@@ -14,6 +14,7 @@ import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,12 +33,16 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 4;
 
+    private static final int CLAW_HOLD_WAIT_TIME = 1;
+
 
     // subsystems
     //private final CommandXboxController m_joystick;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armSubsystem;
     private final TurretSubsystem m_turretSubsystem;
+
+    private final ClawSubsystem m_claw;
 
     // Led core
     protected final AddressableLEDBuffer m_buffer;
@@ -72,12 +77,20 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_isInLoadingZoneSignal;
 
-    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
+    private final MirroredLEDFlash m_isHoldingPieceClaw;
+
+    private final Timer m_clawLEDsTimer = new Timer();
+
+    private boolean m_clawWasTripped;
+
+
+    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
         m_chassisSubsystem = chassisSubsystem;
         m_armSubsystem = armSubsystem;
         m_turretSubsystem = turretSubsystem;
+        m_claw = claw;
 
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
@@ -137,6 +150,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
         //for Claw Aligned Check
         m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
 
+        //holding piece in claw
+        m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
+        m_clawWasTripped = false;
+
         // Set the data
         m_led.setData(m_buffer);
         m_led.start();
@@ -165,6 +182,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
+        else if (m_claw.hasGamePiece() && m_clawLEDsTimer.get() < CLAW_HOLD_WAIT_TIME) {
+            m_isHoldingPieceClaw.writeLeds();
+
+        }
         else if (m_chassisSubsystem.isInCommunityZone()) {
             communityZonePatterns();
         }
@@ -174,6 +195,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionDockLED) {
             dockAndEngagePatterns();
         }
+
         else {
             m_notInCommunityZone.writeLeds();
         }
@@ -190,16 +212,27 @@ public class LEDManagerSubsystem extends SubsystemBase {
         */
     }
 
+    public void shouldTrip() {
+        if (!m_clawWasTripped && m_claw.hasGamePiece()) {
+            m_clawLEDsTimer.reset();
+            m_clawLEDsTimer.start();
+        }
+        m_clawWasTripped = m_claw.hasGamePiece();
+
+
+    }
+
     @Override
     public void periodic() {
         clear();
-
         if (DriverStation.isDisabled()) {
             disabledPatterns();
         }
         else {
             enabledPatterns();
         }
+        shouldTrip();
+
 
         // driverPracticePatterns();
         m_led.setData(m_buffer);

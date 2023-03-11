@@ -4,8 +4,8 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
-import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -49,6 +49,8 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -60,7 +62,16 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double PITCH_UPPER_LIMIT = 3.0;
 
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
-    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+    private static final double GEAR_RATIO;
+
+    static {
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            GEAR_RATIO = 527.0 / 54.0;
+        } else {
+            GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+        }
+    }
+
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
@@ -87,7 +98,7 @@ public class ChassisSubsystem extends SubsystemBase {
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
-    private final Vision m_vision;
+    private final List<Vision> m_cameras;
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -160,8 +171,14 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_leaderLeft.setInverted(true);
+            m_leaderRight.setInverted(false);
+        }
+        else {
+            m_leaderLeft.setInverted(false);
+            m_leaderRight.setInverted(true);
+        }
 
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
@@ -194,7 +211,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_vision = new PhotonVisionSubsystem(m_field);
+        m_cameras = new ArrayList<>();
+        m_cameras.add(new PhotonVisionSubsystem(m_field));
+        m_cameras.add(new LimelightVisionSubsystem(m_field));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -240,7 +259,6 @@ public class ChassisSubsystem extends SubsystemBase {
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
-
     }
 
     private void logTrajectoryErrors(Translation2d translation2d, Rotation2d rotation2d) {
@@ -278,14 +296,26 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0) //this needs to be tuned!
-            .addI(0)
-            .addD(0)
-            .addFF(.22)
-            .addMaxVelocity(2)
-            .addMaxAcceleration(0)
-            .build();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+                .addP(0) //this needs to be tuned!
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
+                .build();
+        }
+        else {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+                .addP(0)
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
+                .build();
+        }
     }
 
     @Override
@@ -392,11 +422,17 @@ public class ChassisSubsystem extends SubsystemBase {
         //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        for (Vision vision : m_cameras) {
+            updateCameraEstimate(vision);
+        }
+    }
+
+    private void updateCameraEstimate(Vision vision) {
         //NEW ODOMETRY
         m_poseEstimator.update(
                     m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
-            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();

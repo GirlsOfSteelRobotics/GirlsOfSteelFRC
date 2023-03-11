@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,27 +31,55 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
+import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
+
 
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 2);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .27);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
+    // From SysID
+    private static final double KS = 0.13773;
+
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
 
     // Arm Setpoints
-    private static final double HUMAN_PLAYER_ANGLE = 12;
-    private static final double ARM_CUBE_MIDDLE_DEG = 0;
-    private static final double ARM_CUBE_HIGH_DEG = 12;
-    private static final double ARM_CONE_MIDDLE_DEG = 15;
-    private static final double ARM_CONE_HIGH_DEG = 30;
-    private static final double MIN_ANGLE_DEG = -61;
-    private static final double MAX_ANGLE_DEG = 50;
+    private static final double HUMAN_PLAYER_ANGLE;
+    private static final double ARM_CUBE_MIDDLE_DEG;
+    private static final double ARM_CUBE_HIGH_DEG;
+    private static final double ARM_CONE_MIDDLE_DEG;
+    private static final double ARM_CONE_HIGH_DEG;
+    private static final double MIN_ANGLE_DEG;
+    private static final double MAX_ANGLE_DEG;
+
+    static {
+        //toDo: make these values work as expected
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            HUMAN_PLAYER_ANGLE = 12;
+            ARM_CUBE_MIDDLE_DEG = 0;
+            ARM_CUBE_HIGH_DEG = 15;
+            ARM_CONE_MIDDLE_DEG = 15;
+            ARM_CONE_HIGH_DEG = 30;
+            MIN_ANGLE_DEG = -53;
+            MAX_ANGLE_DEG = 50;
+
+        } else {
+            HUMAN_PLAYER_ANGLE = 12;
+            ARM_CUBE_MIDDLE_DEG = 0;
+            ARM_CUBE_HIGH_DEG = 12;
+            ARM_CONE_MIDDLE_DEG = 15;
+            ARM_CONE_HIGH_DEG = 30;
+            MIN_ANGLE_DEG = -53;
+            MAX_ANGLE_DEG = 50;
+        }
+    }
 
     public static final double ARM_HIT_INTAKE_ANGLE = 15;
 
@@ -60,12 +88,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double MIN_ANGLE_RADS = Math.toRadians(MIN_ANGLE_DEG);
     private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
-
     private static final boolean SIMULATE_GRAVITY = true;
+
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
+
+    private final SparkMaxAbsoluteEncoder m_absoluteEncoder;
 
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
@@ -77,14 +107,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_encoderDegEntry;
     private final NetworkTableEntry m_goalAngleDegEntry;
     private final NetworkTableEntry m_velocityEntry;
+    private final NetworkTableEntry m_effectiveGravityOffsetEntry;
+    private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
+    private final NetworkTableEntry m_absoluteEncoderEntry;
 
     private final SparkMaxAlerts m_pivotErrorAlert;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public ArmPivotSubsystem() {
-
-        //SORTING: pivot stuff:
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -108,15 +139,27 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
         m_goalAngleDegEntry = loggingTable.getEntry("Arm Goal (deg)");
         m_velocityEntry = loggingTable.getEntry("Arm Velocity");
+        m_effectiveGravityOffsetEntry = loggingTable.getEntry("Effective Gravity Offset");
+        m_pidArbitraryFeedForwardEntry = loggingTable.getEntry("Arbitrary FF");
+        m_absoluteEncoderEntry = loggingTable.getEntry("Absolute Encoder Entry");
         m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
+
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+        m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder(kDutyCycle);
+        m_absoluteEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
+        m_absoluteEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
 
-        resetPivotEncoder();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_pivotMotorEncoder.setPosition(m_absoluteEncoder.getPosition());
+        }
+        else {
+            resetPivotEncoder();
+        }
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -136,8 +179,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
+        m_absoluteEncoderEntry.setNumber(m_absoluteEncoder.getPosition());
         m_goalAngleDegEntry.setNumber(m_armAngleGoal);
-        m_velocityEntry.setNumber(m_pivotMotorEncoder.getVelocity());
+        m_velocityEntry.setNumber(getArmVelocityDegPerSec());
 
         m_pivotErrorAlert.checkAlerts();
     }
@@ -172,6 +216,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return m_armAngleGoal;
     }
 
+    public double getArmVelocityDegPerSec() {
+        return m_pivotMotorEncoder.getVelocity();
+    }
+
     public boolean isUpperLimitSwitchedPressed() {
         return !m_upperLimitSwitch.get();
     }
@@ -183,11 +231,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public void pivotArmToAngle(double pivotAngleGoal) {
         m_armAngleGoal = pivotAngleGoal;
 
+        double error = m_armAngleGoal - getArmAngleDeg();
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
+        double arbFf = gravityOffset + KS * Math.signum(error);
 
-        SmartDashboard.putNumber("~effective gravity offset~", gravityOffset);
+        m_effectiveGravityOffsetEntry.setNumber(gravityOffset);
+        m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
+
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
-            m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
+            m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
         } else {
             m_pivotMotor.set(0);
         }
@@ -199,8 +251,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public boolean isArmAtAngle(double pivotAngleGoal) {
         double error = getArmAngleDeg() - pivotAngleGoal;
+        double velocity = getArmVelocityDegPerSec();
 
-        return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
+        return Math.abs(error) <= ALLOWABLE_ERROR.getValue() && Math.abs(velocity) < ALLOWABLE_VELOCITY_ERROR.getValue();
     }
 
     public final void resetPivotEncoder() {
@@ -248,8 +301,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     ///////////////////////
     // Command Factories
     ///////////////////////
-
-    //SORTING: PIVOT STUFF (MOTORIZED)
     public CommandBase createPivotToCoastMode() {
         return this.runEnd(
             () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
@@ -329,6 +380,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return commandPivotArmToAngleNonHold(MIN_ANGLE_DEG);
     }
 
+    public CommandBase commandHpPickup() {
+        return commandPivotArmToAngleNonHold(HUMAN_PLAYER_ANGLE);
+    }
 
 
     ////////////////
@@ -337,10 +391,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public CommandBase createIsPivotMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
-    }
-
-    public CommandBase commandHpPickup() {
-        return commandPivotArmToAngleHold(HUMAN_PLAYER_ANGLE);
     }
 }
 

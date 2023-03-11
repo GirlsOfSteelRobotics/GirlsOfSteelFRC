@@ -336,17 +336,33 @@
     }
   },
   {
-    "name": "/Preferences/Turret Degree Offset",
+    "name": "/Preferences/ClawInSpeed",
     "type": "double",
-    "value": 0.0,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Claw Aligned Acceptable Error",
+    "name": "/Preferences/ClawOutSpeed",
     "type": "double",
-    "value": 1.0,
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPiece",
+    "type": "double",
+    "value": 12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 2.0,
     "properties": {
       "persistent": true
     }
