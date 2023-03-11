@@ -3,8 +3,9 @@ package com.gos.chargedup.subsystems;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
-import com.gos.lib.ctre.PigeonAlerts;
+import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -26,6 +27,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
@@ -35,7 +37,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -48,12 +49,14 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .02);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -91,12 +94,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RelativeEncoder m_leftEncoder;
 
     //Field
-    private final Field2d m_field;
+    private final GosField m_field;
 
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
-    private final Vision m_vision;
+    private final List<Vision> m_cameras;
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -112,6 +115,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_leftEncoderVelocity;
     private final NetworkTableEntry m_rightEncoderPosition;
     private final NetworkTableEntry m_rightEncoderVelocity;
+    private final NetworkTableEntry m_trajectoryErrorX;
+    private final NetworkTableEntry m_trajectoryErrorY;
+    private final NetworkTableEntry m_trajectoryErrorAngle;
+    private final NetworkTableEntry m_trajectoryVelocitySetpointX;
+    private final NetworkTableEntry m_trajectoryVelocitySetpointY;
+    private final NetworkTableEntry m_trajectoryVelocitySetpointAngle;
 
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
@@ -122,11 +131,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
     private final RectangleInterface m_communityRectangle1;
-
     private final RectangleInterface m_communityRectangle2;
-
     private final RectangleInterface m_loadingRectangle1;
-
     private final RectangleInterface m_loadingRectangle2;
 
     @SuppressWarnings("PMD.NcssCount")
@@ -136,10 +142,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
     private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
 
-    @SuppressWarnings("PMD.NcssCount")
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public ChassisSubsystem() {
-        m_field = new Field2d();
-        SmartDashboard.putData(m_field);
+        m_field = new GosField();
+        SmartDashboard.putData(m_field.getSendable());
 
         m_communityRectangle1 = new RectangleInterface(FieldConstants.Community.INNER_X, FieldConstants.Community.LEFT_Y, FieldConstants.Community.MID_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityRight");
         m_communityRectangle2 = new RectangleInterface(FieldConstants.Community.MID_X, FieldConstants.Community.MID_Y, FieldConstants.Community.OUTER_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityLeft");
@@ -202,7 +208,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_vision = new PhotonVisionSubsystem();
+        m_cameras = new ArrayList<>();
+        m_cameras.add(new PhotonVisionSubsystem(m_field));
+        m_cameras.add(new LimelightVisionSubsystem(m_field));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -212,11 +220,25 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightEncoderPosition = loggingTable.getEntry("Right Position");
         m_rightEncoderVelocity = loggingTable.getEntry("Right Velocity");
 
+        m_trajectoryErrorX = loggingTable.getEntry("Trajectory Error X");
+        m_trajectoryErrorY = loggingTable.getEntry("Trajectory Error Y");
+        m_trajectoryErrorAngle = loggingTable.getEntry("Trajectory Error Angle");
+        m_trajectoryVelocitySetpointX = loggingTable.getEntry("Trajectory Velocity Setpoint X");
+        m_trajectoryVelocitySetpointY = loggingTable.getEntry("Trajectory Velocity Setpoint Y");
+        m_trajectoryVelocitySetpointAngle = loggingTable.getEntry("Trajectory Velocity Setpoint Angle");
+
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
         m_pigeonAlerts = new PigeonAlerts(m_gyro);
+
+        PPRamseteCommand.setLoggingCallbacks(
+            m_field::setTrajectory,
+            m_field::setTrajectorySetpoint,
+            this::logTrajectoryChassisSetpoint,
+            this::logTrajectoryErrors
+        );
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -235,10 +257,16 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public void nodeCount(FieldConstants fieldConstants) {
-        for (int i = 0; i < FieldConstants.Grids.NODE_ROW_COUNT; i++) {
-            FieldConstants.Grids.LOW_TRANSLATIONS[i] = new Translation2d(FieldConstants.Grids.LOW_X, FieldConstants.Grids.NODE_FIRST_Y + FieldConstants.Grids.NODE_SEPARATION_Y * i);
-        }
+    private void logTrajectoryErrors(Translation2d translation2d, Rotation2d rotation2d) {
+        m_trajectoryErrorX.setNumber(translation2d.getX());
+        m_trajectoryErrorY.setNumber(translation2d.getY());
+        m_trajectoryErrorAngle.setNumber(rotation2d.getDegrees());
+    }
+
+    private void logTrajectoryChassisSetpoint(ChassisSpeeds chassisSpeeds) {
+        m_trajectoryVelocitySetpointX.setNumber(chassisSpeeds.vxMetersPerSecond);
+        m_trajectoryVelocitySetpointY.setNumber(chassisSpeeds.vyMetersPerSecond);
+        m_trajectoryVelocitySetpointAngle.setNumber(chassisSpeeds.omegaRadiansPerSecond);
     }
 
     public double findingClosestNodeY(double yPositionButton) {
@@ -270,8 +298,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 .addI(0)
                 .addD(0)
                 .addFF(.22)
-                .addMaxVelocity((Units.inchesToMeters(2)))
-                .addMaxAcceleration((Units.inchesToMeters(0)))
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
                 .build();
         }
         else {
@@ -280,8 +308,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 .addI(0)
                 .addD(0)
                 .addFF(.22)
-                .addMaxVelocity((Units.inchesToMeters(2)))
-                .addMaxAcceleration((Units.inchesToMeters(0)))
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
                 .build();
         }
     }
@@ -291,8 +319,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
         updateOdometry();
 
-        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
-        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+        m_field.setOdometry(m_odometry.getPoseMeters());
+        m_field.setPoseEstimate(m_poseEstimator.getEstimatedPosition());
 
         m_leftPIDProperties.updateIfChanged();
         m_rightPIDProperties.updateIfChanged();
@@ -381,7 +409,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.run(this::autoEngage);
+        return this.run(this::autoEngage).withName("Auto Engage");
     }
 
 
@@ -390,19 +418,21 @@ public class ChassisSubsystem extends SubsystemBase {
         //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        for (Vision vision : m_cameras) {
+            updateCameraEstimate(vision);
+        }
+    }
+
+    private void updateCameraEstimate(Vision vision) {
         //NEW ODOMETRY
         m_poseEstimator.update(
                     m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
-            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
             m_poseEstimator.addVisionMeasurement(pose2d, camPose.timestampSeconds);
-            m_field.getObject("Camera Estimated Position").setPose(pose2d);
-        } else {
-            // move it way off the screen to make it disappear
-            m_field.getObject("Camera Estimated Position").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
     }
 
@@ -426,10 +456,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")
-    public PPRamseteCommand driveToPoint(Pose2d point) {
+    public CommandBase driveToPoint(Pose2d point) {
         point = AllianceFlipper.maybeFlip(point);
-
-        m_field.getObject("Point to Drive To").setPose(point);
 
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
             new PathConstraints(Units.inchesToMeters(m_tuningVelocity.getValue()), Units.inchesToMeters(m_tuningAcceleration.getValue())),
@@ -445,7 +473,9 @@ public class ChassisSubsystem extends SubsystemBase {
             this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
             false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
             this // Requires this drive subsystem
-        );
+        ).finallyDo((interrupted) -> {
+            m_field.clearTrajectory();
+        });
 
 
     }

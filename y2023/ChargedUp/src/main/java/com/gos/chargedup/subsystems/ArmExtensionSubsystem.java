@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import java.util.function.DoubleSupplier;
 
 public class ArmExtensionSubsystem extends SubsystemBase {
-
-    //SORTING: arm extension stuff (pneumatics):
     private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
     private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
 

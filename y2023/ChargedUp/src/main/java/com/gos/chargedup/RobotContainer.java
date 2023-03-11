@@ -7,10 +7,10 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
+import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
@@ -21,7 +21,6 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.gos.lib.properties.PropertyManager;
@@ -32,12 +31,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -59,7 +60,7 @@ public class RobotContainer {
 
     private final TurretSubsystem m_turret;
 
-    private final IntakeSubsystem m_intake;
+    // private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armPivot;
 
@@ -81,19 +82,20 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(DoubleSupplier pressureSupplier) {
+    public RobotContainer(PneumaticHub pneumaticHub) {
         // Configure the trigger bindings
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
         m_claw = new ClawSubsystem();
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
-        m_intake = new IntakeSubsystem();
+        // m_intake = new IntakeSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_armPivot, m_armExtend, m_claw);
 
-        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_autonomousFactory); //NOPMD
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_claw, m_autonomousFactory); //NOPMD
 
-        m_pressureSupplier = pressureSupplier;
+        pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
+        m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
 
         if (RobotBase.isSimulation()) {
@@ -105,8 +107,8 @@ public class RobotContainer {
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
-        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
-        createTestCommands();
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_claw));
+        createTestCommands(pneumaticHub);
         automatedTurretCommands();
 
         if (RobotBase.isReal()) {
@@ -115,8 +117,10 @@ public class RobotContainer {
     }
 
     @SuppressWarnings("PMD.NcssCount")
-    private void createTestCommands() {
+    private void createTestCommands(PneumaticHub pneumaticHub) {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
+
+        tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
 
         // auto trajectories
         tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
@@ -159,7 +163,7 @@ public class RobotContainer {
         tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
         tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
 
-        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder(ArmPivotSubsystem.MIN_ANGLE_DEG));
+        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder());
         tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoder(0));
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
@@ -181,19 +185,18 @@ public class RobotContainer {
         tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
 
         // intake
-        tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
-        tab.add("Intake Piston: In", m_intake.createIntakeRetract());
+        // tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
+        // tab.add("Intake Piston: In", m_intake.createIntakeRetract());
 
-        tab.add("Intake Roller: In", m_intake.createIntakeIn());
-        tab.add("Intake Roller: Out", m_intake.createIntakeOut());
+        // tab.add("Intake Roller: In", m_intake.createIntakeIn());
+        // tab.add("Intake Roller: Out", m_intake.createIntakeOut());
 
 
         // Smart arm movement
-        tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 45));
-        tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 90));
-        tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 0));
-        tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, -45));
-        tab.add("Arm to Angle PreventionXXXXXX", m_armPivot.commandPivotArmToAnglePrevention(45.0, m_chassisSubsystem, m_operatorController));
+        // tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 45));
+        // tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 90));
+        // tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 0));
+        // tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, -45));
     }
 
     private void automatedTurretCommands() {
@@ -241,16 +244,22 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOutCommand());
-        m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
-        m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
+        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
+        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
 
+        m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
+
         // Backup manual controls for debugging
+        // m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        // m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickup());
+        // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
+
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
         // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
@@ -287,10 +296,10 @@ public class RobotContainer {
                 SmartDashboardNames.ARM_EXTENSION2, m_armExtend::isTopPistonIn, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_armPivot::getArmMotorSpeed, null);
-            builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
-            builder.addBooleanProperty(
-                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+            // builder.addDoubleProperty(
+            //     SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
+            // builder.addBooleanProperty(
+            //     SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
             builder.addDoubleProperty(

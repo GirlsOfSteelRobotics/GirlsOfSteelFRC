@@ -71,6 +71,12 @@ public final class Constants {
 
     public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
 
+    // Turn the compressor on if the PSI is lower than this
+    public static final double MIN_COMPRESSOR_PSI = 110;
+
+    // Turn the compressor off if the PSI is higher than this
+    public static final double MAX_COMPRESSOR_PSI = 120;
+
     public static final DigitalInput ROBOT_NAME = new DigitalInput(4); //todo: get actual port number
 
     public static final boolean IS_ROBOT_BLOSSOM = ROBOT_NAME.get(); // false is bubbles, true is blossom
