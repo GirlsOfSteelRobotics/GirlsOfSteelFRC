@@ -31,6 +31,8 @@ public final class AutonomousFactory {
         ONLY_DOCK_AND_ENGAGE,
         SCORE_CUBE_AT_CURRENT_POS,
 
+        ENGAGE_AND_LEAVE_COMMUNITY,
+
         SCORE_CONE_AT_CURRENT_POS,
         ONE_NODE_AND_ENGAGE_3,
         ONE_NODE_AND_ENGAGE_4,
@@ -65,6 +67,7 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_END, new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity"));
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_PLAYER_STATION, new OnlyLeaveCommunityCommandGroup(chassis, "PlayerStationLeaveCommunity"));
             m_autoOptions.get(height).put(AutonMode.ONLY_DOCK_AND_ENGAGE, new OnlyDockAndEngageCommandGroup(chassis));
+            m_autoOptions.get(height).put(AutonMode.ENGAGE_AND_LEAVE_COMMUNITY, new EngageAndLeaveCommunityCommandGroup(chassis));
         }
 
         for (AutonMode auto: AutonMode.values()) {
