@@ -14,6 +14,11 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -34,6 +39,7 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutomatedTurret/Choose Turret Command": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
       "/Shuffleboard/AutomatedTurret/High Cube": "Command",
@@ -169,6 +175,7 @@
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
+      "/SmartDashboard/Choose Turret Command": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Height Options": "String Chooser",
       "/SmartDashboard/OV5647 Sim Field": "Field2d",
@@ -176,6 +183,11 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
+      "/Shuffleboard/AutomatedTurret/Choose Turret Command": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
         "window": {
           "visible": true
@@ -213,6 +225,11 @@
         }
       },
       "/SmartDashboard/Auto Mode Select": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Choose Turret Command": {
         "window": {
           "visible": true
         }

@@ -198,7 +198,8 @@ public class RobotContainer {
     private void automatedTurretCommands() {
 
         ShuffleboardTab tab = Shuffleboard.getTab("AutomatedTurret");
-
+        tab.add("Choose Turret Command", new ChooseAimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, m_ledManagerSubsystem));
+        /*
         tab.add("Low Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
             .withPosition(0, 2);
         tab.add("Mid Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
@@ -217,6 +218,8 @@ public class RobotContainer {
             .withPosition(2, 1);
         tab.add("High Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
             .withPosition(2, 0);
+
+        */
     }
 
     /**
