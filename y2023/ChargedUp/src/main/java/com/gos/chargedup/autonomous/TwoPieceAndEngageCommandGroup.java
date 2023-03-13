@@ -18,17 +18,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
     public TwoPieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
 
-        HashMap<String, Command> eventMap = new HashMap<>();
-        eventMap.put("pickUpObject", claw.createMoveClawIntakeInCommand());
-        eventMap.put("resetArmAndTurret", CombinedCommandsUtil.goHome(armPivot, armExtension, turret));
-        eventMap.put("setArmAndTurretToScore", CombinedCommandsUtil.moveToScore(180, pivotHeightType, GamePieceType.CUBE, turret, armPivot));
-        eventMap.put("scorePiece", new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE));
-        eventMap.put("engage", chassis.createAutoEngageCommand());
+        Map<String, Command> eventMap = EventMapUtil.createDefaultEventMap(chassis, turret, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE);
 
         List<PathPlannerTrajectory> twoPieceEngage = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
         Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceEngage);

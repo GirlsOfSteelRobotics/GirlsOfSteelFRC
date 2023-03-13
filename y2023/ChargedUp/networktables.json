@@ -406,5 +406,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ClawHoldSpeed",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

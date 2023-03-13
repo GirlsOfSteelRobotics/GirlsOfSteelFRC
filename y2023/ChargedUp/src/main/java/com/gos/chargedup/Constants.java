@@ -66,7 +66,7 @@ public final class Constants {
     public static final int LED_PORT = 0;
 
     //defined location the robot can pick up pieces from
-    public static final Pose2d ROBOT_LEFT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(597), Units.inchesToMeters(282), new Rotation2d(0));
+    public static final Pose2d ROBOT_LEFT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(597), Units.inchesToMeters(292), new Rotation2d(0));
 
     public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
 

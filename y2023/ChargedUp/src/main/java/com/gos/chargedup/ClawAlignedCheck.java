@@ -6,6 +6,7 @@ import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClawAlignedCheck {
 
@@ -46,6 +47,7 @@ public class ClawAlignedCheck {
         GosDoubleProperty acceptError = new GosDoubleProperty(false, "Claw Aligned Acceptable Error", 1.0); //Todo: Update with the actual error value in meters
         Translation2d clawPos = getAbsoluteClawPos(m_chassis.getPose());
 
+        SmartDashboard.putBoolean("Check If Ready To Score", Math.abs(clawPos.getX() - xPos) < acceptError.getValue() && Math.abs(clawPos.getY() - yPos) < acceptError.getValue());
         return (Math.abs(clawPos.getX() - xPos) < acceptError.getValue() && Math.abs(clawPos.getY() - yPos) < acceptError.getValue());
 
     }

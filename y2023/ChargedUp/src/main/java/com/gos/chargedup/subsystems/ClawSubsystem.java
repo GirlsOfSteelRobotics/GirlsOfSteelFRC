@@ -15,16 +15,21 @@ import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class ClawSubsystem extends SubsystemBase {
+    private static final GosDoubleProperty HOLD_SPEED = new GosDoubleProperty(false, "ClawHoldSpeed", 0.2);
     private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(false, "ClawInSpeed", 0.5);
     private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawOutSpeed", 0.75);
     private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 25);
     private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPieceCurrent", 5);
     private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT_VELOCITY = new GosDoubleProperty(false, "ClawCheckHasPieceVelocity", 1);
+
+    private static final double AUTO_EJECTION_TIME = 0.5;
+    private static final double AUTO_INTAKE_TIME = 0.5;
 
     private final SimableCANSparkMax m_clawMotor;
     private final RelativeEncoder m_clawEncoder;
@@ -59,6 +64,10 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotor.set(CLAW_IN_SPEED.getValue());
     }
 
+    public void holdPiece() {
+        m_clawMotor.set(HOLD_SPEED.getValue());
+    }
+
     //intake open
     public void moveClawIntakeOut() {
         m_clawMotor.set(-CLAW_OUT_SPEED.getValue());
@@ -91,8 +100,20 @@ public class ClawSubsystem extends SubsystemBase {
         return this.runEnd(this::moveClawIntakeIn, this::stopIntake).withName("ClawIntakeIn");
     }
 
+    public Command createMoveClawIntakeInNoStopCommand() {
+        return this.run(this::moveClawIntakeIn);
+    }
+
+    public CommandBase createMoveClawIntakeInWithTimeoutCommand() {
+        return createMoveClawIntakeInCommand().withTimeout(AUTO_INTAKE_TIME);
+    }
+
     public CommandBase createMoveClawIntakeOutCommand() {
         return this.runEnd(this::moveClawIntakeOut, this::stopIntake).withName("ClawIntakeOut");
+    }
+
+    public CommandBase createMoveClawIntakeOutWithTimeoutCommand() {
+        return createMoveClawIntakeOutCommand().withTimeout(AUTO_EJECTION_TIME);
     }
 
     public CommandBase createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {

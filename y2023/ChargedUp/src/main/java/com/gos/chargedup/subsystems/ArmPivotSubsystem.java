@@ -297,7 +297,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             break;
         case LOW:
             //pivotArmToAngle();
-            angle = MIN_ANGLE_DEG;
+            angle = HOME_ANGLE;
             break;
         default:
             angle = ARM_CONE_HIGH_DEG;

@@ -14,14 +14,11 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
     public ScorePieceCommandGroup(TurretSubsystem turret, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         //assuming robot is in correct position to score (intake facing nodes)
         //arm to angle, arm extend, drop piece
-        addCommands((armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType))
-            .alongWith(turret.commandTurretPID(180)));
+        addCommands((armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType)));
+            // .alongWith(turret.commandTurretPID(180)
         addCommands(armExtension.createArmToSpecifiedHeight(pivotHeightType));
 
         //check that this function works:
-        addCommands(claw.createMoveClawIntakeOutCommand());
-
-        //piece dropped on node by now, reset arm back now:
-        addCommands(armExtension.commandFullRetract());
+        addCommands(claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
 }
