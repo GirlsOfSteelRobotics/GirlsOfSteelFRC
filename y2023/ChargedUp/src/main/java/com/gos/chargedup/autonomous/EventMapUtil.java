@@ -10,8 +10,6 @@ import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +21,7 @@ public class EventMapUtil {
         eventMap.put("pickUpObject", claw.createMoveClawIntakeInWithTimeoutCommand());
         eventMap.put("resetArmAndTurret", turret.goHome().andThen(CombinedCommandsUtil.goHome(armPivot, armExtension, turret)));
         eventMap.put("setArmAndTurretToScore", CombinedCommandsUtil.moveToScore(180, pivotHeightType, gamePieceType, turret, armPivot));
-        eventMap.put("scorePiece", new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, pivotHeightType, gamePieceType));
+        eventMap.put("scorePiece", new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
         eventMap.put("engage", chassis.createAutoEngageCommand());
 
         return eventMap;

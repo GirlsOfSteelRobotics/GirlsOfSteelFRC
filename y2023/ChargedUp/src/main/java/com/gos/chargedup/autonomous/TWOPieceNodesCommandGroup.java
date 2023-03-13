@@ -3,7 +3,6 @@ package com.gos.chargedup.autonomous;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
-import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
@@ -16,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +30,7 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         //score first piece:
         addCommands(new InstantCommand(claw::holdPiece));
-        addCommands(new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
 
         // Get the turret mostly spun back around before driving the path and moving the arm
         addCommands(turret.goHome().until(() -> turret.getTurretAngleDeg() < 90));
@@ -41,7 +39,7 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         addCommands(fullAuto);
 
         //score second piece
-        addCommands(new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE));
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE));
 
 
     }
