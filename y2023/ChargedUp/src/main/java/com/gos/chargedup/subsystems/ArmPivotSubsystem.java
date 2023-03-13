@@ -7,6 +7,7 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -37,16 +38,16 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 2);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
-    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .27);
+    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.5);
+    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", .2);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 1);
+    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.3);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
     // From SysID
-    private static final double KS = 0.13773;
-
+    private static final double KS = 0.1375;
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
 
@@ -56,28 +57,31 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double ARM_CUBE_HIGH_DEG;
     private static final double ARM_CONE_MIDDLE_DEG;
     private static final double ARM_CONE_HIGH_DEG;
+    private static final double HOME_ANGLE;
     private static final double MIN_ANGLE_DEG;
     private static final double MAX_ANGLE_DEG;
 
     static {
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
-            HUMAN_PLAYER_ANGLE = 12;
+            HUMAN_PLAYER_ANGLE = 20;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 15;
             ARM_CONE_MIDDLE_DEG = 15;
             ARM_CONE_HIGH_DEG = 30;
-            MIN_ANGLE_DEG = -53;
+            MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
+            HOME_ANGLE = -20;
 
         } else {
-            HUMAN_PLAYER_ANGLE = 12;
+            HUMAN_PLAYER_ANGLE = 10;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 12;
             ARM_CONE_MIDDLE_DEG = 15;
             ARM_CONE_HIGH_DEG = 30;
-            MIN_ANGLE_DEG = -53;
+            MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
+            HOME_ANGLE = -45;
         }
     }
 
@@ -131,8 +135,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_upperLimitSwitch = new DigitalInput(Constants.INTAKE_UPPER_LIMIT_SWITCH);
         m_pivotPID = setupPidValues(m_pivotPIDController);
 
-        m_pivotMotor.burnFlash();
-
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
         m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
         m_upperLimitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
@@ -155,21 +157,28 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_absoluteEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
-            m_pivotMotorEncoder.setPosition(m_absoluteEncoder.getPosition());
+            resetPivotEncoder(m_absoluteEncoder.getPosition());
         }
         else {
-            resetPivotEncoder();
+            resetPivotEncoder(MIN_ANGLE_DEG);
         }
+
+        m_pivotMotor.burnFlash();
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        ///
+        // Full retract:
+        // kp=0.000400
+        // kf=0.005000
+        // kd=0.005000
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
-            .addP(0.0033) // 0.0058
+            .addP(0.0045) // 0.0058
             .addI(0)
-            .addD(0.035)
-            .addFF(0.0055) // 0.0065
-            .addMaxVelocity(100)
-            .addMaxAcceleration(200)
+            .addD(0.045)
+            .addFF(0.0053) // 0.0065
+            .addMaxVelocity(60)
+            .addMaxAcceleration(180)
             .build();
     }
 
@@ -239,7 +248,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
-            m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
+            if (Math.abs(error) < PID_STOP_ERROR.getValue()) {
+                m_pivotMotor.set(0);
+            } else {
+                m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
+            }
         } else {
             m_pivotMotor.set(0);
         }
@@ -256,8 +269,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue() && Math.abs(velocity) < ALLOWABLE_VELOCITY_ERROR.getValue();
     }
 
-    public final void resetPivotEncoder() {
-        m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
+    public final void resetPivotEncoder(double angle) {
+        SparkMaxUtil.autoRetry(() -> m_pivotMotorEncoder.setPosition(angle));
     }
 
     public double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
@@ -284,7 +297,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             break;
         case LOW:
             //pivotArmToAngle();
-            angle = MIN_ANGLE_DEG;
+            angle = HOME_ANGLE;
             break;
         default:
             angle = ARM_CONE_HIGH_DEG;
@@ -313,7 +326,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public CommandBase createResetPivotEncoder(double angle) {
-        return this.run(() -> m_pivotMotorEncoder.setPosition(angle))
+        return this.run(() -> resetPivotEncoder(angle))
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (" + angle + ")");
     }
@@ -377,13 +390,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandGoHome() {
-        return commandPivotArmToAngleNonHold(MIN_ANGLE_DEG);
+        return commandPivotArmToAngleNonHold(HOME_ANGLE);
     }
 
-    public CommandBase commandHpPickup() {
+    public CommandBase commandHpPickupNoHold() {
         return commandPivotArmToAngleNonHold(HUMAN_PLAYER_ANGLE);
     }
 
+    public CommandBase commandHpPickupHold() {
+        return commandPivotArmToAngleHold(HUMAN_PLAYER_ANGLE);
+    }
 
     ////////////////
     // Checklists

@@ -49,8 +49,6 @@ public final class Constants {
     public static final int ARM_BOTTOM_PISTON_REVERSE = 11;
     public static final int ARM_BOTTOM_PISTON_FORWARD = 8;
 
-    public static final int CLAW_PISTON_FORWARD = 9;
-    public static final int CLAW_PISTON_REVERSE = 10;
     public static final int INTAKE_PISTON_FORWARD = 15;
     public static final int INTAKE_PISTON_REVERSE = 14;
 
@@ -68,7 +66,7 @@ public final class Constants {
     public static final int LED_PORT = 0;
 
     //defined location the robot can pick up pieces from
-    public static final Pose2d ROBOT_LEFT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(597), Units.inchesToMeters(282), new Rotation2d(0));
+    public static final Pose2d ROBOT_LEFT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(597), Units.inchesToMeters(292), new Rotation2d(0));
 
     public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
 
@@ -79,5 +77,5 @@ public final class Constants {
     public static final double MAX_COMPRESSOR_PSI = 120;
 
     public static final DigitalInput ROBOT_NAME = new DigitalInput(IS_BLOSSOM_DIO);
-    public static final boolean IS_ROBOT_BLOSSOM = ROBOT_NAME.get(); // false is bubbles, true is blossom
+    public static final boolean IS_ROBOT_BLOSSOM = !ROBOT_NAME.get(); // false is bubbles, true is blossom
 }

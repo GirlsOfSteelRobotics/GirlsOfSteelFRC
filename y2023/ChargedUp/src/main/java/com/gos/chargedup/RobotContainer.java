@@ -8,7 +8,6 @@ package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AimTurretCommand;
-import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
@@ -143,9 +142,6 @@ public class RobotContainer {
 
         // turret
         tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
-        tab.add("Turret: Automated - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2]));
-        tab.add("Turret: Automated - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[6]));
-        tab.add("Turret: Automated - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[8]));
         tab.add("Turret: To Coast Mode", m_turret.createTurretToCoastMode());
         tab.add("Turret: Reset Encoder", m_turret.createResetEncoder());
         tab.add("Turret: Move Clockwise", m_turret.commandMoveTurretClockwise());
@@ -203,16 +199,24 @@ public class RobotContainer {
 
         ShuffleboardTab tab = Shuffleboard.getTab("AutomatedTurret");
 
-        tab.add("Low Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
-        tab.add("Mid Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
-        tab.add("High Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
-        tab.add("Low Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
-        tab.add("Mid Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
-        tab.add("High Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
-        tab.add("Low Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
-        tab.add("Mid Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
-        tab.add("High Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
-
+        tab.add("Low Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
+            .withPosition(0, 2);
+        tab.add("Mid Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
+            .withPosition(0, 1);
+        tab.add("High Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
+            .withPosition(0, 0);
+        tab.add("Low Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
+            .withPosition(1, 2);
+        tab.add("Mid Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
+            .withPosition(1, 1);
+        tab.add("High Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
+            .withPosition(1, 0);
+        tab.add("Low Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
+            .withPosition(2, 2);
+        tab.add("Mid Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
+            .withPosition(2, 1);
+        tab.add("High Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
+            .withPosition(2, 0);
     }
 
     /**
@@ -256,8 +260,8 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-        // m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
-        // m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickup());
+        m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());

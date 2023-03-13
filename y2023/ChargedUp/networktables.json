@@ -374,5 +374,45 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Turret Angle Stop PID Error",
+    "type": "double",
+    "value": 0.21,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPieceCurrent",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPieceVelocity",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm PID Stop Error",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawHoldSpeed",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

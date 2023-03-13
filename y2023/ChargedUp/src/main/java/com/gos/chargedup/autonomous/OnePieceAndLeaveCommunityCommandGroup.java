@@ -1,5 +1,6 @@
 package com.gos.chargedup.autonomous;
 
+
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
@@ -15,23 +16,17 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.HashMap;
 
-public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
-
-
-
-    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-
-        PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
-        Command driveAutoOnePieceEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(oneNodeAndEngage);
+public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGroup {
+    public OnePieceAndLeaveCommunityCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot,
+                                                 ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
+                                                 AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+        PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
+        Command driveAutoOnePieceAndLeave = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(onePieceAndLeave);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
 
-        //drive to docking station
-        addCommands((driveAutoOnePieceEngage)
-            .alongWith(armPivot.commandGoHome()));
-
-        //dock and engage
-        addCommands(chassis.createAutoEngageCommand());
+        //drive out of community
+        addCommands(driveAutoOnePieceAndLeave);
     }
 }
