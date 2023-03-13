@@ -55,6 +55,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
+@SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
 
@@ -133,6 +134,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RectangleInterface m_communityRectangle2;
     private final RectangleInterface m_loadingRectangle1;
     private final RectangleInterface m_loadingRectangle2;
+
+    private boolean m_isEngaged;
 
     @SuppressWarnings("PMD.NcssCount")
     private final PigeonAlerts m_pigeonAlerts;
@@ -258,6 +261,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
+
+            m_isEngaged = false;
         }
     }
 
@@ -410,10 +415,15 @@ public class ChassisSubsystem extends SubsystemBase {
             }
             setArcadeDrive(speed, 0);
         }
+        m_isEngaged = true;
+    }
+
+    public boolean tryingToEngage() {
+        return m_isEngaged;
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.run(this::autoEngage).withName("Auto Engage");
+        return this.runEnd(() -> autoEngage(), () -> m_isEngaged = false).withName("Auto Engage");
     }
 
 

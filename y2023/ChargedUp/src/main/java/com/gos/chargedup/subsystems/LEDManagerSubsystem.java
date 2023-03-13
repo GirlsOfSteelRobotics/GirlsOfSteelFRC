@@ -179,6 +179,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+
     private void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
@@ -186,7 +188,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-        else if (m_optionDockLED) {
+        else if (m_optionDockLED || m_chassisSubsystem.tryingToEngage()) {
             dockAndEngagePatterns();
         }
         else if (m_claw.hasGamePiece() && m_clawLEDsTimer.get() < CLAW_HOLD_WAIT_TIME) {
@@ -246,9 +248,12 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
-    public void dockAndEngagePatterns() {
+    public void setDockOption() {
         m_optionDockLED = true;
-        if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE) {
+    }
+
+    private void dockAndEngagePatterns() {
+        if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE && m_chassisSubsystem.tryingToEngage()) {
             m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
             m_dockAngle.writeLeds();
         }
