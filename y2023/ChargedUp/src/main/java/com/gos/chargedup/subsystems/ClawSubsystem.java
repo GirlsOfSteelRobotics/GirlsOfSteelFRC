@@ -23,8 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class ClawSubsystem extends SubsystemBase {
     private static final GosDoubleProperty HOLD_SPEED = new GosDoubleProperty(false, "ClawHoldSpeed", 0.2);
     private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(false, "ClawInSpeed", 0.5);
-    private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawOutSpeed", 0.75);
-    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 25);
+    private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawOutSpeed", 0.9);
+    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 40);
     private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPieceCurrent", 5);
     private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT_VELOCITY = new GosDoubleProperty(false, "ClawCheckHasPieceVelocity", 1);
 

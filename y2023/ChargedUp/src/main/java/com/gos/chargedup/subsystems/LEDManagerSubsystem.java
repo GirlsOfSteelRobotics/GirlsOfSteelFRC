@@ -65,6 +65,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDBoolean m_armAtAngle;
 
     private final MirroredLEDPercentScale m_dockAngle;
+    private final MirroredLEDFlash m_isEngaged;
+    private static final double ALLOWABLE_ERROR_ENGAGE = 2;
 
     private final MirroredLEDRainbow m_notInCommunityZone;
 
@@ -112,6 +114,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_isInLoadingZoneSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kCornflowerBlue);
 
         m_dockAngle = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
+        m_optionDockLED = false;
+        m_isEngaged = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
 
         m_notInCommunityZone = new MirroredLEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
@@ -182,18 +186,17 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
+        else if (m_optionDockLED) {
+            dockAndEngagePatterns();
+        }
         else if (m_claw.hasGamePiece() && m_clawLEDsTimer.get() < CLAW_HOLD_WAIT_TIME) {
             m_isHoldingPieceClaw.writeLeds();
-
         }
         else if (m_chassisSubsystem.isInCommunityZone()) {
             communityZonePatterns();
         }
         else if (m_chassisSubsystem.isInLoadingZone()) {
             loadingZonePatterns();
-        }
-        else if (m_optionDockLED) {
-            dockAndEngagePatterns();
         }
 
         else {
@@ -217,9 +220,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_clawLEDsTimer.reset();
             m_clawLEDsTimer.start();
         }
+
         m_clawWasTripped = m_claw.hasGamePiece();
-
-
     }
 
     @Override
@@ -246,7 +248,17 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     public void dockAndEngagePatterns() {
         m_optionDockLED = true;
-        m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
+        if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE) {
+            m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
+            m_dockAngle.writeLeds();
+        }
+        else {
+            m_isEngaged.writeLeds();
+        }
+    }
+
+    public void stopDockAndEngagePatterns() {
+        m_optionDockLED = false;
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")

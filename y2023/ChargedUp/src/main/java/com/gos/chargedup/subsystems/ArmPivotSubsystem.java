@@ -38,10 +38,10 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 2);
+    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.5);
     private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", .2);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
-    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .42103);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 1);
+    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.3);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
@@ -173,12 +173,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
         // kf=0.005000
         // kd=0.005000
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
-            .addP(0.0033) // 0.0058
+            .addP(0.0045) // 0.0058
             .addI(0)
-            .addD(0.035)
-            .addFF(0.0055) // 0.0065
-            .addMaxVelocity(100)
-            .addMaxAcceleration(200)
+            .addD(0.045)
+            .addFF(0.0053) // 0.0065
+            .addMaxVelocity(60)
+            .addMaxAcceleration(180)
             .build();
     }
 

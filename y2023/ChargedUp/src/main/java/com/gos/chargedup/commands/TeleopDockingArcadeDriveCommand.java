@@ -43,5 +43,6 @@ public class TeleopDockingArcadeDriveCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         this.m_chassisSubsystem.drivetrainToCoastMode();
+        m_led.stopDockAndEngagePatterns();
     }
 }

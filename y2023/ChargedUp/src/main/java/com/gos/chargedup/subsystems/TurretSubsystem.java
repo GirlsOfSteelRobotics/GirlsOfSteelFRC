@@ -93,12 +93,12 @@ public class TurretSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Turret", false, pidController, 0)
-            .addP(0.001) //0.20201
+            .addP(0.0001) //0.20201
             .addI(0)
-            .addD(0.04)
-            .addFF(0.00675)
-            .addMaxVelocity(80)
-            .addMaxAcceleration(160)
+            .addD(0.00)
+            .addFF(0.0065)
+            .addMaxVelocity(150)
+            .addMaxAcceleration(120)
             .build();
     }
 
