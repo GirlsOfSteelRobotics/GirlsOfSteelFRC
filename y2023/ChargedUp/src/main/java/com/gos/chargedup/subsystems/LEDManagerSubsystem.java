@@ -180,7 +180,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
-
     private void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
@@ -253,7 +252,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void dockAndEngagePatterns() {
-        if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE && m_chassisSubsystem.tryingToEngage()) {
+        if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE) {
             m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
             m_dockAngle.writeLeds();
         }

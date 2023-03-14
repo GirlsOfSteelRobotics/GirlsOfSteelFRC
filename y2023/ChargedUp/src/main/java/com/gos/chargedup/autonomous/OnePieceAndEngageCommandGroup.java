@@ -18,6 +18,7 @@ import java.util.HashMap;
 public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
 
+
     public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
 
         PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
@@ -32,6 +33,5 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());
-
     }
 }

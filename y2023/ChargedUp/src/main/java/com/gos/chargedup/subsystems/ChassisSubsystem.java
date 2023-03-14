@@ -135,7 +135,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RectangleInterface m_loadingRectangle1;
     private final RectangleInterface m_loadingRectangle2;
 
-    private boolean m_isEngaged;
+    private boolean m_tryingToEngage;
 
     @SuppressWarnings("PMD.NcssCount")
     private final PigeonAlerts m_pigeonAlerts;
@@ -262,7 +262,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
 
-            m_isEngaged = false;
+            m_tryingToEngage = false;
         }
     }
 
@@ -415,15 +415,15 @@ public class ChassisSubsystem extends SubsystemBase {
             }
             setArcadeDrive(speed, 0);
         }
-        m_isEngaged = true;
+        m_tryingToEngage = true;
     }
 
     public boolean tryingToEngage() {
-        return m_isEngaged;
+        return m_tryingToEngage;
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.runEnd(() -> autoEngage(), () -> m_isEngaged = false).withName("Auto Engage");
+        return this.runEnd(() -> autoEngage(), () -> m_tryingToEngage = false).withName("Auto Engage");
     }
 
 
