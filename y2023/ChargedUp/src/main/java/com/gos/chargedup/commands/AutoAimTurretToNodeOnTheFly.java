@@ -31,16 +31,16 @@ public class AutoAimTurretToNodeOnTheFly extends BaseAutoAimTurretCommand {
     }
 
     @Override
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public void execute() {
-        AutoTurretCommands nodePos = m_selectedPosition;
-        Translation2d baseTargetLocation;
-        double targetPitch;
-
-        if (nodePos == null || nodePos == AutoTurretCommands.NONE) {
+        if (m_selectedPosition == null || m_selectedPosition == AutoTurretCommands.NONE) {
             return;
         }
 
-        switch (nodePos) {
+        Translation2d baseTargetLocation;
+        double targetPitch;
+
+        switch (m_selectedPosition) {
         case HIGH_LEFT:
             baseTargetLocation = FieldConstants.Grids.HIGH_TRANSLATIONS[0];
             targetPitch = m_armSubsystem.getArmAngleForScoring(AutoPivotHeight.HIGH, GamePieceType.CONE);
@@ -85,6 +85,7 @@ public class AutoAimTurretToNodeOnTheFly extends BaseAutoAimTurretCommand {
 
     private class ChooseAimTurretCommandSendable implements Sendable {
 
+        @Override
         public void initSendable(SendableBuilder builder) {
             builder.setSmartDashboardType("ScoringPosition");
 
@@ -94,12 +95,11 @@ public class AutoAimTurretToNodeOnTheFly extends BaseAutoAimTurretCommand {
         }
 
         private void handleScoringPosition(double d) {
-            System.out.println("Update....");
             try {
-                m_selectedPosition = AutoTurretCommands.values()[(int)d];
-            } catch (Exception ex) {
+                m_selectedPosition = AutoTurretCommands.values()[(int) d];
+            } catch (Exception ex) { // NOPMD
                 m_selectedPosition = AutoTurretCommands.NONE;
-                ex.printStackTrace();
+                ex.printStackTrace(); // NOPMD
             }
         }
     }
