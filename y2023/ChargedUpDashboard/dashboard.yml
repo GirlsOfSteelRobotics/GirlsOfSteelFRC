@@ -71,3 +71,16 @@ widgets:
     name: turretTopDown
   - type: Rectangle
     name: turretTopDownGoal
+
+
+- table: ScoringPosition
+  package_name: scoring_position
+  widget_name: Charged Up Scoring Position Widget
+  sd_table_name_constant: SCORING_POSITION_TABLE_NAME
+  children_tables:
+    - table: ScoringPosition
+      table_name: SCORING_POSITION
+      entries:
+      - type: double
+        name: scoringPosition
+        dasboard_constant: SCORING_POSITION

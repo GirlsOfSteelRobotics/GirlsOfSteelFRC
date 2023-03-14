@@ -7,8 +7,8 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
+import com.gos.chargedup.commands.ChooseAimTurretCommand;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
@@ -42,7 +42,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;

@@ -1,5 +1,10 @@
-package com.gos.chargedup;
+package com.gos.chargedup.commands;
 
+import com.gos.chargedup.AllianceFlipper;
+import com.gos.chargedup.AutoPivotHeight;
+import com.gos.chargedup.AutoTurretCommands;
+import com.gos.chargedup.ClawAlignedCheck;
+import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
