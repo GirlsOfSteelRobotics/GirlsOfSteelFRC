@@ -3,6 +3,10 @@ package {{overall_config.base_package}};
 import {{overall_config.base_package}}.{{widget.package_name}}.{{widget.table}}Widget;
 import {{overall_config.base_package}}.{{widget.package_name}}.{{widget.table}}DataType;
 {%- endfor %}
+{%- for widget in overall_config.manual_widgets %}
+import {{overall_config.base_package}}.{{widget.package_name}}.{{widget.table}}Widget;
+import {{overall_config.base_package}}.{{widget.package_name}}.{{widget.table}}DataType;
+{%- endfor %}
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.wpi.first.shuffleboard.api.data.DataType;
@@ -22,6 +26,10 @@ public class {{overall_config.plugin_name}} extends Plugin {
         return ImmutableList.of(
         {%- for widget in overall_config.widgets %}
             WidgetType.forAnnotatedWidget({{widget.table}}Widget.class){% if not loop.last %},{%endif%}
+        {%- endfor %}
+        {%- if overall_config.manual_widgets %},{%- endif %}
+        {%- for widget in overall_config.manual_widgets %}
+            WidgetType.forAnnotatedWidget({{widget.table}}Widget.class){% if not loop.last %},{%endif%}
         {%- endfor %});
 
     }
@@ -31,6 +39,10 @@ public class {{overall_config.plugin_name}} extends Plugin {
         return ImmutableList.of(
         {%- for widget in overall_config.widgets %}
             {{widget.table}}DataType.INSTANCE{% if not loop.last %},{%endif%}
+        {%- endfor %}
+        {%- if overall_config.manual_widgets %},{%- endif %}
+        {%- for widget in overall_config.manual_widgets %}
+            {{widget.table}}DataType.INSTANCE{% if not loop.last %},{%endif%}
         {%- endfor %});
 
     }
@@ -39,6 +51,9 @@ public class {{overall_config.plugin_name}} extends Plugin {
     public Map<DataType, ComponentType> getDefaultComponents() {
         return ImmutableMap.<DataType, ComponentType>builder()
         {%- for widget in overall_config.widgets %}
+                .put({{widget.table}}DataType.INSTANCE, WidgetType.forAnnotatedWidget({{widget.table}}Widget.class))
+        {%- endfor %}
+        {%- for widget in overall_config.manual_widgets %}
                 .put({{widget.table}}DataType.INSTANCE, WidgetType.forAnnotatedWidget({{widget.table}}Widget.class))
         {%- endfor %}
                 .build();
