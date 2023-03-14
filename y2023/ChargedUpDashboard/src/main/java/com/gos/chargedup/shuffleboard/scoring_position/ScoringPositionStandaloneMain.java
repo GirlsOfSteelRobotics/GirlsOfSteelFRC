@@ -23,10 +23,10 @@ import java.util.Map;
 public class ScoringPositionStandaloneMain {
     private final ScoringPositionWidget m_controller;
 
-    private double m_scoringPositionScoringPosition;
+    private double m_scoringPositionSelectedPosition;
 
 
-    private final Label m_scoringPositionScoringPositionLabel = new Label("Q/A -> scoringPositionScoringPosition");
+    private final Label m_scoringPositionSelectedPositionLabel = new Label("Q/A -> scoringPositionSelectedPosition");
 
     public ScoringPositionStandaloneMain(Scene scene, ScoringPositionWidget robotController) {
         m_controller = robotController;
@@ -35,7 +35,7 @@ public class ScoringPositionStandaloneMain {
         labelPane.setBorder(new Border(new BorderStroke(Color.BLACK,
             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        labelPane.getChildren().add(m_scoringPositionScoringPositionLabel);
+        labelPane.getChildren().add(m_scoringPositionSelectedPositionLabel);
         ((BorderPane) scene.getRoot()).setBottom(labelPane);
 
         scene.setOnKeyPressed(event -> {
@@ -44,12 +44,12 @@ public class ScoringPositionStandaloneMain {
 
             // ScoringPosition
             case Q:
-                m_scoringPositionScoringPosition = 0.25;
-                m_scoringPositionScoringPositionLabel.setTextFill(Color.GREEN);
+                m_scoringPositionSelectedPosition = 0.25;
+                m_scoringPositionSelectedPositionLabel.setTextFill(Color.GREEN);
                 break;
             case A:
-                m_scoringPositionScoringPosition = -0.25;
-                m_scoringPositionScoringPositionLabel.setTextFill(Color.GREEN);
+                m_scoringPositionSelectedPosition = -0.25;
+                m_scoringPositionSelectedPositionLabel.setTextFill(Color.GREEN);
                 break;
 
             default:
@@ -66,8 +66,8 @@ public class ScoringPositionStandaloneMain {
             // ScoringPosition
             case Q:
             case A:
-                m_scoringPositionScoringPosition = 0;
-                m_scoringPositionScoringPositionLabel.setTextFill(Color.BLACK);
+                m_scoringPositionSelectedPosition = 0;
+                m_scoringPositionSelectedPositionLabel.setTextFill(Color.BLACK);
                 break;
             default:
                 break;
@@ -81,7 +81,7 @@ public class ScoringPositionStandaloneMain {
         try {
 
             ScoringPositionData data = new ScoringPositionData(
-                m_scoringPositionScoringPosition
+                m_scoringPositionSelectedPosition
             );
 
             final ScoringPositionData oldData =  m_controller.dataProperty().getValue();

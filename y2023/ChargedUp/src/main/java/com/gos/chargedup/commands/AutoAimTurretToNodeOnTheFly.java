@@ -15,9 +15,10 @@ import org.littletonrobotics.frc2023.FieldConstants;
 
 
 public class AutoAimTurretToNodeOnTheFly extends BaseAutoAimTurretCommand {
-    private AutoTurretCommands m_selectedPosition;
+    private AutoTurretCommands m_selectedPosition = AutoTurretCommands.NONE;
 
     private enum AutoTurretCommands {
+        NONE,
         HIGH_LEFT, HIGH_MIDDLE, HIGH_RIGHT,
         MEDIUM_LEFT, MEDIUM_MIDDLE, MEDIUM_RIGHT,
         LOW_LEFT, LOW_MIDDLE, LOW_RIGHT
@@ -29,35 +30,13 @@ public class AutoAimTurretToNodeOnTheFly extends BaseAutoAimTurretCommand {
         SmartDashboard.putData("Select Position", new ChooseAimTurretCommandSendable());
     }
 
-    private class ChooseAimTurretCommandSendable implements Sendable {
-
-        public void initSendable(SendableBuilder builder) {
-            builder.setSmartDashboardType("ScoringPositionxx");
-
-            builder.addDoubleProperty(
-                "ScoringPositionyy", null, this::handleScoringPosition);
-            builder.addIntegerProperty(
-                "ScoringPositioninnnitt", null, (x) -> System.out.println(x));
-
-        }
-
-        private void handleScoringPosition(double d) {
-            try {
-                System.out.println("D!" + d);
-//                m_selectedPosition = AutoTurretCommands.values()[(int)d];
-            } catch (Exception ex) {
-//                m_selectedPosition = null;
-            }
-        }
-    }
-
     @Override
     public void execute() {
         AutoTurretCommands nodePos = m_selectedPosition;
         Translation2d baseTargetLocation;
         double targetPitch;
 
-        if (nodePos == null) {
+        if (nodePos == null || nodePos == AutoTurretCommands.NONE) {
             return;
         }
 
@@ -101,5 +80,27 @@ public class AutoAimTurretToNodeOnTheFly extends BaseAutoAimTurretCommand {
         }
 
         runAutoAim(baseTargetLocation, targetPitch);
+    }
+
+
+    private class ChooseAimTurretCommandSendable implements Sendable {
+
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType("ScoringPosition");
+
+            builder.addDoubleProperty(
+                "SelectedPosition", null, this::handleScoringPosition);
+            builder.addStringProperty("AsString", () -> m_selectedPosition.toString(), null);
+        }
+
+        private void handleScoringPosition(double d) {
+            System.out.println("Update....");
+            try {
+                m_selectedPosition = AutoTurretCommands.values()[(int)d];
+            } catch (Exception ex) {
+                m_selectedPosition = AutoTurretCommands.NONE;
+                ex.printStackTrace();
+            }
+        }
     }
 }

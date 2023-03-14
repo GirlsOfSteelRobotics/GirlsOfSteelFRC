@@ -39,6 +39,7 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutoAimTurretDebug/Field": "Field2d",
       "/Shuffleboard/AutomatedTurret/Choose Turret Command": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
@@ -179,9 +180,11 @@
       "/SmartDashboard/Choose Turret Command": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Height Options": "String Chooser",
+      "/SmartDashboard/Mia Buttons": "Command",
       "/SmartDashboard/OV5647 Sim Field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
       "/Shuffleboard/AutomatedTurret/Choose Turret Command": {
@@ -399,7 +402,7 @@
         "AHHHHHHHHHHHHHHH": {
           "open": true
         },
-        "BOOOOOO": {
+        "jflkdsjfl": {
           "open": true
         },
         "open": true

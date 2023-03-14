@@ -40,7 +40,7 @@ public class ScoringPositionController {
 
     private Consumer<ScoringPositionData> m_listener;
 
-    private ToggleGroup m_toggleGroup = new ToggleGroup();
+    private final ToggleGroup m_toggleGroup = new ToggleGroup();
 
     @FXML
     public void initialize() {
@@ -58,18 +58,21 @@ public class ScoringPositionController {
         setUpButton(m_lowRight, AutoTurretCommands.LOW_RIGHT);
     }
 
-    private void handleButtonClick(AutoTurretCommands position) {
-        System.out.println("licked!" + position);
-
+    private void handleButtonClick(ToggleButton button, AutoTurretCommands position) {
         if (m_listener == null) {
             return;
         }
 
-        m_listener.accept(new ScoringPositionData(position.ordinal()));
+        if (button.isSelected()) {
+            m_listener.accept(new ScoringPositionData(position.ordinal()));
+        } else {
+            m_listener.accept(new ScoringPositionData(AutoTurretCommands.NONE.ordinal()));
+        }
+
     }
 
     private void setUpButton(ToggleButton button, AutoTurretCommands scoringPosition) {
-        button.setOnAction(event -> handleButtonClick(scoringPosition));
+        button.setOnAction(event -> handleButtonClick(button, scoringPosition));
         button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         m_toggleGroup.getToggles().add(button);
     }

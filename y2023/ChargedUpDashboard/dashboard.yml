@@ -82,5 +82,5 @@ widgets:
       table_name: SCORING_POSITION
       entries:
       - type: double
-        name: scoringPosition
-        dasboard_constant: SCORING_POSITION
+        name: selectedPosition
+        dasboard_constant: SELECTED_POSITION

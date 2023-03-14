@@ -10,38 +10,38 @@ import java.util.StringJoiner;
 @SuppressWarnings({"PMD.DataClass", "PMD.ExcessiveParameterList"})
 public class ScoringPositionData extends ComplexData<ScoringPositionData> {
 
-    private final double m_scoringPosition;
+    private final double m_selectedPosition;
 
 
     public ScoringPositionData() {
         this(0.0);
     }
 
-    public ScoringPositionData(double scoringPosition) {
-        m_scoringPosition = scoringPosition;
+    public ScoringPositionData(double selectedPosition) {
+        m_selectedPosition = selectedPosition;
     }
 
     public ScoringPositionData(Map<String, Object> map) {
         this(
-            Maps.getOrDefault(map, SmartDashboardNames.SCORING_POSITION, 0.0));
+            Maps.getOrDefault(map, SmartDashboardNames.SELECTED_POSITION, 0.0));
     }
 
     @Override
     public Map<String, Object> asMap() {
         Map<String, Object> output = new HashMap<>();
-        output.put(SmartDashboardNames.SCORING_POSITION, m_scoringPosition);
+        output.put(SmartDashboardNames.SELECTED_POSITION, m_selectedPosition);
         return output;
     }
 
-    public double getScoringPosition() {
-        return m_scoringPosition;
+    public double getSelectedPosition() {
+        return m_selectedPosition;
     }
 
 
     @Override
     public String toString() {
         return new StringJoiner(", ", "ScoringPositionData [", "]")
-                    .add("scoringPosition=" + m_scoringPosition)
+                    .add("selectedPosition=" + m_selectedPosition)
                     .toString();
     }
 }
