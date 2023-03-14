@@ -175,6 +175,7 @@
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
+      "/SmartDashboard/BOOOOOO": "String Chooser",
       "/SmartDashboard/Choose Turret Command": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Height Options": "String Chooser",
@@ -392,7 +393,17 @@
       }
     }
   },
-  "NetworkTables View": {
-    "visible": false
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "AHHHHHHHHHHHHHHH": {
+          "open": true
+        },
+        "BOOOOOO": {
+          "open": true
+        },
+        "open": true
+      }
+    }
   }
 }

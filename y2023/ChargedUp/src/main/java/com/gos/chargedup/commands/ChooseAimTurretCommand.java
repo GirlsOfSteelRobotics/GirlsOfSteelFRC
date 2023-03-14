@@ -5,6 +5,7 @@ import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.AutoTurretCommands;
 import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.SmartDashboardNames;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -15,12 +16,16 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.littletonrobotics.frc2023.FieldConstants;
+
+import java.util.function.DoubleConsumer;
 
 
 public class ChooseAimTurretCommand extends CommandBase {
@@ -32,9 +37,9 @@ public class ChooseAimTurretCommand extends CommandBase {
     private static final double SHIFT_X_CHASSIS_POS = Units.inchesToMeters(-2);
     private static final Transform2d TURRET_TRANSFORM = new Transform2d(new Translation2d(SHIFT_X_CHASSIS_POS, SHIFT_Y_CHASSIS_POS), Rotation2d.fromDegrees(0));
 
-    static {
-        Shuffleboard.getTab("Debug").add(DEBUG_FIELD);
-    }
+//    static {
+//        Shuffleboard.getTab("Debug").add(DEBUG_FIELD);
+//    }
 
     private final ArmPivotSubsystem m_armSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
@@ -51,16 +56,18 @@ public class ChooseAimTurretCommand extends CommandBase {
 
     private final ArmExtensionSubsystem m_armExtension;
 
-    private final SendableChooser<AutoTurretCommands> m_sendable;
+    private AutoTurretCommands m_selectedPosition;
+
+    ChooseAimTurretCommandSendable m_why = new ChooseAimTurretCommandSendable();
+
 
     public ChooseAimTurretCommand(ArmPivotSubsystem armSubsystem, ArmExtensionSubsystem armExtension, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, LEDManagerSubsystem ledManagerSubsystem) {
-        m_sendable = new SendableChooser();
 
-        for(AutoTurretCommands turretPos : AutoTurretCommands.values()) {
-            m_sendable.addOption(turretPos.name(), turretPos);
-        }
+        SendableChooser<AutoTurretCommands> ahhhhh = new SendableChooser<>();
+        SmartDashboard.putData("BOOOOOO", ahhhhh);
 
-        SmartDashboard.putData("Choose Turret Command", m_sendable);
+        Shuffleboard.getTab("Dumb").add("Stupid", new ChooseAimTurretCommandSendable());
+        SmartDashboard.putData("AHHHHHHHHHHHHHHH", m_why);
 
         this.m_armSubsystem = armSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
@@ -74,6 +81,28 @@ public class ChooseAimTurretCommand extends CommandBase {
         m_ledManagerSubsystem = ledManagerSubsystem;
     }
 
+    private class ChooseAimTurretCommandSendable implements Sendable {
+
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType("ScoringPositionxx");
+
+            builder.addDoubleProperty(
+                "ScoringPositionyy", null, this::handleScoringPosition);
+            builder.addIntegerProperty(
+                "ScoringPositioninnnitt", null, (x) -> System.out.println(x));
+
+        }
+
+        private void handleScoringPosition(double d) {
+            try {
+                System.out.println("D!" + d);
+//                m_selectedPosition = AutoTurretCommands.values()[(int)d];
+            } catch (Exception ex) {
+//                m_selectedPosition = null;
+            }
+        }
+    }
+
     @Override
     public void initialize() {
 
@@ -81,7 +110,7 @@ public class ChooseAimTurretCommand extends CommandBase {
 
     @Override
     public void execute() {
-        AutoTurretCommands nodePos = m_sendable.getSelected();
+        AutoTurretCommands nodePos = m_selectedPosition;
         Translation2d baseTargetLocation;
         double targetPitch;
 
