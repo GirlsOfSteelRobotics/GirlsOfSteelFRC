@@ -31,7 +31,7 @@ public class TeleopDockingArcadeDriveCommand extends CommandBase {
     @Override
     public void execute() {
         m_chassisSubsystem.setArcadeDrive(ARCADE_DRIVE_BRAKE_SPEED.getValue() * -m_joystick.getLeftY(), ARCADE_DRIVE_BRAKE_SPEED.getValue() * -m_joystick.getRightX());
-        m_led.dockAndEngagePatterns();
+        m_led.setDockOption();
     }
 
     @Override

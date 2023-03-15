@@ -2,6 +2,8 @@ package com.gos.chargedup.shuffleboard;
 
 import com.gos.chargedup.shuffleboard.super_structure.SuperStructureWidget;
 import com.gos.chargedup.shuffleboard.super_structure.SuperStructureDataType;
+import com.gos.chargedup.shuffleboard.scoring_position.ScoringPositionWidget;
+import com.gos.chargedup.shuffleboard.scoring_position.ScoringPositionDataType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.wpi.first.shuffleboard.api.data.DataType;
@@ -19,14 +21,16 @@ public class ChargedUpRobot extends Plugin {
     @Override
     public List<ComponentType> getComponents() {
         return ImmutableList.of(
-            WidgetType.forAnnotatedWidget(SuperStructureWidget.class));
+            WidgetType.forAnnotatedWidget(SuperStructureWidget.class),
+            WidgetType.forAnnotatedWidget(ScoringPositionWidget.class));
 
     }
 
     @Override
     public List<DataType> getDataTypes() {
         return ImmutableList.of(
-            SuperStructureDataType.INSTANCE);
+            SuperStructureDataType.INSTANCE,
+            ScoringPositionDataType.INSTANCE);
 
     }
 
@@ -34,6 +38,7 @@ public class ChargedUpRobot extends Plugin {
     public Map<DataType, ComponentType> getDefaultComponents() {
         return ImmutableMap.<DataType, ComponentType>builder()
                 .put(SuperStructureDataType.INSTANCE, WidgetType.forAnnotatedWidget(SuperStructureWidget.class))
+                .put(ScoringPositionDataType.INSTANCE, WidgetType.forAnnotatedWidget(ScoringPositionWidget.class))
                 .build();
     }
 }
