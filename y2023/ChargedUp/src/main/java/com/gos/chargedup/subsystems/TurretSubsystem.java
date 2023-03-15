@@ -94,11 +94,11 @@ public class TurretSubsystem extends SubsystemBase {
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Turret", false, pidController, 0)
-                .addP(0.0001)
+                .addP(0.0)
                 .addI(0)
                 .addD(0.00)
-                .addFF(0.0065)
-                .addMaxVelocity(150)
+                .addFF(0.0081)
+                .addMaxVelocity(120)
                 .addMaxAcceleration(120)
                 .build();
         } else {
