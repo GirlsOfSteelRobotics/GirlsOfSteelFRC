@@ -130,14 +130,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
         autonColorMap.put(AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPapayaWhip));
 
         autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CUBE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kPapayaWhip));
-        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
+//        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
+//        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
         autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kYellow));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
+//        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
 
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
+//        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
+//        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
+//        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
 
         // no scoring -- solid red
         // low - red, middle - blue, high - purple

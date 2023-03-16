@@ -399,7 +399,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
-        double speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        double speed;
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            speed = getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
+        else {
+            speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
 
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);

@@ -150,10 +150,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height) {
         if (height == AutoPivotHeight.HIGH) {
-            return commandFullExtend();
+            return commandMiddleRetract();
         }
         else if (height == AutoPivotHeight.MEDIUM) {
-            return commandMiddleRetract();
+            return commandFullRetract();
         }
         else {
             return commandFullRetract();
