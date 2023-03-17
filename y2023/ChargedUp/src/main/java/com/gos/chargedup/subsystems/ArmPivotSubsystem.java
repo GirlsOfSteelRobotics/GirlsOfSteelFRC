@@ -318,10 +318,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
             break;
         case LOW:
             //pivotArmToAngle();
-            angle = HOME_ANGLE;
+            angle = -35;
             break;
         default:
-            angle = ARM_CONE_HIGH_DEG;
+            angle = -35;
             break;
         }
         return angle;

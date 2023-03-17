@@ -144,7 +144,7 @@ public class RobotContainer {
         // turret
         // tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
         // tab.add("Turret: To Coast Mode", m_turret.createTurretToCoastMode());
-        // tab.add("Turret: Reset Encoder", m_turret.createResetEncoder());
+         tab.add("Turret: Reset Encoder", m_turret.createResetEncoder());
         // tab.add("Turret: Move Clockwise", m_turret.commandMoveTurretClockwise());
         // tab.add("Turret: Move Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
         // tab.add("Turret: PID - -90 degrees", m_turret.commandTurretPID(-90));

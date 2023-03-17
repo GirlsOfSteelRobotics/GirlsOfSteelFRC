@@ -26,6 +26,8 @@ public final class AutonomousFactory {
     private final SendableChooser<AutonMode> m_chooseAutoOption;
 
     public enum AutonMode {
+        DO_NOTHING,
+        
         ONLY_LEAVE_COMMUNITY_END,
         ONLY_LEAVE_COMMUNITY_PLAYER_STATION,
         ONLY_DOCK_AND_ENGAGE,
@@ -61,6 +63,8 @@ public final class AutonomousFactory {
             // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
             // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceEngage", height));
 
+            m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new DoNothingAutoCommandGroup());
+            
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
 
