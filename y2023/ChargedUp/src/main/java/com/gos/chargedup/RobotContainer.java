@@ -260,7 +260,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("Mia Buttons", new AutoAimTurretToNodeOnTheFly(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, m_ledManagerSubsystem));
 
-        m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
+        // m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
 
@@ -271,8 +271,8 @@ public class RobotContainer {
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
-        m_operatorController.povRight().whileTrue(m_armExtend.commandBottomPistonExtended());
-        m_operatorController.povLeft().whileTrue(m_armExtend.commandBottomPistonRetracted());
+        // m_operatorController.povRight().whileTrue(m_armExtend.commandBottomPistonExtended());
+        // m_operatorController.povLeft().whileTrue(m_armExtend.commandBottomPistonRetracted());
 
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
