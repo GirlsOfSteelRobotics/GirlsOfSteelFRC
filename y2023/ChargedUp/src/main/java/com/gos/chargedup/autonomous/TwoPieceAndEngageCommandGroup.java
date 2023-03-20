@@ -9,7 +9,6 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,9 +19,9 @@ import java.util.Map;
 
 
 public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
-    public TwoPieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
+    public TwoPieceAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
 
-        Map<String, Command> eventMap = EventMapUtil.createDefaultEventMap(chassis, turret, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE);
+        Map<String, Command> eventMap = EventMapUtil.createDefaultEventMap(chassis, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE);
 
         List<PathPlannerTrajectory> twoPieceEngage = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
         Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceEngage);
@@ -33,4 +32,9 @@ public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
         //drive
         addCommands(fullAuto);
     }
+
+    //initialie
+    //score piece
+    //chassis.rotate(90)
+    //runautopath
 }

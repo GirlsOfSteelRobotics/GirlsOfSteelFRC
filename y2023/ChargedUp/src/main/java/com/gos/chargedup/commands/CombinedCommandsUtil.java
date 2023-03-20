@@ -27,9 +27,9 @@ public final class CombinedCommandsUtil {
             .withName("HP Pickup");
     }
 
-    public static CommandBase moveToScore(double turretAngle, AutoPivotHeight height, GamePieceType gamePiece, TurretSubsystem turret, ArmPivotSubsystem armPivot) {
+    public static CommandBase moveToScore(double turretAngle, AutoPivotHeight height, GamePieceType gamePiece, ArmPivotSubsystem armPivot) {
         return new ParallelCommandGroup(
-            turret.commandTurretPID(turretAngle),
+            //turret.commandTurretPID(turretAngle),
             armPivot.commandMoveArmToPieceScorePositionAndHold(height, gamePiece) //set for second piece
         ).withName("Move To Score");
     }
