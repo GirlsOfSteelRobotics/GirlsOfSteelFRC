@@ -55,6 +55,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
+@SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
 
@@ -134,6 +135,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RectangleInterface m_loadingRectangle1;
     private final RectangleInterface m_loadingRectangle2;
 
+    private boolean m_tryingToEngage;
+
     @SuppressWarnings("PMD.NcssCount")
     private final PigeonAlerts m_pigeonAlerts;
 
@@ -186,6 +189,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
+        m_gyro.configFactoryDefault();
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
@@ -258,6 +262,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
+
+            m_tryingToEngage = false;
         }
     }
 
@@ -301,8 +307,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 .addP(0) //this needs to be tuned!
                 .addI(0)
                 .addD(0)
-                .addFF(.22)
-                .addMaxVelocity(2)
+                .addFF(0)
+                .addMaxVelocity(0)
                 .addMaxAcceleration(0)
                 .build();
         }
@@ -393,7 +399,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
-        double speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        double speed;
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            speed = getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
+        else {
+            speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
 
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
@@ -410,10 +422,15 @@ public class ChassisSubsystem extends SubsystemBase {
             }
             setArcadeDrive(speed, 0);
         }
+        m_tryingToEngage = true;
+    }
+
+    public boolean tryingToEngage() {
+        return m_tryingToEngage;
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.run(this::autoEngage).withName("Auto Engage");
+        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
     }
 
 

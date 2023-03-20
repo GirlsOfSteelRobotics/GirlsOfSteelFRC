@@ -71,3 +71,7 @@ widgets:
     name: turretTopDown
   - type: Rectangle
     name: turretTopDownGoal
+
+manual_widgets:
+- table: ScoringPosition
+  package_name: scoring_position

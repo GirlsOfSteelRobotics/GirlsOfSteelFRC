@@ -6,7 +6,6 @@ import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
-import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
 import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
 import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
 import com.gos.lib.led.mirrored.MirroredLEDRainbow;
@@ -127,14 +126,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
         autonColorMap.put(AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPapayaWhip));
 
         autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CUBE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kPapayaWhip));
-        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
         autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kYellow));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
 
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
 
         // no scoring -- solid red
         // low - red, middle - blue, high - purple
@@ -176,6 +175,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     private void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
@@ -183,7 +183,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-        else if (m_optionDockLED) {
+        else if (m_optionDockLED || m_chassisSubsystem.tryingToEngage()) {
             dockAndEngagePatterns();
         }
         else if (m_claw.hasGamePiece() && m_clawLEDsTimer.get() < CLAW_HOLD_WAIT_TIME) {
@@ -243,8 +243,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
-    public void dockAndEngagePatterns() {
+    public void setDockOption() {
         m_optionDockLED = true;
+    }
+
+    private void dockAndEngagePatterns() {
         if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE) {
             m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
             m_dockAngle.writeLeds();

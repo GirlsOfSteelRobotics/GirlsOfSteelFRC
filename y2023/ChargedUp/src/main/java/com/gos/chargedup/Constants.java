@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -77,5 +78,9 @@ public final class Constants {
     public static final double MAX_COMPRESSOR_PSI = 120;
 
     public static final DigitalInput ROBOT_NAME = new DigitalInput(IS_BLOSSOM_DIO);
-    public static final boolean IS_ROBOT_BLOSSOM = !ROBOT_NAME.get(); // false is bubbles, true is blossom
+    public static final boolean IS_ROBOT_BLOSSOM = ROBOT_NAME.get(); // false is bubbles, true is blossom
+
+    static {
+        SmartDashboard.putBoolean("Is Blossom", IS_ROBOT_BLOSSOM);
+    }
 }

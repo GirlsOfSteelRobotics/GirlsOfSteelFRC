@@ -14,6 +14,11 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -21,6 +26,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
@@ -34,6 +40,8 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutoAimTurretDebug/Field": "Field2d",
+      "/Shuffleboard/AutomatedTurret/Choose Turret Command": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
       "/Shuffleboard/AutomatedTurret/High Cube": "Command",
@@ -169,13 +177,22 @@
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
+      "/SmartDashboard/BOOOOOO": "String Chooser",
+      "/SmartDashboard/Choose Turret Command": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Height Options": "String Chooser",
+      "/SmartDashboard/Mia Buttons": "Command",
       "/SmartDashboard/OV5647 Sim Field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
+      "/Shuffleboard/AutomatedTurret/Choose Turret Command": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
         "window": {
           "visible": true
@@ -375,7 +392,17 @@
       }
     }
   },
-  "NetworkTables View": {
-    "visible": false
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "AHHHHHHHHHHHHHHH": {
+          "open": true
+        },
+        "jflkdsjfl": {
+          "open": true
+        },
+        "open": true
+      }
+    }
   }
 }

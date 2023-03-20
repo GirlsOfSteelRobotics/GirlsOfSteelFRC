@@ -39,15 +39,15 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.5);
-    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", .2);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 1);
-    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.3);
+    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 0.5);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
+    private static final GosDoubleProperty GRAVITY_OFFSET;
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
     // From SysID
-    private static final double KS = 0.1375;
+    private static final double KS;
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
 
@@ -57,6 +57,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double ARM_CUBE_HIGH_DEG;
     private static final double ARM_CONE_MIDDLE_DEG;
     private static final double ARM_CONE_HIGH_DEG;
+    private static final double ARM_SCORE_LOW_DEG;
+    private static final double GROUND_PICKUP_ANGLE;
     private static final double HOME_ANGLE;
     private static final double MIN_ANGLE_DEG;
     private static final double MAX_ANGLE_DEG;
@@ -64,6 +66,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
     static {
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
+            KS = 0.10072;
+            GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.2);
+
             HUMAN_PLAYER_ANGLE = 20;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 15;
@@ -71,9 +76,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
             ARM_CONE_HIGH_DEG = 30;
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
-            HOME_ANGLE = -20;
+            HOME_ANGLE = MIN_ANGLE_DEG + 5;
+            GROUND_PICKUP_ANGLE = -20;
+            ARM_SCORE_LOW_DEG = -35;
 
         } else {
+            KS = 0.1375;
+            GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.3);
+
+
             HUMAN_PLAYER_ANGLE = 10;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 12;
@@ -82,6 +93,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
             HOME_ANGLE = -45;
+            GROUND_PICKUP_ANGLE = -20;
+            ARM_SCORE_LOW_DEG = -25;
         }
     }
 
@@ -172,14 +185,25 @@ public class ArmPivotSubsystem extends SubsystemBase {
         // kp=0.000400
         // kf=0.005000
         // kd=0.005000
-        return new RevPidPropertyBuilder("Arm", false, pidController, 0)
-            .addP(0.0045) // 0.0058
-            .addI(0)
-            .addD(0.045)
-            .addFF(0.0053) // 0.0065
-            .addMaxVelocity(60)
-            .addMaxAcceleration(180)
-            .build();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            return new RevPidPropertyBuilder("Arm", false, pidController, 0)
+                .addP(0.004)
+                .addI(0)
+                .addD(0)
+                .addFF(0.005)
+                .addMaxVelocity(120)
+                .addMaxAcceleration(60)
+                .build();
+        } else {
+            return new RevPidPropertyBuilder("Arm", false, pidController, 0)
+                .addP(0.0045) // 0.0058
+                .addI(0)
+                .addD(0.045)
+                .addFF(0.0053) // 0.0065
+                .addMaxVelocity(60)
+                .addMaxAcceleration(180)
+                .build();
+        }
     }
 
     @Override
@@ -274,33 +298,28 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        double angle = 0.0;
+        double angle;
 
         switch (pivotHeightType) {
         case HIGH:
             if (gamePieceType == GamePieceType.CONE) {
-                //pivotArmToAngle(ARM_CONE_HIGH_DEG);
                 angle = ARM_CONE_HIGH_DEG;
             } else {
-                //pivotArmToAngle();
                 angle = ARM_CUBE_HIGH_DEG;
             }
             break;
         case MEDIUM:
             if (gamePieceType == GamePieceType.CONE) {
-                //pivotArmToAngle();
                 angle = ARM_CONE_MIDDLE_DEG;
             } else {
-                //pivotArmToAngle();
                 angle = ARM_CUBE_MIDDLE_DEG;
             }
             break;
         case LOW:
-            //pivotArmToAngle();
-            angle = HOME_ANGLE;
+            angle = ARM_SCORE_LOW_DEG;
             break;
         default:
-            angle = ARM_CONE_HIGH_DEG;
+            angle = ARM_SCORE_LOW_DEG;
             break;
         }
         return angle;
@@ -391,6 +410,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public CommandBase commandGoHome() {
         return commandPivotArmToAngleNonHold(HOME_ANGLE);
+    }
+
+    public CommandBase commandGoToGroundPickup() {
+        return commandPivotArmToAngleNonHold(GROUND_PICKUP_ANGLE);
     }
 
     public CommandBase commandHpPickupNoHold() {
