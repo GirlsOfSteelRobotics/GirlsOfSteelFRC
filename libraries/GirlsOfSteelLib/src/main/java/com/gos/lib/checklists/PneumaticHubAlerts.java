@@ -16,7 +16,7 @@ public class PneumaticHubAlerts {
     public PneumaticHubAlerts(PneumaticHub pneumaticHub) {
         m_pneumaticHub = pneumaticHub;
         m_alert = new Alert("pneumatic hub", Alert.AlertType.ERROR);
-        m_alertSticky = new Alert("pneumatic hub (sticky) ", Alert.AlertType.ERROR);
+        m_alertSticky = new Alert("pneumatic hub (sticky) ", Alert.AlertType.WARNING);
     }
 
     public void checkAlerts() {

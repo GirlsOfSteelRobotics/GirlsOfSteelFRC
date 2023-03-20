@@ -334,5 +334,77 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ClawInSpeed",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawOutSpeed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPiece",
+    "type": "double",
+    "value": 12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Claw Aligned Acceptable Error",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Turret Angle Stop PID Error",
+    "type": "double",
+    "value": 0.21,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPieceCurrent",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPieceVelocity",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm PID Stop Error",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

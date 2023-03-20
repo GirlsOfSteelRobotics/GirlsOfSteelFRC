@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="m_root" prefHeight="200" prefWidth="200"
+    xmlns="http://javafx.com/javafx/8.0.141"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.gos.chargedup.shuffleboard.scoring_position.ScoringPositionWidget">
+    <center>
+        <fx:include fx:id="m_widget"
+            source="/com/gos/chargedup/shuffleboard/scoring_position/scoring_position.fxml" />
+    </center>
+</BorderPane>

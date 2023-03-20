@@ -17,7 +17,7 @@ public class PowerDistributionAlerts {
     public PowerDistributionAlerts(PowerDistribution powerDistribution) {
         m_powerDistribution = powerDistribution;
         m_alert = new Alert("power distribution", Alert.AlertType.ERROR);
-        m_alertSticky = new Alert("power distribution (sticky)", Alert.AlertType.ERROR);
+        m_alertSticky = new Alert("power distribution (sticky)", Alert.AlertType.WARNING);
     }
 
 

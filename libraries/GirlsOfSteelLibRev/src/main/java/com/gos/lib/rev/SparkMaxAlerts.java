@@ -13,7 +13,7 @@ public class SparkMaxAlerts {
         m_sparkMax = sparkMax;
         m_motorString = motor;
         m_alert = new Alert(m_motorString, Alert.AlertType.ERROR);
-        m_alertSticky = new Alert(m_motorString, Alert.AlertType.ERROR);
+        m_alertSticky = new Alert(m_motorString, Alert.AlertType.WARNING);
     }
 
     public void checkAlerts() {

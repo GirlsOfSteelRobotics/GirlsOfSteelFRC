@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -31,7 +30,9 @@ public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.4;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
-    public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 0);
+    public static final GosDoubleProperty STOP_PID_ERROR = new GosDoubleProperty(false, "Turret Angle Stop PID Error", 0.21);
+    public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 150);
+
     private final SimableCANSparkMax m_turretMotor;
     private final RelativeEncoder m_turretEncoder;
     private final PidProperty m_turretPID;
@@ -69,6 +70,8 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretPidController = m_turretMotor.getPIDController();
         m_turretPID = setupPidValues(m_turretPidController);
 
+        m_turretMotor.enableVoltageCompensation(10);
+
         m_turretMotor.burnFlash();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Turret Subsystem");
@@ -89,14 +92,25 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Turret", false, pidController, 0)
-            .addP(0.001) //0.20201
-            .addI(0)
-            .addD(0.04)
-            .addFF(0.00675)
-            .addMaxVelocity(Units.inchesToMeters(80))
-            .addMaxAcceleration(Units.inchesToMeters(160))
-            .build();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            return new RevPidPropertyBuilder("Turret", false, pidController, 0)
+                .addP(0.0)
+                .addI(0)
+                .addD(0.00)
+                .addFF(0.0081)
+                .addMaxVelocity(120)
+                .addMaxAcceleration(120)
+                .build();
+        } else {
+            return new RevPidPropertyBuilder("Turret", false, pidController, 0)
+                .addP(0.0001) //0.20201
+                .addI(0)
+                .addD(0.00)
+                .addFF(0.0065)
+                .addMaxVelocity(150)
+                .addMaxAcceleration(120)
+                .build();
+        }
     }
 
     @Override
@@ -148,17 +162,23 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretEncoder.getPosition();
     }
 
-    public boolean moveTurretToAngleWithPID(double goalAngle) {
+    public void moveTurretToAngleWithPID(double goalAngle) {
         m_turretGoalAngle = goalAngle;
 
-        double error = goalAngle - getTurretAngleDegreesNeoEncoder();
-
-        m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
-        return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
+        double error = m_turretGoalAngle - getTurretAngleDegreesNeoEncoder();
+        if (Math.abs(error) < STOP_PID_ERROR.getValue()) {
+            m_turretMotor.set(0);
+        } else {
+            m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
+        }
     }
 
     public boolean atTurretAngle() {
-        double error = m_turretGoalAngle - getTurretAngleDegreesNeoEncoder();
+        return atTurretAngle(m_turretGoalAngle);
+    }
+
+    public boolean atTurretAngle(double goal) {
+        double error = goal - getTurretAngleDegreesNeoEncoder();
 
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
@@ -196,7 +216,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
-            .until(() -> moveTurretToAngleWithPID(angle))
+            .until(() -> atTurretAngle(angle))
             .withName("Turret PID" + angle);
     }
 

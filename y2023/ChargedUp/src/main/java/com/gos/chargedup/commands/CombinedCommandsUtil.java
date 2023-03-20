@@ -15,14 +15,21 @@ public final class CombinedCommandsUtil {
     }
 
     public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
-        return pivot.commandGoHome()
-            .alongWith(extension.commandFullRetract())
-            .alongWith(turret.goHome())
+        return extension.commandFullRetract()
+            .andThen(pivot.commandGoHome()
+                .alongWith(turret.goHome()))
             .withName("Go Home");
     }
 
+    public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
+        return extension.commandMiddleRetract()
+            .alongWith(pivot.commandGoToGroundPickup())
+            .alongWith(turret.goHome())
+            .withName("Go To Ground Pickup");
+    }
+
     public static CommandBase armToHpPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return pivot.commandHpPickup()
+        return pivot.commandHpPickupHold()
             .alongWith(extension.commandMiddleRetract())
             .withName("HP Pickup");
     }

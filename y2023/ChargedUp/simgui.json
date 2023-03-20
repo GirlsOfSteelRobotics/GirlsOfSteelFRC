@@ -10,13 +10,15 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [5]": {
+      "SPARK MAX [11]": {
         "header": {
           "open": true
         }
       },
-      "window": {
-        "visible": false
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -24,6 +26,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
@@ -37,6 +40,8 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutoAimTurretDebug/Field": "Field2d",
+      "/Shuffleboard/AutomatedTurret/Choose Turret Command": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
       "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
       "/Shuffleboard/AutomatedTurret/High Cube": "Command",
@@ -172,13 +177,58 @@
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
+      "/SmartDashboard/BOOOOOO": "String Chooser",
+      "/SmartDashboard/Choose Turret Command": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Height Options": "String Chooser",
+      "/SmartDashboard/Mia Buttons": "Command",
       "/SmartDashboard/OV5647 Sim Field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
+      "/Shuffleboard/AutomatedTurret/Choose Turret Command": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/High Cone Right": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/Low Cone Left": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/Low Cone Right": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/Mid Cone Left": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Debug/Field": {
+        "TurretRotationPoint": {
+          "arrows": false,
+          "color": [
+            0.0,
+            19.36710548400879,
+            255.0,
+            255.0
+          ],
+          "length": 0.8199999928474426,
+          "width": 0.6859999895095825
+        },
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true
@@ -197,23 +247,6 @@
           "style": "Box/Image",
           "weight": 1.0,
           "width": 0.10000000149011612
-        },
-        "BlueCharging": {
-          "arrowColor": [
-            0.4159945249557495,
-            0.6541532874107361,
-            0.9518518447875977,
-            255.0
-          ],
-          "arrows": false,
-          "color": [
-            0.3930315375328064,
-            0.6133399605751038,
-            0.914814829826355,
-            255.0
-          ],
-          "length": 0.20000000298023224,
-          "width": 0.20000000298023224
         },
         "BlueCommunityLeft": {
           "arrows": false,
@@ -362,6 +395,12 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "AHHHHHHHHHHHHHHH": {
+          "open": true
+        },
+        "jflkdsjfl": {
+          "open": true
+        },
         "open": true
       }
     }

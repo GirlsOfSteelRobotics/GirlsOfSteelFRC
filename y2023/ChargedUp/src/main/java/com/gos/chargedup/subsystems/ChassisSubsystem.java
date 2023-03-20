@@ -4,8 +4,8 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
-import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -49,18 +49,30 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 
+@SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .02);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
 
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
-    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+    private static final double GEAR_RATIO;
+
+    static {
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            GEAR_RATIO = 527.0 / 54.0;
+        } else {
+            GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+        }
+    }
+
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
@@ -87,7 +99,7 @@ public class ChassisSubsystem extends SubsystemBase {
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
-    private final Vision m_vision;
+    private final List<Vision> m_cameras;
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -119,14 +131,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
     private final RectangleInterface m_communityRectangle1;
-
     private final RectangleInterface m_communityRectangle2;
-
     private final RectangleInterface m_loadingRectangle1;
-
     private final RectangleInterface m_loadingRectangle2;
 
-    private final RectangleInterface m_chargingRectangle1;
+    private boolean m_tryingToEngage;
 
     @SuppressWarnings("PMD.NcssCount")
     private final PigeonAlerts m_pigeonAlerts;
@@ -144,7 +153,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_communityRectangle2 = new RectangleInterface(FieldConstants.Community.MID_X, FieldConstants.Community.MID_Y, FieldConstants.Community.OUTER_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityLeft");
         m_loadingRectangle1 = new RectangleInterface(FieldConstants.LoadingZone.OUTER_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.MID_Y, m_field, "BlueLoadingRight");
         m_loadingRectangle2 = new RectangleInterface(FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.INNER_X, FieldConstants.LoadingZone.RIGHT_Y, m_field, "BlueLoadingLeft");
-        m_chargingRectangle1 = new RectangleInterface(FieldConstants.Community.CHARGING_STATION_INNER_X, FieldConstants.Community.CHARGING_STATION_LEFT_Y, FieldConstants.Community.CHARGING_STATION_OUTER_X, FieldConstants.Community.CHARGING_STATION_RIGHT_Y, m_field, "BlueCharging");
+
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -165,8 +174,14 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_leaderLeft.setInverted(true);
+            m_leaderRight.setInverted(false);
+        }
+        else {
+            m_leaderLeft.setInverted(false);
+            m_leaderRight.setInverted(true);
+        }
 
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
@@ -174,6 +189,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
+        m_gyro.configFactoryDefault();
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
@@ -199,7 +215,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_vision = new PhotonVisionSubsystem(m_field);
+        m_cameras = new ArrayList<>();
+        // m_cameras.add(new PhotonVisionSubsystem(m_field));
+        m_cameras.add(new LimelightVisionSubsystem(m_field));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -244,8 +262,9 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
-        }
 
+            m_tryingToEngage = false;
+        }
     }
 
     private void logTrajectoryErrors(Translation2d translation2d, Rotation2d rotation2d) {
@@ -283,14 +302,26 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0) //this needs to be tuned!
-            .addI(0)
-            .addD(0)
-            .addFF(.22)
-            .addMaxVelocity((Units.inchesToMeters(2)))
-            .addMaxAcceleration((Units.inchesToMeters(0)))
-            .build();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+                .addP(0) //this needs to be tuned!
+                .addI(0)
+                .addD(0)
+                .addFF(0)
+                .addMaxVelocity(0)
+                .addMaxAcceleration(0)
+                .build();
+        }
+        else {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+                .addP(0)
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
+                .build();
+        }
     }
 
     @Override
@@ -315,7 +346,6 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
         SmartDashboard.putBoolean("In Community", isInCommunityZone());
         SmartDashboard.putBoolean("In Loading", isInLoadingZone());
-        SmartDashboard.putBoolean("On Charging Station", isOnChargingStation());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -369,7 +399,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
-        double speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        double speed;
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            speed = getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
+        else {
+            speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
 
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
@@ -386,10 +422,15 @@ public class ChassisSubsystem extends SubsystemBase {
             }
             setArcadeDrive(speed, 0);
         }
+        m_tryingToEngage = true;
+    }
+
+    public boolean tryingToEngage() {
+        return m_tryingToEngage;
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.run(this::autoEngage).withName("Auto Engage");
+        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
     }
 
 
@@ -398,11 +439,17 @@ public class ChassisSubsystem extends SubsystemBase {
         //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        for (Vision vision : m_cameras) {
+            updateCameraEstimate(vision);
+        }
+    }
+
+    private void updateCameraEstimate(Vision vision) {
         //NEW ODOMETRY
         m_poseEstimator.update(
                     m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
-            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
@@ -422,10 +469,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean isInLoadingZone() {
         return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
-    }
-
-    public boolean isOnChargingStation() {
-        return m_chargingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
     }
 
     public boolean canExtendArm() {

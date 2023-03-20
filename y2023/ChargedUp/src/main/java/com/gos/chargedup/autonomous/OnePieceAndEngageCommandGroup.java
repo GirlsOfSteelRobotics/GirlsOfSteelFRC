@@ -3,6 +3,7 @@ package com.gos.chargedup.autonomous;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
@@ -20,17 +21,17 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
 
 
-    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, TurretSubsystem turret, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
 
-        PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
+        PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoOnePieceEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(oneNodeAndEngage);
 
         //score
-        addCommands(new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, pivotHeightType, gamePieceType));
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
 
         //drive to docking station
         addCommands((driveAutoOnePieceEngage)
-            .alongWith(armPivot.commandGoHome()));
+            .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension, turret)));
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());

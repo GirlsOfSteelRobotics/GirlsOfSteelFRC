@@ -3,6 +3,7 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.Robot;
+import com.gos.chargedup.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -30,15 +31,23 @@ import java.util.Optional;
 public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
 
     // TODO get transform for real robot
-    private static final Transform3d ROBOT_TO_CAMERA =
-        new Transform3d(
-            new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12)),
-            new Rotation3d(0, 0, 0));
+
+
+    private static final Transform3d ROBOT_TO_CAMERA;
+
+    static {
+        //toDo: make these values work as expected
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12)), new Rotation3d(0, 0, 0));
+        } else {
+            ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12.25)), new Rotation3d(0, 0, 0));
+        }
+    }
 
     private static final String CAMERA_NAME = "OV5647";
 
     //get or tune this constant
-    private static final GosDoubleProperty POSE_AMBIGUITY_THRESHOLD = new GosDoubleProperty(false, "Pose ambiguity threshold", 0.2);
+    private static final GosDoubleProperty POSE_AMBIGUITY_THRESHOLD = new GosDoubleProperty(false, "Pose ambiguity threshold", 0.35);
     private static final GosDoubleProperty POSE_DISTANCE_THRESHOLD = new GosDoubleProperty(false, "Pose distance Threshold", 4.25);
     private static final GosDoubleProperty POSE_DISTANCE_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pose distance allowable error", 0.2);
 
@@ -88,6 +97,7 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
         if (!cameraResult.hasTargets()) {
             m_field.setBestGuesses(bestGuessPoses);
             m_field.setAltGuesses(altGuessPoses);
+            m_field.setEstimate(Optional.empty());
             return Optional.empty();
         } else {
             for (PhotonTrackedTarget target: cameraResult.getTargets()) {

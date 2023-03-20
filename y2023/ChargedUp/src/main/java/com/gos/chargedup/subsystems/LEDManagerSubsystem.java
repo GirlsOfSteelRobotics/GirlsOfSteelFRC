@@ -6,7 +6,6 @@ import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
-import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
 import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
 import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
 import com.gos.lib.led.mirrored.MirroredLEDRainbow;
@@ -14,6 +13,7 @@ import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,12 +32,16 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 4;
 
+    private static final int CLAW_HOLD_WAIT_TIME = 1;
+
 
     // subsystems
     //private final CommandXboxController m_joystick;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armSubsystem;
     private final TurretSubsystem m_turretSubsystem;
+
+    private final ClawSubsystem m_claw;
 
     // Led core
     protected final AddressableLEDBuffer m_buffer;
@@ -60,6 +64,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDBoolean m_armAtAngle;
 
     private final MirroredLEDPercentScale m_dockAngle;
+    private final MirroredLEDFlash m_isEngaged;
+    private static final double ALLOWABLE_ERROR_ENGAGE = 2;
 
     private final MirroredLEDRainbow m_notInCommunityZone;
 
@@ -72,12 +78,20 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_isInLoadingZoneSignal;
 
-    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
+    private final MirroredLEDFlash m_isHoldingPieceClaw;
+
+    private final Timer m_clawLEDsTimer = new Timer();
+
+    private boolean m_clawWasTripped;
+
+
+    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
         m_chassisSubsystem = chassisSubsystem;
         m_armSubsystem = armSubsystem;
         m_turretSubsystem = turretSubsystem;
+        m_claw = claw;
 
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
@@ -99,6 +113,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_isInLoadingZoneSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kCornflowerBlue);
 
         m_dockAngle = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
+        m_optionDockLED = false;
+        m_isEngaged = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
 
         m_notInCommunityZone = new MirroredLEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
@@ -113,14 +129,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
         autonColorMap.put(AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPapayaWhip));
 
         autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CUBE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kPapayaWhip));
-        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
         autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kYellow));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
 
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
+        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
 
         // no scoring -- solid red
         // low - red, middle - blue, high - purple
@@ -136,6 +152,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         //for Claw Aligned Check
         m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
+
+        //holding piece in claw
+        m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
+        m_clawWasTripped = false;
 
         // Set the data
         m_led.setData(m_buffer);
@@ -158,6 +178,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     private void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
@@ -165,15 +186,19 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
+        else if (m_optionDockLED || m_chassisSubsystem.tryingToEngage()) {
+            dockAndEngagePatterns();
+        }
+        else if (m_claw.hasGamePiece() && m_clawLEDsTimer.get() < CLAW_HOLD_WAIT_TIME) {
+            m_isHoldingPieceClaw.writeLeds();
+        }
         else if (m_chassisSubsystem.isInCommunityZone()) {
             communityZonePatterns();
         }
         else if (m_chassisSubsystem.isInLoadingZone()) {
             loadingZonePatterns();
         }
-        else if (m_optionDockLED) {
-            dockAndEngagePatterns();
-        }
+
         else {
             m_notInCommunityZone.writeLeds();
         }
@@ -190,16 +215,26 @@ public class LEDManagerSubsystem extends SubsystemBase {
         */
     }
 
+    public void shouldTrip() {
+        if (!m_clawWasTripped && m_claw.hasGamePiece()) {
+            m_clawLEDsTimer.reset();
+            m_clawLEDsTimer.start();
+        }
+
+        m_clawWasTripped = m_claw.hasGamePiece();
+    }
+
     @Override
     public void periodic() {
         clear();
-
         if (DriverStation.isDisabled()) {
             disabledPatterns();
         }
         else {
             enabledPatterns();
         }
+        shouldTrip();
+
 
         // driverPracticePatterns();
         m_led.setData(m_buffer);
@@ -211,9 +246,22 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
-    public void dockAndEngagePatterns() {
+    public void setDockOption() {
         m_optionDockLED = true;
-        m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
+    }
+
+    private void dockAndEngagePatterns() {
+        if (Math.abs(m_chassisSubsystem.getPitch()) > ALLOWABLE_ERROR_ENGAGE) {
+            m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
+            m_dockAngle.writeLeds();
+        }
+        else {
+            m_isEngaged.writeLeds();
+        }
+    }
+
+    public void stopDockAndEngagePatterns() {
+        m_optionDockLED = false;
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")

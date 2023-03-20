@@ -7,29 +7,21 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
-import com.gos.chargedup.commands.AimTurretCommand;
-import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
+import com.gos.chargedup.commands.AutoAimTurretToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
-import com.gos.chargedup.commands.testing.TestLineCommandGroup;
-import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
-import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -45,7 +37,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -62,7 +53,7 @@ public class RobotContainer {
 
     private final TurretSubsystem m_turret;
 
-    private final IntakeSubsystem m_intake;
+    // private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armPivot;
 
@@ -91,10 +82,10 @@ public class RobotContainer {
         m_claw = new ClawSubsystem();
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
-        m_intake = new IntakeSubsystem();
+        // m_intake = new IntakeSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_armPivot, m_armExtend, m_claw);
 
-        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_autonomousFactory); //NOPMD
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_claw, m_autonomousFactory); //NOPMD
 
         pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
         m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
@@ -109,7 +100,7 @@ public class RobotContainer {
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
-        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_claw));
         createTestCommands(pneumaticHub);
         automatedTurretCommands();
 
@@ -125,97 +116,102 @@ public class RobotContainer {
         tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
 
         // auto trajectories
-        tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
-        tab.add("Trajectory: Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
-        tab.add("Trajectory: Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
+        // tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
+        // tab.add("Trajectory: Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+        // tab.add("Trajectory: Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
 
         // auto engage
         tab.add("Chassis Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
 
         // chassis reset odometry test
-        tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
-        tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
-        tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
-        tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
+        // tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+        // tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
+        // tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
+        // tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
 
-        tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
-        tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
+        // tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
+        // tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
 
         tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
 
         // turret
-        tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
-        tab.add("Turret: Automated - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2]));
-        tab.add("Turret: Automated - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[6]));
-        tab.add("Turret: Automated - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[8]));
-        tab.add("Turret: To Coast Mode", m_turret.createTurretToCoastMode());
+        // tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
+        // tab.add("Turret: To Coast Mode", m_turret.createTurretToCoastMode());
         tab.add("Turret: Reset Encoder", m_turret.createResetEncoder());
-        tab.add("Turret: Move Clockwise", m_turret.commandMoveTurretClockwise());
-        tab.add("Turret: Move Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
-        tab.add("Turret: PID - -90 degrees", m_turret.commandTurretPID(-90));
-        tab.add("Turret: PID - 0 degrees", m_turret.commandTurretPID(0));
-        tab.add("Turret: PID - 90 degrees", m_turret.commandTurretPID(90));
-        tab.add("Turret: PID - 180 degrees", m_turret.commandTurretPID(180));
+        // tab.add("Turret: Move Clockwise", m_turret.commandMoveTurretClockwise());
+        // tab.add("Turret: Move Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
+        // tab.add("Turret: PID - -90 degrees", m_turret.commandTurretPID(-90));
+        // tab.add("Turret: PID - 0 degrees", m_turret.commandTurretPID(0));
+        // tab.add("Turret: PID - 90 degrees", m_turret.commandTurretPID(90));
+        // tab.add("Turret: PID - 180 degrees", m_turret.commandTurretPID(180));
 
         // arm pivot
         tab.add("Arm Pivot: Pivot Down", m_armPivot.commandPivotArmDown());
         tab.add("Arm Pivot: Pivot Up", m_armPivot.commandPivotArmUp());
 
-        tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleNonHold(0));
-        tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
-        tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
+        // tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleNonHold(0));
+        // tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
+        // tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
 
         tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder());
         tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoder(0));
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
-        tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
+        // tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
 
         // arm extension
-        tab.add("Arm Piston: Full Retract", m_armExtend.commandFullRetract());
-        tab.add("Arm Piston: Mid Retract", m_armExtend.commandMiddleRetract());
-        tab.add("Arm Piston: Full Extend", m_armExtend.commandFullExtend());
-
-        tab.add("Arm Piston: Bottom Extended", m_armExtend.commandBottomPistonExtended());
-        tab.add("Arm Piston: Bottom Retracted", m_armExtend.commandBottomPistonRetracted());
-        tab.add("Arm Piston: Top Extended", m_armExtend.commandTopPistonExtended());
-        tab.add("Arm Piston: Top Retracted", m_armExtend.commandTopPistonRetracted());
+        // tab.add("Arm Piston: Full Retract", m_armExtend.commandFullRetract());
+        // tab.add("Arm Piston: Mid Retract", m_armExtend.commandMiddleRetract());
+        // tab.add("Arm Piston: Full Extend", m_armExtend.commandFullExtend());
+        //
+        // tab.add("Arm Piston: Bottom Extended", m_armExtend.commandBottomPistonExtended());
+        // tab.add("Arm Piston: Bottom Retracted", m_armExtend.commandBottomPistonRetracted());
+        // tab.add("Arm Piston: Top Extended", m_armExtend.commandTopPistonExtended());
+        // tab.add("Arm Piston: Top Retracted", m_armExtend.commandTopPistonRetracted());
 
 
         // claw
-        tab.add("Claw: Close", m_claw.createMoveClawIntakeInCommand());
-        tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
+        // tab.add("Claw: Close", m_claw.createMoveClawIntakeInCommand());
+        // tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
 
         // intake
-        tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
-        tab.add("Intake Piston: In", m_intake.createIntakeRetract());
+        // tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
+        // tab.add("Intake Piston: In", m_intake.createIntakeRetract());
 
-        tab.add("Intake Roller: In", m_intake.createIntakeIn());
-        tab.add("Intake Roller: Out", m_intake.createIntakeOut());
+        // tab.add("Intake Roller: In", m_intake.createIntakeIn());
+        // tab.add("Intake Roller: Out", m_intake.createIntakeOut());
 
 
         // Smart arm movement
-        tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 45));
-        tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 90));
-        tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 0));
-        tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, -45));
-        tab.add("Arm to Angle PreventionXXXXXX", m_armPivot.commandPivotArmToAnglePrevention(45.0, m_chassisSubsystem, m_operatorController));
+        // tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 45));
+        // tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 90));
+        // tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 0));
+        // tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, -45));
     }
 
     private void automatedTurretCommands() {
-
+        /*
         ShuffleboardTab tab = Shuffleboard.getTab("AutomatedTurret");
 
-        tab.add("Low Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
-        tab.add("Mid Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
-        tab.add("High Cone Left", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
-        tab.add("Low Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
-        tab.add("Mid Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
-        tab.add("High Cube", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
-        tab.add("Low Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
-        tab.add("Mid Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
-        tab.add("High Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
-
+        tab.add("Low Cone Left", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
+            .withPosition(0, 2);
+        tab.add("Mid Cone Left", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
+            .withPosition(0, 1);
+        tab.add("High Cone Left", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
+            .withPosition(0, 0);
+        tab.add("Low Cube", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
+            .withPosition(1, 2);
+        tab.add("Mid Cube", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
+            .withPosition(1, 1);
+        tab.add("High Cube", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
+            .withPosition(1, 0);
+        tab.add("Low Cone Right", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem))
+            .withPosition(2, 2);
+        tab.add("Mid Cone Right", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem))
+            .withPosition(2, 1);
+        tab.add("High Cone Right", new AutoAimTurretToNodePreselected(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem))
+            .withPosition(2, 0);
+         */
     }
 
     /**
@@ -237,6 +233,7 @@ public class RobotContainer {
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
         m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.povUp().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
 
         // Operator
         Trigger leftJoystickAsButtonRight = new Trigger(() -> m_operatorController.getLeftX() > .5);
@@ -250,15 +247,26 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
-        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
+        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goToGroundPickup(m_armPivot, m_armExtend, m_turret));
+        m_operatorController.povLeft().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
+        //m_operatorController.povDown().whileTrue(CombinedCommandsUtil.armReset(m_armPivot, m_armExtend, m_turret));
 
-        m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
+        SmartDashboard.putData("Mia Buttons", new AutoAimTurretToNodeOnTheFly(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, m_ledManagerSubsystem));
+
+        // m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
 
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
+        //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
+        // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
+
+        // m_operatorController.povRight().whileTrue(m_armExtend.commandBottomPistonExtended());
+        // m_operatorController.povLeft().whileTrue(m_armExtend.commandBottomPistonRetracted());
+
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
         // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
@@ -295,10 +303,10 @@ public class RobotContainer {
                 SmartDashboardNames.ARM_EXTENSION2, m_armExtend::isTopPistonIn, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_armPivot::getArmMotorSpeed, null);
-            builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
-            builder.addBooleanProperty(
-                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+            // builder.addDoubleProperty(
+            //     SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
+            // builder.addBooleanProperty(
+            //     SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
             builder.addDoubleProperty(

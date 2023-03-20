@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class TeleopDockingArcadeDriveCommand extends CommandBase {
-    private static final GosDoubleProperty ARCADE_DRIVE_BRAKE_SPEED = new GosDoubleProperty(false, "Chassis speed for brake", 0.2);
+    private static final GosDoubleProperty ARCADE_DRIVE_BRAKE_SPEED = new GosDoubleProperty(false, "Chassis speed for brake", 0.6);
     private final ChassisSubsystem m_chassisSubsystem;
     private final CommandXboxController m_joystick;
     private final LEDManagerSubsystem m_led;
@@ -31,7 +31,7 @@ public class TeleopDockingArcadeDriveCommand extends CommandBase {
     @Override
     public void execute() {
         m_chassisSubsystem.setArcadeDrive(ARCADE_DRIVE_BRAKE_SPEED.getValue() * -m_joystick.getLeftY(), ARCADE_DRIVE_BRAKE_SPEED.getValue() * -m_joystick.getRightX());
-        m_led.dockAndEngagePatterns();
+        m_led.setDockOption();
     }
 
     @Override
@@ -43,5 +43,6 @@ public class TeleopDockingArcadeDriveCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         this.m_chassisSubsystem.drivetrainToCoastMode();
+        m_led.stopDockAndEngagePatterns();
     }
 }
