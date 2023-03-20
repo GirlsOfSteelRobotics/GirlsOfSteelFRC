@@ -16,6 +16,8 @@ import  com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,8 @@ public final class AutonomousFactory {
     private final SendableChooser<AutonMode> m_chooseAutoOption;
 
     public enum AutonMode {
+        DO_NOTHING,
+        
         ONLY_LEAVE_COMMUNITY_END,
         ONLY_LEAVE_COMMUNITY_PLAYER_STATION,
         ONLY_DOCK_AND_ENGAGE,
@@ -34,17 +38,17 @@ public final class AutonomousFactory {
         ONE_NODE_AND_LEAVE_COMMUNITY_1,
         ONE_NODE_AND_LEAVE_COMMUNITY_7,
 
-        SCORE_CONE_AT_CURRENT_POS,
+        // SCORE_CONE_AT_CURRENT_POS,
 
-        ONE_NODE_AND_ENGAGE_3,
+        // ONE_NODE_AND_ENGAGE_3,
         ONE_NODE_AND_ENGAGE_4,
-        ONE_NODE_AND_ENGAGE_5,
-        ONE_NODE_AND_LEAVE_AND_ENGAGE_4,
+        // ONE_NODE_AND_ENGAGE_5,
+        // ONE_NODE_AND_LEAVE_AND_ENGAGE_4
 
-        TWO_PIECE_NODE_0_AND_1,
-        TWO_PIECE_NODE_7_AND_8,
+        // TWO_PIECE_NODE_0_AND_1,
+        // TWO_PIECE_NODE_7_AND_8,
 
-        TWO_PIECE_ENGAGE
+        // TWO_PIECE_ENGAGE
     }
 
     private final Map<AutoPivotHeight, Map<AutonMode, Command>> m_autoOptions = new HashMap<>();
@@ -57,21 +61,23 @@ public final class AutonomousFactory {
         // Initialize map
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             m_autoOptions.put(height, new HashMap<>());
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes0And1", height));
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceEngage", height));
+            // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes0And1", height));
+            // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
+            // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceEngage", height));
 
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new SequentialCommandGroup());
+            
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
 
 
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
+            // m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
+            // m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
 
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "DockandEngage_Community4", height, GamePieceType.CUBE));
+            // m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "DockandEngage_Community4", height, GamePieceType.CUBE));
 
-            m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
+            // m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.SCORE_CUBE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CUBE));
 
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_END, new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity"));

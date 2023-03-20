@@ -189,6 +189,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
+        m_gyro.configFactoryDefault();
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
@@ -306,8 +307,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 .addP(0) //this needs to be tuned!
                 .addI(0)
                 .addD(0)
-                .addFF(.22)
-                .addMaxVelocity(2)
+                .addFF(0)
+                .addMaxVelocity(0)
                 .addMaxAcceleration(0)
                 .build();
         }
@@ -398,7 +399,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
-        double speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        double speed;
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            speed = getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
+        else {
+            speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
+        }
 
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
@@ -423,7 +430,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.runEnd(() -> autoEngage(), () -> m_tryingToEngage = false).withName("Auto Engage");
+        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
     }
 
 

@@ -26,6 +26,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
@@ -229,11 +230,6 @@
         }
       },
       "/SmartDashboard/Auto Mode Select": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Choose Turret Command": {
         "window": {
           "visible": true
         }
