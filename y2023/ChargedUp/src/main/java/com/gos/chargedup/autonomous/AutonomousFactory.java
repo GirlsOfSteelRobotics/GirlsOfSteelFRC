@@ -16,6 +16,8 @@ import  com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +65,7 @@ public final class AutonomousFactory {
             // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
             // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceEngage", height));
 
-            m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new DoNothingAutoCommandGroup());
+            m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new SequentialCommandGroup());
             
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));

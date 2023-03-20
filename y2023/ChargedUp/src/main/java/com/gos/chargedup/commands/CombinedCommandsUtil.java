@@ -16,9 +16,8 @@ public final class CombinedCommandsUtil {
 
     public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
         return extension.commandFullRetract()
-            .andThen(pivot.commandGoHome())
-            //.alongWith(pivot.commandGoHome())
-            //.alongWith(turret.goHome())
+            .andThen(pivot.commandGoHome()
+                .alongWith(turret.goHome()))
             .withName("Go Home");
     }
 
@@ -26,7 +25,7 @@ public final class CombinedCommandsUtil {
         return extension.commandMiddleRetract()
             .alongWith(pivot.commandGoToGroundPickup())
             .alongWith(turret.goHome())
-            .withName("Reset Pos");
+            .withName("Go To Ground Pickup");
     }
 
     public static CommandBase armToHpPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {

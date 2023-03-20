@@ -7,16 +7,12 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.AutoAimTurretToNodePreselected;
-import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.AutoAimTurretToNodeOnTheFly;
+import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
-import com.gos.chargedup.commands.testing.TestLineCommandGroup;
-import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
-import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -26,8 +22,6 @@ import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -43,7 +37,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -144,7 +137,7 @@ public class RobotContainer {
         // turret
         // tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
         // tab.add("Turret: To Coast Mode", m_turret.createTurretToCoastMode());
-         tab.add("Turret: Reset Encoder", m_turret.createResetEncoder());
+        tab.add("Turret: Reset Encoder", m_turret.createResetEncoder());
         // tab.add("Turret: Move Clockwise", m_turret.commandMoveTurretClockwise());
         // tab.add("Turret: Move Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
         // tab.add("Turret: PID - -90 degrees", m_turret.commandTurretPID(-90));
@@ -170,7 +163,7 @@ public class RobotContainer {
         // tab.add("Arm Piston: Full Retract", m_armExtend.commandFullRetract());
         // tab.add("Arm Piston: Mid Retract", m_armExtend.commandMiddleRetract());
         // tab.add("Arm Piston: Full Extend", m_armExtend.commandFullExtend());
-//
+        //
         // tab.add("Arm Piston: Bottom Extended", m_armExtend.commandBottomPistonExtended());
         // tab.add("Arm Piston: Bottom Retracted", m_armExtend.commandBottomPistonRetracted());
         // tab.add("Arm Piston: Top Extended", m_armExtend.commandTopPistonExtended());

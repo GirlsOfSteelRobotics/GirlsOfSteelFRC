@@ -58,8 +58,6 @@ import java.util.Optional;
 @SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
-    private static final GosDoubleProperty AUTO_ENGAGE_MIN_SPEED = new GosDoubleProperty(false, "Chassis auto engage min speed", 0.015);
-    private static final GosDoubleProperty AUTO_ENGAGE_MAX_SPEED = new GosDoubleProperty(false, "Chassis auto engage max speed", 0.02);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -384,7 +382,6 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void setArcadeDrive(double speed, double steer) {
-        SmartDashboard.putNumber("Chassis speed", speed);
         m_drive.arcadeDrive(speed, steer);
     }
 
@@ -425,25 +422,6 @@ public class ChassisSubsystem extends SubsystemBase {
             }
             setArcadeDrive(speed, 0);
         }
-        /*else if (getPitch() > 0) {
-            if (speed < -AUTO_ENGAGE_MAX_SPEED.getValue()) {
-                speed = -AUTO_ENGAGE_MAX_SPEED.getValue();
-            }
-            if (speed > -AUTO_ENGAGE_MIN_SPEED.getValue()) {
-                speed = -AUTO_ENGAGE_MIN_SPEED.getValue();
-            }
-            setArcadeDrive(speed, 0);
-
-        } else if (getPitch() < 0) {
-            if (speed > AUTO_ENGAGE_MAX_SPEED.getValue()) {
-                speed = AUTO_ENGAGE_MAX_SPEED.getValue();
-            }
-            if (speed < AUTO_ENGAGE_MIN_SPEED.getValue()) {
-                speed = AUTO_ENGAGE_MIN_SPEED.getValue();
-            }
-            setArcadeDrive(speed, 0);
-        }
-        */
         m_tryingToEngage = true;
     }
 
@@ -452,7 +430,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.runEnd(() -> autoEngage(), () -> m_tryingToEngage = false).withName("Auto Engage");
+        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
     }
 
 

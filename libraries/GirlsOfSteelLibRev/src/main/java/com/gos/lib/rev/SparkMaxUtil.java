@@ -8,9 +8,9 @@ import java.util.function.Supplier;
 
 public class SparkMaxUtil {
 
-    private static final StringBuilder ALERT_BUILDER = new StringBuilder();
-    private static boolean CONFIG_FAILED = false;
+    private static final StringBuilder ALERT_BUILDER = new StringBuilder(100); // NOPMD(AvoidStringBufferField)
     private static final Alert CONFIG_FAILED_ALERT = new Alert("Rev CAN config failure", Alert.AlertType.ERROR);
+    private static boolean configFailed;
 
     public static void autoRetry(Supplier<REVLibError> command) {
         autoRetry(command, 10);
@@ -26,14 +26,14 @@ public class SparkMaxUtil {
         }
         while (error != REVLibError.kOk && ctr < maxRetries);
 
-        CONFIG_FAILED &= error != REVLibError.kOk;
+        configFailed &= error != REVLibError.kOk;
 
         if (ctr != 1) {
-            ALERT_BUILDER.append("Took " + ctr + " times to retry command");
+            ALERT_BUILDER.append("Took ").append(ctr).append(" times to retry command");
             DriverStation.reportError("Took " + ctr + " times to retry command", false);
         }
 
-        CONFIG_FAILED_ALERT.set(CONFIG_FAILED);
+        CONFIG_FAILED_ALERT.set(configFailed);
         CONFIG_FAILED_ALERT.setText(ALERT_BUILDER.toString());
     }
 }
