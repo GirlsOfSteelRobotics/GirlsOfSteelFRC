@@ -33,8 +33,4 @@ public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
         addCommands(fullAuto);
     }
 
-    //initialie
-    //score piece
-    //chassis.rotate(90)
-    //runautopath
 }

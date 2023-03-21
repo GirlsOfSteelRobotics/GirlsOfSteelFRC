@@ -19,7 +19,7 @@ public class EventMapUtil {
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", claw.createMoveClawIntakeInWithTimeoutCommand());
         //eventMap.put("resetArmAndTurret", turret.goHome().andThen(CombinedCommandsUtil.goHome(armPivot, armExtension, turret)));
-        eventMap.put("setArmAndTurretToScore", CombinedCommandsUtil.moveToScore(180, pivotHeightType, gamePieceType, armPivot));
+        eventMap.put("setArmAndTurretToScore", CombinedCommandsUtil.moveToScore(pivotHeightType, gamePieceType, armPivot));
         eventMap.put("scorePiece", new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
         eventMap.put("engage", chassis.createAutoEngageCommand());
 
