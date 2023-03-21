@@ -9,7 +9,6 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,7 +20,7 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
 
 
-    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, TurretSubsystem turret, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
 
         PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoOnePieceEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(oneNodeAndEngage);
@@ -31,7 +30,7 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
         //drive to docking station
         addCommands((driveAutoOnePieceEngage)
-            .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension, turret)));
+            .alongWith(CombinedCommandsUtil.goHomeWithoutTurret(armPivot, armExtension)));
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());
