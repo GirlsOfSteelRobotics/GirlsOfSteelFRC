@@ -38,7 +38,7 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.5);
+    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.75);
     private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 0.5);
     private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
     private static final GosDoubleProperty GRAVITY_OFFSET;
@@ -71,9 +71,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
             HUMAN_PLAYER_ANGLE = 20;
             ARM_CUBE_MIDDLE_DEG = 0;
-            ARM_CUBE_HIGH_DEG = 15;
-            ARM_CONE_MIDDLE_DEG = 15;
-            ARM_CONE_HIGH_DEG = 30;
+            ARM_CUBE_HIGH_DEG = 23;
+            ARM_CONE_MIDDLE_DEG = 23;
+            ARM_CONE_HIGH_DEG = 25;
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
             HOME_ANGLE = MIN_ANGLE_DEG + 5;

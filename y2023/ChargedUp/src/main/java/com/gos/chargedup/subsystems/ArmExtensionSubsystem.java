@@ -3,6 +3,7 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.GamePieceType;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -148,11 +149,17 @@ public class ArmExtensionSubsystem extends SubsystemBase {
             cs::canExtendArm);
     }
 
-    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height) {
-        if (height == AutoPivotHeight.HIGH) {
+    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height, GamePieceType gamePiece) {
+        if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CONE) {
+            return commandFullExtend();
+        }
+        else if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CUBE) {
             return commandMiddleRetract();
         }
-        else if (height == AutoPivotHeight.MEDIUM) {
+        else if (height == AutoPivotHeight.MEDIUM && gamePiece == GamePieceType.CONE) {
+            return commandMiddleRetract();
+        }
+        else if (height == AutoPivotHeight.MEDIUM && gamePiece == GamePieceType.CUBE) {
             return commandFullRetract();
         }
         else {
