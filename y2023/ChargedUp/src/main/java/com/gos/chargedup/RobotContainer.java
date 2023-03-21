@@ -253,7 +253,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("Mia Buttons", new AutoAimTurretToNodeOnTheFly(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, m_ledManagerSubsystem));
 
-        // m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
+        m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
 
