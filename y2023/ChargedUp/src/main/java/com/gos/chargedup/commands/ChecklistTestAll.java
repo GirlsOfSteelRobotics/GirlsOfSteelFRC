@@ -4,14 +4,13 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.function.DoubleSupplier;
 
 public class ChecklistTestAll extends SequentialCommandGroup {
 
-    public ChecklistTestAll(DoubleSupplier pressureSupplier, ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, TurretSubsystem turret, ClawSubsystem claw) {
+    public ChecklistTestAll(DoubleSupplier pressureSupplier, ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw) {
         setName("Self Test Checklist");
 
         //chassis
@@ -24,7 +23,7 @@ public class ChecklistTestAll extends SequentialCommandGroup {
         addCommands(armExtension.createIsArmTopPneumaticMoving(pressureSupplier));
 
         //turret
-        addCommands(turret.createIsTurretMotorMoving());
+        //addCommands(turret.createIsTurretMotorMoving());
 
         //claw
         addCommands(claw.createIsClawMotorMoving());
