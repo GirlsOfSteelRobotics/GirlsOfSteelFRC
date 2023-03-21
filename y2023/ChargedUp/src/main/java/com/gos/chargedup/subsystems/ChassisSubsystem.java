@@ -81,6 +81,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(TRACK_WIDTH);
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
+
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -127,7 +129,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_trajectoryVelocitySetpointX;
     private final NetworkTableEntry m_trajectoryVelocitySetpointY;
     private final NetworkTableEntry m_trajectoryVelocitySetpointAngle;
-
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
@@ -212,6 +213,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .addMaxAcceleration(0)
             .addMaxVelocity(0)
             .build();
+
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
@@ -413,6 +415,24 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_gyro.getYaw();
     }
 
+    public void turnPID(double angleGoal) {
+        double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+        steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
+
+        if (m_turnAnglePID.atSetpoint()) {
+            steerVoltage = 0;
+        }
+
+        m_leaderRight.setVoltage(steerVoltage);
+        m_leaderLeft.setVoltage(-steerVoltage);
+        m_drive.feed();
+
+    }
+
+    public boolean turnPIDIsAtAngle() {
+        return m_turnAnglePID.atSetpoint();
+    }
+
     public void autoEngage() {
         double speed;
         if (Constants.IS_ROBOT_BLOSSOM) {
@@ -513,7 +533,6 @@ public class ChassisSubsystem extends SubsystemBase {
             m_field.clearTrajectory();
         });
 
-
     }
 
     ////////////////////
@@ -579,4 +598,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return new ProxyCommand(() -> driveToPoint(point));
     }
 
+    public CommandBase createTurnPID(double angleGoal) {
+        return this.run(() -> turnPID(angleGoal))
+            .until(() -> turnPIDIsAtAngle())
+            .withName("Chassis to Angle" + angleGoal);
+    }
 }
+

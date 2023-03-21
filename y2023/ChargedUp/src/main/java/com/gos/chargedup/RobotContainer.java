@@ -123,6 +123,10 @@ public class RobotContainer {
         // auto engage
         tab.add("Chassis Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
 
+        // chassis turn PID
+        tab.add("Chassis To Angle 0", m_chassisSubsystem.createTurnPID(0));
+        tab.add("Chassis To Angle 180", m_chassisSubsystem.createTurnPID(180));
+
         // chassis reset odometry test
         // tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
         // tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));

@@ -10,6 +10,11 @@
       }
     },
     "Other Devices": {
+      "Pigeon 2[20]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [11]": {
         "header": {
           "open": true
@@ -95,6 +100,8 @@
       "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 8": "Command",
       "/Shuffleboard/TestCommands/Chassis Auto Engage": "Command",
+      "/Shuffleboard/TestCommands/Chassis To Angle 0": "Command",
+      "/Shuffleboard/TestCommands/Chassis To Angle 180": "Command",
       "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, -90 deg)": "Command",
       "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 0)": "Command",
       "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 90 deg)": "Command",
@@ -225,6 +232,16 @@
           "length": 0.8199999928474426,
           "width": 0.6859999895095825
         },
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/TestCommands/Chassis To Angle 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/TestCommands/Chassis To Angle 180": {
         "window": {
           "visible": true
         }
@@ -393,6 +410,11 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
       "SmartDashboard": {
         "AHHHHHHHHHHHHHHH": {
