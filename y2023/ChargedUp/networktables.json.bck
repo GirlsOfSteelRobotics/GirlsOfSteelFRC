@@ -362,7 +362,7 @@
   {
     "name": "/Preferences/Pivot Arm Allowable Velocity Error",
     "type": "double",
-    "value": 2.0,
+    "value": 15.0,
     "properties": {
       "persistent": true
     }
@@ -401,6 +401,14 @@
   },
   {
     "name": "/Preferences/Pivot Arm PID Stop Error",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawHoldSpeed",
     "type": "double",
     "value": 0.2,
     "properties": {

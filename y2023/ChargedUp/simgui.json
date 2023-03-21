@@ -188,22 +188,7 @@
       "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
-      "/Shuffleboard/AutomatedTurret/Choose Turret Command": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/AutomatedTurret/Low Cone Left": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/AutomatedTurret/Low Cone Right": {
         "window": {
           "visible": true
         }
