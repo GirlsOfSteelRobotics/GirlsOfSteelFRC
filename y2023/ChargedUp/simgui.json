@@ -10,11 +10,6 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [11]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK MAX [6]": {
         "header": {
           "open": true
@@ -371,6 +366,11 @@
         }
       },
       "/SmartDashboard/Height Options": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Mia Buttons": {
         "window": {
           "visible": true
         }
