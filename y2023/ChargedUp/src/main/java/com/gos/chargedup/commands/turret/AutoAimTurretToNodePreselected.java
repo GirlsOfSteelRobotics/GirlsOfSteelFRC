@@ -2,7 +2,6 @@ package com.gos.chargedup.commands.turret;
 
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
-import com.gos.chargedup.commands.turret.BaseAutoAimTurretCommand;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Translation2d;

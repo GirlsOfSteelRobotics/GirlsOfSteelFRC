@@ -180,6 +180,7 @@
       "/Shuffleboard/TestCommands/Turret: To Coast Mode": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Position (-90 degrees)": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Velocity": "Command",
+      "/SmartDashboard/Auto Aim Chassis": "Command",
       "/SmartDashboard/Auto Mode Select": "String Chooser",
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",

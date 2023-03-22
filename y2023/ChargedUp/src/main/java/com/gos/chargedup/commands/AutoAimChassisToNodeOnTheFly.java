@@ -2,7 +2,6 @@ package com.gos.chargedup.commands;
 
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
-import com.gos.chargedup.commands.turret.AutoAimTurretToNodeOnTheFly;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -13,9 +12,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.littletonrobotics.frc2023.FieldConstants;
 
-import java.util.function.DoubleConsumer;
-
-public class AutoAimChassisToNodeOnTheFly extends BaseAutoAimChassisCommand{
+public class AutoAimChassisToNodeOnTheFly extends BaseAutoAimChassisCommand {
 
     private AutoChassisCommands m_selectedPosition = AutoChassisCommands.NONE;
 
@@ -34,6 +31,7 @@ public class AutoAimChassisToNodeOnTheFly extends BaseAutoAimChassisCommand{
     }
 
     @Override
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public void execute() {
         if (m_selectedPosition == null || m_selectedPosition == AutoAimChassisToNodeOnTheFly.AutoChassisCommands.NONE) {
             return;
