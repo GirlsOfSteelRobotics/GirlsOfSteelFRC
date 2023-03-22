@@ -7,6 +7,7 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
@@ -250,6 +251,8 @@ public class RobotContainer {
         m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHomeWithoutTurret(m_armPivot, m_armExtend));
 
         //SmartDashboard.putData("Mia Buttons", new AutoAimTurretToNodeOnTheFly(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, m_ledManagerSubsystem));
+
+        SmartDashboard.putData("Auto Aim Chassis", new AutoAimChassisToNodeOnTheFly(m_armPivot, m_chassisSubsystem, m_ledManagerSubsystem, m_armExtend));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());

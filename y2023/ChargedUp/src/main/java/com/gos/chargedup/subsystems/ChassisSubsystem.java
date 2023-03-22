@@ -363,6 +363,8 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
         SmartDashboard.putBoolean("In Community", isInCommunityZone());
         SmartDashboard.putBoolean("In Loading", isInLoadingZone());
+        SmartDashboard.putNumber("xxxpose angle", m_odometry.getPoseMeters().getRotation().getDegrees());
+
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();

@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public abstract class BaseAutoAimChassisCommand extends CommandBase {
@@ -59,6 +60,10 @@ public abstract class BaseAutoAimChassisCommand extends CommandBase {
         double currentY = armRotationPoint.getY();
 
         double goalAngle = Math.toDegrees(Math.atan2((closestYvalue - currentY), (correctedTarget.getX() - currentX)));
+
+        if (m_chassisSubsystem.getPose().getRotation().getDegrees() < 0) {
+            goalAngle -= 360;
+        }
 
         m_chassisSubsystem.turnPID(goalAngle);
 
