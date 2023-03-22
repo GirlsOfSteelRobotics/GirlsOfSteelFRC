@@ -362,7 +362,7 @@
   {
     "name": "/Preferences/Pivot Arm Allowable Velocity Error",
     "type": "double",
-    "value": 2.0,
+    "value": 15.0,
     "properties": {
       "persistent": true
     }
@@ -403,6 +403,54 @@
     "name": "/Preferences/Pivot Arm PID Stop Error",
     "type": "double",
     "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawHoldSpeed",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_acceleration",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_velocity",
+    "type": "double",
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
