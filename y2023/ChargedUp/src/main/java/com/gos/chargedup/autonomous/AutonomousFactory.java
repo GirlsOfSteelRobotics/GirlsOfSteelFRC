@@ -69,8 +69,8 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new SequentialCommandGroup());
 
             //MVR Path Option 1: Score piece and leave community through the sides
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
 
 
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
