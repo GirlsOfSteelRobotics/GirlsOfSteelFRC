@@ -26,7 +26,7 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
-            .andThen(CombinedCommandsUtil.goHomeWithoutTurret(armPivot, armExtension)));
+            .andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
         //drive out of community
         addCommands(driveAutoOnePieceAndLeave);
