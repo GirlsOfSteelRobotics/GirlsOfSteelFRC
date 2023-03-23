@@ -1,5 +1,6 @@
 package com.gos.chargedup.subsystems;
 
+import com.gos.chargedup.AutoAimNodePositions;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,6 +33,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+
+import java.util.function.Supplier;
 
 import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 
@@ -77,7 +81,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
             HOME_ANGLE = MIN_ANGLE_DEG + 5;
-            GROUND_PICKUP_ANGLE = -20;
+            GROUND_PICKUP_ANGLE = -38;
             ARM_SCORE_LOW_DEG = -35;
 
         } else {
@@ -166,8 +170,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
         m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder(kDutyCycle);
-        m_absoluteEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
-        m_absoluteEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
+        m_absoluteEncoder.setPositionConversionFactor(360.0);
+        m_absoluteEncoder.setVelocityConversionFactor(360.0 / 60);
+        m_absoluteEncoder.setInverted(true);
+        m_absoluteEncoder.setZeroOffset(39.6 - MIN_ANGLE_DEG);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
             resetPivotEncoder(m_absoluteEncoder.getPosition());
@@ -297,7 +303,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         SparkMaxUtil.autoRetry(() -> m_pivotMotorEncoder.setPosition(angle));
     }
 
-    public double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+    public static double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         double angle;
 
         switch (pivotHeightType) {
@@ -316,8 +322,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
             }
             break;
         case LOW:
-            angle = ARM_SCORE_LOW_DEG;
-            break;
         default:
             angle = ARM_SCORE_LOW_DEG;
             break;
@@ -422,6 +426,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public CommandBase commandHpPickupHold() {
         return commandPivotArmToAngleHold(HUMAN_PLAYER_ANGLE);
+    }
+
+    public Command commandGoToAutoNodePosition(Supplier<AutoAimNodePositions> nodeSupplier) {
+        return runEnd(() -> {
+            AutoAimNodePositions position = nodeSupplier.get();
+            if (position == null || position == AutoAimNodePositions.NONE) {
+                return;
+            }
+            pivotArmToAngle(position.getTargetPitch());
+        }, this::pivotArmStop);
     }
 
     ////////////////
