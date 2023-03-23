@@ -16,4 +16,9 @@ public class HeavyDoubleProperty extends BaseHeavyProperty<Double> {
         super(setter::accept, property);
     }
 
+    public static HeavyDoubleProperty create(String propertyName, boolean isConstant, double defaultValue, DoubleConsumer setter) {
+        GosDoubleProperty prop = new GosDoubleProperty(isConstant, propertyName, defaultValue);
+        return new HeavyDoubleProperty(setter, prop);
+    }
+
 }

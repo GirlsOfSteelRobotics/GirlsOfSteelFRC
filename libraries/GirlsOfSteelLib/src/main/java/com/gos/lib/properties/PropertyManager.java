@@ -88,7 +88,7 @@ public final class PropertyManager {
             m_name = key;
 
             if (purgeConstantPreferenceKeys) {
-                System.out.print("Removing constant key for '" + key + "'");
+                System.out.println("Removing constant key for '" + key + "'");
                 Preferences.remove(key);
             }
         }
