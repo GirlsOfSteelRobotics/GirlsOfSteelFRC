@@ -4,7 +4,6 @@ import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
@@ -14,17 +13,22 @@ public final class CombinedCommandsUtil {
 
     }
 
-    public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
+    public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandFullRetract()
-            .andThen(pivot.commandGoHome()
-                .alongWith(turret.goHome()))
-            .withName("Go Home");
+            .andThen(pivot.commandGoHome())
+            .withName("Go Home Without Turret");
     }
 
-    public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
+    //public static CommandBase goHomeWithTurret(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
+    //    return extension.commandFullRetract()
+    //        .andThen(pivot.commandGoHome()
+    //            .alongWith(turret.goHome()))
+    //        .withName("Go Home With Turret");
+    //}
+
+    public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandMiddleRetract()
             .alongWith(pivot.commandGoToGroundPickup())
-            .alongWith(turret.goHome())
             .withName("Go To Ground Pickup");
     }
 
@@ -34,9 +38,9 @@ public final class CombinedCommandsUtil {
             .withName("HP Pickup");
     }
 
-    public static CommandBase moveToScore(double turretAngle, AutoPivotHeight height, GamePieceType gamePiece, TurretSubsystem turret, ArmPivotSubsystem armPivot) {
+    public static CommandBase moveToScore(AutoPivotHeight height, GamePieceType gamePiece, ArmPivotSubsystem armPivot) {
         return new ParallelCommandGroup(
-            turret.commandTurretPID(turretAngle),
+            //turret.commandTurretPID(turretAngle),
             armPivot.commandMoveArmToPieceScorePositionAndHold(height, gamePiece) //set for second piece
         ).withName("Move To Score");
     }

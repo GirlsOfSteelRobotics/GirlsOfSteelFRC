@@ -8,6 +8,7 @@ import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
@@ -22,6 +23,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -30,6 +32,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -57,7 +60,7 @@ import java.util.Optional;
 
 @SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .025);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -78,6 +81,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(TRACK_WIDTH);
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
+
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -110,6 +115,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
 
+    private final ProfiledPIDController m_turnAnglePID;
+    private final PidProperty m_turnAnglePIDProperties;
+
     private final NetworkTableEntry m_gyroAngleDegEntry;
     private final NetworkTableEntry m_leftEncoderPosition;
     private final NetworkTableEntry m_leftEncoderVelocity;
@@ -121,7 +129,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_trajectoryVelocitySetpointX;
     private final NetworkTableEntry m_trajectoryVelocitySetpointY;
     private final NetworkTableEntry m_trajectoryVelocitySetpointAngle;
-
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
@@ -197,6 +204,15 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
+
+        m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .addMaxAcceleration(0)
+            .addMaxVelocity(0)
+            .build();
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
@@ -304,10 +320,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-                .addP(0) //this needs to be tuned!
+                .addP(0.1) //this needs to be tuned!
                 .addI(0)
                 .addD(0)
-                .addFF(0)
+                .addFF(0.215)
                 .addMaxVelocity(0)
                 .addMaxAcceleration(0)
                 .build();
@@ -334,6 +350,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftPIDProperties.updateIfChanged();
         m_rightPIDProperties.updateIfChanged();
+        m_turnAnglePIDProperties.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
         m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
@@ -346,6 +363,8 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
         SmartDashboard.putBoolean("In Community", isInCommunityZone());
         SmartDashboard.putBoolean("In Loading", isInLoadingZone());
+        SmartDashboard.putNumber("xxxpose angle", m_odometry.getPoseMeters().getRotation().getDegrees());
+
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -396,6 +415,24 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getYaw() {
         return m_gyro.getYaw();
+    }
+
+    public void turnPID(double angleGoal) {
+        double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+        steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
+
+        if (m_turnAnglePID.atSetpoint()) {
+            steerVoltage = 0;
+        }
+
+        m_leaderRight.setVoltage(steerVoltage);
+        m_leaderLeft.setVoltage(-steerVoltage);
+        m_drive.feed();
+
+    }
+
+    public boolean turnPIDIsAtAngle() {
+        return m_turnAnglePID.atSetpoint();
     }
 
     public void autoEngage() {
@@ -498,7 +535,6 @@ public class ChassisSubsystem extends SubsystemBase {
             m_field.clearTrajectory();
         });
 
-
     }
 
     ////////////////////
@@ -564,4 +600,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return new ProxyCommand(() -> driveToPoint(point));
     }
 
+    public CommandBase createTurnPID(double angleGoal) {
+        return this.run(() -> turnPID(angleGoal))
+            .until(() -> turnPIDIsAtAngle())
+            .withName("Chassis to Angle" + angleGoal);
+    }
 }
+

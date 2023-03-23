@@ -5,6 +5,7 @@ import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class ScorePieceCommandGroup extends SequentialCommandGroup {
@@ -13,8 +14,9 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
     public ScorePieceCommandGroup(ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         //assuming robot is in correct position to score (intake facing nodes)
         //arm to angle, arm extend, drop piece
-        addCommands((armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType)));
-        addCommands(armExtension.createArmToSpecifiedHeight(pivotHeightType));
+        addCommands(new InstantCommand(claw::holdPiece));
+        addCommands(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType));
+        addCommands(armExtension.createArmToSpecifiedHeight(pivotHeightType, gamePieceType));
 
         //check that this function works:
         addCommands(claw.createMoveClawIntakeOutWithTimeoutCommand());

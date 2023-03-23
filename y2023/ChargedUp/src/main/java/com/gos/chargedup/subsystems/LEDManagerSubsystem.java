@@ -39,7 +39,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     //private final CommandXboxController m_joystick;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armSubsystem;
-    private final TurretSubsystem m_turretSubsystem;
 
     private final ClawSubsystem m_claw;
 
@@ -60,7 +59,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private boolean m_clawIsAligned;
 
     private final MirroredLEDFlash m_readyToScore;
-    private final MirroredLEDPercentScale m_turretAngle;
     private final MirroredLEDBoolean m_armAtAngle;
 
     private final MirroredLEDPercentScale m_dockAngle;
@@ -85,12 +83,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private boolean m_clawWasTripped;
 
 
-    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
+    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
         m_chassisSubsystem = chassisSubsystem;
         m_armSubsystem = armSubsystem;
-        m_turretSubsystem = turretSubsystem;
         m_claw = claw;
 
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
@@ -104,9 +101,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_cubeGamePieceSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kMediumPurple);
 
         m_readyToScore = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
-        m_turretAngle = new MirroredLEDPercentScale(m_buffer, 20, 10, Color.kRed, 20);
+        //m_turretAngle = new MirroredLEDPercentScale(m_buffer, 20, 10, Color.kRed, 20);
         m_armAtAngle = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kAntiqueWhite, Color.kRed);
-        // m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
+        //m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
 
         //m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
 
@@ -266,11 +263,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void communityZonePatterns() {
-        if (m_turretSubsystem.atTurretAngle() && m_armSubsystem.isArmAtAngle()) {
+        if (m_armSubsystem.isArmAtAngle()) {
             m_readyToScore.writeLeds();
         }
-        else if (!m_turretSubsystem.atTurretAngle() || !m_armSubsystem.isArmAtAngle()) {
-            m_turretAngle.distanceToTarget(m_turretSubsystem.getTurretError());
+        else if (!m_armSubsystem.isArmAtAngle()) {
+            //m_turretAngle.distanceToTarget(m_turretSubsystem.getTurretError());
             m_armAtAngle.setState(m_armSubsystem.isArmAtAngle());
         }
     }

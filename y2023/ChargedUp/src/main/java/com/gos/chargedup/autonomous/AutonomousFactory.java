@@ -12,7 +12,6 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import  com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,25 +28,28 @@ public final class AutonomousFactory {
 
     public enum AutonMode {
         DO_NOTHING,
-        
+
         ONLY_LEAVE_COMMUNITY_END,
         ONLY_LEAVE_COMMUNITY_PLAYER_STATION,
         ONLY_DOCK_AND_ENGAGE,
         SCORE_CUBE_AT_CURRENT_POS,
 
+        ONE_NODE_LEAVE_AND_ENGAGE,
+
         ONE_NODE_AND_LEAVE_COMMUNITY_1,
+        ONE_NODE_AND_LEAVE_COMMUNITY_3,
         ONE_NODE_AND_LEAVE_COMMUNITY_7,
 
-        // SCORE_CONE_AT_CURRENT_POS,
+        SCORE_CONE_AT_CURRENT_POS,
 
-        // ONE_NODE_AND_ENGAGE_3,
+        ONE_NODE_AND_ENGAGE_3,
         ONE_NODE_AND_ENGAGE_4,
-        // ONE_NODE_AND_ENGAGE_5,
-        // ONE_NODE_AND_LEAVE_AND_ENGAGE_4
         TWO_NODE_LEAVE_COMMUNITY_ENGAGE,
+        ONE_NODE_AND_ENGAGE_5,
+        ONE_NODE_AND_LEAVE_AND_ENGAGE_4,
 
-        // TWO_PIECE_NODE_0_AND_1,
-        // TWO_PIECE_NODE_7_AND_8,
+        TWO_PIECE_NODE_0_AND_1,
+        TWO_PIECE_NODE_7_AND_8,
 
         // TWO_PIECE_ENGAGE
     }
@@ -55,28 +57,39 @@ public final class AutonomousFactory {
     private final Map<AutoPivotHeight, Map<AutonMode, Command>> m_autoOptions = new HashMap<>();
 
     @SuppressWarnings({"PMD.NPathComplexity", "PMD.CyclomaticComplexity"})
-    public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw) {
+    public AutonomousFactory(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw) {
         m_armHeight = new SendableChooser<>();
         m_chooseAutoOption = new SendableChooser<>();
 
         // Initialize map
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             m_autoOptions.put(height, new HashMap<>());
-            // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes0And1", height));
-            // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
-            // m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceEngage", height));
+            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, armPivot, armExtension, claw, "TWOPieceNodes0And1", height));
+            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
+            //m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "TWOPieceEngage", height));
 
             m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new SequentialCommandGroup());
-            
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
 
+            //MVR Path Option 1: Score piece and leave community through the sides
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_3, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity4", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
 
-            // m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
-            // m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
+            //MVR Path Option 2: Leave community and engage (with speeds changed)
+            //testing score piece, leave community, and engage
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE, new OneNodeLeaveAndEngageFullCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE));
 
-            // m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "DockandEngage_Community4", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
+
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "DockandEngage_Community4", height, GamePieceType.CUBE));
+
+            m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
+
+            // m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
+            //testing score piece, leave community, and engage
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE, new OnePieceLeaveEngageCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE));
 
             // m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.SCORE_CUBE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CUBE));
