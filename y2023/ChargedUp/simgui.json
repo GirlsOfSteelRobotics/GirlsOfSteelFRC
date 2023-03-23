@@ -222,6 +222,16 @@
           "visible": true
         }
       },
+      "/Shuffleboard/TestCommands/Chassis To Angle 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/TestCommands/Chassis To Angle 180": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true
@@ -377,6 +387,16 @@
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/Height Options": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Mia Buttons": {
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -397,8 +417,5 @@
         "open": true
       }
     }
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }
