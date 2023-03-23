@@ -416,33 +416,41 @@
     }
   },
   {
-    "name": "/Preferences/max Velocity Part 1",
+    "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 2.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/max Acceleration Part 1",
+    "name": "/Preferences/Chassis to angle.mm.ki",
     "type": "double",
-    "value": 2.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/max Velocity Part 2",
+    "name": "/Preferences/Chassis to angle.mm.kd",
     "type": "double",
-    "value": 3.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/max Acceleration Part 2",
+    "name": "/Preferences/Chassis to angle.mm.max_acceleration",
     "type": "double",
-    "value": 3.0,
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_velocity",
+    "type": "double",
+    "value": 0.0,
     "properties": {
       "persistent": true
     }

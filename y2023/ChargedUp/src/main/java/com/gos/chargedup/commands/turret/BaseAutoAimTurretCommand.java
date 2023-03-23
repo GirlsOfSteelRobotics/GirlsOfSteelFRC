@@ -1,4 +1,4 @@
-package com.gos.chargedup.commands;
+package com.gos.chargedup.commands.turret;
 
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.ClawAlignedCheck;
