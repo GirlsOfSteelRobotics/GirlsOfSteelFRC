@@ -44,6 +44,7 @@ public final class AutonomousFactory {
         ONE_NODE_AND_ENGAGE_4,
         // ONE_NODE_AND_ENGAGE_5,
         // ONE_NODE_AND_LEAVE_AND_ENGAGE_4
+        TWO_NODE_LEAVE_COMMUNITY_ENGAGE,
 
         // TWO_PIECE_NODE_0_AND_1,
         // TWO_PIECE_NODE_7_AND_8,
@@ -83,6 +84,7 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_END, new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity"));
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_PLAYER_STATION, new OnlyLeaveCommunityCommandGroup(chassis, "PlayerStationLeaveCommunity"));
             m_autoOptions.get(height).put(AutonMode.ONLY_DOCK_AND_ENGAGE, new OnlyDockAndEngageCommandGroup(chassis));
+            m_autoOptions.get(height).put(AutonMode.TWO_NODE_LEAVE_COMMUNITY_ENGAGE, new TwoPieceLeaveCommunityAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "TwoPieceLeaveCommunityAndEngage", height, GamePieceType.CUBE));
         }
 
         for (AutonMode auto: AutonMode.values()) {
