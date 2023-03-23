@@ -68,6 +68,7 @@ public class RobotContainer {
 
     private final LEDManagerSubsystem m_ledManagerSubsystem;
     private final DoubleSupplier m_pressureSupplier;
+    private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -98,6 +99,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_claw));
+        SmartDashboard.putData("Select Auto Scoring Position", new ChooseAimTurretCommandSendable());
         createTestCommands(pneumaticHub);
         //automatedTurretCommands();
 
@@ -248,11 +250,13 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
-        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHomeWithoutTurret(m_armPivot, m_armExtend));
+        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goToGroundPickup(m_armPivot, m_armExtend));
+        m_operatorController.povLeft().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend));
+        m_operatorController.povRight().whileTrue(m_armPivot.commandGoToAutoNodePosition(() -> m_autoAimNodePosition));
 
         //SmartDashboard.putData("Mia Buttons", new AutoAimTurretToNodeOnTheFly(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, m_ledManagerSubsystem));
 
-        SmartDashboard.putData("Auto Aim Chassis", new AutoAimChassisToNodeOnTheFly(m_armPivot, m_chassisSubsystem, m_ledManagerSubsystem, m_armExtend));
+        SmartDashboard.putData("Auto Aim Chassis", new AutoAimChassisToNodeOnTheFly(() -> m_autoAimNodePosition, m_armPivot, m_chassisSubsystem, m_ledManagerSubsystem, m_armExtend));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
@@ -317,6 +321,27 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ROBOT_ANGLE, () -> m_chassisSubsystem.getPose().getRotation().getDegrees(), null);
 
+        }
+    }
+
+    private class ChooseAimTurretCommandSendable implements Sendable {
+
+        @Override
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType("ScoringPosition");
+
+            builder.addDoubleProperty(
+                "SelectedPosition", null, this::handleScoringPosition);
+            builder.addStringProperty("AsString", () -> m_autoAimNodePosition.toString(), null);
+        }
+
+        private void handleScoringPosition(double d) {
+            try {
+                m_autoAimNodePosition = AutoAimNodePositions.values()[(int) d];
+            } catch (Exception ex) { // NOPMD
+                m_autoAimNodePosition = AutoAimNodePositions.NONE;
+                ex.printStackTrace(); // NOPMD
+            }
         }
     }
 }

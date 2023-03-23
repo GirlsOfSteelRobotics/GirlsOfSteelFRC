@@ -20,7 +20,7 @@ public class AutoAimTurretToNodePreselected extends BaseAutoAimTurretCommand {
         setName("Score " + gamePiece + " " + position + " " + height);
 
         m_baseTargetLocation = targetPos;
-        m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
+        m_targetPitch = ArmPivotSubsystem.getArmAngleForScoring(height, gamePiece);
     }
 
     @Override

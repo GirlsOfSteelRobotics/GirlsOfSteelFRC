@@ -1,7 +1,7 @@
 {
-  "System Joysticks": {
+  "Keyboard 1 Settings": {
     "window": {
-      "visible": false
+      "visible": true
     }
   },
   "keyboardJoysticks": [
@@ -68,7 +68,12 @@
         46,
         47
       ],
-      "povCount": 0
+      "povConfig": [
+        {
+          "key90": 49
+        }
+      ],
+      "povCount": 1
     },
     {
       "axisConfig": [
@@ -104,8 +109,7 @@
       "guid": "Keyboard0"
     },
     {
-      "guid": "78696e70757401000000000000000000",
-      "useGamepad": true
+      "guid": "Keyboard1"
     }
   ]
 }
