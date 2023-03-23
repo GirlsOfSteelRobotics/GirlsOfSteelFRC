@@ -4,7 +4,6 @@ import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
@@ -14,7 +13,7 @@ public final class CombinedCommandsUtil {
 
     }
 
-    public static CommandBase goHomeWithoutTurret(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
+    public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandFullRetract()
             .andThen(pivot.commandGoHome())
             .withName("Go Home Without Turret");
@@ -27,10 +26,9 @@ public final class CombinedCommandsUtil {
     //        .withName("Go Home With Turret");
     //}
 
-    public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, TurretSubsystem turret) {
+    public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandMiddleRetract()
             .alongWith(pivot.commandGoToGroundPickup())
-            .alongWith(turret.goHome())
             .withName("Go To Ground Pickup");
     }
 

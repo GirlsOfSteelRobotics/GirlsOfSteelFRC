@@ -30,7 +30,7 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
         //drive to docking station
         addCommands((driveAutoOnePieceEngage)
-            .alongWith(CombinedCommandsUtil.goHomeWithoutTurret(armPivot, armExtension)));
+            .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());
