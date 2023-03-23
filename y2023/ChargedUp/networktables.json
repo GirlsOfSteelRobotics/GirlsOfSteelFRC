@@ -454,5 +454,37 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/max Velocity Part 1",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max Acceleration Part 1",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max Velocity Part 2",
+    "type": "double",
+    "value": 3.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max Acceleration Part 2",
+    "type": "double",
+    "value": 3.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

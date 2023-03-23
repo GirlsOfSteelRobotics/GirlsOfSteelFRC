@@ -418,7 +418,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.02,
     "properties": {
       "persistent": true
     }

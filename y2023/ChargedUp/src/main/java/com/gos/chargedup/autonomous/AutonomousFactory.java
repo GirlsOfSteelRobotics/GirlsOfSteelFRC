@@ -37,6 +37,7 @@ public final class AutonomousFactory {
         ONE_NODE_LEAVE_AND_ENGAGE,
 
         ONE_NODE_AND_LEAVE_COMMUNITY_1,
+        ONE_NODE_AND_LEAVE_COMMUNITY_3,
         ONE_NODE_AND_LEAVE_COMMUNITY_7,
 
         SCORE_CONE_AT_CURRENT_POS,
@@ -69,12 +70,12 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.DO_NOTHING, new SequentialCommandGroup());
 
             //MVR Path Option 1: Score piece and leave community through the sides
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, turret, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
-
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity1", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_3, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity4", height, GamePieceType.CUBE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceAndLeaveCommunity7", height, GamePieceType.CUBE));
 
+            //MVR Path Option 2: Leave community and engage (with speeds changed)
+            //testing score piece, leave community, and engage
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE, new OneNodeLeaveAndEngageFullCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE));
 
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
@@ -83,8 +84,6 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "DockandEngage_Community4", height, GamePieceType.CUBE));
 
             m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
-            //testing score piece, leave community, and engage
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE, new OnePieceLeaveEngageCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE));
 
             // m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.SCORE_CUBE_AT_CURRENT_POS, new ScorePieceCommandGroup(armPivot, armExtension, claw, height, GamePieceType.CUBE));

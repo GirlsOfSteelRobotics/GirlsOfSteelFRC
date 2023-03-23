@@ -28,6 +28,9 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
             .andThen(CombinedCommandsUtil.goHomeWithoutTurret(armPivot, armExtension)));
 
+        //turn to start
+        addCommands(chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees()));
+
         //drive out of community
         addCommands(driveAutoOnePieceAndLeave);
     }
