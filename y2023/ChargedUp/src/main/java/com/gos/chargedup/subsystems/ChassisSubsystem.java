@@ -206,6 +206,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
@@ -421,7 +422,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
 
-        if (m_turnAnglePID.atSetpoint()) {
+        if (m_turnAnglePID.atGoal()) {
             steerVoltage = 0;
         }
 
@@ -432,7 +433,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean turnPIDIsAtAngle() {
-        return m_turnAnglePID.atSetpoint();
+        return m_turnAnglePID.atGoal();
     }
 
     public void autoEngage() {

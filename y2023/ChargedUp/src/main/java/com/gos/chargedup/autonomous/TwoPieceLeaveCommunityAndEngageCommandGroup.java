@@ -19,28 +19,26 @@ import java.util.HashMap;
 
 public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialCommandGroup {
     public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
+        PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath(path + "Before", Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoTwoPieceLeaveCommunityAndEngageBefore = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceLeaveAndEngageBefore);
-        PathPlannerTrajectory twoPieceLeaveAndEngageAfter = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
+        PathPlannerTrajectory twoPieceLeaveAndEngageAfter = PathPlanner.loadPath(path + "After", Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoTwoPieceLeaveCommunityAndEngageAfter = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceLeaveAndEngageAfter);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
             .andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
-        //turn to start
-        addCommands(chassis.createTurnPID(twoPieceLeaveAndEngageBefore.getInitialPose().getRotation().getDegrees()));
-
         //drive out of community across engage
         addCommands(driveAutoTwoPieceLeaveCommunityAndEngageBefore);
 
+        //turn 180
+//        addCommands(chassis.createTurnPID(twoPieceLeaveAndEngageBefore.getInitialPose().getRotation().getDegrees()));
+        addCommands(chassis.createTurnPID(0));
+
         //grab piece
         addCommands(armPivot.commandGoToGroundPickup());
-        addCommands(claw.createMoveClawIntakeInCommand());
+        addCommands(claw.createMoveClawIntakeInWithTimeoutCommand());
         addCommands(armPivot.commandHpPickupHold());
-
-        //turn to go back
-        addCommands(chassis.createTurnPID(twoPieceLeaveAndEngageAfter.getInitialPose().getRotation().getDegrees()));
 
         //engage
         addCommands(driveAutoTwoPieceLeaveCommunityAndEngageAfter);
