@@ -418,7 +418,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.02,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
@@ -483,46 +483,6 @@
     "name": "/Preferences/max Acceleration Part 2",
     "type": "double",
     "value": 3.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.max_acceleration",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.max_velocity",
-    "type": "double",
-    "value": 0.0,
     "properties": {
       "persistent": true
     }
