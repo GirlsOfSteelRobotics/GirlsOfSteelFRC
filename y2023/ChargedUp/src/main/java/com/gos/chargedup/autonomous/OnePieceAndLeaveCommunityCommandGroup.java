@@ -3,6 +3,8 @@ package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.commands.CombinedCommandsUtil;
+import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -35,15 +37,15 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
         //0.6 away
         Pose2d startPose = new Pose2d(new Translation2d(onePieceAndLeave.getInitialPose().getTranslation().getX()-0.6, onePieceAndLeave.getInitialPose().getTranslation().getY()), Rotation2d.fromDegrees(180));
         addCommands(chassis.createResetOdometry(startPose));
+        addCommands(new PrintCommand("reset Odom to correct initial pose "));
 
-        addCommands(new WaitCommand(2));
-        addCommands(new PrintCommand("reset Odom"));
-
+        //cover the 0.6 away
         addCommands(chassis.createDriveToPoint(new Pose2d(onePieceAndLeave.getInitialPose().getTranslation(), Rotation2d.fromDegrees(180)), true));
         addCommands(new WaitCommand(2));
-        addCommands(new PrintCommand("drive to point "));
+        addCommands(new PrintCommand("drive to point"));
 
 
+        //turn to start pos
         addCommands(chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees()));
         addCommands(new WaitCommand(2));
         addCommands(new PrintCommand("turn at point"));
