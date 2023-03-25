@@ -6,6 +6,7 @@ import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
+import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
 import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
 import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
 import com.gos.lib.led.mirrored.MirroredLEDRainbow;
@@ -119,28 +120,47 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // one piece - flash
         // two piece - single light
 
-        // starting position -- color (1 - pink, 2 - red, 3 - orange, 4 - yellow, 5 - green, 6 - blue, 7 - purple)
+        Color NODE_0_COLOR = Color.kRed;
+        Color NODE_1_COLOR = Color.kOrange;
+        Color NODE_2_COLOR = Color.kYellow;
+        Color NODE_3_COLOR = Color.kGreen;
+        Color NODE_4_COLOR = Color.kBlack;
+        Color NODE_5_COLOR = Color.kIndigo;
+        Color NODE_6_COLOR = Color.kViolet;
+        Color NODE_7_COLOR = Color.kPapayaWhip;
+        Color NODE_8_COLOR = Color.kDarkCyan;
+
+
         Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap = new HashMap<>();
-        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_END, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_PLAYER_STATION, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPapayaWhip));
 
-        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CUBE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kPapayaWhip));
-        //        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
-        //        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kYellow));
-        //        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
+        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.DO_NOTHING, Color.kBlack);
 
-        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
-        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
-        //        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
+        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_0, NODE_0_COLOR);
+        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_8, NODE_8_COLOR);
+        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE_4, NODE_4_COLOR);
+
+        addOnePieceAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, NODE_3_COLOR);
+        addOnePieceAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, NODE_4_COLOR);
+        addOnePieceAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, NODE_5_COLOR);
+
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_0, NODE_0_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, NODE_1_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, NODE_2_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_3, NODE_3_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_5, NODE_5_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, NODE_6_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, NODE_7_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_8, NODE_8_COLOR);
+
+        addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, NODE_0_COLOR);
+        addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, NODE_7_COLOR);
 
         // no scoring -- solid red
         // low - red, middle - blue, high - purple
         Map<AutoPivotHeight, LEDPattern> autoHeightMap = new HashMap<>();
-        autoHeightMap.put(AutoPivotHeight.LOW, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, Color.kRed));
-        autoHeightMap.put(AutoPivotHeight.MEDIUM, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, Color.kBlue));
-        autoHeightMap.put(AutoPivotHeight.HIGH, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, Color.kPurple));
+        addHeightPattern(autoHeightMap, AutoPivotHeight.LOW, Color.kRed);
+        addHeightPattern(autoHeightMap, AutoPivotHeight.MEDIUM, Color.kBlue);
+        addHeightPattern(autoHeightMap, AutoPivotHeight.HIGH, Color.kPurple);
 
         m_autoModeColor = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
         m_heightColor = new MirroredLEDPatternLookup<>(m_buffer, autoHeightMap);
@@ -158,6 +178,27 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_led.setData(m_buffer);
         m_led.start();
     }
+
+    private void addNoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+        autonColorMap.put(mode, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
+    }
+
+    private void addOnePieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+        autonColorMap.put(mode, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, color));
+    }
+
+    private void addOnePieceAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+        autonColorMap.put(mode, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 2, color));
+    }
+
+    private void addTwoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+        autonColorMap.put(mode, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
+    }
+
+    private void addHeightPattern(Map<AutoPivotHeight, LEDPattern> autoHeightMap, AutoPivotHeight height, Color color) {
+        autoHeightMap.put(height, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, color));
+    }
+
 
     private void disabledPatterns() {
         AutoPivotHeight height = m_autoModeFactory.getSelectedHeight();

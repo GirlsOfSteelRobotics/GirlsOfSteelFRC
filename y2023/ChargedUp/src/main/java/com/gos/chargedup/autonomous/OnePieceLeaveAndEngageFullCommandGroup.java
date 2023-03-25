@@ -18,10 +18,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import java.util.HashMap;
 import java.util.List;
 
-public class OneNodeLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
-    public OneNodeLeaveAndEngageFullCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
+    public OnePieceLeaveAndEngageFullCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String path) {
 
-        List<PathPlannerTrajectory> driveOverStation = PathPlanner.loadPathGroup("OneNodeLeaveAndEngageFull", true, Constants.DEFAULT_PATH_CONSTRAINTS, new PathConstraints(0.5, 0.5), new PathConstraints(7, 7));
+        List<PathPlannerTrajectory> driveOverStation = PathPlanner.loadPathGroup(path, true,
+            Constants.DEFAULT_PATH_CONSTRAINTS,
+            new PathConstraints(0.5, 0.5),
+            Constants.DEFAULT_PATH_CONSTRAINTS);
         Command driveForwardOverChargingStation1 = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(driveOverStation);
 
         //score piece
