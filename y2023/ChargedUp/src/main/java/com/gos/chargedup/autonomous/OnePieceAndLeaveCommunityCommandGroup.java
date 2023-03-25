@@ -34,11 +34,11 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
         Command driveAutoOnePieceAndLeave = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(onePieceAndLeave);
 
         //score
-        //addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
-          //  .andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
+            .andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
         //0.6 away
-        Pose2d startPose = new Pose2d(new Translation2d(onePieceAndLeave.getInitialPose().getTranslation().getX()-0.6, onePieceAndLeave.getInitialPose().getTranslation().getY()), Rotation2d.fromDegrees(180));
+        Pose2d startPose = new Pose2d(new Translation2d(onePieceAndLeave.getInitialPose().getTranslation().getX() - 0.6, onePieceAndLeave.getInitialPose().getTranslation().getY()), Rotation2d.fromDegrees(180));
         addCommands(chassis.createResetOdometry(startPose));
         addCommands(new PrintCommand("reset Odom to correct initial pose "));
 
