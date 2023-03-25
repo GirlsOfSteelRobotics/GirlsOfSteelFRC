@@ -1,6 +1,7 @@
 package com.gos.chargedup.autonomous;
 
 
+import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
@@ -16,7 +17,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -39,8 +42,17 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
         addCommands(chassis.createResetOdometry(startPose));
         addCommands(new PrintCommand("reset Odom to correct initial pose "));
 
-        //cover the 0.6 away
-        addCommands(chassis.createDriveToPoint(new Pose2d(onePieceAndLeave.getInitialPose().getTranslation(), Rotation2d.fromDegrees(180)), true));
+        addCommands(new WaitCommand(2));
+        addCommands(new PrintCommand("reset Odom"));
+
+        Pose2d realTrajectoryStart = onePieceAndLeave.getInitialPose();
+
+        addCommands(new ConditionalCommand(
+            chassis.driveToPointNoFlip(startPose, new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180)), true),
+            chassis.driveToPointNoFlip(AllianceFlipper.flip(startPose), AllianceFlipper.flip(new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180))), true),
+            () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
+        ));
+
         addCommands(new WaitCommand(2));
         addCommands(new PrintCommand("drive to point"));
 
