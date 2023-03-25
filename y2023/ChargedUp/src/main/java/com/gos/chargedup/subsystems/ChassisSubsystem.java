@@ -640,9 +640,10 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createTurnPID(double angleGoal) {
-        return this.run(() -> turnPID(angleGoal))
+        return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
+            .andThen(this.run(() -> turnPID(angleGoal))
             .until(this::turnPIDIsAtAngle)
-            .withName("Chassis to Angle" + angleGoal);
+            .withName("Chassis to Angle" + angleGoal));
     }
 }
 
