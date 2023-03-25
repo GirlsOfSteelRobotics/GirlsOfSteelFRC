@@ -9,6 +9,7 @@ import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
@@ -117,8 +118,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final ProfiledPIDController m_turnAnglePID;
     private final PidProperty m_turnAnglePIDProperties;
+    private final SimpleMotorFeedForwardProperty m_turnAnglePIDFFProperty;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
+    private final NetworkTableEntry m_gyroAngleRateEntry;
+    private final NetworkTableEntry m_gyroAngleGoalVelocityEntry;
+
     private final NetworkTableEntry m_leftEncoderPosition;
     private final NetworkTableEntry m_leftEncoderVelocity;
     private final NetworkTableEntry m_rightEncoderPosition;
@@ -206,6 +211,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
@@ -213,6 +219,10 @@ public class ChassisSubsystem extends SubsystemBase {
             .addMaxAcceleration(0)
             .addMaxVelocity(0)
             .build();
+        m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
+            .addKs(0)
+            .addKa(0)
+            .addKff(0);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
@@ -237,6 +247,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
+        m_gyroAngleRateEntry = loggingTable.getEntry("Gyro Rate");
+        m_gyroAngleGoalVelocityEntry = loggingTable.getEntry("Gyro Goal Velocity");
 
         m_leftEncoderPosition = loggingTable.getEntry("Left Position");
         m_leftEncoderVelocity = loggingTable.getEntry("Left Velocity");
@@ -351,8 +363,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftPIDProperties.updateIfChanged();
         m_rightPIDProperties.updateIfChanged();
         m_turnAnglePIDProperties.updateIfChanged();
+        m_turnAnglePIDFFProperty.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
+        m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
         m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
         m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
         m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));
@@ -363,8 +377,7 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
         SmartDashboard.putBoolean("In Community", isInCommunityZone());
         SmartDashboard.putBoolean("In Loading", isInLoadingZone());
-        SmartDashboard.putNumber("xxxpose angle", m_odometry.getPoseMeters().getRotation().getDegrees());
-
+        SmartDashboard.putNumber("pose angle", m_odometry.getPoseMeters().getRotation().getDegrees());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -419,9 +432,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void turnPID(double angleGoal) {
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
-        steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
+        steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
 
-        if (m_turnAnglePID.atSetpoint()) {
+        m_gyroAngleGoalVelocityEntry.setNumber(steerVoltage);
+
+
+        if (m_turnAnglePID.atGoal()) {
             steerVoltage = 0;
         }
 
@@ -432,7 +448,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean turnPIDIsAtAngle() {
-        return m_turnAnglePID.atSetpoint();
+        return m_turnAnglePID.atGoal();
     }
 
     public void autoEngage() {
@@ -602,7 +618,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createTurnPID(double angleGoal) {
         return this.run(() -> turnPID(angleGoal))
-            .until(() -> turnPIDIsAtAngle())
+            .until(this::turnPIDIsAtAngle)
             .withName("Chassis to Angle" + angleGoal);
     }
 }
