@@ -478,5 +478,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/turn PID allowable error",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
