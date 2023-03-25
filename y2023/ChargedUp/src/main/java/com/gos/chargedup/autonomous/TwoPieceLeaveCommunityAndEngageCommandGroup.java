@@ -18,10 +18,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import java.util.HashMap;
 
 public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialCommandGroup {
-    public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath(path + "Before", Constants.DEFAULT_PATH_CONSTRAINTS, true);
+    public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+        PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath("OnePieceEngageWithSecondp1", Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoTwoPieceLeaveCommunityAndEngageBefore = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceLeaveAndEngageBefore);
-        PathPlannerTrajectory twoPieceLeaveAndEngageAfter = PathPlanner.loadPath(path + "After", Constants.DEFAULT_PATH_CONSTRAINTS, true);
+
+        PathPlannerTrajectory twoPieceLeaveAndEngageAfter = PathPlanner.loadPath("OnePieceEngageWithSecondp2", Constants.DEFAULT_PATH_CONSTRAINTS, false);
         Command driveAutoTwoPieceLeaveCommunityAndEngageAfter = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceLeaveAndEngageAfter);
 
         //score
@@ -38,9 +39,9 @@ public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialComma
         //grab piece
         addCommands(armPivot.commandGoToGroundPickup());
         addCommands(claw.createMoveClawIntakeInWithTimeoutCommand());
-        addCommands(armPivot.commandHpPickupHold());
 
         //engage
         addCommands(driveAutoTwoPieceLeaveCommunityAndEngageAfter);
+        addCommands(chassis.createAutoEngageCommand());
     }
 }
