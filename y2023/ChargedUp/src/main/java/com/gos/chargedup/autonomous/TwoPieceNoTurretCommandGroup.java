@@ -25,7 +25,7 @@ public class TwoPieceNoTurretCommandGroup extends SequentialCommandGroup {
         PathPlannerTrajectory getSecondPiece = PathPlanner.loadPath(pathMiddle, Constants.DEFAULT_PATH_CONSTRAINTS, false);
         Command driveToGetSecondPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(getSecondPiece);
 
-        PathPlannerTrajectory scoreSecondPiece = PathPlanner.loadPath(pathEnd, Constants.DEFAULT_PATH_CONSTRAINTS, true);
+        PathPlannerTrajectory scoreSecondPiece = PathPlanner.loadPath(pathEnd, Constants.DEFAULT_PATH_CONSTRAINTS, false);
         Command driveToScoreSecondPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(scoreSecondPiece);
 
         //score piece
