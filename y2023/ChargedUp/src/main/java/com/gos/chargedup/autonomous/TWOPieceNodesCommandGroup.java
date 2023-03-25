@@ -37,10 +37,8 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         addCommands(chassis.createTurnPID(0));
 
         //drive second part
-        addCommands(driveToGetSecondPiece);
-
-        //get piece
-        addCommands(claw.createMoveClawIntakeInWithTimeoutCommand());
+        addCommands(driveToGetSecondPiece
+            .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //turn 180
         addCommands(chassis.createTurnPID(180));

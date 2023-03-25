@@ -173,16 +173,32 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_absoluteEncoder.setPositionConversionFactor(360.0);
         m_absoluteEncoder.setVelocityConversionFactor(360.0 / 60);
         m_absoluteEncoder.setInverted(true);
-        m_absoluteEncoder.setZeroOffset(39.6 - MIN_ANGLE_DEG);
+        m_absoluteEncoder.setZeroOffset(22.1);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
-            resetPivotEncoder(m_absoluteEncoder.getPosition());
+            syncMotorEncoderToAbsoluteEncoder();
         }
         else {
             resetPivotEncoder(MIN_ANGLE_DEG);
         }
 
         m_pivotMotor.burnFlash();
+    }
+
+    private void syncMotorEncoderToAbsoluteEncoder() {
+        resetPivotEncoder(getAbsoluteEncoderAngle());
+    }
+
+    private double getAbsoluteEncoderAngle() {
+        double val = m_absoluteEncoder.getPosition();
+        if (val > 180) {
+            val -= 360;
+        }
+        if (val < -180) {
+            val += 360;
+        }
+
+        return val;
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -218,7 +234,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
-        m_absoluteEncoderEntry.setNumber(m_absoluteEncoder.getPosition());
+        m_absoluteEncoderEntry.setNumber(getAbsoluteEncoderAngle());
         m_goalAngleDegEntry.setNumber(m_armAngleGoal);
         m_velocityEntry.setNumber(getArmVelocityDegPerSec());
 

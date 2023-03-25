@@ -34,32 +34,26 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         Command driveAutoOnePieceAndLeave = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(onePieceAndLeave);
 
         //score
-        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
-            .andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
 
         //0.6 away
-        Pose2d startPose = new Pose2d(new Translation2d(onePieceAndLeave.getInitialPose().getTranslation().getX() - 0.6, onePieceAndLeave.getInitialPose().getTranslation().getY()), Rotation2d.fromDegrees(180));
+        Pose2d startPose = new Pose2d(new Translation2d(
+            onePieceAndLeave.getInitialPose().getTranslation().getX() - Units.inchesToMeters(6),
+            onePieceAndLeave.getInitialPose().getTranslation().getY()),
+            Rotation2d.fromDegrees(180));
         addCommands(chassis.createResetOdometry(startPose));
-        addCommands(new PrintCommand("reset Odom to correct initial pose "));
-
-        addCommands(new WaitCommand(2));
-        addCommands(new PrintCommand("reset Odom"));
 
         Pose2d realTrajectoryStart = onePieceAndLeave.getInitialPose();
-
         addCommands(new ConditionalCommand(
             chassis.driveToPointNoFlip(startPose, new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180)), true),
             chassis.driveToPointNoFlip(AllianceFlipper.flip(startPose), AllianceFlipper.flip(new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180))), true),
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
-        ));
-
-        addCommands(new WaitCommand(2));
-        addCommands(new PrintCommand("drive to point"));
-
+        ).raceWith(new WaitCommand(100).alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension))));
 
         //turn to start pos
-        addCommands(chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees()));
-        addCommands(new WaitCommand(2));
+        addCommands(
+            chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees())
+                .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
         addCommands(new PrintCommand("turn at point"));
 
 
