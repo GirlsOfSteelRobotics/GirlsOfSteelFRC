@@ -3,6 +3,7 @@ package com.gos.chargedup.autonomous;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
@@ -11,35 +12,44 @@ import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import java.util.List;
-import java.util.Map;
-
+import java.util.HashMap;
 
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
+    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, String pathStart, String pathMiddle, String pathEnd) {
+        PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, Constants.DEFAULT_PATH_CONSTRAINTS, true);
+        Command driveToFirstPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(firstPiece);
 
-    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
+        PathPlannerTrajectory getSecondPiece = PathPlanner.loadPath(pathMiddle, Constants.DEFAULT_PATH_CONSTRAINTS, false);
+        Command driveToGetSecondPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(getSecondPiece);
 
-        Map<String, Command> eventMap = EventMapUtil.createDefaultEventMap(chassis, armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE);
+        PathPlannerTrajectory scoreSecondPiece = PathPlanner.loadPath(pathEnd, Constants.DEFAULT_PATH_CONSTRAINTS, false);
+        Command driveToScoreSecondPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(scoreSecondPiece);
 
-        List<PathPlannerTrajectory> twoPieceNodes0And1 = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceNodes0And1);
-
-        //score first piece:
-        addCommands(new InstantCommand(claw::holdPiece));
+        //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
 
-        // Get the turret mostly spun back around before driving the path and moving the arm
-        //addCommands(turret.goHome().until(() -> turret.getTurretAngleDeg() < 90));
+        //first part
+        addCommands(driveToFirstPiece.alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
-        //drive, get piece, drive back
-        addCommands(fullAuto);
+        //turn 180
+        addCommands(chassis.createTurnPID(0));
 
-        //score second piece
+        //drive second part
+        addCommands(driveToGetSecondPiece);
+
+        //get piece
+        addCommands(claw.createMoveClawIntakeInWithTimeoutCommand());
+
+        //turn 180
+        addCommands(chassis.createTurnPID(180));
+
+        //third part
+        addCommands(driveToScoreSecondPiece);
+
+        //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE));
-
 
     }
 }

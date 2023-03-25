@@ -418,7 +418,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.02,
     "properties": {
       "persistent": true
     }
@@ -449,6 +449,30 @@
   },
   {
     "name": "/Preferences/Chassis to angle.mm.max_velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle FF Properties.smff.kff",
+    "type": "double",
+    "value": 0.03,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle FF Properties.smff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle FF Properties.smff.ka",
     "type": "double",
     "value": 0.0,
     "properties": {

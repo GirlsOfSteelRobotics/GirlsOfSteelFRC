@@ -24,6 +24,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     }
   },
@@ -37,9 +40,13 @@
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[5]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[7]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
       "/LiveWindow/Ungrouped/Pigeon 2 [20]": "Gyro",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
@@ -196,27 +203,7 @@
       "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
-      "/Shuffleboard/AutomatedTurret/Choose Turret Command": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/AutomatedTurret/Low Cone Left": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/AutomatedTurret/Low Cone Right": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/AutomatedTurret/Mid Cone Left": {
         "window": {
           "visible": true
         }
@@ -238,11 +225,6 @@
         }
       },
       "/Shuffleboard/TestCommands/Chassis To Angle 0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/TestCommands/Chassis To Angle 180": {
         "window": {
           "visible": true
         }
@@ -411,6 +393,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true
@@ -427,5 +412,8 @@
         "open": true
       }
     }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

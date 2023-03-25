@@ -38,12 +38,14 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
@@ -84,6 +86,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
+    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "turn PID allowable error", 1);
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -211,7 +214,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
-        m_turnAnglePID.enableContinuousInput(-180, 180);
+        m_turnAnglePID.enableContinuousInput(0, 360);
+        m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
@@ -366,7 +370,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDFFProperty.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
-        m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
+        m_gyroAngleRateEntry.setNumber(-m_gyro.getRate());
         m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
         m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
         m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));
@@ -431,20 +435,20 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void turnPID(double angleGoal) {
+        SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
         steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
 
-        m_gyroAngleGoalVelocityEntry.setNumber(steerVoltage);
+        m_gyroAngleGoalVelocityEntry.setNumber(m_turnAnglePID.getSetpoint().velocity);
 
 
-        if (m_turnAnglePID.atGoal()) {
+        if (turnPIDIsAtAngle()) {
             steerVoltage = 0;
         }
 
         m_leaderRight.setVoltage(steerVoltage);
         m_leaderLeft.setVoltage(-steerVoltage);
         m_drive.feed();
-
     }
 
     public boolean turnPIDIsAtAngle() {
@@ -513,7 +517,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public void resetOdometry(Pose2d pose2d) {
         m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
         m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
-        System.out.println("Reset Odometry was called");
+        //System.out.println("Reset Odometry was called");
     }
 
     public boolean isInCommunityZone() {
@@ -530,13 +534,18 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")
-    public CommandBase driveToPoint(Pose2d point) {
+    public CommandBase driveToPoint(Pose2d point, boolean reverse) {
         point = AllianceFlipper.maybeFlip(point);
+        System.out.println("flipped point" + point);
+        return driveToPointNoFlip(getPose(), point, reverse);
+    }
 
+    public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
             new PathConstraints(Units.inchesToMeters(m_tuningVelocity.getValue()), Units.inchesToMeters(m_tuningAcceleration.getValue())),
-            new PathPoint(new Translation2d(getPose().getX(), getPose().getY()), getPose().getRotation()),
-            new PathPoint(point.getTranslation(), point.getRotation())
+            reverse,
+            new PathPoint(start.getTranslation(), getPose().getRotation()),
+            new PathPoint(end.getTranslation(), end.getRotation())
         );
 
         return new PPRamseteCommand(
@@ -601,6 +610,7 @@ public class ChassisSubsystem extends SubsystemBase {
             this);
     }
 
+
     ////////////////
     // Checklists
     ////////////////
@@ -612,14 +622,28 @@ public class ChassisSubsystem extends SubsystemBase {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
-    public CommandBase createDriveToPoint(Pose2d point) {
-        return new ProxyCommand(() -> driveToPoint(point));
+    public CommandBase createDriveToPoint(Pose2d point, boolean reverse) {
+        return new ProxyCommand(() -> driveToPoint(point, reverse));
+    }
+
+    public CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle) {
+        return Commands.runOnce(
+            () -> {
+                PathPlannerTrajectory.PathPlannerState initialState = trajectory.getInitialState();
+                initialState =
+                        PathPlannerTrajectory.transformStateForAlliance(
+                            initialState, DriverStation.getAlliance());
+                Pose2d startPose = new Pose2d(initialState.poseMeters.getTranslation(), startAngle);
+                resetOdometry(startPose);
+            });
+
     }
 
     public CommandBase createTurnPID(double angleGoal) {
-        return this.run(() -> turnPID(angleGoal))
+        return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
+            .andThen(this.run(() -> turnPID(angleGoal))
             .until(this::turnPIDIsAtAngle)
-            .withName("Chassis to Angle" + angleGoal);
+            .withName("Chassis to Angle" + angleGoal));
     }
 }
 
