@@ -5,6 +5,7 @@ import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.chargedup.SmartDashboardNames;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
@@ -84,6 +85,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
+    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "turn PID allowable error", 1);
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -211,7 +213,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
-        m_turnAnglePID.enableContinuousInput(-180, 180);
+        m_turnAnglePID.enableContinuousInput(0, 360);
+        m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
@@ -366,7 +369,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDFFProperty.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
-        m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
+        m_gyroAngleRateEntry.setNumber(-m_gyro.getRate());
         m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
         m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
         m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));
@@ -431,20 +434,20 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void turnPID(double angleGoal) {
+        SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
         steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
 
-        m_gyroAngleGoalVelocityEntry.setNumber(steerVoltage);
+        m_gyroAngleGoalVelocityEntry.setNumber(m_turnAnglePID.getSetpoint().velocity);
 
 
-        if (m_turnAnglePID.atGoal()) {
+        if (turnPIDIsAtAngle()) {
             steerVoltage = 0;
         }
 
         m_leaderRight.setVoltage(steerVoltage);
         m_leaderLeft.setVoltage(-steerVoltage);
         m_drive.feed();
-
     }
 
     public boolean turnPIDIsAtAngle() {

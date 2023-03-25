@@ -21,6 +21,8 @@ import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -127,8 +129,8 @@ public class RobotContainer {
         tab.add("Chassis To Angle 180", m_chassisSubsystem.createTurnPID(180));
 
         // chassis reset odometry test
-        // tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
-        // tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
+        tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+        tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
         // tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
         // tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
 
@@ -265,8 +267,8 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-        // m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
-        // m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
+        m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
+        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
 
         //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
