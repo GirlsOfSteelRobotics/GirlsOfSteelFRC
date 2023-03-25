@@ -537,12 +537,15 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase driveToPoint(Pose2d point, boolean reverse) {
         point = AllianceFlipper.maybeFlip(point);
         System.out.println("flipped point" + point);
+        return driveToPointNoFlip(getPose(), point, reverse);
+    }
 
+    public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
             new PathConstraints(Units.inchesToMeters(m_tuningVelocity.getValue()), Units.inchesToMeters(m_tuningAcceleration.getValue())),
             reverse,
-            new PathPoint(new Translation2d(getPose().getX(), getPose().getY()), getPose().getRotation()),
-            new PathPoint(point.getTranslation(), point.getRotation())
+            new PathPoint(start.getTranslation(), getPose().getRotation()),
+            new PathPoint(end.getTranslation(), end.getRotation())
         );
 
         return new PPRamseteCommand(
