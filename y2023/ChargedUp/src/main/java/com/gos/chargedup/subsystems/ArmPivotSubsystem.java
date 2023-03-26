@@ -56,16 +56,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 45.0 * 4.0;
 
     // Arm Setpoints
-    private static final double HUMAN_PLAYER_ANGLE;
-    private static final double ARM_CUBE_MIDDLE_DEG;
-    private static final double ARM_CUBE_HIGH_DEG;
-    private static final double ARM_CONE_MIDDLE_DEG;
-    private static final double ARM_CONE_HIGH_DEG;
-    private static final double ARM_SCORE_LOW_DEG;
-    private static final double GROUND_PICKUP_ANGLE;
-    private static final double HOME_ANGLE;
-    private static final double MIN_ANGLE_DEG;
-    private static final double MAX_ANGLE_DEG;
+    public static final double HUMAN_PLAYER_ANGLE;
+    public static final double ARM_CUBE_MIDDLE_DEG;
+    public static final double ARM_CUBE_HIGH_DEG;
+    public static final double ARM_CONE_MIDDLE_DEG;
+    public static final double ARM_CONE_HIGH_DEG;
+    public static final double ARM_SCORE_LOW_DEG;
+    public static final double GROUND_PICKUP_ANGLE;
+    public static final double HOME_ANGLE;
+    public static final double MIN_ANGLE_DEG;
+    public static final double MAX_ANGLE_DEG;
 
     static {
         //toDo: make these values work as expected
@@ -309,11 +309,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(double pivotAngleGoal) {
+        return isArmAtAngle(pivotAngleGoal, ALLOWABLE_ERROR.getValue(), ALLOWABLE_VELOCITY_ERROR.getValue());
+    }
+
+    public boolean isArmAtAngle(double pivotAngleGoal, double allowableError, double allowableVelocityError) {
         double error = getArmAngleDeg() - pivotAngleGoal;
         double velocity = getArmVelocityDegPerSec();
 
-        return Math.abs(error) <= ALLOWABLE_ERROR.getValue() && Math.abs(velocity) < ALLOWABLE_VELOCITY_ERROR.getValue();
+        return Math.abs(error) <= allowableError && Math.abs(velocity) < allowableVelocityError;
     }
+
 
     public final void resetPivotEncoder(double angle) {
         SparkMaxUtil.autoRetry(() -> m_pivotMotorEncoder.setPosition(angle));
@@ -408,6 +413,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .withName("Arm to Angle And Hold" + angle);
     }
 
+    public CommandBase commandPivotArmToAngleHold(double angle, double allowableError, double velocityAllowableError) {
+        return this.run(() -> pivotArmToAngle(angle))
+            .until(() -> isArmAtAngle(angle, allowableError, velocityAllowableError))
+            .withName("Arm to Angle And Hold" + angle);
+    }
+
     public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle),
@@ -444,6 +455,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public CommandBase commandGoToGroundPickupAndHold() {
         return commandPivotArmToAngleHold(GROUND_PICKUP_ANGLE);
+    }
+
+    public CommandBase commandGoToGroundPickupAndHold(double allowableError, double velocityAllowableError) {
+        return commandPivotArmToAngleHold(GROUND_PICKUP_ANGLE, allowableError, velocityAllowableError);
     }
 
     public CommandBase commandHpPickupNoHold() {

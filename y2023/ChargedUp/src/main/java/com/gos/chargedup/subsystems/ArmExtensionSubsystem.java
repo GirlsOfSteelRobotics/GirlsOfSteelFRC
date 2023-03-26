@@ -54,6 +54,11 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
     }
 
+
+    public boolean isMiddleRetract() {
+        return m_currentArmLengthMeters == ARM_MIDDLE_LENGTH;
+    }
+
     public void out() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
@@ -179,6 +184,5 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
-
 }
 
