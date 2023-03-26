@@ -1,7 +1,6 @@
 package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.AutoPivotHeight;
-import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
@@ -16,7 +15,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import jdk.jfr.Event;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,9 +48,6 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         //turn 180
         addCommands(chassis.createTurnPID(0));
-            // .andThen(armPivot.commandPivotArmToAngleHold(-10)
-            //     .alongWith(Commands.waitUntil(() -> armPivot.getArmAngleDeg() > armPivot.GROUND_PICKUP_ANGLE)
-            //     .andThen(armExtension.commandMiddleRetract()))));
 
         //drive second part
         addCommands(driveToGetSecondPiece

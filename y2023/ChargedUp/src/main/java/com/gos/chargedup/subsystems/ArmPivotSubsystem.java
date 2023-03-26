@@ -185,7 +185,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.burnFlash();
     }
 
-    public void syncMotorEncoderToAbsoluteEncoder() {
+    public final void syncMotorEncoderToAbsoluteEncoder() {
         resetPivotEncoder(getAbsoluteEncoderAngle());
     }
 
