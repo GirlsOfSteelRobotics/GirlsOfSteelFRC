@@ -86,7 +86,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
-    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "turn PID allowable error", 1);
+    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "turn PID allowable error", 2);
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -217,16 +217,16 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePID.enableContinuousInput(0, 360);
         m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
-            .addP(0)
+            .addP(0.4)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
+            .addMaxAcceleration(30)
+            .addMaxVelocity(30)
             .build();
         m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
-            .addKs(0)
+            .addKs(0.8)
             .addKa(0)
-            .addKff(0);
+            .addKff(0.027);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();

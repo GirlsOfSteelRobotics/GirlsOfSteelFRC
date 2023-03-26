@@ -89,7 +89,7 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_0, new OnlyLeaveCommunityCommandGroup(chassis, "OnePieceLeaveCommunity0"));
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_8, new OnlyLeaveCommunityCommandGroup(chassis, "OnePieceLeaveCommunity8"));
 
-            m_autoOptions.get(height).put(AutonMode.ONLY_DOCK_AND_ENGAGE_4, new OnlyDockAndEngageCommandGroup(chassis, "NoPieceDockAndEngage"));
+            m_autoOptions.get(height).put(AutonMode.ONLY_DOCK_AND_ENGAGE_4, new OnlyDockAndEngageCommandGroup(chassis, "NoPieceDockandEngage"));
 
             // Score Piece at Node and Leave Community zone on the nearest side
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_0, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity0", height, GamePieceType.CUBE));
