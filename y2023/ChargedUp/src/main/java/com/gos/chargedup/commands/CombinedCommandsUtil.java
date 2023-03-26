@@ -27,8 +27,8 @@ public final class CombinedCommandsUtil {
     //}
 
     public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return extension.commandMiddleRetract()
-            .alongWith(pivot.commandGoToGroundPickup())
+        return pivot.commandGoToGroundPickupAndHold()
+            .andThen(extension.commandMiddleRetract())
             .withName("Go To Ground Pickup");
     }
 

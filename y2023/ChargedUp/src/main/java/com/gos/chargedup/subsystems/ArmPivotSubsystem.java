@@ -71,12 +71,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
             KS = 0.10072;
-            GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.2);
+            GRAVITY_OFFSET = new GosDoubleProperty(false, "Pivot Arm Gravity Offset", 0.2);
 
             HUMAN_PLAYER_ANGLE = 20;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 23;
-            ARM_CONE_MIDDLE_DEG = 23;
+            ARM_CONE_MIDDLE_DEG = 11;
             ARM_CONE_HIGH_DEG = 25;
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
@@ -173,7 +173,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_absoluteEncoder.setPositionConversionFactor(360.0);
         m_absoluteEncoder.setVelocityConversionFactor(360.0 / 60);
         m_absoluteEncoder.setInverted(true);
-        m_absoluteEncoder.setZeroOffset(22.1);
+        m_absoluteEncoder.setZeroOffset(21.5);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
             syncMotorEncoderToAbsoluteEncoder();
@@ -185,7 +185,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.burnFlash();
     }
 
-    private void syncMotorEncoderToAbsoluteEncoder() {
+    public void syncMotorEncoderToAbsoluteEncoder() {
         resetPivotEncoder(getAbsoluteEncoderAngle());
     }
 
@@ -208,16 +208,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
         // kf=0.005000
         // kd=0.005000
         if (Constants.IS_ROBOT_BLOSSOM) {
-            return new RevPidPropertyBuilder("Arm", false, pidController, 0)
+            return new RevPidPropertyBuilder("Pivot Arm", false, pidController, 0)
                 .addP(0.004)
                 .addI(0)
                 .addD(0)
                 .addFF(0.005)
-                .addMaxVelocity(120)
-                .addMaxAcceleration(60)
+                .addMaxVelocity(120) // 120
+                .addMaxAcceleration(60) // 60
                 .build();
         } else {
-            return new RevPidPropertyBuilder("Arm", false, pidController, 0)
+            return new RevPidPropertyBuilder("Pivot Arm", false, pidController, 0)
                 .addP(0.0045) // 0.0058
                 .addI(0)
                 .addD(0.045)
@@ -370,6 +370,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .withName("Reset Pivot Encoder (" + angle + ")");
     }
 
+    public CommandBase createSyncEncoderToAbsoluteEncoder() {
+        return this.run(() -> syncMotorEncoderToAbsoluteEncoder())
+            .ignoringDisable(true)
+            .withName("Reset Pivot Encoder (Abs Encoder Val)");
+    }
+
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop).withName("Tune Gravity Offset");
     }
@@ -434,6 +440,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public CommandBase commandGoToGroundPickup() {
         return commandPivotArmToAngleNonHold(GROUND_PICKUP_ANGLE);
+    }
+
+    public CommandBase commandGoToGroundPickupAndHold() {
+        return commandPivotArmToAngleHold(GROUND_PICKUP_ANGLE);
     }
 
     public CommandBase commandHpPickupNoHold() {
