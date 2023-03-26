@@ -28,7 +28,8 @@ public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGro
         Command driveForwardOverChargingStation1 = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(driveOverStation);
 
         //score piece
-        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType).andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
+            .andThen(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
         //drive
         addCommands(driveForwardOverChargingStation1);

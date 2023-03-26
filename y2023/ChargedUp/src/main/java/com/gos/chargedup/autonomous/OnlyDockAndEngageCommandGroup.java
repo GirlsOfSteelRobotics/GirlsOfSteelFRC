@@ -14,8 +14,8 @@ public class OnlyDockAndEngageCommandGroup extends SequentialCommandGroup {
 
     public OnlyDockAndEngageCommandGroup(ChassisSubsystem chassis, String path) {
 
-        List<PathPlannerTrajectory> twoPieceNodes0And1 = PathPlanner.loadPathGroup(path, Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command fullAutoDockAndEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceNodes0And1);
+        List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup(path, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command fullAutoDockAndEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(trajectory);
 
         addCommands(fullAutoDockAndEngage);
         addCommands(chassis.createAutoEngageCommand());

@@ -44,11 +44,14 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         addCommands(chassis.createResetOdometry(startPose));
 
         Pose2d realTrajectoryStart = onePieceAndLeave.getInitialPose();
-        addCommands(new ConditionalCommand(
+        Command driveBackwards = new ConditionalCommand(
             chassis.driveToPointNoFlip(startPose, new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180)), true),
             chassis.driveToPointNoFlip(AllianceFlipper.flip(startPose), AllianceFlipper.flip(new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180))), true),
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
-        ).raceWith(new WaitCommand(100).alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension))));
+        );
+
+        addCommands(driveBackwards
+            .raceWith(new WaitCommand(100).alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension))));
 
         //turn to start pos
         addCommands(

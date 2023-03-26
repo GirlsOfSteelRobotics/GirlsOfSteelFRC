@@ -33,6 +33,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -86,7 +87,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
-    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "turn PID allowable error", 2);
+    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -137,8 +138,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_trajectoryVelocitySetpointX;
     private final NetworkTableEntry m_trajectoryVelocitySetpointY;
     private final NetworkTableEntry m_trajectoryVelocitySetpointAngle;
+    private final NetworkTableEntry m_trajectoryLeftWheelSpeedGoal;
+    private final NetworkTableEntry m_trajectoryRightWheelSpeedGoal;
 
-    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
+
+    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Chassis Trajectory Max Velocity", 60);
 
     private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
     private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
@@ -156,8 +160,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PigeonAlerts m_pigeonAlerts;
 
     //max velocity and acceleration tuning
-    private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
-    private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
+    private final GosDoubleProperty m_onTheFlyMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_onTheFlyMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public ChassisSubsystem() {
@@ -265,6 +269,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_trajectoryVelocitySetpointX = loggingTable.getEntry("Trajectory Velocity Setpoint X");
         m_trajectoryVelocitySetpointY = loggingTable.getEntry("Trajectory Velocity Setpoint Y");
         m_trajectoryVelocitySetpointAngle = loggingTable.getEntry("Trajectory Velocity Setpoint Angle");
+        m_trajectoryLeftWheelSpeedGoal = loggingTable.getEntry("Trajectory Velocity Left Wheel Speed Goal");
+        m_trajectoryRightWheelSpeedGoal = loggingTable.getEntry("Trajectory Velocity Right Wheel Speed Goal");
+
 
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
@@ -306,9 +313,14 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private void logTrajectoryChassisSetpoint(ChassisSpeeds chassisSpeeds) {
+        DifferentialDriveWheelSpeeds wheelSpeeds = K_DRIVE_KINEMATICS.toWheelSpeeds(chassisSpeeds);
+
         m_trajectoryVelocitySetpointX.setNumber(chassisSpeeds.vxMetersPerSecond);
         m_trajectoryVelocitySetpointY.setNumber(chassisSpeeds.vyMetersPerSecond);
         m_trajectoryVelocitySetpointAngle.setNumber(chassisSpeeds.omegaRadiansPerSecond);
+
+        m_trajectoryLeftWheelSpeedGoal.setNumber(Units.metersToInches(wheelSpeeds.leftMetersPerSecond));
+        m_trajectoryRightWheelSpeedGoal.setNumber(Units.metersToInches(wheelSpeeds.rightMetersPerSecond));
     }
 
     public double findingClosestNodeY(double yPositionButton) {
@@ -336,12 +348,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-                .addP(0.1) //this needs to be tuned!
+                .addP(0.4) //this needs to be tuned!
                 .addI(0)
                 .addD(0)
                 .addFF(0.215)
-                .addMaxVelocity(0)
-                .addMaxAcceleration(0)
+                // .addMaxVelocity(0)
+                // .addMaxAcceleration(0)
                 .build();
         }
         else {
@@ -350,8 +362,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 .addI(0)
                 .addD(0)
                 .addFF(.22)
-                .addMaxVelocity(2)
-                .addMaxAcceleration(0)
+                // .addMaxVelocity(2)
+                // .addMaxAcceleration(0)
                 .build();
         }
     }
@@ -542,7 +554,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
-            new PathConstraints(Units.inchesToMeters(m_tuningVelocity.getValue()), Units.inchesToMeters(m_tuningAcceleration.getValue())),
+            new PathConstraints(Units.inchesToMeters(m_onTheFlyMaxVelocity.getValue()), Units.inchesToMeters(m_onTheFlyMaxAcceleration.getValue())),
             reverse,
             new PathPoint(start.getTranslation(), getPose().getRotation()),
             new PathPoint(end.getTranslation(), end.getRotation())

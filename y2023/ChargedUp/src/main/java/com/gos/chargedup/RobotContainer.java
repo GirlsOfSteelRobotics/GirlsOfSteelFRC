@@ -15,6 +15,7 @@ import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
+import com.gos.chargedup.commands.testing.TestOnePieceAndLeaveCommunityThreeCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -111,6 +112,7 @@ public class RobotContainer {
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
+            PropertyManager.purgeExtraKeys();
         }
     }
 
@@ -128,6 +130,7 @@ public class RobotContainer {
 
         tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder());
         tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoder(0));
+        tab.add("Arm Pivot: Reset Encoder (Abs Encoder Val)", m_armPivot.createSyncEncoderToAbsoluteEncoder());
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
         tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
@@ -245,6 +248,7 @@ public class RobotContainer {
         // Backup manual controls for debugging
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
+        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
         //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());

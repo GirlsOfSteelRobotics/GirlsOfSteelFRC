@@ -6,6 +6,7 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 public final class CombinedCommandsUtil {
 
@@ -27,8 +28,14 @@ public final class CombinedCommandsUtil {
     //}
 
     public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return extension.commandMiddleRetract()
-            .alongWith(pivot.commandGoToGroundPickup())
+        return pivot.commandGoToGroundPickupAndHold()
+            .andThen(extension.commandMiddleRetract())
+            .withName("Go To Ground Pickup");
+    }
+
+    public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, double allowableError, double velocityAllowableError) {
+        return pivot.commandGoToGroundPickupAndHold(allowableError, velocityAllowableError)
+            .andThen((extension.commandMiddleRetract().andThen(new PrintCommand("Ran middle retract"))).unless(extension::isMiddleRetract))
             .withName("Go To Ground Pickup");
     }
 
