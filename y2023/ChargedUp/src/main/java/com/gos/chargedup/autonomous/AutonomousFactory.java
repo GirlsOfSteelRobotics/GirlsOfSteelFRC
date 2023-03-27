@@ -60,6 +60,10 @@ public final class AutonomousFactory {
         // Score, Drive over bridge and out of community, then engage
         ONE_NODE_LEAVE_AND_ENGAGE_4,
 
+        // One piece, grab a second
+        ONE_NODE_AND_GRAB_SECOND_PIECE_0,
+        ONE_NODE_AND_GRAB_SECOND_PIECE_8,
+
         // Two piece, driving through the closest side
         TWO_PIECE_NODE_0_AND_1,
         TWO_PIECE_NODE_7_AND_8,
@@ -108,6 +112,10 @@ public final class AutonomousFactory {
 
             // Score Game Piece, drive over bridge out of the community zone, then engage
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_4, new OnePieceLeaveAndEngageFullCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE, "OnePieceLeaveAndEngage4"));
+
+            // Score Piece + Grab Second
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_GRAB_SECOND_PIECE_0, new OnePieceANDGrabSecondCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CONE, "TwoPieceNodes0And1Part1", "TwoPieceNodes0And1Part2"));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_GRAB_SECOND_PIECE_8, new OnePieceANDGrabSecondCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CONE, "TwoPieceNodes7And8Part1", "TwoPieceNodes7And8Part2"));
 
             //MVR Path Option 4: Two piece auto without the turret
             m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, armPivot, armExtension, claw, height, "TwoPieceNodes0And1Part1", "TwoPieceNodes0And1Part2", "TwoPieceNodes0And1Part3"));

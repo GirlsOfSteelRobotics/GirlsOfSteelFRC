@@ -38,11 +38,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private static final int MAX_INDEX_LED = 30;
 
     private static final int AUTO_HEIGHT_START = 0;
-    private static final int AUTO_HEIGHT_COUNT = MAX_INDEX_LED / 4;
+    private static final int AUTO_HEIGHT_COUNT = MAX_INDEX_LED / 8;
 
     private static final int AUTO_MODE_START = AUTO_HEIGHT_COUNT;
 
-    private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 4;
+    private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 8;
 
     private static final int CLAW_HOLD_WAIT_TIME = 1;
 
@@ -83,12 +83,12 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
     private final MirroredLEDPatternLookup<AutoPivotHeight> m_heightColor;
+    private final MirroredLEDFlash m_autoResetArmAtAngle;
 
     private final MirroredLEDFlash m_clawAlignedSignal;
+    private final MirroredLEDFlash m_isHoldingPieceClaw;
 
     private final MirroredLEDFlash m_isInLoadingZoneSignal;
-
-    private final MirroredLEDFlash m_isHoldingPieceClaw;
 
     private final Timer m_clawLEDsTimer = new Timer();
 
@@ -164,6 +164,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_autoModeColor = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
         m_heightColor = new MirroredLEDPatternLookup<>(m_buffer, autoHeightMap);
 
+        m_autoResetArmAtAngle = new MirroredLEDFlash(m_buffer, AUTO_MODE_START + AUTO_MODE_COUNT, MAX_INDEX_LED / 2, 0.5, Color.kGreen);
+
         m_led.setLength(m_buffer.getLength());
 
         //for Claw Aligned Check
@@ -212,6 +214,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         if (m_autoModeColor.hasKey(autoMode)) {
             m_autoModeColor.writeLeds();
+        }
+
+        if (Math.abs(m_armSubsystem.getArmAngleDeg() - m_armSubsystem.getAbsoluteEncoderAngle()) < 1) {
+            m_autoResetArmAtAngle.writeLeds();
         }
     }
 

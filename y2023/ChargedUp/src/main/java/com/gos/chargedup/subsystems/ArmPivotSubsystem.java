@@ -189,7 +189,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         resetPivotEncoder(getAbsoluteEncoderAngle());
     }
 
-    private double getAbsoluteEncoderAngle() {
+    public double getAbsoluteEncoderAngle() {
         double val = m_absoluteEncoder.getPosition();
         if (val > 180) {
             val -= 360;
