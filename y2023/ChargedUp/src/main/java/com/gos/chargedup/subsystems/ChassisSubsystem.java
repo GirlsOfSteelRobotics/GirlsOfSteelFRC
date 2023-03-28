@@ -382,7 +382,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDFFProperty.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
-        m_gyroAngleRateEntry.setNumber(-m_gyro.getRate());
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_gyroAngleRateEntry.setNumber(-m_gyro.getRate());
+        }
+        else {
+            m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
+        }
+
         m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
         m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
         m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));

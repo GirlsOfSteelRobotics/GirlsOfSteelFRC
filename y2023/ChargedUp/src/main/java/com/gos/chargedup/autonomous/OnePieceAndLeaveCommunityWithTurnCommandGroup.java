@@ -30,7 +30,7 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
     public OnePieceAndLeaveCommunityWithTurnCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot,
                                                          ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                          AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, new PathConstraints(Units.inchesToMeters(24), Units.inchesToMeters(24)), true);
+        PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)), false);
         Command driveAutoOnePieceAndLeave = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(onePieceAndLeave);
 
         //score
@@ -50,18 +50,18 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
         );
 
-        addCommands(driveBackwards
-            .raceWith(new WaitCommand(100).alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension))));
+        addCommands(driveBackwards);
 
         //turn to start pos
         addCommands(
             chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees())
-                .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
+                .raceWith(new WaitCommand(100)
+                    .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension))));
         addCommands(new PrintCommand("turn at point"));
 
 
         //drive out of community
-        addCommands(driveAutoOnePieceAndLeave);
+        addCommands(driveAutoOnePieceAndLeave.alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
         addCommands(new PrintCommand("leave"));
 
     }
