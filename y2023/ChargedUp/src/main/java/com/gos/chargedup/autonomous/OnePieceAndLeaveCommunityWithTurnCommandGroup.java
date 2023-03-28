@@ -41,7 +41,12 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
             onePieceAndLeave.getInitialPose().getTranslation().getX() - Units.inchesToMeters(6),
             onePieceAndLeave.getInitialPose().getTranslation().getY()),
             Rotation2d.fromDegrees(180));
-        addCommands(chassis.createResetOdometry(startPose));
+        Command resetOdometry = new ConditionalCommand(
+            chassis.createResetOdometry(startPose),
+            chassis.createResetOdometry(AllianceFlipper.flip(startPose)),
+            () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
+        );
+        addCommands(resetOdometry);
 
         Pose2d realTrajectoryStart = onePieceAndLeave.getInitialPose();
         Command driveBackwards = new ConditionalCommand(
@@ -53,8 +58,13 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         addCommands(driveBackwards);
 
         //turn to start pos
+        Command turnToAngle = new ConditionalCommand(
+            chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees()),
+            chassis.createTurnPID(AllianceFlipper.flip(onePieceAndLeave.getInitialPose().getRotation()).getDegrees()),
+            () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
+        );
         addCommands(
-            chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees())
+            turnToAngle
                 .raceWith(new WaitCommand(100)
                     .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension))));
         addCommands(new PrintCommand("turn at point"));

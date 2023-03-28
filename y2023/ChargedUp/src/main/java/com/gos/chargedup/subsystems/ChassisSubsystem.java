@@ -400,6 +400,7 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("In Community", isInCommunityZone());
         SmartDashboard.putBoolean("In Loading", isInLoadingZone());
         SmartDashboard.putNumber("pose angle", m_odometry.getPoseMeters().getRotation().getDegrees());
+        SmartDashboard.putBoolean("Field/flip", DriverStation.getAlliance() == DriverStation.Alliance.Red);
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -539,11 +540,11 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean isInCommunityZone() {
-        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
+        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation()) || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation());
     }
 
     public boolean isInLoadingZone() {
-        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
+        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation());
     }
 
     public boolean canExtendArm() {
