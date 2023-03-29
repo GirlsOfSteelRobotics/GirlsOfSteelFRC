@@ -490,7 +490,7 @@
   {
     "name": "/Preferences/Pivot Arm Gravity Offset",
     "type": "double",
-    "value": 1.8,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
