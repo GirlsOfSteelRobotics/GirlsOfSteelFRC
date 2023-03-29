@@ -426,9 +426,6 @@
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
     "persistent": {
       "Preferences": {
         "open": true
@@ -445,8 +442,5 @@
         "open": true
       }
     }
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }

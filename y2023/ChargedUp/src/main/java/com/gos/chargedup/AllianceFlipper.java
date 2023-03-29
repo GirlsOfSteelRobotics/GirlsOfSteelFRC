@@ -10,8 +10,8 @@ public class AllianceFlipper {
 
     public static Translation2d flip(Translation2d translation) {
         return new Translation2d(
-            flipX(translation.getX()),
-            translation.getY()
+            translation.getX(),
+            FieldConstants.FIELD_WIDTH - translation.getY()
         );
     }
 
@@ -24,10 +24,6 @@ public class AllianceFlipper {
             flip(pose.getTranslation()),
             flip(pose.getRotation())
         );
-    }
-
-    public static double flipX(double xPos) {
-        return FieldConstants.FIELD_LENGTH - xPos;
     }
 
     public static Translation2d maybeFlip(Translation2d translation) {
