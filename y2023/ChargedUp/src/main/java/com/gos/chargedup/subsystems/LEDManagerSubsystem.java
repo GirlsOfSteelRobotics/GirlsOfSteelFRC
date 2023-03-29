@@ -3,14 +3,14 @@ package com.gos.chargedup.subsystems;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.lib.led.LEDBoolean;
+import com.gos.lib.led.LEDFlash;
+import com.gos.lib.led.LEDMovingPixel;
 import com.gos.lib.led.LEDPattern;
-import com.gos.lib.led.mirrored.MirroredLEDBoolean;
-import com.gos.lib.led.mirrored.MirroredLEDFlash;
-import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
-import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
-import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
-import com.gos.lib.led.mirrored.MirroredLEDRainbow;
-import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
+import com.gos.lib.led.LEDPatternLookup;
+import com.gos.lib.led.LEDPercentScale;
+import com.gos.lib.led.LEDRainbow;
+import com.gos.lib.led.LEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -62,33 +62,33 @@ public class LEDManagerSubsystem extends SubsystemBase {
     //private final MirroredLEDPercentScale m_drivetrainSpeed;
 
     // Comp LED
-    private final MirroredLEDFlash m_coneGamePieceSignal;
-    private final MirroredLEDFlash m_cubeGamePieceSignal;
+    private final LEDFlash m_coneGamePieceSignal;
+    private final LEDFlash m_cubeGamePieceSignal;
 
     private boolean m_optionConeLED;
     private boolean m_optionCubeLED;
     private boolean m_optionDockLED;
     private boolean m_clawIsAligned;
 
-    private final MirroredLEDFlash m_readyToScore;
-    private final MirroredLEDBoolean m_armAtAngle;
+    private final LEDFlash m_readyToScore;
+    private final LEDBoolean m_armAtAngle;
 
-    private final MirroredLEDPercentScale m_dockAngle;
-    private final MirroredLEDFlash m_isEngaged;
+    private final LEDPercentScale m_dockAngle;
+    private final LEDFlash m_isEngaged;
     private static final double ALLOWABLE_ERROR_ENGAGE = 2;
 
-    private final MirroredLEDRainbow m_notInCommunityZone;
+    private final LEDRainbow m_notInCommunityZone;
 
     private final AutonomousFactory m_autoModeFactory;
 
-    private final MirroredLEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
-    private final MirroredLEDPatternLookup<AutoPivotHeight> m_heightColor;
+    private final LEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
+    private final LEDPatternLookup<AutoPivotHeight> m_heightColor;
 
-    private final MirroredLEDFlash m_clawAlignedSignal;
+    private final LEDFlash m_clawAlignedSignal;
 
-    private final MirroredLEDFlash m_isInLoadingZoneSignal;
+    private final LEDFlash m_isInLoadingZoneSignal;
 
-    private final MirroredLEDFlash m_isHoldingPieceClaw;
+    private final LEDFlash m_isHoldingPieceClaw;
 
     private final Timer m_clawLEDsTimer = new Timer();
 
@@ -109,23 +109,23 @@ public class LEDManagerSubsystem extends SubsystemBase {
         //m_drivetrainSpeed = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kGreen, 15);
 
         // Comp LED
-        m_coneGamePieceSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kYellow);
-        m_cubeGamePieceSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kMediumPurple);
+        m_coneGamePieceSignal = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kYellow);
+        m_cubeGamePieceSignal = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kMediumPurple);
 
-        m_readyToScore = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
+        m_readyToScore = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
         //m_turretAngle = new MirroredLEDPercentScale(m_buffer, 20, 10, Color.kRed, 20);
-        m_armAtAngle = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kAntiqueWhite, Color.kRed);
+        m_armAtAngle = new LEDBoolean(m_buffer, 10, 10, Color.kAntiqueWhite, Color.kRed);
         //m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
 
         //m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
 
-        m_isInLoadingZoneSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kCornflowerBlue);
+        m_isInLoadingZoneSignal = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kCornflowerBlue);
 
-        m_dockAngle = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
+        m_dockAngle = new LEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
         m_optionDockLED = false;
-        m_isEngaged = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
+        m_isEngaged = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
 
-        m_notInCommunityZone = new MirroredLEDRainbow(m_buffer, 0, MAX_INDEX_LED);
+        m_notInCommunityZone = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
         // no piece - base color
         // one piece - flash
@@ -161,16 +161,16 @@ public class LEDManagerSubsystem extends SubsystemBase {
         addHeightPattern(autoHeightMap, AutoPivotHeight.MEDIUM, Color.kBlue);
         addHeightPattern(autoHeightMap, AutoPivotHeight.HIGH, Color.kPurple);
 
-        m_autoModeColor = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
-        m_heightColor = new MirroredLEDPatternLookup<>(m_buffer, autoHeightMap);
+        m_autoModeColor = new LEDPatternLookup<>(m_buffer, autonColorMap);
+        m_heightColor = new LEDPatternLookup<>(m_buffer, autoHeightMap);
 
         m_led.setLength(m_buffer.getLength());
 
         //for Claw Aligned Check
-        m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
+        m_clawAlignedSignal = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
 
         //holding piece in claw
-        m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
+        m_isHoldingPieceClaw = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
         m_clawWasTripped = false;
 
         // Set the data
@@ -179,23 +179,23 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void addNoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
+        autonColorMap.put(mode, new LEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
     }
 
     private void addOnePieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, color));
+        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, color));
     }
 
     private void addOnePieceAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 2, color));
+        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 2, color));
     }
 
     private void addTwoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
+        autonColorMap.put(mode, new LEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
     }
 
     private void addHeightPattern(Map<AutoPivotHeight, LEDPattern> autoHeightMap, AutoPivotHeight height, Color color) {
-        autoHeightMap.put(height, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, color));
+        autoHeightMap.put(height, new LEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, color));
     }
 
 
