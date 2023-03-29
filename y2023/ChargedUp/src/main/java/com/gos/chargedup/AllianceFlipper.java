@@ -16,7 +16,7 @@ public class AllianceFlipper {
     }
 
     public static Rotation2d flip(Rotation2d rotation) {
-        return rotation.plus(Rotation2d.fromDegrees(180));
+        return rotation.times(-1);
     }
 
     public static Pose2d flip(Pose2d pose) {

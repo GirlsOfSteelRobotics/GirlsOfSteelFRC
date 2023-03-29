@@ -33,9 +33,6 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)), false);
         Command driveAutoOnePieceAndLeave = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(onePieceAndLeave);
 
-        //score
-        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
-
         //0.6 away
         Pose2d startPose = new Pose2d(new Translation2d(
             onePieceAndLeave.getInitialPose().getTranslation().getX() - Units.inchesToMeters(6),
@@ -48,6 +45,9 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         );
         addCommands(resetOdometry);
 
+        //score
+        addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
+
         Pose2d realTrajectoryStart = onePieceAndLeave.getInitialPose();
         Command driveBackwards = new ConditionalCommand(
             chassis.driveToPointNoFlip(startPose, new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180)), true),
@@ -55,7 +55,8 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
         );
 
-        addCommands(driveBackwards);
+        addCommands(driveBackwards
+            .alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
 
         //turn to start pos
         Command turnToAngle = new ConditionalCommand(
@@ -71,7 +72,7 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
 
 
         //drive out of community
-        addCommands(driveAutoOnePieceAndLeave.alongWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
+        addCommands(driveAutoOnePieceAndLeave);
         addCommands(new PrintCommand("leave"));
 
     }
