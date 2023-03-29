@@ -83,14 +83,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final LEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
     private final LEDPatternLookup<AutoPivotHeight> m_heightColor;
+    private final LEDFlash m_autoResetArmAtAngle;
 
     private final LEDFlash m_clawAlignedSignal;
 
     private final LEDFlash m_isInLoadingZoneSignal;
 
     private final LEDFlash m_isHoldingPieceClaw;
-
-    private final MirroredLEDFlash m_isInLoadingZoneSignal;
 
     private final Timer m_clawLEDsTimer = new Timer();
 
@@ -166,7 +165,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_autoModeColor = new LEDPatternLookup<>(m_buffer, autonColorMap);
         m_heightColor = new LEDPatternLookup<>(m_buffer, autoHeightMap);
 
-        m_autoResetArmAtAngle = new MirroredLEDFlash(m_buffer, AUTO_MODE_START + AUTO_MODE_COUNT, MAX_INDEX_LED / 2, 0.5, Color.kGreen);
+        m_autoResetArmAtAngle = new LEDFlash(m_buffer, AUTO_MODE_START + AUTO_MODE_COUNT, MAX_INDEX_LED / 2, 0.5, Color.kGreen);
 
         m_led.setLength(m_buffer.getLength());
 
