@@ -42,9 +42,9 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.75);
-    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 0.5);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
+    private static final GosDoubleProperty ALLOWABLE_ERROR;
+    private static final GosDoubleProperty PID_STOP_ERROR;
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR;
     private static final GosDoubleProperty GRAVITY_OFFSET;
 
     private static final double ARM_MOTOR_SPEED = 0.20;
@@ -71,6 +71,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
             KS = 0.10072;
+            ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.75);
+            PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 0.5);
+            ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
+
             GRAVITY_OFFSET = new GosDoubleProperty(false, "Pivot Arm Gravity Offset", 0.2);
 
             HUMAN_PLAYER_ANGLE = 20;
@@ -87,7 +91,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
         } else {
             KS = 0.1375;
             GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.3);
-
+            ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.5);
+            PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 0.2);
+            ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 1);
 
             HUMAN_PLAYER_ANGLE = 10;
             ARM_CUBE_MIDDLE_DEG = 0;

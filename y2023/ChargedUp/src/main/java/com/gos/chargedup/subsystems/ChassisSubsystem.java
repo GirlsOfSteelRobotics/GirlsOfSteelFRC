@@ -64,7 +64,8 @@ import java.util.Optional;
 
 @SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .025);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP;
+    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR;
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -72,22 +73,23 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
     private static final double GEAR_RATIO;
 
+    private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
+    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
+        new DifferentialDriveKinematics(TRACK_WIDTH);
+
     static {
         if (Constants.IS_ROBOT_BLOSSOM) {
             GEAR_RATIO = 527.0 / 54.0;
+            AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .025);
+            TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
         } else {
             GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+            AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
+            TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 8);
         }
     }
 
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
-
-    private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
-    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
-        new DifferentialDriveKinematics(TRACK_WIDTH);
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
-
-    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -220,17 +222,32 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         m_turnAnglePID.enableContinuousInput(0, 360);
         m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
-        m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
-            .addP(0.4)
-            .addI(0)
-            .addD(0)
-            .addMaxAcceleration(30)
-            .addMaxVelocity(30)
-            .build();
-        m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
-            .addKs(0.8)
-            .addKa(0)
-            .addKff(0.027);
+
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+                .addP(0.4)
+                .addI(0)
+                .addD(0)
+                .addMaxAcceleration(30)
+                .addMaxVelocity(30)
+                .build();
+            m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
+                .addKs(0.8)
+                .addKa(0)
+                .addKff(0.027);
+        } else {
+            m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+                .addP(0.05)
+                .addI(0)
+                .addD(0)
+                .addMaxAcceleration(180)
+                .addMaxVelocity(180)
+                .build();
+            m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
+                .addKs(1)
+                .addKa(0)
+                .addKff(0.027);
+        }
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
@@ -358,7 +375,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
         else {
             return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-                .addP(0)
+                .addP(0.52)
                 .addI(0)
                 .addD(0)
                 .addFF(.22)
