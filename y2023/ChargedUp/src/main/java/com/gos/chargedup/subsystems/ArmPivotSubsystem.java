@@ -144,6 +144,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.setSmartCurrentLimit(60);
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
         m_pivotPIDController = m_pivotMotor.getPIDController();
+        m_pivotPIDController.setFeedbackDevice(m_pivotMotorEncoder);
 
         m_pivotMotorEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
         m_pivotMotorEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
