@@ -50,5 +50,9 @@ public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
         //drive second part
         addCommands(driveToGetSecondPiece
             .raceWith(claw.createMoveClawIntakeInCommand()));
+
+        //turn 180
+        addCommands(chassis.createTurnPID(180)
+            .raceWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
     }
 }

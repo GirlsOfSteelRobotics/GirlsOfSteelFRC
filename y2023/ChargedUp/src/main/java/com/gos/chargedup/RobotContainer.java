@@ -112,8 +112,8 @@ public class RobotContainer {
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
-            PropertyManager.purgeExtraKeys();
         }
+        PropertyManager.purgeExtraKeys();
     }
 
     @SuppressWarnings("PMD.NcssCount")
@@ -212,6 +212,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+        m_claw.setDefaultCommand(m_claw.createHoldPiece());
 
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));

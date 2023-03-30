@@ -1,13 +1,5 @@
 [
   {
-    "name": "/Preferences/Chassis speed for auto engage",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Chassis.mm.kp",
     "type": "double",
     "value": 0.8,
@@ -40,129 +32,9 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.max_velocity",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis.mm.max_acceleration",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Pivot Arm Allowable Error",
     "type": "double",
     "value": 5.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Collector.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Collector.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Collector.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Collector.mm.kff",
-    "type": "double",
-    "value": 0.0121,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Collector.mm.max_velocity",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Collector.mm.max_acceleration",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret Angle Allowable Error",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm.mm.kp",
-    "type": "double",
-    "value": 0.001,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm.mm.kff",
-    "type": "double",
-    "value": 0.004,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm.mm.max_velocity",
-    "type": "double",
-    "value": 30.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm.mm.max_acceleration",
-    "type": "double",
-    "value": 30.0,
     "properties": {
       "persistent": true
     }
@@ -179,102 +51,6 @@
     "name": "/Preferences/JoysticTurnInPlaceThreshold",
     "type": "double",
     "value": 0.05,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Gravity Offset",
-    "type": "double",
-    "value": 1.8,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret.mm.kff",
-    "type": "double",
-    "value": 0.0056,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret.mm.max_velocity",
-    "type": "double",
-    "value": 90.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret.mm.max_acceleration",
-    "type": "double",
-    "value": 90.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pose ambiguity threshold",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pose distance Threshold",
-    "type": "double",
-    "value": 4.25,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pose distance allowable error",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret Goal Velocity",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Max Chassis Velocity",
-    "type": "double",
-    "value": 60.0,
     "properties": {
       "persistent": true
     }
@@ -297,30 +73,6 @@
   },
   {
     "name": "/Preferences/Chassis speed medium",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/max velocity - chassis",
-    "type": "double",
-    "value": 48.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/max acceleration - chassis",
-    "type": "double",
-    "value": 48.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ClawSpeed",
     "type": "double",
     "value": 0.5,
     "properties": {
@@ -352,33 +104,9 @@
     }
   },
   {
-    "name": "/Preferences/ClawCheckHasPiece",
-    "type": "double",
-    "value": 12.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Pivot Arm Allowable Velocity Error",
     "type": "double",
     "value": 15.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Claw Aligned Acceptable Error",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Turret Angle Stop PID Error",
-    "type": "double",
-    "value": 0.21,
     "properties": {
       "persistent": true
     }
@@ -480,14 +208,6 @@
     }
   },
   {
-    "name": "/Preferences/turn PID allowable error",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Pivot Arm Gravity Offset",
     "type": "double",
     "value": 0.2,
@@ -515,6 +235,54 @@
     "name": "/Preferences/Chassis On the Fly Max Acceleration",
     "type": "double",
     "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.mm.kp",
+    "type": "double",
+    "value": 0.004,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.mm.kff",
+    "type": "double",
+    "value": 0.005,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.mm.max_velocity",
+    "type": "double",
+    "value": 120.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.mm.max_acceleration",
+    "type": "double",
+    "value": 60.0,
     "properties": {
       "persistent": true
     }

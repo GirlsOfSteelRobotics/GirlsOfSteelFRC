@@ -224,8 +224,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .addP(0.4)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(30)
-            .addMaxVelocity(30)
+            .addMaxAcceleration(210)
+            .addMaxVelocity(210)
             .build();
         m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
             .addKs(0.8)
@@ -348,7 +348,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-                .addP(0.4) //this needs to be tuned!
+                .addP(0.6)
                 .addI(0)
                 .addD(0)
                 .addFF(0.215)

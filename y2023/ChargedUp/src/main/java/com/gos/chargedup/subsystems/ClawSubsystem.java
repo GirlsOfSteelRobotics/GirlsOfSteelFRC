@@ -120,6 +120,10 @@ public class ClawSubsystem extends SubsystemBase {
         return this.createMoveClawIntakeInCommand().alongWith(new CheckRumbleCommand(joystick, this::hasGamePiece));
     }
 
+    public CommandBase createHoldPiece() {
+        return this.run(this::holdPiece);
+    }
+
     //////////////
     // Checklists
     //////////////
