@@ -112,8 +112,8 @@ public class RobotContainer {
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
-            PropertyManager.purgeExtraKeys();
         }
+        PropertyManager.purgeExtraKeys();
     }
 
     @SuppressWarnings("PMD.NcssCount")

@@ -131,6 +131,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_effectiveGravityOffsetEntry;
     private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
     private final NetworkTableEntry m_absoluteEncoderEntry;
+    private final NetworkTableEntry m_absoluteEncoderToBuiltInDriftEntry;
 
     private final SparkMaxAlerts m_pivotErrorAlert;
 
@@ -162,6 +163,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_effectiveGravityOffsetEntry = loggingTable.getEntry("Effective Gravity Offset");
         m_pidArbitraryFeedForwardEntry = loggingTable.getEntry("Arbitrary FF");
         m_absoluteEncoderEntry = loggingTable.getEntry("Absolute Encoder Entry");
+        m_absoluteEncoderToBuiltInDriftEntry = loggingTable.getEntry("Encoder Drift");
         m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
 
         if (RobotBase.isSimulation()) {
@@ -236,6 +238,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
         m_absoluteEncoderEntry.setNumber(getAbsoluteEncoderAngle());
+        m_absoluteEncoderToBuiltInDriftEntry.setNumber(getAbsoluteEncoderAngle() - getArmAngleDeg());
         m_goalAngleDegEntry.setNumber(m_armAngleGoal);
         m_velocityEntry.setNumber(getArmVelocityDegPerSec());
 

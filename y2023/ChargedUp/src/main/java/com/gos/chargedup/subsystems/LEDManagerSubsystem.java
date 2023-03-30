@@ -42,7 +42,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private static final int AUTO_MODE_START = AUTO_HEIGHT_COUNT;
 
-    private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 4;
+    private static final int AUTO_MODE_END = AUTO_MODE_START + MAX_INDEX_LED / 4;
 
     private static final int CLAW_HOLD_WAIT_TIME = 1;
 
@@ -165,7 +165,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_autoModeColor = new LEDPatternLookup<>(m_buffer, autonColorMap);
         m_heightColor = new LEDPatternLookup<>(m_buffer, autoHeightMap);
 
-        m_autoResetArmAtAngle = new LEDFlash(m_buffer, AUTO_MODE_START + AUTO_MODE_COUNT, MAX_INDEX_LED, 0.5, Color.kGreen);
+        m_autoResetArmAtAngle = new LEDFlash(m_buffer, AUTO_MODE_END, MAX_INDEX_LED, 0.5, Color.kGreen);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -182,19 +182,19 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void addNoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new LEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
+        autonColorMap.put(mode, new LEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_END, color));
     }
 
     private void addOnePieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, color));
+        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_END, 0.5, color));
     }
 
     private void addOnePieceAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 2, color));
+        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_END, 2, color));
     }
 
     private void addTwoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new LEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, color));
+        autonColorMap.put(mode, new LEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_END, color));
     }
 
     private void addHeightPattern(Map<AutoPivotHeight, LEDPattern> autoHeightMap, AutoPivotHeight height, Color color) {
