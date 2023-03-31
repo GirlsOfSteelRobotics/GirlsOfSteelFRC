@@ -128,16 +128,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_notInCommunityZone = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
-        // no piece - base color
-        // one piece - flash
+        // no piece - none
+        // one piece - solid
+        // one piece + grab second - flash
+        // one piece + grab second + engage - flash faster
         // two piece - single light
+
         Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap = new HashMap<>();
-
-        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.DO_NOTHING, Color.kBlack);
-
-        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_0, NODE_0_COLOR);
-        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_8, NODE_8_COLOR);
-        addNoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE_4, NODE_4_COLOR);
 
         addOnePieceAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, NODE_3_COLOR);
         addOnePieceAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, NODE_4_COLOR);
@@ -151,6 +148,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, NODE_6_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, NODE_7_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_8, NODE_8_COLOR);
+
+        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, NODE_4_COLOR);
+        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, NODE_3_COLOR);
+        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, NODE_5_COLOR);
 
         addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, NODE_0_COLOR);
         addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, NODE_7_COLOR);
@@ -181,16 +182,18 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_led.start();
     }
 
-    private void addNoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+    private void addOnePieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
         autonColorMap.put(mode, new LEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_END, color));
+
     }
 
-    private void addOnePieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+    private void addOnePieceGrabSecondAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
         autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_END, 0.5, color));
     }
 
     private void addOnePieceAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_END, 2, color));
+        autonColorMap.put(mode, new LEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_END, color));
+
     }
 
     private void addTwoPieceAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
@@ -342,4 +345,3 @@ public class LEDManagerSubsystem extends SubsystemBase {
         return this.runEnd(() -> m_optionCubeLED = true, () -> m_optionCubeLED = false);
     }
 }
-
