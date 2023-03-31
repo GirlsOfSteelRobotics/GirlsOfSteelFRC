@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -80,7 +81,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             HUMAN_PLAYER_ANGLE = 20;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 23;
-            ARM_CONE_MIDDLE_DEG = 11;
+            ARM_CONE_MIDDLE_DEG = 13;
             ARM_CONE_HIGH_DEG = 25;
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
@@ -334,6 +335,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_armAngleGoal = pivotAngleGoal;
 
+        if (m_wpiPIDController.getSetpoint().equals(m_wpiPIDController.getGoal())) {
+            System.out.println("GOAL IS AT SETPOINT");
+//            resetWpiPidController();
+        }
+
         double currentAngleDeg = getAbsoluteEncoderAngle();
 
         double error = m_armAngleGoal - currentAngleDeg;
@@ -344,25 +350,22 @@ public class ArmPivotSubsystem extends SubsystemBase {
 //        m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
 
         System.out.println("Running");
+        SmartDashboard.putNumber("arm angle error", error);
 
-        if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
-            if (Math.abs(error) < PID_STOP_ERROR.getValue()) {
-                m_pivotMotor.set(0);
-            } else {
-                // m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
-                double volts = m_wpiPIDController.calculate(currentAngleDeg, pivotAngleGoal);
-
-                TrapezoidProfile.State setpointDegrees = m_wpiPIDController.getSetpoint();
-                m_velocityGoalEntry.setNumber(setpointDegrees.velocity);
-
-                double feedForward = m_armFeedForwardProperty.calculate(
-                    Units.degreesToRadians(setpointDegrees.position),
-                    Units.degreesToRadians(setpointDegrees.velocity)
-                );
-                m_pivotMotor.setVoltage(volts + feedForward);
-            }
-        } else {
+        if (Math.abs(error) < PID_STOP_ERROR.getValue()) {
             m_pivotMotor.set(0);
+        } else {
+            // m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
+            double volts = m_wpiPIDController.calculate(currentAngleDeg, pivotAngleGoal);
+
+            TrapezoidProfile.State setpointDegrees = m_wpiPIDController.getSetpoint();
+            m_velocityGoalEntry.setNumber(setpointDegrees.velocity);
+
+            double feedForward = m_armFeedForwardProperty.calculate(
+                Units.degreesToRadians(setpointDegrees.position),
+                Units.degreesToRadians(setpointDegrees.velocity)
+            );
+            m_pivotMotor.setVoltage(volts + feedForward);
         }
 
     }
@@ -471,7 +474,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     private void resetWpiPidController() {
-        m_wpiPIDController.reset(getAbsoluteEncoderAngle());
+        m_wpiPIDController.reset(getAbsoluteEncoderAngle(), m_absoluteEncoder.getVelocity());
     }
 
     private CommandBase createResetWpiPidController() {

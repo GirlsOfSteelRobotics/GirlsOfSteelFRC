@@ -55,12 +55,15 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         //turn 180
         addCommands(chassis.createTurnPID(180)
-            .raceWith(claw.createMoveClawIntakeInCommand()));
+            .alongWith(armExtension.commandFullRetract()
+                .andThen(armPivot.commandGoHome()))
+            .raceWith(claw.createHoldPiece()));
 
 
         //third part
         addCommands(driveToScoreSecondPiece
-            .alongWith(Commands.waitSeconds(0.75).andThen(armExtension.commandFullRetract()))
+            .alongWith(Commands.waitSeconds(0.75)
+                .andThen(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE)))
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //score piece
