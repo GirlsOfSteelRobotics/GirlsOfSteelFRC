@@ -21,11 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialCommandGroup {
-    public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath("OnePieceEngageWithSecondp1", Constants.DEFAULT_PATH_CONSTRAINTS, true);
+    public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String firstPath, String secondPath) {
+        // node 4
+        PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath(firstPath, Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoTwoPieceLeaveCommunityAndEngageBefore = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceLeaveAndEngageBefore);
 
-        List<PathPlannerTrajectory> twoPieceLeaveAndEngageAfter = PathPlanner.loadPathGroup("OnePieceEngageWithSecondp2", false, new PathConstraints(Units.inchesToMeters(60), Units.inchesToMeters(60)));
+        List<PathPlannerTrajectory> twoPieceLeaveAndEngageAfter = PathPlanner.loadPathGroup(secondPath, false, new PathConstraints(Units.inchesToMeters(60), Units.inchesToMeters(60)));
         Command driveAutoTwoPieceLeaveCommunityAndEngageAfter = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(twoPieceLeaveAndEngageAfter);
 
         //score
@@ -46,5 +47,6 @@ public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialComma
         //engage
         addCommands(driveAutoTwoPieceLeaveCommunityAndEngageAfter);
         addCommands(chassis.createAutoEngageCommand());
+
     }
 }
