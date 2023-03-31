@@ -10,23 +10,10 @@
       }
     },
     "Other Devices": {
-      "Pigeon 2[20]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [11]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK MAX [6]": {
         "header": {
           "open": true
         }
-      },
-      "window": {
-        "visible": false
       }
     }
   },
@@ -236,6 +223,16 @@
       "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 0 degrees": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 45 degrees": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
         "window": {
           "visible": true
@@ -426,6 +423,9 @@
     }
   },
   "NetworkTables": {
+    "Transitory Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true

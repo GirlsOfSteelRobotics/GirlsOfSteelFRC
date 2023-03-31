@@ -251,7 +251,8 @@ public class RobotContainer {
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
         m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
-        //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        m_operatorController.y().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        m_operatorController.b().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(-30));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 

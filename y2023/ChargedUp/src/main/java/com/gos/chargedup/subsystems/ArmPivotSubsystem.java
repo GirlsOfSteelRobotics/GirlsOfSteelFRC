@@ -6,6 +6,8 @@ import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.lib.rev.SparkMaxUtil;
@@ -16,7 +18,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -116,6 +120,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
 
+    // testing PID controllers to work with abs encoder
+    private final ProfiledPIDController m_wpiPIDController;
+    private final PidProperty m_wpiPIDProperty;
+    private final ArmFeedForwardProperty m_armFeedForwardProperty;
+
     private final SparkMaxAbsoluteEncoder m_absoluteEncoder;
 
     private final DigitalInput m_lowerLimitSwitch;
@@ -128,8 +137,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_encoderDegEntry;
     private final NetworkTableEntry m_goalAngleDegEntry;
     private final NetworkTableEntry m_velocityEntry;
-    private final NetworkTableEntry m_effectiveGravityOffsetEntry;
-    private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
+    private final NetworkTableEntry m_velocityGoalEntry;
     private final NetworkTableEntry m_absoluteEncoderEntry;
     private final NetworkTableEntry m_absoluteEncoderToBuiltInDriftEntry;
 
@@ -154,14 +162,41 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_upperLimitSwitch = new DigitalInput(Constants.INTAKE_UPPER_LIMIT_SWITCH);
         m_pivotPID = setupPidValues(m_pivotPIDController);
 
+        m_wpiPIDController = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        WpiProfiledPidPropertyBuilder pidPropertyBuilder = new WpiProfiledPidPropertyBuilder("WPI Pivot Arm", false, m_wpiPIDController);
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_wpiPIDProperty = pidPropertyBuilder
+                .addP(0)
+                .addI(0)
+                .addD(0)
+                // .addFF(0)
+                .addMaxAcceleration(0)
+                .addMaxVelocity(0)
+                .build();
+        } else {
+            m_wpiPIDProperty = pidPropertyBuilder
+                .addP(0)
+                .addI(0)
+                .addD(0)
+                // .addFF(0)
+                .addMaxAcceleration(0)
+                .addMaxVelocity(0)
+                .build();
+        }
+        m_armFeedForwardProperty = new ArmFeedForwardProperty("WPI Pivot Arm FF Property", false)
+            .addKa(0)
+            .addKg(0)
+            .addKff(0)
+            .addKs(0);
+
+
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
         m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
         m_upperLimitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
         m_goalAngleDegEntry = loggingTable.getEntry("Arm Goal (deg)");
         m_velocityEntry = loggingTable.getEntry("Arm Velocity");
-        m_effectiveGravityOffsetEntry = loggingTable.getEntry("Effective Gravity Offset");
-        m_pidArbitraryFeedForwardEntry = loggingTable.getEntry("Arbitrary FF");
+        m_velocityGoalEntry = loggingTable.getEntry("Velocity Goal");
         m_absoluteEncoderEntry = loggingTable.getEntry("Absolute Encoder Entry");
         m_absoluteEncoderToBuiltInDriftEntry = loggingTable.getEntry("Encoder Drift");
         m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
@@ -172,6 +207,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+
         m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder(kDutyCycle);
         m_absoluteEncoder.setPositionConversionFactor(360.0);
         m_absoluteEncoder.setVelocityConversionFactor(360.0 / 60);
@@ -193,6 +229,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public final double getAbsoluteEncoderAngle() {
+
+        if (RobotBase.isSimulation()) {
+            return getArmAngleDeg();
+        }
+
         double val = m_absoluteEncoder.getPosition();
         if (val > 180) {
             val -= 360;
@@ -205,7 +246,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        ///
         // Full retract:
         // kp=0.000400
         // kf=0.005000
@@ -243,6 +283,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_velocityEntry.setNumber(getArmVelocityDegPerSec());
 
         m_pivotErrorAlert.checkAlerts();
+
+        m_armFeedForwardProperty.updateIfChanged();
+        m_wpiPIDProperty.updateIfChanged();
     }
 
     @Override
@@ -288,24 +331,40 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public void pivotArmToAngle(double pivotAngleGoal) {
+
         m_armAngleGoal = pivotAngleGoal;
 
-        double error = m_armAngleGoal - getArmAngleDeg();
-        double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
-        double arbFf = gravityOffset + KS * Math.signum(error);
+        double currentAngleDeg = getAbsoluteEncoderAngle();
 
-        m_effectiveGravityOffsetEntry.setNumber(gravityOffset);
-        m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
+        double error = m_armAngleGoal - currentAngleDeg;
+//        double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
+//        double arbFf = gravityOffset + KS * Math.signum(error);
+
+//        m_effectiveGravityOffsetEntry.setNumber(gravityOffset);
+//        m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
+
+        System.out.println("Running");
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             if (Math.abs(error) < PID_STOP_ERROR.getValue()) {
                 m_pivotMotor.set(0);
             } else {
-                m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
+                // m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
+                double volts = m_wpiPIDController.calculate(currentAngleDeg, pivotAngleGoal);
+
+                TrapezoidProfile.State setpointDegrees = m_wpiPIDController.getSetpoint();
+                m_velocityGoalEntry.setNumber(setpointDegrees.velocity);
+
+                double feedForward = m_armFeedForwardProperty.calculate(
+                    Units.degreesToRadians(setpointDegrees.position),
+                    Units.degreesToRadians(setpointDegrees.velocity)
+                );
+                m_pivotMotor.setVoltage(volts + feedForward);
             }
         } else {
             m_pivotMotor.set(0);
         }
+
     }
 
     public boolean isArmAtAngle() {
@@ -317,7 +376,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public boolean isArmAtAngle(double pivotAngleGoal, double allowableError, double allowableVelocityError) {
-        double error = getArmAngleDeg() - pivotAngleGoal;
+        double error = getAbsoluteEncoderAngle() - pivotAngleGoal;
         double velocity = getArmVelocityDegPerSec();
 
         return Math.abs(error) <= allowableError && Math.abs(velocity) < allowableVelocityError;
@@ -411,21 +470,29 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
+    private void resetWpiPidController() {
+        m_wpiPIDController.reset(getAbsoluteEncoderAngle());
+    }
+
+    private CommandBase createResetWpiPidController() {
+        return runOnce(this::resetWpiPidController);
+    }
+
     public CommandBase commandPivotArmToAngleHold(double angle) {
-        return this.run(() -> pivotArmToAngle(angle))
+        return createResetWpiPidController().andThen(this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle))
-            .withName("Arm to Angle And Hold" + angle);
+            .withName("Arm to Angle And Hold" + angle));
     }
 
     public CommandBase commandPivotArmToAngleHold(double angle, double allowableError, double velocityAllowableError) {
-        return this.run(() -> pivotArmToAngle(angle))
+        return createResetWpiPidController().andThen(this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle, allowableError, velocityAllowableError))
-            .withName("Arm to Angle And Hold" + angle);
+            .withName("Arm to Angle And Hold" + angle));
     }
 
     public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
-            this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle),
+            commandPivotArmToAngleHold(angle),
             this.run(() -> {
                 System.out.println("BAD");
                 x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1);
@@ -434,9 +501,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandPivotArmToAngleNonHold(double angle) {
-        return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
+        return runOnce(this::resetWpiPidController)
+            .andThen(this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
             .until(() -> isArmAtAngle(angle))
-            .withName("Arm to Angle" + angle);
+            .withName("Arm to Angle" + angle));
     }
 
     public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight height, GamePieceType gamePieceType) {

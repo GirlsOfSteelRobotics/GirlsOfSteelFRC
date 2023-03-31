@@ -186,7 +186,7 @@
   {
     "name": "/Preferences/Chassis to angle FF Properties.smff.kff",
     "type": "double",
-    "value": 0.03,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -283,6 +283,78 @@
     "name": "/Preferences/Pivot Arm.mm.max_acceleration",
     "type": "double",
     "value": 60.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.max_acceleration",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.max_velocity",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.ka",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.kg",
+    "type": "double",
+    "value": 1.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.kff",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.ks",
+    "type": "double",
+    "value": 0.10072,
     "properties": {
       "persistent": true
     }
