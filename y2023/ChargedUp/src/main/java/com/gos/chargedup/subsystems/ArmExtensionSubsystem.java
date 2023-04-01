@@ -52,9 +52,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
         m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
-
     }
-
 
     public boolean isMiddleRetract() {
         return m_currentArmLengthMeters == ARM_MIDDLE_LENGTH;

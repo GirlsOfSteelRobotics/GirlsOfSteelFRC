@@ -5,7 +5,6 @@
 
 package com.gos.chargedup;
 
-
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
@@ -21,7 +20,6 @@ import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
-import com.gos.lib.checklists.PowerDistributionAlerts;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
@@ -31,6 +29,7 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -46,7 +45,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -77,13 +75,14 @@ public class RobotContainer {
 
     private final PneumaticHub m_pneumaticHub;
     private final DoubleSupplier m_pressureSupplier;
-    private final PowerDistributionAlerts m_powerDistributionAlerts;
+
+    private final PowerDistribution m_powerDistribution;
     private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(PneumaticHub pneumaticHub, PowerDistributionAlerts powerDistributionAlerts) {
+    public RobotContainer(PneumaticHub pneumaticHub, PowerDistribution powerDistribution) {
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
@@ -99,7 +98,8 @@ public class RobotContainer {
         m_pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
         m_pressureSupplier = () -> m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
-        m_powerDistributionAlerts = powerDistributionAlerts;
+
+        m_powerDistribution = powerDistribution;
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
@@ -140,7 +140,7 @@ public class RobotContainer {
         tab.add("Arm Pivot: Reset Encoder (Abs Encoder Val)", m_armPivot.createSyncEncoderToAbsoluteEncoder());
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
-        tab.add("Reset Pneumatics Sticky Faults",  createResetStickyFaults());
+        tab.add("Reset Sticky Faults",  createResetStickyFaults());
         tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
     }
 
@@ -286,10 +286,14 @@ public class RobotContainer {
 
     private void resetStickyFaults() {
         m_pneumaticHub.clearStickyFaults();
-        m_powerDistributionAlerts.clearStickyFaultsPDH();
+        clearStickyFaultsPDH();
         m_chassisSubsystem.resetStickyFaultsChassis();
         m_armPivot.clearStickyFaultsArmPivot();
         m_claw.clearStickyFaultsClaw();
+    }
+
+    private void clearStickyFaultsPDH() {
+        m_powerDistribution.clearStickyFaults();
     }
 
     private CommandBase createResetStickyFaults() {
