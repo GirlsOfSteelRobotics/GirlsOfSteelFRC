@@ -20,7 +20,7 @@ import java.util.List;
 
 public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
 
-    private static final PathConstraints NON_CHARGING_STATION_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(60), Units.inchesToMeters(60));
+    private static final PathConstraints NON_CHARGING_STATION_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(45), Units.inchesToMeters(45));
     private static final PathConstraints CHARGING_STATION_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36));
 
 
