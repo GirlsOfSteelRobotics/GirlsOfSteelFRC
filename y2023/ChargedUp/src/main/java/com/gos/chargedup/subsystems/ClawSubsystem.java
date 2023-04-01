@@ -93,6 +93,10 @@ public class ClawSubsystem extends SubsystemBase {
         m_velocityEntry.setNumber(m_clawEncoder.getVelocity());
     }
 
+    public void clearStickyFaultsClaw() {
+        m_clawMotor.clearFaults();
+    }
+
     /////////////////////
     // Command Factories
     /////////////////////
