@@ -2,7 +2,7 @@ package com.gos.lib.properties.feedforward;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 
-public class ArmFeedForwardProperty extends BaseFeedForwardProperty{
+public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
 
     private ArmFeedforward m_feedForward;
 

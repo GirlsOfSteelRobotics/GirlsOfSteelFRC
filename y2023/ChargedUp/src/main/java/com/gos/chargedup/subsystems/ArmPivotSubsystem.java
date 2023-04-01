@@ -55,9 +55,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
-    // From SysID
-    private static final double KS;
-
     private static final double GEAR_RATIO = 45.0 * 4.0;
 
     // Arm Setpoints
@@ -75,7 +72,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     static {
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
-            KS = 0.10072;
             GRAVITY_OFFSET = new GosDoubleProperty(false, "Pivot Arm Gravity Offset", 0.2);
 
             HUMAN_PLAYER_ANGLE = 20;
@@ -86,11 +82,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
             HOME_ANGLE = MIN_ANGLE_DEG + 5;
-            GROUND_PICKUP_ANGLE = -38;
+            GROUND_PICKUP_ANGLE = -37;
             ARM_SCORE_LOW_DEG = -35;
 
         } else {
-            KS = 0.1375;
             GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0.3);
 
 
@@ -118,8 +113,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
-    private final SparkMaxPIDController m_pivotPIDController;
-    private final PidProperty m_pivotPID;
 
     // testing PID controllers to work with abs encoder
     private final ProfiledPIDController m_wpiPIDController;
@@ -153,15 +146,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.setInverted(true);
         m_pivotMotor.setSmartCurrentLimit(60);
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
-        m_pivotPIDController = m_pivotMotor.getPIDController();
-        m_pivotPIDController.setFeedbackDevice(m_pivotMotorEncoder);
 
         m_pivotMotorEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
         m_pivotMotorEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
 
         m_lowerLimitSwitch = new DigitalInput(Constants.INTAKE_LOWER_LIMIT_SWITCH);
         m_upperLimitSwitch = new DigitalInput(Constants.INTAKE_UPPER_LIMIT_SWITCH);
-        m_pivotPID = setupPidValues(m_pivotPIDController);
 
         m_wpiPIDController = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         WpiProfiledPidPropertyBuilder pidPropertyBuilder = new WpiProfiledPidPropertyBuilder("WPI Pivot Arm", false, m_wpiPIDController);
@@ -274,7 +264,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_pivotPID.updateIfChanged();
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
@@ -343,11 +332,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         double currentAngleDeg = getAbsoluteEncoderAngle();
 
         double error = m_armAngleGoal - currentAngleDeg;
-//        double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
-//        double arbFf = gravityOffset + KS * Math.signum(error);
-
-//        m_effectiveGravityOffsetEntry.setNumber(gravityOffset);
-//        m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
 
         System.out.println("Running");
         SmartDashboard.putNumber("arm angle error", error);
@@ -355,7 +339,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         if (Math.abs(error) < PID_STOP_ERROR.getValue()) {
             m_pivotMotor.set(0);
         } else {
-            // m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
             double volts = m_wpiPIDController.calculate(currentAngleDeg, pivotAngleGoal);
 
             TrapezoidProfile.State setpointDegrees = m_wpiPIDController.getSetpoint();
