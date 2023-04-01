@@ -284,7 +284,7 @@ public class RobotContainer {
     }
 
 
-    public void resetStickyFaults() {
+    private void resetStickyFaults() {
         m_pneumaticHub.clearStickyFaults();
         m_powerDistributionAlerts.clearStickyFaultsPDH();
         m_chassisSubsystem.resetStickyFaultsChassis();
@@ -292,7 +292,7 @@ public class RobotContainer {
         m_claw.clearStickyFaultsClaw();
     }
 
-    public CommandBase createResetStickyFaults() {
+    private CommandBase createResetStickyFaults() {
         return Commands.run(this::resetStickyFaults);
     }
 
