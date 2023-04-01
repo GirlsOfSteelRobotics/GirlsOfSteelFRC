@@ -35,7 +35,7 @@ public final class CombinedCommandsUtil {
 
     public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, double allowableError, double velocityAllowableError) {
         return pivot.commandGoToGroundPickupAndHold(allowableError, velocityAllowableError)
-            .andThen((extension.commandMiddleRetract().andThen(new PrintCommand("Ran middle retract"))).unless(extension::isMiddleRetract))
+            .andThen((extension.commandMiddleRetract().andThen(new PrintCommand("Ran middle retract"))))
             .withName("Go To Ground Pickup");
     }
 

@@ -28,6 +28,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -83,8 +84,8 @@ public class RobotContainer {
         //m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
         m_claw = new ClawSubsystem();
-        m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
+        m_armPivot = new ArmPivotSubsystem(m_armExtend::getArmExtension);
         // m_intake = new IntakeSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_armPivot, m_armExtend, m_claw);
 
@@ -114,6 +115,7 @@ public class RobotContainer {
             PropertyManager.printDynamicProperties();
         }
         PropertyManager.purgeExtraKeys();
+        DataLogManager.start();
     }
 
     @SuppressWarnings("PMD.NcssCount")
@@ -233,8 +235,8 @@ public class RobotContainer {
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        // m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        // m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
@@ -251,7 +253,7 @@ public class RobotContainer {
         // Backup manual controls for debugging
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
-        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
+        // m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
         m_operatorController.y().whileTrue(m_armPivot.commandPivotArmToAngleHold(0));
         m_operatorController.b().whileTrue(m_armPivot.commandPivotArmToAngleHold(-30));

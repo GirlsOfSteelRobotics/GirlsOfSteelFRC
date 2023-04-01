@@ -60,6 +60,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -221,7 +223,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePID.enableContinuousInput(0, 360);
         m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
-            .addP(0.4)
+            .addP(0.1)
             .addI(0)
             .addD(0)
             .addMaxAcceleration(210)
@@ -471,7 +473,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean turnPIDIsAtAngle() {
-        return m_turnAnglePID.atGoal();
+        return m_turnAnglePID.getSetpoint().equals(m_turnAnglePID.getGoal());
+//        return m_turnAnglePID.atGoal();
     }
 
     public void autoEngage() {
@@ -617,16 +620,24 @@ public class ChassisSubsystem extends SubsystemBase {
             .withName("Sync Odometry /w Pose");
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+    private RamseteAutoBuilder createRamseteAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
         return new RamseteAutoBuilder(
             this::getPose, // Pose supplier
-            this::resetOdometry,
+            poseSetter,
             new RamseteController(),
             K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
             this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
             eventMap,
             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
             this);
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+        return createRamseteAutoBuilder(eventMap, this::resetOdometry);
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
+        return createRamseteAutoBuilder(eventMap, (Pose2d pose) -> {});
     }
 
 

@@ -1,0 +1,522 @@
+[
+  {
+    "name": "/Preferences/Chassis.mm.kp",
+    "type": "double",
+    "value": 0.6,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis.mm.kff",
+    "type": "double",
+    "value": 0.215,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Error",
+    "type": "double",
+    "value": 3.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis auto engage kP",
+    "type": "double",
+    "value": 0.025,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawInSpeed",
+    "type": "double",
+    "value": 0.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawOutSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCurrentLimit",
+    "type": "double",
+    "value": 25.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/JoystickTurnDamping",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/JoysticTurnInPlaceThreshold",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis speed for brake",
+    "type": "double",
+    "value": 0.6,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis speed medium",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawHoldSpeed",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPieceCurrent",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPieceVelocity",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm PID Stop Error",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_acceleration",
+    "type": "double",
+    "value": 250.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_velocity",
+    "type": "double",
+    "value": 250.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle FF Properties.smff.ks",
+    "type": "double",
+    "value": 0.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle FF Properties.smff.ka",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle FF Properties.smff.kff",
+    "type": "double",
+    "value": 0.027,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Gravity Offset",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis Turn PID Allowable Error",
+    "type": "double",
+    "value": 3.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis Trajectory Max Velocity",
+    "type": "double",
+    "value": 60.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis On the Fly Max Acceleration",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.kp",
+    "type": "double",
+    "value": 0.0195,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.max_acceleration",
+    "type": "double",
+    "value": 130.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm.mm.max_velocity",
+    "type": "double",
+    "value": 45.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.ka",
+    "type": "double",
+    "value": 0.02,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.kg",
+    "type": "double",
+    "value": 0.7,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.kff",
+    "type": "double",
+    "value": 5.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property.smff.ks",
+    "type": "double",
+    "value": 0.10072,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.mm.kp",
+    "type": "double",
+    "value": 0.0195,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.mm.max_acceleration",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.mm.max_velocity",
+    "type": "double",
+    "value": 60.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.mm.max_acceleration",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.mm.max_velocity",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property MID.smff.ka",
+    "type": "double",
+    "value": 0.02,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property MID.smff.kg",
+    "type": "double",
+    "value": 0.7,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property MID.smff.kff",
+    "type": "double",
+    "value": 5.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property MID.smff.ks",
+    "type": "double",
+    "value": 0.10072,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property RETRACT.smff.ka",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property RETRACT.smff.kg",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property RETRACT.smff.kff",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm FF Property RETRACT.smff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.smff.ka",
+    "type": "double",
+    "value": 0.02,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.smff.kg",
+    "type": "double",
+    "value": 0.7,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.smff.kff",
+    "type": "double",
+    "value": 5.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm MID.smff.ks",
+    "type": "double",
+    "value": 0.10072,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.smff.ka",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.smff.kg",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.smff.kff",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/WPI Pivot Arm RETRACT.smff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

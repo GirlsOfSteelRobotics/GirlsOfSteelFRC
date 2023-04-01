@@ -11,7 +11,7 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
     }
 
     public ArmFeedForwardProperty(String baseName, boolean isConstant, ArmFeedforward feedforward) {
-        super(baseName + ".smff.", isConstant);
+        super(baseName + ".aff.", isConstant);
         m_feedForward = feedforward;
     }
 
@@ -43,6 +43,10 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
     public double calculate(double position, double velocity) {
         return m_feedForward.calculate(position, velocity);
 
+    }
+
+    public double calculate(double position, double velocity, double acceleration) {
+        return m_feedForward.calculate(position, velocity, acceleration);
     }
 
     public double getKs() {

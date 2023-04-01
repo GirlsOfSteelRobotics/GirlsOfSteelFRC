@@ -31,20 +31,20 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         List<PathPlannerTrajectory> getSecondPiece = PathPlanner.loadPathGroup(pathMiddle, false, NOT_AS_FAST_PATH_CONSTRAINTS);
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
-        Command driveToGetSecondPiece = chassis.ramseteAutoBuilder(eventMap).fullAuto(getSecondPiece);
+        Command driveToGetSecondPiece = chassis.ramseteAutoBuilderNoPoseReset(eventMap).fullAuto(getSecondPiece);
 
 
         PathPlannerTrajectory scoreSecondPiece = PathPlanner.loadPath(pathEnd, FASTER_PATH_CONSTRAINTS, false);
-        Command driveToScoreSecondPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(scoreSecondPiece);
+        Command driveToScoreSecondPiece = chassis.ramseteAutoBuilderNoPoseReset(new HashMap<>()).fullAuto(scoreSecondPiece);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
 
         //first part
         addCommands(driveToFirstPiece
-            .alongWith(armPivot.commandPivotArmToAngleHold(-10))
+            .alongWith(armPivot.commandPivotArmToAngleHold(-10)
             .alongWith(Commands.waitSeconds(0.25)
-                .andThen(armExtension.commandMiddleRetract())));
+                .andThen(armExtension.commandMiddleRetract()))));
 
         //turn 180
         addCommands(chassis.createTurnPID(0));
@@ -55,15 +55,14 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         //turn 180
         addCommands(chassis.createTurnPID(180)
-            .alongWith(armExtension.commandFullRetract()
-                .andThen(armPivot.commandGoHome()))
+            .alongWith(CombinedCommandsUtil.moveToScore(pivotHeightType, GamePieceType.CUBE, armPivot))
             .raceWith(claw.createHoldPiece()));
 
 
         //third part
         addCommands(driveToScoreSecondPiece
-            .alongWith(Commands.waitSeconds(0.75)
-                .andThen(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE)))
+            .alongWith(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE)
+                .andThen(armExtension.commandFullRetract()))
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //score piece

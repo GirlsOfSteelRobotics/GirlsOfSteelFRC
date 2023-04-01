@@ -22,14 +22,20 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     private static final DoubleSolenoid.Value BOTTOM_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
     private static final DoubleSolenoid.Value BOTTOM_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
 
+    public enum ArmExtension {
+        FULL_RETRACT,
+        MIDDLE_RETEACT,
+        FULL_EXTEND
+    }
+
     private static final double PNEUMATICS_WAIT = 1.3;
 
     //Todo: Get the actual values for the lengths for the arm
-    private static final double ARM_RETRACTED_LENGTH = 1.0;
+    private static final double ARM_RETRACTED_LENGTH = 0;
 
     private static final double ARM_MIDDLE_LENGTH = 1.0;
 
-    private static final double ARM_EXTENDED_LENGTH = 1.0;
+    private static final double ARM_EXTENDED_LENGTH = 2.0;
 
     private final DoubleSolenoid m_topPiston;
     private final DoubleSolenoid m_bottomPiston;
@@ -40,6 +46,16 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
         m_bottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
         fullRetract();
+    }
+
+    public ArmExtension getArmExtension() {
+        if (m_currentArmLengthMeters == ARM_RETRACTED_LENGTH) {
+            return ArmExtension.FULL_RETRACT;
+        } else if (m_currentArmLengthMeters == ARM_MIDDLE_LENGTH) {
+            return ArmExtension.MIDDLE_RETEACT;
+        } else {
+            return ArmExtension.FULL_EXTEND;
+        }
     }
 
     public final void fullRetract() {
@@ -57,6 +73,14 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     public boolean isMiddleRetract() {
         return m_currentArmLengthMeters == ARM_MIDDLE_LENGTH;
+    }
+
+    public boolean isFullRetract() {
+        return m_currentArmLengthMeters == ARM_RETRACTED_LENGTH;
+    }
+
+    public boolean isFullExtend() {
+        return m_currentArmLengthMeters == ARM_EXTENDED_LENGTH;
     }
 
     public void out() {
@@ -121,7 +145,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandFullRetract() {
-        return run(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
+        return run(this::fullRetract).unless(this::isFullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
     public CommandBase commandMiddleRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
@@ -132,7 +156,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandMiddleRetract() {
-        return run(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
+        return run(this::middleRetract).unless(this::isMiddleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
     public CommandBase commandFullExtendPrevention(ChassisSubsystem cs, CommandXboxController x) {
@@ -143,7 +167,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandFullExtend() {
-        return run(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
+        return run(this::out).unless(this::isFullExtend).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
     // TODO Are these ones necessary

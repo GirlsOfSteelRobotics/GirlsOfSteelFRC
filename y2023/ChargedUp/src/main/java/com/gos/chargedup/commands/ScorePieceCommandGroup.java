@@ -15,7 +15,7 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
         //assuming robot is in correct position to score (intake facing nodes)
         //arm to angle, arm extend, drop piece
         addCommands(new InstantCommand(claw::holdPiece));
-        addCommands(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType));
+        addCommands(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType).withTimeout(3));
         addCommands(armExtension.createArmToSpecifiedHeight(pivotHeightType, gamePieceType));
 
         //check that this function works:
