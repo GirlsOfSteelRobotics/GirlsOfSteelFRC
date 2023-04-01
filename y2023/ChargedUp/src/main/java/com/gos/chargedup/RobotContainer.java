@@ -217,8 +217,8 @@ public class RobotContainer {
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
         m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_RIGHT_BLUE_PICK_UP_POINT, false));
-        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        //m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        //m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
         m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
         m_driverController.povUp().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
@@ -233,6 +233,8 @@ public class RobotContainer {
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
+        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));

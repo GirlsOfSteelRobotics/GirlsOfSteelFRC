@@ -69,7 +69,10 @@ public final class AutonomousFactory {
         TWO_PIECE_NODE_7_AND_8,
 
         // Leave community, get second piece, and engage
-        TWO_PIECE_LEAVE_COMMUNITY_ENGAGE,
+        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3,
+        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4,
+        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5,
+
     }
 
     private final Map<AutoPivotHeight, Map<AutonMode, Command>> m_autoOptions = new HashMap<>();
@@ -122,7 +125,10 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, armPivot, armExtension, claw, height, "TwoPieceNodes7And8Part1", "TwoPieceNodes7And8Part2", "TwoPieceNodes7And8Part3"));
 
             //MVR Path Option 3: Leave community, get second piece, and engage
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_LEAVE_COMMUNITY_ENGAGE, new TwoPieceLeaveCommunityAndEngageCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, new TwoPieceLeaveCommunityAndEngageCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE, "OnePieceEngageWithSecondp1", "OnePieceEngageWithSecondp2"));
+            m_autoOptions.get(height).put(AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, new TwoPieceLeaveCommunityAndEngageCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE, "OnePieceEngageWithSecondNode3Part1", "OnePieceEngageWithSecondNode3Part2"));
+            m_autoOptions.get(height).put(AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, new TwoPieceLeaveCommunityAndEngageCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE, "OnePieceEngageWithSecondNode5Part1", "OnePieceEngageWithSecondNode5Part2"));
+
         }
 
         for (AutonMode auto: AutonMode.values()) {
