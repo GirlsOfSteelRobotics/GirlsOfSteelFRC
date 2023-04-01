@@ -79,7 +79,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void out() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
-        m_armExtension = ArmExtension.FULL_EXTEND
+        m_armExtension = ArmExtension.FULL_EXTEND;
     }
 
     public double getArmLengthMeters() {
@@ -89,9 +89,9 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         case MIDDLE_RETRACT:
             return ARM_MIDDLE_LENGTH;
         case FULL_RETRACT:
+        default:
             return ARM_RETRACTED_LENGTH;
         }
-        return 0;
     }
 
     public boolean isBottomPistonIn() {
