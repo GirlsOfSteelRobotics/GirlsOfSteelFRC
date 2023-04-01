@@ -217,5 +217,4 @@ public class PowerDistributionAlerts {
 
         m_alertSticky.set(!STICKY_ALERT_NAME.equals(alertMessage));
     }
-
 }

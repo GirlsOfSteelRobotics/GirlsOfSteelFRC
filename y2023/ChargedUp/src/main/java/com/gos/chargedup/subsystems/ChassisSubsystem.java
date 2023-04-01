@@ -301,9 +301,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
-
             m_tryingToEngage = false;
-
         }
     }
 
@@ -407,11 +405,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
         m_followerRightMotorErrorAlert.checkAlerts();
-
         m_pigeonAlerts.checkAlerts();
-
     }
-
 
     @Override
     public void simulationPeriodic() {
