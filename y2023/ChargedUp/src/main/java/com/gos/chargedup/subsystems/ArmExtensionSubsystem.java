@@ -54,7 +54,6 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
     }
 
-
     public boolean isMiddleRetract() {
         return m_currentArmLengthMeters == ARM_MIDDLE_LENGTH;
     }
