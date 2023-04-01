@@ -46,9 +46,9 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0.75);
-    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 0.5);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
+    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 3);
+    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 2);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
     private static final GosDoubleProperty GRAVITY_OFFSET;
 
     private static final double ARM_MOTOR_SPEED = 0.20;
@@ -173,10 +173,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .addKs(0.10072);
 
         m_retractedPidFeedForward = new ArmFeedForwardProperty("WPI Pivot Arm RETRACT", false)
-            .addKa(0)
-            .addKg(0)
-            .addKff(0)
-            .addKs(0);
+            .addKa(0.02)
+            .addKg(0.22)
+            .addKff(5.5)
+            .addKs(0.10072);
 
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
@@ -251,7 +251,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 .addD(0)
                 // .addFF(0)
                 .addMaxAcceleration(180)
-                .addMaxVelocity(60)
+                .addMaxVelocity(80)
                 .build();
         } else {
             return pidPropertyBuilder
@@ -279,8 +279,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 .addI(0)
                 .addD(0)
                 // .addFF(0)
-                .addMaxAcceleration(0)
-                .addMaxVelocity(0)
+                .addMaxAcceleration(180)
+                .addMaxVelocity(100)
                 .build();
         } else {
             return pidPropertyBuilder

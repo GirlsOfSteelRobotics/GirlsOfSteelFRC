@@ -89,7 +89,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
-    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
+    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 3.5);
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -226,8 +226,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .addP(0.1)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(210)
-            .addMaxVelocity(210)
+            .addMaxAcceleration(250)
+            .addMaxVelocity(250)
             .build();
         m_turnAnglePIDFFProperty = new SimpleMotorFeedForwardProperty("Chassis to angle FF Properties", false)
             .addKs(0.8)
