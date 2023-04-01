@@ -81,7 +81,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             HUMAN_PLAYER_ANGLE = 20;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 23;
-            ARM_CONE_MIDDLE_DEG = 13;
+            ARM_CONE_MIDDLE_DEG = 15;
             ARM_CONE_HIGH_DEG = 25;
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
