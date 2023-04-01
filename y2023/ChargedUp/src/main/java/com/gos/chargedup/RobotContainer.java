@@ -5,7 +5,6 @@
 
 package com.gos.chargedup;
 
-
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
@@ -31,12 +30,14 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -45,7 +46,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -73,13 +73,17 @@ public class RobotContainer {
         new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     private final LEDManagerSubsystem m_ledManagerSubsystem;
+
+    private final PneumaticHub m_pneumaticHub;
     private final DoubleSupplier m_pressureSupplier;
+
+    private final PowerDistribution m_powerDistribution;
     private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(PneumaticHub pneumaticHub) {
+    public RobotContainer(PneumaticHub pneumaticHub, PowerDistribution powerDistribution) {
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
@@ -91,9 +95,12 @@ public class RobotContainer {
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_claw, m_autonomousFactory); //NOPMD
 
-        pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
-        m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
+        m_pneumaticHub = pneumaticHub;
+        m_pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
+        m_pressureSupplier = () -> m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
+
+        m_powerDistribution = powerDistribution;
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
@@ -135,6 +142,7 @@ public class RobotContainer {
         tab.add("Arm Pivot: Reset Encoder (Abs Encoder Val)", m_armPivot.createSyncEncoderToAbsoluteEncoder());
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
+        tab.add("Reset Sticky Faults",  createResetStickyFaults());
         tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
     }
 
@@ -278,6 +286,23 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         return m_autonomousFactory.getAutonomousCommand();
+    }
+
+
+    private void resetStickyFaults() {
+        m_pneumaticHub.clearStickyFaults();
+        clearStickyFaultsPDH();
+        m_chassisSubsystem.resetStickyFaultsChassis();
+        m_armPivot.clearStickyFaultsArmPivot();
+        m_claw.clearStickyFaultsClaw();
+    }
+
+    private void clearStickyFaultsPDH() {
+        m_powerDistribution.clearStickyFaults();
+    }
+
+    private CommandBase createResetStickyFaults() {
+        return Commands.run(this::resetStickyFaults);
     }
 
 

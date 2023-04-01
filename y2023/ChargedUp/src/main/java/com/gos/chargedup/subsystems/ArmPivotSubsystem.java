@@ -437,6 +437,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return Math.abs(error) <= allowableError && Math.abs(velocity) < allowableVelocityError;
     }
 
+    public void clearStickyFaultsArmPivot() {
+        m_pivotMotor.clearFaults();
+    }
+
 
     public final void resetPivotEncoder(double angle) {
         SparkMaxUtil.autoRetry(() -> m_pivotMotorEncoder.setPosition(angle));
