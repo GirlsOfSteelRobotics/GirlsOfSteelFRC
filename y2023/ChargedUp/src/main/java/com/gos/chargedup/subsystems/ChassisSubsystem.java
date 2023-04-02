@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -620,16 +621,24 @@ public class ChassisSubsystem extends SubsystemBase {
             .withName("Sync Odometry /w Pose");
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+    private RamseteAutoBuilder createRamseteAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
         return new RamseteAutoBuilder(
             this::getPose, // Pose supplier
-            this::resetOdometry,
+            poseSetter,
             new RamseteController(),
             K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
             this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
             eventMap,
             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
             this);
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+        return createRamseteAutoBuilder(eventMap, this::resetOdometry);
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
+        return createRamseteAutoBuilder(eventMap, (Pose2d pose) -> {});
     }
 
 
