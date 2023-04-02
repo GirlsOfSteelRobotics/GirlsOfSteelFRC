@@ -68,7 +68,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         double gravityOffset;
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
-            HUMAN_PLAYER_ANGLE = 20;
+            HUMAN_PLAYER_ANGLE = 18;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 23;
             ARM_CONE_MIDDLE_DEG = 11;

@@ -15,8 +15,8 @@ public class PigeonAlerts {
 
     public PigeonAlerts(Pigeon2 pigeon2) {
         m_pigeon = pigeon2;
-        m_alert = new Alert("pigeon", Alert.AlertType.ERROR);
-        m_alertSticky = new Alert("pigeon (sticky)", Alert.AlertType.ERROR);
+        m_alert = new Alert(ALERT_NAME, Alert.AlertType.ERROR);
+        m_alertSticky = new Alert(STICKY_ALERT_NAME, Alert.AlertType.WARNING);
     }
 
     public void checkAlerts() {
@@ -24,99 +24,61 @@ public class PigeonAlerts {
         checkStickyFaults();
     }
 
-    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-    public void checkFaults() {
-        StringBuilder alertMessageBuilder = new StringBuilder(700);
-        alertMessageBuilder.append(ALERT_NAME);
-
-        Pigeon2_Faults faults = new Pigeon2_Faults();
-        m_pigeon.getFaults(faults);
-
-        if (faults.HardwareFault) {
-            alertMessageBuilder.append(" Hardwar Fault");
-        }
-        if (faults.APIError) {
-            alertMessageBuilder.append(" API Error");
-        }
-        if (faults.UnderVoltage) {
-            alertMessageBuilder.append(" Under Voltage fault");
-        }
-        if (faults.ResetDuringEn) {
-            alertMessageBuilder.append(" Reset During En fault");
-        }
-        if (faults.SaturatedRotVelocity) {
-            alertMessageBuilder.append(" Saturated Rot Velocity fault");
-        }
-        if (faults.SaturatedAccel) {
-            alertMessageBuilder.append(" Saturated Accel Fault");
-        }
-        if (faults.SaturatedMag) {
-            alertMessageBuilder.append(" Saturated Mag fault");
-        }
-        if (faults.BootIntoMotion) {
-            alertMessageBuilder.append(" Boot into motion fault");
-        }
-        if (faults.MagnetometerFault) {
-            alertMessageBuilder.append(" Magnetometer fault");
-        }
-        if (faults.GyroFault) {
-            alertMessageBuilder.append(" Gyro fault");
-        }
-        if (faults.AccelFault) {
-            alertMessageBuilder.append(" Alert message builder fault");
-        }
-
-        String alertMessage = alertMessageBuilder.toString();
-        m_alert.setText(alertMessage);
-
-        m_alert.set(!ALERT_NAME.equals(alertMessage));
-    }
-
-    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-    public void checkStickyFaults() {
-        StringBuilder alertMessageBuilder = new StringBuilder(700);
-        alertMessageBuilder.append(STICKY_ALERT_NAME);
-
+    private void checkStickyFaults() {
         Pigeon2_Faults stickyFaults = new Pigeon2_Faults();
         m_pigeon.getStickyFaults(stickyFaults);
+        checkFaults(stickyFaults, m_alertSticky, STICKY_ALERT_NAME);
+    }
 
-        if (stickyFaults.HardwareFault) {
-            alertMessageBuilder.append(" Hardware Fault");
+    private void checkFaults() {
+        Pigeon2_Faults faults = new Pigeon2_Faults();
+        m_pigeon.getFaults(faults);
+        checkFaults(faults, m_alert, ALERT_NAME);
+    }
+
+    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+    private void checkFaults(Pigeon2_Faults faults, Alert alert, String alertName) {
+        StringBuilder alertMessageBuilder = new StringBuilder(700);
+        alertMessageBuilder.append(alertName);
+
+        if (faults.HardwareFault) {
+            alertMessageBuilder.append("\nHardware Fault");
         }
-        if (stickyFaults.APIError) {
-            alertMessageBuilder.append(" APIE Error");
+        if (faults.APIError) {
+            alertMessageBuilder.append("\nAPI Error");
         }
-        if (stickyFaults.UnderVoltage) {
-            alertMessageBuilder.append(" Under Voltage fault");
+        if (faults.UnderVoltage) {
+            alertMessageBuilder.append("\nUnder Voltage fault");
         }
-        if (stickyFaults.ResetDuringEn) {
-            alertMessageBuilder.append(" Reset During En Fault");
+        if (faults.ResetDuringEn) {
+            alertMessageBuilder.append("\nReset During En fault");
         }
-        if (stickyFaults.SaturatedRotVelocity) {
-            alertMessageBuilder.append(" Saturated Rot Velocity fault");
+        if (faults.SaturatedRotVelocity) {
+            alertMessageBuilder.append("\nSaturated Rot Velocity fault");
         }
-        if (stickyFaults.SaturatedAccel) {
-            alertMessageBuilder.append(" Saturated Accel fault");
+        if (faults.SaturatedAccel) {
+            alertMessageBuilder.append("\nSaturated Accel Fault");
         }
-        if (stickyFaults.SaturatedMag) {
-            alertMessageBuilder.append(" Saturated Mag fault");
+        if (faults.SaturatedMag) {
+            alertMessageBuilder.append("\nSaturated Mag fault");
         }
-        if (stickyFaults.BootIntoMotion) {
-            alertMessageBuilder.append(" Boot into motion fault");
+        if (faults.BootIntoMotion) {
+            alertMessageBuilder.append("\nBoot into motion fault");
         }
-        if (stickyFaults.MagnetometerFault) {
-            alertMessageBuilder.append(" Magnetometer Fault");
+        if (faults.MagnetometerFault) {
+            alertMessageBuilder.append("\nMagnetometer fault");
         }
-        if (stickyFaults.GyroFault) {
-            alertMessageBuilder.append(" Gyro fault");
+        if (faults.GyroFault) {
+            alertMessageBuilder.append("\nGyro fault");
         }
-        if (stickyFaults.AccelFault) {
-            alertMessageBuilder.append(" Accel Fault");
+        if (faults.AccelFault) {
+            alertMessageBuilder.append("\nAlert message builder fault");
         }
 
         String alertMessage = alertMessageBuilder.toString();
-        m_alertSticky.setText(alertMessage);
+        alert.setText(alertMessage);
 
-        m_alertSticky.set(!STICKY_ALERT_NAME.equals(alertMessage));
+        alert.set(!alertName.equals(alertMessage));
     }
+
 }

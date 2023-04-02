@@ -314,7 +314,7 @@ public class RobotContainer {
     }
 
     private CommandBase createResetStickyFaults() {
-        return Commands.run(this::resetStickyFaults);
+        return Commands.run(this::resetStickyFaults).ignoringDisable(true);
     }
 
 

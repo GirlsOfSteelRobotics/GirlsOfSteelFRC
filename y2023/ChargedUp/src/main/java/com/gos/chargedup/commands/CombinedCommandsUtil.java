@@ -5,6 +5,7 @@ import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 
@@ -16,7 +17,8 @@ public final class CombinedCommandsUtil {
 
     public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandFullRetract()
-            .andThen(pivot.commandGoHome())
+            .alongWith(Commands.waitSeconds(0.25)
+            .andThen(pivot.commandGoHome()))
             .withName("Go Home Without Turret");
     }
 

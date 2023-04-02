@@ -24,9 +24,6 @@
         "header": {
           "open": true
         }
-      },
-      "window": {
-        "visible": false
       }
     }
   },
@@ -461,5 +458,8 @@
         "open": true
       }
     }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }
