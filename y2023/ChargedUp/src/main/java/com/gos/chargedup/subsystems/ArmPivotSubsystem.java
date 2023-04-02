@@ -22,14 +22,11 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -384,7 +381,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public CommandBase createSyncEncoderToAbsoluteEncoder() {
-        return this.run(() -> syncMotorEncoderToAbsoluteEncoder())
+        return this.run(this::syncMotorEncoderToAbsoluteEncoder)
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (Abs Encoder Val)");
     }
@@ -393,22 +390,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop).withName("Tune Gravity Offset");
     }
 
-    public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
-
     public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
-    }
-
-    public CommandBase commandPivotArmDownPrevention(ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmDown() {
@@ -425,16 +408,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle, allowableError, velocityAllowableError))
             .withName("Arm to Angle And Hold" + angle);
-    }
-
-    public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle),
-            this.run(() -> {
-                System.out.println("BAD");
-                x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1);
-            }),
-            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmToAngleNonHold(double angle) {

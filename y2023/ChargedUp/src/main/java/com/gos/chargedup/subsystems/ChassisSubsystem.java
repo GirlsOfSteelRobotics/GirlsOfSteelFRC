@@ -7,6 +7,7 @@ import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
@@ -88,7 +89,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
-    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
+    private final HeavyDoubleProperty m_turnPidAllowableError;
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -220,7 +221,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         m_turnAnglePID.enableContinuousInput(0, 360);
-        m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0.4)
             .addI(0)
@@ -232,6 +232,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .addKs(0.8)
             .addKa(0)
             .addKff(0.027);
+        GosDoubleProperty turnPidAllowableErrorProperty = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
+        m_turnPidAllowableError = new HeavyDoubleProperty(m_turnAnglePID::setTolerance, turnPidAllowableErrorProperty);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
@@ -380,6 +382,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
         m_turnAnglePIDProperties.updateIfChanged();
         m_turnAnglePIDFFProperty.updateIfChanged();
+        m_turnPidAllowableError.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
         if (Constants.IS_ROBOT_BLOSSOM) {
@@ -537,11 +540,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean isInCommunityZone() {
-        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation()) || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation());
+        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
+            || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
     }
 
     public boolean isInLoadingZone() {
-        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation());
+        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
+            || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
     }
 
     public boolean canExtendArm() {
@@ -613,6 +618,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createResetOdometry(Pose2d pose2d) {
         return this.runOnce(() -> resetOdometry(pose2d))
+            .ignoringDisable(true)
             .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
