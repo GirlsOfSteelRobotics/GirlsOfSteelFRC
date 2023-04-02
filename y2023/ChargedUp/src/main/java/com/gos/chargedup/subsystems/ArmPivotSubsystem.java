@@ -340,7 +340,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 Units.degreesToRadians(profileSetpointDegrees.velocity));
         m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts);
 
-        m_sparkPidController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+        if (isMotionProfileFinished()) {
+            m_sparkPidController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+        } else {
+            m_pivotMotor.setVoltage(feedForwardVolts);
+        }
     }
 
     public boolean isArmAtAngle() {
