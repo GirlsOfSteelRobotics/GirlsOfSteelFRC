@@ -121,7 +121,7 @@ public class RobotContainer {
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-        PropertyManager.purgeExtraKeys();
+        // PropertyManager.purgeExtraKeys();
 
         if (RobotBase.isSimulation()) {
             DataLogManager.start("datalogs");
