@@ -189,10 +189,10 @@ public class RobotContainer {
         tab.add("Arm Pivot: Pivot Down", m_armPivot.commandPivotArmDown());
         tab.add("Arm Pivot: Pivot Up", m_armPivot.commandPivotArmUp());
 
-        tab.add("Arm Pivot: Angle PID - -30 degrees", m_armPivot.commandPivotArmToAngleHold(-30));
-        tab.add("Arm Pivot: Angle PID - -10 degrees", m_armPivot.commandPivotArmToAngleHold(-10));
-        tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleHold(0));
-        tab.add("Arm Pivot: Angle PID - 10 degrees", m_armPivot.commandPivotArmToAngleHold(10));
+        tab.add("Arm Pivot: Angle PID - -30 degrees", debugArmPid(-30));
+        tab.add("Arm Pivot: Angle PID - -10 degrees", debugArmPid(-10));
+        tab.add("Arm Pivot: Angle PID - 0 degrees", debugArmPid(0));
+        tab.add("Arm Pivot: Angle PID - 10 degrees", debugArmPid(14));
 
         // tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
     }
@@ -249,10 +249,10 @@ public class RobotContainer {
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+//        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+//        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+//        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
+//        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
         m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goToGroundPickup(m_armPivot, m_armExtend));
         m_operatorController.povLeft().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend));
@@ -265,11 +265,14 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-        m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
-        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
-        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
+//        m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
+//        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
+//        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
-        //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        m_operatorController.y().whileTrue(debugArmPid(0));
+        m_operatorController.a().whileTrue(debugArmPid(-10));
+        m_operatorController.b().whileTrue(debugArmPid(-30));
+        m_operatorController.x().whileTrue(debugArmPid(14));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
@@ -280,6 +283,10 @@ public class RobotContainer {
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
         // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
         // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
+    }
+
+    private CommandBase debugArmPid(double angle) {
+        return m_armPivot.commandPivotArmToAngleHold(angle).andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
 
 

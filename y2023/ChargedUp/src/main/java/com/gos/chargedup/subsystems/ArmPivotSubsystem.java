@@ -123,7 +123,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_encoderDegEntry;
     private final NetworkTableEntry m_goalAngleDegEntry;
     private final NetworkTableEntry m_velocityEntry;
-    private final NetworkTableEntry m_effectiveGravityOffsetEntry;
+    private final NetworkTableEntry m_profilePositionGoalEntry;
+    private final NetworkTableEntry m_profileVelocityGoalEntry;
     private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
     private final NetworkTableEntry m_absoluteEncoderEntry;
     private final NetworkTableEntry m_absoluteEncoderToBuiltInDriftEntry;
@@ -179,7 +180,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
         m_goalAngleDegEntry = loggingTable.getEntry("Arm Goal (deg)");
         m_velocityEntry = loggingTable.getEntry("Arm Velocity");
-        m_effectiveGravityOffsetEntry = loggingTable.getEntry("Effective Gravity Offset");
+        m_profilePositionGoalEntry = loggingTable.getEntry("Profile Angle Goal");
+        m_profileVelocityGoalEntry = loggingTable.getEntry("Velocity Goal");
         m_pidArbitraryFeedForwardEntry = loggingTable.getEntry("Arbitrary FF");
         m_absoluteEncoderEntry = loggingTable.getEntry("Absolute Encoder Entry");
         m_absoluteEncoderToBuiltInDriftEntry = loggingTable.getEntry("Encoder Drift");
@@ -327,35 +329,18 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public void pivotArmToAngle2(double pivotAngleGoal) {
         m_armAngleGoal = pivotAngleGoal;
 
-        m_wpiPidController.calculate(getFeedbackAngleDeg());
+        m_wpiPidController.calculate(getFeedbackAngleDeg(), pivotAngleGoal);
 
         TrapezoidProfile.State profileSetpointDegrees = m_wpiPidController.getSetpoint();
-
+        m_profileVelocityGoalEntry.setNumber(profileSetpointDegrees.velocity);
+        m_profilePositionGoalEntry.setNumber(profileSetpointDegrees.position);
 
         double feedForwardVolts = m_wpiFeedForward.calculate(
                 Units.degreesToRadians(profileSetpointDegrees.position),
                 Units.degreesToRadians(profileSetpointDegrees.velocity));
-
         m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts);
+
         m_sparkPidController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
-
-
-//        double error = m_armAngleGoal - getArmAngleDeg2();
-//        double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg2())) * GRAVITY_OFFSET.getValue();
-//        double arbFf = gravityOffset + KS * Math.signum(error);
-//
-//        m_effectiveGravityOffsetEntry.setNumber(gravityOffset);
-//        m_pidArbitraryFeedForwardEntry.setNumber(arbFf);
-//
-//        if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
-//            if (Math.abs(error) < PID_STOP_ERROR.getValue()) {
-//                m_pivotMotor.set(0);
-//            } else {
-//                m_sparkPidController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFf);
-//            }
-//        } else {
-//            m_pivotMotor.set(0);
-//        }
     }
 
     public boolean isArmAtAngle() {
@@ -462,7 +447,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private CommandBase commandBasePivotToAngle(double angle, Runnable endBehavior, DoubleSupplier allowablePositionError, DoubleSupplier allowableVelocityError) {
         return createResetWpiPidController()
             .andThen(runEnd(() -> pivotArmToAngle2(angle), endBehavior))
-            .until(() -> isArmAtAngle(angle, allowablePositionError.getAsDouble(), allowableVelocityError.getAsDouble()));
+            .until(() -> isArmAtAngle(angle, allowablePositionError.getAsDouble(), allowableVelocityError.getAsDouble()))
+            .withName("Pivot To " + angle);
     }
 
     private CommandBase commandBasePivotToAngle(double angle, Runnable endBehavior, double allowablePositionError, double allowableVelocityError) {
