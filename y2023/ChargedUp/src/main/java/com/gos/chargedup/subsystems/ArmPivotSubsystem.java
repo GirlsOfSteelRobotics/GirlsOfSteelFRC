@@ -70,7 +70,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             KS = 0.10072;
             GRAVITY_OFFSET = new GosDoubleProperty(false, "Pivot Arm Gravity Offset", 0.2);
 
-            HUMAN_PLAYER_ANGLE = 20;
+            HUMAN_PLAYER_ANGLE = 18;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 23;
             ARM_CONE_MIDDLE_DEG = 11;

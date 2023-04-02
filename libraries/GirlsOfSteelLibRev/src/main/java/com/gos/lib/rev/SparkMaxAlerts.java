@@ -21,13 +21,13 @@ public class SparkMaxAlerts {
         checkStickyFaults();
     }
 
-    public void checkFaults() {
+    private void checkFaults() {
         short bitmask = m_sparkMax.getFaults();
 
         StringBuilder errorBuilder = new StringBuilder(m_motorString);
         for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
             if ((bitmask & (1 << faultId.value)) != 0) {
-                errorBuilder.append(' ').append(faultId);
+                errorBuilder.append('\n').append(faultId);
             }
         }
 
@@ -37,13 +37,13 @@ public class SparkMaxAlerts {
         m_alert.set(!(errorString.equals(m_motorString)));
     }
 
-    public void checkStickyFaults() {
+    private void checkStickyFaults() {
         short bitmask = m_sparkMax.getStickyFaults();
 
         StringBuilder errorBuilder = new StringBuilder(m_motorString);
         for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
             if ((bitmask & (1 << faultId.value)) != 0) {
-                errorBuilder.append(' ').append(faultId);
+                errorBuilder.append('\n').append(faultId);
             }
         }
 
