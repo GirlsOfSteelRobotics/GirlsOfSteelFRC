@@ -122,7 +122,12 @@ public class RobotContainer {
             PropertyManager.printDynamicProperties();
         }
         PropertyManager.purgeExtraKeys();
-        DataLogManager.start();
+
+        if (RobotBase.isSimulation()) {
+            DataLogManager.start("datalogs");
+        } else {
+            DataLogManager.start();
+        }
     }
 
     @SuppressWarnings("PMD.NcssCount")

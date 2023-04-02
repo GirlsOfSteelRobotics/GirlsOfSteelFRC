@@ -146,7 +146,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.02,
+    "value": 0.01,
     "properties": {
       "persistent": true
     }
@@ -170,7 +170,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.max_acceleration",
     "type": "double",
-    "value": 0.0,
+    "value": 120.0,
     "properties": {
       "persistent": true
     }
@@ -178,7 +178,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.max_velocity",
     "type": "double",
-    "value": 0.0,
+    "value": 120.0,
     "properties": {
       "persistent": true
     }
@@ -186,7 +186,7 @@
   {
     "name": "/Preferences/Chassis to angle FF Properties.smff.kff",
     "type": "double",
-    "value": 0.03,
+    "value": 0.009,
     "properties": {
       "persistent": true
     }
