@@ -14,7 +14,6 @@ import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
-import com.gos.chargedup.commands.testing.TestOnePieceAndLeaveCommunityThreeCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -121,8 +120,13 @@ public class RobotContainer {
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-        PropertyManager.purgeExtraKeys();
-        DataLogManager.start();
+        // PropertyManager.purgeExtraKeys();
+
+        if (RobotBase.isSimulation()) {
+            DataLogManager.start("datalogs");
+        } else {
+            DataLogManager.start();
+        }
     }
 
     @SuppressWarnings("PMD.NcssCount")

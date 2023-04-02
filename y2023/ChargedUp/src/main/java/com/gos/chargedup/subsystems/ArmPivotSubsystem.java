@@ -24,16 +24,12 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -47,7 +43,6 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 3);
-    private static final GosDoubleProperty PID_STOP_ERROR = new GosDoubleProperty(false, "Pivot Arm PID Stop Error", 2);
     private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
     private static final GosDoubleProperty GRAVITY_OFFSET;
 
@@ -335,7 +330,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.set(0);
     }
 
-    public double getArmAngleDeg() {
+    public final double getArmAngleDeg() {
         return m_pivotMotorEncoder.getPosition();
     }
 
@@ -363,14 +358,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         ArmExtensionSubsystem.ArmExtension currentExtension = m_armExtensionSupplier.get();
         switch (currentExtension) {
-        default:
-        case MIDDLE_RETEACT:
-            controller = m_midPivotPidController;
-            feedForwardProperty = m_midPidFeedForward;
-            break;
         case FULL_RETRACT:
             controller = m_retractedPivotPidController;
             feedForwardProperty = m_retractedPidFeedForward;
+            break;
+        case MIDDLE_RETRACT:
+        default:
+            controller = m_midPivotPidController;
+            feedForwardProperty = m_midPidFeedForward;
             break;
         }
 
@@ -412,29 +407,29 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return isArmAtAngle(pivotAngleGoal, ALLOWABLE_ERROR.getValue(), ALLOWABLE_VELOCITY_ERROR.getValue());
     }
 
-    public boolean isArmPIDTrapezoidFinished() {
-        ProfiledPIDController controller;
-
-        ArmExtensionSubsystem.ArmExtension currentExtension = m_armExtensionSupplier.get();
-        switch (currentExtension) {
-        default:
-        case MIDDLE_RETEACT:
-            controller = m_midPivotPidController;
-            break;
-        case FULL_RETRACT:
-            controller = m_retractedPivotPidController;
-            break;
-        }
-
-        return controller.getSetpoint().equals(controller.getGoal());
-
-    }
-
     public boolean isArmAtAngle(double pivotAngleGoal, double allowableError, double allowableVelocityError) {
         double error = getAbsoluteEncoderAngle() - pivotAngleGoal;
         double velocity = getArmVelocityDegPerSec();
 
         return Math.abs(error) <= allowableError && Math.abs(velocity) < allowableVelocityError;
+    }
+
+    public boolean isArmPIDTrapezoidFinished() {
+        ProfiledPIDController controller;
+
+        ArmExtensionSubsystem.ArmExtension currentExtension = m_armExtensionSupplier.get();
+        switch (currentExtension) {
+        case FULL_RETRACT:
+            controller = m_retractedPivotPidController;
+            break;
+        case MIDDLE_RETRACT:
+        default:
+            controller = m_midPivotPidController;
+            break;
+        }
+
+        return controller.getSetpoint().equals(controller.getGoal());
+
     }
 
     public void clearStickyFaultsArmPivot() {
@@ -498,7 +493,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public CommandBase createSyncEncoderToAbsoluteEncoder() {
-        return this.run(() -> syncMotorEncoderToAbsoluteEncoder())
+        return this.run(this::syncMotorEncoderToAbsoluteEncoder)
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (Abs Encoder Val)");
     }
@@ -507,22 +502,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop).withName("Tune Gravity Offset");
     }
 
-    public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
-
     public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
-    }
-
-    public CommandBase commandPivotArmDownPrevention(ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmDown() {
@@ -550,16 +531,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return createResetWpiPidController().andThen(this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle, allowableError, velocityAllowableError))
             .withName("Arm to Angle And Hold" + angle));
-    }
-
-    public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            commandPivotArmToAngleHold(angle),
-            this.run(() -> {
-                System.out.println("BAD");
-                x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1);
-            }),
-            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmToAngleNonHold(double angle) {

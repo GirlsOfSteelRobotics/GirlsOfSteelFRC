@@ -24,7 +24,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     public enum ArmExtension {
         FULL_RETRACT,
-        MIDDLE_RETEACT,
+        MIDDLE_RETRACT,
         FULL_EXTEND
     }
 
@@ -40,7 +40,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     private final DoubleSolenoid m_topPiston;
     private final DoubleSolenoid m_bottomPiston;
 
-    private double m_currentArmLengthMeters;
+    private ArmExtension m_armExtension;
 
     public ArmExtensionSubsystem() {
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
@@ -49,47 +49,49 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public ArmExtension getArmExtension() {
-        if (m_currentArmLengthMeters == ARM_RETRACTED_LENGTH) {
-            return ArmExtension.FULL_RETRACT;
-        } else if (m_currentArmLengthMeters == ARM_MIDDLE_LENGTH) {
-            return ArmExtension.MIDDLE_RETEACT;
-        } else {
-            return ArmExtension.FULL_EXTEND;
-        }
+        return m_armExtension;
+    }
+
+    public boolean isMiddleRetract() {
+        return m_armExtension == ArmExtension.MIDDLE_RETRACT;
+    }
+
+    public boolean isFullRetract() {
+        return m_armExtension == ArmExtension.FULL_RETRACT;
+    }
+
+    public boolean isFullExtend() {
+        return m_armExtension == ArmExtension.FULL_EXTEND;
     }
 
     public final void fullRetract() {
         m_topPiston.set(TOP_PISTON_EXTENDED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
-        m_currentArmLengthMeters = ARM_RETRACTED_LENGTH;
+        m_armExtension = ArmExtension.FULL_RETRACT;
     }
 
     public void middleRetract() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
-        m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
-    }
-
-    public boolean isMiddleRetract() {
-        return m_currentArmLengthMeters == ARM_MIDDLE_LENGTH;
-    }
-
-    public boolean isFullRetract() {
-        return m_currentArmLengthMeters == ARM_RETRACTED_LENGTH;
-    }
-
-    public boolean isFullExtend() {
-        return m_currentArmLengthMeters == ARM_EXTENDED_LENGTH;
+        m_armExtension = ArmExtension.MIDDLE_RETRACT;
     }
 
     public void out() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
-        m_currentArmLengthMeters = ARM_EXTENDED_LENGTH;
+        m_armExtension = ArmExtension.FULL_EXTEND;
     }
 
     public double getArmLengthMeters() {
-        return m_currentArmLengthMeters;
+        switch (m_armExtension) {
+        case FULL_EXTEND:
+            return ARM_EXTENDED_LENGTH;
+        case MIDDLE_RETRACT:
+            return ARM_MIDDLE_LENGTH;
+        case FULL_RETRACT:
+        default:
+            return ARM_RETRACTED_LENGTH;
+        }
     }
 
     public boolean isBottomPistonIn() {

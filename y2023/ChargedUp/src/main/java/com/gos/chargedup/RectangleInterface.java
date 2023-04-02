@@ -1,5 +1,6 @@
 package com.gos.chargedup;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class RectangleInterface {
@@ -26,10 +27,14 @@ public class RectangleInterface {
         m_field = new GosField.RectangleObject(leftTopX, leftTopY, rightBottomX, rightBottomY, field, name);
     }
 
-    public boolean pointIsInRect(Translation2d loc) {
-        AllianceFlipper.maybeFlip(loc);
-        double yLoc = loc.getY();
-        double xLoc = loc.getX();
+    public boolean pointIsInRect(Pose2d pose) {
+        return pointIsInRect(pose.getTranslation());
+    }
+
+    public boolean pointIsInRect(Translation2d translation) {
+        Translation2d maybeFlippedTranslation = AllianceFlipper.maybeFlip(translation);
+        double yLoc = maybeFlippedTranslation.getY();
+        double xLoc = maybeFlippedTranslation.getX();
         m_field.updateRectangle();
 
         return (m_rightBottomY < yLoc && yLoc < m_leftTopY
