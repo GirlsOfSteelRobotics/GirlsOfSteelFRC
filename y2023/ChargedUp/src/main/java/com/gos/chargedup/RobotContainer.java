@@ -121,7 +121,7 @@ public class RobotContainer {
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-        // PropertyManager.purgeExtraKeys();
+         PropertyManager.purgeExtraKeys();
 
         if (RobotBase.isSimulation()) {
             DataLogManager.start("datalogs");
@@ -189,11 +189,12 @@ public class RobotContainer {
         tab.add("Arm Pivot: Pivot Down", m_armPivot.commandPivotArmDown());
         tab.add("Arm Pivot: Pivot Up", m_armPivot.commandPivotArmUp());
 
-        tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleNonHold(0));
-        tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
-        tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
+        tab.add("Arm Pivot: Angle PID - -30 degrees", m_armPivot.commandPivotArmToAngleHold(-30));
+        tab.add("Arm Pivot: Angle PID - -10 degrees", m_armPivot.commandPivotArmToAngleHold(-10));
+        tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleHold(0));
+        tab.add("Arm Pivot: Angle PID - 10 degrees", m_armPivot.commandPivotArmToAngleHold(10));
 
-        tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
+        // tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
     }
 
     private void createArmTestCommands() {
@@ -317,7 +318,7 @@ public class RobotContainer {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
 
             builder.addDoubleProperty(
-                SmartDashboardNames.ARM_ANGLE, m_armPivot::getArmAngleDeg, null);
+                SmartDashboardNames.ARM_ANGLE, m_armPivot::getFeedbackAngleDeg, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_GOAL_ANGLE, m_armPivot::getArmAngleGoal, null);
             builder.addBooleanProperty(

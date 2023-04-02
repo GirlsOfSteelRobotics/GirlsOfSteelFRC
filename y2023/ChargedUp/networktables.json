@@ -128,14 +128,6 @@
     }
   },
   {
-    "name": "/Preferences/Pivot Arm PID Stop Error",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/ClawHoldSpeed",
     "type": "double",
     "value": 0.2,
@@ -208,14 +200,6 @@
     }
   },
   {
-    "name": "/Preferences/Pivot Arm Gravity Offset",
-    "type": "double",
-    "value": 1.8,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Chassis Turn PID Allowable Error",
     "type": "double",
     "value": 2.0,
@@ -242,15 +226,7 @@
   {
     "name": "/Preferences/Pivot Arm.mm.kp",
     "type": "double",
-    "value": 0.004,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pivot Arm.mm.ki",
-    "type": "double",
-    "value": 0.0,
+    "value": 0.005,
     "properties": {
       "persistent": true
     }
@@ -264,25 +240,41 @@
     }
   },
   {
-    "name": "/Preferences/Pivot Arm.mm.kff",
+    "name": "/Preferences/Pivot Arm Motion Profile.aff.kff",
     "type": "double",
-    "value": 0.005,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Pivot Arm.mm.max_velocity",
+    "name": "/Preferences/Pivot Arm Motion Profile.aff.ks",
     "type": "double",
-    "value": 120.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Pivot Arm.mm.max_acceleration",
+    "name": "/Preferences/Pivot Arm Motion Profile.aff.kg",
     "type": "double",
-    "value": 60.0,
+    "value": 1.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.max_acceleration",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.max_velocity",
+    "type": "double",
+    "value": 40.0,
     "properties": {
       "persistent": true
     }

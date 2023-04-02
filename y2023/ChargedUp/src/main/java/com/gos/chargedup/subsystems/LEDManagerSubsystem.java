@@ -220,7 +220,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_autoModeColor.writeLeds();
         }
 
-        if (Math.abs(m_armSubsystem.getArmAngleDeg() - m_armSubsystem.getAbsoluteEncoderAngle()) < 1) {
+        if (m_armSubsystem.areEncodersSynced()) {
             m_autoResetArmAtAngle.writeLeds();
         }
     }
