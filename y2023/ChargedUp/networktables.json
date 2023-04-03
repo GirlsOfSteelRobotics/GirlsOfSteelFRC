@@ -278,5 +278,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.kp",
+    "type": "double",
+    "value": 0.008,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

@@ -65,13 +65,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final double MAX_ANGLE_DEG;
 
     static {
-        double gravityOffset;
         //toDo: make these values work as expected
         if (Constants.IS_ROBOT_BLOSSOM) {
             HUMAN_PLAYER_ANGLE = 18;
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 23;
-            ARM_CONE_MIDDLE_DEG = 11;
+            ARM_CONE_MIDDLE_DEG = 14;
             ARM_CONE_HIGH_DEG = 25;
             MIN_ANGLE_DEG = -60;
             MAX_ANGLE_DEG = 50;
@@ -166,13 +165,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_wpiPidController = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         m_wpiPidProperties = new WpiProfiledPidPropertyBuilder("Pivot Arm Motion Profile", false, m_wpiPidController)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
+            .addP(0.008)
+            .addMaxAcceleration(80)
+            .addMaxVelocity(80)
             .build();
         m_wpiFeedForward = new ArmFeedForwardProperty("Pivot Arm Motion Profile", false)
-            .addKff(0)
+            .addKff(3.55)
             .addKs(0.10072)
-            .addKg(0);
+            .addKg(0.22);
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
         m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
@@ -252,7 +252,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         // kd=0.005000
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Pivot Arm", false, pidController, 0)
-                .addP(0.004)
+                .addP(0.0075)
                 .addD(0)
                 .build();
         } else {
@@ -432,10 +432,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .withName("Reset Pivot Encoder (Abs Encoder Val)");
     }
 
-//    public CommandBase tuneGravityOffsetPID() {
-//        return this.runEnd(this::tuneGravityOffset, this::pivotArmStop).withName("Tune Gravity Offset");
-//    }
-
     public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
     }
@@ -481,6 +477,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return commandPivotArmToAngleHold(angle).withName("Score [" + height + "," + gamePieceType + "] and Hold");
+    }
+
+    public CommandBase commandMoveArmToPieceScorePositionDifferenceAndHold(AutoPivotHeight height, GamePieceType gamePieceType, double heightChange) {
+        double angle = getArmAngleForScoring(height, gamePieceType);
+        return commandPivotArmToAngleHold(angle + heightChange).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
     public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight height, GamePieceType gamePieceType) {

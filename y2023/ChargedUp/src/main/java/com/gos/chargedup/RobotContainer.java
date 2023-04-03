@@ -14,7 +14,6 @@ import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
-import com.gos.chargedup.commands.testing.TestOnePieceAndLeaveCommunityThreeCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -27,7 +26,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -121,13 +119,13 @@ public class RobotContainer {
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-         PropertyManager.purgeExtraKeys();
+        // PropertyManager.purgeExtraKeys();
 
-//        if (RobotBase.isSimulation()) {
-//            DataLogManager.start("datalogs");
-//        } else {
-//            DataLogManager.start();
-//        }
+        //        if (RobotBase.isSimulation()) {
+        //            DataLogManager.start("datalogs");
+        //        } else {
+        //            DataLogManager.start();
+        //        }
     }
 
     @SuppressWarnings("PMD.NcssCount")
@@ -210,9 +208,6 @@ public class RobotContainer {
         tab.add("Arm Piston: Top Retracted", m_armExtend.commandTopPistonRetracted());
     }
 
-    // front
-    // z - in
-
     private void createClawTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("ClawTestCommands");
 
@@ -231,6 +226,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+        // m_claw.setDefaultCommand(m_claw.createHoldPiece());
 
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
@@ -251,10 +247,10 @@ public class RobotContainer {
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-//        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-//        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-//        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
-//        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
         m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goToGroundPickup(m_armPivot, m_armExtend));
         m_operatorController.povLeft().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend));
@@ -267,14 +263,14 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-//        m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
-//        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
-//        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
+        // m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
+        // m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
+        // m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
-        m_operatorController.y().whileTrue(debugArmPid(0));
-        m_operatorController.a().whileTrue(debugArmPid(-10));
-        m_operatorController.b().whileTrue(debugArmPid(-30));
-        m_operatorController.x().whileTrue(debugArmPid(14));
+        // m_operatorController.y().whileTrue(debugArmPid(0));
+        // m_operatorController.a().whileTrue(debugArmPid(-10));
+        // m_operatorController.b().whileTrue(debugArmPid(-30));
+        // m_operatorController.x().whileTrue(debugArmPid(14));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
@@ -288,7 +284,8 @@ public class RobotContainer {
     }
 
     private CommandBase debugArmPid(double angle) {
-        return m_armPivot.commandPivotArmToAngleHold(angle).andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
+        return m_armPivot.commandPivotArmToAngleHold(angle);
+        //.andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
 
 

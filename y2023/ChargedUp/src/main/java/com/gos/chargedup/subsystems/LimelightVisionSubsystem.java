@@ -13,14 +13,12 @@ import java.util.Optional;
 public class LimelightVisionSubsystem extends SubsystemBase implements Vision {
     private final LimelightSensor m_limelight;
 
-    private static final String LIMELIGHT_NAME = "limelight";
-
     private final GosField.CameraObject m_field;
 
-    public LimelightVisionSubsystem(GosField field) {
-        m_limelight = new LimelightSensor(LIMELIGHT_NAME);
+    public LimelightVisionSubsystem(GosField field, String name) {
+        m_limelight = new LimelightSensor(name);
 
-        m_field = new GosField.CameraObject(field, LIMELIGHT_NAME);
+        m_field = new GosField.CameraObject(field, name);
     }
 
     @Override

@@ -20,17 +20,20 @@ import java.util.List;
 
 public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
 
-    private static final PathConstraints NON_CHARGING_STATION_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(45), Units.inchesToMeters(45));
-    private static final PathConstraints CHARGING_STATION_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36));
+    private static final PathConstraints FASTER_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(55), Units.inchesToMeters(55));
+    private static final PathConstraints SLOWER_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(45), Units.inchesToMeters(36));
+    private static final PathConstraints EVEN_SLOWER_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(24), Units.inchesToMeters(24));
+
 
 
     public OnePieceLeaveAndEngageFullCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String path) {
 
         List<PathPlannerTrajectory> driveOverStation = PathPlanner.loadPathGroup(path, true,
-            NON_CHARGING_STATION_CONSTRAINTS,
-            CHARGING_STATION_CONSTRAINTS,
-            NON_CHARGING_STATION_CONSTRAINTS,
-            NON_CHARGING_STATION_CONSTRAINTS);
+            FASTER_CONSTRAINTS,
+            SLOWER_CONSTRAINTS,
+            SLOWER_CONSTRAINTS,
+            EVEN_SLOWER_CONSTRAINTS,
+            FASTER_CONSTRAINTS);
         Command driveForwardOverChargingStation1 = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(driveOverStation);
 
         //score piece

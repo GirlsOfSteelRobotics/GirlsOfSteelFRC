@@ -237,17 +237,7 @@
       "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
-      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 0 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/ChassisTestCommands/Chassis To Angle 0": {
         "window": {
           "visible": true
         }
