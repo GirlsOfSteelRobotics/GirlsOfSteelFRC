@@ -14,7 +14,6 @@ import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
-import com.gos.chargedup.commands.testing.TestOnePieceAndLeaveCommunityThreeCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -27,7 +26,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -123,11 +121,11 @@ public class RobotContainer {
         }
         // PropertyManager.purgeExtraKeys();
 
-        if (RobotBase.isSimulation()) {
-            DataLogManager.start("datalogs");
-        } else {
-            DataLogManager.start();
-        }
+        //        if (RobotBase.isSimulation()) {
+        //            DataLogManager.start("datalogs");
+        //        } else {
+        //            DataLogManager.start();
+        //        }
     }
 
     @SuppressWarnings("PMD.NcssCount")
@@ -189,11 +187,12 @@ public class RobotContainer {
         tab.add("Arm Pivot: Pivot Down", m_armPivot.commandPivotArmDown());
         tab.add("Arm Pivot: Pivot Up", m_armPivot.commandPivotArmUp());
 
-        tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleNonHold(0));
-        tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
-        tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
+        tab.add("Arm Pivot: Angle PID - -30 degrees", debugArmPid(-30));
+        tab.add("Arm Pivot: Angle PID - -10 degrees", debugArmPid(-10));
+        tab.add("Arm Pivot: Angle PID - 0 degrees", debugArmPid(0));
+        tab.add("Arm Pivot: Angle PID - 10 degrees", debugArmPid(14));
 
-        tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
+        // tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
     }
 
     private void createArmTestCommands() {
@@ -227,7 +226,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
-        m_claw.setDefaultCommand(m_claw.createHoldPiece());
+        // m_claw.setDefaultCommand(m_claw.createHoldPiece());
 
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
@@ -264,11 +263,14 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-        m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
-        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
-        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
+        // m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
+        // m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
+        // m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
-        //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        // m_operatorController.y().whileTrue(debugArmPid(0));
+        // m_operatorController.a().whileTrue(debugArmPid(-10));
+        // m_operatorController.b().whileTrue(debugArmPid(-30));
+        // m_operatorController.x().whileTrue(debugArmPid(14));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
@@ -279,6 +281,11 @@ public class RobotContainer {
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
         // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
         // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
+    }
+
+    private CommandBase debugArmPid(double angle) {
+        return m_armPivot.commandPivotArmToAngleHold(angle);
+        //.andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
 
 
@@ -317,7 +324,7 @@ public class RobotContainer {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
 
             builder.addDoubleProperty(
-                SmartDashboardNames.ARM_ANGLE, m_armPivot::getArmAngleDeg, null);
+                SmartDashboardNames.ARM_ANGLE, m_armPivot::getFeedbackAngleDeg, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_GOAL_ANGLE, m_armPivot::getArmAngleGoal, null);
             builder.addBooleanProperty(

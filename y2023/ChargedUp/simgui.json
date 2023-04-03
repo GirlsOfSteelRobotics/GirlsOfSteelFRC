@@ -56,7 +56,10 @@
       "/Shuffleboard/ArmExtensionTestCommands/Arm Piston: Mid Retract": "Command",
       "/Shuffleboard/ArmExtensionTestCommands/Arm Piston: Top Extended": "Command",
       "/Shuffleboard/ArmExtensionTestCommands/Arm Piston: Top Retracted": "Command",
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - -10 degrees": "Command",
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - -30 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 0 degrees": "Command",
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 10 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 45 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 90 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Gravity Offset Tune": "Command",
@@ -235,11 +238,6 @@
     },
     "windows": {
       "/Shuffleboard/AutomatedTurret/High Cone Right": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/ChassisTestCommands/Chassis To Angle 0": {
         "window": {
           "visible": true
         }

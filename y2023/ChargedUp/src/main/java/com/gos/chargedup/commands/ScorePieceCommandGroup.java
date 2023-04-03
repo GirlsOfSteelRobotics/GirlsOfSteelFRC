@@ -18,6 +18,10 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
         addCommands(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType));
         addCommands(armExtension.createArmToSpecifiedHeight(pivotHeightType, gamePieceType));
 
+        if (gamePieceType == GamePieceType.CONE && pivotHeightType != AutoPivotHeight.LOW) {
+            addCommands(armPivot.commandMoveArmToPieceScorePositionDifferenceAndHold(pivotHeightType, gamePieceType, -6));
+        }
+
         //check that this function works:
         addCommands(claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
