@@ -253,8 +253,8 @@ public class ChassisSubsystem extends SubsystemBase {
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
         m_cameras = new ArrayList<>();
-        m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-back"));
-        m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-front"));
+        // m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-back"));
+        // m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-front"));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -512,6 +512,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void updateOdometry() {
         m_poseEstimator.update(
+
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         for (Vision vision : m_cameras) {

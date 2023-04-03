@@ -58,7 +58,9 @@ public final class AutonomousFactory {
         ONE_NODE_AND_ENGAGE_5,
 
         // Score, Drive over bridge and out of community, then engage
+        ONE_NODE_LEAVE_AND_ENGAGE_3,
         ONE_NODE_LEAVE_AND_ENGAGE_4,
+        ONE_NODE_LEAVE_AND_ENGAGE_5,
 
         // One piece, grab a second
         ONE_NODE_AND_GRAB_SECOND_PIECE_0,
@@ -114,7 +116,9 @@ public final class AutonomousFactory {
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, armPivot, armExtension, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
 
             // Score Game Piece, drive over bridge out of the community zone, then engage
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_3, new OnePieceLeaveAndEngageFullCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CONE, "OnePieceLeaveAndEngage3"));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_4, new OnePieceLeaveAndEngageFullCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CUBE, "OnePieceLeaveAndEngage4"));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_5, new OnePieceLeaveAndEngageFullCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CONE, "OnePieceLeaveAndEngage5"));
 
             // Score Piece + Grab Second
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_GRAB_SECOND_PIECE_0, new OnePieceANDGrabSecondCommandGroup(chassis, armPivot, armExtension, claw, height, GamePieceType.CONE, "TwoPieceNodes0And1Part1", "TwoPieceNodes0And1Part2"));

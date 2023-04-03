@@ -41,9 +41,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private static final int AUTO_HEIGHT_START = 0;
     private static final int AUTO_HEIGHT_COUNT = 10;
 
-    private static final int AUTO_MODE_START = AUTO_HEIGHT_COUNT;
+    private static final int AUTO_MODE_START = MAX_INDEX_LED - 10;
 
-    private static final int AUTO_MODE_END = AUTO_MODE_START + 10;
+    private static final int AUTO_MODE_END = MAX_INDEX_LED;
 
     private static final int CLAW_HOLD_WAIT_TIME = 1;
 
@@ -152,6 +152,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, NODE_7_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_8, NODE_8_COLOR);
 
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_3, NODE_3_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_4, NODE_4_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_5, NODE_5_COLOR);
+
+
         addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, NODE_4_COLOR);
         addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, NODE_3_COLOR);
         addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, NODE_5_COLOR);
@@ -177,9 +182,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_clawWasTripped = false;
 
         // disabled -- show if there's alerts
-        m_alertError = new LEDFlash(m_buffer, 21, 30, 0.5, Color.kRed);
-        m_alertWarning = new LEDFlash(m_buffer, 21, 30, 0.5, Color.kYellow);
-        m_noAlerts = new LEDFlash(m_buffer, 21, 30, 0.5, Color.kGreen);
+        m_alertError = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kRed);
+        m_alertWarning = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kYellow);
+        m_noAlerts = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kGreen);
 
 
         m_led.setLength(m_buffer.getLength());

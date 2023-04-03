@@ -247,14 +247,15 @@ public class RobotContainer {
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        // m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        // m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        // m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
+        // m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
         m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goToGroundPickup(m_armPivot, m_armExtend));
         m_operatorController.povLeft().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend));
-        m_operatorController.povRight().whileTrue(m_armPivot.commandGoToAutoNodePosition(() -> m_autoAimNodePosition));
+
+        // m_operatorController.povRight().whileTrue(m_armPivot.commandGoToAutoNodePosition(() -> m_autoAimNodePosition));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
@@ -267,10 +268,10 @@ public class RobotContainer {
         // m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
         // m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
-        // m_operatorController.y().whileTrue(debugArmPid(0));
-        // m_operatorController.a().whileTrue(debugArmPid(-10));
-        // m_operatorController.b().whileTrue(debugArmPid(-30));
-        // m_operatorController.x().whileTrue(debugArmPid(14));
+        m_operatorController.y().whileTrue(debugArmPid(0));
+        m_operatorController.a().whileTrue(debugArmPid(-10));
+        m_operatorController.b().whileTrue(debugArmPid(-30));
+        m_operatorController.x().whileTrue(debugArmPid(14));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
