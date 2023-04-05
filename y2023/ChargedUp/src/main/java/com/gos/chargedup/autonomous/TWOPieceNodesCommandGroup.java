@@ -41,32 +41,28 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
 
         //first part
-        // addCommands(driveToFirstPiece
-        //     .alongWith(armPivot.commandPivotArmToAngleHold(-10))
-        //     .alongWith(Commands.waitSeconds(0.25)
-        //         .andThen(armExtension.commandMiddleRetract())));
-        addCommands(armPivot.commandPivotArmToAngleHold(-10)
-            .alongWith(Commands.waitSeconds(0.25).andThen(armExtension.commandMiddleRetract())));
+        addCommands(driveToFirstPiece
+            .alongWith(armPivot.commandPivotArmToAngleHold(-10))
+            .alongWith(Commands.waitSeconds(0.25)
+                .andThen(armExtension.commandMiddleRetract())));
 
         //turn 180
-        // addCommands(chassis.createTurnPID(0));
+        addCommands(chassis.createTurnPID(0));
 
         //drive second part
-        // addCommands(driveToGetSecondPiece
-        //     .raceWith(claw.createMoveClawIntakeInCommand()));
+        addCommands(driveToGetSecondPiece
+            .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //turn 180
-        // addCommands(chassis.createTurnPID(180)
-        //     .alongWith(CombinedCommandsUtil.moveToScore(pivotHeightType, GamePieceType.CUBE, armPivot))
-        //     .raceWith(claw.createHoldPiece()));
-        addCommands(CombinedCommandsUtil.moveToScore(pivotHeightType, GamePieceType.CUBE, armPivot)
+        addCommands(chassis.createTurnPID(180)
+            .alongWith(CombinedCommandsUtil.moveToScore(pivotHeightType, GamePieceType.CUBE, armPivot))
             .raceWith(claw.createHoldPiece()));
 
+
         //third part
-        // addCommands(driveToScoreSecondPiece
-        //     .alongWith(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE))
-        //     .raceWith(claw.createMoveClawIntakeInCommand()));
-        addCommands(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE));
+        addCommands(driveToScoreSecondPiece
+            .alongWith(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE))
+            .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CUBE));

@@ -18,7 +18,7 @@ public final class CombinedCommandsUtil {
     public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandFullRetract()
             .alongWith(Commands.waitUntil(() -> pivot.getAbsoluteEncoderAngle2() > -40)
-                .andThen(pivot.commandGoHome()))
+            .andThen(pivot.commandGoHome()))
             .withName("Go Home Without Turret");
     }
 
