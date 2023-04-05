@@ -17,7 +17,7 @@ public final class CombinedCommandsUtil {
 
     public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return extension.commandFullRetract()
-            .alongWith(Commands.waitSeconds(0.25)
+            .alongWith(Commands.waitUntil(() -> pivot.getAbsoluteEncoderAngle2() > -40)
             .andThen(pivot.commandGoHome()))
             .withName("Go Home Without Turret");
     }
@@ -43,7 +43,7 @@ public final class CombinedCommandsUtil {
 
     public static CommandBase armToHpPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
         return pivot.commandHpPickupHold()
-            .alongWith(extension.commandMiddleRetract())
+            .alongWith(Commands.waitUntil(() -> (pivot.getAbsoluteEncoderAngle2() > -40)).andThen(extension.commandMiddleRetract()))
             .withName("HP Pickup");
     }
 
