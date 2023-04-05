@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class CurvatureDriveCommand extends CommandBase {
-    private static final GosDoubleProperty TURN_DAMPING = new GosDoubleProperty(false, "JoystickTurnDamping", 0.5);
-    private static final GosDoubleProperty TURN_IN_PLACE_THRESHOLD = new GosDoubleProperty(false, "JoysticTurnInPlaceThreshold", 0.05);
+    private static final GosDoubleProperty TURN_DAMPING = new GosDoubleProperty(true, "JoystickTurnDamping", 0.5);
+    private static final GosDoubleProperty TURN_IN_PLACE_THRESHOLD = new GosDoubleProperty(true, "JoysticTurnInPlaceThreshold", 0.05);
 
     private final ChassisSubsystem m_chassis;
 

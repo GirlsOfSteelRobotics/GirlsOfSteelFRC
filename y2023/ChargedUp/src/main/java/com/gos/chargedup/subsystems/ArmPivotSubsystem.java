@@ -45,7 +45,7 @@ import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 1.5);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(true, "Pivot Arm Allowable Velocity Error", 20);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
@@ -256,7 +256,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 .addD(0)
                 .build();
         } else {
-            return new RevPidPropertyBuilder("Pivot Arm", false, pidController, 0)
+            return new RevPidPropertyBuilder("Pivot Arm", true, pidController, 0)
                 .addP(0.0045) // 0.0058
                 .addD(0.045)
                 .build();
