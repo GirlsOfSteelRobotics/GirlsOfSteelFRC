@@ -232,7 +232,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .addKs(0.8)
             .addKa(0)
             .addKff(0.027);
-        GosDoubleProperty turnPidAllowableErrorProperty = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
+        GosDoubleProperty turnPidAllowableErrorProperty = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 3.5);
         m_turnPidAllowableError = new HeavyDoubleProperty(m_turnAnglePID::setTolerance, turnPidAllowableErrorProperty);
 
         m_rightEncoder = m_leaderRight.getEncoder();
