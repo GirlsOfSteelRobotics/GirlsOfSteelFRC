@@ -514,8 +514,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        for (Vision vision : m_cameras) {
-            updateCameraEstimate(vision);
+        if (DriverStation.isTeleop()) {
+            for (Vision vision : m_cameras) {
+                updateCameraEstimate(vision);
+            }
         }
     }
 
