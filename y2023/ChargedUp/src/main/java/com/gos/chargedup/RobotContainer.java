@@ -82,6 +82,8 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer(PneumaticHub pneumaticHub, PowerDistribution powerDistribution) {
+        // PropertyManager.setPurgeConstantPreferenceKeys(true);
+
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
@@ -113,7 +115,7 @@ public class RobotContainer {
         SmartDashboard.putData("Select Auto Scoring Position", new ChooseAimTurretCommandSendable());
 
         createPitCommands(pneumaticHub);
-        createTestCommands();
+        // createTestCommands();
         //automatedTurretCommands();
 
         if (RobotBase.isReal()) {
@@ -128,7 +130,7 @@ public class RobotContainer {
         //        }
     }
 
-    @SuppressWarnings("PMD.NcssCount")
+    @SuppressWarnings({"PMD.NcssCount", "PMD.UnusedPrivateMethod"})
     private void createTestCommands() {
         createTrajectoryTestCommands();
         createChassisTestCommands();

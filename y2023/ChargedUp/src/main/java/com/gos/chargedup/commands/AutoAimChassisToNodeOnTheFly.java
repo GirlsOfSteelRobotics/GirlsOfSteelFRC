@@ -27,11 +27,10 @@ public class AutoAimChassisToNodeOnTheFly extends CommandBase {
     // note to self: "TURRET"
     private static final Transform2d TURRET_TRANSFORM = new Transform2d(new Translation2d(SHIFT_X_CHASSIS_POS, SHIFT_Y_CHASSIS_POS), Rotation2d.fromDegrees(0));
 
-    private static final Field2d DEBUG_FIELD = new Field2d();
-
-    static {
-        Shuffleboard.getTab("AutoAimTurretDebug").add(DEBUG_FIELD);
-    }
+    // private static final Field2d DEBUG_FIELD = new Field2d();
+    // static {
+    //     Shuffleboard.getTab("AutoAimTurretDebug").add(DEBUG_FIELD);
+    // }
 
     protected final ArmPivotSubsystem m_armSubsystem;
     protected final ChassisSubsystem m_chassisSubsystem;

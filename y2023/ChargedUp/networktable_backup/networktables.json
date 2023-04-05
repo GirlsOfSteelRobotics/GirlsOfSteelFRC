@@ -138,7 +138,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.1,
+    "value": 0.4,
     "properties": {
       "persistent": true
     }
@@ -162,7 +162,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.max_acceleration",
     "type": "double",
-    "value": 250.0,
+    "value": 210.0,
     "properties": {
       "persistent": true
     }
@@ -170,7 +170,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.max_velocity",
     "type": "double",
-    "value": 250.0,
+    "value": 210.0,
     "properties": {
       "persistent": true
     }
@@ -226,7 +226,7 @@
   {
     "name": "/Preferences/Pivot Arm.mm.kp",
     "type": "double",
-    "value": 0.0075,
+    "value": 0.03,
     "properties": {
       "persistent": true
     }
@@ -242,7 +242,7 @@
   {
     "name": "/Preferences/Pivot Arm Motion Profile.mm.max_acceleration",
     "type": "double",
-    "value": 120.0,
+    "value": 80.0,
     "properties": {
       "persistent": true
     }
@@ -250,7 +250,7 @@
   {
     "name": "/Preferences/Pivot Arm Motion Profile.mm.max_velocity",
     "type": "double",
-    "value": 120.0,
+    "value": 80.0,
     "properties": {
       "persistent": true
     }
@@ -258,7 +258,7 @@
   {
     "name": "/Preferences/Pivot Arm Motion Profile.aff.kff",
     "type": "double",
-    "value": 3.55,
+    "value": 3.455,
     "properties": {
       "persistent": true
     }
@@ -275,6 +275,14 @@
     "name": "/Preferences/Pivot Arm Motion Profile.aff.kg",
     "type": "double",
     "value": 0.22,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.kp",
+    "type": "double",
+    "value": 0.0073,
     "properties": {
       "persistent": true
     }

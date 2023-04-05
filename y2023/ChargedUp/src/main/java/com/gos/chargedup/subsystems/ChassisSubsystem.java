@@ -66,7 +66,7 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .025);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(true, "Chassis auto engage kP", .025);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -144,7 +144,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_trajectoryRightWheelSpeedGoal;
 
 
-    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Chassis Trajectory Max Velocity", 60);
+    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(true, "Chassis Trajectory Max Velocity", 60);
 
     private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
     private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
@@ -162,8 +162,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PigeonAlerts m_pigeonAlerts;
 
     //max velocity and acceleration tuning
-    private final GosDoubleProperty m_onTheFlyMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
-    private final GosDoubleProperty m_onTheFlyMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_onTheFlyMaxVelocity = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_onTheFlyMaxAcceleration = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public ChassisSubsystem() {
@@ -349,7 +349,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
-            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", true, pidController, 0)
                 .addP(0.6)
                 .addI(0)
                 .addD(0)
