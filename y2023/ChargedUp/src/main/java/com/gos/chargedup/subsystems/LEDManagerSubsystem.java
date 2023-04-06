@@ -145,10 +145,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_0, NODE_0_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, NODE_1_COLOR);
-        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, NODE_2_COLOR);
+//        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, NODE_2_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_3, NODE_3_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_5, NODE_5_COLOR);
-        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, NODE_6_COLOR);
+//        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, NODE_6_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, NODE_7_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_8, NODE_8_COLOR);
 
@@ -157,11 +157,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_5, NODE_5_COLOR);
 
 
-        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, NODE_4_COLOR);
-        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, NODE_3_COLOR);
-        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, NODE_5_COLOR);
+//        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, NODE_4_COLOR);
+//        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, NODE_3_COLOR);
+//        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, NODE_5_COLOR);
 
-        addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, NODE_0_COLOR);
+        // addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, NODE_0_COLOR);
         addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, NODE_7_COLOR);
 
         // no scoring -- solid red
