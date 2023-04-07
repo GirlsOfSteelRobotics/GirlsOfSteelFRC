@@ -47,6 +47,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private static final int CLAW_HOLD_WAIT_TIME = 1;
 
+    private static final int GAME_PIECE_FLASH_TIME = 3;
+
 
     // subsystems
     //private final CommandXboxController m_joystick;
@@ -95,6 +97,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDFlash m_isHoldingPieceClaw;
 
     private final Timer m_clawLEDsTimer = new Timer();
+    private final Timer m_gamePieceTimer = new Timer();
+
 
     private boolean m_clawWasTripped;
 
@@ -246,10 +250,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
     private void enabledPatterns() {
-        if (m_optionConeLED) {
+        if (m_optionConeLED && m_gamePieceTimer.get() < GAME_PIECE_FLASH_TIME) {
             m_coneGamePieceSignal.writeLeds();
         }
-        else if (m_optionCubeLED) {
+        else if (m_optionCubeLED && m_gamePieceTimer.get() < GAME_PIECE_FLASH_TIME) {
             m_cubeGamePieceSignal.writeLeds();
         }
         else if (m_optionDockLED || m_chassisSubsystem.tryingToEngage()) {
@@ -273,7 +277,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_clawAlignedSignal.writeLeds();
         }
 
-
+        if (m_gamePieceTimer.get() > GAME_PIECE_FLASH_TIME) {
+            m_gamePieceTimer.reset();
+        }
         /*
         else {
             communityZonePatterns();
@@ -297,6 +303,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
             disabledPatterns();
         }
         else {
+            if (m_optionCubeLED || m_optionConeLED) {
+                m_gamePieceTimer.start();
+            }
             enabledPatterns();
         }
         shouldTrip();
