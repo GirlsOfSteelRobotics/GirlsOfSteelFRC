@@ -506,7 +506,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
+        return this.runOnce(this::drivetrainToBrakeMode)
+            .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
+            .finallyDo((interrupted) -> drivetrainToCoastMode()).withName("Auto Engage");
     }
 
 
