@@ -21,7 +21,7 @@ public class PneumaticHubAlerts {
 
     public void checkAlerts() {
         checkFaults();
-        checkStickyFaults();
+        // checkStickyFaults();
     }
 
     @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
