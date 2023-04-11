@@ -45,10 +45,10 @@ public final class AutonomousFactory {
         // 1 Piece, exit closest side
         ONE_NODE_AND_LEAVE_COMMUNITY_0,
         ONE_NODE_AND_LEAVE_COMMUNITY_1,
-//        ONE_NODE_AND_LEAVE_COMMUNITY_2,
+        //        ONE_NODE_AND_LEAVE_COMMUNITY_2,
         ONE_NODE_AND_LEAVE_COMMUNITY_3,
         ONE_NODE_AND_LEAVE_COMMUNITY_5,
-//        ONE_NODE_AND_LEAVE_COMMUNITY_6,
+        //        ONE_NODE_AND_LEAVE_COMMUNITY_6,
         ONE_NODE_AND_LEAVE_COMMUNITY_7,
         ONE_NODE_AND_LEAVE_COMMUNITY_8,
 
@@ -71,9 +71,9 @@ public final class AutonomousFactory {
         TWO_PIECE_NODE_7_AND_8,
 
         // Leave community, get second piece, and engage
-//        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3,
-//        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4,
-//        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5,
+        //        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3,
+        //        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4,
+        //        ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5,
 
     }
 
@@ -103,10 +103,10 @@ public final class AutonomousFactory {
             // Score Piece at Node and Leave Community zone on the nearest side
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_0, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity0", height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity1", height, GamePieceType.CUBE));
-//            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, new OnePieceAndLeaveCommunityWithTurnCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity2", height, GamePieceType.CONE));
+            //            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, new OnePieceAndLeaveCommunityWithTurnCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity2", height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_3, new OnePieceAndLeaveCommunityWithTurnCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity3", height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_5, new OnePieceAndLeaveCommunityWithTurnCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity5", height, GamePieceType.CONE));
-//            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, new OnePieceAndLeaveCommunityWithTurnCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity6", height, GamePieceType.CONE));
+            //            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, new OnePieceAndLeaveCommunityWithTurnCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity6", height, GamePieceType.CONE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity7", height, GamePieceType.CUBE));
             m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_8, new OnePieceAndLeaveCommunityCommandGroup(chassis, armPivot, armExtension, claw, "OnePieceLeaveCommunity8", height, GamePieceType.CONE));
 

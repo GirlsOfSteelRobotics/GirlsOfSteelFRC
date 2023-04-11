@@ -17,7 +17,7 @@ public class PowerDistributionAlerts {
 
     private final PowerDistribution m_powerDistribution;
     private final Alert m_alert;
-    // private final Alert m_alertSticky;
+    private final Alert m_alertSticky;
 
     private Set<Integer> m_ignoredBreakers;
 
@@ -28,7 +28,7 @@ public class PowerDistributionAlerts {
     public PowerDistributionAlerts(PowerDistribution powerDistribution, List<Integer> ignoredBreakers) {
         m_powerDistribution = powerDistribution;
         m_alert = new Alert("power distribution", Alert.AlertType.ERROR);
-        // m_alertSticky = new Alert("power distribution (sticky)", Alert.AlertType.WARNING);
+        m_alertSticky = new Alert("power distribution (sticky)", Alert.AlertType.WARNING);
 
         m_ignoredBreakers = new HashSet<>();
         m_ignoredBreakers.addAll(ignoredBreakers);
@@ -223,12 +223,12 @@ public class PowerDistributionAlerts {
         if (stickyFaults.CanBusOff) {
             alertMessageBuilder.append("\nCan Bus Off fault");
         }
-        if (stickyFaults.HasReset) {
-            alertMessageBuilder.append("\nHas Reset fault");
-        }
+        // if (stickyFaults.HasReset) {
+        //     alertMessageBuilder.append("\nHas Reset fault");
+        // }
         String alertMessage = alertMessageBuilder.toString();
-        // m_alertSticky.setText(alertMessage);
+        m_alertSticky.setText(alertMessage);
 
-        // m_alertSticky.set(!STICKY_ALERT_NAME.equals(alertMessage));
+        m_alertSticky.set(!STICKY_ALERT_NAME.equals(alertMessage));
     }
 }

@@ -9,10 +9,8 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -20,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
-
-    private static final PathConstraints SLOWER_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(60), Units.inchesToMeters(60));
 
     public OnePieceLeaveAndEngageFullCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String path) {
 
