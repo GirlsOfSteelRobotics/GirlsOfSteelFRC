@@ -66,7 +66,7 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(true, "Chassis auto engage kP", .025);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .025);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -506,7 +506,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
+        return this.runOnce(this::drivetrainToBrakeMode)
+            .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
+            .finallyDo((interrupted) -> drivetrainToCoastMode()).withName("Auto Engage");
     }
 
 

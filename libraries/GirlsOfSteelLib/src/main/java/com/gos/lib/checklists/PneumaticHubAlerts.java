@@ -131,9 +131,9 @@ public class PneumaticHubAlerts {
         if (revphStickyFaults.CanBusOff) {
             alertMessageBuilder.append("\nCan Bus Off fault");
         }
-        if (revphStickyFaults.HasReset) {
-            alertMessageBuilder.append("\nHas resent fault");
-        }
+        // if (revphStickyFaults.HasReset) {
+        //     alertMessageBuilder.append("\nHas reset fault");
+        // }
 
         String alertMessage = alertMessageBuilder.toString();
         m_alertSticky.setText(alertMessage);

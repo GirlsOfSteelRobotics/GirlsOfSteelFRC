@@ -223,9 +223,9 @@ public class PowerDistributionAlerts {
         if (stickyFaults.CanBusOff) {
             alertMessageBuilder.append("\nCan Bus Off fault");
         }
-        if (stickyFaults.HasReset) {
-            alertMessageBuilder.append("\nHas Reset fault");
-        }
+        // if (stickyFaults.HasReset) {
+        //     alertMessageBuilder.append("\nHas Reset fault");
+        // }
         String alertMessage = alertMessageBuilder.toString();
         m_alertSticky.setText(alertMessage);
 
