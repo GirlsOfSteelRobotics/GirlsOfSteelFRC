@@ -1,10 +1,11 @@
 import os
+import re
 import json
 import hashlib
-from urllib.request import urlopen
 from libraries.scripts.updater.update_vendor_deps import download_latest_vendordeps
 from libraries.scripts.updater.replace_gradlerio_files import get_gradlerio_version
 from libraries.scripts.git.git_python_wrappers import commit_all_changes
+from libraries.scripts.updater.utils import auto_retry_download
 
 
 def get_java_dep_sha(vendor_dep, version):
@@ -20,12 +21,35 @@ def get_java_dep_sha(vendor_dep, version):
             f"{artifact_id}-{version}.jar",
         ]
     )
-    data = urlopen(url).read()
+    data = auto_retry_download(url)
     sha = hashlib.sha256(data).hexdigest()
     return sha
 
 
+def update_bazelrio_rule():
+    bazelrio_repo = "pjreiniger/bazelrio"
+    bazelrio_branch = "pj_java_head"
+
+    data = auto_retry_download(f"https://api.github.com/repos/{bazelrio_repo}/branches/{bazelrio_branch}")
+    bazelrio_commitish = json.loads(data.decode("utf-8"))["commit"]["sha"]
+
+    bazelrio_url = f"https://github.com/{bazelrio_repo}/archive/{bazelrio_commitish}.tar.gz"
+    data = auto_retry_download(bazelrio_url)
+    bazelrio_sha256 = hashlib.sha256(data).hexdigest()
+
+    with open("build_scripts/bazel/deps/download_external_archives.bzl", "r") as f:
+        contents = f.read()
+
+    contents = re.sub('BAZELRIO_COMMITISH = ".*"', f'BAZELRIO_COMMITISH = "{bazelrio_commitish}"', contents)
+    contents = re.sub('BAZELRIO_SHA256 = ".*"', f'BAZELRIO_SHA256 = "{bazelrio_sha256}"', contents)
+
+    with open("build_scripts/bazel/deps/download_external_archives.bzl", "w") as f:
+        f.write(contents)
+
+
 def update_bazelrio(auto_commit=True, ignore_cache=False):
+    update_bazelrio_rule()
+
     vendor_deps_files = download_latest_vendordeps(ignore_cache)
 
     java_libraries_with_sha = [

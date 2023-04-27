@@ -3,8 +3,7 @@ Downloads and overwrites any gradlerio specific files and gradle build files
 """
 
 import re
-from urllib.request import urlopen
-from libraries.scripts.updater.utils import walk_for_extension, regex_replace_file
+from libraries.scripts.updater.utils import walk_for_extension, regex_replace_file, auto_retry_download
 from libraries.scripts.git.git_python_wrappers import (
     commit_all_changes,
     checkout_files_from_branch,
@@ -92,12 +91,8 @@ def load_url(url_suffix, pinned_version="main"):
     download_url = "/".join(
         ["https://raw.githubusercontent.com", project_subpath, pinned_version, url_suffix]
     )
-    # print(f"Downloading from {download_url}")
 
-    # content_url = "/".join(["https://github.com", project_subpath, "blob/", pinned_version, url_suffix])
-    # print(f"See content at {content_url}")
-
-    return urlopen(download_url).read()
+    return auto_retry_download(download_url)
 
 
 def get_gradlerio_version():
