@@ -58,7 +58,7 @@ def auto_retry_download(url):
     retries = 0
 
     while retries < 100:
-        retries +=1
+        retries += 1
 
         try:
             with urlopen(req) as x:

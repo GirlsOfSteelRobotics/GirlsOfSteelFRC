@@ -30,7 +30,9 @@ def update_bazelrio_rule():
     bazelrio_repo = "pjreiniger/bazelrio"
     bazelrio_branch = "pj_java_head"
 
-    data = auto_retry_download(f"https://api.github.com/repos/{bazelrio_repo}/branches/{bazelrio_branch}")
+    data = auto_retry_download(
+        f"https://api.github.com/repos/{bazelrio_repo}/branches/{bazelrio_branch}"
+    )
     bazelrio_commitish = json.loads(data.decode("utf-8"))["commit"]["sha"]
 
     bazelrio_url = f"https://github.com/{bazelrio_repo}/archive/{bazelrio_commitish}.tar.gz"
@@ -40,7 +42,9 @@ def update_bazelrio_rule():
     with open("build_scripts/bazel/deps/download_external_archives.bzl", "r") as f:
         contents = f.read()
 
-    contents = re.sub('BAZELRIO_COMMITISH = ".*"', f'BAZELRIO_COMMITISH = "{bazelrio_commitish}"', contents)
+    contents = re.sub(
+        'BAZELRIO_COMMITISH = ".*"', f'BAZELRIO_COMMITISH = "{bazelrio_commitish}"', contents
+    )
     contents = re.sub('BAZELRIO_SHA256 = ".*"', f'BAZELRIO_SHA256 = "{bazelrio_sha256}"', contents)
 
     with open("build_scripts/bazel/deps/download_external_archives.bzl", "w") as f:

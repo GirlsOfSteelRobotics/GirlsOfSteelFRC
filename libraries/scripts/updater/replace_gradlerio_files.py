@@ -3,7 +3,11 @@ Downloads and overwrites any gradlerio specific files and gradle build files
 """
 
 import re
-from libraries.scripts.updater.utils import walk_for_extension, regex_replace_file, auto_retry_download
+from libraries.scripts.updater.utils import (
+    walk_for_extension,
+    regex_replace_file,
+    auto_retry_download,
+)
 from libraries.scripts.git.git_python_wrappers import (
     commit_all_changes,
     checkout_files_from_branch,
