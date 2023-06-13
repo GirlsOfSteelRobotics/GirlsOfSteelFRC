@@ -21,11 +21,13 @@ import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
+import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -75,6 +77,9 @@ public class RobotContainer {
     private final DoubleSupplier m_pressureSupplier;
     private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
+    //swerve stuff
+    private final SwerveDriveChassisSubsystem m_swerveDrive;
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -86,6 +91,7 @@ public class RobotContainer {
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
         // m_intake = new IntakeSubsystem();
+        m_swerveDrive = new SwerveDriveChassisSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_armPivot, m_armExtend, m_claw);
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_claw, m_autonomousFactory); //NOPMD
@@ -110,10 +116,13 @@ public class RobotContainer {
         createTestCommands();
         //automatedTurretCommands();
 
+
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
         PropertyManager.purgeExtraKeys();
+
+
     }
 
     @SuppressWarnings("PMD.NcssCount")
@@ -123,6 +132,42 @@ public class RobotContainer {
         createClawTestCommands();
         createArmTestCommands();
         createPivotTestCommands();
+        createSwerveTestCommands();
+
+    }
+
+    private void createSwerveTestCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("SwerveDriveTestCommands");
+
+        ChassisSpeeds chassisSpeed = new ChassisSpeeds(1, 0, 0);
+
+
+        tab.add("45deg Swerve Module 0", m_swerveDrive.commandSetModuleState(0, 45, 3));
+        tab.add("45deg Swerve Module 1", m_swerveDrive.commandSetModuleState(1, 45, 3));
+        tab.add("45deg Swerve Module 2", m_swerveDrive.commandSetModuleState(2, 45, 3));
+        tab.add("45deg Swerve Module 3", m_swerveDrive.commandSetModuleState(3, 45, 3));
+
+        tab.add("180deg Swerve Module 0", m_swerveDrive.commandSetModuleState(0, 180, 3));
+        tab.add("180deg Swerve Module 1", m_swerveDrive.commandSetModuleState(1, 180, 3));
+        tab.add("180deg Swerve Module 2", m_swerveDrive.commandSetModuleState(2, 180, 3));
+        tab.add("180deg Swerve Module 3", m_swerveDrive.commandSetModuleState(3, 180, 3));
+
+        tab.add("1ms Swerve Module 0", m_swerveDrive.commandSetModuleState(0, 180, 1));
+        tab.add("1ms Swerve Module 1", m_swerveDrive.commandSetModuleState(1, 180, 1));
+        tab.add("1ms Swerve Module 2", m_swerveDrive.commandSetModuleState(2, 180, 1));
+        tab.add("1ms Swerve Module 3", m_swerveDrive.commandSetModuleState(3, 180, 1));
+
+        tab.add("3ms Swerve Module 0", m_swerveDrive.commandSetModuleState(0, 180, 3));
+        tab.add("3ms Swerve Module 1", m_swerveDrive.commandSetModuleState(1, 180, 3));
+        tab.add("3ms Swerve Module 2", m_swerveDrive.commandSetModuleState(2, 180, 3));
+        tab.add("3ms Swerve Module 3", m_swerveDrive.commandSetModuleState(3, 180, 3));
+
+        tab.add("1vx Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
+        tab.add("1vy Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
+        tab.add("1theta Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+
+
+
     }
 
     private void createPitCommands(PneumaticHub pneumaticHub) {
