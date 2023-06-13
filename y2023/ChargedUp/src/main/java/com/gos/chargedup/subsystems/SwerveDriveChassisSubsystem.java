@@ -86,8 +86,7 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
     }
 
     public void setSpeeds(ChassisSpeeds speedsInp) {
-        ChassisSpeeds speeds = new ChassisSpeeds(1.0, 3.0, 1.5);
-        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speedsInp);
         for (int i = 0; i < 4; i++) {
             m_modules[i].setState(moduleStates[i]);
         }
