@@ -66,11 +66,11 @@ public class SwerveDriveModules {
         m_wheelPidController = m_wheel.getPIDController();
         m_azimuthPidController = m_azimuth.getPIDController();
         m_azimuthEncoder = m_azimuth.getEncoder();
-            m_azimuthEncoder.setPositionConversionFactor(360 / TURNING_GEAR_RATIO);
-            m_azimuthEncoder.setVelocityConversionFactor(360 / TURNING_GEAR_RATIO / 60);
+        m_azimuthEncoder.setPositionConversionFactor(360 / TURNING_GEAR_RATIO);
+        m_azimuthEncoder.setVelocityConversionFactor(360 / TURNING_GEAR_RATIO / 60);
         m_wheelEncoder = m_wheel.getEncoder();
-            m_wheelEncoder.setPositionConversionFactor(DRIVE_ENCODER_CONSTANT);
-            m_wheelEncoder.setVelocityConversionFactor(DRIVE_ENCODER_CONSTANT / 60);
+        m_wheelEncoder.setPositionConversionFactor(DRIVE_ENCODER_CONSTANT);
+        m_wheelEncoder.setVelocityConversionFactor(DRIVE_ENCODER_CONSTANT / 60);
 
             m_wheelPID = new RevPidPropertyBuilder("Wheel PID", false, m_wheelPidController, 0)
             .addP(0)

@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +29,11 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
 
     private static final double TRACK_WIDTH = 0.381;
+
+    public static final double MAX_TRANSLATION_SPEED = 2.9;
+
+    public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(180);
+
 
     private SwerveSimWrapper m_Simulator;
 

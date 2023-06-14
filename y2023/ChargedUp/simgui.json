@@ -278,6 +278,9 @@
           ],
           "length": 0.8199999928474426,
           "width": 0.6859999895095825
+        },
+        "window": {
+          "visible": true
         }
       },
       "/Shuffleboard/SwerveDriveTestCommands/1vx Set all Speeds": {
@@ -436,6 +439,9 @@
           ],
           "length": 1.0,
           "width": 1.0
+        },
+        "window": {
+          "visible": true
         }
       },
       "/SmartDashboard/SwerveField": {
@@ -467,7 +473,7 @@
     "Plot <0>": {
       "plots": [
         {
-          "height": 326,
+          "height": 0,
           "series": [
             {
               "color": [
