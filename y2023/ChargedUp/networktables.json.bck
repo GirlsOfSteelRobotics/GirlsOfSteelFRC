@@ -306,7 +306,7 @@
   {
     "name": "/Preferences/Wheel PID.mm.kff",
     "type": "double",
-    "value": 1.2,
+    "value": 2.0,
     "properties": {
       "persistent": true
     }

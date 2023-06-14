@@ -17,6 +17,11 @@
           "open": true
         }
       },
+      "SPARK MAX [25]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [6]": {
         "header": {
           "open": true
@@ -258,6 +263,7 @@
       "/SmartDashboard/OV5647 Sim Field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/SwerveField": "Field2d",
       "/SmartDashboard/jflkdsjfl": "Command"
     },
     "windows": {
@@ -275,6 +281,11 @@
         }
       },
       "/Shuffleboard/SwerveDriveTestCommands/1vx Set all Speeds": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/SwerveDriveTestCommands/1vy Set all Speeds": {
         "window": {
           "visible": true
         }
@@ -425,6 +436,11 @@
           ],
           "length": 1.0,
           "width": 1.0
+        }
+      },
+      "/SmartDashboard/SwerveField": {
+        "window": {
+          "visible": true
         }
       }
     }

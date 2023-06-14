@@ -1,7 +1,6 @@
 package com.gos.chargedup.subsystems;
 
 
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -13,13 +12,11 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.swerve.SwerveModuleSim;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
-import org.snobotv2.module_wrappers.wpi.ADXRS450GyroWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 
@@ -27,7 +24,7 @@ import java.util.List;
 
 public class SwerveDriveChassisSubsystem extends SubsystemBase {
 
-
+    private final Field2d m_swerveField;
     private static final double WHEEL_BASE = 0.381;
 
     private static final double TRACK_WIDTH = 0.381;
@@ -48,6 +45,8 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
 
     private final WPI_Pigeon2 m_gyro;
 
+    private final SwerveDriveOdometry m_swerveDriveOdom;
+
     // Creating my kinematics object using the module locations
     private static final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
         m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation
@@ -55,13 +54,16 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
 
     public SwerveDriveChassisSubsystem() {
 
+        m_swerveField = new Field2d();
+        SmartDashboard.putData("SwerveField", m_swerveField);
+
         m_frontLeft = new SwerveDriveModules(Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH, "FL");
         m_frontRight = new SwerveDriveModules(Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH, "FR");
         m_backLeft = new SwerveDriveModules(Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH, "BL");
         m_backRight = new SwerveDriveModules(Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH, "BR");
         m_modules = new SwerveDriveModules[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
-        SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+        m_swerveDriveOdom = new SwerveDriveOdometry(
             m_kinematics, m_gyro.getRotation2d(),
             new SwerveModulePosition[] {
                 m_frontLeft.getModulePosition(),
@@ -81,6 +83,16 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
         }
     }
 
+    public void periodic() {
+        SwerveModulePosition[] modulePositions = new SwerveModulePosition[4];
+        for (int i = 0; i < 4; i += 1)
+        {
+            modulePositions[i] = m_modules[i].getModulePosition();
+        }
+        m_swerveDriveOdom.update(m_gyro.getRotation2d(), modulePositions);
+        m_swerveField.setRobotPose(m_swerveDriveOdom.getPoseMeters());
+
+    }
     public void simulationPeriodic() {
         m_Simulator.update();
     }
