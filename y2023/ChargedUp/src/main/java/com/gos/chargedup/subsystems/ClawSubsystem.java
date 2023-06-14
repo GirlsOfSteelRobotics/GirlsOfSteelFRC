@@ -3,6 +3,7 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.CheckRumbleCommand;
+import com.gos.lib.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
@@ -12,9 +13,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -36,9 +34,7 @@ public class ClawSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_clawMotorErrorAlerts;
     private final HeavyIntegerProperty m_currentLimit;
 
-    private final NetworkTableEntry m_currentEntry;
-    private final NetworkTableEntry m_outputEntry;
-    private final NetworkTableEntry m_velocityEntry;
+    private final LoggingUtil m_networkTableEntries;
 
     public ClawSubsystem() {
         m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -53,10 +49,10 @@ public class ClawSubsystem extends SubsystemBase {
 
         m_currentLimit = new HeavyIntegerProperty(m_clawMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
 
-        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ClawSubsystem");
-        m_currentEntry = loggingTable.getEntry("CurrentAmps");
-        m_outputEntry = loggingTable.getEntry("Output");
-        m_velocityEntry = loggingTable.getEntry("Velocity (RPM)");
+        m_networkTableEntries = new LoggingUtil("Claw Subsystem");
+        m_networkTableEntries.addDouble("Current Amps", () -> m_clawMotor.getOutputCurrent());
+        m_networkTableEntries.addDouble("Output", () -> m_clawMotor.getAppliedOutput());
+        m_networkTableEntries.addDouble("Velocity (RPM)", () -> m_clawEncoder.getVelocity());
     }
 
     //intake close
@@ -87,10 +83,6 @@ public class ClawSubsystem extends SubsystemBase {
     public void periodic() {
         m_currentLimit.updateIfChanged();
         m_clawMotorErrorAlerts.checkAlerts();
-
-        m_currentEntry.setNumber(m_clawMotor.getOutputCurrent());
-        m_outputEntry.setNumber(m_clawMotor.getAppliedOutput());
-        m_velocityEntry.setNumber(m_clawEncoder.getVelocity());
     }
 
     public void clearStickyFaultsClaw() {
