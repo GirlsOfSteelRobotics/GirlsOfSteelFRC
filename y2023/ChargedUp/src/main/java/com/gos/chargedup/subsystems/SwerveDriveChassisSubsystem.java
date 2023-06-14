@@ -76,7 +76,7 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
                 m_frontRight.getModulePosition(),
                 m_backLeft.getModulePosition(),
                 m_backRight.getModulePosition()
-            }, new Pose2d(5.0, 13.5, new Rotation2d()));
+            }, new Pose2d(0, 0, new Rotation2d()));
 
         if (RobotBase.isSimulation())
         {
