@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 <GridPane fx:id="m_pane" xmlns="http://javafx.com/javafx/9"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.gos.chargedup.shuffleboard.scoring_position.ScoringPositionController">
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.gos.chargedup.shuffleboard.scoring_position.ScoringPositionController">
 
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -24,17 +24,26 @@
         <RowConstraints vgrow="SOMETIMES" />
     </rowConstraints>
 
-    <ToggleButton fx:id="m_highLeft" text="High Left"  GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <ToggleButton fx:id="m_highMiddle" text="High Middle"  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-    <ToggleButton fx:id="m_highRight" text="High Right"  GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    <ToggleButton fx:id="m_highLeft" text="High Left"
+        GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <ToggleButton fx:id="m_highMiddle" text="High Middle"
+        GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <ToggleButton fx:id="m_highRight" text="High Right"
+        GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
-    <ToggleButton fx:id="m_mediumLeft" text="Low Left"  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <ToggleButton fx:id="m_mediumMiddle" text="Low Middle"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <ToggleButton fx:id="m_mediumRight" text="Low Right"  GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    <ToggleButton fx:id="m_mediumLeft" text="Low Left"
+        GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <ToggleButton fx:id="m_mediumMiddle" text="Low Middle"
+        GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <ToggleButton fx:id="m_mediumRight" text="Low Right"
+        GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
-    <ToggleButton fx:id="m_lowLeft" text="Ground Left"  GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <ToggleButton fx:id="m_lowMiddle" text="Ground Middle"  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <ToggleButton fx:id="m_lowRight" text="Ground Right"  GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <ToggleButton fx:id="m_lowLeft" text="Ground Left"
+        GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <ToggleButton fx:id="m_lowMiddle" text="Ground Middle"
+        GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <ToggleButton fx:id="m_lowRight" text="Ground Right"
+        GridPane.columnIndex="2" GridPane.rowIndex="2" />
 
 
 

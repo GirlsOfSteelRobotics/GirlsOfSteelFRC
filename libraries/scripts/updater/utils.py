@@ -1,5 +1,6 @@
 import os
 import re
+from urllib.request import urlopen, Request
 
 DEFAULT_DIR_BLACKLIST = [
     ".git",
@@ -43,3 +44,26 @@ def regex_replace_file(file, replacements):
 
     with open(file, "wb") as f:
         f.write(contents.encode("utf-8"))
+
+
+def auto_retry_download(url):
+    print(f"Downloading from {url}")
+
+    req = Request(url)
+    req.add_header(
+        "User-Agent",
+        "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7",
+    )
+
+    retries = 0
+
+    while retries < 100:
+        retries += 1
+
+        try:
+            with urlopen(req) as x:
+                return x.read()
+        except:
+            print("  Trying again...")
+
+    raise Exception(f"Could not {url}")

@@ -4,8 +4,7 @@ Downloads the latest version of the vendor dependences, and replaces all copies 
 import os
 import shutil
 import tempfile
-from urllib.request import urlopen, Request
-from libraries.scripts.updater.utils import walk_with_blacklist
+from libraries.scripts.updater.utils import walk_with_blacklist, auto_retry_download
 from libraries.scripts.git.git_python_wrappers import commit_all_changes
 
 CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "gos_vendor_cache")
@@ -36,14 +35,8 @@ def download_latest_vendordeps(ignore_cache):
 
         print(f"Downloading {cached_file} - {url}")
 
-        req = Request(url)
-        req.add_header(
-            "User-Agent",
-            "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7",
-        )
-        data = urlopen(req).read()
         with open(cached_file, "wb") as f:
-            f.write(data)
+            f.write(auto_retry_download(url))
 
     return vendor_files
 

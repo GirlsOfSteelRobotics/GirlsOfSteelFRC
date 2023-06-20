@@ -25,80 +25,80 @@ public class PneumaticHubAlerts {
     }
 
     @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-    public void checkFaults() {
+    private void checkFaults() {
         // lookie so many if statements :)))))))
         StringBuilder alertMessageBuilder = new StringBuilder(400);
         alertMessageBuilder.append(ALERT_NAME);
 
         REVPHFaults faults = m_pneumaticHub.getFaults();
         if (faults.Channel0Fault) {
-            alertMessageBuilder.append(" channel 0 error");
+            alertMessageBuilder.append("\nchannel 0 error");
         }
         if (faults.Channel1Fault) {
-            alertMessageBuilder.append(" channel 1 error");
+            alertMessageBuilder.append("\nchannel 1 error");
         }
         if (faults.Channel2Fault) {
-            alertMessageBuilder.append(" channel 2 error");
+            alertMessageBuilder.append("\nchannel 2 error");
         }
         if (faults.Channel3Fault) {
-            alertMessageBuilder.append(" channel 3 error");
+            alertMessageBuilder.append("\nchannel 3 error");
         }
         if (faults.Channel4Fault) {
-            alertMessageBuilder.append(" channel 4 error");
+            alertMessageBuilder.append("\nchannel 4 error");
         }
         if (faults.Channel5Fault) {
-            alertMessageBuilder.append(" channel 5 error");
+            alertMessageBuilder.append("\nchannel 5 error");
         }
         if (faults.Channel6Fault) {
-            alertMessageBuilder.append(" channel 6 error");
+            alertMessageBuilder.append("\nchannel 6 error");
         }
         if (faults.Channel7Fault) {
-            alertMessageBuilder.append(" channel 7 error");
+            alertMessageBuilder.append("\nchannel 7 error");
         }
         if (faults.Channel8Fault) {
-            alertMessageBuilder.append(" channel 8 error");
+            alertMessageBuilder.append("\nchannel 8 error");
         }
         if (faults.Channel9Fault) {
-            alertMessageBuilder.append(" channel 9 error");
+            alertMessageBuilder.append("\nchannel 9 error");
         }
         if (faults.Channel10Fault) {
-            alertMessageBuilder.append(" channel 10 error");
+            alertMessageBuilder.append("\nchannel 10 error");
         }
         if (faults.Channel11Fault) {
-            alertMessageBuilder.append(" channel 11 error");
+            alertMessageBuilder.append("\nchannel 11 error");
         }
         if (faults.Channel12Fault) {
-            alertMessageBuilder.append(" channel 12 error");
+            alertMessageBuilder.append("\nchannel 12 error");
         }
         if (faults.Channel13Fault) {
-            alertMessageBuilder.append(" channel 13 error");
+            alertMessageBuilder.append("\nchannel 13 error");
         }
         if (faults.Channel14Fault) {
-            alertMessageBuilder.append(" channel 14 error");
+            alertMessageBuilder.append("\nchannel 14 error");
         }
         if (faults.Channel15Fault) {
-            alertMessageBuilder.append(" channel 15 error");
+            alertMessageBuilder.append("\nchannel 15 error");
         }
         if (faults.Channel6Fault) {
-            alertMessageBuilder.append(" channel 16 error");
+            alertMessageBuilder.append("\nchannel 16 error");
         }
         if (faults.Brownout) {
-            alertMessageBuilder.append(" brownout");
+            alertMessageBuilder.append("\nbrownout");
         }
         if (faults.CompressorOverCurrent) {
-            alertMessageBuilder.append(" compressor over current");
+            alertMessageBuilder.append("\ncompressor over current");
         }
         if (faults.CanWarning) {
-            alertMessageBuilder.append(" can warning");
+            alertMessageBuilder.append("\ncan warning");
         }
         if (faults.SolenoidOverCurrent) {
-            alertMessageBuilder.append(" solenoid over current");
+            alertMessageBuilder.append("\nsolenoid over current");
         }
         if (faults.CompressorOpen) {
-            alertMessageBuilder.append(" compressor open");
+            alertMessageBuilder.append("\ncompressor open");
         }
         if (faults.HardwareFault) {
-            alertMessageBuilder.append(" hardware fault");
+            alertMessageBuilder.append("\nhardware fault");
         }
 
         String alertMessage = alertMessageBuilder.toString();
@@ -107,33 +107,33 @@ public class PneumaticHubAlerts {
         m_alert.set(!ALERT_NAME.equals(alertMessage));
     }
 
-    public void checkStickyFaults() {
+    private void checkStickyFaults() {
         StringBuilder alertMessageBuilder = new StringBuilder(700);
         alertMessageBuilder.append(STICKY_ALERT_NAME);
 
         REVPHStickyFaults revphStickyFaults = m_pneumaticHub.getStickyFaults();
 
         if (revphStickyFaults.CompressorOverCurrent) {
-            alertMessageBuilder.append("Compressor Over Current fault");
+            alertMessageBuilder.append("\nCompressor Over Current fault");
         }
         if (revphStickyFaults.CompressorOpen) {
-            alertMessageBuilder.append("Compressor open fault");
+            alertMessageBuilder.append("\nCompressor open fault");
         }
         if (revphStickyFaults.SolenoidOverCurrent) {
-            alertMessageBuilder.append("Solenoid Over Current fault");
+            alertMessageBuilder.append("\nSolenoid Over Current fault");
         }
         if (revphStickyFaults.Brownout) {
-            alertMessageBuilder.append("Brownout fault");
+            alertMessageBuilder.append("\nBrownout fault");
         }
         if (revphStickyFaults.CanWarning) {
-            alertMessageBuilder.append("Can Warning fault");
+            alertMessageBuilder.append("\nCan Warning fault");
         }
         if (revphStickyFaults.CanBusOff) {
-            alertMessageBuilder.append("Can Bus Off fault");
+            alertMessageBuilder.append("\nCan Bus Off fault");
         }
-        if (revphStickyFaults.HasReset) {
-            alertMessageBuilder.append("Has resent fault");
-        }
+        // if (revphStickyFaults.HasReset) {
+        //     alertMessageBuilder.append("\nHas reset fault");
+        // }
 
         String alertMessage = alertMessageBuilder.toString();
         m_alertSticky.setText(alertMessage);

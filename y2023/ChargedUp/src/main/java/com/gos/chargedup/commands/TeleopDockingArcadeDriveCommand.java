@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class TeleopDockingArcadeDriveCommand extends CommandBase {
-    private static final GosDoubleProperty ARCADE_DRIVE_BRAKE_SPEED = new GosDoubleProperty(false, "Chassis speed for brake", 0.6);
+    private static final GosDoubleProperty ARCADE_DRIVE_BRAKE_SPEED = new GosDoubleProperty(true, "Chassis speed for brake", 0.6);
     private final ChassisSubsystem m_chassisSubsystem;
     private final CommandXboxController m_joystick;
     private final LEDManagerSubsystem m_led;

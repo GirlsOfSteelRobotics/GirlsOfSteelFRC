@@ -5,7 +5,6 @@
 
 package com.gos.chargedup;
 
-
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
@@ -16,7 +15,6 @@ import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
-import com.gos.chargedup.commands.testing.TestOnePieceAndLeaveCommunityThreeCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -33,12 +31,14 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -47,7 +47,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -75,7 +74,11 @@ public class RobotContainer {
         new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     private final LEDManagerSubsystem m_ledManagerSubsystem;
+
+    private final PneumaticHub m_pneumaticHub;
     private final DoubleSupplier m_pressureSupplier;
+
+    private final PowerDistribution m_powerDistribution;
     private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
     //swerve stuff
@@ -84,7 +87,9 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(PneumaticHub pneumaticHub) {
+    public RobotContainer(PneumaticHub pneumaticHub, PowerDistribution powerDistribution) {
+        // PropertyManager.setPurgeConstantPreferenceKeys(true);
+
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
@@ -97,9 +102,12 @@ public class RobotContainer {
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_claw, m_autonomousFactory); //NOPMD
 
-        pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
-        m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
+        m_pneumaticHub = pneumaticHub;
+        m_pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
+        m_pressureSupplier = () -> m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
+
+        m_powerDistribution = powerDistribution;
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
@@ -114,7 +122,7 @@ public class RobotContainer {
         SmartDashboard.putData("Select Auto Scoring Position", new ChooseAimTurretCommandSendable());
 
         createPitCommands(pneumaticHub);
-        createTestCommands();
+        // createTestCommands();
         //automatedTurretCommands();
 
 
@@ -126,7 +134,7 @@ public class RobotContainer {
 
     }
 
-    @SuppressWarnings("PMD.NcssCount")
+    @SuppressWarnings({"PMD.NcssCount", "PMD.UnusedPrivateMethod"})
     private void createTestCommands() {
         createTrajectoryTestCommands();
         createChassisTestCommands();
@@ -176,6 +184,7 @@ public class RobotContainer {
         tab.add("Arm Pivot: Reset Encoder (Abs Encoder Val)", m_armPivot.createSyncEncoderToAbsoluteEncoder());
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
+        tab.add("Reset Sticky Faults",  createResetStickyFaults());
         tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
     }
 
@@ -217,11 +226,12 @@ public class RobotContainer {
         tab.add("Arm Pivot: Pivot Down", m_armPivot.commandPivotArmDown());
         tab.add("Arm Pivot: Pivot Up", m_armPivot.commandPivotArmUp());
 
-        tab.add("Arm Pivot: Angle PID - 0 degrees", m_armPivot.commandPivotArmToAngleNonHold(0));
-        tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
-        tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
+        tab.add("Arm Pivot: Angle PID - -30 degrees", debugArmPid(-30));
+        tab.add("Arm Pivot: Angle PID - -10 degrees", debugArmPid(-10));
+        tab.add("Arm Pivot: Angle PID - 0 degrees", debugArmPid(0));
+        tab.add("Arm Pivot: Angle PID - 10 degrees", debugArmPid(14));
 
-        tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
+        // tab.add("Arm Pivot: Gravity Offset Tune", m_armPivot.tuneGravityOffsetPID());
     }
 
     private void createArmTestCommands() {
@@ -261,8 +271,8 @@ public class RobotContainer {
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
         m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_RIGHT_BLUE_PICK_UP_POINT, false));
-        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        //m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        //m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
         m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
         m_driverController.povUp().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
@@ -277,6 +287,8 @@ public class RobotContainer {
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
+        m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
@@ -291,11 +303,14 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-        m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
-        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
-        m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
+        // m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
+        // m_driverController.povLeft().whileTrue(m_chassisSubsystem.createTurnPID(180));
+        // m_driverController.y().whileTrue(new TestOnePieceAndLeaveCommunityThreeCommandGroup(m_chassisSubsystem));
 
-        //m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        // m_operatorController.y().whileTrue(debugArmPid(0));
+        // m_operatorController.a().whileTrue(debugArmPid(-10));
+        // m_operatorController.b().whileTrue(debugArmPid(-30));
+        // m_operatorController.x().whileTrue(debugArmPid(14));
         //m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
@@ -306,6 +321,11 @@ public class RobotContainer {
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
         // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
         // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
+    }
+
+    private CommandBase debugArmPid(double angle) {
+        return m_armPivot.commandPivotArmToAngleHold(angle);
+        //.andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
 
 
@@ -320,6 +340,23 @@ public class RobotContainer {
     }
 
 
+    private void resetStickyFaults() {
+        m_pneumaticHub.clearStickyFaults();
+        clearStickyFaultsPDH();
+        m_chassisSubsystem.resetStickyFaultsChassis();
+        m_armPivot.clearStickyFaultsArmPivot();
+        m_claw.clearStickyFaultsClaw();
+    }
+
+    private void clearStickyFaultsPDH() {
+        m_powerDistribution.clearStickyFaults();
+    }
+
+    private CommandBase createResetStickyFaults() {
+        return Commands.run(this::resetStickyFaults).ignoringDisable(true);
+    }
+
+
     private class SuperstructureSendable implements Sendable {
 
         @Override
@@ -327,7 +364,7 @@ public class RobotContainer {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
 
             builder.addDoubleProperty(
-                SmartDashboardNames.ARM_ANGLE, m_armPivot::getArmAngleDeg, null);
+                SmartDashboardNames.ARM_ANGLE, m_armPivot::getFeedbackAngleDeg, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_GOAL_ANGLE, m_armPivot::getArmAngleGoal, null);
             builder.addBooleanProperty(

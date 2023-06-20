@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.littletonrobotics.frc2023.util.Alert;
 
+import java.util.List;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -33,7 +35,9 @@ public class Robot extends TimedRobot {
     private final PneumaticHubAlerts m_pneumaticHubAlert = new PneumaticHubAlerts(m_pneumaticHub);
 
     private final PowerDistribution m_powerDistribution = new PowerDistribution();
-    private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution);
+    private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution, List.of(
+        1, 2, 3, 6, 7, 8, 11, 12, 13, 15, 17, 19, 23
+    ));
 
     private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
     private static final double LOW_BATTERY_VOLTAGE = 11.9;
@@ -47,7 +51,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        m_robotContainer = new RobotContainer(m_pneumaticHub);
+        m_robotContainer = new RobotContainer(m_pneumaticHub, m_powerDistribution);
     }
 
 

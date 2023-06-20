@@ -2,7 +2,7 @@
   {
     "name": "/Preferences/Chassis.mm.kp",
     "type": "double",
-    "value": 0.8,
+    "value": 0.6,
     "properties": {
       "persistent": true
     }
@@ -26,7 +26,7 @@
   {
     "name": "/Preferences/Chassis.mm.kff",
     "type": "double",
-    "value": 0.1524,
+    "value": 0.215,
     "properties": {
       "persistent": true
     }
@@ -34,7 +34,47 @@
   {
     "name": "/Preferences/Pivot Arm Allowable Error",
     "type": "double",
-    "value": 5.0,
+    "value": 1.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis auto engage kP",
+    "type": "double",
+    "value": 0.025,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawInSpeed",
+    "type": "double",
+    "value": 0.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawOutSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCurrentLimit",
+    "type": "double",
+    "value": 25.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 20.0,
     "properties": {
       "persistent": true
     }
@@ -42,7 +82,7 @@
   {
     "name": "/Preferences/JoystickTurnDamping",
     "type": "double",
-    "value": 0.75,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
@@ -58,15 +98,7 @@
   {
     "name": "/Preferences/Chassis speed for brake",
     "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis auto engage kP",
-    "type": "double",
-    "value": 0.02,
+    "value": 0.6,
     "properties": {
       "persistent": true
     }
@@ -80,33 +112,9 @@
     }
   },
   {
-    "name": "/Preferences/ClawCurrentLimit",
+    "name": "/Preferences/ClawHoldSpeed",
     "type": "double",
-    "value": 25.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ClawInSpeed",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ClawOutSpeed",
-    "type": "double",
-    "value": 0.75,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
-    "type": "double",
-    "value": 15.0,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
@@ -128,25 +136,9 @@
     }
   },
   {
-    "name": "/Preferences/Pivot Arm PID Stop Error",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ClawHoldSpeed",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.02,
+    "value": 0.4,
     "properties": {
       "persistent": true
     }
@@ -170,7 +162,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.max_acceleration",
     "type": "double",
-    "value": 0.0,
+    "value": 210.0,
     "properties": {
       "persistent": true
     }
@@ -178,15 +170,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.max_velocity",
     "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle FF Properties.smff.kff",
-    "type": "double",
-    "value": 0.03,
+    "value": 210.0,
     "properties": {
       "persistent": true
     }
@@ -194,7 +178,7 @@
   {
     "name": "/Preferences/Chassis to angle FF Properties.smff.ks",
     "type": "double",
-    "value": 0.0,
+    "value": 0.8,
     "properties": {
       "persistent": true
     }
@@ -208,9 +192,9 @@
     }
   },
   {
-    "name": "/Preferences/Pivot Arm Gravity Offset",
+    "name": "/Preferences/Chassis to angle FF Properties.smff.kff",
     "type": "double",
-    "value": 1.8,
+    "value": 0.027,
     "properties": {
       "persistent": true
     }
@@ -218,7 +202,7 @@
   {
     "name": "/Preferences/Chassis Turn PID Allowable Error",
     "type": "double",
-    "value": 2.0,
+    "value": 3.5,
     "properties": {
       "persistent": true
     }
@@ -242,15 +226,7 @@
   {
     "name": "/Preferences/Pivot Arm.mm.kp",
     "type": "double",
-    "value": 0.004,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pivot Arm.mm.ki",
-    "type": "double",
-    "value": 0.0,
+    "value": 0.03,
     "properties": {
       "persistent": true
     }
@@ -264,65 +240,49 @@
     }
   },
   {
-    "name": "/Preferences/Pivot Arm.mm.kff",
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.max_acceleration",
     "type": "double",
-    "value": 0.005,
+    "value": 80.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Pivot Arm.mm.max_velocity",
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.max_velocity",
     "type": "double",
-    "value": 120.0,
+    "value": 80.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Pivot Arm.mm.max_acceleration",
+    "name": "/Preferences/Pivot Arm Motion Profile.aff.kff",
     "type": "double",
-    "value": 60.0,
+    "value": 3.455,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Wheel PID.mm.kp",
+    "name": "/Preferences/Pivot Arm Motion Profile.aff.ks",
     "type": "double",
-    "value": 0.0,
+    "value": 0.10072,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Wheel PID.mm.kd",
+    "name": "/Preferences/Pivot Arm Motion Profile.aff.kg",
     "type": "double",
-    "value": 0.0,
+    "value": 0.22,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Wheel PID.mm.kff",
+    "name": "/Preferences/Pivot Arm Motion Profile.mm.kp",
     "type": "double",
-    "value": 2.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Azimuth PID.mm.kp",
-    "type": "double",
-    "value": 0.005,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Azimuth PID.mm.kd",
-    "type": "double",
-    "value": 0.0,
+    "value": 0.0073,
     "properties": {
       "persistent": true
     }

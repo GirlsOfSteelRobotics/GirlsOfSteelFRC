@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,24 +28,26 @@ public class LEDManagerSubsystem extends SubsystemBase {
     // Colors for auto nodes
     private static final Color NODE_0_COLOR = Color.kRed;
     private static final Color NODE_1_COLOR = Color.kOrange;
-    private static final Color NODE_2_COLOR = Color.kYellow;
+    // private static final Color NODE_2_COLOR = Color.kYellow;
     private static final Color NODE_3_COLOR = Color.kGreen;
     private static final Color NODE_4_COLOR = Color.kBlack;
     private static final Color NODE_5_COLOR = Color.kIndigo;
-    private static final Color NODE_6_COLOR = Color.kViolet;
+    // private static final Color NODE_6_COLOR = Color.kViolet;
     private static final Color NODE_7_COLOR = Color.kPapayaWhip;
     private static final Color NODE_8_COLOR = Color.kDarkCyan;
 
     private static final int MAX_INDEX_LED = 30;
 
     private static final int AUTO_HEIGHT_START = 0;
-    private static final int AUTO_HEIGHT_COUNT = MAX_INDEX_LED / 4;
+    private static final int AUTO_HEIGHT_COUNT = 10;
 
-    private static final int AUTO_MODE_START = AUTO_HEIGHT_COUNT;
+    private static final int AUTO_MODE_START = MAX_INDEX_LED - 10;
 
-    private static final int AUTO_MODE_END = AUTO_MODE_START + MAX_INDEX_LED / 4;
+    private static final int AUTO_MODE_END = MAX_INDEX_LED;
 
     private static final int CLAW_HOLD_WAIT_TIME = 1;
+
+    private static final int GAME_PIECE_FLASH_TIME = 3;
 
 
     // subsystems
@@ -83,15 +86,19 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final LEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
     private final LEDPatternLookup<AutoPivotHeight> m_heightColor;
-    private final LEDFlash m_autoResetArmAtAngle;
 
     private final LEDFlash m_clawAlignedSignal;
-
     private final LEDFlash m_isInLoadingZoneSignal;
+
+    private final LEDFlash m_alertError;
+    private final LEDFlash m_alertWarning;
+    private final LEDFlash m_noAlerts;
 
     private final LEDFlash m_isHoldingPieceClaw;
 
     private final Timer m_clawLEDsTimer = new Timer();
+    private final Timer m_gamePieceTimer = new Timer();
+
 
     private boolean m_clawWasTripped;
 
@@ -142,18 +149,23 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_0, NODE_0_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_1, NODE_1_COLOR);
-        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, NODE_2_COLOR);
+        //        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_2, NODE_2_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_3, NODE_3_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_5, NODE_5_COLOR);
-        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, NODE_6_COLOR);
+        //        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_6, NODE_6_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_7, NODE_7_COLOR);
         addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_AND_LEAVE_COMMUNITY_8, NODE_8_COLOR);
 
-        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, NODE_4_COLOR);
-        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, NODE_3_COLOR);
-        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, NODE_5_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_3, NODE_3_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_4, NODE_4_COLOR);
+        addOnePieceAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_NODE_LEAVE_AND_ENGAGE_5, NODE_5_COLOR);
 
-        addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, NODE_0_COLOR);
+
+        //        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_4, NODE_4_COLOR);
+        //        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_3, NODE_3_COLOR);
+        //        addOnePieceGrabSecondAndEngageAuto(autonColorMap, AutonomousFactory.AutonMode.ONE_PIECE_LEAVE_COMMUNITY_ENGAGE_WITH_SECOND_5, NODE_5_COLOR);
+
+        // addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, NODE_0_COLOR);
         addTwoPieceAuto(autonColorMap, AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, NODE_7_COLOR);
 
         // no scoring -- solid red
@@ -166,16 +178,20 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_autoModeColor = new LEDPatternLookup<>(m_buffer, autonColorMap);
         m_heightColor = new LEDPatternLookup<>(m_buffer, autoHeightMap);
 
-        m_autoResetArmAtAngle = new LEDFlash(m_buffer, AUTO_MODE_END, MAX_INDEX_LED, 0.5, Color.kGreen);
-
-        m_led.setLength(m_buffer.getLength());
-
         //for Claw Aligned Check
         m_clawAlignedSignal = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
 
         //holding piece in claw
         m_isHoldingPieceClaw = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
         m_clawWasTripped = false;
+
+        // disabled -- show if there's alerts
+        m_alertError = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kRed);
+        m_alertWarning = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kYellow);
+        m_noAlerts = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kGreen);
+
+
+        m_led.setLength(m_buffer.getLength());
 
         // Set the data
         m_led.setData(m_buffer);
@@ -187,9 +203,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     }
 
-    private void addOnePieceGrabSecondAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
-        autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_END, 0.5, color));
-    }
+    // private void addOnePieceGrabSecondAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
+    //     autonColorMap.put(mode, new LEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_END, 0.5, color));
+    // }
 
     private void addOnePieceAndEngageAuto(Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap, AutonomousFactory.AutonMode mode, Color color) {
         autonColorMap.put(mode, new LEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_END, color));
@@ -220,17 +236,24 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_autoModeColor.writeLeds();
         }
 
-        if (Math.abs(m_armSubsystem.getArmAngleDeg() - m_armSubsystem.getAbsoluteEncoderAngle()) < 1) {
-            m_autoResetArmAtAngle.writeLeds();
+        if (Alert.hasErrors()) {
+            m_alertError.writeLeds();
         }
+        else if (Alert.hasWarnings()) {
+            m_alertWarning.writeLeds();
+        }
+        else {
+            m_noAlerts.writeLeds();
+        }
+
     }
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
     private void enabledPatterns() {
-        if (m_optionConeLED) {
+        if (m_optionConeLED && m_gamePieceTimer.get() < GAME_PIECE_FLASH_TIME) {
             m_coneGamePieceSignal.writeLeds();
         }
-        else if (m_optionCubeLED) {
+        else if (m_optionCubeLED && m_gamePieceTimer.get() < GAME_PIECE_FLASH_TIME) {
             m_cubeGamePieceSignal.writeLeds();
         }
         else if (m_optionDockLED || m_chassisSubsystem.tryingToEngage()) {
@@ -254,7 +277,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_clawAlignedSignal.writeLeds();
         }
 
-
+        if (m_gamePieceTimer.get() > GAME_PIECE_FLASH_TIME) {
+            m_gamePieceTimer.reset();
+        }
         /*
         else {
             communityZonePatterns();
@@ -278,6 +303,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
             disabledPatterns();
         }
         else {
+            if (m_optionCubeLED || m_optionConeLED) {
+                m_gamePieceTimer.start();
+            }
             enabledPatterns();
         }
         shouldTrip();

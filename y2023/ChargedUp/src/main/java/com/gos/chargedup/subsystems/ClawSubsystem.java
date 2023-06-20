@@ -21,12 +21,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class ClawSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty HOLD_SPEED = new GosDoubleProperty(false, "ClawHoldSpeed", 0.2);
-    private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(false, "ClawInSpeed", 0.5);
-    private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawOutSpeed", 0.8);
-    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 25);
-    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPieceCurrent", 5);
-    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT_VELOCITY = new GosDoubleProperty(false, "ClawCheckHasPieceVelocity", 1);
+    private static final GosDoubleProperty HOLD_SPEED = new GosDoubleProperty(true, "ClawHoldSpeed", 0.2);
+    private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(true, "ClawInSpeed", 0.8);
+    private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(true, "ClawOutSpeed", 1.0);
+    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(true, "ClawCurrentLimit", 25);
+    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(true, "ClawCheckHasPieceCurrent", 5);
+    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT_VELOCITY = new GosDoubleProperty(true, "ClawCheckHasPieceVelocity", 1);
 
     private static final double AUTO_EJECTION_TIME = 0.5;
     private static final double AUTO_INTAKE_TIME = 0.5;
@@ -91,6 +91,10 @@ public class ClawSubsystem extends SubsystemBase {
         m_currentEntry.setNumber(m_clawMotor.getOutputCurrent());
         m_outputEntry.setNumber(m_clawMotor.getAppliedOutput());
         m_velocityEntry.setNumber(m_clawEncoder.getVelocity());
+    }
+
+    public void clearStickyFaultsClaw() {
+        m_clawMotor.clearFaults();
     }
 
     /////////////////////

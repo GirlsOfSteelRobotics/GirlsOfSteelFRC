@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class TeleopMediumArcadeDriveCommand extends CommandBase {
-    private static final GosDoubleProperty ARCADE_DRIVE_MEDIUM_SPEED = new GosDoubleProperty(false, "Chassis speed medium", 0.5);
+    private static final GosDoubleProperty ARCADE_DRIVE_MEDIUM_SPEED = new GosDoubleProperty(true, "Chassis speed medium", 0.5);
     private final ChassisSubsystem m_chassisSubsystem;
     private final CommandXboxController m_joystick;
 

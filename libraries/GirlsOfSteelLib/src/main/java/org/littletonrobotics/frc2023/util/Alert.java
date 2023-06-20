@@ -110,6 +110,28 @@ public class Alert {
         }
     }
 
+    public static boolean hasErrors() {
+        for (SendableAlerts sendableAlerts : groups.values()) {
+            for (Alert alert : sendableAlerts.m_alerts) {
+                if (alert.m_type == AlertType.ERROR && alert.m_active) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasWarnings() {
+        for (SendableAlerts sendableAlerts : groups.values()) {
+            for (Alert alert : sendableAlerts.m_alerts) {
+                if (alert.m_type == AlertType.WARNING && alert.m_active) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /** Represents an alert's level of urgency. */
     public enum AlertType {
         /**

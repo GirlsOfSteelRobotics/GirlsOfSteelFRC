@@ -205,7 +205,8 @@ replay_pid*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -330,4 +331,7 @@ bin/
 *-window.json
 
 # End entries from WPI Lib team
+
+datalogs/
+networktables.json.bck
 

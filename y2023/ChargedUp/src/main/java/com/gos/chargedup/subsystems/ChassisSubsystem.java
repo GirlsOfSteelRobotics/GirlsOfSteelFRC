@@ -7,6 +7,7 @@ import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
@@ -60,6 +61,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -87,7 +89,7 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
-    private static final GosDoubleProperty TURN_PID_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 2);
+    private final HeavyDoubleProperty m_turnPidAllowableError;
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -142,7 +144,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_trajectoryRightWheelSpeedGoal;
 
 
-    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Chassis Trajectory Max Velocity", 60);
+    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(true, "Chassis Trajectory Max Velocity", 60);
 
     private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
     private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
@@ -160,8 +162,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PigeonAlerts m_pigeonAlerts;
 
     //max velocity and acceleration tuning
-    private final GosDoubleProperty m_onTheFlyMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
-    private final GosDoubleProperty m_onTheFlyMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_onTheFlyMaxVelocity = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_onTheFlyMaxAcceleration = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public ChassisSubsystem() {
@@ -219,7 +221,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         m_turnAnglePID.enableContinuousInput(0, 360);
-        m_turnAnglePID.setTolerance(TURN_PID_ALLOWABLE_ERROR.getValue());
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0.4)
             .addI(0)
@@ -231,6 +232,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .addKs(0.8)
             .addKa(0)
             .addKff(0.027);
+        GosDoubleProperty turnPidAllowableErrorProperty = new GosDoubleProperty(false, "Chassis Turn PID Allowable Error", 3.5);
+        m_turnPidAllowableError = new HeavyDoubleProperty(m_turnAnglePID::setTolerance, turnPidAllowableErrorProperty);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
@@ -250,8 +253,8 @@ public class ChassisSubsystem extends SubsystemBase {
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
         m_cameras = new ArrayList<>();
-        // m_cameras.add(new PhotonVisionSubsystem(m_field));
-        m_cameras.add(new LimelightVisionSubsystem(m_field));
+        m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-back"));
+        m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-front"));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -301,7 +304,6 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
-
             m_tryingToEngage = false;
         }
     }
@@ -347,7 +349,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
-            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", true, pidController, 0)
                 .addP(0.6)
                 .addI(0)
                 .addD(0)
@@ -380,6 +382,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
         m_turnAnglePIDProperties.updateIfChanged();
         m_turnAnglePIDFFProperty.updateIfChanged();
+        m_turnPidAllowableError.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
         if (Constants.IS_ROBOT_BLOSSOM) {
@@ -406,9 +409,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
         m_followerRightMotorErrorAlert.checkAlerts();
-
-
-
         m_pigeonAlerts.checkAlerts();
     }
 
@@ -506,24 +506,25 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createAutoEngageCommand() {
-        return this.runEnd(this::autoEngage, () -> m_tryingToEngage = false).withName("Auto Engage");
+        return this.runOnce(this::drivetrainToBrakeMode)
+            .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
+            .finallyDo((interrupted) -> drivetrainToCoastMode()).withName("Auto Engage");
     }
 
 
-    //NEW ODOMETRY
     public void updateOdometry() {
-        //OLD ODOMETRY
+        m_poseEstimator.update(
+            m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-
-        for (Vision vision : m_cameras) {
-            updateCameraEstimate(vision);
+        if (DriverStation.isTeleop()) {
+            for (Vision vision : m_cameras) {
+                updateCameraEstimate(vision);
+            }
         }
     }
 
     private void updateCameraEstimate(Vision vision) {
         //NEW ODOMETRY
-        m_poseEstimator.update(
-                    m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
             vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
@@ -540,11 +541,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean isInCommunityZone() {
-        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation()) || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation());
+        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
+            || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
     }
 
     public boolean isInLoadingZone() {
-        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getTranslation());
+        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
+            || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
     }
 
     public boolean canExtendArm() {
@@ -581,6 +584,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    public void resetStickyFaultsChassis() {
+        m_leaderLeft.clearFaults();
+        m_leaderRight.clearFaults();
+        m_followerLeft.clearFaults();
+        m_followerRight.clearFaults();
+    }
+
     ////////////////////
     // Command Factories
     ////////////////////
@@ -608,7 +618,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
     public CommandBase createResetOdometry(Pose2d pose2d) {
-        return this.runOnce(() -> resetOdometry(pose2d))
+        return this.run(() -> resetOdometry(pose2d))
+            .ignoringDisable(true)
             .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
@@ -617,16 +628,24 @@ public class ChassisSubsystem extends SubsystemBase {
             .withName("Sync Odometry /w Pose");
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+    private RamseteAutoBuilder createRamseteAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
         return new RamseteAutoBuilder(
             this::getPose, // Pose supplier
-            this::resetOdometry,
+            poseSetter,
             new RamseteController(),
             K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
             this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
             eventMap,
             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
             this);
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+        return createRamseteAutoBuilder(eventMap, this::resetOdometry);
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
+        return createRamseteAutoBuilder(eventMap, (Pose2d pose) -> {});
     }
 
 
