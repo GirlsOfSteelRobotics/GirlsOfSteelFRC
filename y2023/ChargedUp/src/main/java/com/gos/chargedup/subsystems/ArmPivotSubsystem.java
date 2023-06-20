@@ -4,6 +4,7 @@ import com.gos.chargedup.AutoAimNodePositions;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
@@ -117,16 +118,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private double m_armAngleGoal = Double.MIN_VALUE;
 
-    private final NetworkTableEntry m_lowerLimitSwitchEntry;
-    private final NetworkTableEntry m_upperLimitSwitchEntry;
-    private final NetworkTableEntry m_encoderDegEntry;
-    private final NetworkTableEntry m_goalAngleDegEntry;
-    private final NetworkTableEntry m_velocityEntry;
+    private final LoggingUtil m_networkTableEntries;
+
     private final NetworkTableEntry m_profilePositionGoalEntry;
     private final NetworkTableEntry m_profileVelocityGoalEntry;
     private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
-    private final NetworkTableEntry m_absoluteEncoderEntry;
-    private final NetworkTableEntry m_absoluteEncoderToBuiltInDriftEntry;
 
     private final SparkMaxAlerts m_pivotErrorAlert;
 
@@ -174,17 +170,19 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .addKs(0.10072)
             .addKg(0.22);
 
+        m_networkTableEntries = new LoggingUtil("Arm Subsystem");
+        m_networkTableEntries.addBoolean("Arm Lower LS", this::isLowerLimitSwitchedPressed);
+        m_networkTableEntries.addBoolean("Arm Upper LS", this::isUpperLimitSwitchedPressed);
+        m_networkTableEntries.addDouble("Arm Encoder (deg)", this::getArmAngleDeg2);
+        m_networkTableEntries.addDouble("Absolute Encoder Entry", this::getAbsoluteEncoderAngle2);
+        m_networkTableEntries.addDouble("Encoder Drift", this::getAbsoluteEncoderBuiltInDrift);
+        m_networkTableEntries.addDouble("Arm Velocity", this::getArmVelocityDegPerSec2);
+        m_networkTableEntries.addDouble("Arm Goal (deg)", () -> m_armAngleGoal);
+
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
-        m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
-        m_upperLimitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
-        m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
-        m_goalAngleDegEntry = loggingTable.getEntry("Arm Goal (deg)");
-        m_velocityEntry = loggingTable.getEntry("Arm Velocity");
         m_profilePositionGoalEntry = loggingTable.getEntry("Profile Angle Goal");
         m_profileVelocityGoalEntry = loggingTable.getEntry("Velocity Goal");
         m_pidArbitraryFeedForwardEntry = loggingTable.getEntry("Arbitrary FF");
-        m_absoluteEncoderEntry = loggingTable.getEntry("Absolute Encoder Entry");
-        m_absoluteEncoderToBuiltInDriftEntry = loggingTable.getEntry("Encoder Drift");
         m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
 
         if (RobotBase.isSimulation()) {
@@ -240,6 +238,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return val;
     }
 
+    public double getAbsoluteEncoderBuiltInDrift() {
+        return getAbsoluteEncoderAngle2() - getArmAngleDeg2();
+    }
+
     private double getAbsoluteEncoderVelocity2() {
         return m_absoluteEncoder.getVelocity();
     }
@@ -269,15 +271,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_wpiPidProperties.updateIfChanged();
         m_wpiFeedForward.updateIfChanged();
 
-        m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
-        m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
-        m_encoderDegEntry.setNumber(getArmAngleDeg2());
-        m_absoluteEncoderEntry.setNumber(getAbsoluteEncoderAngle2());
-        m_absoluteEncoderToBuiltInDriftEntry.setNumber(getAbsoluteEncoderAngle2() - getArmAngleDeg2());
-        m_goalAngleDegEntry.setNumber(m_armAngleGoal);
-        m_velocityEntry.setNumber(getArmVelocityDegPerSec2());
+        m_networkTableEntries.updateLogs();
 
         m_pivotErrorAlert.checkAlerts();
+    }
+
+    public double jfdklsfjaklsdj() {
+        return 0;
     }
 
     @Override

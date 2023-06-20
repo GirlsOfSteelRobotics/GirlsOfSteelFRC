@@ -5,6 +5,7 @@ import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
@@ -126,22 +127,19 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_turnAnglePIDProperties;
     private final SimpleMotorFeedForwardProperty m_turnAnglePIDFFProperty;
 
-    private final NetworkTableEntry m_gyroAngleDegEntry;
-    private final NetworkTableEntry m_gyroAngleRateEntry;
+    private final LoggingUtil m_networkTableEntries;
+
     private final NetworkTableEntry m_gyroAngleGoalVelocityEntry;
 
-    private final NetworkTableEntry m_leftEncoderPosition;
-    private final NetworkTableEntry m_leftEncoderVelocity;
-    private final NetworkTableEntry m_rightEncoderPosition;
-    private final NetworkTableEntry m_rightEncoderVelocity;
-    private final NetworkTableEntry m_trajectoryErrorX;
-    private final NetworkTableEntry m_trajectoryErrorY;
-    private final NetworkTableEntry m_trajectoryErrorAngle;
     private final NetworkTableEntry m_trajectoryVelocitySetpointX;
     private final NetworkTableEntry m_trajectoryVelocitySetpointY;
     private final NetworkTableEntry m_trajectoryVelocitySetpointAngle;
     private final NetworkTableEntry m_trajectoryLeftWheelSpeedGoal;
     private final NetworkTableEntry m_trajectoryRightWheelSpeedGoal;
+
+    private final NetworkTableEntry m_trajectoryErrorX;
+    private final NetworkTableEntry m_trajectoryErrorY;
+    private final NetworkTableEntry m_trajectoryErrorAngle;
 
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(true, "Chassis Trajectory Max Velocity", 60);
@@ -256,25 +254,41 @@ public class ChassisSubsystem extends SubsystemBase {
         m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-back"));
         m_cameras.add(new LimelightVisionSubsystem(m_field, "limelight-front"));
 
-        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
-        m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
-        m_gyroAngleRateEntry = loggingTable.getEntry("Gyro Rate");
-        m_gyroAngleGoalVelocityEntry = loggingTable.getEntry("Gyro Goal Velocity");
+        m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
+        m_networkTableEntries.addDouble("Left Position", () -> Units.metersToInches(m_leftEncoder.getPosition()));
+        m_networkTableEntries.addDouble("Left Velocity", () -> Units.metersToInches(m_leftEncoder.getVelocity()));
+        m_networkTableEntries.addDouble("Right Position", () -> Units.metersToInches(m_rightEncoder.getPosition()));
+        m_networkTableEntries.addDouble("Rigth Velocity", () -> Units.metersToInches(m_rightEncoder.getVelocity()));
 
-        m_leftEncoderPosition = loggingTable.getEntry("Left Position");
-        m_leftEncoderVelocity = loggingTable.getEntry("Left Velocity");
-        m_rightEncoderPosition = loggingTable.getEntry("Right Position");
-        m_rightEncoderVelocity = loggingTable.getEntry("Right Velocity");
+        m_networkTableEntries.addDouble("Position values: X", () -> Units.metersToInches(getPose().getX()));
+        m_networkTableEntries.addDouble("Position values: Y", () -> Units.metersToInches(getPose().getY()));
+        m_networkTableEntries.addDouble("Position values: theta", () -> getPose().getRotation().getDegrees());
+        m_networkTableEntries.addDouble("Chassis Pitch", this::getPitch);
+        m_networkTableEntries.addBoolean("In Community", this::isInCommunityZone);
+        m_networkTableEntries.addBoolean("In Loading", this::isInLoadingZone);
+        m_networkTableEntries.addDouble("pose angle", () -> m_odometry.getPoseMeters().getRotation().getDegrees());
+        m_networkTableEntries.addBoolean("Field/flip", this::isRedAllianceFlipped);
+        m_networkTableEntries.addDouble("Gyro Angle (deg)", this::getYaw);
+
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_networkTableEntries.addDouble("Gyro Rate", () -> -m_gyro.getRate());
+        }
+        else {
+            m_networkTableEntries.addDouble("Gyro Rate", () -> m_gyro.getRate());
+        }
+
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Chassis Subsystem");
+        m_gyroAngleGoalVelocityEntry = loggingTable.getEntry("Gyro Goal Velocity");
 
         m_trajectoryErrorX = loggingTable.getEntry("Trajectory Error X");
         m_trajectoryErrorY = loggingTable.getEntry("Trajectory Error Y");
         m_trajectoryErrorAngle = loggingTable.getEntry("Trajectory Error Angle");
+
         m_trajectoryVelocitySetpointX = loggingTable.getEntry("Trajectory Velocity Setpoint X");
         m_trajectoryVelocitySetpointY = loggingTable.getEntry("Trajectory Velocity Setpoint Y");
         m_trajectoryVelocitySetpointAngle = loggingTable.getEntry("Trajectory Velocity Setpoint Angle");
         m_trajectoryLeftWheelSpeedGoal = loggingTable.getEntry("Trajectory Velocity Left Wheel Speed Goal");
         m_trajectoryRightWheelSpeedGoal = loggingTable.getEntry("Trajectory Velocity Right Wheel Speed Goal");
-
 
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
@@ -383,27 +397,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDProperties.updateIfChanged();
         m_turnAnglePIDFFProperty.updateIfChanged();
         m_turnPidAllowableError.updateIfChanged();
-
-        m_gyroAngleDegEntry.setNumber(getYaw());
-        if (Constants.IS_ROBOT_BLOSSOM) {
-            m_gyroAngleRateEntry.setNumber(-m_gyro.getRate());
-        }
-        else {
-            m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
-        }
-
-        m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
-        m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
-        m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));
-        m_rightEncoderVelocity.setNumber(Units.metersToInches(m_rightEncoder.getVelocity()));
-        SmartDashboard.putNumber("Position values: X", Units.metersToInches(getPose().getX()));
-        SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
-        SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
-        SmartDashboard.putNumber("Chassis Pitch", getPitch());
-        SmartDashboard.putBoolean("In Community", isInCommunityZone());
-        SmartDashboard.putBoolean("In Loading", isInLoadingZone());
-        SmartDashboard.putNumber("pose angle", m_odometry.getPoseMeters().getRotation().getDegrees());
-        SmartDashboard.putBoolean("Field/flip", DriverStation.getAlliance() == DriverStation.Alliance.Red);
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -548,6 +541,10 @@ public class ChassisSubsystem extends SubsystemBase {
     public boolean isInLoadingZone() {
         return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
             || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
+    }
+
+    public boolean isRedAllianceFlipped() {
+        return DriverStation.getAlliance() == DriverStation.Alliance.Red;
     }
 
     public boolean canExtendArm() {
