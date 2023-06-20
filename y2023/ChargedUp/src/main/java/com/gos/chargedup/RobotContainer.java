@@ -122,7 +122,7 @@ public class RobotContainer {
         SmartDashboard.putData("Select Auto Scoring Position", new ChooseAimTurretCommandSendable());
 
         createPitCommands(pneumaticHub);
-        // createTestCommands();
+        createTestCommands();
         //automatedTurretCommands();
 
         if (RobotBase.isReal()) {
@@ -139,11 +139,12 @@ public class RobotContainer {
         createArmTestCommands();
         createPivotTestCommands();
         createSwerveTestCommands();
-
     }
 
     private void createSwerveTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("SwerveDriveTestCommands");
+
+        tab.add("Swerve reset position: (0, 0, 0)", m_swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
 
         for (int i = 0; i < 4; ++i) {
             tab.add("45deg Swerve Module " + i, m_swerveDrive.commandSetModuleState(i, 45, 3));
@@ -258,7 +259,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
-        m_claw.setDefaultCommand(m_claw.createHoldPiece());
+        //m_claw.setDefaultCommand(m_claw.createHoldPiece());
         m_swerveDrive.setDefaultCommand(new SwerveChassisJoystickCommand(m_swerveDrive, m_driverController));
 
         // Driver

@@ -26,9 +26,9 @@ public class SwerveChassisJoystickCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double xVelocity = m_joystick.getLeftX() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
-        double yVelocity = m_joystick.getLeftY() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
-        double omega = m_joystick.getRightX() * SwerveDriveChassisSubsystem.MAX_ROTATION_SPEED;
+        double yVelocity = -m_joystick.getLeftX() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
+        double xVelocity = -m_joystick.getLeftY() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
+        double omega = -m_joystick.getRightX() * SwerveDriveChassisSubsystem.MAX_ROTATION_SPEED;
         m_swerveDriveChassisSubsystem.setSpeeds(new ChassisSpeeds(xVelocity, yVelocity, omega));
 
 

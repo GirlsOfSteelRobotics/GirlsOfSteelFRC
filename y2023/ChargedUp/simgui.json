@@ -26,12 +26,16 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/LimelightVisionSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
@@ -39,6 +43,11 @@
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[10]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[12]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[14]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[16]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[18]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
@@ -58,7 +67,10 @@
       "/Shuffleboard/ArmExtensionTestCommands/Arm Piston: Mid Retract": "Command",
       "/Shuffleboard/ArmExtensionTestCommands/Arm Piston: Top Extended": "Command",
       "/Shuffleboard/ArmExtensionTestCommands/Arm Piston: Top Retracted": "Command",
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - -10 degrees": "Command",
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - -30 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 0 degrees": "Command",
+      "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 10 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 45 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Angle PID - 90 degrees": "Command",
       "/Shuffleboard/ArmPivotTestCommands/Arm Pivot: Gravity Offset Tune": "Command",
@@ -94,6 +106,7 @@
       "/Shuffleboard/PitCommands/Arm Pivot: Reset Encoder (Abs Encoder Val)": "Command",
       "/Shuffleboard/PitCommands/Arm Pivot: to Coast Mode": "Command",
       "/Shuffleboard/PitCommands/Compressor: Disable": "Command",
+      "/Shuffleboard/PitCommands/Reset Sticky Faults": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/180 Swerve Module 0": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/180 Swerve Module 1": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/180 Swerve Module 2": "Command",
@@ -102,6 +115,10 @@
       "/Shuffleboard/SwerveDriveTestCommands/180deg Swerve Module 1": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/180deg Swerve Module 2": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/180deg Swerve Module 3": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/1m/s Swerve Module0": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/1m/s Swerve Module1": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/1m/s Swerve Module2": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/1m/s Swerve Module3": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/1ms Swerve Module 0": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/1ms Swerve Module 1": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/1ms Swerve Module 2": "Command",
@@ -113,6 +130,10 @@
       "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module 1": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module 2": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module 3": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module0": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module1": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module2": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/3ms Swerve Module3": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/45 Swerve Module 0": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/45 Swerve Module 1": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/45 Swerve Module 2": "Command",
@@ -125,6 +146,7 @@
       "/Shuffleboard/SwerveDriveTestCommands/Swerve Module 1": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/Swerve Module 2": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/Swerve Module 3": "Command",
+      "/Shuffleboard/SwerveDriveTestCommands/Swerve reset position: (0, 0, 0)": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Retracted": "Command",
       "/Shuffleboard/TestCommands/Arm Full Extend": "Command",
@@ -278,6 +300,9 @@
           ],
           "length": 0.8199999928474426,
           "width": 0.6859999895095825
+        },
+        "window": {
+          "visible": true
         }
       },
       "/Shuffleboard/SwerveDriveTestCommands/1vx Set all Speeds": {
@@ -285,7 +310,7 @@
           "visible": true
         }
       },
-      "/Shuffleboard/SwerveDriveTestCommands/1vy Set all Speeds": {
+      "/Shuffleboard/SwerveDriveTestCommands/Swerve reset position: (0, 0, 0)": {
         "window": {
           "visible": true
         }
@@ -436,6 +461,9 @@
           ],
           "length": 1.0,
           "width": 1.0
+        },
+        "window": {
+          "visible": true
         }
       },
       "/SmartDashboard/SwerveField": {
@@ -452,6 +480,9 @@
       }
     },
     "transitory": {
+      "ChassisSubsystem": {
+        "open": true
+      },
       "SmartDashboard": {
         "AHHHHHHHHHHHHHHH": {
           "open": true
@@ -467,7 +498,7 @@
     "Plot <0>": {
       "plots": [
         {
-          "height": 326,
+          "height": 605,
           "series": [
             {
               "color": [
@@ -477,15 +508,6 @@
                 1.0
               ],
               "id": "NT:/SmartDashboard/FL Current Angle: "
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/FL Goal Angle: "
             },
             {
               "color": [
@@ -504,6 +526,15 @@
                 1.0
               ],
               "id": "NT:/SmartDashboard/FL Goal Velocity: "
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/FL Goal Angle: "
             }
           ]
         }

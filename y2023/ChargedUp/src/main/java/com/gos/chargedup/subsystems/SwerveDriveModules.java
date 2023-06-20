@@ -23,6 +23,12 @@ import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 
 public class SwerveDriveModules {
 
+    // TODO these are SDS mk4i ratios
+    private static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
+    private static final double TURNING_GEAR_RATIO = (50.0 / 14.0) * (60.0 / 10.0);
+    private static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (19.0 / 25.0) * (45.0 / 15.0);
+    private static final double DRIVE_ENCODER_CONSTANT = (1.0 / DRIVE_GEAR_RATIO) * WHEEL_DIAMETER_METERS * Math.PI;
+
     private final SimableCANSparkMax m_wheel;
     private final SimableCANSparkMax m_azimuth;
 
@@ -39,11 +45,6 @@ public class SwerveDriveModules {
     private final SparkMaxPIDController m_wheelPidController;
 
     private final SparkMaxPIDController m_azimuthPidController;
-    // TODO these are SDS mk4i ratios
-    private static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
-    private static final double TURNING_GEAR_RATIO = (50.0 / 14.0) * (60.0 / 10.0);
-    private static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (19.0 / 25.0) * (45.0 / 15.0);
-    private static final double DRIVE_ENCODER_CONSTANT = (1.0 / DRIVE_GEAR_RATIO) * WHEEL_DIAMETER_METERS * Math.PI;
 
     private SwerveModuleSimWrapper m_simWrapper;
 
