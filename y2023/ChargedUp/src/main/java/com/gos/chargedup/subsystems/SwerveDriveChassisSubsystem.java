@@ -35,12 +35,12 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(180);
 
 
-    private SwerveSimWrapper m_Simulator;
+    private SwerveSimWrapper m_simulator;
 
-    private static final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
-    private static final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
-    private static final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
-    private static final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
+    private static final Translation2d FRONT_LEFT_LOCATION = new Translation2d(0.381, 0.381);
+    private static final Translation2d FRONT_RIGHT_LOCATION = new Translation2d(0.381, -0.381);
+    private static final Translation2d BACK_LEFT_LOCATION = new Translation2d(-0.381, 0.381);
+    private static final Translation2d BACK_RIGHT_LOCATION = new Translation2d(-0.381, -0.381);
 
     private final SwerveDriveModules m_frontLeft;
     private final SwerveDriveModules m_backLeft;
@@ -54,8 +54,8 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
     private final SwerveDriveOdometry m_swerveDriveOdom;
 
     // Creating my kinematics object using the module locations
-    private static final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-        m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation
+    private static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
+        FRONT_LEFT_LOCATION, FRONT_RIGHT_LOCATION, BACK_LEFT_LOCATION, BACK_RIGHT_LOCATION
     );
 
     public SwerveDriveChassisSubsystem() {
@@ -70,7 +70,7 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
         m_modules = new SwerveDriveModules[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
         m_swerveDriveOdom = new SwerveDriveOdometry(
-            m_kinematics, m_gyro.getRotation2d(),
+            SWERVE_KINEMATICS, m_gyro.getRotation2d(),
             new SwerveModulePosition[] {
                 m_frontLeft.getModulePosition(),
                 m_frontRight.getModulePosition(),
@@ -78,39 +78,40 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
                 m_backRight.getModulePosition()
             }, new Pose2d(0, 0, new Rotation2d()));
 
-        if (RobotBase.isSimulation())
-        {
+        if (RobotBase.isSimulation()) {
             List<SwerveModuleSimWrapper> moduleSims = List.of(
                 m_frontLeft.getSimWrapper(),
                 m_frontRight.getSimWrapper(),
                 m_backLeft.getSimWrapper(),
                 m_backRight.getSimWrapper());
-            m_Simulator = new SwerveSimWrapper(WHEEL_BASE, TRACK_WIDTH, 64.0, 1.0, moduleSims, new CtrePigeonImuWrapper(m_gyro));
+            m_simulator = new SwerveSimWrapper(WHEEL_BASE, TRACK_WIDTH, 64.0, 1.0, moduleSims, new CtrePigeonImuWrapper(m_gyro));
         }
     }
 
+    @Override
     public void periodic() {
         SwerveModulePosition[] modulePositions = new SwerveModulePosition[4];
-        for (int i = 0; i < 4; i += 1)
-        {
+        for (int i = 0; i < 4; i += 1) {
             modulePositions[i] = m_modules[i].getModulePosition();
         }
         m_swerveDriveOdom.update(m_gyro.getRotation2d(), modulePositions);
         m_swerveField.setRobotPose(m_swerveDriveOdom.getPoseMeters());
 
     }
+
+    @Override
     public void simulationPeriodic() {
-        m_Simulator.update();
+        m_simulator.update();
     }
 
     public void setSpeeds(ChassisSpeeds speedsInp) {
-        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speedsInp);
+        SwerveModuleState[] moduleStates = SWERVE_KINEMATICS.toSwerveModuleStates(speedsInp);
         for (int i = 0; i < 4; i++) {
             m_modules[i].setState(moduleStates[i]);
         }
     }
 
-    public void setModuleState(int moduleId, double degrees, double velocity){
+    public void setModuleState(int moduleId, double degrees, double velocity) {
         m_modules[moduleId].setState(new SwerveModuleState(velocity, Rotation2d.fromDegrees(degrees)));
     }
 
@@ -122,5 +123,5 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
         return this.run(() -> setSpeeds(chassisSp)).withName("Set Chassis Speeds");
     }
 
-    }
+}
 

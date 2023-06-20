@@ -39,18 +39,18 @@ public class SwerveDriveModules {
     private final SparkMaxPIDController m_wheelPidController;
 
     private final SparkMaxPIDController m_azimuthPidController;
-//    public static final double kWheelDiameterMeters = 0.0762;
-//    public static final int kDrivingMotorPinionTeeth = 14;
-//
-//    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
-//
-//    public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
-//        / kDrivingMotorReduction;
-//    public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
-//        / kDrivingMotorReduction) / 60.0;
-//
-//    public static final double kTurningEncoderPositionFactor = 360;
-//    public static final double kTurningEncoderVelocityFactor = 360 / 60.0;
+    //public static final double kWheelDiameterMeters = 0.0762;
+    //public static final int kDrivingMotorPinionTeeth = 14;
+
+    //public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
+
+    //public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
+    //    / kDrivingMotorReduction;
+    //public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
+    //    / kDrivingMotorReduction) / 60.0;
+
+    //public static final double kTurningEncoderPositionFactor = 360;
+    //public static final double kTurningEncoderVelocityFactor = 360 / 60.0;
 
     // TODO these are SDS mk4i ratios
     private static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
@@ -58,9 +58,9 @@ public class SwerveDriveModules {
     private static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (19.0 / 25.0) * (45.0 / 15.0);
     private static final double DRIVE_ENCODER_CONSTANT = (1.0 / DRIVE_GEAR_RATIO) * WHEEL_DIAMETER_METERS * Math.PI;
 
-    private SwerveModuleSimWrapper m_SimWrapper;
+    private SwerveModuleSimWrapper m_simWrapper;
 
-        public SwerveDriveModules(int wheelId, int azimuthId, String moduleName) {
+    public SwerveDriveModules(int wheelId, int azimuthId, String moduleName) {
         m_wheel = new SimableCANSparkMax(wheelId, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_azimuth = new SimableCANSparkMax(azimuthId, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_wheelPidController = m_wheel.getPIDController();
@@ -72,7 +72,7 @@ public class SwerveDriveModules {
         m_wheelEncoder.setPositionConversionFactor(DRIVE_ENCODER_CONSTANT);
         m_wheelEncoder.setVelocityConversionFactor(DRIVE_ENCODER_CONSTANT / 60);
 
-            m_wheelPID = new RevPidPropertyBuilder("Wheel PID", false, m_wheelPidController, 0)
+        m_wheelPID = new RevPidPropertyBuilder("Wheel PID", false, m_wheelPidController, 0)
             .addP(0)
             .addD(0)
             .addFF(0)
@@ -83,8 +83,7 @@ public class SwerveDriveModules {
             .addD(0)
             .build();
 
-        if (RobotBase.isSimulation())
-        {
+        if (RobotBase.isSimulation()) {
             SwerveModuleSim moduleSim = new SwerveModuleSim(
                 DCMotor.getNEO(1),
                 DCMotor.getNEO(1),
@@ -92,7 +91,7 @@ public class SwerveDriveModules {
                 TURNING_GEAR_RATIO,
                 DRIVE_GEAR_RATIO
             );
-            m_SimWrapper = new SwerveModuleSimWrapper(
+            m_simWrapper = new SwerveModuleSimWrapper(
                 moduleSim,
                 new RevMotorControllerSimWrapper(m_wheel),
                 new RevMotorControllerSimWrapper(m_azimuth),
@@ -103,11 +102,12 @@ public class SwerveDriveModules {
         m_moduleName = moduleName;
 
     }
-    public SwerveModuleSimWrapper getSimWrapper(){
-            return m_SimWrapper;
+
+    public SwerveModuleSimWrapper getSimWrapper() {
+        return m_simWrapper;
     }
 
-    public void setState(SwerveModuleState state){
+    public void setState(SwerveModuleState state) {
         m_azimuthPID.updateIfChanged();
         m_wheelPID.updateIfChanged();
         m_wheelPidController.setReference(state.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
@@ -123,7 +123,7 @@ public class SwerveDriveModules {
         return new SwerveModuleState(m_wheelEncoder.getVelocity(), Rotation2d.fromDegrees(m_azimuthEncoder.getPosition()));
     }
 
-    public SwerveModulePosition getModulePosition(){
+    public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(m_wheelEncoder.getPosition(), Rotation2d.fromDegrees(m_azimuthEncoder.getPosition()));
     }
 }

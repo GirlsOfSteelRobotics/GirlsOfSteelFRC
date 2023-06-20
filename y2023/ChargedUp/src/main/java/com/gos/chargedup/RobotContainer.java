@@ -140,9 +140,6 @@ public class RobotContainer {
     private void createSwerveTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("SwerveDriveTestCommands");
 
-        ChassisSpeeds chassisSpeed = new ChassisSpeeds(1, 0, 0);
-
-
         tab.add("45deg Swerve Module 0", m_swerveDrive.commandSetModuleState(0, 45, 3));
         tab.add("45deg Swerve Module 1", m_swerveDrive.commandSetModuleState(1, 45, 3));
         tab.add("45deg Swerve Module 2", m_swerveDrive.commandSetModuleState(2, 45, 3));
