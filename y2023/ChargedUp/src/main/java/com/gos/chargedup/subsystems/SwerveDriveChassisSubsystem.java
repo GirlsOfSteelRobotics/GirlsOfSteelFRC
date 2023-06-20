@@ -25,7 +25,6 @@ import java.util.List;
 
 public class SwerveDriveChassisSubsystem extends SubsystemBase {
 
-    private final Field2d m_swerveField;
     private static final double WHEEL_BASE = 0.381;
 
     private static final double TRACK_WIDTH = 0.381;
@@ -34,13 +33,10 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
 
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(180);
 
-
-    private SwerveSimWrapper m_simulator;
-
-    private static final Translation2d FRONT_LEFT_LOCATION = new Translation2d(0.381, 0.381);
-    private static final Translation2d FRONT_RIGHT_LOCATION = new Translation2d(0.381, -0.381);
-    private static final Translation2d BACK_LEFT_LOCATION = new Translation2d(-0.381, 0.381);
-    private static final Translation2d BACK_RIGHT_LOCATION = new Translation2d(-0.381, -0.381);
+    private static final Translation2d FRONT_LEFT_LOCATION = new Translation2d(WHEEL_BASE / 2, TRACK_WIDTH / 2);
+    private static final Translation2d FRONT_RIGHT_LOCATION = new Translation2d(WHEEL_BASE / 2, -TRACK_WIDTH / 2);
+    private static final Translation2d BACK_LEFT_LOCATION = new Translation2d(-WHEEL_BASE / 2, TRACK_WIDTH / 2);
+    private static final Translation2d BACK_RIGHT_LOCATION = new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2);
 
     private final SwerveDriveModules m_frontLeft;
     private final SwerveDriveModules m_backLeft;
@@ -57,6 +53,10 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
     private static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
         FRONT_LEFT_LOCATION, FRONT_RIGHT_LOCATION, BACK_LEFT_LOCATION, BACK_RIGHT_LOCATION
     );
+
+    private final Field2d m_swerveField;
+
+    private SwerveSimWrapper m_simulator;
 
     public SwerveDriveChassisSubsystem() {
 
@@ -120,7 +120,7 @@ public class SwerveDriveChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandSetChassisSpeed(ChassisSpeeds chassisSp) {
-        return this.run(() -> setSpeeds(chassisSp)).withName("Set Chassis Speeds");
+        return this.run(() -> setSpeeds(chassisSp)).withName("Set Chassis Speeds" + chassisSp);
     }
 
 }

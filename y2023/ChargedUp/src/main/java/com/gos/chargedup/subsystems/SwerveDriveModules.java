@@ -39,19 +39,6 @@ public class SwerveDriveModules {
     private final SparkMaxPIDController m_wheelPidController;
 
     private final SparkMaxPIDController m_azimuthPidController;
-    //public static final double kWheelDiameterMeters = 0.0762;
-    //public static final int kDrivingMotorPinionTeeth = 14;
-
-    //public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
-
-    //public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
-    //    / kDrivingMotorReduction;
-    //public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
-    //    / kDrivingMotorReduction) / 60.0;
-
-    //public static final double kTurningEncoderPositionFactor = 360;
-    //public static final double kTurningEncoderVelocityFactor = 360 / 60.0;
-
     // TODO these are SDS mk4i ratios
     private static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
     private static final double TURNING_GEAR_RATIO = (50.0 / 14.0) * (60.0 / 10.0);

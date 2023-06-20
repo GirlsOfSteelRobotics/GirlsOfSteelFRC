@@ -94,6 +94,4 @@ public final class Constants {
     static {
         SmartDashboard.putBoolean("Is Blossom", IS_ROBOT_BLOSSOM);
     }
-
-
 }
