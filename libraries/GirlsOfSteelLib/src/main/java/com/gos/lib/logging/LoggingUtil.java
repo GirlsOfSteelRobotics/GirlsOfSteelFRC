@@ -1,4 +1,4 @@
-package com.gos.lib;
+package com.gos.lib.logging;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -11,9 +11,14 @@ import java.util.function.DoubleSupplier;
 
 public class LoggingUtil {
 
-    private class DoubleLogger {
-        NetworkTableEntry m_networkTableEntry;
-        DoubleSupplier m_doubleSupplier;
+    private final NetworkTable m_loggingTable;
+
+    private final List<DoubleLogger> m_doubleLogs = new ArrayList<>();
+    private final List<BooleanLogger> m_booleanLogs = new ArrayList<>();
+
+    private static class DoubleLogger {
+        private final NetworkTableEntry m_networkTableEntry;
+        private final DoubleSupplier m_doubleSupplier;
 
         public DoubleLogger(NetworkTableEntry networkTableEntry, DoubleSupplier doubleSupplier) {
             m_networkTableEntry = networkTableEntry;
@@ -25,9 +30,9 @@ public class LoggingUtil {
         }
     }
 
-    private class BooleanLogger {
-        NetworkTableEntry m_networkTableEntry;
-        BooleanSupplier m_booleanSupplier;
+    private static class BooleanLogger {
+        private final NetworkTableEntry m_networkTableEntry;
+        private final BooleanSupplier m_booleanSupplier;
 
         public BooleanLogger(NetworkTableEntry networkTableEntry, BooleanSupplier doubleSupplier) {
             m_networkTableEntry = networkTableEntry;
@@ -39,21 +44,20 @@ public class LoggingUtil {
         }
     }
 
-    NetworkTable loggingTable;
-
-    List<DoubleLogger> m_doubleLogs = new ArrayList<>();
-    List<BooleanLogger> m_booleanLogs = new ArrayList<>();
-
     public LoggingUtil(String loggingTableName) {
-        loggingTable = NetworkTableInstance.getDefault().getTable(loggingTableName);
+        this(NetworkTableInstance.getDefault().getTable(loggingTableName));
+    }
+
+    public LoggingUtil(NetworkTable loggingTable) {
+        m_loggingTable = loggingTable;
     }
 
     public void addDouble(String logName, DoubleSupplier updateChecker) {
-        m_doubleLogs.add(new DoubleLogger(loggingTable.getEntry(logName), updateChecker));
+        m_doubleLogs.add(new DoubleLogger(m_loggingTable.getEntry(logName), updateChecker));
     }
 
     public void addBoolean(String logName, BooleanSupplier updateChecker) {
-        m_booleanLogs.add(new BooleanLogger(loggingTable.getEntry(logName), updateChecker));
+        m_booleanLogs.add(new BooleanLogger(m_loggingTable.getEntry(logName), updateChecker));
     }
 
     public void updateLogs() {

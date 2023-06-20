@@ -3,7 +3,7 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.CheckRumbleCommand;
-import com.gos.lib.LoggingUtil;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
