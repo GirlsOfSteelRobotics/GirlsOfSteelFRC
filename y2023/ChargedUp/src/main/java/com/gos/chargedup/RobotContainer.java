@@ -10,6 +10,7 @@ import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.commands.SwerveChassisJoystickCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
@@ -19,11 +20,13 @@ import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
+import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -78,6 +81,9 @@ public class RobotContainer {
     private final PowerDistribution m_powerDistribution;
     private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
+    //swerve stuff
+    private final SwerveDriveChassisSubsystem m_swerveDrive;
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -91,6 +97,7 @@ public class RobotContainer {
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
         // m_intake = new IntakeSubsystem();
+        m_swerveDrive = new SwerveDriveChassisSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_armPivot, m_armExtend, m_claw);
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_claw, m_autonomousFactory); //NOPMD
@@ -115,19 +122,13 @@ public class RobotContainer {
         SmartDashboard.putData("Select Auto Scoring Position", new ChooseAimTurretCommandSendable());
 
         createPitCommands(pneumaticHub);
-        // createTestCommands();
+        createTestCommands();
         //automatedTurretCommands();
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-        // PropertyManager.purgeExtraKeys();
-
-        //        if (RobotBase.isSimulation()) {
-        //            DataLogManager.start("datalogs");
-        //        } else {
-        //            DataLogManager.start();
-        //        }
+        PropertyManager.purgeExtraKeys();
     }
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.UnusedPrivateMethod"})
@@ -137,6 +138,36 @@ public class RobotContainer {
         createClawTestCommands();
         createArmTestCommands();
         createPivotTestCommands();
+        createSwerveTestCommands();
+    }
+
+    private void createSwerveTestCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("SwerveDriveTestCommands");
+
+        tab.add("Swerve reset position: (0, 0, 0)", m_swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+
+        for (int i = 0; i < 4; ++i) {
+            tab.add("45deg Swerve Module " + i, m_swerveDrive.commandSetModuleState(i, 45, 3));
+        }
+
+        for (int i = 0; i < 4; ++i) {
+            tab.add("180deg Swerve Module " + i, m_swerveDrive.commandSetModuleState(i, 180, 3));
+        }
+
+        for (int i = 0; i < 4; ++i) {
+            tab.add("1m/s Swerve Module" + i, m_swerveDrive.commandSetModuleState(i, 180, 1));
+        }
+
+        for (int i = 0; i < 4; ++i) {
+            tab.add("3ms Swerve Module" + i, m_swerveDrive.commandSetModuleState(i, 180, 3));
+        }
+
+        tab.add("1vx Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
+        tab.add("1vy Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
+        tab.add("1theta Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+
+
+
     }
 
     private void createPitCommands(PneumaticHub pneumaticHub) {
@@ -228,7 +259,8 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
-        // m_claw.setDefaultCommand(m_claw.createHoldPiece());
+        //m_claw.setDefaultCommand(m_claw.createHoldPiece());
+        m_swerveDrive.setDefaultCommand(new SwerveChassisJoystickCommand(m_swerveDrive, m_driverController));
 
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));

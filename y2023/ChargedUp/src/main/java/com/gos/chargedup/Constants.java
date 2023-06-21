@@ -22,6 +22,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public final class Constants {
 
+    //Swerve modules
+
+    public static final int FRONT_LEFT_WHEEL = 21;
+    public static final int FRONT_RIGHT_WHEEL = 22;
+    public static final int BACK_LEFT_WHEEL = 23;
+    public static final int BACK_RIGHT_WHEEL = 24;
+
+    public static final int FRONT_LEFT_AZIMUTH = 25;
+    public static final int FRONT_RIGHT_AZIMUTH = 26;
+    public static final int BACK_LEFT_AZIMUTH = 27;
+    public static final int BACK_RIGHT_AZIMUTH = 28;
+
     // CAN
     public static final int DRIVE_LEFT_LEADER_SPARK = 1;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
