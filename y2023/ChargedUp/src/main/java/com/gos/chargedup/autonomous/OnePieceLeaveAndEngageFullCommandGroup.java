@@ -7,7 +7,7 @@ import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
 
-    public OnePieceLeaveAndEngageFullCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String path) {
+    public OnePieceLeaveAndEngageFullCommandGroup(TankDriveChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String path) {
 
         List<PathPlannerTrajectory> driveOverStation = PathPlanner.loadPathGroup(path, true,
             Constants.DEFAULT_PATH_CONSTRAINTS,

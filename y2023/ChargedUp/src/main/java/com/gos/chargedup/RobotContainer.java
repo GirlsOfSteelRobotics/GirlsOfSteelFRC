@@ -17,7 +17,7 @@ import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
@@ -58,7 +58,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // private final IntakeSubsystem m_intake;
-    private final ChassisSubsystem m_chassisSubsystem;
+    private final TankDriveChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armPivot;
 
     private final ArmExtensionSubsystem m_armExtend;
@@ -92,7 +92,7 @@ public class RobotContainer {
 
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
-        m_chassisSubsystem = new ChassisSubsystem();
+        m_chassisSubsystem = new TankDriveChassisSubsystem();
         m_claw = new ClawSubsystem();
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();

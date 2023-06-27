@@ -52,7 +52,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     // subsystems
     //private final CommandXboxController m_joystick;
-    private final ChassisSubsystem m_chassisSubsystem;
+    private final TankDriveChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armSubsystem;
 
     private final ClawSubsystem m_claw;
@@ -103,7 +103,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private boolean m_clawWasTripped;
 
 
-    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
+    public LEDManagerSubsystem(TankDriveChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
         m_chassisSubsystem = chassisSubsystem;

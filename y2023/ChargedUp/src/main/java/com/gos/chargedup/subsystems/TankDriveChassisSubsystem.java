@@ -66,11 +66,8 @@ import java.util.function.Consumer;
 
 
 @SuppressWarnings("PMD.GodClass")
-public class ChassisSubsystem extends SubsystemBase {
+public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSubsystemInterface {
     private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .025);
-
-    private static final double PITCH_LOWER_LIMIT = -3.0;
-    private static final double PITCH_UPPER_LIMIT = 3.0;
 
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
     private static final double GEAR_RATIO;
@@ -90,7 +87,6 @@ public class ChassisSubsystem extends SubsystemBase {
         new DifferentialDriveKinematics(TRACK_WIDTH);
     public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0;
 
-    private final HeavyDoubleProperty m_turnPidAllowableError;
 
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
@@ -102,30 +98,19 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //Odometry
     private final DifferentialDriveOdometry m_odometry;
-    private final WPI_Pigeon2 m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
-
-    //Field
-    private final GosField m_field;
 
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
-    private final List<Vision> m_cameras;
-
     private final DifferentialDrivePoseEstimator m_poseEstimator;
-
 
     private final SparkMaxPIDController m_leftPIDcontroller;
     private final SparkMaxPIDController m_rightPIDcontroller;
 
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
-
-    private final ProfiledPIDController m_turnAnglePID;
-    private final PidProperty m_turnAnglePIDProperties;
-    private final SimpleMotorFeedForwardProperty m_turnAnglePIDFFProperty;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
     private final NetworkTableEntry m_gyroAngleRateEntry;
@@ -167,7 +152,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_onTheFlyMaxAcceleration = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
-    public ChassisSubsystem() {
+    public TankDriveChassisSubsystem() {
         m_field = new GosField();
         SmartDashboard.putData(m_field.getSendable());
 
@@ -326,6 +311,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_trajectoryRightWheelSpeedGoal.setNumber(Units.metersToInches(wheelSpeeds.rightMetersPerSecond));
     }
 
+    @Override
     public double findingClosestNodeY(double yPositionButton) {
         double distanceBetweenArrays = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
         double array1 = yPositionButton + 0 * distanceBetweenArrays;
@@ -418,6 +404,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_simulator.update();
     }
 
+    @Override
     public Pose2d getPose() {
         return m_poseEstimator.getEstimatedPosition();
     }
@@ -427,6 +414,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
 
+    @Override
     public void stop() {
         setArcadeDrive(0, 0);
     }
@@ -440,14 +428,17 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
+    @Override
     public double getPitch() {
         return m_gyro.getRoll();
     }
 
+    @Override
     public double getYaw() {
         return m_gyro.getYaw();
     }
 
+    @Override
     public void turnPID(double angleGoal) {
         SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
@@ -465,10 +456,12 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.feed();
     }
 
+    @Override
     public boolean turnPIDIsAtAngle() {
         return m_turnAnglePID.atGoal();
     }
 
+    @Override
     public void autoEngage() {
         double speed;
         if (Constants.IS_ROBOT_BLOSSOM) {
@@ -496,6 +489,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_tryingToEngage = true;
     }
 
+    @Override
     public boolean tryingToEngage() {
         return m_tryingToEngage;
     }
@@ -522,27 +516,32 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    @Override
     public void resetOdometry(Pose2d pose2d) {
         m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
         m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
         //System.out.println("Reset Odometry was called");
     }
 
+    @Override
     public boolean isInCommunityZone() {
         return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
             || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
     }
 
+    @Override
     public boolean isInLoadingZone() {
         return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition())
             || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition());
     }
 
+    @Override
     public boolean canExtendArm() {
         return (this.isInCommunityZone() || this.isInLoadingZone());
     }
 
 
+    @Override
     @SuppressWarnings("PMD.AvoidReassigningParameters")
     public CommandBase driveToPoint(Pose2d point, boolean reverse) {
         point = AllianceFlipper.maybeFlip(point);
@@ -550,6 +549,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return driveToPointNoFlip(getPose(), point, reverse);
     }
 
+    @Override
     public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
             new PathConstraints(Units.inchesToMeters(m_onTheFlyMaxVelocity.getValue()), Units.inchesToMeters(m_onTheFlyMaxAcceleration.getValue())),
@@ -572,6 +572,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    @Override
     public void resetStickyFaultsChassis() {
         m_leaderLeft.clearFaults();
         m_leaderRight.clearFaults();
@@ -583,6 +584,7 @@ public class ChassisSubsystem extends SubsystemBase {
     // Command Factories
     ////////////////////
 
+    @Override
     public CommandBase createAutoEngageCommand() {
         return this.runOnce(this::drivetrainToBrakeMode)
             .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
@@ -612,12 +614,14 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
 
+    @Override
     public CommandBase createResetOdometry(Pose2d pose2d) {
         return this.run(() -> resetOdometry(pose2d))
             .ignoringDisable(true)
             .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
+    @Override
     public CommandBase syncOdometryWithPoseEstimator() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()))
             .withName("Sync Odometry /w Pose");
@@ -635,22 +639,27 @@ public class ChassisSubsystem extends SubsystemBase {
             this);
     }
 
+    @Override
     public CommandBase createPathPlannerBuilder(PathPlannerTrajectory trajectory) {
         return ramseteAutoBuilder(new HashMap<>()).fullAuto(trajectory);
     }
 
+    @Override
     public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory) {
         return ramseteAutoBuilder(new HashMap<>()).fullAuto(trajectory);
     }
 
+    @Override
     public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
         return ramseteAutoBuilder(events).fullAuto(trajectory);
     }
 
+    @Override
     public CommandBase createPathPlannerBuilderNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
         return ramseteAutoBuilderNoPoseReset(events).fullAuto(trajectory);
     }
 
+    @Override
     public CommandBase createPathPlannerBuilderNoPoseReset(PathPlannerTrajectory trajectory) {
         return ramseteAutoBuilderNoPoseReset(new HashMap<>()).fullAuto(trajectory);
     }
@@ -675,10 +684,12 @@ public class ChassisSubsystem extends SubsystemBase {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
+    @Override
     public CommandBase createDriveToPoint(Pose2d point, boolean reverse) {
         return new ProxyCommand(() -> driveToPoint(point, reverse));
     }
 
+    @Override
     public CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle) {
         return Commands.runOnce(
             () -> {
@@ -692,6 +703,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    @Override
     public CommandBase createTurnPID(double angleGoal) {
         return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
             .andThen(this.run(() -> turnPID(angleGoal))
