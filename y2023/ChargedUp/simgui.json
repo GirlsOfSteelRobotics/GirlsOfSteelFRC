@@ -300,9 +300,6 @@
           ],
           "length": 0.8199999928474426,
           "width": 0.6859999895095825
-        },
-        "window": {
-          "visible": true
         }
       },
       "/Shuffleboard/SwerveDriveTestCommands/1vx Set all Speeds": {
@@ -311,6 +308,11 @@
         }
       },
       "/Shuffleboard/SwerveDriveTestCommands/Swerve reset position: (0, 0, 0)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true
         }
@@ -461,9 +463,6 @@
           ],
           "length": 1.0,
           "width": 1.0
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/SwerveField": {

@@ -58,6 +58,7 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -426,14 +427,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
 
-    private void stop() {
+    public void stop() {
         setArcadeDrive(0, 0);
-    }
-
-    public void trapezoidMotionControl(double leftDistance, double rightDistance) {
-        m_leftPIDcontroller.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0);
-        m_rightPIDcontroller.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0);
-
     }
 
     public void setArcadeDrive(double speed, double steer) {
@@ -444,7 +439,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.curvatureDrive(speed, steer, allowTurnInPlace);
     }
 
-    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCOPATHS I PROMISE
+    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
     public double getPitch() {
         return m_gyro.getRoll();
     }
@@ -505,14 +500,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_tryingToEngage;
     }
 
-    public CommandBase createAutoEngageCommand() {
-        return this.runOnce(this::drivetrainToBrakeMode)
-            .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
-            .finallyDo((interrupted) -> drivetrainToCoastMode()).withName("Auto Engage");
-    }
-
-
-    public void updateOdometry() {
+    private void updateOdometry() {
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
@@ -594,6 +582,13 @@ public class ChassisSubsystem extends SubsystemBase {
     ////////////////////
     // Command Factories
     ////////////////////
+
+    public CommandBase createAutoEngageCommand() {
+        return this.runOnce(this::drivetrainToBrakeMode)
+            .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
+            .finallyDo((interrupted) -> drivetrainToCoastMode()).withName("Auto Engage");
+    }
+
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
             () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
@@ -640,11 +635,31 @@ public class ChassisSubsystem extends SubsystemBase {
             this);
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+    public CommandBase createPathPlannerBuilder(PathPlannerTrajectory trajectory) {
+        return ramseteAutoBuilder(new HashMap<>()).fullAuto(trajectory);
+    }
+
+    public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory) {
+        return ramseteAutoBuilder(new HashMap<>()).fullAuto(trajectory);
+    }
+
+    public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
+        return ramseteAutoBuilder(events).fullAuto(trajectory);
+    }
+
+    public CommandBase createPathPlannerBuilderNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
+        return ramseteAutoBuilderNoPoseReset(events).fullAuto(trajectory);
+    }
+
+    public CommandBase createPathPlannerBuilderNoPoseReset(PathPlannerTrajectory trajectory) {
+        return ramseteAutoBuilderNoPoseReset(new HashMap<>()).fullAuto(trajectory);
+    }
+
+    private RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
         return createRamseteAutoBuilder(eventMap, this::resetOdometry);
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
+    private RamseteAutoBuilder ramseteAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
         return createRamseteAutoBuilder(eventMap, (Pose2d pose) -> {});
     }
 

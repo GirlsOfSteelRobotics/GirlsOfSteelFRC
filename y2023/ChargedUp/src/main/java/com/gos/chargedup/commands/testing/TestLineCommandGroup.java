@@ -7,7 +7,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class TestLineCommandGroup extends SequentialCommandGroup {
@@ -17,7 +16,7 @@ public class TestLineCommandGroup extends SequentialCommandGroup {
     public TestLineCommandGroup(ChassisSubsystem chassis) {
 
         List<PathPlannerTrajectory> testLine = PathPlanner.loadPathGroup("TestLine", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testLineCommand = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(testLine);
+        Command testLineCommand = chassis.createPathPlannerBuilder(testLine);
         addCommands(testLineCommand);
 
         setName("TestTrajectoryStraightLine");

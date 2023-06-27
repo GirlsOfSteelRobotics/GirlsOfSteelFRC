@@ -15,14 +15,13 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import java.util.HashMap;
 
 public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGroup {
     public OnePieceAndLeaveCommunityCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot,
                                                  ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                  AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
-        Command driveAutoOnePieceAndLeave = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(onePieceAndLeave);
+        Command driveAutoOnePieceAndLeave = chassis.createPathPlannerBuilder(onePieceAndLeave);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)

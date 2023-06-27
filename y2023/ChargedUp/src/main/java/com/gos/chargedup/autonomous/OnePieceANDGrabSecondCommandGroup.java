@@ -28,12 +28,12 @@ public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
 
     public OnePieceANDGrabSecondCommandGroup(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String pathStart, String pathEnd) {
         PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, NOT_AS_FAST_PATH_CONSTRAINTS, true);
-        Command driveToPiece = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(firstPiece);
+        Command driveToPiece = chassis.createPathPlannerBuilder(firstPiece);
 
         List<PathPlannerTrajectory> getSecondPiece = PathPlanner.loadPathGroup(pathEnd, false, NOT_AS_FAST_PATH_CONSTRAINTS);
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
-        Command driveToGetSecondPiece = chassis.ramseteAutoBuilder(eventMap).fullAuto(getSecondPiece);
+        Command driveToGetSecondPiece = chassis.createPathPlannerBuilder(getSecondPiece, eventMap);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

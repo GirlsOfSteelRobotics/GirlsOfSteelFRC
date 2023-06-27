@@ -7,7 +7,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class TestMildCurveCommandGroup extends SequentialCommandGroup {
@@ -17,7 +16,7 @@ public class TestMildCurveCommandGroup extends SequentialCommandGroup {
     public TestMildCurveCommandGroup(ChassisSubsystem chassis) {
 
         List<PathPlannerTrajectory> testMildCurve = PathPlanner.loadPathGroup("TestMildCurve", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testMildCurveCommand = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(testMildCurve);
+        Command testMildCurveCommand = chassis.createPathPlannerBuilder(testMildCurve);
         addCommands(testMildCurveCommand);
 
         setName("TestTrajectoryMildCurve");

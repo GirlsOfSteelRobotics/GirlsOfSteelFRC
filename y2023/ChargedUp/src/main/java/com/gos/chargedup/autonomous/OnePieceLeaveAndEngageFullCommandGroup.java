@@ -14,7 +14,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
@@ -24,7 +23,7 @@ public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGro
         List<PathPlannerTrajectory> driveOverStation = PathPlanner.loadPathGroup(path, true,
             Constants.DEFAULT_PATH_CONSTRAINTS,
             Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command driveForwardOverChargingStation1 = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(driveOverStation);
+        Command driveForwardOverChargingStation1 = chassis.createPathPlannerBuilder(driveOverStation);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
