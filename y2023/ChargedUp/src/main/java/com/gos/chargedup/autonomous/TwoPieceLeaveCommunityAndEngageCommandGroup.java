@@ -8,7 +8,7 @@ import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -16,10 +16,11 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 import java.util.List;
 
 public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialCommandGroup {
-    public TwoPieceLeaveCommunityAndEngageCommandGroup(TankDriveChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String firstPath, String secondPath) {
+    public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String firstPath, String secondPath) {
         // node 4
         PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath(firstPath, Constants.DEFAULT_PATH_CONSTRAINTS, true);
         Command driveAutoTwoPieceLeaveCommunityAndEngageBefore = chassis.createPathPlannerBuilder(twoPieceLeaveAndEngageBefore);

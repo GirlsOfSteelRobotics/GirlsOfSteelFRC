@@ -7,7 +7,7 @@ import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -26,7 +26,7 @@ public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
     public static final PathConstraints NOT_AS_FAST_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(70), Units.inchesToMeters(70));
 
 
-    public OnePieceANDGrabSecondCommandGroup(TankDriveChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String pathStart, String pathEnd) {
+    public OnePieceANDGrabSecondCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String pathStart, String pathEnd) {
         PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, NOT_AS_FAST_PATH_CONSTRAINTS, true);
         Command driveToPiece = chassis.createPathPlannerBuilder(firstPiece);
 

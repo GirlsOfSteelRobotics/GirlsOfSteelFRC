@@ -2,7 +2,7 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
-import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClawAlignedCheck {
 
-    private final TankDriveChassisSubsystem m_chassis;
+    private final ChassisSubsystemInterface m_chassis;
 
     private final ArmExtensionSubsystem m_armExtension;
     private double m_angle;
@@ -19,7 +19,7 @@ public class ClawAlignedCheck {
 
 
 
-    public ClawAlignedCheck(TankDriveChassisSubsystem chassis, ArmExtensionSubsystem armExtension) {
+    public ClawAlignedCheck(ChassisSubsystemInterface chassis, ArmExtensionSubsystem armExtension) {
         m_chassis = chassis;
         m_armExtension = armExtension;
         //DONT need a turret subsystem -- turret absolute angle is passed as a parameter

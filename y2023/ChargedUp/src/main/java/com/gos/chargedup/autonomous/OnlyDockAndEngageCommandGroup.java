@@ -1,7 +1,7 @@
 package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OnlyDockAndEngageCommandGroup extends SequentialCommandGroup {
 
-    public OnlyDockAndEngageCommandGroup(TankDriveChassisSubsystem chassis, String path) {
+    public OnlyDockAndEngageCommandGroup(ChassisSubsystemInterface chassis, String path) {
 
         List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup(path, Constants.DEFAULT_PATH_CONSTRAINTS);
         Command fullAutoDockAndEngage = chassis.createPathPlannerBuilder(trajectory);

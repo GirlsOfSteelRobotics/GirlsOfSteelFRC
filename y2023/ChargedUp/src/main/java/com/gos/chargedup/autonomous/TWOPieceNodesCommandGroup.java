@@ -6,7 +6,7 @@ import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -24,7 +24,7 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
     public static final PathConstraints FASTER_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(120), Units.inchesToMeters(120));
     public static final PathConstraints NOT_AS_FAST_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(70), Units.inchesToMeters(70));
 
-    public TWOPieceNodesCommandGroup(TankDriveChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, String pathStart, String pathMiddle, String pathEnd) {
+    public TWOPieceNodesCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, String pathStart, String pathMiddle, String pathEnd) {
         PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, FASTER_PATH_CONSTRAINTS, true);
         Command driveToFirstPiece = chassis.createPathPlannerBuilder(firstPiece);
 

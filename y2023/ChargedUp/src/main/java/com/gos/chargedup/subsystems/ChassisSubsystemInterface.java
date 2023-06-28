@@ -66,4 +66,6 @@ public interface ChassisSubsystemInterface extends Subsystem {
     CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle);
 
     CommandBase createTurnPID(double angleGoal);
+
+    CommandBase selfTestMotors();
 }
