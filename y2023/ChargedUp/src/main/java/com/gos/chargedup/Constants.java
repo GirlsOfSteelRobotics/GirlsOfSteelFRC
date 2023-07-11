@@ -90,7 +90,8 @@ public final class Constants {
     public static final double MAX_COMPRESSOR_PSI = 120;
 
     public static final DigitalInput ROBOT_NAME = new DigitalInput(IS_BLOSSOM_DIO);
-    public static final boolean IS_ROBOT_BLOSSOM = RobotBase.isReal(); //TODO fix  || ROBOT_NAME.get(); // false is bubbles, true is blossom
+    public static final boolean IS_ROBOT_BLOSSOM = RobotBase.isReal();
+    public static final boolean IS_SWERVE = RobotBase.isReal() ? IS_ROBOT_BLOSSOM : false; // NOPMD(SimplifiedTernary)
 
     static {
         SmartDashboard.putBoolean("Is Blossom", IS_ROBOT_BLOSSOM);

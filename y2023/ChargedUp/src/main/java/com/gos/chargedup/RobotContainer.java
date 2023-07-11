@@ -90,10 +90,10 @@ public class RobotContainer {
 
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
-        if (Constants.IS_ROBOT_BLOSSOM) {
-            m_chassisSubsystem = new TankDriveChassisSubsystem();
-        } else {
+        if (Constants.IS_SWERVE) {
             m_chassisSubsystem = new SwerveDriveChassisSubsystem();
+        } else {
+            m_chassisSubsystem = new TankDriveChassisSubsystem();
         }
         m_claw = new ClawSubsystem();
         m_armPivot = new ArmPivotSubsystem();
@@ -129,7 +129,7 @@ public class RobotContainer {
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-        PropertyManager.purgeExtraKeys();
+        // PropertyManager.purgeExtraKeys();
     }
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.UnusedPrivateMethod"})
@@ -139,37 +139,6 @@ public class RobotContainer {
         createClawTestCommands();
         createArmTestCommands();
         createPivotTestCommands();
-        createSwerveTestCommands();
-    }
-
-    private void createSwerveTestCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("SwerveDriveTestCommands");
-        SwerveDriveChassisSubsystem swerveDrive = (SwerveDriveChassisSubsystem) m_chassisSubsystem;
-
-        tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("45deg Swerve Module " + i, swerveDrive.commandSetModuleState(i, 45, 3));
-        }
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("180deg Swerve Module " + i, swerveDrive.commandSetModuleState(i, 180, 3));
-        }
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("1m/s Swerve Module" + i, swerveDrive.commandSetModuleState(i, 180, 1));
-        }
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("3ms Swerve Module" + i, swerveDrive.commandSetModuleState(i, 180, 3));
-        }
-
-        tab.add("1vx Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
-        tab.add("1vy Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
-        tab.add("1theta Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
-
-
-
     }
 
     private void createPitCommands(PneumaticHub pneumaticHub) {
@@ -216,6 +185,31 @@ public class RobotContainer {
             TankDriveChassisSubsystem tankDrive = (TankDriveChassisSubsystem) m_chassisSubsystem;
             tab.add("Chassis: Tune Velocity", tankDrive.commandChassisVelocity());
             tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(tankDrive, m_driverController, m_ledManagerSubsystem));
+        } else {
+            SwerveDriveChassisSubsystem swerveDrive = (SwerveDriveChassisSubsystem) m_chassisSubsystem;
+
+            tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+
+            for (int i = 0; i < 4; ++i) {
+                tab.add("45deg Swerve Module " + i, swerveDrive.commandSetModuleState(i, 45, 3));
+            }
+
+            for (int i = 0; i < 4; ++i) {
+                tab.add("180deg Swerve Module " + i, swerveDrive.commandSetModuleState(i, 180, 3));
+            }
+
+            for (int i = 0; i < 4; ++i) {
+                tab.add("1m/s Swerve Module" + i, swerveDrive.commandSetModuleState(i, 180, 1));
+            }
+
+            for (int i = 0; i < 4; ++i) {
+                tab.add("3ms Swerve Module" + i, swerveDrive.commandSetModuleState(i, 180, 3));
+            }
+
+            tab.add("1vx Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
+            tab.add("1vy Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
+            tab.add("1theta Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+
         }
     }
 

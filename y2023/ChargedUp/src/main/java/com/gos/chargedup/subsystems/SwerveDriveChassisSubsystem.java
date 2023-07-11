@@ -3,6 +3,9 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
 import com.pathplanner.lib.auto.BaseAutoBuilder;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -15,6 +18,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveSimWrapper;
@@ -51,7 +56,8 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     private final SwerveDriveModules[] m_modules;
 
-    private final SwerveDriveOdometry m_swerveDriveOdom;
+    private final SwerveDriveOdometry m_odometry;
+    private final SwerveDrivePoseEstimator m_poseEstimator;
 
 
     private SwerveSimWrapper m_simulator;
@@ -64,14 +70,11 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         m_backRight = new SwerveDriveModules(Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH, "BR");
         m_modules = new SwerveDriveModules[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
 
-        m_swerveDriveOdom = new SwerveDriveOdometry(
+        m_odometry = new SwerveDriveOdometry(
             SWERVE_KINEMATICS, m_gyro.getRotation2d(),
-            new SwerveModulePosition[] {
-                m_frontLeft.getModulePosition(),
-                m_frontRight.getModulePosition(),
-                m_backLeft.getModulePosition(),
-                m_backRight.getModulePosition()
-            }, new Pose2d(0, 0, new Rotation2d()));
+            getModulePositions(), new Pose2d());
+
+        m_poseEstimator = new SwerveDrivePoseEstimator(SWERVE_KINEMATICS, m_gyro.getRotation2d(), getModulePositions(), new Pose2d());
 
         if (RobotBase.isSimulation()) {
             List<SwerveModuleSimWrapper> moduleSims = List.of(
@@ -85,15 +88,15 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     protected void lockDriveTrain() {
-
+        // TODO implement
     }
 
     @Override
     protected void unlockDriveTrain() {
-
+        // TODO implement
     }
 
-    public SwerveModulePosition[] getModulePositions() {
+    public final SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] modulePositions = new SwerveModulePosition[4];
         for (int i = 0; i < 4; i += 1) {
             modulePositions[i] = m_modules[i].getModulePosition();
@@ -111,8 +114,8 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     public void periodic() {
-        m_swerveDriveOdom.update(m_gyro.getRotation2d(), getModulePositions());
-        m_field.setOdometry(m_swerveDriveOdom.getPoseMeters());
+        m_odometry.update(m_gyro.getRotation2d(), getModulePositions());
+        m_field.setOdometry(m_odometry.getPoseMeters());
     }
 
     @Override
@@ -122,6 +125,10 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     public void setSpeeds(ChassisSpeeds speedsInp) {
         SwerveModuleState[] moduleStates = SWERVE_KINEMATICS.toSwerveModuleStates(speedsInp);
+        setModuleStates(moduleStates);
+    }
+
+    public void setModuleStates(SwerveModuleState... moduleStates) {
         for (int i = 0; i < 4; i++) {
             m_modules[i].setState(moduleStates[i]);
         }
@@ -133,53 +140,65 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     public Pose2d getPose() {
-        return null;
+        // TODO should be pose estimator
+        return m_odometry.getPoseMeters();
     }
 
     @Override
     public void stop() {
-
+        // TODO implement
     }
 
     @Override
     public void turnPID(double angleGoal) {
-
+        // TODO implement
     }
 
     @Override
     public void autoEngage() {
-
+        // TODO implement
     }
 
     @Override
     public void resetOdometry(Pose2d pose2d) {
-        m_swerveDriveOdom.resetPosition(m_gyro.getRotation2d(), getModulePositions(), pose2d);
-        //System.out.println("Reset Odometry was called");
+        m_odometry.resetPosition(m_gyro.getRotation2d(), getModulePositions(), pose2d);
+        m_poseEstimator.resetPosition(m_gyro.getRotation2d(), getModulePositions(), pose2d);
     }
 
     @Override
     public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
-        return null;
+        // TODO implement
+        return new InstantCommand();
     }
 
     @Override
     public void resetStickyFaultsChassis() {
-
+        // TODO implement
     }
 
     @Override
     public CommandBase syncOdometryWithPoseEstimator() {
-        return null;
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), getModulePositions(), m_poseEstimator.getEstimatedPosition()))
+        .withName("Sync Odometry /w Pose");
     }
 
     @Override
     public CommandBase selfTestMotors() {
-        return null;
+        // TODO implement
+        return new SequentialCommandGroup();
     }
 
     @Override
     protected BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
-        return null;
+        return new SwerveAutoBuilder(
+            this::getPose,
+            poseSetter,
+            new PIDConstants(0, 0, 0),
+            new PIDConstants(0, 0, 0),
+            this::setSpeeds,
+            eventMap,
+            this
+        );
     }
 
     public CommandBase commandSetModuleState(int moduleId, double degrees, double velocity) {
