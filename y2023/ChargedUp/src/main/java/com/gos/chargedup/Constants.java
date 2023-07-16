@@ -91,7 +91,7 @@ public final class Constants {
 
     public static final DigitalInput ROBOT_NAME = new DigitalInput(IS_BLOSSOM_DIO);
     public static final boolean IS_ROBOT_BLOSSOM = RobotBase.isReal();
-    public static final boolean IS_SWERVE = RobotBase.isReal() ? true : false; // NOPMD(SimplifiedTernary)
+    public static final boolean IS_SWERVE = RobotBase.isReal() ? IS_ROBOT_BLOSSOM : true; // NOPMD(SimplifiedTernary)
 
     static {
         SmartDashboard.putBoolean("Is Blossom", IS_ROBOT_BLOSSOM);

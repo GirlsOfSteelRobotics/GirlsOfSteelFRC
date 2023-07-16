@@ -191,25 +191,18 @@ public class RobotContainer {
             tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
 
             for (int i = 0; i < 4; ++i) {
-                tab.add("45deg Swerve Module " + i, swerveDrive.commandSetModuleState(i, 45, 3));
+                tab.add("Swerve Module[" + i + "]   45deg 0mps", swerveDrive.commandSetModuleState(i, 45, 0));
+                tab.add("Swerve Module[" + i + "]  180deg 0mps", swerveDrive.commandSetModuleState(i, 180, 0));
+                tab.add("Swerve Module[" + i + "] -180deg 0mps", swerveDrive.commandSetModuleState(i, -180, 0));
+
+                tab.add("Swerve Module[" + i + "] 0deg -1mps", swerveDrive.commandSetModuleState(i, 0, -1));
+                tab.add("Swerve Module[" + i + "] 0deg  1mps", swerveDrive.commandSetModuleState(i, 0, 1));
+                tab.add("Swerve Module[" + i + "] 0deg  2mps", swerveDrive.commandSetModuleState(i, 0, 2));
             }
 
-            for (int i = 0; i < 4; ++i) {
-                tab.add("180deg Swerve Module " + i, swerveDrive.commandSetModuleState(i, 180, 3));
-            }
-
-            for (int i = 0; i < 4; ++i) {
-                tab.add("1m/s Swerve Module" + i, swerveDrive.commandSetModuleState(i, 180, 1));
-            }
-
-            for (int i = 0; i < 4; ++i) {
-                tab.add("3ms Swerve Module" + i, swerveDrive.commandSetModuleState(i, 180, 3));
-            }
-
-            tab.add("1vx Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
-            tab.add("1vy Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
-            tab.add("1theta Set all Speeds", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
-
+            tab.add("Chassis Speed (1,0,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
+            tab.add("Chassis Speed (0,1,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
+            tab.add("Chassis Speed (0,0,1)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
         }
     }
 

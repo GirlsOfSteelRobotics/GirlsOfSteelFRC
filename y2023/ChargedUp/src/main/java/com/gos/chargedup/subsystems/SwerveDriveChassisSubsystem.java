@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.SwerveDrivePublisher;
 import com.pathplanner.lib.auto.BaseAutoBuilder;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
@@ -59,14 +60,16 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     private final SwerveDriveOdometry m_odometry;
     private final SwerveDrivePoseEstimator m_poseEstimator;
 
+    private final SwerveDrivePublisher m_swervePublisher;
+
 
     private SwerveSimWrapper m_simulator;
 
     public SwerveDriveChassisSubsystem() {
-        m_frontLeft = new SwerveDriveModules(Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH, "FL", 0.1148682);
-        m_frontRight = new SwerveDriveModules(Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH, "FR", 0.0281372);
-        m_backLeft = new SwerveDriveModules(Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH, "BL", 0.9281006);
-        m_backRight = new SwerveDriveModules(Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH, "BR", 0.4526596);
+        m_frontLeft = new SwerveDriveModules("FL", Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH, 0.1148682);
+        m_frontRight = new SwerveDriveModules("FR", Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH, 0.0281372);
+        m_backLeft = new SwerveDriveModules("BL", Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH, 0.9281006);
+        m_backRight = new SwerveDriveModules("BR", Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH, 0.4526596);
         m_modules = new SwerveDriveModules[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
 
         m_odometry = new SwerveDriveOdometry(
@@ -74,6 +77,8 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
             getModulePositions(), new Pose2d());
 
         m_poseEstimator = new SwerveDrivePoseEstimator(SWERVE_KINEMATICS, m_gyro.getRotation2d(), getModulePositions(), new Pose2d());
+
+        m_swervePublisher = new SwerveDrivePublisher();
 
         if (RobotBase.isSimulation()) {
             List<SwerveModuleSimWrapper> moduleSims = List.of(
@@ -111,10 +116,32 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         return modulePositions;
     }
 
+    private SwerveModuleState[] getModuleDesiredStates() {
+        SwerveModuleState[] modulePositions = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i += 1) {
+            modulePositions[i] = m_modules[i].getDesiredState();
+        }
+        return modulePositions;
+    }
+
     @Override
     public void periodic() {
-        m_odometry.update(m_gyro.getRotation2d(), getModulePositions());
+        for (SwerveDriveModules module : m_modules) {
+            module.updateDashboard();
+        }
+
+        SwerveModulePosition[] modulePositions = getModulePositions();
+        m_odometry.update(m_gyro.getRotation2d(), modulePositions);
+        m_poseEstimator.update(m_gyro.getRotation2d(), modulePositions);
+
         m_field.setOdometry(m_odometry.getPoseMeters());
+        m_field.setPoseEstimate(m_poseEstimator.getEstimatedPosition());
+
+        SwerveModuleState[] moduleStates = getModuleStates();
+        SwerveModuleState[] desiredStates = getModuleDesiredStates();
+        m_swervePublisher.setMeasuredStates(moduleStates);
+        m_swervePublisher.setDesiredStates(desiredStates);
+        m_swervePublisher.setRobotRotation(getPose().getRotation());
     }
 
     @Override
@@ -139,8 +166,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     public Pose2d getPose() {
-        // TODO should be pose estimator
-        return m_odometry.getPoseMeters();
+        return m_poseEstimator.getEstimatedPosition();
     }
 
     @Override
@@ -201,7 +227,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     public CommandBase commandSetModuleState(int moduleId, double degrees, double velocity) {
-        return this.run(() -> setModuleState(moduleId, degrees, velocity)).withName("Set Module State" + moduleId);
+        return this.run(() -> setModuleState(moduleId, degrees, velocity)).withName("Module " + moduleId + "(" + degrees + ", " + velocity + ")");
     }
 
     public CommandBase commandSetChassisSpeed(ChassisSpeeds chassisSp) {
