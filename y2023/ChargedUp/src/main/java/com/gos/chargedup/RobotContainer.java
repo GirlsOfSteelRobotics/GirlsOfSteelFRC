@@ -162,6 +162,7 @@ public class RobotContainer {
         tab.add("Trajectory: Test S Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
     }
 
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     private void createChassisTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("ChassisTestCommands");
 

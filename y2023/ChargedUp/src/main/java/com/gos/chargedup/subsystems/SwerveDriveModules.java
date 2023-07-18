@@ -20,7 +20,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.swerve.SwerveModuleSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
@@ -30,11 +29,12 @@ public class SwerveDriveModules {
 
     // TODO these are SDS mk4i ratios
     private static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
-    private static final double TURNING_GEAR_RATIO = (50.0 / 14.0) * (60.0 / 10.0);
-    private static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (19.0 / 25.0) * (45.0 / 15.0);
-    private static final double DRIVE_ENCODER_CONSTANT = (1.0 / DRIVE_GEAR_RATIO) * WHEEL_DIAMETER_METERS * Math.PI;
 
-    private final String m_moduleName;
+    private static final int DRIVING_MOTOR_PINION_TEETH = 14;
+    private static final double DRIVING_MOTOR_REDUCTION = (45.0 * 22) / (DRIVING_MOTOR_PINION_TEETH * 15);
+    private static final double DRIVE_ENCODER_CONSTANT = (WHEEL_DIAMETER_METERS * Math.PI) / DRIVING_MOTOR_REDUCTION;
+
+    private static final double TURNING_GEAR_RATIO = 9424.0 / 203;
 
     private final SimableCANSparkMax m_wheel;
     private final RelativeEncoder m_wheelEncoder;
@@ -54,8 +54,6 @@ public class SwerveDriveModules {
     private final LoggingUtil m_logger;
 
     public SwerveDriveModules(String moduleName, int wheelId, int azimuthId, double zeroOffset) {
-        m_moduleName = moduleName;
-
         m_wheel = new SimableCANSparkMax(wheelId, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_wheel.restoreFactoryDefaults();
         m_wheel.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -104,7 +102,7 @@ public class SwerveDriveModules {
                 DCMotor.getNEO(1),
                 WHEEL_DIAMETER_METERS / 2,
                 TURNING_GEAR_RATIO,
-                DRIVE_GEAR_RATIO
+                DRIVING_MOTOR_REDUCTION
             );
             m_simWrapper = new SwerveModuleSimWrapper(
                 moduleSim,
