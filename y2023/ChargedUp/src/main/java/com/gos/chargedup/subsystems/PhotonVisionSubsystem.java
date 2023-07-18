@@ -1,9 +1,9 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.Robot;
-import com.gos.chargedup.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;

@@ -7,7 +7,7 @@
 
     <frc-camera
         source-provider="NetworkTables"
-        style="transform: translate(80px, 361px); --image-width:0px; --image-height:0px; --crosshair-width:2px; --crosshair-color:#ffffff; --image-display:block; width: 538px; height: 349px;"
+        style="transform: translate(80px, 361px); --image-width: 0px; --image-height: 0px; --crosshair-width: 2px; --crosshair-color: #ffffff; --image-display: block; width: 538px; height: 349px;"
         streams="[]"
     ></frc-camera>
     <frc-robot-command
@@ -130,7 +130,7 @@
         <frc-field-robot
             source-key="/SmartDashboard/Field/Robot"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(90.011deg);"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(77.5635deg);"
             pose="[0,0,0]"
             opacity="100"
         ></frc-field-robot>
@@ -166,7 +166,7 @@
         <frc-field-robot
             source-key="/SmartDashboard/Field/OldOdometry"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(184.194deg);"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(77.5635deg);"
             opacity="100"
             pose="[0,0,0]"
         ></frc-field-robot>
@@ -256,7 +256,6 @@
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 >
     <frc-robot-command
         source-provider="NetworkTables"
@@ -364,23 +363,23 @@
         source-provider="NetworkTables"
         style="transform: translate(56px, 533px);"
         source-key="/Arm Subsystem/Arm Encoder (deg)"
-        placeholder=""
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-25"
+            id="vaadin-number-field-2"
             aria-labelledby="label-vaadin-number-field-25"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-25"
-            for="vaadin-number-field-25"
+            for="vaadin-number-field-2"
         >Arm Encoder</label>
         <div
             slot="error-message"
@@ -431,7 +430,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-4"
+            id="vaadin-number-field-3"
             aria-labelledby="label-vaadin-number-field-111"
             aria-describedby=""
             min="NaN"
@@ -440,7 +439,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-111"
-            for="vaadin-number-field-4"
+            for="vaadin-number-field-3"
         >Absolute Encoder</label>
         <div
             slot="error-message"
@@ -463,7 +462,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-5"
+            id="vaadin-number-field-4"
             aria-labelledby="label-vaadin-number-field-135"
             aria-describedby=""
             min="NaN"
@@ -472,7 +471,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-135"
-            for="vaadin-number-field-5"
+            for="vaadin-number-field-4"
         >Built In Encoder</label>
         <div
             slot="error-message"
@@ -564,7 +563,7 @@
         <frc-field-robot
             source-key="/SmartDashboard/Field/Robot"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(90.011deg);"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(77.5635deg);"
             opacity="100"
             pose="[0,0,0]"
         ></frc-field-robot>
@@ -606,12 +605,12 @@
 >
     <frc-camera
         source-provider="NetworkTables"
-        style="transform: translate(36px, 19px); --image-width:0px; --image-height:0px; --crosshair-width:2px; --crosshair-color:#ffffff; --image-display:block;"
+        style="transform: translate(36px, 19px); --image-width: 0px; --image-height: 0px; --crosshair-width: 2px; --crosshair-color: #ffffff; --image-display: block;"
         streams="[]"
     ></frc-camera>
     <frc-camera
         source-provider="NetworkTables"
-        style="transform: translate(416px, 20px); --image-width:0px; --image-height:0px; --crosshair-width:2px; --crosshair-color:#ffffff; --image-display:block;"
+        style="transform: translate(416px, 20px); --image-width: 0px; --image-height: 0px; --crosshair-width: 2px; --crosshair-color: #ffffff; --image-display: block;"
         streams="[]"
     ></frc-camera>
 
@@ -630,7 +629,7 @@
         <frc-field-robot
             source-key="/SmartDashboard/Field/Robot"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(90.011deg);"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(77.5635deg);"
             opacity="100"
             pose="[0,0,0]"
         ></frc-field-robot>
@@ -653,7 +652,7 @@
         <frc-field-robot
             source-key="/SmartDashboard/Field/OldOdometry"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(184.194deg);"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(77.5635deg);"
             opacity="100"
             pose="[0,0,0]"
         ></frc-field-robot>
@@ -830,4 +829,113 @@
             label="Angle"
         ></frc-chart-data>
     </frc-line-chart>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Swerve"
+    slot="tab"
+    source-provider="NetworkTables"
+    selected=""
+>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/ChassisTestCommands/Swerve Module[0]  180deg 0mps"
+        style="transform: translate(2.2px, 47.6px);"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/ChassisTestCommands/Swerve Module[0]   45deg 0mps"
+    ></frc-robot-command>
+    <frc-line-chart
+        title="Module 0"
+        source-provider="NetworkTables"
+        style="transform: translate(198.391px, 137px); width: 729px; height: 593px;"
+    >
+        <frc-chart-axis
+            source-provider="NetworkTables"
+            tick-values="[]"
+            min="-200"
+            max="200"
+            axis-id="AngleAxis"
+        ></frc-chart-axis>
+        <frc-chart-axis
+            source-provider="NetworkTables"
+            axis-id="VelocityAxis"
+            min="-3"
+            max="3"
+            tick-values="[]"
+            position="right"
+        ></frc-chart-axis>
+        <frc-chart-data
+            label="Angle"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/SwerveDrive/FL/Current Angle"
+            axis-id="AngleAxis"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            source-key="/SwerveDrive/FL/Goal Angle"
+            axis-id="AngleAxis"
+            label="Goal Angle"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            source-key="/SwerveDrive/FL/Current Velocity"
+            axis-id="VelocityAxis"
+            label="Velocity"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            source-key="/SwerveDrive/FL/Goal Velocity"
+            axis-id="VelocityAxis"
+            label="Goal Velocity"
+        ></frc-chart-data>
+    </frc-line-chart>
+
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(9px, 99px);"
+        source-key="/Shuffleboard/ChassisTestCommands/Swerve Module[0] -180deg 0mps"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/ChassisTestCommands/Swerve Module[0] 0deg -1mps"
+        style="transform: translate(11px, 154px);"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(18px, 198px);"
+        source-key="/Shuffleboard/ChassisTestCommands/Swerve Module[0] 0deg  1mps"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(16px, 244px);"
+        source-key="/Shuffleboard/ChassisTestCommands/Swerve Module[0] 0deg  2mps"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(222px, 6px);"
+        source-key="/Shuffleboard/ChassisTestCommands/Chassis Speed (1,0,0)"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(223px, 55px);"
+        source-key="/Shuffleboard/ChassisTestCommands/Chassis Speed (0,1,0)"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(225px, 93px);"
+        source-key="/Shuffleboard/ChassisTestCommands/Chassis Speed (0,0,1)"
+    ></frc-robot-command>
+    <frc-swerve-drivebase
+        source-provider="NetworkTables"
+        style="transform: translate(980px, 206px);"
+        source-key="/SwerveDrive"
+        wheellocations="[2.5,2,2.5,-2,-2.5,2,-2.5,-2]"
+        measuredstates="[0,0,0,0,0,0,0,0]"
+        desiredstates="[0,0,0,0,0,0,0,0]"
+        sizeleftright="4"
+        sizefrontback="5"
+    ></frc-swerve-drivebase>
 </dashboard-tab>

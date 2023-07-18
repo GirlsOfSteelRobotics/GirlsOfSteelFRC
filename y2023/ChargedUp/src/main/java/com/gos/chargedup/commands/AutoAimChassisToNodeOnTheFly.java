@@ -5,7 +5,7 @@ import com.gos.chargedup.AutoAimNodePositions;
 import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,13 +31,13 @@ public class AutoAimChassisToNodeOnTheFly extends CommandBase {
     // }
 
     protected final ArmPivotSubsystem m_armSubsystem;
-    protected final ChassisSubsystem m_chassisSubsystem;
+    protected final ChassisSubsystemInterface m_chassisSubsystem;
     protected final ClawAlignedCheck m_clawAlignedCheck;
     protected final LEDManagerSubsystem m_ledManagerSubsystem;
 
     private final Supplier<AutoAimNodePositions> m_positionSupplier;
 
-    public AutoAimChassisToNodeOnTheFly(Supplier<AutoAimNodePositions> positionSupplier, ArmPivotSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, LEDManagerSubsystem ledManagerSubsystem, ArmExtensionSubsystem armExtension) {
+    public AutoAimChassisToNodeOnTheFly(Supplier<AutoAimNodePositions> positionSupplier, ArmPivotSubsystem armSubsystem, ChassisSubsystemInterface chassisSubsystem, LEDManagerSubsystem ledManagerSubsystem, ArmExtensionSubsystem armExtension) {
         m_armSubsystem = armSubsystem;
         m_chassisSubsystem = chassisSubsystem;
         m_ledManagerSubsystem = ledManagerSubsystem;
@@ -96,6 +96,6 @@ public class AutoAimChassisToNodeOnTheFly extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_chassisSubsystem.setArcadeDrive(0, 0);
+        m_chassisSubsystem.stop();
     }
 }

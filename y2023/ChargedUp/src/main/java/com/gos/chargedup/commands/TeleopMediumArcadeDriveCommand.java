@@ -1,17 +1,17 @@
 package com.gos.chargedup.commands;
 
+import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class TeleopMediumArcadeDriveCommand extends CommandBase {
     private static final GosDoubleProperty ARCADE_DRIVE_MEDIUM_SPEED = new GosDoubleProperty(true, "Chassis speed medium", 0.5);
-    private final ChassisSubsystem m_chassisSubsystem;
+    private final TankDriveChassisSubsystem m_chassisSubsystem;
     private final CommandXboxController m_joystick;
 
-    public TeleopMediumArcadeDriveCommand(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
+    public TeleopMediumArcadeDriveCommand(TankDriveChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
         m_joystick = joystick;
         m_chassisSubsystem = chassisSubsystem;
         // each subsystem used by the command must be passed into the

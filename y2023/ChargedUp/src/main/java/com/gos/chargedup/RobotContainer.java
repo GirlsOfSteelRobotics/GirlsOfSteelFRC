@@ -17,10 +17,11 @@ import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
+import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
@@ -58,7 +59,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // private final IntakeSubsystem m_intake;
-    private final ChassisSubsystem m_chassisSubsystem;
+    private final ChassisSubsystemInterface m_chassisSubsystem;
     private final ArmPivotSubsystem m_armPivot;
 
     private final ArmExtensionSubsystem m_armExtend;
@@ -81,9 +82,6 @@ public class RobotContainer {
     private final PowerDistribution m_powerDistribution;
     private AutoAimNodePositions m_autoAimNodePosition = AutoAimNodePositions.NONE;
 
-    //swerve stuff
-    private final SwerveDriveChassisSubsystem m_swerveDrive;
-
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -92,12 +90,15 @@ public class RobotContainer {
 
         // Configure the trigger bindings
         //m_turret = new TurretSubsystem();
-        m_chassisSubsystem = new ChassisSubsystem();
+        if (Constants.IS_SWERVE) {
+            m_chassisSubsystem = new SwerveDriveChassisSubsystem();
+        } else {
+            m_chassisSubsystem = new TankDriveChassisSubsystem();
+        }
         m_claw = new ClawSubsystem();
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
         // m_intake = new IntakeSubsystem();
-        m_swerveDrive = new SwerveDriveChassisSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_armPivot, m_armExtend, m_claw);
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_claw, m_autonomousFactory); //NOPMD
@@ -128,7 +129,7 @@ public class RobotContainer {
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
         }
-        PropertyManager.purgeExtraKeys();
+        // PropertyManager.purgeExtraKeys();
     }
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.UnusedPrivateMethod"})
@@ -138,36 +139,6 @@ public class RobotContainer {
         createClawTestCommands();
         createArmTestCommands();
         createPivotTestCommands();
-        createSwerveTestCommands();
-    }
-
-    private void createSwerveTestCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("SwerveDriveTestCommands");
-
-        tab.add("Swerve reset position: (0, 0, 0)", m_swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("45deg Swerve Module " + i, m_swerveDrive.commandSetModuleState(i, 45, 3));
-        }
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("180deg Swerve Module " + i, m_swerveDrive.commandSetModuleState(i, 180, 3));
-        }
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("1m/s Swerve Module" + i, m_swerveDrive.commandSetModuleState(i, 180, 1));
-        }
-
-        for (int i = 0; i < 4; ++i) {
-            tab.add("3ms Swerve Module" + i, m_swerveDrive.commandSetModuleState(i, 180, 3));
-        }
-
-        tab.add("1vx Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
-        tab.add("1vy Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
-        tab.add("1theta Set all Speeds", m_swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
-
-
-
     }
 
     private void createPitCommands(PneumaticHub pneumaticHub) {
@@ -191,6 +162,7 @@ public class RobotContainer {
         tab.add("Trajectory: Test S Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
     }
 
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     private void createChassisTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("ChassisTestCommands");
 
@@ -207,10 +179,32 @@ public class RobotContainer {
         tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
         tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
 
-        tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
 
-        tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
+
+        if (m_chassisSubsystem instanceof TankDriveChassisSubsystem) {
+            TankDriveChassisSubsystem tankDrive = (TankDriveChassisSubsystem) m_chassisSubsystem;
+            tab.add("Chassis: Tune Velocity", tankDrive.commandChassisVelocity());
+            tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(tankDrive, m_driverController, m_ledManagerSubsystem));
+        } else {
+            SwerveDriveChassisSubsystem swerveDrive = (SwerveDriveChassisSubsystem) m_chassisSubsystem;
+
+            tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+
+            for (int i = 0; i < 4; ++i) {
+                tab.add("Swerve Module[" + i + "]   45deg 0mps", swerveDrive.commandSetModuleState(i, 45, 0));
+                tab.add("Swerve Module[" + i + "]  180deg 0mps", swerveDrive.commandSetModuleState(i, 180, 0));
+                tab.add("Swerve Module[" + i + "] -180deg 0mps", swerveDrive.commandSetModuleState(i, -180, 0));
+
+                tab.add("Swerve Module[" + i + "] 0deg -1mps", swerveDrive.commandSetModuleState(i, 0, -1));
+                tab.add("Swerve Module[" + i + "] 0deg  1mps", swerveDrive.commandSetModuleState(i, 0, 1));
+                tab.add("Swerve Module[" + i + "] 0deg  2mps", swerveDrive.commandSetModuleState(i, 0, 2));
+            }
+
+            tab.add("Chassis Speed (1,0,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
+            tab.add("Chassis Speed (0,1,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
+            tab.add("Chassis Speed (0,0,1)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+        }
     }
 
     private void createPivotTestCommands() {
@@ -258,17 +252,22 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+
+        if (m_chassisSubsystem instanceof TankDriveChassisSubsystem) {
+            TankDriveChassisSubsystem tankDrive = (TankDriveChassisSubsystem) m_chassisSubsystem;
+            m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(tankDrive, m_driverController));
+            m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(tankDrive, m_driverController, m_ledManagerSubsystem));
+            m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(tankDrive, m_driverController));
+        } else {
+            m_chassisSubsystem.setDefaultCommand(new SwerveChassisJoystickCommand((SwerveDriveChassisSubsystem) m_chassisSubsystem, m_driverController));
+        }
         //m_claw.setDefaultCommand(m_claw.createHoldPiece());
-        m_swerveDrive.setDefaultCommand(new SwerveChassisJoystickCommand(m_swerveDrive, m_driverController));
 
         // Driver
         m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
         m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_RIGHT_BLUE_PICK_UP_POINT, false));
         //m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         //m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
-        m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
         m_driverController.povUp().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
         SmartDashboard.putData("Auto Aim Chassis", new AutoAimChassisToNodeOnTheFly(() -> m_autoAimNodePosition, m_armPivot, m_chassisSubsystem, m_ledManagerSubsystem, m_armExtend));
 

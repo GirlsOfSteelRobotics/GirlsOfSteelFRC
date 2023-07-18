@@ -1,6 +1,6 @@
 package com.gos.chargedup.commands;
 
-import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -9,11 +9,11 @@ public class CurvatureDriveCommand extends CommandBase {
     private static final GosDoubleProperty TURN_DAMPING = new GosDoubleProperty(true, "JoystickTurnDamping", 0.5);
     private static final GosDoubleProperty TURN_IN_PLACE_THRESHOLD = new GosDoubleProperty(true, "JoysticTurnInPlaceThreshold", 0.05);
 
-    private final ChassisSubsystem m_chassis;
+    private final TankDriveChassisSubsystem m_chassis;
 
     private final CommandXboxController m_joystick;
 
-    public CurvatureDriveCommand(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
+    public CurvatureDriveCommand(TankDriveChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
         m_chassis = chassisSubsystem;
         m_joystick = joystick;
         addRequirements(this.m_chassis);

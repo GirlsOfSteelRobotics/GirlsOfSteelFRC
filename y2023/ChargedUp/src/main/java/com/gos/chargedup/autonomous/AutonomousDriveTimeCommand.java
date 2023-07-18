@@ -1,6 +1,6 @@
 package com.gos.chargedup.autonomous;
 
-import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -11,11 +11,11 @@ public class AutonomousDriveTimeCommand extends CommandBase {
 
     private static final double AUTONOMOUS_DRIVE_SPEED = 0.5;
 
-    private final ChassisSubsystem m_chassis;
+    private final TankDriveChassisSubsystem m_chassis;
 
     private final Timer m_timer;
 
-    public AutonomousDriveTimeCommand(ChassisSubsystem chassisSubsystem) {
+    public AutonomousDriveTimeCommand(TankDriveChassisSubsystem chassisSubsystem) {
         m_timer = new Timer();
         m_chassis = chassisSubsystem;
 

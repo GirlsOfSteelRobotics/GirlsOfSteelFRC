@@ -138,7 +138,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
     }
 
-    public CommandBase commandFullRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
+    public CommandBase commandFullRetractPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.run(this::fullRetract),
             this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
@@ -149,7 +149,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         return run(this::fullRetract).unless(this::isFullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
-    public CommandBase commandMiddleRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
+    public CommandBase commandMiddleRetractPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.run(this::middleRetract).withName("ArmPistonsMiddleRetract"),
             this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
@@ -160,7 +160,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         return run(this::middleRetract).unless(this::isMiddleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
-    public CommandBase commandFullExtendPrevention(ChassisSubsystem cs, CommandXboxController x) {
+    public CommandBase commandFullExtendPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.run(this::out).withName("Arm Pistons: FullExtend").withTimeout(PNEUMATICS_WAIT),
             this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
@@ -172,7 +172,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     // TODO Are these ones necessary
-    public CommandBase commandOutPrevention(ChassisSubsystem cs, CommandXboxController x) {
+    public CommandBase commandOutPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.run(this::out).withName("ArmPistonsOut"),
             this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
