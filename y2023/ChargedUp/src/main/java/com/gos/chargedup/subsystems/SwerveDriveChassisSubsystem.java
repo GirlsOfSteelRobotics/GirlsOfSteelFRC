@@ -33,7 +33,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     private static final double WHEEL_BASE = 0.381;
 
-    private static final double TRACK_WIDTH = 0.381;
+    private static final double TRACK_WIDTH = Units.inchesToMeters(.381);
 
     public static final double MAX_TRANSLATION_SPEED = 2.9;
 
@@ -62,14 +62,13 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     private final SwerveDrivePublisher m_swervePublisher;
 
-
     private SwerveSimWrapper m_simulator;
 
     public SwerveDriveChassisSubsystem() {
-        m_frontLeft = new SwerveDriveModules("FL", Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH, 0.1148682);
-        m_frontRight = new SwerveDriveModules("FR", Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH, 0.0281372);
-        m_backLeft = new SwerveDriveModules("BL", Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH, 0.9281006);
-        m_backRight = new SwerveDriveModules("BR", Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH, 0.4526596);
+        m_frontLeft = new SwerveDriveModules("FL", Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH, -90);
+        m_frontRight = new SwerveDriveModules("FR", Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH, 0);
+        m_backLeft = new SwerveDriveModules("BL", Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH, 180);
+        m_backRight = new SwerveDriveModules("BR", Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH, 90);
         m_modules = new SwerveDriveModules[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
 
         m_odometry = new SwerveDriveOdometry(
@@ -92,7 +91,10 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     protected void lockDriveTrain() {
-        // TODO implement
+        m_frontLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+        m_frontRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(135)));
+        m_backLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(135)));
+        m_backRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     }
 
     @Override
@@ -127,7 +129,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     @Override
     public void periodic() {
         for (SwerveDriveModules module : m_modules) {
-            module.updateDashboard();
+            module.update();
         }
 
         SwerveModulePosition[] modulePositions = getModulePositions();
@@ -232,6 +234,10 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     public CommandBase commandSetChassisSpeed(ChassisSpeeds chassisSp) {
         return this.run(() -> setSpeeds(chassisSp)).withName("Set Chassis Speeds" + chassisSp);
+    }
+
+    public CommandBase commandLockDrivetrain() {
+        return this.run(this::lockDriveTrain).withName("Lock Wheels Command");
     }
 
 }

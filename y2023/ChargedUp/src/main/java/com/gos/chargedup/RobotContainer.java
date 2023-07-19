@@ -155,7 +155,6 @@ public class RobotContainer {
 
     private void createTrajectoryTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TrajectoryTestCommands");
-
         // auto trajectories
         tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         tab.add("Trajectory: Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
@@ -189,6 +188,8 @@ public class RobotContainer {
         } else {
             SwerveDriveChassisSubsystem swerveDrive = (SwerveDriveChassisSubsystem) m_chassisSubsystem;
 
+            //lock wheels
+            tab.add("Lock wheels", swerveDrive.commandLockDrivetrain());
             tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
 
             for (int i = 0; i < 4; ++i) {

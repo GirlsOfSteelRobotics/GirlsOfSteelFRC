@@ -29,9 +29,11 @@ public class SwerveChassisJoystickCommand extends CommandBase {
         double yVelocity = -m_joystick.getLeftX() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
         double xVelocity = -m_joystick.getLeftY() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
         double omega = -m_joystick.getRightX() * SwerveDriveChassisSubsystem.MAX_ROTATION_SPEED;
-        m_swerveDriveChassisSubsystem.setSpeeds(new ChassisSpeeds(xVelocity, yVelocity, omega));
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            xVelocity, yVelocity, omega, m_swerveDriveChassisSubsystem.getPose().getRotation());
 
-
+        // Now use this in our kinematics
+        m_swerveDriveChassisSubsystem.setSpeeds(speeds);
     }
 
     @Override
