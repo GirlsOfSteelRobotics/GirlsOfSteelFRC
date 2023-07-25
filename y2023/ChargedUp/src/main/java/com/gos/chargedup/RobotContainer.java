@@ -6,6 +6,7 @@
 package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.autonomous.SwerveStraightLineCommandGroup;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
@@ -139,6 +140,7 @@ public class RobotContainer {
         createClawTestCommands();
         createArmTestCommands();
         createPivotTestCommands();
+        createSwerveTrajectoryCommands();
     }
 
     private void createPitCommands(PneumaticHub pneumaticHub) {
@@ -155,10 +157,20 @@ public class RobotContainer {
 
     private void createTrajectoryTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TrajectoryTestCommands");
+
         // auto trajectories
         tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         tab.add("Trajectory: Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
         tab.add("Trajectory: Test S Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+    }
+
+    private void createSwerveTrajectoryCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("SwerveTestCommands");
+        if (Constants.IS_SWERVE) {
+            tab.add("Swerve: Test Straight", new SwerveStraightLineCommandGroup(m_chassisSubsystem));
+            tab.add("Swerve: test Strafe", new SwerveStraightLineCommandGroup(m_chassisSubsystem));
+        }
+
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
