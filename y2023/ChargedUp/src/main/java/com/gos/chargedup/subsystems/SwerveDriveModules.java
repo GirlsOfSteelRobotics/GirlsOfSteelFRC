@@ -165,14 +165,15 @@ public class SwerveDriveModules {
 
     public void setState(SwerveModuleState rawState) {
         SwerveModuleState optimizedState = SwerveModuleState.optimize(rawState, Rotation2d.fromDegrees(getAzimuthAngle()));
-        m_desiredState = new SwerveModuleState(optimizedState.speedMetersPerSecond, optimizedState.angle.plus(Rotation2d.fromDegrees(m_chassisAngleOffset)));
+        Rotation2d offsetAngle = optimizedState.angle;
+        if (RobotBase.isReal()) {
+            offsetAngle = offsetAngle.plus(Rotation2d.fromDegrees(m_chassisAngleOffset));
+        }
+        m_desiredState = new SwerveModuleState(optimizedState.speedMetersPerSecond, offsetAngle);
         m_azimuthPID.updateIfChanged();
         m_wheelPID.updateIfChanged();
         m_wheelPidController.setReference(m_desiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
         m_azimuthPidController.setReference(m_desiredState.angle.getDegrees(), CANSparkMax.ControlType.kPosition);
-        System.out.println(m_desiredState.speedMetersPerSecond);
-        System.out.println(m_wheelPidController.getFF());
-
     }
 
     public SwerveModuleState getDesiredState() {
@@ -185,6 +186,11 @@ public class SwerveDriveModules {
 
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(m_wheelEncoder.getPosition(), Rotation2d.fromDegrees(getAzimuthAngle()));
+    }
+
+    public void setSpeedPercent(double percentAzimuth, double percentWheel) {
+        m_wheel.set(percentWheel);
+        m_azimuth.set(percentAzimuth);
     }
 
 

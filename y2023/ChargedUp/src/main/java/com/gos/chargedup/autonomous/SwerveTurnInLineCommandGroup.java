@@ -10,10 +10,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.List;
 
-public class SwerveStrafeCommandGroup extends SequentialCommandGroup {
-    public SwerveStrafeCommandGroup(ChassisSubsystemInterface chassis) {
-        List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup("Swerve Strafe Path", Constants.DEFAULT_PATH_CONSTRAINTS);
+public class SwerveTurnInLineCommandGroup extends SequentialCommandGroup {
+    public SwerveTurnInLineCommandGroup(ChassisSubsystemInterface chassis) {
+        List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup("SwerveTurnInPath", Constants.DEFAULT_PATH_CONSTRAINTS);
         Command testLineCommand = chassis.createPathPlannerBuilder(trajectory);
         addCommands(testLineCommand);
+
     }
 }

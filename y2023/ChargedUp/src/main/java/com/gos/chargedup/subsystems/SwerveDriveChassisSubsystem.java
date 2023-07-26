@@ -2,10 +2,12 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.GosSwerveAutoBuilder;
 import com.gos.chargedup.SwerveDrivePublisher;
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.WpiPidPropertyBuilder;
 import com.pathplanner.lib.auto.BaseAutoBuilder;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -25,6 +27,7 @@ import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -62,6 +65,14 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     private final SwerveDrivePublisher m_swervePublisher;
 
+
+    private final PIDController m_xTranslationPidController;
+    private final PIDController m_yTranslationPidController;
+    private final PIDController m_rotationPidController;
+    private final PidProperty m_xTranslationPidProperties;
+    private final PidProperty m_yTranslationPidProperties;
+    private final PidProperty m_rotationPidProperties;
+
     private SwerveSimWrapper m_simulator;
 
     public SwerveDriveChassisSubsystem() {
@@ -78,6 +89,24 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         m_poseEstimator = new SwerveDrivePoseEstimator(SWERVE_KINEMATICS, m_gyro.getRotation2d(), getModulePositions(), new Pose2d());
 
         m_swervePublisher = new SwerveDrivePublisher();
+
+        m_xTranslationPidController = new PIDController(0, 0, 0);
+        m_xTranslationPidProperties = new WpiPidPropertyBuilder("SwerveTranslation", false, m_xTranslationPidController)
+            .addP(0)
+            .addD(0)
+            .build();
+
+        m_yTranslationPidController = new PIDController(0, 0, 0);
+        m_yTranslationPidProperties = new WpiPidPropertyBuilder("SwerveTranslation", false, m_yTranslationPidController)
+            .addP(0)
+            .addD(0)
+            .build();
+
+        m_rotationPidController = new PIDController(0, 0, 0);
+        m_rotationPidProperties = new WpiPidPropertyBuilder("SwerveRotation", false, m_rotationPidController)
+            .addP(0)
+            .addD(0)
+            .build();
 
         if (RobotBase.isSimulation()) {
             List<SwerveModuleSimWrapper> moduleSims = List.of(
@@ -128,6 +157,10 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     public void periodic() {
+        m_xTranslationPidProperties.updateIfChanged();
+        m_yTranslationPidProperties.updateIfChanged();
+        m_rotationPidProperties.updateIfChanged();
+
         for (SwerveDriveModules module : m_modules) {
             module.update();
         }
@@ -153,12 +186,19 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     public void setSpeeds(ChassisSpeeds speedsInp) {
         SwerveModuleState[] moduleStates = SWERVE_KINEMATICS.toSwerveModuleStates(speedsInp);
+        System.out.println(speedsInp + " - " + Arrays.toString(moduleStates));
         setModuleStates(moduleStates);
     }
 
     public void setModuleStates(SwerveModuleState... moduleStates) {
         for (int i = 0; i < 4; i++) {
             m_modules[i].setState(moduleStates[i]);
+        }
+    }
+
+    public void setChassisSpeedsPercent(double wheelPercent, double azimuthPercent) {
+        for (SwerveDriveModules module: m_modules) {
+            module.setSpeedPercent(azimuthPercent, wheelPercent);
         }
     }
 
@@ -217,11 +257,12 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     protected BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
-        return new SwerveAutoBuilder(
+        return new GosSwerveAutoBuilder(
             this::getPose,
             poseSetter,
-            new PIDConstants(0, 0, 0),
-            new PIDConstants(0, 0, 0),
+            m_xTranslationPidController,
+            m_yTranslationPidController,
+            m_rotationPidController,
             this::setSpeeds,
             eventMap,
             this
@@ -238,6 +279,10 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     public CommandBase commandLockDrivetrain() {
         return this.run(this::lockDriveTrain).withName("Lock Wheels Command");
+    }
+
+    public CommandBase commandSetPercentSpeeds(double percentAzimuth, double percentWheel) {
+        return this.run(() -> setChassisSpeedsPercent(percentWheel, percentAzimuth));
     }
 
 }

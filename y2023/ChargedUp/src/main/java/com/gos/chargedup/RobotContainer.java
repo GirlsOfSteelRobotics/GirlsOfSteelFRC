@@ -6,7 +6,9 @@
 package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.autonomous.SwerveStrafeCommandGroup;
 import com.gos.chargedup.autonomous.SwerveStraightLineCommandGroup;
+import com.gos.chargedup.autonomous.SwerveTurnInLineCommandGroup;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
@@ -168,7 +170,8 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("SwerveTestCommands");
         if (Constants.IS_SWERVE) {
             tab.add("Swerve: Test Straight", new SwerveStraightLineCommandGroup(m_chassisSubsystem));
-            tab.add("Swerve: test Strafe", new SwerveStraightLineCommandGroup(m_chassisSubsystem));
+            tab.add("Swerve: Test Strafe", new SwerveStrafeCommandGroup(m_chassisSubsystem));
+            tab.add("Swerve: Test Turn in Line 180", new SwerveTurnInLineCommandGroup(m_chassisSubsystem));
         }
 
     }
@@ -217,6 +220,9 @@ public class RobotContainer {
             tab.add("Chassis Speed (1,0,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
             tab.add("Chassis Speed (0,1,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
             tab.add("Chassis Speed (0,0,1)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+
+            tab.add("Chassis Speeds Percent 0% 5%", swerveDrive.commandSetPercentSpeeds(0, 0.05));
+            tab.add("Chassis Speeds Percent 0% 100%", swerveDrive.commandSetPercentSpeeds(0, 1));
         }
     }
 
