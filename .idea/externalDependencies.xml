@@ -3,7 +3,6 @@
   <component name="ExternalDependencies">
     <plugin id="CheckStyle-IDEA" />
     <plugin id="PythonCore" />
-    <plugin id="com.google.idea.bazel.ijwb" />
     <plugin id="net.javaru.idea.frc" />
   </component>
 </project>
