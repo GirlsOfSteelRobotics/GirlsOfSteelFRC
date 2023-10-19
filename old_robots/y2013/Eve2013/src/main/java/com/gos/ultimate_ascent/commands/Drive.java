@@ -4,7 +4,7 @@ import com.gos.ultimate_ascent.subsystems.Chassis;
 import com.gos.ultimate_ascent.subsystems.DriveFlag;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class Drive extends CommandBase {
+public class Drive extends GosCommandBase {
 
     private final double m_turningScale;
     private final double m_scale;

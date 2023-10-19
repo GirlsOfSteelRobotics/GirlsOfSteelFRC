@@ -17,7 +17,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
 //BACKUP TO PID SET ANGLE: this code is super out of date and we have to update it
 //multiple definitions of angle need to be updated and changed to the same through all the code
 
-public class SetArmAngle extends CommandBase {
+public class SetArmAngle extends GosCommandBase {
 
     private final Manipulator m_manipulator;
     private double m_angle;

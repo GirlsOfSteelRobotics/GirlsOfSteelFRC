@@ -13,7 +13,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
  * @author arushibandi This is the Manual Manipulator PID Tuner on
  * SmartDashboard Arushi can use it.
  */
-public class TuneManipulatorPID extends CommandBase {
+public class TuneManipulatorPID extends GosCommandBase {
 
     private double m_p;
     private double m_i;

@@ -7,13 +7,13 @@
 package com.gos.aerial_assist.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.aerial_assist.commands.CommandBase;
+import com.gos.aerial_assist.commands.GosCommandBase;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
  * @author user
  */
-public class TestPivotArmPID extends CommandBase {
+public class TestPivotArmPID extends GosCommandBase {
     private final Manipulator m_manipulator;
     private double m_currentAngle;
 
