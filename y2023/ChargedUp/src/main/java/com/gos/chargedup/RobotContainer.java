@@ -6,6 +6,9 @@
 package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.autonomous.SwerveStrafeCommandGroup;
+import com.gos.chargedup.autonomous.SwerveStraightLineCommandGroup;
+import com.gos.chargedup.autonomous.SwerveTurnInLineCommandGroup;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
@@ -139,6 +142,7 @@ public class RobotContainer {
         createClawTestCommands();
         createArmTestCommands();
         createPivotTestCommands();
+        createSwerveTrajectoryCommands();
     }
 
     private void createPitCommands(PneumaticHub pneumaticHub) {
@@ -160,6 +164,16 @@ public class RobotContainer {
         tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         tab.add("Trajectory: Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
         tab.add("Trajectory: Test S Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+    }
+
+    private void createSwerveTrajectoryCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("SwerveTestCommands");
+        if (Constants.IS_SWERVE) {
+            tab.add("Swerve: Test Straight", new SwerveStraightLineCommandGroup(m_chassisSubsystem));
+            tab.add("Swerve: Test Strafe", new SwerveStrafeCommandGroup(m_chassisSubsystem));
+            tab.add("Swerve: Test Turn in Line 180", new SwerveTurnInLineCommandGroup(m_chassisSubsystem));
+        }
+
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -189,6 +203,8 @@ public class RobotContainer {
         } else {
             SwerveDriveChassisSubsystem swerveDrive = (SwerveDriveChassisSubsystem) m_chassisSubsystem;
 
+            //lock wheels
+            tab.add("Lock wheels", swerveDrive.commandLockDrivetrain());
             tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
 
             for (int i = 0; i < 4; ++i) {
@@ -204,6 +220,9 @@ public class RobotContainer {
             tab.add("Chassis Speed (1,0,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
             tab.add("Chassis Speed (0,1,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
             tab.add("Chassis Speed (0,0,1)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+
+            tab.add("Chassis Speeds Percent 0% 5%", swerveDrive.commandSetPercentSpeeds(0, 0.05));
+            tab.add("Chassis Speeds Percent 0% 100%", swerveDrive.commandSetPercentSpeeds(0, 1));
         }
     }
 

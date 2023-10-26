@@ -4,6 +4,7 @@ package com.gos.chargedup.subsystems;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -47,13 +48,22 @@ public class SwerveDriveModules {
     private final PidProperty m_azimuthPID;
     private final SparkMaxPIDController m_azimuthPidController;
 
+    private final double m_chassisAngleOffset;
+
     private SwerveModuleState m_desiredState;
 
     private SwerveModuleSimWrapper m_simWrapper;
 
     private final LoggingUtil m_logger;
 
-    public SwerveDriveModules(String moduleName, int wheelId, int azimuthId, double zeroOffset) {
+    private final SparkMaxAlerts m_wheelAlerts;
+
+    private final SparkMaxAlerts m_azimuthAlerts;
+
+
+    public SwerveDriveModules(String moduleName, int wheelId, int azimuthId, double chassisAngularOffset) {
+        m_chassisAngleOffset = chassisAngularOffset;
+
         m_wheel = new SimableCANSparkMax(wheelId, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_wheel.restoreFactoryDefaults();
         m_wheel.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -77,6 +87,9 @@ public class SwerveDriveModules {
 
         m_azimuthPidController = m_azimuth.getPIDController();
 
+        m_wheelAlerts = new SparkMaxAlerts(m_wheel, "Wheel: " + moduleName);
+        m_azimuthAlerts = new SparkMaxAlerts(m_azimuth, "Azimuth: " + moduleName);
+
         m_azimuthRelativeEncoder = m_azimuth.getEncoder();
         m_azimuthRelativeEncoder.setPositionConversionFactor(360 / TURNING_GEAR_RATIO);
         m_azimuthRelativeEncoder.setVelocityConversionFactor(360 / TURNING_GEAR_RATIO / 60);
@@ -84,12 +97,13 @@ public class SwerveDriveModules {
         m_azimuthAbsoluteEncoder = m_azimuth.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
         m_azimuthAbsoluteEncoder.setPositionConversionFactor(360);
         m_azimuthAbsoluteEncoder.setVelocityConversionFactor(360 / 60.0);
-        m_azimuthAbsoluteEncoder.setZeroOffset(zeroOffset);
+        m_azimuthAbsoluteEncoder.setInverted(true);
 
         m_azimuthPidController.setFeedbackDevice(m_azimuthAbsoluteEncoder);
         m_azimuthPidController.setPositionPIDWrappingEnabled(true);
         m_azimuthPidController.setPositionPIDWrappingMinInput(0);
         m_azimuthPidController.setPositionPIDWrappingMinInput(360);
+
 
         m_azimuthPID = new RevPidPropertyBuilder("Azimuth PID", false, m_azimuthPidController, 0)
             .addP(0)
@@ -127,11 +141,12 @@ public class SwerveDriveModules {
 
         m_logger.addDouble("Abs Encoder", m_azimuthAbsoluteEncoder::getPosition);
         m_logger.addDouble("Rel Encoder", m_azimuthRelativeEncoder::getPosition);
+
     }
 
     private double getAzimuthAngle() {
         if (RobotBase.isReal()) {
-            return m_azimuthAbsoluteEncoder.getPosition();
+            return m_azimuthAbsoluteEncoder.getPosition() - m_chassisAngleOffset;
         }
         else {
             return m_azimuthRelativeEncoder.getPosition();
@@ -142,13 +157,19 @@ public class SwerveDriveModules {
         return m_simWrapper;
     }
 
-    public void updateDashboard() {
+    public void update() {
         m_logger.updateLogs();
+        m_azimuthAlerts.checkAlerts();
+        m_wheelAlerts.checkAlerts();
     }
 
     public void setState(SwerveModuleState rawState) {
-        m_desiredState = rawState;
-
+        SwerveModuleState optimizedState = SwerveModuleState.optimize(rawState, Rotation2d.fromDegrees(getAzimuthAngle()));
+        Rotation2d offsetAngle = optimizedState.angle;
+        if (RobotBase.isReal()) {
+            offsetAngle = offsetAngle.plus(Rotation2d.fromDegrees(m_chassisAngleOffset));
+        }
+        m_desiredState = new SwerveModuleState(optimizedState.speedMetersPerSecond, offsetAngle);
         m_azimuthPID.updateIfChanged();
         m_wheelPID.updateIfChanged();
         m_wheelPidController.setReference(m_desiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
@@ -165,6 +186,11 @@ public class SwerveDriveModules {
 
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(m_wheelEncoder.getPosition(), Rotation2d.fromDegrees(getAzimuthAngle()));
+    }
+
+    public void setSpeedPercent(double percentAzimuth, double percentWheel) {
+        m_wheel.set(percentWheel);
+        m_azimuth.set(percentAzimuth);
     }
 
 
