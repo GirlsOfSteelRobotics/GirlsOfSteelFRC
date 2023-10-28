@@ -123,7 +123,8 @@ public class SwerveDriveModules {
                 new RevMotorControllerSimWrapper(m_wheel),
                 new RevMotorControllerSimWrapper(m_azimuth),
                 RevEncoderSimWrapper.create(m_wheel),
-                RevEncoderSimWrapper.create(m_azimuth));
+                RevEncoderSimWrapper.create(m_azimuth),
+                WHEEL_DIAMETER_METERS * Math.PI);
         }
 
         m_wheel.burnFlash();
