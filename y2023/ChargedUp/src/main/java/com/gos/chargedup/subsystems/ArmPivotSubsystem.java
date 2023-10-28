@@ -531,4 +531,3 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
     }
 }
-

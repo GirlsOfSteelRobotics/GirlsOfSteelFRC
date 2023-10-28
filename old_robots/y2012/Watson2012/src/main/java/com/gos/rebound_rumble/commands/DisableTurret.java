@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class DisableTurret extends CommandBase {
+public class DisableTurret extends GosCommandBase {
     private final Turret m_turret;
 
     public DisableTurret(Turret turret) {

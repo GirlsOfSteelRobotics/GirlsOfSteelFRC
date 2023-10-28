@@ -7,7 +7,7 @@ import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TestAutonomousShootTwoBalls extends CommandBase {
+public class TestAutonomousShootTwoBalls extends GosCommandBase {
 
     private final Shooter m_shooter;
     private final Collector m_collector;

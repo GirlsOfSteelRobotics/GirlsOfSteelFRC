@@ -2,6 +2,7 @@ package com.gos.ultimate_ascent.commands;
 
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -12,14 +13,14 @@ import edu.wpi.first.wpilibj.Timer;
  * @author Author
  */
 @SuppressWarnings({"PMD.GodClass", "PMD.DataClass"})
-public abstract class CommandBase extends edu.wpi.first.wpilibj2.command.CommandBase {
+public abstract class GosCommandBase extends CommandBase {
     protected Timer m_timer;
 
-    public CommandBase(String name) {
+    public GosCommandBase(String name) {
         setName(name);
     }
 
-    public CommandBase() {
+    public GosCommandBase() {
         super();
     }
 

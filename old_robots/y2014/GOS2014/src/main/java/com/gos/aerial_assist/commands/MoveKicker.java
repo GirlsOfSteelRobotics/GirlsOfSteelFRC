@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
 /**
  * @author Sylvie
  */
-public class MoveKicker extends CommandBase {
+public class MoveKicker extends GosCommandBase {
     private static final double ALLOWED_OFF_BY = 0.05; //Degrees
     private static final double LOADED = 0.0; //Starting position is loaded pos
     private static final double SHOOT = 0.111111; //The angle degree needed to kick

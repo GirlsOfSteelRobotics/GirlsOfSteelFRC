@@ -252,4 +252,3 @@ public class TurretSubsystem extends SubsystemBase {
         return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
     }
 }
-

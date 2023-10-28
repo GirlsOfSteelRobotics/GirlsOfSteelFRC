@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Climber;
 /**
  * @author sam
  */
-public class RetractClimberPiston extends CommandBase {
+public class RetractClimberPiston extends GosCommandBase {
 
     private final Climber m_climber;
 

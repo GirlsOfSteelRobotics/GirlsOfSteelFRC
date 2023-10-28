@@ -8,7 +8,7 @@ package com.gos.ultimate_ascent.commands;
 /**
  * @author sam
  */
-public class CloseTopGrip extends CommandBase {
+public class CloseTopGrip extends GosCommandBase {
 
     //Command for closing the bottom gripper around the pyramid
 

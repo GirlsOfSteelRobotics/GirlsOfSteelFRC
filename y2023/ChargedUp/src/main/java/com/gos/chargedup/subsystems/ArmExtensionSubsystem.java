@@ -210,4 +210,3 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
 }
-

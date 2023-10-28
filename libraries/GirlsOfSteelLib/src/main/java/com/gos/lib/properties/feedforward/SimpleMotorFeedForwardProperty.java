@@ -54,4 +54,3 @@ public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
     }
 
 }
-

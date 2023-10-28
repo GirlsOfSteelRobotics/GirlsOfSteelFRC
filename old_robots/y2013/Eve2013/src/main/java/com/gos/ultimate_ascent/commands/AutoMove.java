@@ -2,7 +2,7 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Chassis;
 
-public class AutoMove extends CommandBase {
+public class AutoMove extends GosCommandBase {
 
     private final Chassis m_chassis;
     private final double m_x;

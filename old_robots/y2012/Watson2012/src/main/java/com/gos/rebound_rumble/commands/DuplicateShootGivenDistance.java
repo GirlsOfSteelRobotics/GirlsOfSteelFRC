@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class DuplicateShootGivenDistance extends CommandBase {
+public class DuplicateShootGivenDistance extends GosCommandBase {
     private final Shooter m_shooter;
     private final double m_speed;
 

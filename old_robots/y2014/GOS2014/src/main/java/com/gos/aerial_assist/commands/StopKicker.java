@@ -13,7 +13,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
  * <p>
  * Stops the kicker wherever it is (does not stop the PID)
  */
-public class StopKicker extends CommandBase {
+public class StopKicker extends GosCommandBase {
 
     private final Kicker m_kicker;
 

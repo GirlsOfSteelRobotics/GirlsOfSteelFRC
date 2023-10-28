@@ -5,13 +5,13 @@
 
 package com.gos.aerial_assist.tests;
 
-import com.gos.aerial_assist.commands.CommandBase;
+import com.gos.aerial_assist.commands.GosCommandBase;
 import com.gos.aerial_assist.subsystems.Collector;
 
 /**
  * @author appasamysm
  */
-public class TestingCollector extends CommandBase {
+public class TestingCollector extends GosCommandBase {
 
     //not finished
     private final Collector m_collector;

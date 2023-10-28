@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import com.gos.rebound_rumble.objects.Camera;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TurretTrackTarget extends CommandBase {
+public class TurretTrackTarget extends GosCommandBase {
 
     private final Turret m_turret;
     private final Joystick m_operatorJoystick;
