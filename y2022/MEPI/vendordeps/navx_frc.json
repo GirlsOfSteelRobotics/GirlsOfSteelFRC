@@ -30,7 +30,7 @@
                 "linuxraspbian",
                 "linuxarm32",
                 "linuxarm64",
-                "linux86-64",
+                "linuxx86-64",
                 "osxuniversal",
                 "windowsx86-64"
             ]
