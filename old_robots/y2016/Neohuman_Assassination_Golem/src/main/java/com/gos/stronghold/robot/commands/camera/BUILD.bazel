@@ -6,7 +6,6 @@ gos_java_library(
     visibility = ["//old_robots/y2016/Neohuman_Assassination_Golem:__subpackages__"],
     deps = [
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
     ],
 )

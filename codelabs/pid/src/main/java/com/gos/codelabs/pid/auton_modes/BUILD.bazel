@@ -9,9 +9,8 @@ gos_java_library(
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpimath",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
 )
 
@@ -23,8 +22,7 @@ gos_java_library(
     ),
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

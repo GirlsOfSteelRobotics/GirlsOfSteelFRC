@@ -22,7 +22,7 @@ gos_java_robot(
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/lifter",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/shack",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

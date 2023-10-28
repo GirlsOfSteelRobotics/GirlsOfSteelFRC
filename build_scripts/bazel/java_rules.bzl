@@ -2,7 +2,7 @@
 Girls of Steel rules for java. Mostly just adds automatic hooks into styleguide tools
 """
 
-load("@bazelrio//:defs.bzl", "robot_java_binary")
+load("@rules_bazelrio//:robot_rules.bzl", "robot_java_binary")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("@rules_pmd//pmd:defs.bzl", "pmd")
 

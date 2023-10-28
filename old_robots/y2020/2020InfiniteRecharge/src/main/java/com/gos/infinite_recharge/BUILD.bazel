@@ -5,7 +5,7 @@ gos_java_library(
     srcs = ["Constants.java"],
     visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
 )
 
@@ -26,8 +26,8 @@ gos_java_robot(
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands/autonomous",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/trajectory_modes",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpiutil",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpiutil",
     ],
 )

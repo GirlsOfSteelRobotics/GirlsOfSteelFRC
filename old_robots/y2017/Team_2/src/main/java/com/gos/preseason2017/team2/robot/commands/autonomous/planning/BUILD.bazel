@@ -4,5 +4,4 @@ gos_java_library(
     name = "planning",
     srcs = glob(["*.java"]),
     visibility = ["//old_robots/y2017/Team_2:__subpackages__"],
-    deps = ["@snobot_sim//jar"],
 )

@@ -7,7 +7,6 @@ gos_java_library(
     deps = [
         "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works/commands",
         "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
     ],
 )

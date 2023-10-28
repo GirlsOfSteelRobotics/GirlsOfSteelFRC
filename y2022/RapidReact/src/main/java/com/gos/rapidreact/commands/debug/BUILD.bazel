@@ -6,7 +6,6 @@ gos_java_library(
     visibility = ["//y2022/RapidReact:__subpackages__"],
     deps = [
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
     ],
 )
