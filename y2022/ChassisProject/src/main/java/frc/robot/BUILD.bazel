@@ -17,8 +17,8 @@ gos_java_robot(
     deps = [
         "//y2022/ChassisProject/src/main/java/frc/robot/commands",
         "//y2022/ChassisProject/src/main/java/frc/robot/subsystems",
-        "@bazelrio//libraries/java/wpilib/hal",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/hal",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

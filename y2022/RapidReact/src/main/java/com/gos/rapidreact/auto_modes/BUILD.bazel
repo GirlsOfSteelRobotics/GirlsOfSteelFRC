@@ -10,9 +10,9 @@ gos_java_library(
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/commands/autonomous",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/trajectory",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

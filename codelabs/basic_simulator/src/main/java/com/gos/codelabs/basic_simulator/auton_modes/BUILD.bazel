@@ -7,8 +7,8 @@ gos_java_library(
     visibility = ["//codelabs/basic_simulator:__subpackages__"],
     deps = [
         "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

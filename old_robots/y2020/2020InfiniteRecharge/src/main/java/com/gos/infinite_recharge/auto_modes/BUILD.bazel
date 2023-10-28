@@ -10,8 +10,8 @@ gos_java_library(
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands/autonomous",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/trajectory_modes",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

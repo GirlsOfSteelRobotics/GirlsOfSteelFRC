@@ -8,7 +8,7 @@ gos_java_library(
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/commands",
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/commands/camera",
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

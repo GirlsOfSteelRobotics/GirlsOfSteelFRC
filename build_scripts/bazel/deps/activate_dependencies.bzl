@@ -1,19 +1,15 @@
 """
 """
 
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
+load("@bzlmodrio//private/non_bzlmod:setup_dependencies.bzl", "get_java_dependencies", "setup_dependencies")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
-load("@rules_python//python:pip.bzl", "pip_install", "pip_parse")
-load("//build_scripts/bazel/deps:versions.bzl", "PATHPLANNERLIB_VERSION", "PATHPLANNERLIB_VERSION_SHA", "PHOTONLIB_JSON_1_0_VERSION", "PHOTONLIB_JSON_1_0_VERSION_SHA", "SNOBOTSIM_VERSION", "SNOBOTSIM_VERSION_SHA")
+load("@rules_python//python:pip.bzl", "pip_parse")
+load("//build_scripts/bazel/deps:versions.bzl", "SNOBOTSIM_VERSION")
 
 def activate_dependencies():
     """
     Final step of dependencies initialization. Does the various installation steps (pip_install, maven_intstall, etc)
     """
-    PMD_VERSION = "6.39.0"
-    rules_pmd_toolchains(pmd_version = PMD_VERSION)
 
     # To regenerate lock file:
     #
@@ -25,37 +21,13 @@ def activate_dependencies():
         name = "gos_pip_deps",
         requirements_lock = "//build_scripts/bazel/deps:requirements_lock.txt",
     )
-    pip_install(
-        name = "__bazelrio_deploy_pip_deps",
-        requirements = "@bazelrio//scripts/deploy:requirements.txt",
-    )
 
-    setup_bazelrio_dependencies()
+    setup_dependencies()
 
-    jvm_maven_import_external(
-        name = "snobot_sim",
-        artifact = "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
-        artifact_sha256 = SNOBOTSIM_VERSION_SHA,
-        server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
-    )
-
-    jvm_maven_import_external(
-        name = "photonvision",
-        artifact = "org.photonvision:PhotonLib-java:{v}".format(v = PHOTONLIB_JSON_1_0_VERSION),
-        artifact_sha256 = PHOTONLIB_JSON_1_0_VERSION_SHA,
-        server_urls = ["https://maven.photonvision.org/repository/internal", "https://maven.photonvision.org/repository/snapshots"],
-    )
-
-    jvm_maven_import_external(
-        name = "pathplanner",
-        artifact = "com.pathplanner.lib:PathplannerLib-java:{v}".format(v = PATHPLANNERLIB_VERSION),
-        artifact_sha256 = PATHPLANNERLIB_VERSION_SHA,
-        server_urls = ["https://3015rangerrobotics.github.io/pathplannerlib/repo"],
-    )
-
+    maven_artifacts, maven_repositories = get_java_dependencies()
     maven_install(
         name = "maven",
-        artifacts = [
+        artifacts = maven_artifacts + [
             "com.google.guava:guava:21.0",
             "org.fxmisc.easybind:easybind:1.0.3",
             "org.junit.jupiter:junit-jupiter-api:5.8.2",
@@ -66,9 +38,10 @@ def activate_dependencies():
             "org.junit.platform:junit-platform-engine:1.6.1",
             "org.junit.platform:junit-platform-launcher:1.6.1",
             "org.junit.platform:junit-platform-suite-api:1.6.1",
-            "org.ejml:ejml-simple:0.38",
+            "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
+            "org.snobotv2:snobot_swerve_sim:{v}".format(v = SNOBOTSIM_VERSION),
         ],
-        repositories = ["https://repo1.maven.org/maven2", "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+        repositories = maven_repositories + ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
         maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
     )
 

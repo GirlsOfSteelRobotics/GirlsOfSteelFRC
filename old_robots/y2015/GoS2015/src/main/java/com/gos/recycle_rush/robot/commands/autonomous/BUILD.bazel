@@ -8,8 +8,8 @@ gos_java_library(
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/collector",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/shack",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

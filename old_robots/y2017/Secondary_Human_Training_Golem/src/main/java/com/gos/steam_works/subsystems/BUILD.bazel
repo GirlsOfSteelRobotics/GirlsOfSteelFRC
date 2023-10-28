@@ -7,11 +7,12 @@ gos_java_library(
     deps = [
         "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works:RobotMap",
         "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works:Vision",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/cameraserver",
+        "@bzlmodrio-allwpilib//libraries/java/cscore",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-phoenix//libraries/java/api-java",
+        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

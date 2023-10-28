@@ -6,9 +6,10 @@ gos_java_library(
     visibility = ["//old_robots/y2017/Team1:__subpackages__"],
     deps = [
         "//old_robots/y2017/Team1/src/main/java/com/gos/preseason2017/team1/robot:RobotMap",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-phoenix//libraries/java/api-java",
+        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

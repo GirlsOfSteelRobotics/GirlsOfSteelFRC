@@ -8,7 +8,7 @@ gos_java_library(
     ],
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )
 
@@ -30,7 +30,7 @@ gos_java_robot(
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/tests",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

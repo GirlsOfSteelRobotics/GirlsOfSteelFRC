@@ -8,8 +8,9 @@ gos_java_library(
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up:GameData",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/commands",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/subsystems",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-phoenix//libraries/java/api-java",
+        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

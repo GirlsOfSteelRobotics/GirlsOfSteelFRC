@@ -5,8 +5,8 @@ gos_java_library(
     srcs = ["EncoderGoSPidController.java"],
     visibility = ["//old_robots/y2012/Watson2012:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )
 
@@ -15,8 +15,8 @@ gos_java_library(
     srcs = ["Camera.java"],
     visibility = ["//old_robots/y2012/Watson2012:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )
 
@@ -25,8 +25,8 @@ gos_java_library(
     srcs = ["SmoothEncoder.java"],
     visibility = ["//old_robots/y2012/Watson2012:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )
 
@@ -34,7 +34,7 @@ gos_java_library(
     name = "ShooterLookupTable",
     srcs = ["ShooterLookupTable.java"],
     visibility = ["//old_robots/y2012/Watson2012:__subpackages__"],
-    deps = ["@snobot_sim//jar"],
+    deps = ["@maven//:org_snobotv2_snobot_sim_java"],
 )
 
 gos_java_library(
@@ -44,8 +44,8 @@ gos_java_library(
     deps = [
         "//old_robots/y2012/Watson2012/src/main/java/com/gos/rebound_rumble/commands",
         "//old_robots/y2012/Watson2012/src/main/java/com/gos/rebound_rumble/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

@@ -7,7 +7,7 @@ gos_java_library(
     deps = [
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

@@ -8,7 +8,7 @@ gos_java_library(
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent:Constants",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

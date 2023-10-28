@@ -9,9 +9,9 @@ gos_java_library(
     visibility = ["//old_robots/y2013/Eve2013:__subpackages__"],
     deps = [
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent:Constants",
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )
 
@@ -23,8 +23,8 @@ gos_java_library(
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/commands",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

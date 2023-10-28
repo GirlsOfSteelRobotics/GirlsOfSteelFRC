@@ -5,6 +5,6 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
     ],
 )

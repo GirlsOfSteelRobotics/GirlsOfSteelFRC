@@ -9,7 +9,7 @@ gos_java_library(
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge:Constants",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

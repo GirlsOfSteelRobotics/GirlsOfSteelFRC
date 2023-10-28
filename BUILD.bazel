@@ -1,4 +1,3 @@
-filegroup(
-    name = "python_requirements",
+exports_files(
     srcs = ["requirements.txt"],
 )

@@ -6,7 +6,7 @@ gos_java_library(
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )
