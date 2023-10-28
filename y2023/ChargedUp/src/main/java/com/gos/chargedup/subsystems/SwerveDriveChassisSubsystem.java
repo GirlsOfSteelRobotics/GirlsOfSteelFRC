@@ -28,7 +28,6 @@ import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
