@@ -298,7 +298,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     @Override
-    public void turnPID(double angleGoal) {
+    public void turnToAngle(double angleGoal) {
         SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
         steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
@@ -375,7 +375,15 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     @Override
-    public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
+    public void resetStickyFaultsChassis() {
+        m_leaderLeft.clearFaults();
+        m_leaderRight.clearFaults();
+        m_followerLeft.clearFaults();
+        m_followerRight.clearFaults();
+    }
+
+    @Override
+    public CommandBase createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
             new PathConstraints(Units.inchesToMeters(m_onTheFlyMaxVelocity.getValue()), Units.inchesToMeters(m_onTheFlyMaxAcceleration.getValue())),
             reverse,
@@ -397,34 +405,6 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     }
 
-    @Override
-    public void resetStickyFaultsChassis() {
-        m_leaderLeft.clearFaults();
-        m_leaderRight.clearFaults();
-        m_followerLeft.clearFaults();
-        m_followerRight.clearFaults();
-    }
-
-    ////////////////////
-    // Command Factories
-    ////////////////////
-
-    @Override
-    protected void lockDriveTrain() {
-        drivetrainToBrakeMode();
-    }
-
-    @Override
-    protected void unlockDriveTrain() {
-        drivetrainToCoastMode();
-    }
-
-    public CommandBase commandChassisVelocity() {
-        return this.runEnd(
-            () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
-            this::stop).withName("Chassis: Tune Velocity");
-    }
-
     public void drivetrainToBrakeMode() {
         m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -441,15 +421,35 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     }
 
+    @Override
+    protected void lockDriveTrain() {
+        drivetrainToBrakeMode();
+    }
 
     @Override
-    public CommandBase syncOdometryWithPoseEstimator() {
+    protected void unlockDriveTrain() {
+        drivetrainToCoastMode();
+    }
+
+    ////////////////////
+    // Command Factories
+    ////////////////////
+
+    public CommandBase commandChassisVelocity() {
+        return this.runEnd(
+            () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
+            this::stop).withName("Chassis: Tune Velocity");
+    }
+
+
+    @Override
+    public CommandBase createSyncOdometryWithPoseEstimatorCommand() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()))
             .withName("Sync Odometry /w Pose");
     }
 
     @Override
-    public CommandBase selfTestMotors() {
+    public CommandBase createSelfTestMotorsCommand() {
         return new SequentialCommandGroup(createIsLeftMotorMoving(), createIsRightMotorMoving());
     }
 

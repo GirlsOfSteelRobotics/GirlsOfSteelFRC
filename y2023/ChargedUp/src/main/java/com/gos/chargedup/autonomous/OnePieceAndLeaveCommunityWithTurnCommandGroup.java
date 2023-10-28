@@ -30,16 +30,18 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
                                                          ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                          AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)), false);
-        Command driveAutoOnePieceAndLeave = chassis.createPathPlannerBuilder(onePieceAndLeave);
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave);
+
+        Pose2d initialPose = onePieceAndLeave.getInitialPose();
 
         //0.6 away
         Pose2d startPose = new Pose2d(new Translation2d(
-            onePieceAndLeave.getInitialPose().getTranslation().getX() - Units.inchesToMeters(6),
-            onePieceAndLeave.getInitialPose().getTranslation().getY()),
+            initialPose.getTranslation().getX() - Units.inchesToMeters(6),
+            initialPose.getTranslation().getY()),
             Rotation2d.fromDegrees(180));
         Command resetOdometry = new ConditionalCommand(
-            chassis.createResetOdometry(startPose),
-            chassis.createResetOdometry(AllianceFlipper.flip(startPose)),
+            chassis.createResetOdometryCommand(startPose),
+            chassis.createResetOdometryCommand(AllianceFlipper.flip(startPose)),
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
         );
         addCommands(resetOdometry);
@@ -47,10 +49,9 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
 
-        Pose2d realTrajectoryStart = onePieceAndLeave.getInitialPose();
         Command driveBackwards = new ConditionalCommand(
-            chassis.driveToPointNoFlip(startPose, new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180)), true),
-            chassis.driveToPointNoFlip(AllianceFlipper.flip(startPose), AllianceFlipper.flip(new Pose2d(realTrajectoryStart.getTranslation(), Rotation2d.fromDegrees(180))), true),
+            chassis.createDriveToPointNoFlipCommand(startPose, new Pose2d(initialPose.getTranslation(), Rotation2d.fromDegrees(180)), true),
+            chassis.createDriveToPointNoFlipCommand(AllianceFlipper.flip(startPose), AllianceFlipper.flip(new Pose2d(initialPose.getTranslation(), Rotation2d.fromDegrees(180))), true),
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
         );
 
@@ -59,8 +60,8 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
 
         //turn to start pos
         Command turnToAngle = new ConditionalCommand(
-            chassis.createTurnPID(onePieceAndLeave.getInitialPose().getRotation().getDegrees()),
-            chassis.createTurnPID(AllianceFlipper.flip(onePieceAndLeave.getInitialPose().getRotation()).getDegrees()),
+            chassis.createTurnToAngleCommand(initialPose.getRotation().getDegrees()),
+            chassis.createTurnToAngleCommand(AllianceFlipper.flip(initialPose.getRotation()).getDegrees()),
             () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
         );
         addCommands(

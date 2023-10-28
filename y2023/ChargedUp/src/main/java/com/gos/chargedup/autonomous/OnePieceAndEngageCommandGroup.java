@@ -19,7 +19,7 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
     public OnePieceAndEngageCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
 
         PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
-        Command driveAutoOnePieceEngage = chassis.createPathPlannerBuilder(oneNodeAndEngage);
+        Command driveAutoOnePieceEngage = chassis.createFollowPathCommand(oneNodeAndEngage);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

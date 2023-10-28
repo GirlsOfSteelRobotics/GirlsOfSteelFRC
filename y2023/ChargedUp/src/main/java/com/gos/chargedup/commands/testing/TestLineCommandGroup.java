@@ -16,7 +16,7 @@ public class TestLineCommandGroup extends SequentialCommandGroup {
     public TestLineCommandGroup(ChassisSubsystemInterface chassis) {
 
         List<PathPlannerTrajectory> testLine = PathPlanner.loadPathGroup("TestLine", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testLineCommand = chassis.createPathPlannerBuilder(testLine);
+        Command testLineCommand = chassis.createFollowPathCommand(testLine);
         addCommands(testLineCommand);
 
         setName("TestTrajectoryStraightLine");

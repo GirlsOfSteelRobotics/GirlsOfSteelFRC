@@ -79,7 +79,7 @@ public class AutoAimChassisToNodeOnTheFly extends CommandBase {
             goalAngle -= 360;
         }
 
-        m_chassisSubsystem.turnPID(goalAngle);
+        m_chassisSubsystem.turnToAngle(goalAngle);
 
         if (m_clawAlignedCheck.isClawAtPoint(nodePosAbs, m_chassisSubsystem.getYaw())) {
             m_ledManagerSubsystem.setClawIsAligned(true);

@@ -13,7 +13,7 @@ import java.util.List;
 public class TestOnePieceAndLeaveCommunityThreeCommandGroup extends SequentialCommandGroup {
     public TestOnePieceAndLeaveCommunityThreeCommandGroup(ChassisSubsystemInterface chassis) {
         List<PathPlannerTrajectory> onePieceLeaveCommunity3 = PathPlanner.loadPathGroup("OnePieceLeaveCommunity3", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testOnePieceLeaveCommunity3 = chassis.createPathPlannerBuilder(onePieceLeaveCommunity3);
+        Command testOnePieceLeaveCommunity3 = chassis.createFollowPathCommand(onePieceLeaveCommunity3);
         addCommands(testOnePieceLeaveCommunity3);
 
         setName("TestTrajectoryOnePieceLeaveCommunity3");

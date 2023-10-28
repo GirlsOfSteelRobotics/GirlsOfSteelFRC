@@ -31,6 +31,7 @@ import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -148,10 +149,10 @@ public class RobotContainer {
     private void createPitCommands(PneumaticHub pneumaticHub) {
         ShuffleboardTab tab = Shuffleboard.getTab("PitCommands");
 
-        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder());
-        tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoder(0));
-        tab.add("Arm Pivot: Reset Encoder (Abs Encoder Val)", m_armPivot.createSyncEncoderToAbsoluteEncoder());
-        tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
+        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoderCommand());
+        tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoderCommand(0));
+        tab.add("Arm Pivot: Reset Encoder (Abs Encoder Val)", m_armPivot.createSyncEncoderToAbsoluteEncoderCommand());
+        tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastModeCommand());
 
         tab.add("Reset Sticky Faults",  createResetStickyFaults());
         tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
@@ -184,16 +185,16 @@ public class RobotContainer {
         tab.add("Chassis Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
 
         // chassis turn PID
-        tab.add("Chassis To Angle 0", m_chassisSubsystem.createTurnPID(0));
-        tab.add("Chassis To Angle 180", m_chassisSubsystem.createTurnPID(180));
+        tab.add("Chassis To Angle 0", m_chassisSubsystem.createTurnToAngleCommand(0));
+        tab.add("Chassis To Angle 180", m_chassisSubsystem.createTurnToAngleCommand(180));
 
         // chassis reset odometry test
-        tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
-        tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
-        tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
-        tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
+        tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometryCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+        tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometryCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
+        tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometryCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
+        tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometryCommand(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
 
-        tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
+        tab.add("Chassis: Sync Odometry", m_chassisSubsystem.createSyncOdometryWithPoseEstimatorCommand());
 
 
         if (m_chassisSubsystem instanceof TankDriveChassisSubsystem) {
@@ -205,7 +206,7 @@ public class RobotContainer {
 
             //lock wheels
             tab.add("Lock wheels", swerveDrive.commandLockDrivetrain());
-            tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+            tab.add("Swerve reset position: (0, 0, 0)", swerveDrive.createResetOdometryCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
 
             for (int i = 0; i < 4; ++i) {
                 tab.add("Swerve Module[" + i + "]   45deg 0mps", swerveDrive.commandSetModuleState(i, 45, 0));
@@ -219,7 +220,7 @@ public class RobotContainer {
 
             tab.add("Chassis Speed (1,0,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(1, 0, 0)));
             tab.add("Chassis Speed (0,1,0)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 1, 0)));
-            tab.add("Chassis Speed (0,0,1)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, 1)));
+            tab.add("Chassis Speed (0,0,360deg)", swerveDrive.commandSetChassisSpeed(new ChassisSpeeds(0, 0, Units.degreesToRadians(360))));
 
             tab.add("Chassis Speeds Percent 0% 5%", swerveDrive.commandSetPercentSpeeds(0, 0.05));
             tab.add("Chassis Speeds Percent 0% 100%", swerveDrive.commandSetPercentSpeeds(0, 1));
@@ -230,8 +231,8 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("ArmPivotTestCommands");
 
         // arm pivot
-        tab.add("Arm Pivot: Pivot Down", m_armPivot.commandPivotArmDown());
-        tab.add("Arm Pivot: Pivot Up", m_armPivot.commandPivotArmUp());
+        tab.add("Arm Pivot: Pivot Down", m_armPivot.createPivotDownCommand());
+        tab.add("Arm Pivot: Pivot Up", m_armPivot.createPivotUpCommand());
 
         tab.add("Arm Pivot: Angle PID - -30 degrees", debugArmPid(-30));
         tab.add("Arm Pivot: Angle PID - -10 degrees", debugArmPid(-10));
@@ -244,14 +245,14 @@ public class RobotContainer {
     private void createArmTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("ArmExtensionTestCommands");
 
-        tab.add("Arm Piston: Full Retract", m_armExtend.commandFullRetract());
-        tab.add("Arm Piston: Mid Retract", m_armExtend.commandMiddleRetract());
-        tab.add("Arm Piston: Full Extend", m_armExtend.commandFullExtend());
+        tab.add("Arm Piston: Full Retract", m_armExtend.createFullRetractCommand());
+        tab.add("Arm Piston: Mid Retract", m_armExtend.createMiddleExtensionCommand());
+        tab.add("Arm Piston: Full Extend", m_armExtend.createFullExtensionCommand());
 
-        tab.add("Arm Piston: Bottom Extended", m_armExtend.commandBottomPistonExtended());
-        tab.add("Arm Piston: Bottom Retracted", m_armExtend.commandBottomPistonRetracted());
-        tab.add("Arm Piston: Top Extended", m_armExtend.commandTopPistonExtended());
-        tab.add("Arm Piston: Top Retracted", m_armExtend.commandTopPistonRetracted());
+        tab.add("Arm Piston: Bottom Extended", m_armExtend.createExtendBottomPistonCommand());
+        tab.add("Arm Piston: Bottom Retracted", m_armExtend.createRetractBottomPistonCommand());
+        tab.add("Arm Piston: Top Extended", m_armExtend.createExtendTopPistonCommand());
+        tab.add("Arm Piston: Top Retracted", m_armExtend.createRetractTopPistonCommand());
     }
 
     private void createClawTestCommands() {
@@ -283,8 +284,8 @@ public class RobotContainer {
         //m_claw.setDefaultCommand(m_claw.createHoldPiece());
 
         // Driver
-        m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
-        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_RIGHT_BLUE_PICK_UP_POINT, false));
+        m_driverController.x().whileTrue(m_chassisSubsystem.createDeferredDriveToPointCommand(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT, false));
+        m_driverController.b().whileTrue(m_chassisSubsystem.createDeferredDriveToPointCommand(Constants.ROBOT_RIGHT_BLUE_PICK_UP_POINT, false));
         //m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         //m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.povUp().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
@@ -297,8 +298,8 @@ public class RobotContainer {
         Trigger leftJoystickAsButtonUp = new Trigger(() -> m_operatorController.getLeftY() < -.5);
         //leftJoystickAsButtonRight.whileTrue(m_turret.commandMoveTurretCounterClockwise());
         //leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
-        leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
-        leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
+        leftJoystickAsButtonUp.whileTrue(m_armPivot.createPivotUpCommand());
+        leftJoystickAsButtonDown.whileTrue(m_armPivot.createPivotDownCommand());
         m_operatorController.y().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
@@ -306,13 +307,13 @@ public class RobotContainer {
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
         m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goToGroundPickup(m_armPivot, m_armExtend));
         m_operatorController.povLeft().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend));
-        m_operatorController.povRight().whileTrue(m_armPivot.commandGoToAutoNodePosition(() -> m_autoAimNodePosition));
+        m_operatorController.povRight().whileTrue(m_armPivot.createGoToAutoNodePositionCommand(() -> m_autoAimNodePosition));
 
-        m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
-        m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
-        m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
+        m_operatorController.leftBumper().whileTrue(m_armExtend.createFullExtensionCommand());
+        m_operatorController.rightBumper().whileTrue(m_armExtend.createFullRetractCommand());
+        m_operatorController.rightTrigger().whileTrue(m_armExtend.createMiddleExtensionCommand());
 
-        m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
+        m_operatorController.leftTrigger().whileTrue(m_armPivot.createMoveArmToPieceScorePositionAndHoldCommand(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
         // m_driverController.povRight().whileTrue(m_chassisSubsystem.createTurnPID(0));
@@ -336,7 +337,7 @@ public class RobotContainer {
     }
 
     private CommandBase debugArmPid(double angle) {
-        return m_armPivot.commandPivotArmToAngleHold(angle);
+        return m_armPivot.createPivotToAngleAndHoldCommand(angle);
         //.andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
 

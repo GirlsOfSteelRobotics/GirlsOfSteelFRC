@@ -26,42 +26,42 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
     public TWOPieceNodesCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, String pathStart, String pathMiddle, String pathEnd) {
         PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, FASTER_PATH_CONSTRAINTS, true);
-        Command driveToFirstPiece = chassis.createPathPlannerBuilder(firstPiece);
+        Command driveToFirstPiece = chassis.createFollowPathCommand(firstPiece);
 
         List<PathPlannerTrajectory> getSecondPiece = PathPlanner.loadPathGroup(pathMiddle, false, NOT_AS_FAST_PATH_CONSTRAINTS);
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
-        Command driveToGetSecondPiece = chassis.createPathPlannerBuilderNoPoseReset(getSecondPiece, eventMap);
+        Command driveToGetSecondPiece = chassis.createFollowPathCommandNoPoseReset(getSecondPiece, eventMap);
 
 
         PathPlannerTrajectory scoreSecondPiece = PathPlanner.loadPath(pathEnd, FASTER_PATH_CONSTRAINTS, false);
-        Command driveToScoreSecondPiece = chassis.createPathPlannerBuilderNoPoseReset(scoreSecondPiece);
+        Command driveToScoreSecondPiece = chassis.createFollowPathCommandNoPoseReset(scoreSecondPiece);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
 
         //first part
         addCommands(driveToFirstPiece
-            .alongWith(armPivot.commandPivotArmToAngleHold(-10))
+            .alongWith(armPivot.createPivotToAngleAndHoldCommand(-10))
             .alongWith(Commands.waitSeconds(0.25)
-                .andThen(armExtension.commandMiddleRetract())));
+                .andThen(armExtension.createMiddleExtensionCommand())));
 
         //turn 180
-        addCommands(chassis.createTurnPID(0));
+        addCommands(chassis.createTurnToAngleCommand(0));
 
         //drive second part
         addCommands(driveToGetSecondPiece
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //turn 180
-        addCommands(chassis.createTurnPID(180)
+        addCommands(chassis.createTurnToAngleCommand(180)
             .alongWith(CombinedCommandsUtil.moveToScore(pivotHeightType, GamePieceType.CUBE, armPivot))
-            .raceWith(claw.createHoldPiece()));
+            .raceWith(claw.createHoldPieceCommand()));
 
 
         //third part
         addCommands(driveToScoreSecondPiece
-            .alongWith(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE))
+            .alongWith(armPivot.createMoveArmToPieceScorePositionAndHoldCommand(pivotHeightType, GamePieceType.CUBE))
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //score piece

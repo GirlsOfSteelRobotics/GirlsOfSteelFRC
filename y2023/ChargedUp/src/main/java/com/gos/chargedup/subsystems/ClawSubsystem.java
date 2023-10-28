@@ -50,9 +50,9 @@ public class ClawSubsystem extends SubsystemBase {
         m_currentLimit = new HeavyIntegerProperty(m_clawMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
 
         m_networkTableEntries = new LoggingUtil("Claw Subsystem");
-        m_networkTableEntries.addDouble("Current Amps", () -> m_clawMotor.getOutputCurrent());
-        m_networkTableEntries.addDouble("Output", () -> m_clawMotor.getAppliedOutput());
-        m_networkTableEntries.addDouble("Velocity (RPM)", () -> m_clawEncoder.getVelocity());
+        m_networkTableEntries.addDouble("Current Amps", m_clawMotor::getOutputCurrent);
+        m_networkTableEntries.addDouble("Output", m_clawMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Velocity (RPM)", m_clawEncoder::getVelocity);
     }
 
     //intake close
@@ -89,6 +89,13 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotor.clearFaults();
     }
 
+    //////////////
+    // Checklists
+    //////////////
+    public CommandBase createIsClawMotorMovingChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_clawMotor, "Claw: Motor", 1.0);
+    }
+
     /////////////////////
     // Command Factories
     /////////////////////
@@ -116,14 +123,7 @@ public class ClawSubsystem extends SubsystemBase {
         return this.createMoveClawIntakeInCommand().alongWith(new CheckRumbleCommand(joystick, this::hasGamePiece));
     }
 
-    public CommandBase createHoldPiece() {
+    public CommandBase createHoldPieceCommand() {
         return this.run(this::holdPiece);
-    }
-
-    //////////////
-    // Checklists
-    //////////////
-    public CommandBase createIsClawMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_clawMotor, "Claw: Motor", 1.0);
     }
 }

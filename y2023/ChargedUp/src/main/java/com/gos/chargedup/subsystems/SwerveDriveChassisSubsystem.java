@@ -7,6 +7,7 @@ import com.gos.chargedup.SwerveDrivePublisher;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.WpiPidPropertyBuilder;
 import com.pathplanner.lib.auto.BaseAutoBuilder;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,12 +36,9 @@ import java.util.function.Consumer;
 public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     private static final double WHEEL_BASE = 0.381;
-
-    private static final double TRACK_WIDTH = Units.inchesToMeters(.381);
+    private static final double TRACK_WIDTH = 0.381;
 
     public static final double MAX_TRANSLATION_SPEED = 2.9;
-
-
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(180);
 
     private static final Translation2d FRONT_LEFT_LOCATION = new Translation2d(WHEEL_BASE / 2, TRACK_WIDTH / 2);
@@ -85,7 +83,6 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         m_odometry = new SwerveDriveOdometry(
             SWERVE_KINEMATICS, m_gyro.getRotation2d(),
             getModulePositions(), new Pose2d());
-
         m_poseEstimator = new SwerveDrivePoseEstimator(SWERVE_KINEMATICS, m_gyro.getRotation2d(), getModulePositions(), new Pose2d());
 
         m_swervePublisher = new SwerveDrivePublisher();
@@ -108,6 +105,13 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
             .addD(0)
             .build();
 
+        PPSwerveControllerCommand.setLoggingCallbacks(
+            m_field::setTrajectory,
+            m_field::setTrajectorySetpoint,
+            this::logTrajectoryChassisSetpoint,
+            this::logTrajectoryErrors
+        );
+
         if (RobotBase.isSimulation()) {
             List<SwerveModuleSimWrapper> moduleSims = List.of(
                 m_frontLeft.getSimWrapper(),
@@ -118,12 +122,18 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         }
     }
 
+    private void logTrajectoryChassisSetpoint(ChassisSpeeds chassisSpeeds) {
+        m_trajectoryVelocitySetpointX.setNumber(chassisSpeeds.vxMetersPerSecond);
+        m_trajectoryVelocitySetpointY.setNumber(chassisSpeeds.vyMetersPerSecond);
+        m_trajectoryVelocitySetpointAngle.setNumber(chassisSpeeds.omegaRadiansPerSecond);
+    }
+
     @Override
     protected void lockDriveTrain() {
-        m_frontLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-        m_frontRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(135)));
-        m_backLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(135)));
-        m_backRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+        m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+        m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+        m_backLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+        m_backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     }
 
     @Override
@@ -134,7 +144,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     public final SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] modulePositions = new SwerveModulePosition[4];
         for (int i = 0; i < 4; i += 1) {
-            modulePositions[i] = m_modules[i].getModulePosition();
+            modulePositions[i] = m_modules[i].getPosition();
         }
         return modulePositions;
     }
@@ -162,7 +172,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         m_rotationPidProperties.updateIfChanged();
 
         for (SwerveDriveModules module : m_modules) {
-            module.update();
+            module.periodic();
         }
 
         SwerveModulePosition[] modulePositions = getModulePositions();
@@ -186,13 +196,12 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     public void setSpeeds(ChassisSpeeds speedsInp) {
         SwerveModuleState[] moduleStates = SWERVE_KINEMATICS.toSwerveModuleStates(speedsInp);
-        System.out.println(speedsInp + " - " + Arrays.toString(moduleStates));
         setModuleStates(moduleStates);
     }
 
     public void setModuleStates(SwerveModuleState... moduleStates) {
         for (int i = 0; i < 4; i++) {
-            m_modules[i].setState(moduleStates[i]);
+            m_modules[i].setDesiredState(moduleStates[i]);
         }
     }
 
@@ -203,7 +212,26 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     public void setModuleState(int moduleId, double degrees, double velocity) {
-        m_modules[moduleId].setState(new SwerveModuleState(velocity, Rotation2d.fromDegrees(degrees)));
+        m_modules[moduleId].setDesiredState(new SwerveModuleState(velocity, Rotation2d.fromDegrees(degrees)));
+    }
+
+    @Override
+    public void resetStickyFaultsChassis() {
+        // TODO implement
+    }
+
+    @Override
+    protected BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
+        return new GosSwerveAutoBuilder(
+            this::getPose,
+            poseSetter,
+            m_xTranslationPidController,
+            m_yTranslationPidController,
+            m_rotationPidController,
+            this::setSpeeds,
+            eventMap,
+            this
+        );
     }
 
     @Override
@@ -217,7 +245,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     @Override
-    public void turnPID(double angleGoal) {
+    public void turnToAngle(double angleGoal) {
         // TODO implement
     }
 
@@ -233,40 +261,21 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     @Override
-    public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
+    public CommandBase createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
         // TODO implement
         return new InstantCommand();
     }
 
     @Override
-    public void resetStickyFaultsChassis() {
-        // TODO implement
-    }
-
-    @Override
-    public CommandBase syncOdometryWithPoseEstimator() {
+    public CommandBase createSyncOdometryWithPoseEstimatorCommand() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), getModulePositions(), m_poseEstimator.getEstimatedPosition()))
         .withName("Sync Odometry /w Pose");
     }
 
     @Override
-    public CommandBase selfTestMotors() {
+    public CommandBase createSelfTestMotorsCommand() {
         // TODO implement
         return new SequentialCommandGroup();
-    }
-
-    @Override
-    protected BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
-        return new GosSwerveAutoBuilder(
-            this::getPose,
-            poseSetter,
-            m_xTranslationPidController,
-            m_yTranslationPidController,
-            m_rotationPidController,
-            this::setSpeeds,
-            eventMap,
-            this
-        );
     }
 
     public CommandBase commandSetModuleState(int moduleId, double degrees, double velocity) {

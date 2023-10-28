@@ -17,12 +17,11 @@ public interface ChassisSubsystemInterface extends Subsystem {
 
     void stop();
 
-    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
     double getPitch();
 
     double getYaw();
 
-    void turnPID(double angleGoal);
+    void turnToAngle(double angleGoal);
 
     boolean turnPIDIsAtAngle();
 
@@ -38,34 +37,33 @@ public interface ChassisSubsystemInterface extends Subsystem {
 
     boolean canExtendArm();
 
-    @SuppressWarnings("PMD.AvoidReassigningParameters")
-    CommandBase driveToPoint(Pose2d point, boolean reverse);
-
-    CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse);
-
     void resetStickyFaultsChassis();
+
+    CommandBase createDriveToPointCommand(Pose2d point, boolean reverse);
+
+    CommandBase createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse);
 
     CommandBase createAutoEngageCommand();
 
-    CommandBase createResetOdometry(Pose2d pose2d);
+    CommandBase createResetOdometryCommand(Pose2d pose2d);
 
-    CommandBase syncOdometryWithPoseEstimator();
+    CommandBase createSyncOdometryWithPoseEstimatorCommand();
 
-    CommandBase createPathPlannerBuilder(PathPlannerTrajectory trajectory);
+    CommandBase createFollowPathCommand(PathPlannerTrajectory trajectory);
 
-    CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory);
+    CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory);
 
-    CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
+    CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
 
-    CommandBase createPathPlannerBuilderNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
+    CommandBase createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
 
-    CommandBase createPathPlannerBuilderNoPoseReset(PathPlannerTrajectory trajectory);
+    CommandBase createFollowPathCommandNoPoseReset(PathPlannerTrajectory trajectory);
 
-    CommandBase createDriveToPoint(Pose2d point, boolean reverse);
+    CommandBase createDeferredDriveToPointCommand(Pose2d point, boolean reverse);
 
-    CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle);
+    CommandBase createResetPoseCommand(PathPlannerTrajectory trajectory, Rotation2d startAngle);
 
-    CommandBase createTurnPID(double angleGoal);
+    CommandBase createTurnToAngleCommand(double angleGoal);
 
-    CommandBase selfTestMotors();
+    CommandBase createSelfTestMotorsCommand();
 }

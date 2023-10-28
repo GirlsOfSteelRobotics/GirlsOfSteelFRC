@@ -16,9 +16,9 @@ public final class CombinedCommandsUtil {
     }
 
     public static CommandBase goHome(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return extension.commandFullRetract()
+        return extension.createFullRetractCommand()
             .alongWith(Commands.waitUntil(() -> pivot.getAbsoluteEncoderAngle2() > -40)
-            .andThen(pivot.commandGoHome()))
+            .andThen(pivot.createGoHomeCommand()))
             .withName("Go Home Without Turret");
     }
 
@@ -30,27 +30,27 @@ public final class CombinedCommandsUtil {
     //}
 
     public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return pivot.commandGoToGroundPickupAndHold()
-            .andThen(extension.commandMiddleRetract())
+        return pivot.createGoToGroundPickupAndHoldCommand()
+            .andThen(extension.createMiddleExtensionCommand())
             .withName("Go To Ground Pickup");
     }
 
     public static CommandBase goToGroundPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension, double allowableError, double velocityAllowableError) {
-        return pivot.commandGoToGroundPickupAndHold(allowableError, velocityAllowableError)
-            .andThen((extension.commandMiddleRetract().andThen(new PrintCommand("Ran middle retract"))))
+        return pivot.createGoToGroundPickupAndHoldCommand(allowableError, velocityAllowableError)
+            .andThen((extension.createMiddleExtensionCommand().andThen(new PrintCommand("Ran middle retract"))))
             .withName("Go To Ground Pickup");
     }
 
     public static CommandBase armToHpPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return pivot.commandHpPickupHold()
-            .alongWith(Commands.waitUntil(() -> (pivot.getAbsoluteEncoderAngle2() > -40)).andThen(extension.commandMiddleRetract()))
+        return pivot.createGoToHpPickupHoldCommand()
+            .alongWith(Commands.waitUntil(() -> (pivot.getAbsoluteEncoderAngle2() > -40)).andThen(extension.createMiddleExtensionCommand()))
             .withName("HP Pickup");
     }
 
     public static CommandBase moveToScore(AutoPivotHeight height, GamePieceType gamePiece, ArmPivotSubsystem armPivot) {
         return new ParallelCommandGroup(
             //turret.commandTurretPID(turretAngle),
-            armPivot.commandMoveArmToPieceScorePositionAndHold(height, gamePiece) //set for second piece
+            armPivot.createMoveArmToPieceScorePositionAndHoldCommand(height, gamePiece) //set for second piece
         ).withName("Move To Score");
     }
 }
