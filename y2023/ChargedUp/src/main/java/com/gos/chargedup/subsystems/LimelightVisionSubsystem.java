@@ -33,4 +33,3 @@ public class LimelightVisionSubsystem extends SubsystemBase implements Vision {
         return Optional.of(estimatedRobotPose);
     }
 }
-

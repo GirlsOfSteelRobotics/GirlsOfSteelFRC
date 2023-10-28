@@ -151,4 +151,3 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
         m_sim.processFrame(m_photonPoseEstimator.getReferencePose());
     }
 }
-
