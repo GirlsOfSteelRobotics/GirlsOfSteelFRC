@@ -11,7 +11,6 @@ gos_java_library(
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent:Constants",
         "@bzlmodrio-allwpilib//libraries/java/ntcore",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )
 
@@ -25,6 +24,5 @@ gos_java_library(
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

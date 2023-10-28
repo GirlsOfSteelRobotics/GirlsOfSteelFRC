@@ -8,6 +8,5 @@ gos_java_library(
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

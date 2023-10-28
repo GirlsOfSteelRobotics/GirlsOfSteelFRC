@@ -8,6 +8,5 @@ gos_java_library(
         "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works/commands",
         "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

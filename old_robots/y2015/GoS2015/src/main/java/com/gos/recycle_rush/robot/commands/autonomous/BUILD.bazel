@@ -10,6 +10,5 @@ gos_java_library(
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

@@ -4,27 +4,20 @@ gos_java_library(
     name = "EncoderGoSPidController",
     srcs = ["EncoderGoSPidController.java"],
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
-    deps = [
-        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
-    ],
+    deps = ["@bzlmodrio-allwpilib//libraries/java/wpilibj"],
 )
 
 gos_java_library(
     name = "Camera",
     srcs = ["Camera.java"],
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
-    deps = [
-        "@bzlmodrio-allwpilib//libraries/java/ntcore",
-        "@maven//:org_snobotv2_snobot_sim_java",
-    ],
+    deps = ["@bzlmodrio-allwpilib//libraries/java/ntcore"],
 )
 
 gos_java_library(
     name = "LspbPidPlanner",
     srcs = ["LspbPidPlanner.java"],
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
-    deps = ["@maven//:org_snobotv2_snobot_sim_java"],
 )
 
 gos_java_library(
@@ -37,6 +30,5 @@ gos_java_library(
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

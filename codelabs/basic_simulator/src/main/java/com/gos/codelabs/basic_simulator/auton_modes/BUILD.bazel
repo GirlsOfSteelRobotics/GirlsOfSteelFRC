@@ -9,6 +9,5 @@ gos_java_library(
         "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

@@ -39,6 +39,5 @@ gos_java_library(
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/auto_modes",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

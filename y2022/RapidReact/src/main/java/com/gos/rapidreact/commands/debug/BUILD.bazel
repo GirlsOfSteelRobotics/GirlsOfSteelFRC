@@ -7,6 +7,5 @@ gos_java_library(
     deps = [
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

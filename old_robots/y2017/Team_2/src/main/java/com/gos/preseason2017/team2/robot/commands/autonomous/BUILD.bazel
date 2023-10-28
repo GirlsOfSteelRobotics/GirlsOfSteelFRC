@@ -7,6 +7,5 @@ gos_java_library(
     deps = [
         "//old_robots/y2017/Team_2/src/main/java/com/gos/preseason2017/team2/robot/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

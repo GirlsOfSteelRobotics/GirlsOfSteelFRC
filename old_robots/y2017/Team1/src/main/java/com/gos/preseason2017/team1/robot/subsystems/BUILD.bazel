@@ -10,6 +10,5 @@ gos_java_library(
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-phoenix//libraries/java/api-java",
         "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
-        "@maven//:org_snobotv2_snobot_sim_java",
     ],
 )

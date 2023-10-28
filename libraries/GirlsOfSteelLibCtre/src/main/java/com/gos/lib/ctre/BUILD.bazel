@@ -8,6 +8,5 @@ gos_java_library(
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
         "@bzlmodrio-phoenix//libraries/java/api-java",
-        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
     ],
 )
