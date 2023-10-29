@@ -24,15 +24,18 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
+import java.util.HashMap;
+import java.util.List;
+
 
 public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCommandGroup {
     public OnePieceAndLeaveCommunityWithTurnCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot,
                                                          ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                          AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)), false);
-        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave);
+        List<PathPlannerTrajectory> onePieceAndLeave = PathPlanner.loadPathGroup(path, false, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)));
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave, new HashMap<>());
 
-        Pose2d initialPose = onePieceAndLeave.getInitialPose();
+        Pose2d initialPose = onePieceAndLeave.get(0).getInitialPose();
 
         //0.6 away
         Pose2d startPose = new Pose2d(new Translation2d(

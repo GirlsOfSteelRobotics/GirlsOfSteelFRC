@@ -10,15 +10,12 @@ import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
@@ -27,13 +24,11 @@ public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
 
 
     public OnePieceANDGrabSecondCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String pathStart, String pathEnd) {
-        PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, NOT_AS_FAST_PATH_CONSTRAINTS, true);
-        Command driveToPiece = chassis.createFollowPathCommand(firstPiece);
-
-        List<PathPlannerTrajectory> getSecondPiece = PathPlanner.loadPathGroup(pathEnd, false, NOT_AS_FAST_PATH_CONSTRAINTS);
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
-        Command driveToGetSecondPiece = chassis.createFollowPathCommand(getSecondPiece, eventMap);
+
+        Command driveToPiece = chassis.createFollowPathCommand(pathStart, true, NOT_AS_FAST_PATH_CONSTRAINTS);
+        Command driveToGetSecondPiece = chassis.createFollowPathCommand(pathEnd, false, eventMap, NOT_AS_FAST_PATH_CONSTRAINTS);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

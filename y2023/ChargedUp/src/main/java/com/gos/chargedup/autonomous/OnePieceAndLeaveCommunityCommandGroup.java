@@ -10,8 +10,6 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -20,8 +18,7 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
     public OnePieceAndLeaveCommunityCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot,
                                                  ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                  AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerTrajectory onePieceAndLeave = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS, true);
-        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave);
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(path, true, Constants.DEFAULT_PATH_CONSTRAINTS);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
