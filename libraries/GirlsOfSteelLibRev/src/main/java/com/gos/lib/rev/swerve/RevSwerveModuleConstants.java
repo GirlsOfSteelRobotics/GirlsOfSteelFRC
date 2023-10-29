@@ -3,12 +3,9 @@ package com.gos.lib.rev.swerve;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.util.Units;
 
-public class RevSwerveModuleConstants {
+@SuppressWarnings("PMD.DataClass")
+public final class RevSwerveModuleConstants {
     // Modified version of https://github.com/REVrobotics/MAXSwerve-Java-Template/blob/main/src/main/java/frc/robot/Constants.java
-
-    public static final class NeoMotorConstants {
-        public static final double FREE_SPEED_RPM = 5676;
-    }
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the MAXSwerve Module.
@@ -37,6 +34,10 @@ public class RevSwerveModuleConstants {
 
     public final double m_drivingEncoderPositionFactor;
     public final double m_drivingEncoderVelocityFactor;
+
+    public static final class NeoMotorConstants {
+        public static final double FREE_SPEED_RPM = 5676;
+    }
 
     public RevSwerveModuleConstants(int drivingMotorTeeth) {
         m_drivingMotorReduction = (45.0 * 22) / (drivingMotorTeeth * 15);

@@ -61,6 +61,7 @@ public class SwerveDriveModules {
      * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
      * Encoder.
      */
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     public SwerveDriveModules(String moduleName, int drivingCANId, int azimuthId, double chassisAngularOffset) {
         m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -185,7 +186,7 @@ public class SwerveDriveModules {
         // relative to the chassis.
         m_currentPosition = new SwerveModulePosition(
             m_drivingEncoder.getPosition(),
-            new Rotation2d(getTurningEncoderAngle() - m_chassisAngularOffset));;
+            new Rotation2d(getTurningEncoderAngle() - m_chassisAngularOffset));
         m_currentState = new SwerveModuleState(m_drivingEncoder.getVelocity(),
             new Rotation2d(getTurningEncoderAngle() - m_chassisAngularOffset));
 
