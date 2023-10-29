@@ -33,7 +33,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -244,16 +243,6 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     }
 
     @Override
-    public CommandBase createFollowPathCommand(PathPlannerTrajectory trajectory) {
-        return createAutoBuilder(new HashMap<>()).fullAuto(trajectory);
-    }
-
-    @Override
-    public CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory) {
-        return createAutoBuilder(new HashMap<>()).fullAuto(trajectory);
-    }
-
-    @Override
     public CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
         return createAutoBuilder(events).fullAuto(trajectory);
     }
@@ -261,11 +250,6 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     @Override
     public CommandBase createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
         return createAutoBuilderNoPoseReset(events).fullAuto(trajectory);
-    }
-
-    @Override
-    public CommandBase createFollowPathCommandNoPoseReset(PathPlannerTrajectory trajectory) {
-        return createAutoBuilderNoPoseReset(new HashMap<>()).fullAuto(trajectory);
     }
 
     @Override

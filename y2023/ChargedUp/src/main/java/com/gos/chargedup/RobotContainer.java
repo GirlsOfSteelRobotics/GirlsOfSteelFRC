@@ -6,9 +6,6 @@
 package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.autonomous.SwerveStrafeCommandGroup;
-import com.gos.chargedup.autonomous.SwerveStraightLineCommandGroup;
-import com.gos.chargedup.autonomous.SwerveTurnInLineCommandGroup;
 import com.gos.chargedup.commands.AutoAimChassisToNodeOnTheFly;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
@@ -16,8 +13,6 @@ import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.SwerveChassisJoystickCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
-import com.gos.chargedup.commands.testing.TestLineCommandGroup;
-import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
@@ -162,17 +157,17 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("TrajectoryTestCommands");
 
         // auto trajectories
-        tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
-        tab.add("Trajectory: Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
-        tab.add("Trajectory: Test S Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+        tab.add("Trajectory: Test Line", m_chassisSubsystem.createFollowPathCommand("TestLine", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+        tab.add("Trajectory: Test Mild Curve", m_chassisSubsystem.createFollowPathCommand("TestMildCurve", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+        tab.add("Trajectory: Test S Curve", m_chassisSubsystem.createFollowPathCommand("TestSCurve", false, Constants.DEFAULT_PATH_CONSTRAINTS));
     }
 
     private void createSwerveTrajectoryCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("SwerveTestCommands");
         if (Constants.IS_SWERVE) {
-            tab.add("Swerve: Test Straight", new SwerveStraightLineCommandGroup(m_chassisSubsystem));
-            tab.add("Swerve: Test Strafe", new SwerveStrafeCommandGroup(m_chassisSubsystem));
-            tab.add("Swerve: Test Turn in Line 180", new SwerveTurnInLineCommandGroup(m_chassisSubsystem));
+            tab.add("Swerve: Test Straight", m_chassisSubsystem.createFollowPathCommand("Swerve Straight Path", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+            tab.add("Swerve: Test Strafe", m_chassisSubsystem.createFollowPathCommand("Swerve Strafe Path", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+            tab.add("Swerve: Test Turn in Line 180", m_chassisSubsystem.createFollowPathCommand("SwerveTurnInPath", false, Constants.DEFAULT_PATH_CONSTRAINTS));
         }
 
     }
