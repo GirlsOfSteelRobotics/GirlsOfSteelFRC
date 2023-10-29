@@ -23,7 +23,7 @@ public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGro
         List<PathPlannerTrajectory> driveOverStation = PathPlanner.loadPathGroup(path, true,
             Constants.DEFAULT_PATH_CONSTRAINTS,
             Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command driveForwardOverChargingStation1 = chassis.createPathPlannerBuilder(driveOverStation);
+        Command driveForwardOverChargingStation1 = chassis.createFollowPathCommand(driveOverStation);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

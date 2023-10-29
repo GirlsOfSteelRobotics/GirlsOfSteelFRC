@@ -162,9 +162,9 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         return closestNode;
     }
 
-    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
     @Override
     public double getPitch() {
+        // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
         return m_gyro.getRoll();
     }
 
@@ -204,12 +204,29 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         return (this.isInCommunityZone() || this.isInLoadingZone());
     }
 
+    protected abstract void lockDriveTrain();
+
+    protected abstract void unlockDriveTrain();
+
+    protected abstract BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter);
+
+    private BaseAutoBuilder createAutoBuilder(Map<String, Command> eventMap) {
+        return createPathPlannerAutoBuilder(eventMap, this::resetOdometry);
+    }
+
+    private BaseAutoBuilder createAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
+        return createPathPlannerAutoBuilder(eventMap, (Pose2d pose) -> {});
+    }
+
+    //////////////////////////////
+    // Commands
+    //////////////////////////////
     @Override
     @SuppressWarnings("PMD.AvoidReassigningParameters")
-    public CommandBase driveToPoint(Pose2d point, boolean reverse) {
+    public CommandBase createDriveToPointCommand(Pose2d point, boolean reverse) {
         point = AllianceFlipper.maybeFlip(point);
         System.out.println("flipped point" + point);
-        return driveToPointNoFlip(getPose(), point, reverse);
+        return createDriveToPointNoFlipCommand(getPose(), point, reverse);
     }
 
     @Override
@@ -219,60 +236,45 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
             .finallyDo((interrupted) -> unlockDriveTrain()).withName("Auto Engage");
     }
 
-    protected abstract void lockDriveTrain();
-
-    protected abstract void unlockDriveTrain();
-
     @Override
-    public CommandBase createResetOdometry(Pose2d pose2d) {
+    public CommandBase createResetOdometryCommand(Pose2d pose2d) {
         return this.run(() -> resetOdometry(pose2d))
             .ignoringDisable(true)
             .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
-    protected abstract BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter);
-
     @Override
-    public CommandBase createPathPlannerBuilder(PathPlannerTrajectory trajectory) {
-        return createPathPlannerBuilder(new HashMap<>()).fullAuto(trajectory);
+    public CommandBase createFollowPathCommand(PathPlannerTrajectory trajectory) {
+        return createAutoBuilder(new HashMap<>()).fullAuto(trajectory);
     }
 
     @Override
-    public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory) {
-        return createPathPlannerBuilder(new HashMap<>()).fullAuto(trajectory);
+    public CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory) {
+        return createAutoBuilder(new HashMap<>()).fullAuto(trajectory);
     }
 
     @Override
-    public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
-        return createPathPlannerBuilder(events).fullAuto(trajectory);
-    }
-
-    private BaseAutoBuilder createPathPlannerBuilder(Map<String, Command> eventMap) {
-        return createPathPlannerAutoBuilder(eventMap, this::resetOdometry);
+    public CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
+        return createAutoBuilder(events).fullAuto(trajectory);
     }
 
     @Override
-    public CommandBase createPathPlannerBuilderNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
-        return createPathPlannerBuilderNoPoseReset(events).fullAuto(trajectory);
+    public CommandBase createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
+        return createAutoBuilderNoPoseReset(events).fullAuto(trajectory);
     }
 
     @Override
-    public CommandBase createPathPlannerBuilderNoPoseReset(PathPlannerTrajectory trajectory) {
-        return createPathPlannerBuilderNoPoseReset(new HashMap<>()).fullAuto(trajectory);
-    }
-
-    private BaseAutoBuilder createPathPlannerBuilderNoPoseReset(Map<String, Command> eventMap) {
-        return createPathPlannerAutoBuilder(eventMap, (Pose2d pose) -> {
-        });
+    public CommandBase createFollowPathCommandNoPoseReset(PathPlannerTrajectory trajectory) {
+        return createAutoBuilderNoPoseReset(new HashMap<>()).fullAuto(trajectory);
     }
 
     @Override
-    public CommandBase createDriveToPoint(Pose2d point, boolean reverse) {
-        return new ProxyCommand(() -> driveToPoint(point, reverse));
+    public CommandBase createDeferredDriveToPointCommand(Pose2d point, boolean reverse) {
+        return new ProxyCommand(() -> createDriveToPointCommand(point, reverse));
     }
 
     @Override
-    public CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle) {
+    public CommandBase createResetPoseCommand(PathPlannerTrajectory trajectory, Rotation2d startAngle) {
         return Commands.runOnce(
             () -> {
                 PathPlannerTrajectory.PathPlannerState initialState = trajectory.getInitialState();
@@ -286,9 +288,9 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     }
 
     @Override
-    public CommandBase createTurnPID(double angleGoal) {
+    public CommandBase createTurnToAngleCommand(double angleGoal) {
         return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
-            .andThen(this.run(() -> turnPID(angleGoal))
+            .andThen(this.run(() -> turnToAngle(angleGoal))
                 .until(this::turnPIDIsAtAngle)
                 .withName("Chassis to Angle" + angleGoal));
     }

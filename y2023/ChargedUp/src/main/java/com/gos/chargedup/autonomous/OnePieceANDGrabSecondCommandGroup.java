@@ -28,31 +28,31 @@ public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
 
     public OnePieceANDGrabSecondCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String pathStart, String pathEnd) {
         PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, NOT_AS_FAST_PATH_CONSTRAINTS, true);
-        Command driveToPiece = chassis.createPathPlannerBuilder(firstPiece);
+        Command driveToPiece = chassis.createFollowPathCommand(firstPiece);
 
         List<PathPlannerTrajectory> getSecondPiece = PathPlanner.loadPathGroup(pathEnd, false, NOT_AS_FAST_PATH_CONSTRAINTS);
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
-        Command driveToGetSecondPiece = chassis.createPathPlannerBuilder(getSecondPiece, eventMap);
+        Command driveToGetSecondPiece = chassis.createFollowPathCommand(getSecondPiece, eventMap);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));
 
         //first part
         addCommands(driveToPiece
-            .alongWith(armPivot.commandPivotArmToAngleHold(-10))
+            .alongWith(armPivot.createPivotToAngleAndHoldCommand(-10))
             .alongWith(Commands.waitSeconds(0.25)
-                .andThen(armExtension.commandMiddleRetract())));
+                .andThen(armExtension.createMiddleExtensionCommand())));
 
         //turn 180
-        addCommands(chassis.createTurnPID(0));
+        addCommands(chassis.createTurnToAngleCommand(0));
 
         //drive second part
         addCommands(driveToGetSecondPiece
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //turn 180
-        addCommands(chassis.createTurnPID(180)
+        addCommands(chassis.createTurnToAngleCommand(180)
             .raceWith(CombinedCommandsUtil.goHome(armPivot, armExtension)));
     }
 }

@@ -93,6 +93,8 @@ public final class Constants {
     public static final boolean IS_ROBOT_BLOSSOM = RobotBase.isReal();
     public static final boolean IS_SWERVE = RobotBase.isReal() ? IS_ROBOT_BLOSSOM : true; // NOPMD(SimplifiedTernary)
 
+    public static final boolean DEFAULT_LOCK_PROPERTIES = RobotBase.isReal();
+
     static {
         SmartDashboard.putBoolean("Is Blossom", IS_ROBOT_BLOSSOM);
     }

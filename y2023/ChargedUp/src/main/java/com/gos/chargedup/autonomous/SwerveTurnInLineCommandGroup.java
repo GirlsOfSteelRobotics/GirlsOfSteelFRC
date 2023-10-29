@@ -13,7 +13,7 @@ import java.util.List;
 public class SwerveTurnInLineCommandGroup extends SequentialCommandGroup {
     public SwerveTurnInLineCommandGroup(ChassisSubsystemInterface chassis) {
         List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup("SwerveTurnInPath", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testLineCommand = chassis.createPathPlannerBuilder(trajectory);
+        Command testLineCommand = chassis.createFollowPathCommand(trajectory);
         addCommands(testLineCommand);
 
     }

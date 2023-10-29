@@ -23,10 +23,10 @@ public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialComma
     public TwoPieceLeaveCommunityAndEngageCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String firstPath, String secondPath) {
         // node 4
         PathPlannerTrajectory twoPieceLeaveAndEngageBefore = PathPlanner.loadPath(firstPath, Constants.DEFAULT_PATH_CONSTRAINTS, true);
-        Command driveAutoTwoPieceLeaveCommunityAndEngageBefore = chassis.createPathPlannerBuilder(twoPieceLeaveAndEngageBefore);
+        Command driveAutoTwoPieceLeaveCommunityAndEngageBefore = chassis.createFollowPathCommand(twoPieceLeaveAndEngageBefore);
 
         List<PathPlannerTrajectory> twoPieceLeaveAndEngageAfter = PathPlanner.loadPathGroup(secondPath, false, new PathConstraints(Units.inchesToMeters(60), Units.inchesToMeters(60)));
-        Command driveAutoTwoPieceLeaveCommunityAndEngageAfter = chassis.createPathPlannerBuilder(twoPieceLeaveAndEngageAfter);
+        Command driveAutoTwoPieceLeaveCommunityAndEngageAfter = chassis.createFollowPathCommand(twoPieceLeaveAndEngageAfter);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)
@@ -36,11 +36,11 @@ public class TwoPieceLeaveCommunityAndEngageCommandGroup extends SequentialComma
         addCommands(driveAutoTwoPieceLeaveCommunityAndEngageBefore);
 
         //turn 180
-        addCommands(chassis.createTurnPID(0));
+        addCommands(chassis.createTurnToAngleCommand(0));
 
         //grab piece
 
-        addCommands(armPivot.commandGoToGroundPickup());
+        addCommands(armPivot.createGoToGroundPickupCommand());
         addCommands(claw.createMoveClawIntakeInWithTimeoutCommand());
 
         //engage

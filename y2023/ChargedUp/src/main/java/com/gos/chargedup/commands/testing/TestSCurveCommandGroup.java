@@ -16,7 +16,7 @@ public class TestSCurveCommandGroup extends SequentialCommandGroup {
     public TestSCurveCommandGroup(ChassisSubsystemInterface chassis) {
 
         List<PathPlannerTrajectory> testSCurve = PathPlanner.loadPathGroup("TestSCurve", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testSCurveCommand = chassis.createPathPlannerBuilder(testSCurve);
+        Command testSCurveCommand = chassis.createFollowPathCommand(testSCurve);
         addCommands(testSCurveCommand);
 
         setName("TestTrajectorySCurve");

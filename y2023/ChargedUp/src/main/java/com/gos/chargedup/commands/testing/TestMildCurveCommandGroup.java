@@ -16,7 +16,7 @@ public class TestMildCurveCommandGroup extends SequentialCommandGroup {
     public TestMildCurveCommandGroup(ChassisSubsystemInterface chassis) {
 
         List<PathPlannerTrajectory> testMildCurve = PathPlanner.loadPathGroup("TestMildCurve", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testMildCurveCommand = chassis.createPathPlannerBuilder(testMildCurve);
+        Command testMildCurveCommand = chassis.createFollowPathCommand(testMildCurve);
         addCommands(testMildCurveCommand);
 
         setName("TestTrajectoryMildCurve");

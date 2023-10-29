@@ -13,7 +13,7 @@ import java.util.List;
 public class SwerveStrafeCommandGroup extends SequentialCommandGroup {
     public SwerveStrafeCommandGroup(ChassisSubsystemInterface chassis) {
         List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup("Swerve Strafe Path", Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command testLineCommand = chassis.createPathPlannerBuilder(trajectory);
+        Command testLineCommand = chassis.createFollowPathCommand(trajectory);
         addCommands(testLineCommand);
     }
 }
