@@ -186,7 +186,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
-                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY);
+                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
