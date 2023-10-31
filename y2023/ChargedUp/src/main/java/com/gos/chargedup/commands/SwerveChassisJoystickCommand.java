@@ -33,7 +33,7 @@ public class SwerveChassisJoystickCommand extends CommandBase {
             xVelocity, yVelocity, omega, m_swerveDriveChassisSubsystem.getPose().getRotation());
 
         // Now use this in our kinematics
-        m_swerveDriveChassisSubsystem.setSpeeds(speeds);
+        m_swerveDriveChassisSubsystem.setChassisSpeed(speeds);
     }
 
     @Override

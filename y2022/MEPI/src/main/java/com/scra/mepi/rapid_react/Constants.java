@@ -4,9 +4,6 @@
 
 package com.scra.mepi.rapid_react;
 
-import com.pathplanner.lib.PathConstraints;
-import edu.wpi.first.math.util.Units;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -28,10 +25,6 @@ public final class Constants {
     public static final int SHOOTER_HOOD_SPARK = 11;
     public static final int CLIMBER_LEFT = 12;
     public static final int CLIMBER_RIGHT = 13;
-
-    // path constraints
-    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS =
-            new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
 
     // DIO
     public static final int LEFT_LIMIT_SWITCH = 1;

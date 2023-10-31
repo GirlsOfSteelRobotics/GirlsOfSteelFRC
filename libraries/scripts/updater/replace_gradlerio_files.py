@@ -4,6 +4,7 @@ Downloads and overwrites any gradlerio specific files and gradle build files
 
 import re
 from libraries.scripts.updater.utils import (
+    PINNED_VSCODE_WPILIB_COMMITISH,
     walk_for_extension,
     regex_replace_file,
     auto_retry_download,
@@ -89,7 +90,7 @@ def update_non_robot_build_file(build_file, latest_version):
     regex_replace_file(build_file, replacements)
 
 
-def load_url(url_suffix, pinned_version="main"):
+def load_url(url_suffix, pinned_version=PINNED_VSCODE_WPILIB_COMMITISH):
     project_subpath = f"wpilibsuite/vscode-wpilib"
 
     download_url = "/".join(

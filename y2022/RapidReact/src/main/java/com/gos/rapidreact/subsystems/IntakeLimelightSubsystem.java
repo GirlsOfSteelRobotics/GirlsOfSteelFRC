@@ -1,12 +1,12 @@
 package com.gos.rapidreact.subsystems;
 
 
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.sensors.LimelightSensor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLimelightSubsystem extends SubsystemBase {
@@ -48,10 +48,10 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
+        if (GetAllianceUtil.isBlueAlliance()) {
             m_limelight.setPythonNumber(BLUE_CARGO_PARAMS);
         }
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+        if (GetAllianceUtil.isRedAlliance()) {
             m_limelight.setPythonNumber(RED_CARGO_PARAMS);
         }
         m_limelight.setPipeline(FANCY_PIPELINE);

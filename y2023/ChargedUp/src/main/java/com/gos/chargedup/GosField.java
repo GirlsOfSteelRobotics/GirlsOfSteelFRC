@@ -1,5 +1,6 @@
 package com.gos.chargedup;
 
+import com.gos.lib.GetAllianceUtil;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -8,7 +9,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import org.photonvision.EstimatedRobotPose;
@@ -74,7 +74,7 @@ public class GosField {
     public static class RectangleObject {
         private final Pose2d[] m_corners = new Pose2d[4];
         private final FieldObject2d m_object;
-        private DriverStation.Alliance m_lastAlliance;
+        private boolean m_lastAllianceIsBlue;
 
         public RectangleObject(double leftTopX, double leftTopY, double rightBottomX, double rightBottomY, GosField field, String name) {
             m_corners[0] = new Pose2d(leftTopX, leftTopY, new Rotation2d(0.0));
@@ -89,11 +89,12 @@ public class GosField {
                 poses.add(AllianceFlipper.maybeFlip(pose));
             }
             m_object.setPoses(poses);
+            m_lastAllianceIsBlue = GetAllianceUtil.isBlueAlliance();
         }
 
         public void updateRectangle() {
-            DriverStation.Alliance alliance = DriverStation.getAlliance();
-            if (alliance != m_lastAlliance) {
+            boolean isBlue = GetAllianceUtil.isBlueAlliance();
+            if (isBlue != m_lastAllianceIsBlue) {
                 ArrayList<Pose2d> poses = new ArrayList<>();
                 for (Pose2d pose : m_corners) {
                     poses.add(AllianceFlipper.maybeFlip(pose));
@@ -101,7 +102,7 @@ public class GosField {
                 m_object.setPoses(poses);
             }
 
-            m_lastAlliance = alliance;
+            m_lastAllianceIsBlue = isBlue;
         }
     }
 

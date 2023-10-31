@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.ultimate_ascent.RobotMap;
 import com.gos.ultimate_ascent.objects.GosPidController;
 import com.gos.ultimate_ascent.objects.SmoothEncoder;
@@ -112,7 +111,7 @@ public class Chassis extends SubsystemBase {
     private static final double LEFT_POSITION_I = 0.0; //CHANGE for real robot
     private static final double LEFT_POSITION_D = 0.0; //CHANGE for real robot
     //gryo
-    private final Gyro m_gyro;
+    private final AnalogGyro m_gyro;
     private boolean m_gyroOn;
     private boolean m_rotating;
     private boolean m_manualRotationDisabled;

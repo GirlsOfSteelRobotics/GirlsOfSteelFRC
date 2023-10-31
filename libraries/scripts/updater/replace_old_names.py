@@ -3,6 +3,7 @@ Runs a regex replace on any of the class names that got changed in the past year
 """
 import json
 from libraries.scripts.updater.utils import (
+    PINNED_VSCODE_WPILIB_COMMITISH,
     walk_for_extension,
     regex_replace_file,
     auto_retry_download,
@@ -19,7 +20,7 @@ def __run_replacement(replacements, root=".", dir_blacklist=None):
 
 def run_standard_replacement(auto_commit):
     # Last sync Dec 19, 2021
-    wpilib_replacements_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources/java_replacements.json"
+    wpilib_replacements_url = f"https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/{PINNED_VSCODE_WPILIB_COMMITISH}/vscode-wpilib/resources/java_replacements.json"
 
     raw_json_data = auto_retry_download(wpilib_replacements_url).decode("utf-8")
     json_data = json.loads(raw_json_data)

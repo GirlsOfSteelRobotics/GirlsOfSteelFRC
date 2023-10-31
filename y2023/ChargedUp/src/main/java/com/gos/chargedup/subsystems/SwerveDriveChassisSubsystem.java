@@ -112,8 +112,14 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         m_swerveDrive.updateSimulator();
     }
 
-    public void setSpeeds(ChassisSpeeds speedsInp) {
-        m_swerveDrive.setChassisSpeeds(speedsInp);
+    @Override
+    public void setChassisSpeed(ChassisSpeeds speed) {
+        m_swerveDrive.setChassisSpeeds(speed);
+    }
+
+    @Override
+    public ChassisSpeeds getChassisSpeed() {
+        return m_swerveDrive.getChassisSpeed();
     }
 
     @Override
@@ -129,7 +135,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
             m_xTranslationPidController,
             m_yTranslationPidController,
             m_rotationPidController,
-            this::setSpeeds,
+            this::setChassisSpeed,
             eventMap,
             this
         );
@@ -178,7 +184,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     public CommandBase commandSetChassisSpeed(ChassisSpeeds chassisSp) {
-        return this.run(() -> setSpeeds(chassisSp)).withName("Set Chassis Speeds" + chassisSp);
+        return this.run(() -> setChassisSpeed(chassisSp)).withName("Set Chassis Speeds" + chassisSp);
     }
 
     public CommandBase commandLockDrivetrain() {
