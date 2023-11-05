@@ -6,8 +6,6 @@ gos_java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
-        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
-        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-revlib//libraries/java/revlib-java",
     ],
 )

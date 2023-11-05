@@ -4,8 +4,5 @@ gos_java_library(
     name = "properties",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
-    deps = [
-        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
-        "@bzlmodrio-allwpilib//libraries/java/wpimath",
-    ],
+    deps = ["@bzlmodrio-allwpilib//libraries/java/wpilibj"],
 )

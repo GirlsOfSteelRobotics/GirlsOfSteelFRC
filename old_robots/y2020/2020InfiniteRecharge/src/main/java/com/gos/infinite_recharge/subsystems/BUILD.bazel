@@ -8,7 +8,6 @@ gos_java_library(
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
-        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/properties/pid",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge:Constants",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/sim",
