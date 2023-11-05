@@ -14,6 +14,7 @@ public class HopperSubsystem extends SubsystemBase {
     public HopperSubsystem() {
         m_hopperMotor = new CANSparkMax(Constants.HOPPER_SPARK, MotorType.kBrushless);
         m_hopperMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_hopperMotor.setSmartCurrentLimit(30);
         m_hopperMotor.restoreFactoryDefaults();
         m_hopperMotor.burnFlash();
     }

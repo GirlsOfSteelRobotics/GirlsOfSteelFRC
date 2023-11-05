@@ -14,14 +14,17 @@ public class KickIfShootSetRPMCommand extends CommandBase {
 
     private final TowerSubsystem m_towerSubsystem;
 
+    private final double m_rpm;
+
     /**
      * Creates a new KickIfShooterGoBrrCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public KickIfShootSetRPMCommand(ShooterSubsytem subsystem, TowerSubsystem towerSubsystem) {
+    public KickIfShootSetRPMCommand(ShooterSubsytem subsystem, TowerSubsystem towerSubsystem, double rpm) {
         m_shooterSubsystem = subsystem;
         m_towerSubsystem = towerSubsystem;
+        m_rpm = rpm;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
         addRequirements(towerSubsystem);
@@ -35,12 +38,12 @@ public class KickIfShootSetRPMCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_shooterSubsystem.setPidRpm(ShooterSubsytem.FENDER_RPM);
-        if (m_shooterSubsystem.checkAtSpeed(ShooterSubsytem.FENDER_RPM)) {
+        m_shooterSubsystem.setPidRpm(m_rpm);
+        if (m_shooterSubsystem.checkAtSpeed(m_rpm)) {
             m_towerSubsystem.setKickerSpeed(1);
             m_towerSubsystem.setTowerSpeed(0.75);
         }
-        SmartDashboard.putBoolean("kickIfShootRPM atSpeed", m_shooterSubsystem.checkAtSpeed(ShooterSubsytem.FENDER_RPM));
+        SmartDashboard.putBoolean("kickIfShootRPM atSpeed", m_shooterSubsystem.checkAtSpeed(m_rpm));
     }
 
     // Called once the command ends or is interrupted.
@@ -53,6 +56,6 @@ public class KickIfShootSetRPMCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return m_shooterSubsystem.checkAtSpeed(ShooterSubsytem.FENDER_RPM);
+        return false;
     }
 }

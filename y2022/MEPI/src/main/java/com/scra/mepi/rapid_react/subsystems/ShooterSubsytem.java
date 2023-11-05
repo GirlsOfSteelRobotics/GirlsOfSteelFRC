@@ -12,11 +12,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import com.scra.mepi.rapid_react.Constants;
-import com.scra.mepi.rapid_react.ShooterLookupTable;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import com.scra.mepi.rapid_react.Constants;
+import com.scra.mepi.rapid_react.ShooterLookupTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -28,14 +28,14 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 public class ShooterSubsytem extends SubsystemBase {
     private static final double AFTER_ENCODER_REDUCTION = 0.5;
 
-    public static final double FENDER_RPM = 1000;
+    public static final double FENDER_RPM = 1500;
 
     /**
      * Creates a new Shooter.
      */
     private final SimableCANSparkMax m_shooterMotor;
 
-    private final SimableCANSparkMax m_hoodMotor; // NOPMD
+    private final SimableCANSparkMax m_hoodMotor;
 
     private final ShooterLookupTable m_shooterLookupTable;
     private final RelativeEncoder m_encoder;
@@ -50,6 +50,8 @@ public class ShooterSubsytem extends SubsystemBase {
     public ShooterSubsytem() {
         m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
         m_hoodMotor = new SimableCANSparkMax(Constants.SHOOTER_HOOD_SPARK, MotorType.kBrushless);
+        m_shooterMotor.setSmartCurrentLimit(50);
+        m_hoodMotor.setSmartCurrentLimit(30);
         m_shooterLookupTable = new ShooterLookupTable();
         m_encoder = m_shooterMotor.getEncoder();
         m_pidController = m_shooterMotor.getPIDController();
@@ -57,7 +59,7 @@ public class ShooterSubsytem extends SubsystemBase {
             .addP(0)
             .addI(0)
             .addD(0)
-            .addFF(0.0004)
+            .addFF(0.00045)
             .build();
         m_shooterMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotor.restoreFactoryDefaults();
