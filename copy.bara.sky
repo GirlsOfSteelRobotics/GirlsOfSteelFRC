@@ -1,0 +1,191 @@
+DEFAULT_PULL_SCRA_ORIGIN_EXCLUDES = [
+    "gradlew",
+    "gradlew.bat",
+    "settings.gradle",
+    ".gitattributes",
+    ".github/**",
+    ".wpilib/**",
+    ".idea/**",
+    ".run/**",
+    ".vscode/**",
+    "gradle/**",
+    "styleguide/**",
+    "vendordeps/GirlsOfSteelLib.json",
+    ".gitignore",
+    "copy.bara.sky",
+    "build.gradle",
+]
+DEFAULT_PUSH_SCRA_ORIGIN_EXCLUDES = [
+    "**/BUILD.bazel",
+]
+DEFAULT_PUSH_SCRA_ORIGIN_INCLUDES = [
+    ".gitattributes",
+    "gradlew",
+    "gradlew.bat",
+    "styleguide/**",
+    ".wpilib/**",
+    "gradle/**",
+]
+DEFAULT_PUSH_SCRA_DESTINATION_EXCLUDES = [
+    ".github/**",
+    ".idea/**",
+    ".gitignore",
+    ".run/**",
+    "settings.gradle",
+    ".vscode/**",
+    "vendordeps/GirlsOfSteelLib.json",
+]
+
+# GOS_URL = "file:///home/pjreiniger/git/GirlsOfSteelFRC"
+# GOS_URL = "ssh://git@github.com/pjreiniger/GirlsOfSteelFRC.git"
+GOS_URL = "ssh://git@github.com/GirlsOfSteelRobotics/GirlsOfSteelFRC.git"
+
+def bidirectional_workflow(project_name, destination_subpath, scra_url, extra_pull_transformations = None, extra_push_transformations = None):
+    extra_pull_transformations = extra_pull_transformations or []
+    extra_push_transformations = extra_push_transformations or []
+
+    if GOS_URL.startswith("file://"):
+        destination = git.destination(
+            url = GOS_URL,
+            fetch = "main",
+            push = "copybara_" + project_name,
+        )
+    else:
+        destination = git.github_pr_destination(
+            url = GOS_URL,
+            destination_ref = "main",
+            pr_branch = "from_scra_" + project_name,
+            title = "[copybara] Update " + project_name + " from SCRA",
+            body = "",
+            integrates = [],
+        )
+
+    core.workflow(
+        name = "pull_" + project_name,
+        origin = git.origin(
+            url = scra_url,
+            ref = "main",
+        ),
+        destination = destination,
+        destination_files = glob([destination_subpath + "/**"], exclude = [
+            "**/BUILD.bazel",
+            destination_subpath + "/.gitignore",
+            destination_subpath + "/build.gradle",
+        ]),
+        origin_files = glob(["**"], exclude = DEFAULT_PULL_SCRA_ORIGIN_EXCLUDES),
+        authoring = authoring.pass_thru("Default email <default@default.com>"),
+        transformations = [
+            core.move("", destination_subpath),
+        ] + extra_pull_transformations,
+    )
+
+    if scra_url.startswith("file://"):
+        destination = git.destination(
+            url = scra_url,
+            fetch = "main",
+            push = "copybara_" + project_name,
+        )
+    else:
+        destination = git.github_pr_destination(
+            url = scra_url,
+            destination_ref = "main",
+            pr_branch = "from_gos",
+            title = "[copybara] Update " + project_name + " from GOS",
+            body = "",
+            integrates = [],
+        )
+
+    core.workflow(
+        name = "push_" + project_name,
+        origin = git.origin(
+            url = GOS_URL,
+            ref = "main",
+        ),
+        destination = destination,
+        destination_files = glob(["**"], exclude = DEFAULT_PUSH_SCRA_DESTINATION_EXCLUDES + []),
+        origin_files = glob(DEFAULT_PUSH_SCRA_ORIGIN_INCLUDES + [destination_subpath + "/**"], exclude = DEFAULT_PUSH_SCRA_ORIGIN_EXCLUDES + [destination_subpath + "/.gitignore"]),
+        authoring = authoring.pass_thru("Default email <default@default.com>"),
+        transformations = [
+            core.move(destination_subpath, ""),
+            core.transform(
+                transformations = [
+                    core.replace(before = '\n\n\n    implementation project(":libraries:GirlsOfSteelLib")\n    implementation project(":libraries:GirlsOfSteelLibRev")', after = "", multiline = True, paths = glob(["build.gradle"])),
+                ],
+                ignore_noop = True,
+            ),
+            core.replace(before = 'plugins {\n    id "java"', after = 'plugins {\n    id "java"\n    id "com.diffplug.spotless" version "6.12.0" apply false', multiline = True, paths = glob(["build.gradle"])),
+            core.replace(before = '// apply from: "$${rootDir}/styleguide/spotless.gradle"', after = 'apply from: "$${rootDir}/styleguide/spotless.gradle"', paths = glob(["styleguide/styleguide.gradle"])),
+            core.replace("${end}", '\napply from: "styleguide/styleguide.gradle"\n', multiline = True, regex_groups = {"end": "\\z"}, paths = glob(["build.gradle"])),
+            core.replace('"teamNumber": 3504', '"teamNumber": 9999', paths = glob([".wpilib/wpilib_preferences.json"])),
+        ] + extra_push_transformations,
+    )
+
+########################
+# MEPI
+########################
+# bazel run @com_github_google_copybara//java/com/google/copybara -- migrate $PWD/copy.bara.sky pull_mepi
+# bazel run @com_github_google_copybara//java/com/google/copybara -- migrate $PWD/copy.bara.sky push_mepi
+# scra_url = "file:///home/pjreiniger/git/scra/MEPI"
+scra_url = "https://github.com/SteelCityRoboticsAlliance/MEPI.git"
+destination_subpath = "y2022/MEPI"
+extra_pull_transformations = [
+    core.move(destination_subpath + "/src/main/java/frc/robot", destination_subpath + "/src/main/java/com/scra/mepi/rapid_react"),
+    core.replace(before = "frc.robot", after = "com.scra.mepi.rapid_react", paths = glob(["**.java", "**/*.gradle"])),
+]
+extra_push_transformations = [
+    core.move("src/main/java/com/scra/mepi/rapid_react", "src/main/java/frc/robot"),
+    core.replace(before = "com.scra.mepi.rapid_react", after = "frc.robot", paths = glob(["**.java", "build.gradle"])),
+]
+bidirectional_workflow("mepi", "y2022/MEPI", scra_url, extra_pull_transformations = extra_pull_transformations, extra_push_transformations = extra_push_transformations)
+
+########################
+# codelabs/pid
+########################
+# bazel run @com_github_google_copybara//java/com/google/copybara -- migrate $PWD/copy.bara.sky pull_codelab_pid
+# bazel run @com_github_google_copybara//java/com/google/copybara -- migrate $PWD/copy.bara.sky push_codelab_pid
+# scra_url = "file:///home/pjreiniger/git/scra/PidCodelab"
+scra_url = "https://github.com/SteelCityRoboticsAlliance/PidCodelab.git"
+destination_subpath = "codelabs/pid"
+extra_pull_transformations = [
+    core.move(destination_subpath + "/src/main/java/com/scra/codelabs", destination_subpath + "/src/main/java/com/gos/codelabs"),
+    core.replace("com.scra.codelabs.pid", "com.gos.codelabs.pid", paths = glob(["**.java", "**/*.gradle"])),
+]
+extra_push_transformations = [
+    core.move("src/main/java/com/gos/codelabs", "src/main/java/com/scra/codelabs"),
+    core.replace("com.gos.codelabs.pid", "com.scra.codelabs.pid", paths = glob(["**/*.java", "build.gradle"])),
+]
+bidirectional_workflow("codelab_pid", destination_subpath, scra_url, extra_pull_transformations = extra_pull_transformations, extra_push_transformations = extra_push_transformations)
+
+###########################
+# codelabs/basic_simulator
+###########################
+# bazel run @com_github_google_copybara//java/com/google/copybara -- migrate $PWD/copy.bara.sky pull_codelab_basic_simulator
+# bazel run @com_github_google_copybara//java/com/google/copybara -- migrate $PWD/copy.bara.sky push_codelab_basic_simulator
+# scra_url = "file:///home/pjreiniger/git/scra/WpilibIntro"
+scra_url = "https://github.com/SteelCityRoboticsAlliance/WpilibIntro.git"
+destination_subpath = "codelabs/basic_simulator"
+extra_pull_transformations = [
+    core.move(destination_subpath + "/src/main/java/com/scra/codelabs/basic_simulator", destination_subpath + "/src/main/java/com/gos/codelabs/basic_simulator"),
+    core.move(destination_subpath + "/src/test/java/com/scra/codelabs/basic_simulator", destination_subpath + "/src/test/java/com/gos/codelabs/basic_simulator"),
+    core.replace(before = "com.scra.codelabs.basic_simulator", after = "com.gos.codelabs.basic_simulator", paths = glob(["**.java", "**/*.gradle"])),
+]
+extra_push_transformations = [
+    core.move("src/main/java/com/gos/codelabs", "src/main/java/com/scra/codelabs"),
+    core.move("src/test/java/com/gos/codelabs", "src/test/java/com/scra/codelabs"),
+    core.replace("com.gos.codelabs.basic_simulator", "com.scra.codelabs.basic_simulator", paths = glob(["**.java", "build.gradle"])),
+    core.replace("""test {
+    ignoreFailures = true
+}
+pmd {
+    ignoreFailures = true
+}
+""", "", multiline = True, paths = glob(["build.gradle"])),
+    core.replace("${end}", """test {
+    ignoreFailures = true
+}
+pmd {
+    ignoreFailures = true
+}
+""", multiline = True, regex_groups = {"end": "\\z"}, paths = glob(["build.gradle"])),
+]
+bidirectional_workflow("codelab_basic_simulator", destination_subpath, scra_url, extra_pull_transformations = extra_pull_transformations, extra_push_transformations = extra_push_transformations)
