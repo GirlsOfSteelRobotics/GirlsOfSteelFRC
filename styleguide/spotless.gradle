@@ -28,7 +28,7 @@ spotless {
         target fileTree('.') {
             include '**/*.xml'
             include '**/*.fxml'
-            exclude '**/build/**', '**/build-*/**', '**/bazel-*/**', '**/.idea/**', '**/venv/**'
+            exclude '**/build/**', '**/build-*/**', '**/bazel-*/**', '**/.idea/**', '**/.run/**', '**/venv/**'
         }
         eclipseWtp('xml')
         trimTrailingWhitespace()

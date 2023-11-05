@@ -78,8 +78,8 @@
         <!-- <exclude name="NcssMethodCount" /> -->
         <!-- <exclude name="NPathComplexity" /> -->
         <!-- <exclude name="SignatureDeclareThrowsException" /> -->
-         <exclude name="TooManyFields" />
-         <exclude name="TooManyMethods" />
+        <exclude name="TooManyFields" />
+        <exclude name="TooManyMethods" />
     </rule>
 
     <!-- <rule ref="category/java/documentation.xml"> -->
