@@ -37,6 +37,8 @@ public class ClimberSubsystem extends SubsystemBase {
         m_rightClimber.burnFlash();
 
         m_rightClimber.follow(m_leftClimber, true);
+        m_leftClimber.setSmartCurrentLimit(50);
+        m_rightClimber.setSmartCurrentLimit(50);
     }
 
     public void runClimberPID(double goal) {
@@ -47,14 +49,17 @@ public class ClimberSubsystem extends SubsystemBase {
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void set(double speed) {
-        if (speed > 0 && (leftLimitSwitchPress() || rightLimitSwitchPress())) {
+        if (speed < 0 && (leftLimitSwitchPress() || rightLimitSwitchPress())) {
+            speed = 0;
+        }
+        if (speed > 0 && m_leftEncoder.getPosition() > 150) {
             speed = 0;
         }
         m_leftClimber.set(speed);
     }
 
     public boolean leftLimitSwitchPress() {
-        return !m_leftLimitSwitch.get();
+        return m_leftLimitSwitch.get();
     }
 
     public boolean rightLimitSwitchPress() {
@@ -68,14 +73,13 @@ public class ClimberSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (leftLimitSwitchPress()) {
+        if (leftLimitSwitchPress() || rightLimitSwitchPress()) {
             m_leftEncoder.setPosition(0);
-        }
-        if (rightLimitSwitchPress()) {
             m_rightEncoder.setPosition(0);
         }
 
-        SmartDashboard.putBoolean("climber limit switch pressed", leftLimitSwitchPress());
+        SmartDashboard.putBoolean("left limit", leftLimitSwitchPress());
+        SmartDashboard.putBoolean("right limit", rightLimitSwitchPress());
         SmartDashboard.putNumber("climb left encoder", m_leftEncoder.getPosition());
     }
 

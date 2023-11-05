@@ -7,6 +7,7 @@ package com.scra.mepi.rapid_react.commands;
 import com.scra.mepi.rapid_react.subsystems.HopperSubsystem;
 import com.scra.mepi.rapid_react.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.scra.mepi.rapid_react.subsystems.TowerSubsystem;
 
 /**
  * An example command that uses an example subsystem.
@@ -16,22 +17,26 @@ public class RunIntakeCommand extends CommandBase {
     private final IntakeSubsystem m_intakeSubsystem;
 
     private final HopperSubsystem m_hopperSubsystem;
+    private final TowerSubsystem m_towerSubsystem;
 
-    private final double m_speed;
+    private final double m_intakeSpeed;
+    private final double m_towerSpeed;
 
     /**
      * Creates a new IntakeCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public RunIntakeCommand(
-        IntakeSubsystem intakeSubsystem, double speed, HopperSubsystem hopperSubsystem) {
+    public RunIntakeCommand(IntakeSubsystem intakeSubsystem, double intakeSpeed, HopperSubsystem hopperSubsystem, TowerSubsystem towerSubsystem, double towerSpeed) {
         m_intakeSubsystem = intakeSubsystem;
         m_hopperSubsystem = hopperSubsystem;
-        m_speed = speed;
+        m_towerSubsystem = towerSubsystem;
+        m_intakeSpeed = intakeSpeed;
+        m_towerSpeed = towerSpeed;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(intakeSubsystem);
         addRequirements(hopperSubsystem);
+        addRequirements(towerSubsystem);
     }
 
     // Called when the command is initially scheduled.
@@ -42,8 +47,15 @@ public class RunIntakeCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_intakeSubsystem.set(m_speed);
-        m_hopperSubsystem.setHopperSpeed(m_speed);
+        m_intakeSubsystem.set(m_intakeSpeed);
+        m_hopperSubsystem.setHopperSpeed(m_intakeSpeed);
+        if (m_towerSubsystem.getBeamBreak() || m_intakeSpeed < 0) {
+            m_towerSubsystem.setTowerSpeed(m_towerSpeed);
+            m_towerSubsystem.setKickerSpeed(-0.5);
+        } else {
+            m_towerSubsystem.setTowerSpeed(0);
+            m_towerSubsystem.setKickerSpeed(0);
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -51,6 +63,8 @@ public class RunIntakeCommand extends CommandBase {
     public void end(boolean interrupted) {
         m_intakeSubsystem.set(0);
         m_hopperSubsystem.setHopperSpeed(0);
+        m_towerSubsystem.setTowerSpeed(0);
+        m_towerSubsystem.setKickerSpeed(0);
     }
 
     // Returns true when the command should end.

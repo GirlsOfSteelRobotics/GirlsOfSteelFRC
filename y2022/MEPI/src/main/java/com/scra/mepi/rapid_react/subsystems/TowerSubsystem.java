@@ -6,12 +6,15 @@ package com.scra.mepi.rapid_react.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TowerSubsystem extends SubsystemBase {
     private final CANSparkMax m_towerMotor;
     private final CANSparkMax m_towerKicker;
+    private final DigitalInput m_beamBreak = new DigitalInput(9);
 
     /**
      * Creates a new Tower.
@@ -19,6 +22,8 @@ public class TowerSubsystem extends SubsystemBase {
     public TowerSubsystem() {
         m_towerMotor = new CANSparkMax(Constants.TOWER_SPARK, MotorType.kBrushless);
         m_towerKicker = new CANSparkMax(Constants.TOWER_KICKER_SPARK, MotorType.kBrushless);
+        m_towerMotor.setSmartCurrentLimit(30);
+        m_towerKicker.setSmartCurrentLimit(30);
         m_towerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_towerKicker.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_towerMotor.restoreFactoryDefaults();
@@ -30,6 +35,7 @@ public class TowerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        SmartDashboard.putBoolean("beam break", m_beamBreak.get());
     }
 
     @Override
@@ -39,6 +45,10 @@ public class TowerSubsystem extends SubsystemBase {
 
     public void setTowerSpeed(double speed) {
         m_towerMotor.set(speed);
+    }
+
+    public boolean getBeamBreak() {
+        return m_beamBreak.get();
     }
 
     public void setKickerSpeed(double speed) {
