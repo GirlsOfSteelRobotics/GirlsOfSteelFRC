@@ -10,9 +10,7 @@ gos_java_library(
     ),
     visibility = ["//y2022/MEPI:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
-        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
         "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react:Constants",
         "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react:ShooterLookupTable",
@@ -22,7 +20,6 @@ gos_java_library(
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
         "@bzlmodrio-navx//libraries/java/navx",
         "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
-        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
         "@bzlmodrio-revlib//libraries/java/revlib-java",
         "@maven//:org_snobotv2_snobot_sim_java",
     ],
