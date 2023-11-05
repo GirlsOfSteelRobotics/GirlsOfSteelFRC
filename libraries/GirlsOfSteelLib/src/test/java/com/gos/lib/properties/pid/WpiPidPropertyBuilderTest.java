@@ -1,4 +1,4 @@
-package com.gos.lib.properties;
+package com.gos.lib.properties.pid;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Preferences;

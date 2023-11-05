@@ -1,4 +1,4 @@
-package com.gos.lib.rev;
+package com.gos.lib.rev.alerts;
 
 import com.revrobotics.CANSparkMax;
 import org.littletonrobotics.frc2023.util.Alert;

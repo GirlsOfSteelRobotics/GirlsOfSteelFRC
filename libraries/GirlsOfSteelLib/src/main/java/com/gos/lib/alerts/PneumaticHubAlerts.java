@@ -1,4 +1,4 @@
-package com.gos.lib.checklists;
+package com.gos.lib.alerts;
 
 import edu.wpi.first.hal.REVPHFaults;
 import edu.wpi.first.hal.REVPHStickyFaults;

@@ -7,7 +7,7 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
-import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;

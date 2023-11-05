@@ -2,8 +2,8 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.lib.DeadbandHelper;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.utils.ShooterLookupTable;
 import com.revrobotics.CANSparkMax;

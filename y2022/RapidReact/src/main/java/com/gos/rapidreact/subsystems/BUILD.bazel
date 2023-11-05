@@ -14,8 +14,10 @@ gos_java_library(
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/properties/pid",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact:Constants",
         "@bzlmodrio-allwpilib//libraries/java/ntcore",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",

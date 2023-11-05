@@ -4,8 +4,8 @@
 
 package com.scra.mepi.rapid_react.commands;
 
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.scra.mepi.rapid_react.Constants;
 import com.scra.mepi.rapid_react.subsystems.DrivetrainSubsystem;
 import com.scra.mepi.rapid_react.subsystems.LimelightSubsystem;

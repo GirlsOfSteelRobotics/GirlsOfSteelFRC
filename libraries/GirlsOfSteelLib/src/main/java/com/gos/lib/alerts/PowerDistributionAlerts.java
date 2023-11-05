@@ -1,4 +1,4 @@
-package com.gos.lib.checklists;
+package com.gos.lib.alerts;
 
 import edu.wpi.first.hal.PowerDistributionFaults;
 import edu.wpi.first.hal.PowerDistributionStickyFaults;

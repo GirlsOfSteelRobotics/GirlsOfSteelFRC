@@ -6,6 +6,7 @@ gos_java_library(
     visibility = ["//y2022/MEPI:__subpackages__"],
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
         "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react:Constants",
         "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react:ShooterLookupTable",
         "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/subsystems",

@@ -1,7 +1,7 @@
-package com.gos.lib.rev;
+package com.gos.lib.rev.properties.pid;
 
-import com.gos.lib.properties.IPidPropertyBuilder;
-import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.pid.IPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
 import com.revrobotics.SparkMaxPIDController;
 
 public final class RevPidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
