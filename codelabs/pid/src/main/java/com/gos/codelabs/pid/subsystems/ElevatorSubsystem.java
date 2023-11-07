@@ -2,6 +2,8 @@ package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -13,8 +15,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;

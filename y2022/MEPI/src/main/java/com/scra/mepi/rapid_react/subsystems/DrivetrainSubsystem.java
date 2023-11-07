@@ -4,8 +4,8 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
 import com.revrobotics.CANSparkMax.ControlType;

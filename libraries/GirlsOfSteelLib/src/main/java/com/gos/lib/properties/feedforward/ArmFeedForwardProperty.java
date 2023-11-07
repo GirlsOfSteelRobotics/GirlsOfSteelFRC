@@ -40,13 +40,12 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
         return this;
     }
 
-    public double calculate(double position, double velocity) {
-        return m_feedForward.calculate(position, velocity);
-
+    public double calculate(double positionRadians, double velocity) {
+        return m_feedForward.calculate(positionRadians, velocity);
     }
 
-    public double calculate(double position, double velocity, double acceleration) {
-        return m_feedForward.calculate(position, velocity, acceleration);
+    public double calculate(double positionRadians, double velocityRadPerSec, double accelRadPerSecSquared) {
+        return m_feedForward.calculate(positionRadians, velocityRadPerSec, accelRadPerSecSquared);
     }
 
     public double getKs() {

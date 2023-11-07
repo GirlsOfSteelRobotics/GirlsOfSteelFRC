@@ -1,8 +1,8 @@
-package com.gos.lib.ctre;
+package com.gos.lib.ctre.properties.pid;
 
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.gos.lib.properties.IPidPropertyBuilder;
-import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.pid.IPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
 
 public final class CtrePidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
     private final BaseMotorController m_motor;

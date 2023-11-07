@@ -2,9 +2,9 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
-import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
@@ -257,4 +257,3 @@ public class SwerveDriveModules {
         m_turningSparkMax.set(percentAzimuth);
     }
 }
-

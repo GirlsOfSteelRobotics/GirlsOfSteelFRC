@@ -2,9 +2,9 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
-import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;

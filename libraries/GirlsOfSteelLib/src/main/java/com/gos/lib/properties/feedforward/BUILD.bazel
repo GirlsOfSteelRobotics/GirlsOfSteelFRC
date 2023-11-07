@@ -1,0 +1,11 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "feedforward",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+    ],
+)

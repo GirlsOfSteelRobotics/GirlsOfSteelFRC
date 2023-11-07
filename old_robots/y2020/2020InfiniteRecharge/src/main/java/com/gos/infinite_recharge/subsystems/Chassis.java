@@ -3,6 +3,8 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.Constants.DriveConstants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
@@ -12,8 +14,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
 
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.navx.NavxWrapper;

@@ -1,5 +1,6 @@
-package com.gos.lib.properties;
+package com.gos.lib.properties.pid;
 
+import com.gos.lib.properties.BasePropertiesTest;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Preferences;

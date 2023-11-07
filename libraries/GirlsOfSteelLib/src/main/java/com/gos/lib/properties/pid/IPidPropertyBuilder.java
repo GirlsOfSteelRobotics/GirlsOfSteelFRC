@@ -1,4 +1,4 @@
-package com.gos.lib.properties;
+package com.gos.lib.properties.pid;
 
 public interface IPidPropertyBuilder {
     IPidPropertyBuilder addP(double defaultValue);

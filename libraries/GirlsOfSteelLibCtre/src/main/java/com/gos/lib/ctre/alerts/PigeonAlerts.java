@@ -1,4 +1,4 @@
-package com.gos.lib.ctre;
+package com.gos.lib.ctre.alerts;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2_Faults;

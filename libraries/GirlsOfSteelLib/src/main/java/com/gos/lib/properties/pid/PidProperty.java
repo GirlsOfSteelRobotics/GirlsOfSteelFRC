@@ -1,4 +1,7 @@
-package com.gos.lib.properties;
+package com.gos.lib.properties.pid;
+
+import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.HeavyDoubleProperty;
 
 import java.util.ArrayList;
 import java.util.List;

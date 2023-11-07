@@ -5,8 +5,8 @@
 
 package com.gos.chargedup;
 
-import com.gos.lib.checklists.PneumaticHubAlerts;
-import com.gos.lib.checklists.PowerDistributionAlerts;
+import com.gos.lib.alerts.PneumaticHubAlerts;
+import com.gos.lib.alerts.PowerDistributionAlerts;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;

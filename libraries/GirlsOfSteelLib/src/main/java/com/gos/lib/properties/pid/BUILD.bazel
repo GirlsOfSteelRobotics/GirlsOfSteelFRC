@@ -1,12 +1,11 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 gos_java_library(
-    name = "ctre",
+    name = "pid",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
-        "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
-        "@bzlmodrio-phoenix//libraries/java/api-java",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
 )
