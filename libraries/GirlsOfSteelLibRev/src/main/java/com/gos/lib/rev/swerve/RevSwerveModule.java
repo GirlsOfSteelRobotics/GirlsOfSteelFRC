@@ -1,11 +1,10 @@
-package com.gos.chargedup.subsystems;
+package com.gos.lib.rev.swerve;
 
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -26,8 +25,8 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 
 
-public class SwerveDriveModules {
-    private static final RevSwerveModuleConstants MODULE_CONSTANTS = new RevSwerveModuleConstants(14);
+public class RevSwerveModule {
+    private final String m_moduleName;
 
     private final SimableCANSparkMax m_drivingSparkMax;
     private final SimableCANSparkMax m_turningSparkMax;
@@ -62,7 +61,9 @@ public class SwerveDriveModules {
      * Encoder.
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
-    public SwerveDriveModules(String moduleName, int drivingCANId, int azimuthId, double chassisAngularOffset) {
+    public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset) {
+        m_moduleName = moduleName;
+
         m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkMaxLowLevel.MotorType.kBrushless);
 
@@ -83,8 +84,8 @@ public class SwerveDriveModules {
         // Apply position and velocity conversion factors for the driving encoder. The
         // native units for position and velocity are rotations and RPM, respectively,
         // but we want meters and meters per second to use with WPILib's swerve APIs.
-        m_drivingEncoder.setPositionConversionFactor(MODULE_CONSTANTS.m_drivingEncoderPositionFactor);
-        m_drivingEncoder.setVelocityConversionFactor(MODULE_CONSTANTS.m_drivingEncoderVelocityFactor);
+        m_drivingEncoder.setPositionConversionFactor(moduleConstants.m_drivingEncoderPositionFactor);
+        m_drivingEncoder.setVelocityConversionFactor(moduleConstants.m_drivingEncoderVelocityFactor);
 
         // Apply position and velocity conversion factors for the turning encoder. We
         // want these in radians and radians per second to use with WPILib's swerve
@@ -111,7 +112,7 @@ public class SwerveDriveModules {
         m_drivingPIDProperty = new RevPidPropertyBuilder("Swerve Driving PID", false, m_drivingPIDController, 0)
             .addP(0.04)
             .addD(0)
-            .addFF(1 / MODULE_CONSTANTS.m_driveWheelFreeSpeedRps)
+            .addFF(1 / moduleConstants.m_driveWheelFreeSpeedRps)
             .build();
 
         m_turningPIDProperty = new RevPidPropertyBuilder("Swerve Turning PID", false, m_turningPIDController, 0)
@@ -133,7 +134,13 @@ public class SwerveDriveModules {
                 DCMotor.getNEO(1),
                 RevSwerveModuleConstants.WHEEL_DIAMETER_METERS / 2,
                 RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR,
-                MODULE_CONSTANTS.m_drivingMotorReduction
+                moduleConstants.m_drivingMotorReduction,
+                1.0,
+                1.8, // Seems fishy
+                1.1,
+                0.8,
+                16.0,
+                0.001
             );
             m_simWrapper = new SwerveModuleSimWrapper(
                 moduleSim,
@@ -199,7 +206,7 @@ public class SwerveDriveModules {
     }
 
     public SwerveModuleState getDesiredState() {
-        return m_desiredState;
+        return new SwerveModuleState(m_desiredState.speedMetersPerSecond, m_desiredState.angle.minus(new Rotation2d(m_chassisAngularOffset)));
     }
 
     /**
@@ -255,5 +262,14 @@ public class SwerveDriveModules {
     public void setSpeedPercent(double percentAzimuth, double percentWheel) {
         m_drivingSparkMax.set(percentWheel);
         m_turningSparkMax.set(percentAzimuth);
+    }
+
+    public void clearStickyFaults() {
+        m_drivingSparkMax.clearFaults();
+        m_turningSparkMax.clearFaults();
+    }
+
+    public String getName() {
+        return m_moduleName;
     }
 }

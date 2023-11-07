@@ -85,7 +85,7 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotorErrorAlerts.checkAlerts();
     }
 
-    public void clearStickyFaultsClaw() {
+    public void clearStickyFaults() {
         m_clawMotor.clearFaults();
     }
 

@@ -39,8 +39,22 @@ public final class RevSwerveModuleConstants {
         public static final double FREE_SPEED_RPM = 5676;
     }
 
-    public RevSwerveModuleConstants(int drivingMotorTeeth) {
-        m_drivingMotorReduction = (45.0 * 22) / (drivingMotorTeeth * 15);
+    public enum DriveMotorTeeth {
+        T12(12, Units.feetToMeters(13.51)),
+        T13(13, Units.feetToMeters(14.63)),
+        T14(14, Units.feetToMeters(15.76));
+
+        public final int m_teeth;
+        public final double m_theoreticalFreeSpeedMps;
+
+        DriveMotorTeeth(int teeth, double theoreticalFreeSpeedMps) {
+            m_teeth = teeth;
+            m_theoreticalFreeSpeedMps = theoreticalFreeSpeedMps;
+        }
+    }
+
+    public RevSwerveModuleConstants(DriveMotorTeeth teeth) {
+        m_drivingMotorReduction = (45.0 * 22) / (teeth.m_teeth * 15);
         m_driveWheelFreeSpeedRps = (DRIVING_MOTOR_FREE_SPEED_RPS * WHEEL_CIRCUMFERENCE_METERS)
             / m_drivingMotorReduction;
 

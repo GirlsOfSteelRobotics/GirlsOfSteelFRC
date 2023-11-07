@@ -1,4 +1,4 @@
-package com.gos.chargedup;
+package com.gos.lib.swerve;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;

@@ -40,7 +40,7 @@ public interface ChassisSubsystemInterface extends Subsystem {
 
     boolean canExtendArm();
 
-    void resetStickyFaultsChassis();
+    void clearStickyFaults();
 
     CommandBase createDriveToPointCommand(Pose2d point, boolean reverse);
 

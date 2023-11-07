@@ -89,8 +89,11 @@
       "/Shuffleboard/AutomatedTurret/Mid Cube": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis Auto Engage": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis Speed (0,0,1)": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speed (0,0,360deg)": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis Speed (0,1,0)": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis Speed (1,0,0)": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speeds Percent 0% 100%": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speeds Percent 0% 5%": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis To Angle 0": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis To Angle 180": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis set position: (0, 0, -90 deg)": "Command",
@@ -540,26 +543,16 @@
     "Plot <0>": {
       "plots": [
         {
-          "height": 324,
+          "axis": [
+            {
+              "autoFit": true
+            },
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 403,
           "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/SwerveDrive/FR/Current Angle"
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/SwerveDrive/FR/Goal Angle"
-            },
             {
               "color": [
                 0.3333333432674408,
@@ -577,8 +570,29 @@
                 1.0
               ],
               "id": "NT:/SwerveDrive/FR/Current Velocity"
+            },
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SwerveDrive/FR/Current Angle",
+              "yAxis": 1
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SwerveDrive/FR/Goal Angle",
+              "yAxis": 1
             }
-          ]
+          ],
+          "yaxis2": true
         }
       ]
     }
