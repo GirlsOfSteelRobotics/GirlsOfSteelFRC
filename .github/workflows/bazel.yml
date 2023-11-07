@@ -81,7 +81,7 @@ jobs:
           GO111MODULE=on go get github.com/bazelbuild/buildtools/buildozer@5.1.0
 
       - name: Prep unused deps
-        run:  bazel query --tool_tag=unused_deps --keep_going "kind('(kt|java|android)_*', //...)" && bazel build --tool_tag=unused_deps --keep_going //... --config=remote
+        run:  bazel query --tool_tag=unused_deps --keep_going "kind('(kt|java|android)_*', //...)" && bazel build --tool_tag=unused_deps --keep_going //... --config=remote || true
 
       - name: Run unused deps
         run: unused_deps -cquery //... > buildozer-cmds.sh
