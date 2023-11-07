@@ -350,14 +350,10 @@ public class RobotContainer {
 
     private void resetStickyFaults() {
         m_pneumaticHub.clearStickyFaults();
-        clearStickyFaultsPDH();
-        m_chassisSubsystem.resetStickyFaultsChassis();
-        m_armPivot.clearStickyFaultsArmPivot();
-        m_claw.clearStickyFaultsClaw();
-    }
-
-    private void clearStickyFaultsPDH() {
         m_powerDistribution.clearStickyFaults();
+        m_chassisSubsystem.clearStickyFaults();
+        m_armPivot.clearStickyFaults();
+        m_claw.clearStickyFaults();
     }
 
     private CommandBase createResetStickyFaults() {

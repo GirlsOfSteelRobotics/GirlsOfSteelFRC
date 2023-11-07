@@ -362,7 +362,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return isMotionProfileFinished() && Math.abs(error) <= allowableError && Math.abs(velocity) < allowableVelocityError;
     }
 
-    public void clearStickyFaultsArmPivot() {
+    public void clearStickyFaults() {
         m_pivotMotor.clearFaults();
     }
 

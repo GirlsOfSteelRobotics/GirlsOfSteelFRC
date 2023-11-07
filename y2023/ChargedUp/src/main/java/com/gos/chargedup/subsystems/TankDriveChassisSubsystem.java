@@ -375,7 +375,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     @Override
-    public void resetStickyFaultsChassis() {
+    public void clearStickyFaults() {
         m_leaderLeft.clearFaults();
         m_leaderRight.clearFaults();
         m_followerLeft.clearFaults();
