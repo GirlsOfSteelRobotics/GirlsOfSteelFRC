@@ -1,8 +1,8 @@
             case {{entry.sim_keys[0]}}:
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}} = {{entry.sim_value}};
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label.setTextFill(Color.GREEN);
+                m_{{child.combined_variable_name(entry)}} = {{entry.sim_value}};
+                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.GREEN);
                 break;
             case {{entry.sim_keys[1]}}:
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}} = -{{entry.sim_value}};
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label.setTextFill(Color.GREEN);
+                m_{{child.combined_variable_name(entry)}} = -{{entry.sim_value}};
+                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.GREEN);
                 break;

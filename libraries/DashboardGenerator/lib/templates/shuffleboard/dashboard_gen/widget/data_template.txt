@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 @SuppressWarnings({"PMD.DataClass", "PMD.ExcessiveParameterList"})
 public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
 {%- for variable in child.entries %}
-{%- if is_array(variable) %}
+{%- if variable.is_array %}
     private static final {{variable.type}} DEFAULT_{{camel_to_snake(variable.name)|upper}} = new {{variable.type}}{{default_array(variable)}};
 {%- endif %}
 {%- endfor %}
@@ -20,27 +20,31 @@ public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
 
 
     public {{child.table}}Data() {
-        this({% for variable in child.entries %}{{default_value_lookup(variable)}}{% if not loop.last %}, {%endif%}{% endfor %});
+        this({% for variable in child.entries %}{{variable.default_value()}}{% if not loop.last %}, {%endif%}{% endfor %});
     }
 
-    public {{child.table}}Data({% for variable in child.entries %}{{variable.type}} {{variable.name}}{% if not loop.last %}, {%endif%}{% endfor %}) {% raw %}{{% endraw %}
+    public {{child.table}}Data(
+{%- for variable in child.entries -%}
+{{variable.type}} {{variable.name}}{%- if not loop.last %}, {%endif%}
+{%- endfor %}) {% raw %}{{% endraw %}
       {%- for variable in child.entries %}
         m_{{variable.name}} = {{variable.name}};
       {%- endfor %}
     }
 
-{%- if widget.children_tables|length == 1 %}
+{%- if not widget.has_nested_tables %}
 
     public {{child.table}}Data(Map<String, Object> map) {
-        this({% for variable in child.entries %}
-            Maps.getOrDefault(map, SmartDashboardNames.{{variable.dasboard_constant}}, {{default_value_lookup(variable)}}){% if not loop.last %},{%endif%}{% endfor %});
+        this({%- for variable in child.entries %}
+            Maps.getOrDefault(map, SmartDashboardNames.{{variable.dashboard_constant}}, {{variable.default_value()}}){% if not loop.last %},{%endif%}
+{%- endfor -%});
     }
 
     @Override
     public Map<String, Object> asMap() {
         Map<String, Object> output = new HashMap<>();
         {%- for variable in child.entries %}
-        output.put(SmartDashboardNames.{{variable.dasboard_constant}}, m_{{variable.name}});
+        output.put(SmartDashboardNames.{{variable.dashboard_constant}}, m_{{variable.name}});
         {%- endfor %}
         return output;
     }
@@ -51,8 +55,10 @@ public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
     }
 
     public {{child.table}}Data(String prefix, Map<String, Object> map) {
-        this({% for variable in child.entries %}
-            Maps.getOrDefault(map, prefix + SmartDashboardNames.{{variable.dasboard_constant}}, {{default_value_lookup(variable)}}){% if not loop.last %},{%endif%}{% endfor %});
+        this(
+{%- for variable in child.entries %}
+            Maps.getOrDefault(map, prefix + SmartDashboardNames.{{variable.dashboard_constant}}, {{variable.default_value()}}){% if not loop.last %},{%endif%}
+{%- endfor %});
     }
 
     @Override
@@ -63,7 +69,7 @@ public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
     public Map<String, Object> asMap(String prefix) {
         Map<String, Object> output = new HashMap<>();
         {%- for variable in child.entries %}
-        output.put(prefix + SmartDashboardNames.{{variable.dasboard_constant}}, m_{{variable.name}});
+        output.put(prefix + SmartDashboardNames.{{variable.dashboard_constant}}, m_{{variable.name}});
         {%- endfor %}
         return output;
     }
@@ -73,14 +79,16 @@ public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
     }
 
     public static boolean hasChanged(String prefix, Map<String, Object> changes) {
-        boolean changed = false;{% for variable in child.entries %}
-        changed |= changes.containsKey(prefix + SmartDashboardNames.{{variable.dasboard_constant}});{% endfor %}
+        boolean changed = false;
+{%- for variable in child.entries %}
+        changed |= changes.containsKey(prefix + SmartDashboardNames.{{variable.dashboard_constant}});
+{%- endfor %}
 
         return changed;
     }
 {%- endif %}
 {% for variable in child.entries %}
-    public {{variable.type}} {{getter_name(variable)}}{{variable.name[0].upper() + variable.name[1:]}}() {
+    public {{variable.type}} {{variable.type.getter_name()}}{{variable.name.upper_first_char()}}() {
         return m_{{variable.name}};
     }
 {% endfor %}

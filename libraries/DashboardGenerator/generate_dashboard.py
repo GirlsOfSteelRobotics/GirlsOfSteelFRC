@@ -1,8 +1,6 @@
-import yaml
+from libraries.DashboardGenerator.lib.dashboard_config import DashboardConfig
 from libraries.DashboardGenerator.lib.generate_shuffleboard import (
-    WidgetGenerator,
-    TopLevelGenerator,
-    maybe_add_standalone_buttons,
+    generate_shuffleboard_dashboard,
 )
 import os
 import sys
@@ -13,7 +11,7 @@ def get_this_directory():
         from rules_python.python.runfiles import runfiles
 
         r = runfiles.Create()
-        this_file = r.Rlocation("__main__/libraries/DashboardGenerator/generate_dashboard.py")
+        this_file = r.Rlocation("__main__/libraries/ShuffleboardGenerator/generate_dashboard.py")
         return os.path.dirname(this_file)
 
     except ModuleNotFoundError:
@@ -86,40 +84,29 @@ def generate_dashboard(
     force_controller,
 ):
     this_dir = get_this_directory()
-    template_dir = os.path.join(this_dir, "lib", "templates", "shuffleboard")
+    generator_directory = this_dir
 
     if not project_dir:
         print("Output directory not specified, using config file location")
         project_dir = os.path.dirname(config_file)
 
-    if not os.path.exists(project_dir):
-        raise Exception(f"The output directory '{project_dir}' must exist")
+    if not os.path.exists(os.path.dirname(project_dir)):
+        raise Exception(f"The output directory '{os.path.dirname(project_dir)}' must exist")
 
-    if not os.path.exists(project_dir):
-        raise Exception(f"The output directory '{project_dir}' must exist")
+    config = DashboardConfig.from_yaml_file(config_file)
 
-    config = yaml.load(open(config_file, "r"), Loader=yaml.SafeLoader)
+    generate_shuffleboard_dashboard(
+        generator_directory,
+        project_dir,
+        config,
+        force_nt_names,
+        force_utils,
+        force_fxml,
+        force_standalone_main,
+        force_controller,
+    )
 
     print(f"Generating dashboard config in '{os.path.abspath(project_dir)}'")
-
-    for widget in config["widgets"]:
-        print(f"Running generation for widget \"{widget['widget_name']}\"")
-        maybe_add_standalone_buttons(widget)
-        gen = WidgetGenerator(template_dir, project_dir, config["base_package"], widget)
-        gen.verify_config()
-
-        gen.dump_single_components()
-        gen.dump_widget()
-        gen.dump_widget_top_level_data()
-
-        gen.maybe_dump_fxml(force_fxml)
-        gen.maybe_dump_standalone_main(force_standalone_main)
-        gen.maybe_dump_controller(force_controller)
-        gen.maybe_dump_shuffleboard_names(force_nt_names)
-
-    top_level_gen = TopLevelGenerator(template_dir, project_dir, config)
-    top_level_gen.dump_plugin()
-    top_level_gen.maybe_dump_utils(force_utils)
 
 
 if __name__ == "__main__":
