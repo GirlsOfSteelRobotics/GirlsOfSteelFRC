@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 
 
-public class TestShooter extends GosCommand {
+public class TestShooter extends GosCommandBase {
 
     private final Shooter m_shooter;
     private double m_speed;

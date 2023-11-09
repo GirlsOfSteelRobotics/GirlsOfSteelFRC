@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class DelayReverseRollers extends GosCommand {
+public class DelayReverseRollers extends GosCommandBase {
     private final Collector m_collector;
     private final Shooter m_shooter;
 

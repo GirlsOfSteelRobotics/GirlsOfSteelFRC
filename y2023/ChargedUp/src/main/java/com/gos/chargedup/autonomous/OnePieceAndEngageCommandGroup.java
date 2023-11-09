@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
     public OnePieceAndEngageCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        Command driveAutoOnePieceEngage = chassis.createFollowPathCommand(path, true, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command driveAutoOnePieceEngage = chassis.createFollowPathCommand(path);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

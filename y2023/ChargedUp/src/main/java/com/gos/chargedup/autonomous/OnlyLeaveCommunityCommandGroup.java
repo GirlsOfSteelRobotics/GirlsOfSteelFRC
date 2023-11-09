@@ -9,7 +9,7 @@ public class OnlyLeaveCommunityCommandGroup extends SequentialCommandGroup {
 
 
     public OnlyLeaveCommunityCommandGroup(ChassisSubsystemInterface chassis, String path) {
-        Command driveAutoOnlyLeave = chassis.createFollowPathCommand(path, false, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command driveAutoOnlyLeave = chassis.createFollowPathCommand(path);
         addCommands(driveAutoOnlyLeave);
 
     }

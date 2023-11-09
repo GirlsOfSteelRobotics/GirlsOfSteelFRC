@@ -5,7 +5,7 @@ import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.objects.Camera;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class ShootUsingTable extends GosCommand {
+public class ShootUsingTable extends GosCommandBase {
 
     private final Shooter m_shooter;
     private final OI m_oi;

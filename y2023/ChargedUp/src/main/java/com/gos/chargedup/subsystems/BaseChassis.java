@@ -27,7 +27,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -244,12 +243,12 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     }
 
     @Override
-    public Command createFollowPathCommand(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
+    public Command createFollowPathCommand(List<PathPlannerTrajectory> trajectory) {
         return createAutoBuilder(events).fullAuto(trajectory);
     }
 
     @Override
-    public Command createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
+    public Command createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory) {
         return createAutoBuilderNoPoseReset(events).fullAuto(trajectory);
     }
 

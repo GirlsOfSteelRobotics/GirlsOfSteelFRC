@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Collector;
 /**
  * @author Heather
  */
-public class MaintainColDisengage extends GosCommand {
+public class MaintainColDisengage extends GosCommandBase {
 
     private final Collector m_collector;
 

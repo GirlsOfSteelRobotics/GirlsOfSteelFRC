@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
  * <p>
  * This waits for the given number of SECONDSSSS
  */
-public class Wait extends GosCommand {
+public class Wait extends GosCommandBase {
 
     private final double m_time;
     private double m_startTime;

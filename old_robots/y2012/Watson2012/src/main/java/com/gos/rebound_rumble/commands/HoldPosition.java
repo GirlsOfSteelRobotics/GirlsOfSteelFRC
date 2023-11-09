@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class HoldPosition extends GosCommand {
+public class HoldPosition extends GosCommandBase {
     private final Chassis m_chassis;
 
     public HoldPosition(Chassis chassis) {

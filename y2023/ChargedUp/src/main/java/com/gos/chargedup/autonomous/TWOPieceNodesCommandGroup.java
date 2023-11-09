@@ -26,9 +26,9 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
 
-        Command driveToFirstPiece = chassis.createFollowPathCommand(pathStart, true, FASTER_PATH_CONSTRAINTS);
-        Command driveToGetSecondPiece = chassis.createFollowPathCommandNoPoseReset(pathMiddle, false, eventMap, NOT_AS_FAST_PATH_CONSTRAINTS);
-        Command driveToScoreSecondPiece = chassis.createFollowPathCommandNoPoseReset(pathEnd, false, FASTER_PATH_CONSTRAINTS);
+        Command driveToFirstPiece = chassis.createFollowPathCommand(pathStart);
+        Command driveToGetSecondPiece = chassis.createFollowPathCommandNoPoseReset(pathMiddle);
+        Command driveToScoreSecondPiece = chassis.createFollowPathCommandNoPoseReset(pathEnd);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));

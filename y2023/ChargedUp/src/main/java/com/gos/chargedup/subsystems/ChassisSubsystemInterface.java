@@ -7,7 +7,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 import java.util.HashMap;
@@ -57,27 +56,27 @@ public interface ChassisSubsystemInterface extends Subsystem {
 
     Command createSyncOdometryWithPoseEstimatorCommand();
 
-    default Command createFollowPathCommand(String pathFilename, boolean isReversed, PathConstraints constraint, PathConstraints... constraints) {
-        return createFollowPathCommand(pathFilename, isReversed, new HashMap<>(), constraint, constraints);
+    default Command createFollowPathCommand(String pathFilename) {
+        return createFollowPathCommand(pathFilename);
     }
 
-    default Command createFollowPathCommand(String pathFilename, boolean isReversed, Map<String, Command> eventMap, PathConstraints constraint, PathConstraints... constraints) {
+    default Command createFollowPathCommand(String pathFilename) {
         List<PathPlannerTrajectory> path = PathPlanner.loadPathGroup(pathFilename, isReversed, constraint, constraints);
-        return createFollowPathCommand(path, eventMap);
+        return createFollowPathCommand(path);
     }
 
-    Command createFollowPathCommand(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
+    Command createFollowPathCommand(List<PathPlannerTrajectory> trajectory);
 
-    default Command createFollowPathCommandNoPoseReset(String pathFile, boolean isReversed, Map<String, Command> events, PathConstraints constraint)  {
+    default Command createFollowPathCommandNoPoseReset(String pathFile)  {
         List<PathPlannerTrajectory> path = PathPlanner.loadPathGroup(pathFile, isReversed, constraint, constraint);
-        return createFollowPathCommandNoPoseReset(path, events);
+        return createFollowPathCommandNoPoseReset(path);
     }
 
-    default Command createFollowPathCommandNoPoseReset(String pathFile, boolean isReversed, PathConstraints constraint) {
-        return createFollowPathCommandNoPoseReset(pathFile, isReversed, new HashMap<>(), constraint);
+    default Command createFollowPathCommandNoPoseReset(String pathFile) {
+        return createFollowPathCommandNoPoseReset(pathFile);
     }
 
-    Command createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
+    Command createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory);
 
     Command createDeferredDriveToPointCommand(Pose2d point, boolean reverse);
 

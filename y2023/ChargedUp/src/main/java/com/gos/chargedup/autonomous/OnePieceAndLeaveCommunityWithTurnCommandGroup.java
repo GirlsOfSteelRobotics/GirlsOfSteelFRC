@@ -33,7 +33,7 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
                                                          ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                          AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         List<PathPlannerTrajectory> onePieceAndLeave = PathPlanner.loadPathGroup(path, false, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)));
-        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave, new HashMap<>());
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave);
 
         Pose2d initialPose = onePieceAndLeave.get(0).getInitialPose();
 

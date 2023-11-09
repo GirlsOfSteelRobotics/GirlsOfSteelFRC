@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class DriveSlowVelocity extends GosCommand {
+public class DriveSlowVelocity extends GosCommandBase {
     private final Chassis m_chassis;
     private final Joystick m_driverJoystick;
 

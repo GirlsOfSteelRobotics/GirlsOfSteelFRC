@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Driving;
 /**
  * @author ClarVie
  */
-public class DoNothing extends GosCommand {
+public class DoNothing extends GosCommandBase {
 
     public DoNothing(Driving driving) {
         addRequirements(driving);

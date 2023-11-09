@@ -27,8 +27,8 @@ public class OnePieceANDGrabSecondCommandGroup extends SequentialCommandGroup {
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
 
-        Command driveToPiece = chassis.createFollowPathCommand(pathStart, true, NOT_AS_FAST_PATH_CONSTRAINTS);
-        Command driveToGetSecondPiece = chassis.createFollowPathCommand(pathEnd, false, eventMap, NOT_AS_FAST_PATH_CONSTRAINTS);
+        Command driveToPiece = chassis.createFollowPathCommand(pathStart);
+        Command driveToGetSecondPiece = chassis.createFollowPathCommand(pathEnd);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

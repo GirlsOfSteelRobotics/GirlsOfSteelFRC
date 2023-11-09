@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
 /**
  * @author Sylvie and Cla
  */
-public class TestKickerEncoder extends GosCommand {
+public class TestKickerEncoder extends GosCommandBase {
 
     private final Kicker m_kicker;
     private double m_direction;

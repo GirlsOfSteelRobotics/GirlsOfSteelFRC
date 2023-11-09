@@ -9,7 +9,7 @@ public class OnlyDockAndEngageCommandGroup extends SequentialCommandGroup {
 
     public OnlyDockAndEngageCommandGroup(ChassisSubsystemInterface chassis, String path) {
 
-        Command fullAutoDockAndEngage = chassis.createFollowPathCommand(path, false, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command fullAutoDockAndEngage = chassis.createFollowPathCommand(path);
 
         addCommands(fullAutoDockAndEngage);
         addCommands(chassis.createAutoEngageCommand());

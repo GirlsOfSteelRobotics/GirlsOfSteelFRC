@@ -38,7 +38,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -157,17 +156,17 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("TrajectoryTestCommands");
 
         // auto trajectories
-        tab.add("Trajectory: Test Line", m_chassisSubsystem.createFollowPathCommand("TestLine", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-        tab.add("Trajectory: Test Mild Curve", m_chassisSubsystem.createFollowPathCommand("TestMildCurve", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-        tab.add("Trajectory: Test S Curve", m_chassisSubsystem.createFollowPathCommand("TestSCurve", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+        tab.add("Trajectory: Test Line", m_chassisSubsystem.createFollowPathCommand("TestLine"));
+        tab.add("Trajectory: Test Mild Curve", m_chassisSubsystem.createFollowPathCommand("TestMildCurve"));
+        tab.add("Trajectory: Test S Curve", m_chassisSubsystem.createFollowPathCommand("TestSCurve"));
     }
 
     private void createSwerveTrajectoryCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("SwerveTestCommands");
         if (Constants.IS_SWERVE) {
-            tab.add("Swerve: Test Straight", m_chassisSubsystem.createFollowPathCommand("Swerve Straight Path", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-            tab.add("Swerve: Test Strafe", m_chassisSubsystem.createFollowPathCommand("Swerve Strafe Path", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-            tab.add("Swerve: Test Turn in Line 180", m_chassisSubsystem.createFollowPathCommand("SwerveTurnInPath", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+            tab.add("Swerve: Test Straight", m_chassisSubsystem.createFollowPathCommand("Swerve Straight Path"));
+            tab.add("Swerve: Test Strafe", m_chassisSubsystem.createFollowPathCommand("Swerve Strafe Path"));
+            tab.add("Swerve: Test Turn in Line 180", m_chassisSubsystem.createFollowPathCommand("SwerveTurnInPath"));
         }
 
     }

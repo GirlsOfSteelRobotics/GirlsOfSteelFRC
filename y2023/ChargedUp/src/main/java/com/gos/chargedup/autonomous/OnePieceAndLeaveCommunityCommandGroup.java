@@ -18,7 +18,7 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
     public OnePieceAndLeaveCommunityCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot,
                                                  ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                  AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(path, true, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(path);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)

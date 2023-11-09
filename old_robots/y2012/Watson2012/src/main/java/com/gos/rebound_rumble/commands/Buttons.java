@@ -1,7 +1,6 @@
 package com.gos.rebound_rumble.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Chassis;
 import com.gos.rebound_rumble.subsystems.Collector;
