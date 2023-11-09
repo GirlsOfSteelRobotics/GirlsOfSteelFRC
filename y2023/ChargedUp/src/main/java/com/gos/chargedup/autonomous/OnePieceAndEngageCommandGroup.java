@@ -1,7 +1,6 @@
 package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.AutoPivotHeight;
-import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
