@@ -1,12 +1,12 @@
 package com.gos.preseason2017.team1.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2017.team1.robot.subsystems.JawPiston;
 
 /**
  *
  */
-public class JawIn extends CommandBase {
+public class JawIn extends Command {
 
     private final JawPiston m_jaw;
 

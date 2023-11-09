@@ -1,10 +1,10 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 
-public class GoToCargoCommand extends CommandBase {
+public class GoToCargoCommand extends Command {
     private final ChassisSubsystem m_chassis;
     private final double m_xCoordinate;
     private final double m_yCoordinate;

@@ -1,14 +1,14 @@
 package com.gos.preseason2017.team2.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team2.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class DriveByJoystick extends CommandBase {
+public class DriveByJoystick extends Command {
     private final Chassis m_chassis;
     private final Joystick m_stick;
 

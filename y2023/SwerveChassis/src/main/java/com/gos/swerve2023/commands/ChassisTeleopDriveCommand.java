@@ -2,12 +2,12 @@ package com.gos.swerve2023.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.swerve2023.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
-public class ChassisTeleopDriveCommand extends CommandBase {
+public class ChassisTeleopDriveCommand extends Command {
     private static final double JOYSTICK_DEADBAND = 0.025;
     private static final GosDoubleProperty TRANSLATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickTranslationDamping", 0.4);
     private static final GosDoubleProperty ROTATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickRotationDamping", 0.4);

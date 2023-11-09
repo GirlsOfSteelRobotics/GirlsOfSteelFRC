@@ -1,12 +1,12 @@
 package com.gos.preseason2016.team_squirtle.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2016.team_squirtle.robot.subsystems.Shifters;
 
 /**
  *
  */
-public class ShiftLowGear extends CommandBase {
+public class ShiftLowGear extends Command {
 
     private final Shifters m_shifters;
 

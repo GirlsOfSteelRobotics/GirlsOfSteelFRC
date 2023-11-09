@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class AutoTurn extends CommandBase {
+public class AutoTurn extends Command {
 
     private final Chassis m_chassis;
     private final double m_turnAmt;

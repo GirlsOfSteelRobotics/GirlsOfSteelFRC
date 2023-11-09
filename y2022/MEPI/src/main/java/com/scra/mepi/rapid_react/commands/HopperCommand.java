@@ -5,12 +5,12 @@
 package com.scra.mepi.rapid_react.commands;
 
 import com.scra.mepi.rapid_react.subsystems.HopperSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class HopperCommand extends CommandBase {
+public class HopperCommand extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final HopperSubsystem m_hopperSubsystem;
 

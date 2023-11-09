@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands.camera;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Camera;
 
 /**
  *
  */
-public class UpdateCam extends CommandBase {
+public class UpdateCam extends Command {
 
     private final Camera m_camera;
 

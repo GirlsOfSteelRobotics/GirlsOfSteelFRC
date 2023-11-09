@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Chassis;
 
 /**
  *
  */
-public class SwitchToDriveBackward extends CommandBase {
+public class SwitchToDriveBackward extends Command {
 
     private final Chassis m_chassis;
 

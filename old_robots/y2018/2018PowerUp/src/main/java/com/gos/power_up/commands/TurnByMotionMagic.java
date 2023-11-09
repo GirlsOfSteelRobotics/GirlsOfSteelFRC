@@ -3,12 +3,12 @@ package com.gos.power_up.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class TurnByMotionMagic extends CommandBase {
+public class TurnByMotionMagic extends Command {
     private static final double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
     private final double m_targetHeading; // in degrees

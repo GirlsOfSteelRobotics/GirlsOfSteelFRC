@@ -1,0 +1,59 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.82,
+        "y": 2.2
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.0510947006074374,
+        "y": 2.2
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 5.9758174623237625,
+        "y": 2.2
+      },
+      "prevControl": {
+        "x": 5.475817462323761,
+        "y": 2.2
+      },
+      "nextControl": {
+        "x": 5.475817462323761,
+        "y": 2.2
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 3.75,
+        "y": 2.1992341371856146
+      },
+      "prevControl": {
+        "x": 4.86091925521645,
+        "y": 2.1992341371856146
+      },
+      "nextControl": null,
+      "isLocked": false
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.2192,
+    "maxAcceleration": 1.2192,
+    "maxAngularVelocity": 360,
+    "maxAngularAcceleration": 360
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0
+  },
+  "reversed": true,
+  "folder": "LeaveAndEngage"
+}

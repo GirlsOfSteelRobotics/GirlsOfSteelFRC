@@ -1,12 +1,12 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 
 
-public class AutoLimelightConveyorAndShooterCommand extends CommandBase {
+public class AutoLimelightConveyorAndShooterCommand extends Command {
     private final ShooterLimelightSubsystem m_shooterLimelight;
     private final ShooterSubsystem m_shooter;
     private final VerticalConveyorSubsystem m_verticalConveyor;

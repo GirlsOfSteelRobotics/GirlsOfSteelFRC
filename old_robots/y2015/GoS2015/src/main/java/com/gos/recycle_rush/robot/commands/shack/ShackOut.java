@@ -1,12 +1,12 @@
 package com.gos.recycle_rush.robot.commands.shack;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Shack;
 
 /**
  *
  */
-public class ShackOut extends CommandBase {
+public class ShackOut extends Command {
 
     private final Shack m_shack;
 

@@ -11,9 +11,7 @@ import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.lib.GetAllianceUtil;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -24,18 +22,15 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import java.util.HashMap;
-import java.util.List;
-
 
 public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCommandGroup {
     public OnePieceAndLeaveCommunityWithTurnCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot,
                                                          ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                          AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        List<PathPlannerTrajectory> onePieceAndLeave = PathPlanner.loadPathGroup(path, false, new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36)));
-        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave, new HashMap<>());
+        PathPlannerPath onePieceAndLeave = PathPlannerPath.fromPathFile(path);
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave, true);
 
-        Pose2d initialPose = onePieceAndLeave.get(0).getInitialPose();
+        Pose2d initialPose = onePieceAndLeave.getStartingDifferentialPose();
 
         //0.6 away
         Pose2d startPose = new Pose2d(new Translation2d(

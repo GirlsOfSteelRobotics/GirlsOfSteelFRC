@@ -1,13 +1,13 @@
 package com.gos.chargedup.commands;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.BooleanSupplier;
 
 
-public class CheckRumbleCommand extends CommandBase {
+public class CheckRumbleCommand extends Command {
     private final CommandXboxController m_joystick;
     private final BooleanSupplier m_checkValue;
 

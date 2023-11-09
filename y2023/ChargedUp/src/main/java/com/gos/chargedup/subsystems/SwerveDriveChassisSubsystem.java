@@ -2,26 +2,22 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.GosSwerveAutoBuilder;
-import com.gos.lib.properties.pid.PidProperty;
-import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
-import com.pathplanner.lib.auto.BaseAutoBuilder;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import edu.wpi.first.math.controller.PIDController;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
-
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class SwerveDriveChassisSubsystem extends BaseChassis {
 
@@ -30,13 +26,6 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     public static final double MAX_TRANSLATION_SPEED = 2.9;
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(180);
-
-    private final PIDController m_xTranslationPidController;
-    private final PIDController m_yTranslationPidController;
-    private final PIDController m_rotationPidController;
-    private final PidProperty m_xTranslationPidProperties;
-    private final PidProperty m_yTranslationPidProperties;
-    private final PidProperty m_rotationPidProperties;
 
     private final RevSwerveChassis m_swerveDrive;
 
@@ -53,36 +42,20 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
         );
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new CtrePigeonImuWrapper(m_gyro));
 
-        m_xTranslationPidController = new PIDController(0, 0, 0);
-        m_xTranslationPidProperties = new WpiPidPropertyBuilder("SwerveTranslation", false, m_xTranslationPidController)
-            .addP(0)
-            .addD(0)
-            .build();
-
-        m_yTranslationPidController = new PIDController(0, 0, 0);
-        m_yTranslationPidProperties = new WpiPidPropertyBuilder("SwerveTranslation", false, m_yTranslationPidController)
-            .addP(0)
-            .addD(0)
-            .build();
-
-        m_rotationPidController = new PIDController(0, 0, 0);
-        m_rotationPidProperties = new WpiPidPropertyBuilder("SwerveRotation", false, m_rotationPidController)
-            .addP(0)
-            .addD(0)
-            .build();
-
-        PPSwerveControllerCommand.setLoggingCallbacks(
-            m_field::setTrajectory,
-            m_field::setTrajectorySetpoint,
-            this::logTrajectoryChassisSetpoint,
-            this::logTrajectoryErrors
+        AutoBuilder.configureHolonomic(
+            this::getPose,
+            this::resetOdometry,
+            this::getChassisSpeed,
+            this::setChassisSpeed,
+            new HolonomicPathFollowerConfig(
+                new PIDConstants(5, 0, 0),
+                new PIDConstants(5, 0, 0),
+                MAX_TRANSLATION_SPEED,
+                WHEEL_BASE,
+                new ReplanningConfig(),
+                0.02),
+            this
         );
-    }
-
-    private void logTrajectoryChassisSetpoint(ChassisSpeeds chassisSpeeds) {
-        m_trajectoryVelocitySetpointX.setNumber(chassisSpeeds.vxMetersPerSecond);
-        m_trajectoryVelocitySetpointY.setNumber(chassisSpeeds.vyMetersPerSecond);
-        m_trajectoryVelocitySetpointAngle.setNumber(chassisSpeeds.omegaRadiansPerSecond);
     }
 
     @Override
@@ -97,10 +70,6 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     public void periodic() {
-        m_xTranslationPidProperties.updateIfChanged();
-        m_yTranslationPidProperties.updateIfChanged();
-        m_rotationPidProperties.updateIfChanged();
-
         m_swerveDrive.periodic();
 
         m_field.setOdometry(m_swerveDrive.getOdometryPosition());
@@ -125,20 +94,6 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     @Override
     public void clearStickyFaults() {
         m_swerveDrive.clearStickyFaults();
-    }
-
-    @Override
-    protected BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
-        return new GosSwerveAutoBuilder(
-            this::getPose,
-            poseSetter,
-            m_xTranslationPidController,
-            m_yTranslationPidController,
-            m_rotationPidController,
-            this::setChassisSpeed,
-            eventMap,
-            this
-        );
     }
 
     @Override
@@ -167,35 +122,45 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     @Override
-    public CommandBase createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
+    public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
+        Command followPathCommand = AutoBuilder.followPathWithEvents(path);
+        if (resetPose) {
+            Pose2d pose = path.getPreviewStartingHolonomicPose();
+            return Commands.runOnce(() -> resetOdometry(pose)).andThen(followPathCommand);
+        }
+        return followPathCommand;
+    }
+
+    @Override
+    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
         // TODO implement
         return new InstantCommand();
     }
 
     @Override
-    public CommandBase createSyncOdometryWithPoseEstimatorCommand() {
+    public Command createSyncOdometryWithPoseEstimatorCommand() {
         return runOnce(m_swerveDrive::syncOdometryWithPoseEstimator).withName("Sync Odometry /w Pose");
     }
 
     @Override
-    public CommandBase createSelfTestMotorsCommand() {
+    public Command createSelfTestMotorsCommand() {
         // TODO implement
         return new SequentialCommandGroup();
     }
 
-    public CommandBase commandSetChassisSpeed(ChassisSpeeds chassisSp) {
+    public Command commandSetChassisSpeed(ChassisSpeeds chassisSp) {
         return this.run(() -> setChassisSpeed(chassisSp)).withName("Set Chassis Speeds" + chassisSp);
     }
 
-    public CommandBase commandLockDrivetrain() {
+    public Command commandLockDrivetrain() {
         return this.run(this::lockDriveTrain).withName("Lock Wheels Command");
     }
 
-    public CommandBase commandSetModuleState(int moduleId, double degrees, double velocity) {
+    public Command commandSetModuleState(int moduleId, double degrees, double velocity) {
         return this.run(() -> m_swerveDrive.setModuleState(moduleId, degrees, velocity)).withName("Module " + moduleId + "(" + degrees + ", " + velocity + ")");
     }
 
-    public CommandBase commandSetPercentSpeeds(double percentAzimuth, double percentWheel) {
+    public Command commandSetPercentSpeeds(double percentAzimuth, double percentWheel) {
         return this.run(() -> m_swerveDrive.setChassisSpeedsPercent(percentWheel, percentAzimuth));
     }
 

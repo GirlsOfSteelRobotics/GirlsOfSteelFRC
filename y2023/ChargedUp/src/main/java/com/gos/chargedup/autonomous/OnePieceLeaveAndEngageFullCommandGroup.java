@@ -1,7 +1,6 @@
 package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.AutoPivotHeight;
-import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
@@ -15,9 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class OnePieceLeaveAndEngageFullCommandGroup extends SequentialCommandGroup {
 
     public OnePieceLeaveAndEngageFullCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType, String path) {
-        Command driveForwardOverChargingStation1 = chassis.createFollowPathCommand(path, true,
-            Constants.DEFAULT_PATH_CONSTRAINTS,
-            Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command driveForwardOverChargingStation1 = chassis.createFollowPathCommand(path, true);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType));

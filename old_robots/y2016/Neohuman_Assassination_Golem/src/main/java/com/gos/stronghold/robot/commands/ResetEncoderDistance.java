@@ -1,6 +1,6 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Chassis;
 import com.gos.stronghold.robot.subsystems.Flap;
 import com.gos.stronghold.robot.subsystems.Pivot;
@@ -8,7 +8,7 @@ import com.gos.stronghold.robot.subsystems.Pivot;
 /**
  *
  */
-public class ResetEncoderDistance extends CommandBase {
+public class ResetEncoderDistance extends Command {
 
     private final Chassis m_chassis;
     private final Flap m_flap;

@@ -21,7 +21,6 @@ import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
 import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.lib.properties.PropertyManager;
-import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -38,7 +37,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -115,7 +113,6 @@ public class RobotContainer {
         }
 
         DriverStation.silenceJoystickConnectionWarning(true);
-        PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_claw));
@@ -157,17 +154,17 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("TrajectoryTestCommands");
 
         // auto trajectories
-        tab.add("Trajectory: Test Line", m_chassisSubsystem.createFollowPathCommand("TestLine", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-        tab.add("Trajectory: Test Mild Curve", m_chassisSubsystem.createFollowPathCommand("TestMildCurve", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-        tab.add("Trajectory: Test S Curve", m_chassisSubsystem.createFollowPathCommand("TestSCurve", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+        tab.add("Trajectory: Test Line", m_chassisSubsystem.createFollowPathCommand("TestLine"));
+        tab.add("Trajectory: Test Mild Curve", m_chassisSubsystem.createFollowPathCommand("TestMildCurve"));
+        tab.add("Trajectory: Test S Curve", m_chassisSubsystem.createFollowPathCommand("TestSCurve"));
     }
 
     private void createSwerveTrajectoryCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("SwerveTestCommands");
         if (Constants.IS_SWERVE) {
-            tab.add("Swerve: Test Straight", m_chassisSubsystem.createFollowPathCommand("Swerve Straight Path", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-            tab.add("Swerve: Test Strafe", m_chassisSubsystem.createFollowPathCommand("Swerve Strafe Path", false, Constants.DEFAULT_PATH_CONSTRAINTS));
-            tab.add("Swerve: Test Turn in Line 180", m_chassisSubsystem.createFollowPathCommand("SwerveTurnInPath", false, Constants.DEFAULT_PATH_CONSTRAINTS));
+            tab.add("Swerve: Test Straight", m_chassisSubsystem.createFollowPathCommand("Swerve Straight Path"));
+            tab.add("Swerve: Test Strafe", m_chassisSubsystem.createFollowPathCommand("Swerve Strafe Path"));
+            tab.add("Swerve: Test Turn in Line 180", m_chassisSubsystem.createFollowPathCommand("SwerveTurnInPath"));
         }
 
     }
@@ -331,7 +328,7 @@ public class RobotContainer {
         // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
     }
 
-    private CommandBase debugArmPid(double angle) {
+    private Command debugArmPid(double angle) {
         return m_armPivot.createPivotToAngleAndHoldCommand(angle);
         //.andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
@@ -356,7 +353,7 @@ public class RobotContainer {
         m_claw.clearStickyFaults();
     }
 
-    private CommandBase createResetStickyFaults() {
+    private Command createResetStickyFaults() {
         return Commands.run(this::resetStickyFaults).ignoringDisable(true);
     }
 

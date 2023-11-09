@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Pivot;
 
 /**
  *
  */
-public class PivotMiddle extends CommandBase {
+public class PivotMiddle extends Command {
 
     private static final double ENCODER_VALUE_UP = -30; //based on initial position
     private static final double ENCODER_VALUE_MIDDLE = 0; //TODO: fix these depending on which way is positive for motor

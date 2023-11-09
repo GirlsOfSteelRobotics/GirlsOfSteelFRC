@@ -1,13 +1,13 @@
 package com.gos.preseason2017.team1.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2017.team1.robot.subsystems.Shifters;
 import com.gos.preseason2017.team1.robot.subsystems.Shifters.Speed;
 
 /**
  *
  */
-public class ShiftDown extends CommandBase {
+public class ShiftDown extends Command {
 
     private final Shifters m_shifters;
 

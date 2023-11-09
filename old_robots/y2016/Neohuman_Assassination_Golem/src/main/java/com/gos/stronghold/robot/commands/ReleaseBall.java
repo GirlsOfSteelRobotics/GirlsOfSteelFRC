@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.RobotMap;
 import com.gos.stronghold.robot.subsystems.Claw;
 import com.gos.stronghold.robot.subsystems.Shooter;
 
 
-public class ReleaseBall extends CommandBase {
+public class ReleaseBall extends Command {
 
     private final Claw m_claw;
     private final Shooter m_shooter;

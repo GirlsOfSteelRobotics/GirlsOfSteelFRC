@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Climber;
 
 /**
  *
  */
-public class UnClimb extends CommandBase {
+public class UnClimb extends Command {
 
     private final Climber m_climber;
 

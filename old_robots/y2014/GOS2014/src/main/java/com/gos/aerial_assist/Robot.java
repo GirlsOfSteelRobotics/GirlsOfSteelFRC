@@ -117,9 +117,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         CommandScheduler.getInstance().run();
         //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration", 0));
-        //        SmartDashboard.putNumber("robotCameraAngle",(double)CommandBase.camera.getVerticalAngleOffset());
-        //        System.out.println("Camera Angle: " + (double)CommandBase.camera.getVerticalAngleOffset());
-        //        SmartDashboard.putNumber("robotDistance",(double)CommandBase.camera.getDistanceToTarget());
+        //        SmartDashboard.putNumber("robotCameraAngle",(double)Command.camera.getVerticalAngleOffset());
+        //        System.out.println("Camera Angle: " + (double)Command.camera.getVerticalAngleOffset());
+        //        SmartDashboard.putNumber("robotDistance",(double)Command.camera.getDistanceToTarget());
     }
 
     /**

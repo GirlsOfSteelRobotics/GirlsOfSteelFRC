@@ -14,7 +14,6 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -92,14 +91,14 @@ public class ClawSubsystem extends SubsystemBase {
     //////////////
     // Checklists
     //////////////
-    public CommandBase createIsClawMotorMovingChecklist() {
+    public Command createIsClawMotorMovingChecklist() {
         return new SparkMaxMotorsMoveChecklist(this, m_clawMotor, "Claw: Motor", 1.0);
     }
 
     /////////////////////
     // Command Factories
     /////////////////////
-    public CommandBase createMoveClawIntakeInCommand() {
+    public Command createMoveClawIntakeInCommand() {
         return this.runEnd(this::moveClawIntakeIn, this::stopIntake).withName("ClawIntakeIn");
     }
 
@@ -107,23 +106,23 @@ public class ClawSubsystem extends SubsystemBase {
         return this.run(this::moveClawIntakeIn);
     }
 
-    public CommandBase createMoveClawIntakeInWithTimeoutCommand() {
+    public Command createMoveClawIntakeInWithTimeoutCommand() {
         return createMoveClawIntakeInCommand().withTimeout(AUTO_INTAKE_TIME);
     }
 
-    public CommandBase createMoveClawIntakeOutCommand() {
+    public Command createMoveClawIntakeOutCommand() {
         return this.runEnd(this::moveClawIntakeOut, this::stopIntake).withName("ClawIntakeOut");
     }
 
-    public CommandBase createMoveClawIntakeOutWithTimeoutCommand() {
+    public Command createMoveClawIntakeOutWithTimeoutCommand() {
         return createMoveClawIntakeOutCommand().withTimeout(AUTO_EJECTION_TIME);
     }
 
-    public CommandBase createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {
+    public Command createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {
         return this.createMoveClawIntakeInCommand().alongWith(new CheckRumbleCommand(joystick, this::hasGamePiece));
     }
 
-    public CommandBase createHoldPieceCommand() {
+    public Command createHoldPieceCommand() {
         return this.run(this::holdPiece);
     }
 }

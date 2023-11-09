@@ -1,10 +1,10 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Shooter;
 
 
-public class RunShooterRPM extends CommandBase {
+public class RunShooterRPM extends Command {
 
     private final Shooter m_shooter;
     private final double m_goalRPM;

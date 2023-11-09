@@ -1,10 +1,10 @@
 package com.gos.outreach2021.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.outreach2021.subsystems.Shooter;
 
 
-public class SetHoodAngleCommand extends CommandBase {
+public class SetHoodAngleCommand extends Command {
 
     private final Shooter m_shooter;
     private final double m_goalAngle;

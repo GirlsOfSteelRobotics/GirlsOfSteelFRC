@@ -1,10 +1,10 @@
 package com.gos.infinite_recharge.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Chassis;
 
-public class DriveByJoystick extends CommandBase {
+public class DriveByJoystick extends Command {
 
     private final Chassis m_chassis;
     public XboxController m_drivingPad;

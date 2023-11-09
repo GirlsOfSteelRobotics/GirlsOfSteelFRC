@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Shooter;
 
 /**
  *
  */
-public class ShooterPistonsOut extends CommandBase {
+public class ShooterPistonsOut extends Command {
     private final Shooter m_shooter;
 
     public ShooterPistonsOut(Shooter shooter) {

@@ -2,7 +2,6 @@ package com.gos.chargedup.autonomous;
 
 
 import com.gos.chargedup.AutoPivotHeight;
-import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
@@ -18,7 +17,7 @@ public class OnePieceAndLeaveCommunityCommandGroup extends SequentialCommandGrou
     public OnePieceAndLeaveCommunityCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot,
                                                  ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                  AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(path, true, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(path);
 
         //score
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, gamePieceType)

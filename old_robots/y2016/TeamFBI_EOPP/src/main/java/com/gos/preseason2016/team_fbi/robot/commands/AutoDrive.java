@@ -1,10 +1,10 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Drive;
 
-public class AutoDrive extends CommandBase {
+public class AutoDrive extends Command {
 
     private final Drive m_drive;
     private final Timer m_timer;

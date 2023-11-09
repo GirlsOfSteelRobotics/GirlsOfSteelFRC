@@ -5,7 +5,6 @@
 
 package com.gos.chargedup;
 
-import com.pathplanner.lib.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
@@ -68,9 +67,6 @@ public final class Constants {
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
-
-    //Auto velocity and acceleration
-    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;

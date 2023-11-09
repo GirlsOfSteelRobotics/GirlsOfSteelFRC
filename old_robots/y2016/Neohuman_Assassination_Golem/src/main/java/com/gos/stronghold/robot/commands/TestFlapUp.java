@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Flap;
 
 /**
  *
  */
-public class TestFlapUp extends CommandBase {
+public class TestFlapUp extends Command {
     private final Flap m_flap;
 
     public TestFlapUp(Flap flap) {

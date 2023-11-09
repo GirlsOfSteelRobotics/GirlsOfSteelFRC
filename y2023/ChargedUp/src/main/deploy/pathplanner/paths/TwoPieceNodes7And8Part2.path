@@ -1,0 +1,59 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.5,
+        "y": 4.61
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.811796430148766,
+        "y": 4.61
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 6.480403649643404,
+        "y": 4.607919144579382
+      },
+      "prevControl": {
+        "x": 5.736829290024497,
+        "y": 4.607919144579382
+      },
+      "nextControl": {
+        "x": 5.736829290024497,
+        "y": 4.607919144579382
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 5.5,
+        "y": 4.61
+      },
+      "prevControl": {
+        "x": 6.5,
+        "y": 4.61
+      },
+      "nextControl": null,
+      "isLocked": false
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.2192,
+    "maxAcceleration": 1.2192,
+    "maxAngularVelocity": 360,
+    "maxAngularAcceleration": 360
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0
+  },
+  "reversed": true,
+  "folder": "TwoPiece"
+}

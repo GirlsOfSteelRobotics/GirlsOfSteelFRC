@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Shooter;
 
 /**
  *
  */
-public class DecrementHighShooter extends CommandBase {
+public class DecrementHighShooter extends Command {
 
     private final Shooter m_shooter;
 

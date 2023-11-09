@@ -11,7 +11,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class TrajectoryUtils {
         return TrajectoryGenerator.generateTrajectory(list, trajectoryConfig);
     }
 
-    public static CommandBase startTrajectory(String fileName, TrajectoryConfig trajectoryConfig, ChassisSubsystem chassis) {
+    public static Command startTrajectory(String fileName, TrajectoryConfig trajectoryConfig, ChassisSubsystem chassis) {
         Trajectory trajectory = loadingTrajectory(fileName, trajectoryConfig);
         FollowTrajectory followTrajectory = new FollowTrajectory(trajectory, chassis);
         SetInitialOdometryCommand setPosition = new SetInitialOdometryCommand(chassis, trajectory.getInitialPose());

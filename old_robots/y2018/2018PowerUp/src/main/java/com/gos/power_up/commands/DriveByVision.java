@@ -4,12 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.Blobs;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class DriveByVision extends CommandBase {
+public class DriveByVision extends Command {
     private static final double SPEED_PERCENT = 0.2;
 
     private final Chassis m_chassis;

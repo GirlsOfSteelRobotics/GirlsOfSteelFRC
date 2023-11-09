@@ -6,12 +6,12 @@ package com.scra.mepi.rapid_react.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
 import com.scra.mepi.rapid_react.subsystems.ShooterSubsytem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class ShooterPIDCommand extends CommandBase {
+public class ShooterPIDCommand extends Command {
     private final ShooterSubsytem m_shooterSubsystem;
 
     private final GosDoubleProperty m_tunableShooterGoal = new GosDoubleProperty(false, "Shooter Goal", 1000);

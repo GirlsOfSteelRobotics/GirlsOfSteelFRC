@@ -13,8 +13,6 @@ import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.BaseAutoBuilder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -24,19 +22,14 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public abstract class BaseChassis extends SubsystemBase implements ChassisSubsystemInterface {
     protected static final double PITCH_LOWER_LIMIT = -3.0;
@@ -208,72 +201,38 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
 
     protected abstract void unlockDriveTrain();
 
-    protected abstract BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter);
-
-    private BaseAutoBuilder createAutoBuilder(Map<String, Command> eventMap) {
-        return createPathPlannerAutoBuilder(eventMap, this::resetOdometry);
-    }
-
-    private BaseAutoBuilder createAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
-        return createPathPlannerAutoBuilder(eventMap, (Pose2d pose) -> {});
-    }
-
     //////////////////////////////
     // Commands
     //////////////////////////////
     @Override
     @SuppressWarnings("PMD.AvoidReassigningParameters")
-    public CommandBase createDriveToPointCommand(Pose2d point, boolean reverse) {
+    public Command createDriveToPointCommand(Pose2d point, boolean reverse) {
         point = AllianceFlipper.maybeFlip(point);
         System.out.println("flipped point" + point);
         return createDriveToPointNoFlipCommand(getPose(), point, reverse);
     }
 
     @Override
-    public CommandBase createAutoEngageCommand() {
+    public Command createAutoEngageCommand() {
         return this.runOnce(this::lockDriveTrain)
             .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
             .finallyDo((interrupted) -> unlockDriveTrain()).withName("Auto Engage");
     }
 
     @Override
-    public CommandBase createResetOdometryCommand(Pose2d pose2d) {
+    public Command createResetOdometryCommand(Pose2d pose2d) {
         return this.run(() -> resetOdometry(pose2d))
             .ignoringDisable(true)
             .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
     @Override
-    public CommandBase createFollowPathCommand(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
-        return createAutoBuilder(events).fullAuto(trajectory);
-    }
-
-    @Override
-    public CommandBase createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
-        return createAutoBuilderNoPoseReset(events).fullAuto(trajectory);
-    }
-
-    @Override
-    public CommandBase createDeferredDriveToPointCommand(Pose2d point, boolean reverse) {
+    public Command createDeferredDriveToPointCommand(Pose2d point, boolean reverse) {
         return new ProxyCommand(() -> createDriveToPointCommand(point, reverse));
     }
 
     @Override
-    public CommandBase createResetPoseCommand(PathPlannerTrajectory trajectory, Rotation2d startAngle) {
-        return Commands.runOnce(
-            () -> {
-                PathPlannerTrajectory.PathPlannerState initialState = trajectory.getInitialState();
-                initialState =
-                    PathPlannerTrajectory.transformStateForAlliance(
-                        initialState, DriverStation.getAlliance());
-                Pose2d startPose = new Pose2d(initialState.poseMeters.getTranslation(), startAngle);
-                resetOdometry(startPose);
-            });
-
-    }
-
-    @Override
-    public CommandBase createTurnToAngleCommand(double angleGoal) {
+    public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
             .andThen(this.run(() -> turnToAngle(angleGoal))
                 .until(this::turnPIDIsAtAngle)

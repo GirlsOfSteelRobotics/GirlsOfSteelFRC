@@ -2,9 +2,9 @@ package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class DriveByJoystick extends CommandBase {
+public class DriveByJoystick extends Command {
 
     private final Chassis m_chassis;
     private final Joystick m_drivingPad;

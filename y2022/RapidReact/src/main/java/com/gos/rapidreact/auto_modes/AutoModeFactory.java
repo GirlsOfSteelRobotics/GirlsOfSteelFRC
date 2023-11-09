@@ -7,10 +7,9 @@ import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoModeFactory extends SequentialCommandGroup {
@@ -34,16 +33,16 @@ public class AutoModeFactory extends SequentialCommandGroup {
         FIVE_BALL_LOW,
     }
 
-    private final CommandBase m_offTarmacAuto;
-    private final CommandBase m_oneBallAutoLow;
-    private final CommandBase m_oneBallAutoHigh;
-    private final CommandBase m_twoBallAutoLow;
-    private final CommandBase m_twoBallAutoHigh;
-    private final CommandBase m_fourBallAutoLow;
-    private final CommandBase m_fourBallAutoHalf;
-    private final CommandBase m_fourBallAutoHigh;
-    private final CommandBase m_sabotageAutoLowerTarmac;
-    private final CommandBase m_sabotageAutoUpperTarmac;
+    private final Command m_offTarmacAuto;
+    private final Command m_oneBallAutoLow;
+    private final Command m_oneBallAutoHigh;
+    private final Command m_twoBallAutoLow;
+    private final Command m_twoBallAutoHigh;
+    private final Command m_fourBallAutoLow;
+    private final Command m_fourBallAutoHalf;
+    private final Command m_fourBallAutoHigh;
+    private final Command m_sabotageAutoLowerTarmac;
+    private final Command m_sabotageAutoUpperTarmac;
 
     /**
      * Creates a new AutomatedConveyorIntake.

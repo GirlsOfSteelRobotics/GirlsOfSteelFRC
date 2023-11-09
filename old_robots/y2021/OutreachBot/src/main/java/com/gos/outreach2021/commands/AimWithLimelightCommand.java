@@ -2,10 +2,10 @@ package com.gos.outreach2021.commands;
 
 import com.gos.outreach2021.subsystems.Chassis;
 import com.gos.outreach2021.subsystems.LimelightSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class AimWithLimelightCommand extends CommandBase {
+public class AimWithLimelightCommand extends Command {
 
     private final Chassis m_chassis;
     private final LimelightSubsystem m_limelightSubsystem;

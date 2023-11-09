@@ -8,9 +8,9 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Collector;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class CollectorRelease extends CommandBase {
+public class CollectorRelease extends Command {
     private final Collector m_collector;
 
     public CollectorRelease(Collector collector) {

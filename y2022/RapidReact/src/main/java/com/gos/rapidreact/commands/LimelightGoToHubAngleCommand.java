@@ -1,12 +1,12 @@
 package com.gos.rapidreact.commands;
 
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 
 
-public class LimelightGoToHubAngleCommand extends CommandBase {
+public class LimelightGoToHubAngleCommand extends Command {
     private final ChassisSubsystem m_chassis;
     private final ShooterLimelightSubsystem m_limelight;
     private final ShooterSubsystem m_shooter;

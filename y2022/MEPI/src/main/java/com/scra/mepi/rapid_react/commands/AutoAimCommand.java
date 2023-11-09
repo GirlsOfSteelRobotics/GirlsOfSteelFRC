@@ -12,12 +12,12 @@ import com.scra.mepi.rapid_react.subsystems.LimelightSubsystem;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class AutoAimCommand extends CommandBase {
+public class AutoAimCommand extends Command {
     private final DrivetrainSubsystem m_driveTrainSubsystem;
     private final LimelightSubsystem m_limelightSubsystem;
     private final ProfiledPIDController m_controller;

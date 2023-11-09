@@ -51,7 +51,7 @@ public class CollectorWheelForward extends GosCommandBase {
     @Override
     public boolean isFinished() {
         return false;
-        //return CommandBase.collector.isCollectorEngaged();
+        //return Command.collector.isCollectorEngaged();
     }
 
     /**

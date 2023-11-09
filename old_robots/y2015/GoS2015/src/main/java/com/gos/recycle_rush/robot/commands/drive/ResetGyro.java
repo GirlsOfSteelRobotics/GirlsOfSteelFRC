@@ -1,12 +1,12 @@
 package com.gos.recycle_rush.robot.commands.drive;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class ResetGyro extends CommandBase {
+public class ResetGyro extends Command {
     private final Chassis m_chassis;
 
     public ResetGyro(Chassis chassis) {

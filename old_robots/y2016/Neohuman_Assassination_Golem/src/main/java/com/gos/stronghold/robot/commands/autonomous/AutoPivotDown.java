@@ -1,13 +1,13 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Pivot;
 
 /**
  *
  */
-public class AutoPivotDown extends CommandBase {
+public class AutoPivotDown extends Command {
 
     private final Pivot m_pivot;
     private final Timer m_tim;

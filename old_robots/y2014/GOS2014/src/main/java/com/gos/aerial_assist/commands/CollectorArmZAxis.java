@@ -11,7 +11,7 @@
 // *
 // * @author Sylvie
 // */
-//public class CollectorArmZAxis extends CommandBase {
+//public class CollectorArmZAxis extends Command {
 //
 //    Joystick operator;
 //

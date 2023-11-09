@@ -2,11 +2,11 @@ package com.gos.chargedup.commands;
 
 import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
-public class SwerveChassisJoystickCommand extends CommandBase {
+public class SwerveChassisJoystickCommand extends Command {
     private final SwerveDriveChassisSubsystem m_swerveDriveChassisSubsystem;
 
     private final CommandXboxController m_joystick;

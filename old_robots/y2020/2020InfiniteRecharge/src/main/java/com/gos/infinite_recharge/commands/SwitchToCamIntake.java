@@ -1,10 +1,10 @@
 package com.gos.infinite_recharge.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Camera;
 
-public class SwitchToCamIntake extends CommandBase {
+public class SwitchToCamIntake extends Command {
 
     private final Camera m_camera;
 

@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class WristOut extends CommandBase {
+public class WristOut extends Command {
     private final Wrist m_wrist;
 
     public WristOut(Wrist wrist) {

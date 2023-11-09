@@ -1,9 +1,9 @@
 package com.gos.testboard2020.commands;
 
 import com.gos.testboard2020.subsystems.Limelight;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class OuterShootAlign2 extends CommandBase {
+public class OuterShootAlign2 extends Command {
 
     private final Limelight m_limelight;
     //private final Chassis m_chassis;

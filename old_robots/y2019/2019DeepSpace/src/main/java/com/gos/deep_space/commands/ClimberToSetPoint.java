@@ -10,9 +10,9 @@ package com.gos.deep_space.commands;
 import com.gos.deep_space.subsystems.Blinkin;
 import com.gos.deep_space.subsystems.Climber;
 import com.gos.deep_space.subsystems.Climber.ClimberType;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class ClimberToSetPoint extends CommandBase {
+public class ClimberToSetPoint extends Command {
     private final Climber m_climber;
     private final Blinkin m_blinkin;
 

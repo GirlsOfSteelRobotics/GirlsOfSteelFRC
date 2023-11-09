@@ -108,6 +108,7 @@ public final class Constants {
                     ElevatorSimConstants.DRUM_RADIUS,
                     ElevatorSimConstants.MIN_ELEVATOR_HEIGHT,
                     ElevatorSimConstants.MAX_ELEVATOR_HEIGHT, true,
+                    0,
                     SIMULATE_SENSOR_NOISE ?  VecBuilder.fill(0.01) : null); // NOPMD
         }
 

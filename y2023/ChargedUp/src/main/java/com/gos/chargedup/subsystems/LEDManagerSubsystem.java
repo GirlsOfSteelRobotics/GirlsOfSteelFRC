@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.util.Alert;
 
@@ -365,11 +365,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     //////////////////////
     // Command Factories
     //////////////////////
-    public CommandBase commandConeGamePieceSignal() {
+    public Command commandConeGamePieceSignal() {
         return this.runEnd(() -> m_optionConeLED = true, () -> m_optionConeLED = false);
     }
 
-    public CommandBase commandCubeGamePieceSignal() {
+    public Command commandCubeGamePieceSignal() {
         return this.runEnd(() -> m_optionCubeLED = true, () -> m_optionCubeLED = false);
     }
 }

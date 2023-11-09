@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class ShootEngage extends SequentialCommandGroup {
     public ShootEngage(DrivetrainSubsystem drivetrain, ShooterSubsytem shooter, String path) {
-        Command shootEngage = drivetrain.createPathFollowingCommand(path, true);
+        Command shootEngage = drivetrain.createPathFollowingCommand(path);
 
         // STEP 1: shoot a ball
         addCommands(new ShooterPIDCommand(shooter));

@@ -1,13 +1,13 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class AutoDriveBackwards extends CommandBase {
+public class AutoDriveBackwards extends Command {
 
     private final Chassis m_chassis;
     private final double m_inches;

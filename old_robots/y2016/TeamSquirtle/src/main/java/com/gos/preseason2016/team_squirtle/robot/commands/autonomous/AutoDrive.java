@@ -1,13 +1,13 @@
 package com.gos.preseason2016.team_squirtle.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2016.team_squirtle.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class AutoDrive extends CommandBase {
+public class AutoDrive extends Command {
 
     private final Chassis m_chassis;
     public double m_distance;

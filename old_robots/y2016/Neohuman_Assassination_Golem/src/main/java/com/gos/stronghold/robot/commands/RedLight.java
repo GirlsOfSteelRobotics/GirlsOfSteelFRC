@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class RedLight extends CommandBase {
+public class RedLight extends Command {
 
     // Called just before this Command runs the first time
     @Override

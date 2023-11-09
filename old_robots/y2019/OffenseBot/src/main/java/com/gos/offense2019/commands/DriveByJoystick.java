@@ -9,12 +9,12 @@ package com.gos.offense2019.commands;
 
 import com.gos.offense2019.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class DriveByJoystick extends CommandBase {
+public class DriveByJoystick extends Command {
     private final Chassis m_chassis;
     private final Joystick m_drivingPad;
 

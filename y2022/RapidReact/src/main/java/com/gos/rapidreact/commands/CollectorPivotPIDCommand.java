@@ -1,10 +1,10 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 
 
-public class CollectorPivotPIDCommand extends CommandBase {
+public class CollectorPivotPIDCommand extends Command {
     private final CollectorSubsystem m_collector;
     private final double m_pivotAngle;
     private boolean m_isFinished;

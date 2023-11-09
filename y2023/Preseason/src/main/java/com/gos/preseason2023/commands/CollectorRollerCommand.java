@@ -1,10 +1,10 @@
 package com.gos.preseason2023.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2023.subsystems.CollectorExampleSubsystem;
 
 
-public class CollectorRollerCommand extends CommandBase {
+public class CollectorRollerCommand extends Command {
     private final CollectorExampleSubsystem m_collector;
     private final double m_speed;
 
