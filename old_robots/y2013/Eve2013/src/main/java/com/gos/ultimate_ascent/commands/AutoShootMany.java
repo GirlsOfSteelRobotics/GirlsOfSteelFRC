@@ -3,7 +3,7 @@ package com.gos.ultimate_ascent.commands;
 import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 
-public class AutoShootMany extends GosCommandBase {
+public class AutoShootMany extends GosCommand {
 
     public static final double WAIT_TIME = 1.0;
 

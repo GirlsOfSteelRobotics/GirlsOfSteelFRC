@@ -7,7 +7,7 @@ import com.gos.chargedup.GamePieceType;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.function.DoubleSupplier;
@@ -118,46 +118,46 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     ////////////////
     // Checklists
     ////////////////
-    public CommandBase createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
+    public Command createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
     }
 
-    public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
+    public Command createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
 
     ///////////////////////
     // Command Factories
     ///////////////////////
-    public CommandBase createExtendBottomPistonCommand() {
+    public Command createExtendBottomPistonCommand() {
         return runOnce(this::setBottomPistonExtended).withName("Arm Piston: Bottom Extended");
     }
 
-    public CommandBase createRetractBottomPistonCommand() {
+    public Command createRetractBottomPistonCommand() {
         return runOnce(this::setBottomPistonRetracted).withName("Arm Piston: Bottom Retracted");
     }
 
-    public CommandBase createExtendTopPistonCommand() {
+    public Command createExtendTopPistonCommand() {
         return runOnce(this::setTopPistonExtended).withName("Arm Piston: Top Extended");
     }
 
-    public CommandBase createRetractTopPistonCommand() {
+    public Command createRetractTopPistonCommand() {
         return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
     }
 
-    public CommandBase createFullRetractCommand() {
+    public Command createFullRetractCommand() {
         return run(this::fullRetract).unless(this::isFullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
-    public CommandBase createMiddleExtensionCommand() {
+    public Command createMiddleExtensionCommand() {
         return run(this::middleRetract).unless(this::isMiddleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
-    public CommandBase createFullExtensionCommand() {
+    public Command createFullExtensionCommand() {
         return run(this::out).unless(this::isFullExtend).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
-    public CommandBase createArmToSpecifiedHeightCommand(AutoPivotHeight height, GamePieceType gamePiece) {
+    public Command createArmToSpecifiedHeightCommand(AutoPivotHeight height, GamePieceType gamePiece) {
         if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CONE) {
             return createFullExtensionCommand();
         }

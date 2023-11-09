@@ -1,10 +1,10 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 
 
-public class CollectorDownCommand extends CommandBase {
+public class CollectorDownCommand extends Command {
     private final CollectorSubsystem m_collector;
 
     public CollectorDownCommand(CollectorSubsystem collectorSubsystem) {

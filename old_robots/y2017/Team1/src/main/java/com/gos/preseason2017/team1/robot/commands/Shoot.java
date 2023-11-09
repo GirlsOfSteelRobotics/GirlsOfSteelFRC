@@ -1,12 +1,12 @@
 package com.gos.preseason2017.team1.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2017.team1.robot.subsystems.Shooter;
 
 /**
  *
  */
-public class Shoot extends CommandBase {
+public class Shoot extends Command {
 
     private final Shooter m_shooter;
 

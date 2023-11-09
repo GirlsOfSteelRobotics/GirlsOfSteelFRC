@@ -4,7 +4,7 @@ import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class AutonomousShootTwoBalls extends GosCommandBase {
+public class AutonomousShootTwoBalls extends GosCommand {
 
     private static final double TIME_TO_SHOOT_TWO_BALLS = 5.0; //TODO find how long shooting 2 balls takes
 

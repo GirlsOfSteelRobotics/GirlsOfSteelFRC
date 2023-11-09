@@ -1,10 +1,10 @@
 package com.gos.codelabs.pid.commands;
 
 import com.gos.codelabs.pid.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class ShooterRpmCommand extends CommandBase {
+public class ShooterRpmCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
     private final double m_rpm;
     private final boolean m_stopWhenAtSpeed;

@@ -8,9 +8,9 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Climber;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class ClimberManual extends CommandBase {
+public class ClimberManual extends Command {
     private final Climber m_climber;
 
     private final boolean m_directionExtend;

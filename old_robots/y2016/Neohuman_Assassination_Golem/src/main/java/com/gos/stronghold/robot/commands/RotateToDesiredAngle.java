@@ -1,13 +1,13 @@
 package com.gos.stronghold.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class RotateToDesiredAngle extends CommandBase {
+public class RotateToDesiredAngle extends Command {
     private final Chassis m_chassis;
     private final double m_move;
     private final double m_desiredAngle; // NOPMD

@@ -2,10 +2,10 @@ package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class AutonomousDriveTimeCommand extends CommandBase {
+public class AutonomousDriveTimeCommand extends Command {
 
     private static final double DRIVE_TIME = 1.0;
 

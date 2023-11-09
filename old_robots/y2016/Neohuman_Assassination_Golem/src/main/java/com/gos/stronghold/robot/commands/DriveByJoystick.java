@@ -1,14 +1,14 @@
 package com.gos.stronghold.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class DriveByJoystick extends CommandBase {
+public class DriveByJoystick extends Command {
 
     private final Joystick m_drivingStickForward = new Joystick(0);
     private final Joystick m_drivingStickBackward = new Joystick(1);

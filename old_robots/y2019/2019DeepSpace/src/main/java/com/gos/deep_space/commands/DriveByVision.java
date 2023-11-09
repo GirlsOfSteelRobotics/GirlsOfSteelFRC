@@ -6,10 +6,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveByVision extends CommandBase {
+public class DriveByVision extends Command {
 
     private static final double MAX_ANGULAR_VELOCITY = 2.5; // TODO: adjust (rad/s) current
     private static final int IMAGE_WIDTH = 320;

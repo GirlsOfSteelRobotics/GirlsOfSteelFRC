@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Collector;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class ReleaseFast extends CommandBase {
+public class ReleaseFast extends Command {
     private final Collector m_collector;
 
     private final double m_speed;

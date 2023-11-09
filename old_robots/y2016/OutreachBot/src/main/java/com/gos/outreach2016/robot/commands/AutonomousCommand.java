@@ -1,7 +1,7 @@
 package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
 import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
@@ -10,7 +10,7 @@ import com.gos.outreach2016.robot.subsystems.DriveSystem;
 /**
  *
  */
-public class AutonomousCommand extends CommandBase {
+public class AutonomousCommand extends Command {
 
     private final DriveSystem m_driveSystem;
     private final AccessoryMotors m_accessoryMotors;

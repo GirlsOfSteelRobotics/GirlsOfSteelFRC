@@ -5,12 +5,12 @@
 package com.scra.mepi.rapid_react.commands;
 
 import com.scra.mepi.rapid_react.subsystems.TowerSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class TowerDownCommand extends CommandBase {
+public class TowerDownCommand extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final TowerSubsystem m_towerSubsystem;
 

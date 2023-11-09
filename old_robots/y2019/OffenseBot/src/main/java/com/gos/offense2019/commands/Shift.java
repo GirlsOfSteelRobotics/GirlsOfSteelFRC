@@ -9,9 +9,9 @@ package com.gos.offense2019.commands;
 
 import com.gos.offense2019.subsystems.Shifters;
 import com.gos.offense2019.subsystems.Shifters.Speed;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class Shift extends CommandBase {
+public class Shift extends Command {
     private final Speed m_speed;
     private final Shifters m_shifters;
 

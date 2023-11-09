@@ -1,12 +1,12 @@
 package com.gos.rapidreact.commands;
 
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 
 
-public class LimelightGoToCargoCommand extends CommandBase {
+public class LimelightGoToCargoCommand extends Command {
     private final ChassisSubsystem m_chassis;
     private final IntakeLimelightSubsystem m_limelight;
     private final CollectorSubsystem m_collector;

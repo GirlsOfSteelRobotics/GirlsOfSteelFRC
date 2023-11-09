@@ -2,7 +2,7 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Chassis;
 
-public class Rotate extends GosCommandBase {
+public class Rotate extends GosCommand {
 
     private final Chassis m_chassis;
     private final boolean m_targetRotate;

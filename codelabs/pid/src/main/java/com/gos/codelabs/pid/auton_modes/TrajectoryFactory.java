@@ -11,7 +11,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public final class TrajectoryFactory {
 
     }
 
-    public static CommandBase getTestStraightAcrossFieldTrajectory(ChassisSubsystem chassis) {
+    public static Command getTestStraightAcrossFieldTrajectory(ChassisSubsystem chassis) {
 
 
         return DriveTrajectoryCommand.createWithVelocity(chassis, () -> {
@@ -42,7 +42,7 @@ public final class TrajectoryFactory {
         }, true);
     }
 
-    public static CommandBase getTestSCurveTrajectory(ChassisSubsystem chassis) {
+    public static Command getTestSCurveTrajectory(ChassisSubsystem chassis) {
 
         return DriveTrajectoryCommand.createWithVelocity(chassis, () -> {
             TrajectoryConfig config = getTrajectoryConfig();
@@ -56,7 +56,7 @@ public final class TrajectoryFactory {
     }
 
 
-    public static CommandBase getTestStraightForwardTestTrajectory(ChassisSubsystem chassis) {
+    public static Command getTestStraightForwardTestTrajectory(ChassisSubsystem chassis) {
 
         return DriveTrajectoryCommand.createWithVelocity(chassis, () -> {
             TrajectoryConfig config = getTrajectoryConfig();
@@ -69,7 +69,7 @@ public final class TrajectoryFactory {
         }, true);
     }
 
-    public static CommandBase getTestStraightBackwardsTestTrajectory(ChassisSubsystem chassis) {
+    public static Command getTestStraightBackwardsTestTrajectory(ChassisSubsystem chassis) {
         return DriveTrajectoryCommand.createWithVelocity(chassis, () -> {
             TrajectoryConfig config = getTrajectoryConfig();
             config.setReversed(true);

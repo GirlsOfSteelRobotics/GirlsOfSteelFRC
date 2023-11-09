@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Loader;
 
 /**
  *
  */
-public class LoadBall extends CommandBase {
+public class LoadBall extends Command {
 
     private final Loader m_loader;
 

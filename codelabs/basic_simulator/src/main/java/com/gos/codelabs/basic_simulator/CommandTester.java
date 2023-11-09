@@ -8,7 +8,7 @@ import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class CommandTester {
 
@@ -33,7 +33,7 @@ public class CommandTester {
         addCommand("Test Retract Punch", new MovePunchCommand(punch, false));
     }
 
-    private void addCommand(String name, CommandBase command) {
+    private void addCommand(String name, Command command) {
         command.setName(name);
         SmartDashboard.putData(name, command);
     }

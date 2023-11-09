@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Collector;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class CollectorHold extends CommandBase {
+public class CollectorHold extends Command {
     private final Collector m_collector;
 
     public CollectorHold(Collector collector) {

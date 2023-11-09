@@ -1,7 +1,7 @@
 package com.gos.rebound_rumble.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Chassis;
 import com.gos.rebound_rumble.subsystems.Collector;
@@ -9,7 +9,7 @@ import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
 
-public class Buttons extends CommandBase {
+public class Buttons extends Command {
 
     private final Chassis m_chassis;
     private final Shooter m_shooter;

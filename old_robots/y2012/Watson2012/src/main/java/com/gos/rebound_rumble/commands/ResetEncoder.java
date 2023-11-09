@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class ResetEncoder extends GosCommandBase {
+public class ResetEncoder extends GosCommand {
 
     private final Chassis m_chassis;
 

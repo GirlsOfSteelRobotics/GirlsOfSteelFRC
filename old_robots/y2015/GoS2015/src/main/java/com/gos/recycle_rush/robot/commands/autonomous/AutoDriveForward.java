@@ -1,12 +1,12 @@
 package com.gos.recycle_rush.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class AutoDriveForward extends CommandBase {
+public class AutoDriveForward extends Command {
 
     private final Chassis m_chassis;
     private final double m_distance;

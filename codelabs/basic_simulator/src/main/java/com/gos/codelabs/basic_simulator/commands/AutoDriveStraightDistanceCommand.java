@@ -1,9 +1,9 @@
 package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class AutoDriveStraightDistanceCommand extends CommandBase {
+public class AutoDriveStraightDistanceCommand extends Command {
 
     public static final double ALLOWABLE_ERROR = .5;
 

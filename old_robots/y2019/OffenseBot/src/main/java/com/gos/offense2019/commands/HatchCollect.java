@@ -8,9 +8,9 @@
 package com.gos.offense2019.commands;
 
 import com.gos.offense2019.subsystems.HatchCollector;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class HatchCollect extends CommandBase {
+public class HatchCollect extends Command {
     private final HatchCollector m_hatchCollector;
     private final HatchCollector.HatchState m_hatchState;
 

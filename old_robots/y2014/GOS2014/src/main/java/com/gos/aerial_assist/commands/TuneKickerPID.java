@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
 /**
  * @author Mackenzie
  */
-public class TuneKickerPID extends GosCommandBase {
+public class TuneKickerPID extends GosCommand {
     private static final double START_P = 0;
     private static final double MAX_P = 0.3; //max value of p
     private static final double INCREMENT_P = 0.05; //how much p goes up by

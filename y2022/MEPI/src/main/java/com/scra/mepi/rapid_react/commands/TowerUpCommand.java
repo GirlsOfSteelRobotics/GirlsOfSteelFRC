@@ -5,12 +5,12 @@
 package com.scra.mepi.rapid_react.commands;
 
 import com.scra.mepi.rapid_react.subsystems.TowerSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class TowerUpCommand extends CommandBase {
+public class TowerUpCommand extends Command {
     private static final double SPEED = 0.5;
 
     private final TowerSubsystem m_towerSubsystem;

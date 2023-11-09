@@ -2,9 +2,9 @@ package com.gos.testboard2020.commands;
 
 import com.gos.lib.sensors.LidarLite;
 import com.gos.testboard2020.subsystems.Motor;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class SpinByLidar extends CommandBase {
+public class SpinByLidar extends Command {
     private static final double GOAL_LIDAR = 6;
     private static final double LIDAR_TOLERANCE = 1.0;
 

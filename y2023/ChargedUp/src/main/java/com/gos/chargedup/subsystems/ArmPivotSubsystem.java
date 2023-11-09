@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -408,105 +408,105 @@ public class ArmPivotSubsystem extends SubsystemBase {
     ////////////////
     // Checklists
     ////////////////
-    public CommandBase createIsPivotMotorMovingChecklist() {
+    public Command createIsPivotMotorMovingChecklist() {
         return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
     }
 
     ///////////////////////
     // Command Factories
     ///////////////////////
-    public CommandBase createPivotToCoastModeCommand() {
+    public Command createPivotToCoastModeCommand() {
         return this.runEnd(
             () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
             () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
             .ignoringDisable(true).withName("Pivot to Coast");
     }
 
-    public CommandBase createResetPivotEncoderCommand() {
+    public Command createResetPivotEncoderCommand() {
         return createResetPivotEncoderCommand(MIN_ANGLE_DEG);
     }
 
-    public CommandBase createResetPivotEncoderCommand(double angle) {
+    public Command createResetPivotEncoderCommand(double angle) {
         return this.run(() -> resetPivotEncoder(angle))
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (" + angle + ")");
     }
 
-    public CommandBase createSyncEncoderToAbsoluteEncoderCommand() {
+    public Command createSyncEncoderToAbsoluteEncoderCommand() {
         return this.run(this::syncMotorEncoderToAbsoluteEncoder)
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (Abs Encoder Val)");
     }
 
-    public CommandBase createPivotUpCommand() {
+    public Command createPivotUpCommand() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
-    public CommandBase createPivotDownCommand() {
+    public Command createPivotDownCommand() {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
-    private CommandBase createResetWpiPidControllerCommand() {
+    private Command createResetWpiPidControllerCommand() {
         return runOnce(this::resetWpiPidController);
     }
 
-    private CommandBase createBasePivotToAngleCommand(double angle, Runnable endBehavior, DoubleSupplier allowablePositionError, DoubleSupplier allowableVelocityError) {
+    private Command createBasePivotToAngleCommand(double angle, Runnable endBehavior, DoubleSupplier allowablePositionError, DoubleSupplier allowableVelocityError) {
         return createResetWpiPidControllerCommand()
             .andThen(runEnd(() -> pivotArmToAngle2(angle), endBehavior))
             .until(() -> isArmAtAngle(angle, allowablePositionError.getAsDouble(), allowableVelocityError.getAsDouble()))
             .withName("Pivot To " + angle);
     }
 
-    private CommandBase createBasePivotToAngleCommand(double angle, Runnable endBehavior, double allowablePositionError, double allowableVelocityError) {
+    private Command createBasePivotToAngleCommand(double angle, Runnable endBehavior, double allowablePositionError, double allowableVelocityError) {
         return createBasePivotToAngleCommand(angle, endBehavior, () -> allowablePositionError, () -> allowableVelocityError);
     }
 
-    private CommandBase createBasePivotToAngleCommand(double angle, Runnable endBehavior) {
+    private Command createBasePivotToAngleCommand(double angle, Runnable endBehavior) {
         return createBasePivotToAngleCommand(angle, endBehavior, ALLOWABLE_ERROR::getValue, ALLOWABLE_VELOCITY_ERROR::getValue);
     }
 
-    public CommandBase createPivotToAngleAndHoldCommand(double angle) {
+    public Command createPivotToAngleAndHoldCommand(double angle) {
         return createBasePivotToAngleCommand(angle, () -> {})
             .withName("Arm to Angle And Hold" + angle);
     }
 
-    public CommandBase createPivotToAngleAndHoldCommand(double angle, double allowableError, double velocityAllowableError) {
+    public Command createPivotToAngleAndHoldCommand(double angle, double allowableError, double velocityAllowableError) {
         return createBasePivotToAngleCommand(angle, () -> {}, allowableError, velocityAllowableError)
             .withName("Arm to Angle And Hold" + angle);
     }
 
-    public CommandBase createPivotArmToAngleNonHoldCommand(double angle) {
+    public Command createPivotArmToAngleNonHoldCommand(double angle) {
         return createBasePivotToAngleCommand(angle, this::pivotArmStop)
             .withName("Arm to Angle" + angle);
     }
 
-    public CommandBase createMoveArmToPieceScorePositionAndHoldCommand(AutoPivotHeight height, GamePieceType gamePieceType) {
+    public Command createMoveArmToPieceScorePositionAndHoldCommand(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return createPivotToAngleAndHoldCommand(angle).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
-    public CommandBase createMoveArmToPieceScorePositionDifferenceAndHoldCommand(AutoPivotHeight height, GamePieceType gamePieceType, double heightChange) {
+    public Command createMoveArmToPieceScorePositionDifferenceAndHoldCommand(AutoPivotHeight height, GamePieceType gamePieceType, double heightChange) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return createPivotToAngleAndHoldCommand(angle + heightChange).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
-    public CommandBase createGoHomeCommand() {
+    public Command createGoHomeCommand() {
         return createPivotArmToAngleNonHoldCommand(HOME_ANGLE);
     }
 
-    public CommandBase createGoToGroundPickupCommand() {
+    public Command createGoToGroundPickupCommand() {
         return createPivotArmToAngleNonHoldCommand(GROUND_PICKUP_ANGLE);
     }
 
-    public CommandBase createGoToGroundPickupAndHoldCommand() {
+    public Command createGoToGroundPickupAndHoldCommand() {
         return createPivotToAngleAndHoldCommand(GROUND_PICKUP_ANGLE);
     }
 
-    public CommandBase createGoToGroundPickupAndHoldCommand(double allowableError, double velocityAllowableError) {
+    public Command createGoToGroundPickupAndHoldCommand(double allowableError, double velocityAllowableError) {
         return createPivotToAngleAndHoldCommand(GROUND_PICKUP_ANGLE, allowableError, velocityAllowableError);
     }
 
-    public CommandBase createGoToHpPickupHoldCommand() {
+    public Command createGoToHpPickupHoldCommand() {
         return createPivotToAngleAndHoldCommand(HUMAN_PLAYER_ANGLE);
     }
 

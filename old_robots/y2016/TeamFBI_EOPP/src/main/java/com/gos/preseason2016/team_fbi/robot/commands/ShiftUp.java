@@ -1,9 +1,9 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Shifters;
 
-public class ShiftUp extends CommandBase {
+public class ShiftUp extends Command {
 
     private final Shifters m_shifters;
 

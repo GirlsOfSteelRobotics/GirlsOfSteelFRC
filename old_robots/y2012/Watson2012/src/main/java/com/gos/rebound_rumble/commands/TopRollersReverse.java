@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class TopRollersReverse extends GosCommandBase {
+public class TopRollersReverse extends GosCommand {
     private final Shooter m_shooter;
 
     public TopRollersReverse(Shooter shooter) {

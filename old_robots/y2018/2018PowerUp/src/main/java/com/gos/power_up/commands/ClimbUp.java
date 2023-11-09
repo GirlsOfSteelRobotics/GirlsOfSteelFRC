@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Climber;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class ClimbUp extends CommandBase {
+public class ClimbUp extends Command {
     private final Climber m_climber;
 
     public ClimbUp(Climber climber) {

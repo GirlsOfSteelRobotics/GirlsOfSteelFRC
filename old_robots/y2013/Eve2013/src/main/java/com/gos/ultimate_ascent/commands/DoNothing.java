@@ -3,7 +3,7 @@ package com.gos.ultimate_ascent.commands;
 /**
  * @author bradmiller
  */
-public class DoNothing extends GosCommandBase {
+public class DoNothing extends GosCommand {
 
     // Called just before this Command runs the first time
     @Override

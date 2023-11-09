@@ -1,6 +1,6 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.steam_works.RobotMap;
 import com.gos.steam_works.subsystems.Chassis;
@@ -9,7 +9,7 @@ import com.gos.steam_works.subsystems.Shifters;
 /**
  *
  */
-public class TurnByDistance extends CommandBase {
+public class TurnByDistance extends Command {
 
     private final double m_rotationsRight;
     private final double m_rotationsLeft;

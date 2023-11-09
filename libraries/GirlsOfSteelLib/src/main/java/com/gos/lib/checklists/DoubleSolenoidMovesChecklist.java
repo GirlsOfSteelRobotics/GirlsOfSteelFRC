@@ -2,14 +2,14 @@ package com.gos.lib.checklists;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.function.DoubleSupplier;
 
 
-public class DoubleSolenoidMovesChecklist extends CommandBase {
+public class DoubleSolenoidMovesChecklist extends Command {
 
     private final DoubleSupplier m_pressureSupplier;
 

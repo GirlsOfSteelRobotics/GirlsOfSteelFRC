@@ -1,7 +1,7 @@
 package com.gos.steam_works.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.steam_works.subsystems.Camera;
 import com.gos.steam_works.subsystems.Chassis;
@@ -9,7 +9,7 @@ import com.gos.steam_works.subsystems.Chassis;
 /**
  *
  */
-public class DriveByVision extends CommandBase {
+public class DriveByVision extends Command {
 
 
     private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust

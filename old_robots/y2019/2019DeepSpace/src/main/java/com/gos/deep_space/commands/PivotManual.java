@@ -9,9 +9,9 @@ package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Pivot;
 import com.gos.deep_space.subsystems.Pivot.PivotDirection;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class PivotManual extends CommandBase {
+public class PivotManual extends Command {
     private final Pivot m_pivot;
 
     private final PivotDirection m_direction;

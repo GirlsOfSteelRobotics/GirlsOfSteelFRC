@@ -8,9 +8,9 @@
 package com.gos.testboard2020.commands;
 
 import com.gos.testboard2020.subsystems.Motor;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class MotorStop extends CommandBase {
+public class MotorStop extends Command {
 
     private final Motor m_motor;
 

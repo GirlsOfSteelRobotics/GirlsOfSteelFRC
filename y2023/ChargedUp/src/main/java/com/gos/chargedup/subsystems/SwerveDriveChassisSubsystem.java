@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
@@ -167,35 +167,35 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     }
 
     @Override
-    public CommandBase createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
+    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
         // TODO implement
         return new InstantCommand();
     }
 
     @Override
-    public CommandBase createSyncOdometryWithPoseEstimatorCommand() {
+    public Command createSyncOdometryWithPoseEstimatorCommand() {
         return runOnce(m_swerveDrive::syncOdometryWithPoseEstimator).withName("Sync Odometry /w Pose");
     }
 
     @Override
-    public CommandBase createSelfTestMotorsCommand() {
+    public Command createSelfTestMotorsCommand() {
         // TODO implement
         return new SequentialCommandGroup();
     }
 
-    public CommandBase commandSetChassisSpeed(ChassisSpeeds chassisSp) {
+    public Command commandSetChassisSpeed(ChassisSpeeds chassisSp) {
         return this.run(() -> setChassisSpeed(chassisSp)).withName("Set Chassis Speeds" + chassisSp);
     }
 
-    public CommandBase commandLockDrivetrain() {
+    public Command commandLockDrivetrain() {
         return this.run(this::lockDriveTrain).withName("Lock Wheels Command");
     }
 
-    public CommandBase commandSetModuleState(int moduleId, double degrees, double velocity) {
+    public Command commandSetModuleState(int moduleId, double degrees, double velocity) {
         return this.run(() -> m_swerveDrive.setModuleState(moduleId, degrees, velocity)).withName("Module " + moduleId + "(" + degrees + ", " + velocity + ")");
     }
 
-    public CommandBase commandSetPercentSpeeds(double percentAzimuth, double percentWheel) {
+    public Command commandSetPercentSpeeds(double percentAzimuth, double percentWheel) {
         return this.run(() -> m_swerveDrive.setChassisSpeedsPercent(percentWheel, percentAzimuth));
     }
 

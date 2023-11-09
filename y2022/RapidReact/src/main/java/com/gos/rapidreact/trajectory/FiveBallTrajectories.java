@@ -2,11 +2,11 @@ package com.gos.rapidreact.trajectory;
 
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class FiveBallTrajectories {
 
-    public static CommandBase tarmacToFirstBall(ChassisSubsystem chassis) {
+    public static Command tarmacToFirstBall(ChassisSubsystem chassis) {
         return TrajectoryUtils.startTrajectory("PathWeaver/Paths/B5", TrajectoryUtils.getDefaultTrajectoryConfig(), chassis);
     }
 

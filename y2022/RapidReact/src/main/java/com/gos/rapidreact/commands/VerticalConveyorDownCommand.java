@@ -1,10 +1,10 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 
 
-public class VerticalConveyorDownCommand extends CommandBase {
+public class VerticalConveyorDownCommand extends Command {
     private final VerticalConveyorSubsystem m_verticalConveyor;
 
     public VerticalConveyorDownCommand(VerticalConveyorSubsystem verticalConveyorSubsystem) {

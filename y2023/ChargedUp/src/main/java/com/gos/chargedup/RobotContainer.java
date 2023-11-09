@@ -38,7 +38,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -331,7 +331,7 @@ public class RobotContainer {
         // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
     }
 
-    private CommandBase debugArmPid(double angle) {
+    private Command debugArmPid(double angle) {
         return m_armPivot.createPivotToAngleAndHoldCommand(angle);
         //.andThen(m_claw.createMoveClawIntakeOutWithTimeoutCommand());
     }
@@ -356,7 +356,7 @@ public class RobotContainer {
         m_claw.clearStickyFaults();
     }
 
-    private CommandBase createResetStickyFaults() {
+    private Command createResetStickyFaults() {
         return Commands.run(this::resetStickyFaults).ignoringDisable(true);
     }
 

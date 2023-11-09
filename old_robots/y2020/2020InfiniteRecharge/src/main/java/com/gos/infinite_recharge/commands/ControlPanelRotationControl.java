@@ -1,9 +1,9 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.ControlPanel;
 
-public class ControlPanelRotationControl extends CommandBase {
+public class ControlPanelRotationControl extends Command {
     private final ControlPanel m_controlPanel;
     private int m_colorCount;
 

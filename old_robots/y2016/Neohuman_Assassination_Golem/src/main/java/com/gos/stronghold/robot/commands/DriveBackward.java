@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
 import com.gos.stronghold.robot.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class DriveBackward extends CommandBase {
+public class DriveBackward extends Command {
 
     private final Chassis m_chassis;
 

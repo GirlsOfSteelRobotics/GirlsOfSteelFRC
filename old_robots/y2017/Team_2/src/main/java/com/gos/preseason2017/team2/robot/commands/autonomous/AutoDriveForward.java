@@ -1,14 +1,14 @@
 package com.gos.preseason2017.team2.robot.commands.autonomous;
 
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2017.team2.robot.subsystems.Chassis;
 
 
 /**
  *
  */
-public class AutoDriveForward extends CommandBase {
+public class AutoDriveForward extends Command {
 
     @SuppressWarnings("unused")
     private final double m_inches;

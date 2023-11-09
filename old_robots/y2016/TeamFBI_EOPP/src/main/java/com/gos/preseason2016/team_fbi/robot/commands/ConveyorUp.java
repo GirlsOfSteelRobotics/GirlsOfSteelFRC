@@ -1,9 +1,9 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Manipulator;
 
-public class ConveyorUp extends CommandBase {
+public class ConveyorUp extends Command {
 
     private final Manipulator m_manipulator;
 

@@ -8,9 +8,9 @@
 package com.gos.testboard2020.commands;
 
 import com.gos.lib.sensors.LidarLite;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class ReadLidar extends CommandBase {
+public class ReadLidar extends Command {
 
     private final LidarLite m_lidar;
 

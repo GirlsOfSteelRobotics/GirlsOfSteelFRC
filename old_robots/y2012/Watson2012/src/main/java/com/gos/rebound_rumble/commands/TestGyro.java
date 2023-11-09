@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TestGyro extends GosCommandBase {
+public class TestGyro extends GosCommand {
     private final Chassis m_chassis;
     private final Turret m_turret;
 

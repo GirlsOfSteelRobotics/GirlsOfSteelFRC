@@ -4,11 +4,11 @@ package com.gos.lib.rev.checklists;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.littletonrobotics.frc2023.util.Alert;
 
-public class SparkMaxMotorsMoveChecklist extends CommandBase {
+public class SparkMaxMotorsMoveChecklist extends Command {
 
     private final RelativeEncoder m_encoder;
 

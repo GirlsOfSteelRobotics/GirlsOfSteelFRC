@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
@@ -383,7 +383,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     @Override
-    public CommandBase createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
+    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
         PathPlannerTrajectory traj1 = PathPlanner.generatePath(
             new PathConstraints(Units.inchesToMeters(m_onTheFlyMaxVelocity.getValue()), Units.inchesToMeters(m_onTheFlyMaxAcceleration.getValue())),
             reverse,
@@ -446,7 +446,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     // Command Factories
     ////////////////////
 
-    public CommandBase commandChassisVelocity() {
+    public Command commandChassisVelocity() {
         return this.runEnd(
             () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
             this::stop).withName("Chassis: Tune Velocity");
@@ -454,13 +454,13 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
 
     @Override
-    public CommandBase createSyncOdometryWithPoseEstimatorCommand() {
+    public Command createSyncOdometryWithPoseEstimatorCommand() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()))
             .withName("Sync Odometry /w Pose");
     }
 
     @Override
-    public CommandBase createSelfTestMotorsCommand() {
+    public Command createSelfTestMotorsCommand() {
         return new SequentialCommandGroup(createIsLeftMotorMoving(), createIsRightMotorMoving());
     }
 
@@ -480,11 +480,11 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     ////////////////
     // Checklists
     ////////////////
-    public CommandBase createIsLeftMotorMoving() {
+    public Command createIsLeftMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderLeft, "Chassis: Leader left motor", 1.0);
     }
 
-    public CommandBase createIsRightMotorMoving() {
+    public Command createIsRightMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 

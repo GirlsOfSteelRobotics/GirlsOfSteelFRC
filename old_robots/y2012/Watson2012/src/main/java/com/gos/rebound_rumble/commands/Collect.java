@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Collector;
 
-public class Collect extends GosCommandBase {
+public class Collect extends GosCommand {
     private final Collector m_collector;
 
     public Collect(Collector collector) {

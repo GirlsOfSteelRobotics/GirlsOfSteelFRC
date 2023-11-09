@@ -6,12 +6,12 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class DriveByMotionMagicAbsolute extends CommandBase {
+public class DriveByMotionMagicAbsolute extends Command {
 
     private static final double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
     private static final double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)

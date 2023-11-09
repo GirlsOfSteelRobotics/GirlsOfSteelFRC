@@ -10,7 +10,7 @@
 // *
 // * @author Sonia and Alex
 // */
-//public class LightSensorFeeder extends CommandBase {
+//public class LightSensorFeeder extends Command {
 //
 //    boolean previousLight;
 //

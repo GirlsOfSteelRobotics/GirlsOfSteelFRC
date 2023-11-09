@@ -2,12 +2,12 @@ package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Shifters.Speed;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class ShiftDown extends CommandBase {
+public class ShiftDown extends Command {
     private final Shifters m_shifters;
 
     public ShiftDown(Shifters shifters) {

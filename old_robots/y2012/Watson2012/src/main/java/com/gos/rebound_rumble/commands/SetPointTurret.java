@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class SetPointTurret extends GosCommandBase {
+public class SetPointTurret extends GosCommand {
 
     private final Turret m_turret;
     private final OI m_oi;

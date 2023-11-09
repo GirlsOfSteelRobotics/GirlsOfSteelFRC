@@ -7,7 +7,7 @@ import com.gos.aerial_assist.subsystems.Driving;
 /**
  * @author Jisue
  */
-public class TankDrive extends GosCommandBase {
+public class TankDrive extends GosCommand {
     /*  need values for joysticks
         need joystick here
         inputs are joysticks

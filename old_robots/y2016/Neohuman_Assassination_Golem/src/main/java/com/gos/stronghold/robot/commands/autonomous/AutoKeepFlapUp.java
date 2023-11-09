@@ -1,11 +1,11 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class AutoKeepFlapUp extends CommandBase {
+public class AutoKeepFlapUp extends Command {
 
     // Called just before this Command runs the first time
     @Override

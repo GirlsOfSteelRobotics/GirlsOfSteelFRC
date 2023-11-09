@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.navx.NavxWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -177,7 +177,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 this);
     }
 
-    public CommandBase createPathFollowingCommand(String pathName, boolean reverse) {
+    public Command createPathFollowingCommand(String pathName, boolean reverse) {
         PathConstraints pathConstraints =
             new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
         PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, pathConstraints, reverse);

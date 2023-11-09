@@ -9,7 +9,7 @@
 // * @author Sophia and Abby
 // */
 ////This command moves arm wheel to apply continuous pressure to the ball.
-//public class EngageCollectorSlow extends CommandBase {
+//public class EngageCollectorSlow extends Command {
 //
 //    public EngageCollectorSlow() {
 //        addRequirements(collector);

@@ -12,7 +12,7 @@ import com.gos.ultimate_ascent.subsystems.Gripper;
  */
 
 //this command reads the limit switches under the grippers. When press the grippers will close after safely passing the bar
-public class CloseGripPastBar extends GosCommandBase {
+public class CloseGripPastBar extends GosCommand {
     private final Gripper m_gripper;
 
     public CloseGripPastBar(Gripper gripper) {

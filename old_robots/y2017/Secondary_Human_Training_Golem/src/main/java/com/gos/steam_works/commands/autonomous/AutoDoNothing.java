@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Chassis;
 
 /**
  *
  */
-public class AutoDoNothing extends CommandBase {
+public class AutoDoNothing extends Command {
 
     public AutoDoNothing(Chassis chassis) {
         addRequirements(chassis);

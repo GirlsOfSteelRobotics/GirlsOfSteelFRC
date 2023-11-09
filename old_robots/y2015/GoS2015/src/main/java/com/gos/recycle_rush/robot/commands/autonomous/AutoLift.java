@@ -1,12 +1,12 @@
 package com.gos.recycle_rush.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Lifter;
 
 /**
  *
  */
-public class AutoLift extends CommandBase {
+public class AutoLift extends Command {
 
     private final Lifter m_lifter;
     private final double m_distance;

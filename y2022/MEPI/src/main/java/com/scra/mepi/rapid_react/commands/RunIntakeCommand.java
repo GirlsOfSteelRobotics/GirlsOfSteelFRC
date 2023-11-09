@@ -6,13 +6,13 @@ package com.scra.mepi.rapid_react.commands;
 
 import com.scra.mepi.rapid_react.subsystems.HopperSubsystem;
 import com.scra.mepi.rapid_react.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.scra.mepi.rapid_react.subsystems.TowerSubsystem;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class RunIntakeCommand extends CommandBase {
+public class RunIntakeCommand extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final IntakeSubsystem m_intakeSubsystem;
 

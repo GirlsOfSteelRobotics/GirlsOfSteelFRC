@@ -7,13 +7,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Shifters;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveByDistance extends CommandBase {
+public class DriveByDistance extends Command {
     private static final int ERROR_THRESHOLD = 1000;
     private static final int BIG_ERROR_THRESHOLD = 5000;
 

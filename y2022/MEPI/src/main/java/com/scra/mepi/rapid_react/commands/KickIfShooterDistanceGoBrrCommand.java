@@ -5,12 +5,12 @@ import com.scra.mepi.rapid_react.subsystems.LimelightSubsystem;
 import com.scra.mepi.rapid_react.subsystems.ShooterSubsytem;
 import com.scra.mepi.rapid_react.subsystems.TowerSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class KickIfShooterDistanceGoBrrCommand extends CommandBase {
+public class KickIfShooterDistanceGoBrrCommand extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final ShooterSubsytem m_shooterSubsystem;
 

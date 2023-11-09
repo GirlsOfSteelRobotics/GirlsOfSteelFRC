@@ -3,11 +3,11 @@ package com.gos.chargedup.commands;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
-public class TeleopDockingArcadeDriveCommand extends CommandBase {
+public class TeleopDockingArcadeDriveCommand extends Command {
     private static final GosDoubleProperty ARCADE_DRIVE_BRAKE_SPEED = new GosDoubleProperty(true, "Chassis speed for brake", 0.6);
     private final TankDriveChassisSubsystem m_chassisSubsystem;
     private final CommandXboxController m_joystick;

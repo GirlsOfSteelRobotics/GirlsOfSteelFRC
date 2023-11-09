@@ -2,11 +2,11 @@ package com.gos.rapidreact.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 
-public class SetInitialOdometryCommand extends CommandBase {
+public class SetInitialOdometryCommand extends Command {
     private final ChassisSubsystem m_chassis;
     private final double m_xPosition;
     private final double m_yPosition;

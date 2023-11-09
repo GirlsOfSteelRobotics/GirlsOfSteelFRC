@@ -16,8 +16,8 @@ public class TenPointClimb extends SequentialCommandGroup {
         //Starts motors to begin climbing
         addCommands(new StartClimbMotors(climber));
 
-        //        addCommands(new OpenGripAtBar(CommandBase.middleGripper));
-        //        addCommands(new CloseGripPastBar(CommandBase.middleGripper));
+        //        addCommands(new OpenGripAtBar(Command.middleGripper));
+        //        addCommands(new CloseGripPastBar(Command.middleGripper));
 
         //Stops the climbing movement
         addCommands(new StopClimbMotors(climber));

@@ -6,13 +6,13 @@
 package com.gos.aerial_assist.tests;
 
 import edu.wpi.first.wpilibj.Timer;
-import com.gos.aerial_assist.commands.GosCommandBase;
+import com.gos.aerial_assist.commands.GosCommand;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
  * @author sam
  */
-public class TestManipulatorJag extends GosCommandBase {
+public class TestManipulatorJag extends GosCommand {
 
     private final Manipulator m_manipulator;
 

@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class PS3SetPointTurret extends GosCommandBase {
+public class PS3SetPointTurret extends GosCommand {
 
     private final Turret m_turret;
     private final Joystick m_operatorJoystick;

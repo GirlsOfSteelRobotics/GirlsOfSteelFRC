@@ -2,11 +2,11 @@ package com.gos.rapidreact.commands;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 
-public class TeleopCurvatureDriveCommand extends CommandBase {
+public class TeleopCurvatureDriveCommand extends Command {
     private final ChassisSubsystem m_chassis;
     private final XboxController m_joystick;
     private final SlewRateLimiter m_slewRateLimiter = new SlewRateLimiter(2);

@@ -1,9 +1,9 @@
 package com.scra.mepi.rapid_react.commands;
 
 import com.scra.mepi.rapid_react.subsystems.ClimberSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class ClimbPIDComand extends CommandBase {
+public class ClimbPIDComand extends Command {
     private final ClimberSubsystem m_climberSubsystem;
     private final double m_goal;
 

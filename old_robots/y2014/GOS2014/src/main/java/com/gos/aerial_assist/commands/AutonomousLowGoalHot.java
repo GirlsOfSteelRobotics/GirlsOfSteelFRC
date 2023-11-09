@@ -18,7 +18,7 @@ public class AutonomousLowGoalHot extends SequentialCommandGroup {
      */
     public AutonomousLowGoalHot(Chassis chassis, Driving driving, Camera camera, Collector collector, Manipulator manipulator) {
         //        addCommands(new IsGoalHot());
-        //        boolean isHot = CommandBase.camera.isGoalHot(); //CommandBase.camera.isHot;
+        //        boolean isHot = Command.camera.isGoalHot(); //Command.camera.isHot;
 
         addCommands(new Wait(0.01));
         //addCommands(new IsGoalHot());

@@ -1,6 +1,6 @@
 package com.gos.recycle_rush.robot.commands.collector;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Collector;
 
 /*
@@ -8,7 +8,7 @@ import com.gos.recycle_rush.robot.subsystems.Collector;
  * the drivers want -> could use a command group
  *
  */
-public class AngleCollectorIn extends CommandBase {
+public class AngleCollectorIn extends Command {
 
     private final Collector m_collector;
 

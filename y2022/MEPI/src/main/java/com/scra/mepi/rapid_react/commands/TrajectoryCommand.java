@@ -12,7 +12,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,7 +20,7 @@ import java.nio.file.Path;
 /**
  * An example command that uses an example subsystem.
  */
-public class TrajectoryCommand extends CommandBase {
+public class TrajectoryCommand extends Command {
     private final DrivetrainSubsystem m_subsystem;
     private Trajectory m_trajectory;
     private final Timer m_timer;

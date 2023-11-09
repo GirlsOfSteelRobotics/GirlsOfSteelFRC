@@ -6,7 +6,7 @@ import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Chassis;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.Scanner;
 /**
  *
  */
-public class DriveByMotionProfile extends CommandBase {
+public class DriveByMotionProfile extends Command {
 
     private static final int MIN_POINTS_IN_TALON = 5;
 

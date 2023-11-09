@@ -1,12 +1,12 @@
 package com.gos.outreach2016.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.outreach2016.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class ShooterIn extends CommandBase {
+public class ShooterIn extends Command {
 
     private final Manipulator m_manipulator;
 

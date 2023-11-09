@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class TimeDelay extends CommandBase {
+public class TimeDelay extends Command {
 
     private final double m_seconds;
     private final Timer m_tim;

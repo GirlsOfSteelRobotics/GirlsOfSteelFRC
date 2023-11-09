@@ -15,7 +15,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  * @author Sophia, Abby, Sonia
  */
 //This command moves arm wheel to retrieve ball.
-public class DisengageCollector extends GosCommandBase {
+public class DisengageCollector extends GosCommand {
 
     private final Collector m_collector;
 

@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
 import org.snobotv2.coordinate_gui.commands.BaseRamseteCoordinateGuiCommand;
 
@@ -16,7 +16,7 @@ public class DriveTrajectoryCommand extends BaseRamseteCoordinateGuiCommand {
 
     private final ChassisSubsystem m_chassis;
 
-    public static CommandBase createWithVelocity(ChassisSubsystem drivetrain, Supplier<Trajectory> trajectorySupplier, boolean resetPosition) {
+    public static Command createWithVelocity(ChassisSubsystem drivetrain, Supplier<Trajectory> trajectorySupplier, boolean resetPosition) {
 
         DriveTrajectoryCommand runThenStop = new DriveTrajectoryCommand(trajectorySupplier, drivetrain);
         if (resetPosition) {

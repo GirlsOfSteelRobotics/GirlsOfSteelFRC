@@ -8,10 +8,10 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Hatch;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class HatchCollect extends CommandBase {
+public class HatchCollect extends Command {
     private final Hatch m_hatch;
 
     public HatchCollect(Hatch hatch) {

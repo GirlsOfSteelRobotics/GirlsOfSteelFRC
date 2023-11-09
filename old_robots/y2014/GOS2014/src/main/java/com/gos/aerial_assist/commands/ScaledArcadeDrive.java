@@ -6,7 +6,7 @@ import com.gos.aerial_assist.subsystems.Chassis;
 /**
  * @author Jisue
  */
-public class ScaledArcadeDrive extends GosCommandBase {
+public class ScaledArcadeDrive extends GosCommand {
 
     private final Joystick m_joystick;
     private final Chassis m_chassis;

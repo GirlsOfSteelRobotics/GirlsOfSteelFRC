@@ -1,10 +1,10 @@
 package com.gos.rapidreact.commands;
 
 import com.gos.rapidreact.subsystems.HangerSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class HangerDownCommand extends CommandBase {
+public class HangerDownCommand extends Command {
     private final HangerSubsystem m_hanger;
 
     public HangerDownCommand(HangerSubsystem hangerSubsystem) {

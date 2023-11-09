@@ -1,12 +1,12 @@
 package com.gos.preseason2016.team_squirtle.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2016.team_squirtle.robot.subsystems.Ramp;
 
 /**
  *
  */
-public class RampUp extends CommandBase {
+public class RampUp extends Command {
 
     private final Ramp m_ramp;
 
