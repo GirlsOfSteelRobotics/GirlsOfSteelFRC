@@ -44,9 +44,9 @@ public class SuperStructureStandaloneMain {
     private final Label m_superStructureHorizontalConveyorSpeedLabel = new Label("Y/H -> superStructureHorizontalConveyorSpeed");
     private final Label m_superStructureVerticalConveyorSpeedLabel = new Label("U/J -> superStructureVerticalConveyorSpeed");
     private final Label m_superStructureShooterSpeedLabel = new Label("I/K -> superStructureShooterSpeed");
-    private final Label m_superStructureIntakeIndexingSensorLabel = new Label("DIGIT0 -> superStructureIntakeIndexingSensor");
-    private final Label m_superStructureLowerVerticalConveyorIndexingSensorLabel = new Label("DIGIT1 -> superStructureLowerVerticalConveyorIndexingSensor");
-    private final Label m_superStructureUpperVerticalConveyorIndexingSensorLabel = new Label("DIGIT2 -> superStructureUpperVerticalConveyorIndexingSensor");
+    private final Label m_superStructureIntakeIndexingSensorLabel = new Label("DIGIT1 -> superStructureIntakeIndexingSensor");
+    private final Label m_superStructureLowerVerticalConveyorIndexingSensorLabel = new Label("DIGIT2 -> superStructureLowerVerticalConveyorIndexingSensor");
+    private final Label m_superStructureUpperVerticalConveyorIndexingSensorLabel = new Label("DIGIT3 -> superStructureUpperVerticalConveyorIndexingSensor");
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
         m_controller = robotController;
@@ -138,17 +138,17 @@ public class SuperStructureStandaloneMain {
                 m_superStructureShooterSpeedLabel.setTextFill(Color.GREEN);
                 break;
 
-            case DIGIT0:
+            case DIGIT1:
                 m_superStructureIntakeIndexingSensor = true;
                 m_superStructureIntakeIndexingSensorLabel.setTextFill(Color.GREEN);
                 break;
 
-            case DIGIT1:
+            case DIGIT2:
                 m_superStructureLowerVerticalConveyorIndexingSensor = true;
                 m_superStructureLowerVerticalConveyorIndexingSensorLabel.setTextFill(Color.GREEN);
                 break;
 
-            case DIGIT2:
+            case DIGIT3:
                 m_superStructureUpperVerticalConveyorIndexingSensor = true;
                 m_superStructureUpperVerticalConveyorIndexingSensorLabel.setTextFill(Color.GREEN);
                 break;
@@ -204,17 +204,17 @@ public class SuperStructureStandaloneMain {
                 m_superStructureShooterSpeedLabel.setTextFill(Color.BLACK);
                 break;
 
-            case DIGIT0:
+            case DIGIT1:
                 m_superStructureIntakeIndexingSensor = false;
                 m_superStructureIntakeIndexingSensorLabel.setTextFill(Color.BLACK);
                 break;
 
-            case DIGIT1:
+            case DIGIT2:
                 m_superStructureLowerVerticalConveyorIndexingSensor = false;
                 m_superStructureLowerVerticalConveyorIndexingSensorLabel.setTextFill(Color.BLACK);
                 break;
 
-            case DIGIT2:
+            case DIGIT3:
                 m_superStructureUpperVerticalConveyorIndexingSensor = false;
                 m_superStructureUpperVerticalConveyorIndexingSensorLabel.setTextFill(Color.BLACK);
                 break;

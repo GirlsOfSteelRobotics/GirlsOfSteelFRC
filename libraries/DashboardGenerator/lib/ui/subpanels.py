@@ -59,7 +59,11 @@ class TopLevelConfigWidget(QWidget):
 
     def view_to_config(self) -> DashboardConfig:
         return DashboardConfig(
-            self.m_basePackageName.text(), self.m_pluginSummary.text(), self.m_pluginName.text(), [w.view_to_config() for w in self.tabs], self.manual_widgets
+            self.m_basePackageName.text(),
+            self.m_pluginSummary.text(),
+            self.m_pluginName.text(),
+            [w.view_to_config() for w in self.tabs],
+            self.manual_widgets,
         )
 
 
@@ -325,7 +329,7 @@ class GenerateConfigWidget(QWidget):
             "force_nt_names": self.force_nt_names.isChecked(),
             "force_standalone_main": self.force_tester.isChecked(),
             "force_fxml": self.force_fxml.isChecked(),
-            "force_controller": self.force_controller.isChecked()
+            "force_controller": self.force_controller.isChecked(),
         }
 
         return output

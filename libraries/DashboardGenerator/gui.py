@@ -81,8 +81,6 @@ class Window(QMainWindow):
         self.config_file = config_file
         self.actionSave.setEnabled(True)
 
-
-
     def save_config(self):
         config = self.toplevel_widget.view_to_config()
 
