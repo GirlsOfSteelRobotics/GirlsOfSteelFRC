@@ -1,0 +1,44 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.8116616328019393,
+        "y": 3.295782989670245
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.8116616328019397,
+        "y": 3.295782989670245
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 3.2862850559824346
+      },
+      "prevControl": {
+        "x": 3.0,
+        "y": 3.2862850559824346
+      },
+      "nextControl": null,
+      "isLocked": false
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.2192,
+    "maxAcceleration": 1.2192,
+    "maxAngularVelocity": 360,
+    "maxAngularAcceleration": 360
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0
+  },
+  "reversed": true,
+  "folder": "DockAndEngage"
+}
