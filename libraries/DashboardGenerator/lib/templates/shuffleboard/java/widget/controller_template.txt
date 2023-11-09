@@ -37,7 +37,6 @@ public class {{widget.table}}Controller {
 
     @FXML
     private Pane m_pane;
-
     {% for shape in widget.shapes %}
     @FXML
     private {{shape.type}} m_{{shape.name}};
@@ -60,7 +59,6 @@ public class {{widget.table}}Controller {
 
         m_group.getTransforms().add(scale);
         ///////////////////////////////////////////////////////////
-
 {% for shape in widget.shapes %}
 {%- if shape.type == "Rectangle" %}
         m_{{ shape.name }}.setX({{shape.name.camel_to_upper_snake()}}_X);

@@ -29,7 +29,7 @@ def load_ui_file(filename, parent):
 
 def set_text_if_not_null(widget, text: Union[str, None]):
     if text is not None:
-        widget.setText(text)
+        widget.setText(str(text))
 
 
 class TopLevelConfigWidget(QWidget):
@@ -177,7 +177,7 @@ class ShapeWidget(QWidget):
         if t == "Rectangle":
             return Rectangle(
                 width=self.width_txt.text() or None,
-                height=self.width_txt.text() or None,
+                height=self.height_txt.text() or None,
                 rotates=self.rotates_box.isChecked(),
                 **base_kwargs
             )
