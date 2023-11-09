@@ -21,7 +21,6 @@ import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.SwerveDriveChassisSubsystem;
 import com.gos.chargedup.subsystems.TankDriveChassisSubsystem;
 import com.gos.lib.properties.PropertyManager;
-import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -114,7 +113,6 @@ public class RobotContainer {
         }
 
         DriverStation.silenceJoystickConnectionWarning(true);
-        PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_claw));

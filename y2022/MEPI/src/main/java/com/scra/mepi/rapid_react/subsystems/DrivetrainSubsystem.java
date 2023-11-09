@@ -7,24 +7,20 @@ package com.scra.mepi.rapid_react.subsystems;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.RamseteAutoBuilder;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.scra.mepi.rapid_react.Constants;
-import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -37,9 +33,6 @@ import org.snobotv2.module_wrappers.navx.NavxWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
-
-import java.util.HashMap;
-import java.util.function.Consumer;
 
 // Drive train
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"})
@@ -76,8 +69,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * Creates a new DrivetrainSubsystem.
      */
     public DrivetrainSubsystem() {
-        m_gyro.calibrate();
-
         m_leftProperties = setupVelocityPidValues(m_leftController);
         m_rightProperties = setupVelocityPidValues(m_rightController);
 
@@ -165,23 +156,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_rightEncoder.getVelocity();
     }
 
-    private RamseteAutoBuilder createRamseteAutoBuilder(Consumer<Pose2d> poseSetter) {
-        return new RamseteAutoBuilder(
-                this::getPose, // Pose supplier
-                poseSetter,
-                new RamseteController(),
-                m_kinematics, // DifferentialDriveKinematics
-                this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
-                new HashMap<>(),
-                true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-                this);
-    }
-
-    public Command createPathFollowingCommand(String pathName, boolean reverse) {
-        PathConstraints pathConstraints =
-            new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
-        PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, pathConstraints, reverse);
-        return createRamseteAutoBuilder((pose) -> {}).fullAuto(trajectory);
+    public Command createPathFollowingCommand(String pathName) {
+        return AutoBuilder.followPathWithEvents(PathPlannerPath.fromPathFile(pathName));
     }
 
     @Override

@@ -1,14 +1,10 @@
 package com.gos.chargedup.subsystems;
 
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-
-import java.util.List;
 
 public interface ChassisSubsystemInterface extends Subsystem {
     double findingClosestNodeY(double yPositionButton);
@@ -54,30 +50,20 @@ public interface ChassisSubsystemInterface extends Subsystem {
     Command createSyncOdometryWithPoseEstimatorCommand();
 
     default Command createFollowPathCommand(String pathFilename) {
-        return createFollowPathCommand(pathFilename);
+        return createFollowPathCommand(pathFilename, true);
     }
 
-    default Command createFollowPathCommand(String pathFilename) {
-        List<PathPlannerTrajectory> path = PathPlanner.loadPathGroup(pathFilename, isReversed, constraint, constraints);
-        return createFollowPathCommand(path);
+    default Command createFollowPathCommand(String pathFilename, boolean resetPose) {
+        return createFollowPathCommand(PathPlannerPath.fromPathFile(pathFilename), resetPose);
     }
 
-    Command createFollowPathCommand(List<PathPlannerTrajectory> trajectory);
+    Command createFollowPathCommand(PathPlannerPath path, boolean resetPose);
 
     default Command createFollowPathCommandNoPoseReset(String pathFile)  {
-        List<PathPlannerTrajectory> path = PathPlanner.loadPathGroup(pathFile, isReversed, constraint, constraint);
-        return createFollowPathCommandNoPoseReset(path);
+        return createFollowPathCommand(pathFile, false);
     }
-
-    default Command createFollowPathCommandNoPoseReset(String pathFile) {
-        return createFollowPathCommandNoPoseReset(pathFile);
-    }
-
-    Command createFollowPathCommandNoPoseReset(List<PathPlannerTrajectory> trajectory);
 
     Command createDeferredDriveToPointCommand(Pose2d point, boolean reverse);
-
-    Command createResetPoseCommand(PathPlannerTrajectory trajectory, Rotation2d startAngle);
 
     Command createTurnToAngleCommand(double angleGoal);
 
