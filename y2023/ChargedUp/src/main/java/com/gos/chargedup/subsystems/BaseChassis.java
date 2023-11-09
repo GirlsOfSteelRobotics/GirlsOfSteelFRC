@@ -5,6 +5,7 @@ import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.ctre.alerts.PigeonAlerts;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -195,7 +196,7 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     }
 
     public boolean isRedAllianceFlipped() {
-        return DriverStation.getAlliance() == DriverStation.Alliance.Red;
+        return GetAllianceUtil.isRedAlliance();
     }
 
     @Override

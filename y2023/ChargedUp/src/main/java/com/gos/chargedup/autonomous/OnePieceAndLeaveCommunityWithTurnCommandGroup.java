@@ -10,6 +10,7 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
+import com.gos.lib.GetAllianceUtil;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -17,7 +18,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -45,7 +45,7 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         Command resetOdometry = new ConditionalCommand(
             chassis.createResetOdometryCommand(startPose),
             chassis.createResetOdometryCommand(AllianceFlipper.flip(startPose)),
-            () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
+            GetAllianceUtil::isBlueAlliance
         );
         addCommands(resetOdometry);
 
@@ -55,7 +55,7 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         Command driveBackwards = new ConditionalCommand(
             chassis.createDriveToPointNoFlipCommand(startPose, new Pose2d(initialPose.getTranslation(), Rotation2d.fromDegrees(180)), true),
             chassis.createDriveToPointNoFlipCommand(AllianceFlipper.flip(startPose), AllianceFlipper.flip(new Pose2d(initialPose.getTranslation(), Rotation2d.fromDegrees(180))), true),
-            () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
+            GetAllianceUtil::isBlueAlliance
         );
 
         addCommands(driveBackwards
@@ -65,7 +65,7 @@ public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCom
         Command turnToAngle = new ConditionalCommand(
             chassis.createTurnToAngleCommand(initialPose.getRotation().getDegrees()),
             chassis.createTurnToAngleCommand(AllianceFlipper.flip(initialPose.getRotation()).getDegrees()),
-            () -> DriverStation.getAlliance() == DriverStation.Alliance.Blue
+            GetAllianceUtil::isBlueAlliance
         );
         addCommands(
             turnToAngle

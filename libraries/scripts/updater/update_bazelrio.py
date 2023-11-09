@@ -2,6 +2,7 @@ import os
 import re
 import json
 import hashlib
+import subprocess
 from libraries.scripts.updater.update_vendor_deps import download_latest_vendordeps
 from libraries.scripts.updater.replace_gradlerio_files import get_gradlerio_version
 from libraries.scripts.git.git_python_wrappers import commit_all_changes
@@ -27,8 +28,8 @@ def get_java_dep_sha(vendor_dep, version):
 
 
 def update_bazelrio_rule():
-    bazelrio_repo = "pjreiniger/bazelrio"
-    bazelrio_branch = "pj_java_head"
+    bazelrio_repo = "bzlmodRio/bzlmodRio"
+    bazelrio_branch = "refactor_dev"
 
     data = auto_retry_download(
         f"https://api.github.com/repos/{bazelrio_repo}/branches/{bazelrio_branch}"
@@ -43,9 +44,11 @@ def update_bazelrio_rule():
         contents = f.read()
 
     contents = re.sub(
-        'BAZELRIO_COMMITISH = ".*"', f'BAZELRIO_COMMITISH = "{bazelrio_commitish}"', contents
+        'BZLMODRIO_COMMITISH = ".*"', f'BZLMODRIO_COMMITISH = "{bazelrio_commitish}"', contents
     )
-    contents = re.sub('BAZELRIO_SHA256 = ".*"', f'BAZELRIO_SHA256 = "{bazelrio_sha256}"', contents)
+    contents = re.sub(
+        'BZLMODRIO_SHA256 = ".*"', f'BZLMODRIO_SHA256 = "{bazelrio_sha256}"', contents
+    )
 
     with open("build_scripts/bazel/deps/download_external_archives.bzl", "w") as f:
         f.write(contents)
@@ -56,20 +59,18 @@ def update_bazelrio(auto_commit=True, ignore_cache=False):
 
     vendor_deps_files = download_latest_vendordeps(ignore_cache)
 
-    java_libraries_with_sha = [
-        "SNOBOTSIM",
-        "PHOTONLIB_JSON_1_0",
-        "PATHPLANNERLIB",
-    ]
+    java_libraries_with_sha = []
 
     bazelrio_versions = ""
     for vendor_file in vendor_deps_files:
+        if vendor_file.endswith("WPILibNewCommands.json"):
+            continue
         with open(vendor_file, "r") as f:
             vendor_name = os.path.basename(vendor_file)[: -len(".json")].upper()
             vendor_name = vendor_name.replace("-", "_")
             vendor_name = vendor_name.replace(".", "_")
             vendor_dep = json.load(f)
-            version = vendor_dep["version"].replace("+", "_").replace("_", "_")
+            version = vendor_dep["version"]
             bazelrio_versions += f'{vendor_name}_VERSION = "{version}"\n'
 
             if vendor_name in java_libraries_with_sha:
@@ -81,6 +82,8 @@ def update_bazelrio(auto_commit=True, ignore_cache=False):
 
     with open("build_scripts/bazel/deps/versions.bzl", "w") as f:
         f.write(bazelrio_versions)
+
+    subprocess.check_call(["bazel", "run", "@unpinned_maven//:pin"])
 
     if auto_commit:
         commit_all_changes("Auto-Update: Updating bazelrio")

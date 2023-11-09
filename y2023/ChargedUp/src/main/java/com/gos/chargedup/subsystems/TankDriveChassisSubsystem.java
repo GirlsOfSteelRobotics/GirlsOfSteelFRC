@@ -431,6 +431,17 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         drivetrainToCoastMode();
     }
 
+    @Override
+    public ChassisSpeeds getChassisSpeed() {
+        return K_DRIVE_KINEMATICS.toChassisSpeeds(new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity()));
+    }
+
+    @Override
+    public void setChassisSpeed(ChassisSpeeds chassisSpeeds) {
+        DifferentialDriveWheelSpeeds diffSpeeds = K_DRIVE_KINEMATICS.toWheelSpeeds(chassisSpeeds);
+        smartVelocityControl(diffSpeeds.leftMetersPerSecond, diffSpeeds.rightMetersPerSecond);
+    }
+
     ////////////////////
     // Command Factories
     ////////////////////

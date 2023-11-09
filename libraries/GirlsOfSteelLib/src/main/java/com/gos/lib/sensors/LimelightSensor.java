@@ -1,12 +1,12 @@
 package com.gos.lib.sensors;
 
+import com.gos.lib.GetAllianceUtil;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 
 public class LimelightSensor {
 
@@ -118,7 +118,7 @@ public class LimelightSensor {
 
     public Pose3d getRobotPose() {
         NetworkTableEntry botPose; // NOPMD(CloseResource)
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
+        if (GetAllianceUtil.isBlueAlliance()) {
             botPose = m_botPoseWpiBlue;
         } else {
             botPose = m_botPoseWpiRed;

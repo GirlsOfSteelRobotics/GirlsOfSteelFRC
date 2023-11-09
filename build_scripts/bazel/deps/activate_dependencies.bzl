@@ -41,7 +41,7 @@ def activate_dependencies():
             "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
             "org.snobotv2:snobot_swerve_sim:{v}".format(v = SNOBOTSIM_VERSION),
         ],
-        repositories = maven_repositories + ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
+        repositories = maven_repositories + ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release", "https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
         maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
     )
 

@@ -10,5 +10,6 @@ shuffleboard_widget(
 gos_java_binary(
     name = "SuperStructureMain",
     main_class = "com.gos.rapidreact.shuffleboard.super_structure.SuperStructureStandaloneMain",
+    tags = ["no-roborio"],
     runtime_deps = [":RapidReactDashboard"],
 )

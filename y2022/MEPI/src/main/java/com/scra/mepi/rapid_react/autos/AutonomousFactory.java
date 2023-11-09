@@ -15,9 +15,6 @@ public class AutonomousFactory {
 
     //MAKE SURE YOU INCLUDE DO NOTHING and also JUST SHOOTING
     public enum AutonMode {
-        LINE_TEST,
-        CURVE_TEST,
-        S_CURVE_TEST,
         SHOOT_LEAVE_COMMUNITY_1,
         SHOOT_ENGAGE_4,
         SHOOT_LEAVE_COMMUNITY_7,
@@ -35,10 +32,6 @@ public class AutonomousFactory {
     public AutonomousFactory(ShooterSubsytem shooterSubsytem) {
         m_chooseAutoOption = new SendableChooser<>();
 
-        //m_autoOptions.put(AutonMode.LINE_TEST, new lineTest(drivetrainSubsystem, "lineTest"));
-        //        m_autoOptions.put(AutonMode.CURVE_TEST, new curveTest(drivetrainSubsystem, "curveTest"));
-        //        m_autoOptions.put(AutonMode.S_CURVE_TEST, new SCurveTest(drivetrainSubsystem,"sCurveTest"));
-        //        m_autoOptions.put(AutonMode.SHOOT_ENGAGE_4,new ShootEngage(drivetrainSubsystem, shooterSubsytem, "dockAndEngage4"));
         //        m_autoOptions.put(AutonMode.SHOOT_LEAVE_COMMUNITY_1,new ShootLeaveCommunity(drivetrainSubsystem,shooterSubsytem,"leaveCommunity1"));
         //        m_autoOptions.put(AutonMode.SHOOT_LEAVE_COMMUNITY_7,new ShootLeaveCommunity(drivetrainSubsystem,shooterSubsytem,"leaveCommunity7"));
         m_autoOptions.put(AutonMode.SHOOT_4, new Shoot(shooterSubsytem));

@@ -1,6 +1,9 @@
 import os
 import re
 from urllib.request import urlopen, Request
+import http
+import time
+import urllib
 
 DEFAULT_DIR_BLACKLIST = [
     ".git",
@@ -16,6 +19,8 @@ DEFAULT_DIR_BLACKLIST = [
     "build",
     "venv",
 ]
+
+PINNED_VSCODE_WPILIB_COMMITISH = "main"
 
 
 def walk_with_blacklist(search_root, dir_blacklist=None):
@@ -63,7 +68,11 @@ def auto_retry_download(url):
         try:
             with urlopen(req) as x:
                 return x.read()
-        except:
-            print("  Trying again...")
+        except (http.client.RemoteDisconnected, urllib.error.URLError) as e:
+            print(f"  Trying again... - {e}")
+            time.sleep(0.1)
+        except Exception as e:
+            print("Got a different failure...")
+            raise e
 
     raise Exception(f"Could not {url}")

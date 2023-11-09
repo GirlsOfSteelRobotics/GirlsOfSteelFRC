@@ -7,34 +7,38 @@ package com.scra.mepi.rapid_react.subsystems;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj2.command.Command;
 import com.scra.mepi.rapid_react.Constants;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.navx.NavxWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
-import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 // Drive train
@@ -161,21 +165,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_rightEncoder.getVelocity();
     }
 
-    private RamseteAutoBuilder createRamseteAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
+    private RamseteAutoBuilder createRamseteAutoBuilder(Consumer<Pose2d> poseSetter) {
         return new RamseteAutoBuilder(
                 this::getPose, // Pose supplier
                 poseSetter,
                 new RamseteController(),
                 m_kinematics, // DifferentialDriveKinematics
                 this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
-                eventMap,
+                new HashMap<>(),
                 true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
                 this);
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilderNoPoseReset(Map<String, Command> eventMap) {
-        return createRamseteAutoBuilder(eventMap, (Pose2d pose) -> {
-        });
+    public CommandBase createPathFollowingCommand(String pathName, boolean reverse) {
+        PathConstraints pathConstraints =
+            new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
+        PathPlannerTrajectory trajectory = PathPlanner.loadPath(pathName, pathConstraints, reverse);
+        return createRamseteAutoBuilder((pose) -> {}).fullAuto(trajectory);
     }
 
     @Override

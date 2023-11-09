@@ -5,6 +5,7 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
         "@bzlmodrio-allwpilib//libraries/java/ntcore",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",

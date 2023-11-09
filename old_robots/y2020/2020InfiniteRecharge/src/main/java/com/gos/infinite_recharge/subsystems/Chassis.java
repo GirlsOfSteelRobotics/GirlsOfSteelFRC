@@ -12,7 +12,6 @@ import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
@@ -61,7 +60,7 @@ public class Chassis extends SubsystemBase {
     private final SparkMaxPIDController m_leftPidController;
     private final SparkMaxPIDController m_rightPidController;
 
-    private final Gyro m_gyro;
+    private final AHRS m_gyro;
 
     private final DifferentialDrive m_drive;
 
