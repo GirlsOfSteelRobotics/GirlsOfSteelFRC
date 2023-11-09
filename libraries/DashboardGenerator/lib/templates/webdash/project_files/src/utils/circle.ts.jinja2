@@ -18,19 +18,10 @@ export class Circle extends Shape {
   render(ctx: CanvasRenderingContext2D) {
     ctx.save();
 
-
     ctx.beginPath();
     ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = this.fillColor!;
     ctx.fill();
-    // ctx.lineWidth = 5;
-    // ctx.strokeStyle = '#003300';
-    // ctx.stroke();
-
-    // ctx.beginPath();
-    // ctx.fillStyle = this.fillColor!;
-
-    // ctx.ellipse(this.centerX, this.centerY, this.radius, this.radius, 0, 0, 0, false)
 
     ctx.restore();
   }

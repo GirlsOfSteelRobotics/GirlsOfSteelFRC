@@ -1,9 +1,9 @@
 {% for child in widget.children_tables %}
 {%- if widget.sd_table_name_constant != child.table_name %}
-export const {{child.table_name}} = "{{upper_snake_to_camel(child.table_name)}}";
+export const {{child.table_name}} = "{{child.table_name.upper_snake_to_camel()}}";
 {% endif %}
 {% for variable in child.entries %}
-export const {{ "%-32s" | format(variable.dasboard_constant)}} = "{{upper_snake_to_camel(variable.dasboard_constant)}}";
+export const {{ "%-32s" | format(variable.dashboard_constant)}} = "{{variable.dashboard_constant.upper_snake_to_camel()}}";
 {%- endfor %}
 {%- endfor %}
 

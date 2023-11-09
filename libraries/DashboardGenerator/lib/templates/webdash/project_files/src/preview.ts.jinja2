@@ -1,5 +1,5 @@
 {%- for widget in overall_config.widgets %}
-import "./{{widget.package_name.replace("_", "-")}}";
+import "./{{widget.package_name.as_dash()}}";
 {%- endfor %}
 import createDashboard from "@frc-web-components/fwc";
 import loadLocalStorage from "@frc-web-components/fwc/load-local-storage";

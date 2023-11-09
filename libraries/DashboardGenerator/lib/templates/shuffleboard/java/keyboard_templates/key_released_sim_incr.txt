@@ -1,4 +1,4 @@
             case {{entry.sim_keys[0]}}:
             case {{entry.sim_keys[1]}}:
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label.setTextFill(Color.BLACK);
+                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.BLACK);
                 break;

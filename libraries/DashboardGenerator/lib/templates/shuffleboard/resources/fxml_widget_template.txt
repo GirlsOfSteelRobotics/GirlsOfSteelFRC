@@ -7,7 +7,7 @@
     fx:controller="{{widget_package_name}}.{{widget.table}}Widget">
     <center>
         <fx:include fx:id="m_widget"
-            source="/{{package_to_dir(project_package_name)}}/{{package_to_dir(widget.package_name)}}/{{camel_to_snake(widget.table)}}.fxml" />
+            source="/{{project_package_name.as_dir()}}/{{widget.package_name}}/{{widget.table.camel_to_snake()}}.fxml" />
     </center>
 </BorderPane>
 

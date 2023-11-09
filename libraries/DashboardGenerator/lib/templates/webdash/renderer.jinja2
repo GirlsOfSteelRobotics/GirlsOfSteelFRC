@@ -1,6 +1,14 @@
+import { Arc } from "../utils/arc";
+import { Circle } from "../utils/circle";
+import { getClampedColor, setShapesBooleanColor, setShapesMotorColor, setShapesMotorColorStroke } from "../utils/color_utils";
+import { Rectangle } from "../utils/rectangle";
 
-import { Rectangle, Circle } from "../utils/shapes";
-import { {{widget.table}}Data } from "./datatypes"
+import { {{widget.table}}Data
+{%- if widget.has_nested_tables -%}
+    {%- for child in widget.children_tables -%}
+    , {{child.table}}Data
+    {%- endfor -%}
+{%- endif %} } from "./datatypes";
 
 
 export const MAX_WIDTH = 1; // TODO figure out real value
@@ -8,53 +16,50 @@ export const MAX_HEIGHT = 1; // TODO figure out real value
 
 {% for shape in widget.shapes %}
     {%- if shape.type == "Rectangle" %}
-const {{camel_to_snake(shape.name).upper()}}_HEIGHT = 1; // TODO figure out real value
-const {{camel_to_snake(shape.name).upper()}}_WIDTH = 1; // TODO figure out real value
-    {%- elif shape.type == "Arc" %}
-const {{camel_to_snake(shape.name).upper()}}_HEIGHT = 1; // TODO figure out real value
-const {{camel_to_snake(shape.name).upper()}}_WIDTH = 1; // TODO figure out real value
-    {%- elif shape.type == "Circle" %}
-const {{camel_to_snake(shape.name).upper()}}_RADIUS = 1; // TODO figure out real value
+const {{shape.name.camel_to_snake().upper()}}_HEIGHT = {{ shape.height + ";" if shape.height else "1; // TODO figure out real value" }}
+const {{shape.name.camel_to_snake().upper()}}_WIDTH = {{ shape.width + ";" if shape.width else "1; // TODO figure out real value" }}
+    {%- elif shape.type == "Circle" or shape.type == "Arc" %}
+const {{shape.name.camel_to_snake().upper()}}_RADIUS = {{shape.radius + ";" if shape.radius else "1; // TODO figure out real value" }}
     {%- endif %}
 {%- endfor %}
 
 {% for shape in widget.shapes %}
-const {{camel_to_snake(shape.name).upper()}}_X = 1; // TODO figure out real value
-const {{camel_to_snake(shape.name).upper()}}_Y = 1; // TODO figure out real value
+const {{shape.name.camel_to_snake().upper()}}_X = {{shape.x + ";" if shape.x else "1; // TODO figure out real value" }}
+const {{shape.name.camel_to_snake().upper()}}_Y = {{shape.y + ";" if shape.y else "1; // TODO figure out real value" }}
 {%- endfor %}
 
 
 export class Renderer {
 {% for shape in widget.shapes %}
-   m_{{shape.name}}: {{shape.type}};
+  m_{{shape.name}}: {{shape.type}};
 {%- endfor %}
 
   constructor() {
 {% for shape in widget.shapes %}
 {%- if shape.type == "Rectangle" %}
-    this.m_{{shape.name}} = new {{shape.type}}({{camel_to_snake(shape.name).upper()}}_X, {{camel_to_snake(shape.name).upper()}}_Y, {{camel_to_snake(shape.name).upper()}}_WIDTH, {{camel_to_snake(shape.name).upper()}}_HEIGHT, 'papayawhip');
+    this.m_{{shape.name}} = new {{shape.type}}({{shape.name.camel_to_snake().upper()}}_X, {{shape.name.camel_to_snake().upper()}}_Y, {{shape.name.camel_to_snake().upper()}}_WIDTH, {{shape.name.camel_to_snake().upper()}}_HEIGHT, "{{shape.color}}");
 {%- else %}
-    this.m_{{shape.name}} = new {{shape.type}}({{camel_to_snake(shape.name).upper()}}_X, {{camel_to_snake(shape.name).upper()}}_Y, {{camel_to_snake(shape.name).upper()}}_RADIUS, 'papayawhip');
+    this.m_{{shape.name}} = new {{shape.type}}({{shape.name.camel_to_snake().upper()}}_X, {{shape.name.camel_to_snake().upper()}}_Y, {{shape.name.camel_to_snake().upper()}}_RADIUS, "{{shape.color}}");
 {%- endif %}
 {%- endfor %}
   }
 
 {% for child in widget.children_tables %}
-  private update{{child.table}}({{lower_first_char(child.table)}}Data: {{child.table}}Data) {
+  private update{{child.table}}({{child.table.lower_first_char()}}Data: {{child.table}}Data) {
     // TODO update
   }
 {% endfor %}
-{% if widget.children_tables|length != 1 %}
-  private update{{widget.table}}({{lower_first_char(widget.table)}}Data : {{widget.table}}Data) {
+{% if widget.has_nested_tables %}
+  private update{{widget.table}}({{widget.table.lower_first_char()}}Data : {{widget.table}}Data) {
 {%- for child in widget.children_tables %}
-    this.update{{child.table}}({{lower_first_char(widget.table)}}Data.{{lower_first_char(child.table)}});
+    this.update{{child.table}}({{widget.table.lower_first_char()}}Data.{{child.table.lower_first_char()}});
 {%- endfor %}
   }
 {%- endif %}
 
-  render(ctx: CanvasRenderingContext2D, {{lower_first_char(widget.table)}}Data: {{widget.table}}Data) {
+  render(ctx: CanvasRenderingContext2D, {{widget.table.lower_first_char()}}Data: {{widget.table}}Data) {
 
-    this.update{{widget.table}}({{lower_first_char(widget.table)}}Data)
+    this.update{{widget.table}}({{widget.table.lower_first_char()}}Data);
 {% for shape in widget.shapes %}
     this.m_{{shape.name}}.render(ctx);
 {%- endfor %}

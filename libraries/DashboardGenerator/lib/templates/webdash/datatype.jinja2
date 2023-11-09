@@ -1,14 +1,20 @@
 {% for child in widget.children_tables %}
 export interface {{child.table}}Data {
 {%- for variable in child.entries %}
-    {{variable.name}}: {%- if variable.type == "double" or variable.type == "Double" %} number{%- elif variable.type == "boolean" %} boolean{%- elif variable.type == "String" %} string{% else %} UHOH {%- endif %};
+    {{variable.name}}:
+    {%-   if variable.type.is_number() %} number
+    {%- elif variable.type.is_boolean() %} boolean
+    {%- elif variable.type.is_string() %} string
+    {%- else %} UHOH
+    {%- endif -%}
+    ;
 {%- endfor %}
 }
 {% endfor %}
-{% if widget.children_tables|length != 1 %}
+{% if widget.has_nested_tables %}
 export interface {{widget.table}}Data {
 {%- for child in widget.children_tables %}
-    {{lower_first_char(child.table)}} : {{child.table}}Data;
+    {{child.table.lower_first_char()}} : {{child.table}}Data;
 {%- endfor %}
 }
 {%- endif %}

@@ -13,7 +13,7 @@ widgets:
     - type: double
       name: intakeAngle
       dasboard_constant: INTAKE_ANGLE
-      sim_incr: 2
+      sim_incr: '2'
     - type: double
       name: intakeSpeed
       dasboard_constant: INTAKE_SPEED
@@ -26,7 +26,7 @@ widgets:
     - type: double
       name: hangerHeight
       dasboard_constant: HANGER_HEIGHT
-      sim_incr: 2
+      sim_incr: '2'
     - type: double
       name: horizontalConveyorSpeed
       dasboard_constant: HORIZONTAL_CONVEYOR_SPEED
@@ -47,22 +47,68 @@ widgets:
       dasboard_constant: UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR
   shapes:
   - type: Rectangle
-    name: intake
-  - type: Rectangle
     name: chassis
+    x: MAX_WIDTH - CHASSIS_WIDTH
+    y: MAX_HEIGHT - CHASSIS_HEIGHT
+    color: papayacream
+    height: '4'
+    width: '36'
+  - type: Rectangle
+    name: intake
+    x: MAX_WIDTH - INTAKE_WIDTH
+    y: MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - INTAKE_HEIGHT
+    color: papayacream
+    height: '16'
+    width: '10'
   - type: Circle
     name: intakeWheel
+    x: INTAKE_X
+    y: INTAKE_Y
+    color: papayacream
+    radius: '3'
   - type: Rectangle
     name: horizontalConveyor
+    x: MAX_WIDTH - HORIZONTAL_CONVEYOR_WIDTH
+    y: MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT
+    color: papayacream
+    height: '4'
+    width: '36'
   - type: Rectangle
     name: verticalConveyor
+    x: MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - VERTICAL_CONVEYOR_WIDTH - 14
+    y: MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - VERTICAL_CONVEYOR_HEIGHT
+    color: papayacream
+    height: '30'
+    width: '8'
   - type: Rectangle
     name: hanger
+    x: MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - 10
+    y: MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - HANGER_HEIGHT
+    color: papayacream
+    height: '32'
+    width: '2'
   - type: Arc
     name: shooter
+    x: MAX_WIDTH - INTAKE_WIDTH - VERTICAL_CONVEYOR_WIDTH - SHOOTER_WIDTH - 8
+    y: MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - VERTICAL_CONVEYOR_HEIGHT
+    color: papayacream
+    radius: null
   - type: Circle
     name: intakeIndexingSensor
+    x: INTAKE_X + INTAKE_WIDTH
+    y: INTAKE_Y
+    color: papayacream
+    radius: '1.5'
   - type: Circle
     name: upperVConveyorSensor
+    x: VERTICAL_CONVEYOR_X + SHOOTER_WIDTH
+    y: VERTICAL_CONVEYOR_Y + (VERTICAL_CONVEYOR_HEIGHT / 2)
+    color: papayacream
+    radius: '1.5'
   - type: Circle
     name: lowerVConveyorSensor
+    x: VERTICAL_CONVEYOR_X + SHOOTER_WIDTH
+    y: VERTICAL_CONVEYOR_Y
+    color: papayacream
+    radius: '1.5'
+manual_widgets: []

@@ -1,5 +1,5 @@
 
             case {{entry.sim_keys}}:
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}} = true;
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label.setTextFill(Color.GREEN);
+                m_{{child.combined_variable_name(entry)}} = true;
+                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.GREEN);
                 break;
