@@ -49,7 +49,11 @@ public class ShooterSubsytem extends SubsystemBase {
 
     public ShooterSubsytem() {
         m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
+        m_shooterMotor.restoreFactoryDefaults();
+
         m_hoodMotor = new SimableCANSparkMax(Constants.SHOOTER_HOOD_SPARK, MotorType.kBrushless);
+        m_hoodMotor.restoreFactoryDefaults();
+
         m_shooterMotor.setSmartCurrentLimit(50);
         m_hoodMotor.setSmartCurrentLimit(30);
         m_shooterLookupTable = new ShooterLookupTable();
@@ -62,7 +66,6 @@ public class ShooterSubsytem extends SubsystemBase {
             .addFF(0.00045)
             .build();
         m_shooterMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_shooterMotor.restoreFactoryDefaults();
         m_shooterMotor.setInverted(true);
         m_shooterMotor.burnFlash();
 
