@@ -5,8 +5,8 @@
 package com.scra.mepi.rapid_react.commands;
 
 import com.scra.mepi.rapid_react.subsystems.DrivetrainSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * An example command that uses an example subsystem.
@@ -15,14 +15,14 @@ public class DriveCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final DrivetrainSubsystem m_subsystem;
 
-    private final XboxController m_joystick;
+    private final CommandXboxController m_joystick;
 
     /**
      * Creates a new DriveCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public DriveCommand(DrivetrainSubsystem subsystem, XboxController joystick) {
+    public DriveCommand(DrivetrainSubsystem subsystem, CommandXboxController joystick) {
         m_subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
