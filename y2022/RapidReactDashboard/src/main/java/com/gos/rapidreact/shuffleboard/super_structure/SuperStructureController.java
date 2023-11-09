@@ -19,42 +19,42 @@ public class SuperStructureController {
 
     private static final double CHASSIS_HEIGHT = 4;
     private static final double CHASSIS_WIDTH = 36;
-    private static final double INTAKE_WIDTH = 10;
     private static final double INTAKE_HEIGHT = 16;
+    private static final double INTAKE_WIDTH = 10;
     private static final double INTAKE_WHEEL_RADIUS = 3;
-    private static final double HORI_CONVEYOR_WIDTH = 36;
-    private static final double HORI_CONVEYOR_HEIGHT = 4;
-    private static final double VERT_CONVEYOR_WIDTH = 8;
-    private static final double VERT_CONVEYOR_HEIGHT = 30;
-    private static final double HANGER_WIDTH = 2;
+    private static final double HORIZONTAL_CONVEYOR_HEIGHT = 4;
+    private static final double HORIZONTAL_CONVEYOR_WIDTH = 36;
+    private static final double VERTICAL_CONVEYOR_HEIGHT = 30;
+    private static final double VERTICAL_CONVEYOR_WIDTH = 8;
     private static final double HANGER_HEIGHT = 32;
-    private static final double SHOOTER_WIDTH = 8;
+    private static final double HANGER_WIDTH = 2;
     private static final double SHOOTER_HEIGHT = 6;
-    private static final double INTAKE_BREAK_SENSOR_RADIUS = 1.5;
-    private static final double LOWER_VERT_BREAK_SENSOR_RADIUS = 1.5;
-    private static final double UPPER_VERT_BREAK_SENSOR_RADIUS = 1.5;
+    private static final double SHOOTER_WIDTH = 8;
+    private static final double INTAKE_INDEXING_SENSOR_RADIUS = 1.5;
+    private static final double UPPER_V_CONVEYOR_SENSOR_RADIUS = 1.5;
+    private static final double LOWER_V_CONVEYOR_SENSOR_RADIUS = 1.5;
 
 
     private static final double CHASSIS_X = MAX_WIDTH - CHASSIS_WIDTH;
     private static final double CHASSIS_Y = MAX_HEIGHT - CHASSIS_HEIGHT;
     private static final double INTAKE_X = MAX_WIDTH - INTAKE_WIDTH;
-    private static final double INTAKE_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - INTAKE_HEIGHT;
+    private static final double INTAKE_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - INTAKE_HEIGHT;
     private static final double INTAKE_WHEEL_X = INTAKE_X;
     private static final double INTAKE_WHEEL_Y = INTAKE_Y;
-    private static final double HORI_CONVEYOR_X = MAX_WIDTH - HORI_CONVEYOR_WIDTH;
-    private static final double HORI_CONVEYOR_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT;
-    private static final double VERT_CONVEYOR_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - VERT_CONVEYOR_WIDTH - 14;
-    private static final double VERT_CONVEYOR_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - VERT_CONVEYOR_HEIGHT;
+    private static final double HORIZONTAL_CONVEYOR_X = MAX_WIDTH - HORIZONTAL_CONVEYOR_WIDTH;
+    private static final double HORIZONTAL_CONVEYOR_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT;
+    private static final double VERTICAL_CONVEYOR_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - VERTICAL_CONVEYOR_WIDTH - 14;
+    private static final double VERTICAL_CONVEYOR_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - VERTICAL_CONVEYOR_HEIGHT;
     private static final double HANGER_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - 10;
-    private static final double HANGER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - HANGER_HEIGHT;
-    private static final double SHOOTER_X = MAX_WIDTH - INTAKE_WIDTH - VERT_CONVEYOR_WIDTH - SHOOTER_WIDTH - 8;
-    private static final double SHOOTER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - VERT_CONVEYOR_HEIGHT;
-    private static final double INTAKE_BREAK_SENSOR_X = INTAKE_X + INTAKE_WIDTH;
-    private static final double INTAKE_BREAK_SENSOR_Y = INTAKE_Y;
-    private static final double LOWER_VERT_BREAK_SENSOR_X = VERT_CONVEYOR_X + SHOOTER_WIDTH;
-    private static final double LOWER_VERT_BREAK_SENSOR_Y = VERT_CONVEYOR_Y + (VERT_CONVEYOR_HEIGHT / 2);
-    private static final double UPPER_VERT_BREAK_SENSOR_X = VERT_CONVEYOR_X + SHOOTER_WIDTH;
-    private static final double UPPER_VERT_BREAK_SENSOR_Y = VERT_CONVEYOR_Y;
+    private static final double HANGER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - HANGER_HEIGHT;
+    private static final double SHOOTER_X = MAX_WIDTH - INTAKE_WIDTH - VERTICAL_CONVEYOR_WIDTH - SHOOTER_WIDTH - 8;
+    private static final double SHOOTER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORIZONTAL_CONVEYOR_HEIGHT - VERTICAL_CONVEYOR_HEIGHT;
+    private static final double INTAKE_INDEXING_SENSOR_X = INTAKE_X + INTAKE_WIDTH;
+    private static final double INTAKE_INDEXING_SENSOR_Y = INTAKE_Y;
+    private static final double UPPER_V_CONVEYOR_SENSOR_X = VERTICAL_CONVEYOR_X + SHOOTER_WIDTH;
+    private static final double UPPER_V_CONVEYOR_SENSOR_Y = VERTICAL_CONVEYOR_Y + (VERTICAL_CONVEYOR_HEIGHT / 2);
+    private static final double LOWER_V_CONVEYOR_SENSOR_X = VERTICAL_CONVEYOR_X + SHOOTER_WIDTH;
+    private static final double LOWER_V_CONVEYOR_SENSOR_Y = VERTICAL_CONVEYOR_Y;
 
     @FXML
     private Group m_group;
@@ -130,15 +130,15 @@ public class SuperStructureController {
         m_intakeWheel.setCenterY(INTAKE_WHEEL_Y);
         m_intakeWheel.setRadius(INTAKE_WHEEL_RADIUS);
 
-        m_horizontalConveyor.setX(HORI_CONVEYOR_X);
-        m_horizontalConveyor.setY(HORI_CONVEYOR_Y);
-        m_horizontalConveyor.setHeight(HORI_CONVEYOR_HEIGHT);
-        m_horizontalConveyor.setWidth(HORI_CONVEYOR_WIDTH);
+        m_horizontalConveyor.setX(HORIZONTAL_CONVEYOR_X);
+        m_horizontalConveyor.setY(HORIZONTAL_CONVEYOR_Y);
+        m_horizontalConveyor.setHeight(HORIZONTAL_CONVEYOR_HEIGHT);
+        m_horizontalConveyor.setWidth(HORIZONTAL_CONVEYOR_WIDTH);
 
-        m_verticalConveyor.setX(VERT_CONVEYOR_X);
-        m_verticalConveyor.setY(VERT_CONVEYOR_Y);
-        m_verticalConveyor.setHeight(VERT_CONVEYOR_HEIGHT);
-        m_verticalConveyor.setWidth(VERT_CONVEYOR_WIDTH);
+        m_verticalConveyor.setX(VERTICAL_CONVEYOR_X);
+        m_verticalConveyor.setY(VERTICAL_CONVEYOR_Y);
+        m_verticalConveyor.setHeight(VERTICAL_CONVEYOR_HEIGHT);
+        m_verticalConveyor.setWidth(VERTICAL_CONVEYOR_WIDTH);
 
         m_hanger.setX(HANGER_X);
         m_hanger.setY(HANGER_Y);
@@ -150,17 +150,17 @@ public class SuperStructureController {
         m_shooter.setRadiusY(SHOOTER_HEIGHT);
         m_shooter.setRadiusX(SHOOTER_WIDTH);
 
-        m_intakeIndexingSensor.setCenterX(INTAKE_BREAK_SENSOR_X);
-        m_intakeIndexingSensor.setCenterY(INTAKE_BREAK_SENSOR_Y);
-        m_intakeIndexingSensor.setRadius(INTAKE_BREAK_SENSOR_RADIUS);
+        m_intakeIndexingSensor.setCenterX(INTAKE_INDEXING_SENSOR_X);
+        m_intakeIndexingSensor.setCenterY(INTAKE_INDEXING_SENSOR_Y);
+        m_intakeIndexingSensor.setRadius(INTAKE_INDEXING_SENSOR_RADIUS);
 
-        m_upperVConveyorSensor.setCenterX(LOWER_VERT_BREAK_SENSOR_X);
-        m_upperVConveyorSensor.setCenterY(LOWER_VERT_BREAK_SENSOR_Y);
-        m_upperVConveyorSensor.setRadius(LOWER_VERT_BREAK_SENSOR_RADIUS);
+        m_upperVConveyorSensor.setCenterX(UPPER_V_CONVEYOR_SENSOR_X);
+        m_upperVConveyorSensor.setCenterY(UPPER_V_CONVEYOR_SENSOR_Y);
+        m_upperVConveyorSensor.setRadius(UPPER_V_CONVEYOR_SENSOR_RADIUS);
 
-        m_lowerVConveyorSensor.setCenterX(UPPER_VERT_BREAK_SENSOR_X);
-        m_lowerVConveyorSensor.setCenterY(UPPER_VERT_BREAK_SENSOR_Y);
-        m_lowerVConveyorSensor.setRadius(UPPER_VERT_BREAK_SENSOR_RADIUS);
+        m_lowerVConveyorSensor.setCenterX(LOWER_V_CONVEYOR_SENSOR_X);
+        m_lowerVConveyorSensor.setCenterY(LOWER_V_CONVEYOR_SENSOR_Y);
+        m_lowerVConveyorSensor.setRadius(LOWER_V_CONVEYOR_SENSOR_RADIUS);
 
         // Hook up rotations
         m_intakeRotation = new Rotate();
