@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
 /**
  * @author Sylvie
  */
-public class ManipulatorArmDownPID extends GosCommandBase {
+public class ManipulatorArmDownPID extends GosCommand {
 
     private final Manipulator m_manipulator;
     private double m_angle;

@@ -15,7 +15,7 @@ import com.gos.aerial_assist.subsystems.Driving;
 /**
  * @author Sylvie and Jisue
  */
-public class MoveToPositionLSPB extends GosCommandBase {
+public class MoveToPositionLSPB extends GosCommand {
     private static final double OFF_BY = 0.05;
 
     private final Chassis m_chassis;

@@ -2,9 +2,9 @@ package com.gos.ultimate_ascent.tests;
 
 import com.gos.ultimate_ascent.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.ultimate_ascent.commands.GosCommandBase;
+import com.gos.ultimate_ascent.commands.GosCommand;
 
-public class ChassisJags extends GosCommandBase {
+public class ChassisJags extends GosCommand {
 
     private final Chassis m_chassis;
     private double m_speed;

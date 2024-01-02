@@ -14,7 +14,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  *
  * @author Abby, Sophia, Sonia
  */
-public class CollectorWheelReverseAutoVer extends GosCommandBase {
+public class CollectorWheelReverseAutoVer extends GosCommand {
 
     private final Camera m_camera;
     private final Collector m_collector;

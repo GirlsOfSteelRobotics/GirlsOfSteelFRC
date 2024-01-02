@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Chassis;
 
-public class AutoTuneCamera extends GosCommandBase {
+public class AutoTuneCamera extends GosCommand {
 
     //public static final double HALF_COURT = 7.1 // meters
     //public static final double STEP = 0.5; //meters

@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj2.command.Command;
  *
  * @author Author
  */
-public abstract class GosCommandBase extends Command {
+public abstract class GosCommand extends Command {
 
-    public GosCommandBase(String name) {
+    public GosCommand(String name) {
         setName(name);
     }
 
-    public GosCommandBase() {
+    public GosCommand() {
         super();
     }
 }

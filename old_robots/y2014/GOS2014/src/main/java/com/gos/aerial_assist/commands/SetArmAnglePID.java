@@ -16,7 +16,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
  * -18.3 degrees is the actual bottom
  * Top limit of the arm unknown (probably around 100?)
  */
-public class SetArmAnglePID extends GosCommandBase {
+public class SetArmAnglePID extends GosCommand {
 
     private final Manipulator m_manipulator;
     private final double m_desiredAngle;

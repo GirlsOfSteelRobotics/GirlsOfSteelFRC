@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Collector;
 
-public class PS3ThreeBallsNo extends GosCommandBase {
+public class PS3ThreeBallsNo extends GosCommand {
 
     private final Collector m_collector;
 
