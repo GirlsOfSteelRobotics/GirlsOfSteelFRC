@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class IncrementShoot extends GosCommand {
+public class IncrementShoot extends GosCommandBase {
     private final Shooter m_shooter;
     private final OI m_oi;
     private double m_sliderValue;

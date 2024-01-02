@@ -10,7 +10,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
 /**
  * @author < ( *0* ) >
  */
-public class KickerWithoutPIDUsingEncoders extends GosCommand {
+public class KickerWithoutPIDUsingEncoders extends GosCommandBase {
 
     private static final double LOADING_ENCODER_POSITION = .45; // this value is "about"; currentEncoderValue % 360
 

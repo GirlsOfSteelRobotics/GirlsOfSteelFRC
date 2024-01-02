@@ -7,12 +7,12 @@ package com.gos.ultimate_ascent.tests;
 
 import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.ultimate_ascent.commands.GosCommand;
+import com.gos.ultimate_ascent.commands.GosCommandBase;
 
 /**
  * @author Sylvie
  */
-public class ShooterPID extends GosCommand {
+public class ShooterPID extends GosCommandBase {
 
     private final Shooter m_shooter;
     private double m_speed;

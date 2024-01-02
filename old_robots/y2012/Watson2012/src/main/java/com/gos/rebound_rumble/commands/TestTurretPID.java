@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TestTurretPID extends GosCommand {
+public class TestTurretPID extends GosCommandBase {
 
     private final Turret m_turret;
 

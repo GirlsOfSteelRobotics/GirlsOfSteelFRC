@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * @author user
  */
-public class AutoShoot extends GosCommand {
+public class AutoShoot extends GosCommandBase {
 
     private final Feeder m_feeder;
     private final Shooter m_shooter;

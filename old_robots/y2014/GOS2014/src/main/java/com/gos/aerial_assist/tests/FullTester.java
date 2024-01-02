@@ -10,7 +10,7 @@ import com.gos.aerial_assist.commands.ArcadeDrive;
 import com.gos.aerial_assist.commands.AutonomousLowGoal;
 import com.gos.aerial_assist.commands.AutonomousMobility;
 import com.gos.aerial_assist.commands.ChassisLspbplanner;
-import com.gos.aerial_assist.commands.GosCommand;
+import com.gos.aerial_assist.commands.GosCommandBase;
 import com.gos.aerial_assist.commands.ManualPositionPIDTuner;
 import com.gos.aerial_assist.commands.MoveToPositionLSPB;
 import com.gos.aerial_assist.commands.TuneManipulatorPID;
@@ -57,7 +57,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
  * - High goal autonomous (when we get one)
  * - High goal w/ hot goal (when we get one)
  */
-public class FullTester extends GosCommand {
+public class FullTester extends GosCommandBase {
 
     private final Chassis m_chassis;
     private final Manipulator m_manipulator;

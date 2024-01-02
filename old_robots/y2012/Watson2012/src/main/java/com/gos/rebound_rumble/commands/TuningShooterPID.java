@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"})
-public class TuningShooterPID extends GosCommand {
+public class TuningShooterPID extends GosCommandBase {
 
     private boolean m_run;
 

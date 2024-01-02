@@ -5,7 +5,7 @@ import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
 
-public class PS3ShootUsingJoystick extends GosCommand {
+public class PS3ShootUsingJoystick extends GosCommandBase {
 
     private final Shooter m_shooter;
     private final OI m_oi;

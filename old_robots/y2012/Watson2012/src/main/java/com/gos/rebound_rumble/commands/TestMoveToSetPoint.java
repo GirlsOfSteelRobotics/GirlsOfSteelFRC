@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TestMoveToSetPoint extends GosCommand {
+public class TestMoveToSetPoint extends GosCommandBase {
 
     private final Chassis m_chassis;
     private double m_distanceToMove;

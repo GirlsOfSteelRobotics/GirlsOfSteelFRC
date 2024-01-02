@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
 /**
  * @author the programmers
  */
-public class KickerUsingLimitSwitch extends GosCommand {
+public class KickerUsingLimitSwitch extends GosCommandBase {
     private static final boolean TESTING_LIMIT = false;
     private static final boolean TESTING_MOTOR = false;
 

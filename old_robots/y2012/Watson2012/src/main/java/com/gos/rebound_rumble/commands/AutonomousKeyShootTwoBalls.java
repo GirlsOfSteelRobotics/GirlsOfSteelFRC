@@ -5,7 +5,7 @@ import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class AutonomousKeyShootTwoBalls extends GosCommand {
+public class AutonomousKeyShootTwoBalls extends GosCommandBase {
 
     private static final double TIME_TO_SHOOT_TWO_BALLS = 7.0;
 
