@@ -10,7 +10,7 @@ import com.gos.lib.properties.HeavyIntegerProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,7 +36,7 @@ public class ClawSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
     public ClawSubsystem() {
-        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_clawMotor.restoreFactoryDefaults();
 
         m_clawMotor.setInverted(true);

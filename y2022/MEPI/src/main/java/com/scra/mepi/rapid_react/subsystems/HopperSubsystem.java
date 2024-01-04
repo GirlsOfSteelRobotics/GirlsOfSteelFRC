@@ -1,7 +1,7 @@
 package com.scra.mepi.rapid_react.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

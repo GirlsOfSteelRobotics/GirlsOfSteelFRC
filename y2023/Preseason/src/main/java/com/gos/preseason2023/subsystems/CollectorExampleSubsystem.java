@@ -2,7 +2,7 @@ package com.gos.preseason2023.subsystems;
 
 
 import com.gos.preseason2023.Constants;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,9 +15,9 @@ public class CollectorExampleSubsystem extends SubsystemBase {
 
     public CollectorExampleSubsystem() {
         // set to CAN IDs (constants), motor type is brushless
-        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkLowLevel.MotorType.kBrushless);
+        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkLowLevel.MotorType.kBrushless);
+        m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkLowLevel.MotorType.kBrushless);
 
         // m_pivotLeft.setInverted(true);      fyi we're not using because it's funky with following
 

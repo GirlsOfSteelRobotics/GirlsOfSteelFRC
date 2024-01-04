@@ -11,10 +11,10 @@ import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.sim.LimelightSim;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
-import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
@@ -61,8 +61,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
 
-    private final SparkMaxPIDController m_leftPidController;
-    private final SparkMaxPIDController m_rightPidController;
+    private final SparkPIDController m_leftPidController;
+    private final SparkPIDController m_rightPidController;
 
     private final PidProperty m_leftProperties;
     private final PidProperty m_rightProperties;
@@ -110,10 +110,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public ChassisSubsystem() {
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
 
         m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft.restoreFactoryDefaults();
@@ -225,7 +225,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyroAngleRateEntry = odometryTable.getEntry("Angle (dps)");
     }
 
-    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupPidValues(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
             .addP(0.00003) //0.0012776
             .addI(0)

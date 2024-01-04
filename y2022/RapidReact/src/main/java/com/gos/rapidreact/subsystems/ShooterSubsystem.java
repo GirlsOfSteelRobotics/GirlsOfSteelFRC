@@ -7,10 +7,10 @@ import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.utils.ShooterLookupTable;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -40,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_leader;
     private final RelativeEncoder m_shooterEncoder;
     private final PidProperty m_shooterPid;
-    private final SparkMaxPIDController m_shooterPidController;
+    private final SparkPIDController m_shooterPidController;
     private final ShooterLookupTable m_shooterTable;
     private double m_shooterGoalRpm = Double.MAX_VALUE;
     private double m_backspinGoalRpm = Double.MAX_VALUE;
@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_roller;
     private final RelativeEncoder m_rollerEncoder;
     private final PidProperty m_rollerPid;
-    private final SparkMaxPIDController m_rollerPidController;
+    private final SparkPIDController m_rollerPidController;
 
     private ISimWrapper m_shooterSimulator;
     private ISimWrapper m_backspinSimulator;
@@ -63,11 +63,11 @@ public class ShooterSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_shooterAtSpeedEntry;
 
     public ShooterSubsystem() {
-        m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
         m_leader.restoreFactoryDefaults();
         m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_roller = new SimableCANSparkMax(Constants.SHOOTER_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_roller = new SimableCANSparkMax(Constants.SHOOTER_ROLLER, CANSparkLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_roller.setInverted(true);

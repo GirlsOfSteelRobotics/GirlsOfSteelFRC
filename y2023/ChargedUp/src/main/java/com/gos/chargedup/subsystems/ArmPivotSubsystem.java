@@ -14,11 +14,11 @@ import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -38,7 +38,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
+import static com.revrobotics.SparkAbsoluteEncoder.Type.kDutyCycle;
 
 
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
@@ -103,14 +103,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
-    private final SparkMaxPIDController m_sparkPidController;
+    private final SparkPIDController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
 
     private final ProfiledPIDController m_wpiPidController;
     private final PidProperty m_wpiPidProperties;
     private final ArmFeedForwardProperty m_wpiFeedForward;
 
-    private final SparkMaxAbsoluteEncoder m_absoluteEncoder;
+    private final SparkAbsoluteEncoder m_absoluteEncoder;
 
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
@@ -128,7 +128,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public ArmPivotSubsystem() {
-        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotMotor.setInverted(true);
@@ -245,7 +245,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return m_absoluteEncoder.getVelocity();
     }
 
-    private PidProperty setupSparkPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupSparkPidValues(SparkPIDController pidController) {
         ///
         // Full retract:
         // kp=0.000400

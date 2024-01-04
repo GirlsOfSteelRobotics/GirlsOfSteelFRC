@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
 

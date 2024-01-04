@@ -3,7 +3,7 @@ package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -39,9 +39,9 @@ public class HangerSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightHangerHeightEntry;
 
     public HangerSubsystem() {
-        m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, CANSparkLowLevel.MotorType.kBrushless);
         m_leftHanger.restoreFactoryDefaults();
-        m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, CANSparkLowLevel.MotorType.kBrushless);
         m_rightHanger.restoreFactoryDefaults();
         m_leftEncoder = m_leftHanger.getEncoder();
         m_rightEncoder = m_rightHanger.getEncoder();

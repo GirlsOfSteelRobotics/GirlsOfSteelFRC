@@ -10,7 +10,7 @@
 
 package com.gos.outreach2021.subsystems;
 
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

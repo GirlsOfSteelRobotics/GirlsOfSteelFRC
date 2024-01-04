@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import com.gos.codelabs.basic_simulator.Constants;
 import edu.wpi.first.math.VecBuilder;
@@ -80,12 +80,12 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leftDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkLowLevel.MotorType.kBrushless);
+        m_leftDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkLowLevel.MotorType.kBrushless);
         m_leftDriveB.follow(m_leftDriveA);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_rightDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkLowLevel.MotorType.kBrushless);
+        m_rightDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkLowLevel.MotorType.kBrushless);
         m_rightDriveB.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 

@@ -9,11 +9,11 @@ import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -57,9 +57,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Field2d m_field = new Field2d();
 
     // PID
-    private final SparkMaxPIDController m_leftController = m_leftLeader.getPIDController();
+    private final SparkPIDController m_leftController = m_leftLeader.getPIDController();
     private final PidProperty m_leftProperties;
-    private final SparkMaxPIDController m_rightController = m_rightLeader.getPIDController();
+    private final SparkPIDController m_rightController = m_rightLeader.getPIDController();
     private final PidProperty m_rightProperties;
 
     // Simulation
@@ -117,7 +117,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
     }
 
-    private PidProperty setupVelocityPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupVelocityPidValues(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("ChassisVelocity", false, pidController, 0)
             .addP(1)
             .addI(0)

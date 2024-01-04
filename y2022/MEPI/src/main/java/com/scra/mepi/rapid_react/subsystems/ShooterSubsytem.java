@@ -8,10 +8,10 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -39,7 +39,7 @@ public class ShooterSubsytem extends SubsystemBase {
 
     private final ShooterLookupTable m_shooterLookupTable;
     private final RelativeEncoder m_encoder;
-    private final SparkMaxPIDController m_pidController;
+    private final SparkPIDController m_pidController;
     private final PidProperty m_pidProperties;
     private final GosDoubleProperty m_tunableAllowableError = new GosDoubleProperty(false, "Shooter(AllowableError))", 50);
 

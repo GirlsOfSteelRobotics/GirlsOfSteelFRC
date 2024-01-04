@@ -9,8 +9,8 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
@@ -35,7 +35,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.numbers.N2;
 
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +57,8 @@ public class Chassis extends SubsystemBase {
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
 
-    private final SparkMaxPIDController m_leftPidController;
-    private final SparkMaxPIDController m_rightPidController;
+    private final SparkPIDController m_leftPidController;
+    private final SparkPIDController m_rightPidController;
 
     private final AHRS m_gyro;
 
