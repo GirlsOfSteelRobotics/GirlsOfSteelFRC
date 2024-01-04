@@ -12,10 +12,10 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.photonvision.EstimatedRobotPose;
-import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
@@ -84,8 +84,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
-    private final SparkMaxPIDController m_leftPIDcontroller;
-    private final SparkMaxPIDController m_rightPIDcontroller;
+    private final SparkPIDController m_leftPIDcontroller;
+    private final SparkPIDController m_rightPIDcontroller;
 
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
@@ -104,10 +104,10 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public TankDriveChassisSubsystem() {
 
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
 
         m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft.restoreFactoryDefaults();
@@ -200,7 +200,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         }
     }
 
-    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupPidValues(SparkPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Chassis", true, pidController, 0)
                 .addP(0.6)

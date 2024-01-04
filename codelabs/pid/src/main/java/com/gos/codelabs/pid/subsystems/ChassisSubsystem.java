@@ -4,9 +4,9 @@ import com.gos.codelabs.pid.Constants;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -36,8 +36,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_rightDriveA;
     private final RelativeEncoder m_leftEncoder;
     private final RelativeEncoder m_rightEncoder;
-    private final SparkMaxPIDController m_leftPid;
-    private final SparkMaxPIDController m_rightPid;
+    private final SparkPIDController m_leftPid;
+    private final SparkPIDController m_rightPid;
     private final PidProperty m_leftVelocityPidProperty;
     private final PidProperty m_rightVelocityPidProperty;
     private final PidProperty m_leftSmartMotionPidProperty;
@@ -56,12 +56,12 @@ public class ChassisSubsystem extends SubsystemBase {
     @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
-        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkLowLevel.MotorType.kBrushless);
+        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkLowLevel.MotorType.kBrushless);
         leftDriveB.follow(m_leftDriveA);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
-        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkLowLevel.MotorType.kBrushless);
+        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkLowLevel.MotorType.kBrushless);
         rightDriveB.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 
@@ -96,21 +96,21 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    private PidProperty setupVelocityPidConstants(SparkMaxPIDController pidController) {
+    private PidProperty setupVelocityPidConstants(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis.vel", false, pidController, PID_SLOT_VELOCITY)
                 .addP(0)
                 .addFF(0)
                 .build();
     }
 
-    private PidProperty setupPositionPidConstants(SparkMaxPIDController pidController) {
+    private PidProperty setupPositionPidConstants(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis.pos", false, pidController, PID_SLOT_POSITION)
                 .addP(0)
                 .addD(0)
                 .build();
     }
 
-    private PidProperty setupSmartMotionPidConstants(SparkMaxPIDController pidController) {
+    private PidProperty setupSmartMotionPidConstants(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis.sm", false, pidController, PID_SLOT_SMART_MOTION)
                 .addP(0)
                 .addFF(0)
@@ -225,7 +225,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double arbLeft = staticFrictionLeft + accelerationLeft;
         double arbRight = staticFrictionRight + accelerationRight;
 
-        SparkMaxPIDController.ArbFFUnits arbUnit = SparkMaxPIDController.ArbFFUnits.kVoltage;
+        SparkPIDController.ArbFFUnits arbUnit = SparkPIDController.ArbFFUnits.kVoltage;
 
         m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
         m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);

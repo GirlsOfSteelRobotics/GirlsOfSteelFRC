@@ -7,11 +7,11 @@ import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -35,10 +35,10 @@ public class RevSwerveModule {
     private final RelativeEncoder m_turningRelativeEncoder;
     private final AbsoluteEncoder m_turningAbsoluteEncoder;
 
-    private final SparkMaxPIDController m_drivingPIDController;
+    private final SparkPIDController m_drivingPIDController;
     private final PidProperty m_drivingPIDProperty;
 
-    private final SparkMaxPIDController m_turningPIDController;
+    private final SparkPIDController m_turningPIDController;
     private final PidProperty m_turningPIDProperty;
 
     private final SparkMaxAlerts m_wheelAlerts;
@@ -64,8 +64,8 @@ public class RevSwerveModule {
     public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset) {
         m_moduleName = moduleName;
 
-        m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+        m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkLowLevel.MotorType.kBrushless);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
@@ -75,7 +75,7 @@ public class RevSwerveModule {
         // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
         m_turningRelativeEncoder = m_turningSparkMax.getEncoder();
-        m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
+        m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         m_drivingPIDController = m_drivingSparkMax.getPIDController();
         m_turningPIDController = m_turningSparkMax.getPIDController();
         m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);

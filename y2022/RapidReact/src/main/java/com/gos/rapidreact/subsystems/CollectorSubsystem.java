@@ -5,10 +5,10 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -59,10 +59,10 @@ public class CollectorSubsystem extends SubsystemBase {
     private final RelativeEncoder m_pivotExternalEncoderRight;
 
     private final PidProperty m_pivotPIDLeft;
-    private final SparkMaxPIDController m_pidControllerLeft;
+    private final SparkPIDController m_pidControllerLeft;
 
     private final PidProperty m_pivotPIDRight;
-    private final SparkMaxPIDController m_pidControllerRight;
+    private final SparkPIDController m_pidControllerRight;
 
     private SingleJointedArmSimWrapper m_leftSimulator;
     private SingleJointedArmSimWrapper m_rightSimulator;
@@ -85,16 +85,16 @@ public class CollectorSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightGravityOffsetVoltage;
 
     public CollectorSubsystem() {
-        m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotLeft.restoreFactoryDefaults();
         m_pivotLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotLeft.setInverted(true);
 
-        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotRight.restoreFactoryDefaults();
         m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
@@ -154,7 +154,7 @@ public class CollectorSubsystem extends SubsystemBase {
         }
     }
 
-    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupPidValues(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("Collector", false, pidController, 0)
             .addP(0) //0.20201
             .addI(0)

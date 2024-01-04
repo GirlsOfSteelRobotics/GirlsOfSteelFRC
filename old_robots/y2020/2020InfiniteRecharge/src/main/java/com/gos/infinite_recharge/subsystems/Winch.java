@@ -3,9 +3,9 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxRelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.SparkRelativeEncoder;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -25,7 +25,7 @@ public class Winch extends SubsystemBase {
         m_motorA.setIdleMode(IdleMode.kBrake);
         m_motorA.setInverted(false);
         if (isBrushed) {
-            m_encoder = m_motorA.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 8192);
+            m_encoder = m_motorA.getEncoder(SparkRelativeEncoder.Type.kQuadrature, 8192);
         } else {
             m_encoder = m_motorA.getEncoder();
         }

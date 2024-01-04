@@ -5,11 +5,11 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -42,14 +42,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final RelativeEncoder m_liftEncoder;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
-    private final SparkMaxPIDController m_pidController;
+    private final SparkPIDController m_pidController;
     private final PidProperty m_pidProperty;
     private double m_desiredHeight;
 
     private ISimWrapper m_elevatorSim;
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
         m_pidController = m_liftMotor.getPIDController();
 

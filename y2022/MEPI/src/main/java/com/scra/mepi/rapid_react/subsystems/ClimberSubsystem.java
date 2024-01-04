@@ -5,7 +5,7 @@
 package com.scra.mepi.rapid_react.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.math.controller.ProfiledPIDController;
