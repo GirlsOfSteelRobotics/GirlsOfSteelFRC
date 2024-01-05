@@ -9,11 +9,6 @@ gos_java_robot(
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-revlib//libraries/java/revlib-java",
-        "@maven//:org_snobotv2_snobot_sim_java_base",
-        "@maven//:org_snobotv2_snobot_sim_java_navx",
         "@maven//:org_snobotv2_snobot_sim_java_revlib",
-        "@maven//:org_snobotv2_snobot_sim_java_phoenix5",
-        "@maven//:org_snobotv2_snobot_sim_java_phoenix6"
-    ,
     ],
 )
