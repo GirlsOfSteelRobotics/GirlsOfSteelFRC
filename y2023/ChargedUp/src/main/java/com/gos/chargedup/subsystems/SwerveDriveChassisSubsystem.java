@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import org.snobotv2.module_wrappers.phoenix5.Pigeon2Wrapper;
+import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
 public class SwerveDriveChassisSubsystem extends BaseChassis {
 

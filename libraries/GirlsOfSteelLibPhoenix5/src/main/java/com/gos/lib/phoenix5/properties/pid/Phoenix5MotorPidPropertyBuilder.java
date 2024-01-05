@@ -1,14 +1,14 @@
-package com.gos.lib.ctre.properties.pid;
+package com.gos.lib.phoenix5.properties.pid;
 
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.gos.lib.properties.pid.IPidPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
 
-public final class CtrePidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
+public final class Phoenix5MotorPidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
     private final BaseMotorController m_motor;
     private final int m_slot;
 
-    public CtrePidPropertyBuilder(String baseName, boolean isConstant, BaseMotorController motor, int slot) {
+    public Phoenix5MotorPidPropertyBuilder(String baseName, boolean isConstant, BaseMotorController motor, int slot) {
         super(baseName, isConstant);
         m_motor = motor;
         m_slot = slot;

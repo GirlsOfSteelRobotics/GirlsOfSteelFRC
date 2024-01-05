@@ -1,12 +1,13 @@
 package com.gos.chargedup.subsystems;
 
-import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.GetAllianceUtil;
-import com.gos.lib.ctre.alerts.PigeonAlerts;
+import com.gos.lib.phoenix6.alerts.PigeonAlerts;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
@@ -36,7 +37,7 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     protected static final double PITCH_UPPER_LIMIT = 3.0;
     protected final HeavyDoubleProperty m_turnPidAllowableError;
 
-    protected final WPI_Pigeon2 m_gyro;
+    protected final Pigeon2 m_gyro;
 
     protected final GosField m_field;
 
@@ -102,8 +103,8 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         m_networkTableEntries.addBoolean("Field/flip", this::isRedAllianceFlipped);
         m_networkTableEntries.addDouble("Gyro Angle (deg)", this::getYaw);
 
-        m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
-        m_gyro.configFactoryDefault();
+        m_gyro = new Pigeon2(Constants.PIGEON_PORT);
+        m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         if (Constants.IS_ROBOT_BLOSSOM) {
             m_networkTableEntries.addDouble("Gyro Rate", () -> -m_gyro.getRate());
         } else {
@@ -158,12 +159,12 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     @Override
     public double getPitch() {
         // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
-        return m_gyro.getRoll();
+        return m_gyro.getRoll().getValue();
     }
 
     @Override
     public double getYaw() {
-        return m_gyro.getYaw();
+        return m_gyro.getYaw().getValue();
     }
 
     @Override

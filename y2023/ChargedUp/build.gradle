@@ -73,7 +73,7 @@ dependencies {
 
     implementation project(":libraries:GirlsOfSteelLib")
     implementation project(":libraries:GirlsOfSteelLibRev")
-    implementation project(":libraries:GirlsOfSteelLibCtre")
+    implementation project(":libraries:GirlsOfSteelLibPhoenix6")
 }
 
 test {

@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
-import org.snobotv2.module_wrappers.phoenix5.Pigeon2Wrapper;
+import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
@@ -304,7 +304,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getYawAngle() {
-        return m_gyro.getYaw();
+        return m_gyro.getYaw().getValue();
     }
 
     public double getOdometryAngle() {

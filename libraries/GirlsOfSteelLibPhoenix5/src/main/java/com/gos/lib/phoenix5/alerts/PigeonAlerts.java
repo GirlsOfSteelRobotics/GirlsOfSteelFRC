@@ -1,9 +1,10 @@
-package com.gos.lib.ctre.alerts;
+package com.gos.lib.phoenix5.alerts;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.hardware.Pigeon2_Faults;
+import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.Pigeon2_Faults;
 import org.littletonrobotics.frc2023.util.Alert;
 
+@SuppressWarnings("removal")
 public class PigeonAlerts {
     private static final String ALERT_NAME = "pigeon";
     private static final String STICKY_ALERT_NAME = "pigeon (sticky)";
