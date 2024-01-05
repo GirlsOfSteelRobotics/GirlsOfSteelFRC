@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.photonvision.EstimatedRobotPose;
-import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.Pigeon2Wrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
@@ -195,7 +195,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
                 new RevMotorControllerSimWrapper(m_leaderRight),
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
-                new CtrePigeonImuWrapper(m_gyro));
+                new Pigeon2Wrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
     }

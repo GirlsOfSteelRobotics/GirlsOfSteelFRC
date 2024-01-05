@@ -1,7 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
 
-import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
-import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.Pigeon2Wrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
@@ -77,7 +77,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //odometry
     private final DifferentialDriveOdometry m_odometry;
-    private final WPI_PigeonIMU m_gyro;
+    private final Pigeon2 m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
     private final RobotPositionPublisher m_coordinateGuiPublisher;
@@ -168,7 +168,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
-        m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
+        m_gyro = new Pigeon2(Constants.PIGEON_PORT);
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
         m_coordinateGuiPublisher = new RobotPositionPublisher();
@@ -197,7 +197,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 new RevMotorControllerSimWrapper(m_leaderRight),
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
-                new CtrePigeonImuWrapper(m_gyro));
+                new Pigeon2Wrapper(m_gyro));
             m_simulator.setRightInverted(false);
 
             m_limelightSim = new LimelightSim();
