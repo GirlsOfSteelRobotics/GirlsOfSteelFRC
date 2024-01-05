@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.Pigeon2Wrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
 
@@ -40,7 +40,7 @@ public class ChassisSubsystem extends SubsystemBase {
             MAX_TRANSLATION_SPEED,
             MAX_ROTATION_SPEED
         );
-        m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new CtrePigeonImuWrapper(m_gyro));
+        m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);

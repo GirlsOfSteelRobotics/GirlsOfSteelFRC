@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import org.snobotv2.module_wrappers.phoenix5.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix5.Pigeon2Wrapper;
 
 public class SwerveDriveChassisSubsystem extends BaseChassis {
 
@@ -40,7 +40,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
             MAX_TRANSLATION_SPEED,
             MAX_ROTATION_SPEED
         );
-        m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new CtrePigeonImuWrapper(m_gyro));
+        m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         AutoBuilder.configureHolonomic(
             this::getPose,

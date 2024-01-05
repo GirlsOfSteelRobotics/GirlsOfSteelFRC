@@ -6,6 +6,11 @@ gos_java_library(
     visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
     deps = [
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
-        "@maven//:org_snobotv2_snobot_sim_java",
+        "@maven//:org_snobotv2_snobot_sim_java_base",
+        "@maven//:org_snobotv2_snobot_sim_java_navx",
+        "@maven//:org_snobotv2_snobot_sim_java_revlib",
+        "@maven//:org_snobotv2_snobot_sim_java_phoenix5",
+        "@maven//:org_snobotv2_snobot_sim_java_phoenix6"
+    ,
     ],
 )
