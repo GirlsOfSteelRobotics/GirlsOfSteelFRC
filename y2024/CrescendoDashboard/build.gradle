@@ -1,19 +1,17 @@
+
+
 plugins {
-    id 'java'
+    id "java"
+    id 'application'
 }
 
-group = 'org.example'
-version = 'unspecified'
-
-repositories {
-    mavenCentral()
+ext {
+    package_name = "com.gos.crescendo.shuffleboard"
+    publishing_version = "2024.0.0"
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+application {
+    mainClassName = 'com.gos.crescendo.shuffleboard.super_structure.SuperStructureStandaloneMain'
 }
 
-test {
-    useJUnitPlatform()
-}
+apply from: "${rootDir}/build_scripts/gradle/custom_dashboard_helper.gradle"
