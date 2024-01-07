@@ -46,6 +46,7 @@ def run_our_additional_replacements(auto_commit):
 
     # Put our smarter-than-wpilib replacements here
     # fmt: off
+    replacements.append(("GosCommand", "GosCommandBase"))
     # fmt: on
 
     # Run these on all the files
