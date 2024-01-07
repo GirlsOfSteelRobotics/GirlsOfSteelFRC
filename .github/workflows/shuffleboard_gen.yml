@@ -28,7 +28,7 @@ jobs:
         run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2021/OutreachBotDashboard/dashboard.yml
 
       - name: Re-gen 2022
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=y2022/RapidReactDashboard/dashboard.yml
+        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2022/RapidReactDashboard/dashboard.yml
 
       - name: Re-gen 2023
         run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=y2023/ChargedUpDashboard/dashboard.yml
