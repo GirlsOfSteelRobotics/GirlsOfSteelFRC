@@ -58,3 +58,5 @@ include 'y2023:ChargedUp'
 include 'y2023:ChargedUpDashboard'
 include 'y2023:SwerveChassis'
 
+include 'y2024:Crescendo'
+
