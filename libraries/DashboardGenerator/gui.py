@@ -15,7 +15,7 @@ from libraries.DashboardGenerator.lib.ui.subpanels import load_ui_file, TopLevel
 
 
 class Window(QMainWindow):
-    DEFAULT_FILE_DIR = os.path.join(get_this_directory(), "..", "..", "y2023", "ChargedUpDashboard")
+    DEFAULT_FILE_DIR = os.path.join(get_this_directory(), "..", "..", "y2024", "CrescendoDashboard")
     DEFAULT_FILE = os.path.join(DEFAULT_FILE_DIR, "dashboard.yml")
 
     def __init__(self, parent=None):

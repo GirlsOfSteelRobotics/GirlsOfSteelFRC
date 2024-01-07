@@ -1,0 +1,17 @@
+
+
+plugins {
+    id "java"
+    id 'application'
+}
+
+ext {
+    package_name = "com.gos.crescendo.shuffleboard"
+    publishing_version = "2024.0.0"
+}
+
+application {
+    mainClassName = 'com.gos.crescendo.shuffleboard.super_structure.SuperStructureStandaloneMain'
+}
+
+apply from: "${rootDir}/build_scripts/gradle/custom_dashboard_helper.gradle"
