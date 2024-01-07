@@ -1,0 +1,19 @@
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary", "gos_py_library")
+
+gos_py_library(
+    name = "cargo",
+    srcs = glob(
+        ["*.py"],
+        exclude = ["amalgamate_pipeline.py"],
+    ),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//old_robots/y2022/CargoDetection/python/lib/pipelines",
+        "//old_robots/y2022/CargoDetection/python/lib/ui:subpanels",
+    ],
+)
+
+gos_py_binary(
+    name = "amalgamate_pipeline",
+    srcs = ["amalgamate_pipeline.py"],
+)

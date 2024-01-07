@@ -1,0 +1,14 @@
+alias(
+    name = "MEPI",
+    actual = "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react",
+)
+
+alias(
+    name = "sim",
+    actual = "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react:rapid_react.sim",
+)
+
+alias(
+    name = "deploy",
+    actual = "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react:rapid_react.deploy",
+)

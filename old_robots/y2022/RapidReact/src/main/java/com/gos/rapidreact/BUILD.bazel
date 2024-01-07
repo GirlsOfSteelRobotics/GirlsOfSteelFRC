@@ -1,0 +1,34 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//old_robots/y2022/RapidReact:__subpackages__"],
+    deps = [
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+    ],
+)
+
+gos_java_robot(
+    name = "rapidreact",
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
+    main_class = "com.gos.rapidreact.Main",
+    visibility = ["//old_robots/y2022/RapidReact:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/auto_modes",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/commands",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/commands/debug",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/commands/tuning",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems:LEDManagerSubsystem",
+        "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact/trajectory",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpiutil",
+    ],
+)
