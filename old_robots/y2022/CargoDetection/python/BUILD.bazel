@@ -10,7 +10,7 @@ gos_py_binary(
     skip_include_test = True,  #pyqt DLL causes problems
     deps = [
         requirement("PyQt5"),
-        "//y2022/CargoDetection/python/lib/ui:subpanels",
-        "//y2022/CargoDetection/python/rapid_react/cargo",
+        "//old_robots/y2022/CargoDetection/python/lib/ui:subpanels",
+        "//old_robots/y2022/CargoDetection/python/rapid_react/cargo",
     ],
 )

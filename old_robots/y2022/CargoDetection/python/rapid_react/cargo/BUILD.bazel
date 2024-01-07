@@ -8,8 +8,8 @@ gos_py_library(
     ),
     visibility = ["//visibility:public"],
     deps = [
-        "//y2022/CargoDetection/python/lib/pipelines",
-        "//y2022/CargoDetection/python/lib/ui:subpanels",
+        "//old_robots/y2022/CargoDetection/python/lib/pipelines",
+        "//old_robots/y2022/CargoDetection/python/lib/ui:subpanels",
     ],
 )
 

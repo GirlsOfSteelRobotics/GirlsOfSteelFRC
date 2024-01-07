@@ -8,7 +8,7 @@ gos_py_library(
     skip_include_test = True,  #pyqt DLL causes problems
     visibility = ["//visibility:public"],
     deps = [
-        "//y2022/CargoDetection/python/rapid_react/cargo",
+        "//old_robots/y2022/CargoDetection/python/rapid_react/cargo",
         requirement("PyQt5"),
     ],
 )

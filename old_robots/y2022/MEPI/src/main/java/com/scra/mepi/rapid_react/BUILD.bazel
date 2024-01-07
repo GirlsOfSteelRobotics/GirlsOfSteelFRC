@@ -3,13 +3,13 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot
 gos_java_library(
     name = "Constants",
     srcs = ["Constants.java"],
-    visibility = ["//y2022/MEPI:__subpackages__"],
+    visibility = ["//old_robots/y2022/MEPI:__subpackages__"],
 )
 
 gos_java_library(
     name = "ShooterLookupTable",
     srcs = ["ShooterLookupTable.java"],
-    visibility = ["//y2022/MEPI:__subpackages__"],
+    visibility = ["//old_robots/y2022/MEPI:__subpackages__"],
 )
 
 gos_java_library(
@@ -18,11 +18,11 @@ gos_java_library(
         ["*.java"],
         exclude = ["Constants.java"],
     ),
-    visibility = ["//y2022/MEPI:__subpackages__"],
+    visibility = ["//old_robots/y2022/MEPI:__subpackages__"],
     deps = [
-        "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/autos",
-        "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/commands",
-        "//y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/subsystems",
+        "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/autos",
+        "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/commands",
+        "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/cameraserver",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
@@ -32,7 +32,7 @@ gos_java_library(
 gos_java_robot(
     name = "rapid_react",
     main_class = "com.scra.mepi.rapid_react.Main",
-    visibility = ["//y2022/MEPI:__subpackages__"],
+    visibility = ["//old_robots/y2022/MEPI:__subpackages__"],
     runtime_deps = [
         ":Lib",
     ],

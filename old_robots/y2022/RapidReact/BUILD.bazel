@@ -1,4 +1,4 @@
 alias(
     name = "RapidReact",
-    actual = "//y2022/RapidReact/src/main/java/com/gos/rapidreact",
+    actual = "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact",
 )
