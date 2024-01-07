@@ -28,8 +28,9 @@ def add_config(config_name, config_value):
 
 
 def install_hooks():
-    with open(".git/hooks/pre-commit", 'w') as f:
-        f.write("""#!/bin/sh
+    with open(".git/hooks/pre-commit", "w") as f:
+        f.write(
+            """#!/bin/sh
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [ "$branch" = "main" ]; then
@@ -49,8 +50,10 @@ if [ "$unstaged_pathplanner_files" ]; then
   echo $unstaged_pathplanner_files
   exit 1
 fi
-""")
+"""
+        )
     print("Added hooks")
+
 
 def main():
     if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
@@ -66,7 +69,9 @@ def main():
     aliases["dno"] = "diff --name-only"
     aliases["dnol"] = "diff --name-only HEAD~1"
     aliases["diffl"] = "diff HEAD~1"
-    aliases["goscleanup"] = "!python " + os.path.join(script_dir, "cleanup_gone_branches.py").replace("\\", "/")
+    aliases["goscleanup"] = "!python " + os.path.join(
+        script_dir, "cleanup_gone_branches.py"
+    ).replace("\\", "/")
 
     if not config_exists("user.name"):
         username = input("Git does not know your name. Please enter your full name: ")
