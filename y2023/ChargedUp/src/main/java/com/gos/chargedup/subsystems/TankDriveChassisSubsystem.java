@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
@@ -180,6 +181,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
             this::getChassisSpeed,
             this::setChassisSpeed,
             new ReplanningConfig(),
+            GetAllianceUtil::isRedAlliance,
             this
         );
 
@@ -359,7 +361,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     @Override
     public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
-        Command followPathCommand = AutoBuilder.followPathWithEvents(path);
+        Command followPathCommand = AutoBuilder.followPath(path);
         if (resetPose) {
             return Commands.runOnce(() -> resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand);
         }

@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
@@ -54,6 +55,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
                 WHEEL_BASE,
                 new ReplanningConfig(),
                 0.02),
+            GetAllianceUtil::isRedAlliance,
             this
         );
     }
@@ -123,7 +125,7 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
 
     @Override
     public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
-        Command followPathCommand = AutoBuilder.followPathWithEvents(path);
+        Command followPathCommand = AutoBuilder.followPath(path);
         if (resetPose) {
             Pose2d pose = path.getPreviewStartingHolonomicPose();
             return Commands.runOnce(() -> resetOdometry(pose)).andThen(followPathCommand);

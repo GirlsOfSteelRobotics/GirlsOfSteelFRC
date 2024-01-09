@@ -22,7 +22,7 @@ def download_latest_vendordeps(ignore_cache):
     vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc{year}-beta-latest.json"
     vendor_dep_urls["Phoenix6.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc{year}-beta-latest.json"
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
-    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json"
+    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
     vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/PhotonLib-json/1.0/PhotonLib-json-1.0.json"
     vendor_dep_urls["PathplannerLib.json"] = "https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json"
     vendor_dep_urls["WPILibNewCommands.json"] = f"https://raw.githubusercontent.com/wpilibsuite/allwpilib/{PINNED_VSCODE_WPILIB_COMMITISH}/wpilibNewCommands/WPILibNewCommands.json"
