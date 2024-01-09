@@ -157,7 +157,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public Command createPathFollowingCommand(String pathName) {
-        return AutoBuilder.followPathWithEvents(PathPlannerPath.fromPathFile(pathName));
+        return AutoBuilder.followPath(PathPlannerPath.fromPathFile(pathName));
     }
 
     @Override
