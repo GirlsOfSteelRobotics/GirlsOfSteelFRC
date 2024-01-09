@@ -3,7 +3,6 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
-import com.gos.chargedup.Robot;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -18,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.simulation.SimVisionSystem;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -57,8 +55,6 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
 
     private final GosField.CameraObject m_field;
 
-    private SimVisionSystem m_sim;
-
     public PhotonVisionSubsystem(GosField field) {
         m_camera = new PhotonCamera(CAMERA_NAME);
         this.m_field = new GosField.CameraObject(field, CAMERA_NAME);
@@ -68,18 +64,6 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
             m_photonPoseEstimator = new PhotonPoseEstimator(m_aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_camera, ROBOT_TO_CAMERA);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-
-        if (Robot.isSimulation()) {
-            m_sim = new SimVisionSystem(
-                CAMERA_NAME,
-                45,
-                ROBOT_TO_CAMERA.inverse(),
-                27,
-                640,
-                320,
-                .5
-            );
         }
     }
 
@@ -144,10 +128,5 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
         Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(goodCameraResults);
         m_field.setEstimate(estimate);
         return estimate;
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        m_sim.processFrame(m_photonPoseEstimator.getReferencePose());
     }
 }
