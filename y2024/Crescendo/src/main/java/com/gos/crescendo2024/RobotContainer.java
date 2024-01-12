@@ -6,9 +6,9 @@
 package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.auton.Autos;
+import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -52,7 +52,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_driverController.b().whileTrue(new InstantCommand(() -> System.out.println("ReplaceMe"), m_chassisSubsystem));
+        m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
     }
 
 
