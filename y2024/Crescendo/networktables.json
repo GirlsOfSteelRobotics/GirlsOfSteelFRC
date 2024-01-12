@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kff",
+    "type": "double",
+    "value": 0.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Turning PID.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Turning PID.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SwerveJoystickTranslationDamping",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SwerveJoystickRotationDamping",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]
