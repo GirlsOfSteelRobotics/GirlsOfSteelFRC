@@ -18,7 +18,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
 
-    public ShooterSubsystem(){
+    public ShooterSubsystem() {
         m_shooterMotor = new SimableCANSparkMax(8, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotor.restoreFactoryDefaults();
         m_shooterMotor.setInverted(true);
@@ -40,18 +40,19 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
     }
-    public void shoot(){
+
+    public void tuneShootPercentage() {
         m_shooterMotor.set(SHOOTER_SPEED.getValue());
     }
 
-    public void stopShooter(){
+    public void stopShooter() {
         m_shooterMotor.set(0);
     }
 
     // Command Factories
 
-    public Command createShootCommand(){
-        return this.runEnd(this::shoot, this::stopShooter).withName("Shoot");
+    public Command createTunePercentShootCommand() {
+        return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("Shoot");
     }
 
 }
