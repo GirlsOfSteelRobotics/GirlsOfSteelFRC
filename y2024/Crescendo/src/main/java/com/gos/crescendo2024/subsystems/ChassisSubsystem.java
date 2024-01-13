@@ -13,16 +13,23 @@ import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
+
+import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
@@ -113,6 +120,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
+
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
@@ -130,4 +138,22 @@ public class ChassisSubsystem extends SubsystemBase {
                 .withName("Chassis to Angle" + angleGoal));
     }
 
+    public Command createPathCommand(PathPlannerPath path, boolean resetPose)
+    {
+        Command followPathCommand = AutoBuilder.followPath(path);
+        if(resetPose)
+        {
+            return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand);
+        }
+        return followPathCommand;
+    }
+
+    public Command CreateDriveToPoint (Pose2d start, Pose2d end, boolean reverse)
+    {
+        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        PathPlannerPath path = new PathPlannerPath(
+            bezierPoints,
+            new PathConstraints(m_)
+        )
+    }
 }
