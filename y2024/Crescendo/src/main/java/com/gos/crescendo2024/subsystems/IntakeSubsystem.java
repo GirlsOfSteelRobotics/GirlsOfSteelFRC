@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.crescendo2024.Constants;
 import org.snobotv2.interfaces.IEncoderWrapper;
@@ -17,7 +18,7 @@ public class  IntakeSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_intakeMotor;
     private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(true, "Intake_Out_Speed",-1);
     private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(true, "Intake_In_Speed",1);
-    public static final GosIntProperty INTAKE_CURRENT_LIMIT = new GosIntProperty(true, "IntakeCurrentLimit", 25)
+    public static final GosIntProperty INTAKE_CURRENT_LIMIT = new GosIntProperty(true, "IntakeCurrentLimit", 25);
     private final RelativeEncoder m_intakeEncoder;
     private final HeavyIntegerProperty m_currentLimit;
     public IntakeSubsystem() {
@@ -36,6 +37,24 @@ public class  IntakeSubsystem extends SubsystemBase {
     public void intakeOut(){
         m_intakeMotor.set(INTAKE_OUT_SPEED.getValue());
     }
+
+
+
+    //commands
+    public Command createMoveIntakeInCommand()
+    {
+        return this.run(this::intakeIn).withName("IntakeSubsystemIn");
+    }
+
+    public Command createMoveIntakeOutCommand()
+    {
+        return this.run(this::intakeOut).withName("IntakeSubsystemOut");
+    }
+
+
+
+
+
 
 
 
