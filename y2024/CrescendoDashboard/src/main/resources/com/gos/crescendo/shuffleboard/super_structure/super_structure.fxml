@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.*?>
+
+<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.gos.crescendo.shuffleboard.super_structure.SuperStructureController">
+
+    <Group fx:id="m_group">
+        <Rectangle fx:id="m_rectangle" fill="papayawhip" />
+        <Circle fx:id="m_corcle" fill="papayawhip" />
+        <Rectangle fx:id="m_rectttt" fill="papayawhip" />
+        <Circle fx:id="m_cciirrccllee" fill="papayawhip" />
+    </Group>
+</Pane>

@@ -7,6 +7,38 @@ widgets:
   widget_name: Crescendo Bot Super Structure Widget
   sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
   children_tables:
-    - table: SuperStructure
-      table_name: SUPER_STRUCTURE
-      entries: []
+  - table: SuperStructure
+    table_name: SUPER_STRUCTURE
+    entries:
+    - type: double
+      name: fieldName
+      dasboard_constant: FIELD_NAME
+      sim_incr: '2'
+  shapes:
+  - type: Rectangle
+    name: rectangle
+    x: '50'
+    y: '50'
+    color: ''
+    height: '40'
+    width: '10'
+  - type: Circle
+    name: corcle
+    x: '40'
+    y: '40'
+    color: ''
+    radius: '20'
+  - type: Rectangle
+    name: rectttt
+    x: '10'
+    y: '10'
+    color: ''
+    height: '35.04'
+    width: '20'
+  - type: Circle
+    name: cciirrccllee
+    x: '12'
+    y: '17'
+    color: blue
+    radius: '8'
+manual_widgets: []
