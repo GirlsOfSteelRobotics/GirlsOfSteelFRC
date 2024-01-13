@@ -16,7 +16,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
-    private final AbsoluteEncoder m_pivotAbsEncoder;private final LoggingUtil m_networkTableEntriesPivot;
+    private final AbsoluteEncoder m_pivotAbsEncoder;
+    private final LoggingUtil m_networkTableEntriesPivot;
     private final SparkMaxAlerts m_armPivotMotorErrorAlerts;
 
     public ArmPivotSubsystem() {
