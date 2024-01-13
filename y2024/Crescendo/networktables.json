@@ -54,5 +54,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ShooterSpeed",
+    "type": "double",
+    "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

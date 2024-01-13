@@ -8,6 +8,9 @@ package com.gos.crescendo2024;
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -22,8 +25,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
-
+    private final ShooterSubsystem m_shooterSubsystem;
     private final Autos m_autonomousFactory;
+
 
     private final CommandXboxController m_driverController =
         new CommandXboxController(Constants.DRIVER_JOYSTICK);
@@ -35,10 +39,20 @@ public class RobotContainer {
     public RobotContainer() {
         m_chassisSubsystem = new ChassisSubsystem();
 
+        m_shooterSubsystem = new ShooterSubsystem();
+
         m_autonomousFactory = new Autos();
+
 
         // Configure the trigger bindings
         configureBindings();
+
+        createTestCommands();
+    }
+
+    private void createTestCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
+        shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
     }
 
 
