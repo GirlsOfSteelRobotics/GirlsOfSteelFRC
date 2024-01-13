@@ -12,8 +12,9 @@
         <Rectangle fx:id="m_Chassis" fill="grey" />
         <Circle fx:id="m_pivotMotor" fill="darkred" />
         <Rectangle fx:id="m_ArmRect" fill="lightseagreen" />
-        <Rectangle fx:id="m_shooterRect" fill="dodgerblue" />
+        <Rectangle fx:id="m_shooterRect" fill="transparent" stroke="black" strokeWidth=".1"/>
         <Circle fx:id="m_shooterMotor" fill="plum" />
         <Circle fx:id="m_IntakeMotor" fill="plum" />
+        <Rectangle fx:id="m_pivotAngleGoal" fill="transparent" stroke="black" strokeWidth=".1" />
     </Group>
 </Pane>

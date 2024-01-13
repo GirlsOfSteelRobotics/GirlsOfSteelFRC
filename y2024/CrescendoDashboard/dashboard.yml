@@ -27,6 +27,9 @@ widgets:
     - type: boolean
       name: hasGamePiece
       dasboard_constant: HAS_GAME_PIECE
+    - type: double
+      name: intakeMotorPercentage
+      dasboard_constant: INTAKE_MOTOR_PERCENTAGE
   shapes:
   - type: Rectangle
     name: Chassis
@@ -67,4 +70,11 @@ widgets:
     y: '2.5'
     color: ''
     radius: '0.5'
+  - type: Rectangle
+    name: pivotAngleGoal
+    x: '6'
+    y: '0'
+    color: orange
+    height: null
+    width: null
 manual_widgets: []

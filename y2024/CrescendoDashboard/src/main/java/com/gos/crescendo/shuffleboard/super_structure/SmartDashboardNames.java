@@ -12,6 +12,7 @@ public final class SmartDashboardNames {
     public static final String SHOOTER_MOTOR_PERCENTAGE         = "ShooterMotorPercentage";
     public static final String PIVOT_MOTOR_PERCENTAGE           = "PivotMotorPercentage";
     public static final String HAS_GAME_PIECE                   = "HasGamePiece";
+    public static final String INTAKE_MOTOR_PERCENTAGE          = "IntakeMotorPercentage";
 
 
     private SmartDashboardNames() {

@@ -15,18 +15,20 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
     private final double m_shooterMotorPercentage;
     private final double m_pivotMotorPercentage;
     private final boolean m_hasGamePiece;
+    private final double m_intakeMotorPercentage;
 
 
     public SuperStructureData() {
-        this(0.0, 0.0, 0.0, 0.0, false);
+        this(0.0, 0.0, 0.0, 0.0, false, 0.0);
     }
 
-    public SuperStructureData(double pivotMotorAngle, double goalAngle, double shooterMotorPercentage, double pivotMotorPercentage, boolean hasGamePiece) {
+    public SuperStructureData(double pivotMotorAngle, double goalAngle, double shooterMotorPercentage, double pivotMotorPercentage, boolean hasGamePiece, double intakeMotorPercentage) {
         m_pivotMotorAngle = pivotMotorAngle;
         m_goalAngle = goalAngle;
         m_shooterMotorPercentage = shooterMotorPercentage;
         m_pivotMotorPercentage = pivotMotorPercentage;
         m_hasGamePiece = hasGamePiece;
+        m_intakeMotorPercentage = intakeMotorPercentage;
     }
 
     public SuperStructureData(Map<String, Object> map) {
@@ -35,7 +37,8 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
             Maps.getOrDefault(map, SmartDashboardNames.GOAL_ANGLE, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.SHOOTER_MOTOR_PERCENTAGE, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.PIVOT_MOTOR_PERCENTAGE, 0.0),
-            Maps.getOrDefault(map, SmartDashboardNames.HAS_GAME_PIECE, false));
+            Maps.getOrDefault(map, SmartDashboardNames.HAS_GAME_PIECE, false),
+            Maps.getOrDefault(map, SmartDashboardNames.INTAKE_MOTOR_PERCENTAGE, 0.0));
     }
 
     @Override
@@ -46,6 +49,7 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         output.put(SmartDashboardNames.SHOOTER_MOTOR_PERCENTAGE, m_shooterMotorPercentage);
         output.put(SmartDashboardNames.PIVOT_MOTOR_PERCENTAGE, m_pivotMotorPercentage);
         output.put(SmartDashboardNames.HAS_GAME_PIECE, m_hasGamePiece);
+        output.put(SmartDashboardNames.INTAKE_MOTOR_PERCENTAGE, m_intakeMotorPercentage);
         return output;
     }
 
@@ -69,6 +73,10 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         return m_hasGamePiece;
     }
 
+    public double getIntakeMotorPercentage() {
+        return m_intakeMotorPercentage;
+    }
+
 
     @Override
     public String toString() {
@@ -78,6 +86,7 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
                     .add("shooterMotorPercentage=" + m_shooterMotorPercentage)
                     .add("pivotMotorPercentage=" + m_pivotMotorPercentage)
                     .add("hasGamePiece=" + m_hasGamePiece)
+                    .add("intakeMotorPercentage=" + m_intakeMotorPercentage)
                     .toString();
     }
 }

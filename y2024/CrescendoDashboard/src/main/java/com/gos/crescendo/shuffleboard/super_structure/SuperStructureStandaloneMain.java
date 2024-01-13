@@ -28,6 +28,7 @@ public class SuperStructureStandaloneMain {
     private double m_superStructureShooterMotorPercentage;
     private double m_superStructurePivotMotorPercentage;
     private boolean m_superStructureHasGamePiece;
+    private double m_superStructureIntakeMotorPercentage;
 
 
     private final Label m_superStructurePivotMotorAngleLabel = new Label("Q/A -> superStructurePivotMotorAngle");
@@ -35,6 +36,7 @@ public class SuperStructureStandaloneMain {
     private final Label m_superStructureShooterMotorPercentageLabel = new Label("E/D -> superStructureShooterMotorPercentage");
     private final Label m_superStructurePivotMotorPercentageLabel = new Label("R/F -> superStructurePivotMotorPercentage");
     private final Label m_superStructureHasGamePieceLabel = new Label("DIGIT1 -> superStructureHasGamePiece");
+    private final Label m_superStructureIntakeMotorPercentageLabel = new Label("T/G -> superStructureIntakeMotorPercentage");
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
         m_controller = robotController;
@@ -48,6 +50,7 @@ public class SuperStructureStandaloneMain {
         labelPane.getChildren().add(m_superStructureShooterMotorPercentageLabel);
         labelPane.getChildren().add(m_superStructurePivotMotorPercentageLabel);
         labelPane.getChildren().add(m_superStructureHasGamePieceLabel);
+        labelPane.getChildren().add(m_superStructureIntakeMotorPercentageLabel);
         ((BorderPane) scene.getRoot()).setBottom(labelPane);
 
         scene.setOnKeyPressed(event -> {
@@ -92,6 +95,14 @@ public class SuperStructureStandaloneMain {
                 m_superStructureHasGamePiece = true;
                 m_superStructureHasGamePieceLabel.setTextFill(Color.GREEN);
                 break;
+            case T:
+                m_superStructureIntakeMotorPercentage = 0.25;
+                m_superStructureIntakeMotorPercentageLabel.setTextFill(Color.GREEN);
+                break;
+            case G:
+                m_superStructureIntakeMotorPercentage = -0.25;
+                m_superStructureIntakeMotorPercentageLabel.setTextFill(Color.GREEN);
+                break;
 
             default:
                 // ignored
@@ -128,6 +139,11 @@ public class SuperStructureStandaloneMain {
                 m_superStructureHasGamePiece = false;
                 m_superStructureHasGamePieceLabel.setTextFill(Color.BLACK);
                 break;
+            case T:
+            case G:
+                m_superStructureIntakeMotorPercentage = 0;
+                m_superStructureIntakeMotorPercentageLabel.setTextFill(Color.BLACK);
+                break;
             default:
                 break;
             }
@@ -144,7 +160,8 @@ public class SuperStructureStandaloneMain {
                 m_superStructureGoalAngle,
                 m_superStructureShooterMotorPercentage,
                 m_superStructurePivotMotorPercentage,
-                m_superStructureHasGamePiece
+                m_superStructureHasGamePiece,
+                m_superStructureIntakeMotorPercentage
             );
 
             final SuperStructureData oldData =  m_controller.dataProperty().getValue();
