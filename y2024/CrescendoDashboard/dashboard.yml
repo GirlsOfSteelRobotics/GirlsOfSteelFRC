@@ -7,6 +7,74 @@ widgets:
   widget_name: Crescendo Bot Super Structure Widget
   sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
   children_tables:
-    - table: SuperStructure
-      table_name: SUPER_STRUCTURE
-      entries: []
+  - table: SuperStructure
+    table_name: SUPER_STRUCTURE
+    entries:
+    - type: double
+      name: pivotMotorAngle
+      dasboard_constant: PIVOT_MOTOR_ANGLE
+      sim_incr: '2'
+    - type: double
+      name: goalAngle
+      dasboard_constant: GOAL_ANGLE
+      sim_incr: '2'
+    - type: double
+      name: shooterMotorPercentage
+      dasboard_constant: SHOOTER_MOTOR_PERCENTAGE
+    - type: double
+      name: pivotMotorPercentage
+      dasboard_constant: PIVOT_MOTOR_PERCENTAGE
+    - type: boolean
+      name: hasGamePiece
+      dasboard_constant: HAS_GAME_PIECE
+    - type: double
+      name: intakeMotorPercentage
+      dasboard_constant: INTAKE_MOTOR_PERCENTAGE
+  shapes:
+  - type: Rectangle
+    name: Chassis
+    x: '3'
+    y: '9'
+    color: ''
+    height: '2'
+    width: '8'
+  - type: Circle
+    name: pivotMotor
+    x: '3.5'
+    y: '9'
+    color: ''
+    radius: '1'
+  - type: Rectangle
+    name: ArmRect
+    x: '3'
+    y: '3'
+    color: ''
+    height: '6'
+    width: '1'
+  - type: Rectangle
+    name: shooterRect
+    x: '2'
+    y: '2'
+    color: blue
+    height: '1'
+    width: '6'
+  - type: Circle
+    name: shooterMotor
+    x: '1.75'
+    y: '2.5'
+    color: ''
+    radius: '0.5'
+  - type: Circle
+    name: IntakeMotor
+    x: '8.25'
+    y: '2.5'
+    color: ''
+    radius: '0.5'
+  - type: Rectangle
+    name: pivotAngleGoal
+    x: '6'
+    y: '0'
+    color: orange
+    height: null
+    width: null
+manual_widgets: []
