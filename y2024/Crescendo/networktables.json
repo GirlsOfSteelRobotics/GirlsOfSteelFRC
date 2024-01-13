@@ -64,6 +64,46 @@
     }
   },
   {
+    "name": "/Preferences/Chassis to angle.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_acceleration",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis to angle.mm.max_velocity",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/ArmPivotJoystickTranslationDamping",
     "type": "double",
     "value": 0.4,
