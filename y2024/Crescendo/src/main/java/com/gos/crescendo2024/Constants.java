@@ -20,8 +20,8 @@ public final class Constants {
     public static final int OPERATOR_JOYSTICK = 1;
 
     // CAN ID's
-    public static final int INTAKE_MOTOR = 1;
-    public static final int INTAKE_SENSOR = 2;
+    public static final int INTAKE_MOTOR = 18;
+    public static final int INTAKE_SENSOR = 19;
 
     public static final int PIGEON_PORT = 20;
 

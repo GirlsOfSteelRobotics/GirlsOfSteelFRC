@@ -62,5 +62,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ArmPivotJoystickTranslationDamping",
+    "type": "double",
+    "value": 0.4,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
