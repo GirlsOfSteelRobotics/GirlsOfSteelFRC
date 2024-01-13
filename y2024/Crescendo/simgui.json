@@ -12,14 +12,10 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/test commands/shoot": "Command",
+      "/Shuffleboard/test commands/shooterTuning": "Command",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/shoot": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "bottom": 544,
         "builtin": "2024 Crescendo",
@@ -67,7 +63,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": -20,
+          "height": 0,
           "series": [
             {
               "color": [
@@ -98,7 +94,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     },
     "Plot <1>": {
       "plots": [
@@ -114,7 +113,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": -12,
+          "height": 0,
           "series": [
             {
               "color": [
@@ -145,7 +144,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }
