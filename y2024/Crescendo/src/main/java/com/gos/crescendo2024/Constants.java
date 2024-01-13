@@ -19,5 +19,6 @@ public final class Constants {
 
     // CAN ID's
     public static final int INTAKE_MOTOR = 0;
+    public static final int INTAKE_SENSOR = 2;
 
 }
