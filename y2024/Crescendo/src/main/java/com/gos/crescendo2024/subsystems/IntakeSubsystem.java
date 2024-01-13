@@ -4,7 +4,6 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.GosIntProperty;
-import com.gos.lib.properties.HeavyIntegerProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
@@ -54,7 +53,7 @@ public class  IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.set(INTAKE_OUT_SPEED.getValue());
     }
 
-    public void intakeStop(){
+    public void intakeStop() {
         m_intakeMotor.set(0);
     }
 
