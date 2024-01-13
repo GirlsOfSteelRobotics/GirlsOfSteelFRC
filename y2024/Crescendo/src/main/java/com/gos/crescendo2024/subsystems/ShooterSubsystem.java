@@ -1,5 +1,6 @@
 package com.gos.crescendo2024.subsystems;
 
+import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -34,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public ShooterSubsystem() {
-        m_shooterMotor = new SimableCANSparkMax(8, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotor.restoreFactoryDefaults();
         m_shooterMotor.setInverted(true);
         m_shooterEncoder = m_shooterMotor.getEncoder();
@@ -89,7 +90,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getRPM() {
-        return m_shooterEncoder.getVelocity() * 0.5;
+        return m_shooterEncoder.getVelocity();
     }
 
     // Command Factories
@@ -98,16 +99,12 @@ public class ShooterSubsystem extends SubsystemBase {
         return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("TuneShooterPercentage");
     }
 
-    public Command createTestShooter(double rpm) {
-        return this.run(() -> {
-            this.setPidRpm(rpm);
-        }).withName("test shooter " + rpm);
+    public Command createSetRPMCommand(double rpm) {
+        return this.runEnd(() -> this.setPidRpm(rpm), this::stopShooter).withName("set shooter rpm " + rpm);
     }
 
-    public Command createResetShooter() {
-        return this.run(() -> {
-            this.setPidRpm(0.0);
-        }).withName("reset shooter");
+    public Command createStopShooterCommand() {
+        return this.run(this::stopShooter).withName("stop shooter");
     }
 
 }

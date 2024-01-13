@@ -68,9 +68,9 @@ public class RobotContainer {
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
         shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
-        shuffleboardTab.add("testShooter50", m_shooterSubsystem.createTestShooter(50));
-        shuffleboardTab.add("testShooter100", m_shooterSubsystem.createTestShooter(100));
-        shuffleboardTab.add("resetShooter", m_shooterSubsystem.createResetShooter());
+        shuffleboardTab.add("testShooter50", m_shooterSubsystem.createSetRPMCommand(50));
+        shuffleboardTab.add("testShooter100", m_shooterSubsystem.createSetRPMCommand(100));
+        shuffleboardTab.add("resetShooter", m_shooterSubsystem.createStopShooterCommand());
 
         shuffleboardTab.add("Chassis to 45", m_chassisSubsystem.createTurnToAngleCommand(45));
         shuffleboardTab.add("Chassis to 90", m_chassisSubsystem.createTurnToAngleCommand(90));

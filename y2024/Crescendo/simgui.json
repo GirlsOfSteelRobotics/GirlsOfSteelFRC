@@ -1,56 +1,14 @@
 {
-  "NTProvider": {
-    "types": {
-      "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/test commands/resetShooter": "Command",
-      "/Shuffleboard/test commands/Chassis to -180": "Command",
-      "/Shuffleboard/test commands/Chassis to -45": "Command",
-      "/Shuffleboard/test commands/Chassis to 45": "Command",
-      "/Shuffleboard/test commands/Chassis to 90": "Command",
-      "/Shuffleboard/test commands/shoot": "Command",
-      "/Shuffleboard/test commands/shooterTuning": "Command",
-      "/Shuffleboard/test commands/testShooter100": "Command",
-      "/Shuffleboard/test commands/testShooter50": "Command",
-      "/Shuffleboard/test commands/testShooter50?": "Command",
-      "/Shuffleboard/test commands/shooterTuning": "Command",
-      "/SmartDashboard/Field": "Field2d"
-    },
-    "windows": {
-      "/Shuffleboard/test commands/resetShooter": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/testShooter100": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/testShooter50": {
-        "/Shuffleboard/test commands/Chassis to -180": {
-          "window": {
-            "visible": true
-          }
-        },
-        "/Shuffleboard/test commands/Chassis to 90": {
-          "window": {
-            "visible": true
-          }
-        },
-        "/SmartDashboard/Field": {
-          "bottom": 544,
-          "builtin": "2024 Crescendo",
-          "height": 8.013679504394531,
-          "left": 46,
-          "right": 1088,
-          "top": 36,
-          "width": 16.541748046875,
-          "window": {
-            "visible": true
-          }
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [8]": {
+        "header": {
+          "open": true
         }
       }
-    },
+    }
+  },
+  "NTProvider": {
     "NetworkTables": {
       "persistent": {
         "Preferences": {
@@ -179,6 +137,62 @@
           "visible": false
         }
       }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/test commands/Chassis to -180": "Command",
+      "/Shuffleboard/test commands/Chassis to -45": "Command",
+      "/Shuffleboard/test commands/Chassis to 45": "Command",
+      "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/resetShooter": "Command",
+      "/Shuffleboard/test commands/shoot": "Command",
+      "/Shuffleboard/test commands/shooterTuning": "Command",
+      "/Shuffleboard/test commands/testShooter100": "Command",
+      "/Shuffleboard/test commands/testShooter50": "Command",
+      "/Shuffleboard/test commands/testShooter50?": "Command",
+      "/SmartDashboard/Field": "Field2d"
+    },
+    "windows": {
+      "/Shuffleboard/test commands/resetShooter": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/testShooter100": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/testShooter50": {
+        "/Shuffleboard/test commands/Chassis to -180": {
+          "window": {
+            "visible": true
+          }
+        },
+        "/Shuffleboard/test commands/Chassis to 90": {
+          "window": {
+            "visible": true
+          }
+        },
+        "/SmartDashboard/Field": {
+          "bottom": 544,
+          "builtin": "2024 Crescendo",
+          "height": 8.013679504394531,
+          "left": 46,
+          "right": 1088,
+          "top": 36,
+          "width": 16.541748046875,
+          "window": {
+            "visible": true
+          }
+        },
+        "window": {
+          "visible": true
+        }
+      }
     }
+  },
+  "NetworkTables Info": {
+    "visible": true
   }
 }
