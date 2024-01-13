@@ -23,10 +23,18 @@ import java.util.Map;
 public class SuperStructureStandaloneMain {
     private final SuperStructureWidget m_controller;
 
-    private double m_superStructureFieldName;
+    private double m_superStructurePivotMotorAngle;
+    private double m_superStructureGoalAngle;
+    private double m_superStructureShooterMotorPercentage;
+    private double m_superStructurePivotMotorPercentage;
+    private boolean m_superStructureHasGamePiece;
 
 
-    private final Label m_superStructureFieldNameLabel = new Label("Q/A -> superStructureFieldName");
+    private final Label m_superStructurePivotMotorAngleLabel = new Label("Q/A -> superStructurePivotMotorAngle");
+    private final Label m_superStructureGoalAngleLabel = new Label("W/S -> superStructureGoalAngle");
+    private final Label m_superStructureShooterMotorPercentageLabel = new Label("E/D -> superStructureShooterMotorPercentage");
+    private final Label m_superStructurePivotMotorPercentageLabel = new Label("R/F -> superStructurePivotMotorPercentage");
+    private final Label m_superStructureHasGamePieceLabel = new Label("DIGIT1 -> superStructureHasGamePiece");
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
         m_controller = robotController;
@@ -35,7 +43,11 @@ public class SuperStructureStandaloneMain {
         labelPane.setBorder(new Border(new BorderStroke(Color.BLACK,
             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        labelPane.getChildren().add(m_superStructureFieldNameLabel);
+        labelPane.getChildren().add(m_superStructurePivotMotorAngleLabel);
+        labelPane.getChildren().add(m_superStructureGoalAngleLabel);
+        labelPane.getChildren().add(m_superStructureShooterMotorPercentageLabel);
+        labelPane.getChildren().add(m_superStructurePivotMotorPercentageLabel);
+        labelPane.getChildren().add(m_superStructureHasGamePieceLabel);
         ((BorderPane) scene.getRoot()).setBottom(labelPane);
 
         scene.setOnKeyPressed(event -> {
@@ -44,12 +56,41 @@ public class SuperStructureStandaloneMain {
 
             // SuperStructure
             case Q:
-                m_superStructureFieldName -= 2;
-                m_superStructureFieldNameLabel.setTextFill(Color.GREEN);
+                m_superStructurePivotMotorAngle -= 2;
+                m_superStructurePivotMotorAngleLabel.setTextFill(Color.GREEN);
                 break;
             case A:
-                m_superStructureFieldName += 2;
-                m_superStructureFieldNameLabel.setTextFill(Color.GREEN);
+                m_superStructurePivotMotorAngle += 2;
+                m_superStructurePivotMotorAngleLabel.setTextFill(Color.GREEN);
+                break;
+            case W:
+                m_superStructureGoalAngle -= 2;
+                m_superStructureGoalAngleLabel.setTextFill(Color.GREEN);
+                break;
+            case S:
+                m_superStructureGoalAngle += 2;
+                m_superStructureGoalAngleLabel.setTextFill(Color.GREEN);
+                break;
+            case E:
+                m_superStructureShooterMotorPercentage = 0.25;
+                m_superStructureShooterMotorPercentageLabel.setTextFill(Color.GREEN);
+                break;
+            case D:
+                m_superStructureShooterMotorPercentage = -0.25;
+                m_superStructureShooterMotorPercentageLabel.setTextFill(Color.GREEN);
+                break;
+            case R:
+                m_superStructurePivotMotorPercentage = 0.25;
+                m_superStructurePivotMotorPercentageLabel.setTextFill(Color.GREEN);
+                break;
+            case F:
+                m_superStructurePivotMotorPercentage = -0.25;
+                m_superStructurePivotMotorPercentageLabel.setTextFill(Color.GREEN);
+                break;
+
+            case DIGIT1:
+                m_superStructureHasGamePiece = true;
+                m_superStructureHasGamePieceLabel.setTextFill(Color.GREEN);
                 break;
 
             default:
@@ -66,7 +107,26 @@ public class SuperStructureStandaloneMain {
             // SuperStructure
             case Q:
             case A:
-                m_superStructureFieldNameLabel.setTextFill(Color.BLACK);
+                m_superStructurePivotMotorAngleLabel.setTextFill(Color.BLACK);
+                break;
+            case W:
+            case S:
+                m_superStructureGoalAngleLabel.setTextFill(Color.BLACK);
+                break;
+            case E:
+            case D:
+                m_superStructureShooterMotorPercentage = 0;
+                m_superStructureShooterMotorPercentageLabel.setTextFill(Color.BLACK);
+                break;
+            case R:
+            case F:
+                m_superStructurePivotMotorPercentage = 0;
+                m_superStructurePivotMotorPercentageLabel.setTextFill(Color.BLACK);
+                break;
+
+            case DIGIT1:
+                m_superStructureHasGamePiece = false;
+                m_superStructureHasGamePieceLabel.setTextFill(Color.BLACK);
                 break;
             default:
                 break;
@@ -80,7 +140,11 @@ public class SuperStructureStandaloneMain {
         try {
 
             SuperStructureData data = new SuperStructureData(
-                m_superStructureFieldName
+                m_superStructurePivotMotorAngle,
+                m_superStructureGoalAngle,
+                m_superStructureShooterMotorPercentage,
+                m_superStructurePivotMotorPercentage,
+                m_superStructureHasGamePiece
             );
 
             final SuperStructureData oldData =  m_controller.dataProperty().getValue();

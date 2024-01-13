@@ -9,9 +9,11 @@
     fx:controller="com.gos.crescendo.shuffleboard.super_structure.SuperStructureController">
 
     <Group fx:id="m_group">
-        <Rectangle fx:id="m_rectangle" fill="papayawhip" />
-        <Circle fx:id="m_corcle" fill="papayawhip" />
-        <Rectangle fx:id="m_rectttt" fill="papayawhip" />
-        <Circle fx:id="m_cciirrccllee" fill="papayawhip" />
+        <Rectangle fx:id="m_Chassis" fill="grey" />
+        <Circle fx:id="m_pivotMotor" fill="darkred" />
+        <Rectangle fx:id="m_ArmRect" fill="lightseagreen" />
+        <Rectangle fx:id="m_shooterRect" fill="dodgerblue" />
+        <Circle fx:id="m_shooterMotor" fill="plum" />
+        <Circle fx:id="m_IntakeMotor" fill="plum" />
     </Group>
 </Pane>
