@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class ArmPivotJoystickCommand extends Command {
 
-    private static final double JOYSTICK_DEADBAND = 0.025;
+    private static final double ARM_PIVOT_JOYSTICK_DEADBAND = 0.025;
     private static final GosDoubleProperty DAMPING = new GosDoubleProperty(false, "SwerveJoystickTranslationDamping", 0.4);
     private final CommandXboxController m_joystick;
 
@@ -25,7 +25,7 @@ public class ArmPivotJoystickCommand extends Command {
 
     @Override
     public void execute() {
-        double yPercent = -MathUtil.applyDeadband(m_joystick.getLeftY() * DAMPING.getValue(), JOYSTICK_DEADBAND);
+        double yPercent = -MathUtil.applyDeadband(m_joystick.getLeftY() * DAMPING.getValue(), ARM_PIVOT_JOYSTICK_DEADBAND);
         m_armPivotSubsystem.setArmPivotSpeed(yPercent);
     }
 

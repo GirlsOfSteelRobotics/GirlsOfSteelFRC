@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.subsystems;
 
-
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
@@ -14,22 +13,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    //motor, encoder, speed funct -> moves motor
-    //open loop with joystick
-
     private final SimableCANSparkMax m_pivotMotor;
-
     private final SimableCANSparkMax m_followMotor;
-
     private final RelativeEncoder m_pivotMotorEncoder;
-
-    private final AbsoluteEncoder m_pivotAbsEncoder;
-
-    private final LoggingUtil m_networkTableEntriesPivot;
-
+    private final AbsoluteEncoder m_pivotAbsEncoder;private final LoggingUtil m_networkTableEntriesPivot;
     private final SparkMaxAlerts m_armPivotMotorErrorAlerts;
-
-
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -73,4 +61,3 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armPivotMotorErrorAlerts.checkAlerts();
     }
 }
-
