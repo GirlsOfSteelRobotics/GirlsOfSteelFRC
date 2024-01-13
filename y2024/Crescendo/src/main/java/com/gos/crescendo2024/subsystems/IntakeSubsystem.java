@@ -21,7 +21,6 @@ public class  IntakeSubsystem extends SubsystemBase {
     public static final GosIntProperty INTAKE_CURRENT_LIMIT = new GosIntProperty(true, "IntakeCurrentLimit", 25);
     private final SimableCANSparkMax m_intakeMotor;
     private final RelativeEncoder m_intakeEncoder;
-    private final HeavyIntegerProperty m_currentLimit;
     private final DigitalInput m_photoelectricSensor;
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_intakeAlert;
@@ -36,7 +35,6 @@ public class  IntakeSubsystem extends SubsystemBase {
         m_intakeEncoder = m_intakeMotor.getEncoder();
         m_intakeAlert = new SparkMaxAlerts(m_intakeMotor, "Intake Motor");
 
-        m_currentLimit = new HeavyIntegerProperty(m_intakeMotor::setSmartCurrentLimit, INTAKE_CURRENT_LIMIT);
         m_photoelectricSensor = new DigitalInput(Constants.INTAKE_SENSOR);
 
         m_networkTableEntries = new LoggingUtil("Intake Subsystem");
@@ -45,7 +43,6 @@ public class  IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_currentLimit.updateIfChanged();
         m_intakeAlert.checkAlerts();
     }
 
@@ -57,28 +54,20 @@ public class  IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.set(INTAKE_OUT_SPEED.getValue());
     }
 
+    public void intakeStop(){
+        m_intakeMotor.set(0);
+    }
+
     public boolean hasGamePiece() {
         return !m_photoelectricSensor.get();
     }
 
     //commands
     public Command createMoveIntakeInCommand() {
-        return this.run(this::intakeIn).withName("IntakeSubsystemIn");
+        return this.runEnd(this::intakeIn, this::intakeStop).withName("IntakeSubsystemIn");
     }
 
     public Command createMoveIntakeOutCommand() {
-        return this.run(this::intakeOut).withName("IntakeSubsystemOut");
+        return this.runEnd(this::intakeOut, this::intakeStop).withName("IntakeSubsystemOut");
     }
-
-
-
-
-
-
-
-
-
-
 }
-
-

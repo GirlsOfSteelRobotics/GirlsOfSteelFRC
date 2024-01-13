@@ -10,6 +10,7 @@ import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -33,7 +34,7 @@ public class RobotContainer {
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final Autos m_autonomousFactory;
-
+    private final IntakeSubsystem m_intakeSubsystem;
 
     private final CommandXboxController m_driverController =
         new CommandXboxController(Constants.DRIVER_JOYSTICK);
@@ -54,6 +55,7 @@ public class RobotContainer {
 
         m_armPivotSubsystem = new ArmPivotSubsystem();
 
+        m_intakeSubsystem = new IntakeSubsystem();
 
         // Configure the trigger bindings
         configureBindings();
@@ -68,6 +70,8 @@ public class RobotContainer {
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
         shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
+        shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
+        shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
     }
 
 

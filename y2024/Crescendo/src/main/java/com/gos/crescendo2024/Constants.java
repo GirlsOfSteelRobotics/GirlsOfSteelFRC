@@ -21,7 +21,7 @@ public final class Constants {
 
     // CAN ID's
     public static final int INTAKE_MOTOR = 18;
-    public static final int INTAKE_SENSOR = 19;
+
 
     public static final int PIGEON_PORT = 20;
 
@@ -38,4 +38,7 @@ public final class Constants {
     public static final int ARM_PIVOT = 33;
 
     public static final int ARM_PIVOT_FOLLOW = 34;
+
+    //Digital Inputs
+    public static final int INTAKE_SENSOR = 19;
 }
