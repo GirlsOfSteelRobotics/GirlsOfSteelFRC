@@ -11,11 +11,25 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/test commands/Chassis to -180": "Command",
+      "/Shuffleboard/test commands/Chassis to -45": "Command",
+      "/Shuffleboard/test commands/Chassis to 45": "Command",
+      "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Chassis to -180": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Chassis to 90": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 544,
         "builtin": "2024 Crescendo",
@@ -37,6 +51,15 @@
       }
     },
     "transitory": {
+      "Shuffleboard": {
+        "open": true,
+        "test commands": {
+          "Chassis to -180": {
+            "open": true
+          },
+          "open": true
+        }
+      },
       "SwerveDrive": {
         "BL": {
           "open": true
