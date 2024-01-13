@@ -18,7 +18,7 @@ public final class Constants {
     public static final int DRIVER_JOYSTICK = 0;
 
     // CAN ID's
-    public static final int INTAKE_MOTOR = 0;
+    public static final int INTAKE_MOTOR = 1;
     public static final int INTAKE_SENSOR = 2;
 
 }
