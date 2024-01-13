@@ -52,7 +52,7 @@ public class RobotContainer {
 
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
-        shuffleboardTab.add("shoot", m_shooterSubsystem.createTunePercentShootCommand());
+        shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
     }
 
 

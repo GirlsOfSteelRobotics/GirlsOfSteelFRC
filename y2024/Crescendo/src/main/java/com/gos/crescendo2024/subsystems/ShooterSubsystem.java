@@ -52,7 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // Command Factories
 
     public Command createTunePercentShootCommand() {
-        return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("Shoot");
+        return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("TuneShooterPercentage");
     }
 
 }
