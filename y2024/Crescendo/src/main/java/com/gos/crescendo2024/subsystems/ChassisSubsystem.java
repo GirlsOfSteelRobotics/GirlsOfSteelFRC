@@ -13,7 +13,6 @@ import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
-import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -58,8 +57,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
         //TODO need change pls
-        m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0,0));
-        m_turnAnglePID.enableContinuousInput(0,360);
+        m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        m_turnAnglePID.enableContinuousInput(0, 360);
         m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
@@ -73,7 +72,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);
-
 
 
     }
@@ -95,27 +93,23 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
     }
 
-    public Pose2d getPose()
-    {
+    public Pose2d getPose() {
         return m_swerveDrive.getEstimatedPosition();
     }
 
-    public boolean turnPIDIsAngle()
-    {
+    public boolean turnPIDIsAngle() {
         return m_turnAnglePID.atGoal();
     }
 
-    public void turnToAngle(double angleGoal)
-    {
+    public void turnToAngle(double angleGoal) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
         double steerVoltage = m_turnAnglePID.calculate(angleCurrentDegree, angleGoal);
         //TODO add ff
 
-        if(turnPIDIsAngle())
-        {
+        if (turnPIDIsAngle()) {
             steerVoltage = 0;
         }
-        ChassisSpeeds speeds = new ChassisSpeeds(0,0, steerVoltage);
+        ChassisSpeeds speeds = new ChassisSpeeds(0, 0, steerVoltage);
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
@@ -129,8 +123,7 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
 
-    public Command createTurnToAngleCommand(double angleGoal)
-    {
+    public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
             .andThen(this.run(() -> turnToAngle(angleGoal))
                 .until(this::turnPIDIsAngle)
