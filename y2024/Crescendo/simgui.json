@@ -1,21 +1,27 @@
 {
-  "HALProvider": {
-    "Other Devices": {
-      "SPARK MAX [8]": {
-        "header": {
-          "open": true
-        }
-      }
-    }
-  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
+      "/Shuffleboard/test commands/shooterTuning": "Command",
+      "/Shuffleboard/test commands/testShooter100": "Command",
+      "/Shuffleboard/test commands/testShooter50": "Command",
+      "/Shuffleboard/test commands/testShooter50?": "Command",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/shoot": {
+      "/Shuffleboard/test commands/resetShooter": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/testShooter100": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/testShooter50": {
         "window": {
           "visible": true
         }
@@ -41,6 +47,9 @@
       }
     },
     "transitory": {
+      "Claw Subsystem": {
+        "open": true
+      },
       "SwerveDrive": {
         "BL": {
           "open": true
@@ -98,7 +107,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     },
     "Plot <1>": {
       "plots": [
@@ -114,7 +126,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": -12,
+          "height": -28,
           "series": [
             {
               "color": [
@@ -142,6 +154,38 @@
                 1.0
               ],
               "id": "SPARK MAX [25]-Applied Output"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <2>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 262,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Claw Subsystem/Velocity (RPM)"
             }
           ]
         }
