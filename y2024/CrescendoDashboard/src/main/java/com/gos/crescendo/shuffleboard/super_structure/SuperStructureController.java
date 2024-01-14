@@ -72,9 +72,9 @@ public class SuperStructureController {
     @FXML
     private Rectangle m_pivotAngleGoal;
 
-    private Rotate m_pivotArmRotate;
+    private Rotate m_armRectRotation;
 
-    private Rotate m_pivotArmGoalRotate;
+    private Rotate m_pivotAngleGoalRotation;
 
     @FXML
     public void initialize() {
@@ -126,31 +126,30 @@ public class SuperStructureController {
         m_pivotAngleGoal.setHeight(PIVOT_ANGLE_GOAL_HEIGHT);
         m_pivotAngleGoal.setWidth(PIVOT_ANGLE_GOAL_WIDTH);
 
-        m_pivotArmRotate = new Rotate();
-        m_pivotArmRotate.setAngle(0);
-        m_pivotArmRotate.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getX() + ARM_RECT_WIDTH, m_armRect.xProperty()));
-        m_pivotArmRotate.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getY() + ARM_RECT_HEIGHT, m_armRect.yProperty()));
-        m_armRect.getTransforms().add(m_pivotArmRotate);
-        m_shooterRect.getTransforms().add(m_pivotArmRotate);
-        m_intakeMotor.getTransforms().add(m_pivotArmRotate);
-        m_shooterMotor.getTransforms().add(m_pivotArmRotate);
+        m_armRectRotation = new Rotate();
+        m_armRectRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getX() + ARM_RECT_WIDTH, m_armRect.xProperty()));
+        m_armRectRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getY() + ARM_RECT_HEIGHT, m_armRect.yProperty()));
+        m_armRect.getTransforms().add(m_armRectRotation);
+        m_shooterRect.getTransforms().add(m_armRectRotation);
+        m_intakeMotor.getTransforms().add(m_armRectRotation);
+        m_shooterMotor.getTransforms().add(m_armRectRotation);
 
-        m_pivotArmGoalRotate = new Rotate();
-        m_pivotArmGoalRotate.setAngle(0);
-        m_pivotArmGoalRotate.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getX() + ARM_RECT_WIDTH, m_armRect.xProperty()));
-        m_pivotArmGoalRotate.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getY() + ARM_RECT_HEIGHT, m_armRect.yProperty()));
-        m_pivotAngleGoal.getTransforms().add(m_pivotArmGoalRotate);
+        m_pivotAngleGoalRotation = new Rotate();
+        m_pivotAngleGoalRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getX() + ARM_RECT_WIDTH, m_armRect.xProperty()));
+        m_pivotAngleGoalRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_armRect.getY() + ARM_RECT_HEIGHT, m_armRect.yProperty()));
+        m_pivotAngleGoal.getTransforms().add(m_pivotAngleGoalRotation);
 
     }
 
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
 
-        m_pivotMotor.setFill(Utils.getMotorColor(superStructureData.getPivotMotorPercentage()));
-        m_pivotArmRotate.setAngle(superStructureData.getPivotMotorAngle());
-        m_pivotArmGoalRotate.setAngle(superStructureData.getGoalAngle());
+        m_armRectRotation.setAngle(superStructureData.getPivotMotorAngle());
+        m_pivotAngleGoalRotation.setAngle(superStructureData.getGoalAngle());
 
+        m_pivotMotor.setFill(Utils.getMotorColor(superStructureData.getPivotMotorPercentage()));
         m_shooterMotor.setFill(Utils.getMotorColor(superStructureData.getShooterMotorPercentage()));
+        m_intakeMotor.setFill(Utils.getMotorColor(superStructureData.getIntakeMotorPercentage()));
 
         if (superStructureData.isHasGamePiece()) {
             m_shooterRect.setFill(Color.ORANGE);

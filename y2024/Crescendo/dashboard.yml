@@ -32,49 +32,51 @@ widgets:
       dasboard_constant: INTAKE_MOTOR_PERCENTAGE
   shapes:
   - type: Rectangle
-    name: Chassis
+    name: chassis
     x: '3'
     y: '9'
-    color: ''
+    color: grey
     height: '2'
     width: '8'
   - type: Circle
     name: pivotMotor
     x: '3.5'
     y: '9'
-    color: ''
+    color: darkred
     radius: '1'
   - type: Rectangle
-    name: ArmRect
+    name: armRect
     x: '3'
     y: '3'
-    color: ''
+    color: lightseagreen
+    rotates: true
     height: '6'
     width: '1'
   - type: Rectangle
     name: shooterRect
     x: '2'
     y: '2'
-    color: blue
+    color: transparent
     height: '1'
     width: '6'
   - type: Circle
     name: shooterMotor
     x: '1.75'
     y: '2.5'
-    color: ''
+    color: plum
     radius: '0.5'
   - type: Circle
-    name: IntakeMotor
+    name: intakeMotor
     x: '8.25'
     y: '2.5'
-    color: ''
+    color: plum
     radius: '0.5'
   - type: Rectangle
     name: pivotAngleGoal
-    x: '6'
-    y: '0'
-    color: orange
-    height: null
-    width: null
+    x: ARM_RECT_X
+    y: ARM_RECT_Y
+    color: transparent
+    rotates: true
+    height: ARM_RECT_HEIGHT
+    width: ARM_RECT_WIDTH
 manual_widgets: []

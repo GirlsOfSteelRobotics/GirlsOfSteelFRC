@@ -10,7 +10,7 @@
 
     <Group fx:id="m_group">
         {%- for shape in widget.shapes %}
-        <{{shape.type}} fx:id="m_{{shape.name}}" fill="papayawhip" />
+        <{{shape.type}} fx:id="m_{{shape.name}}" fill="{{shape.color or "papayawhip" }}" />
         {%- endfor %}
     </Group>
 </Pane>
