@@ -249,6 +249,7 @@ def _dump_shape(shape: BaseShape):
         shape: Rectangle
         config["height"] = shape.height
         config["width"] = shape.width
+        config["rotates"] = shape.rotates
     elif shape.type == "Arc":
         shape: Arc
         config["radius"] = shape.radius
