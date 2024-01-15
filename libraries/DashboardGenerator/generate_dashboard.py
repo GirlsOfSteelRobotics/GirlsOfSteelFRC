@@ -2,6 +2,9 @@ from libraries.DashboardGenerator.lib.dashboard_config import DashboardConfig
 from libraries.DashboardGenerator.lib.generate_shuffleboard import (
     generate_shuffleboard_dashboard,
 )
+from libraries.DashboardGenerator.lib.generate_webdash import (
+    generate_web_dashboard,
+)
 import os
 import sys
 
@@ -82,6 +85,7 @@ def generate_dashboard(
     force_fxml,
     force_standalone_main,
     force_controller,
+    generate_web_dashboard=False,
 ):
     this_dir = get_this_directory()
     generator_directory = this_dir
@@ -97,7 +101,7 @@ def generate_dashboard(
 
     generate_shuffleboard_dashboard(
         generator_directory,
-        project_dir,
+        project_dir + "Dashboard",
         config,
         force_nt_names,
         force_utils,
@@ -105,6 +109,16 @@ def generate_dashboard(
         force_standalone_main,
         force_controller,
     )
+
+    if generate_web_dashboard:
+        generate_web_dashboard(
+            generator_directory,
+            project_dir + "Webdash",
+            config,
+            force_nt_names,
+            force_utils,
+            force_controller,
+        )
 
     print(f"Generating dashboard config in '{os.path.abspath(project_dir)}'")
 

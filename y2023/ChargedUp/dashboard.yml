@@ -79,11 +79,7 @@ widgets:
     width: '1'
   - type: Rectangle
     name: armGoal
-    x: null
-    y: null
     color: transparent
-    height: null
-    width: null
   - type: Circle
     name: armJoint
     x: ARM_BASE_X + 1
@@ -120,11 +116,8 @@ widgets:
     width: '3'
   - type: Rectangle
     name: turretTopDownGoal
-    x: null
-    y: null
     color: transparent
-    height: null
-    width: null
+
 manual_widgets:
 - table: ScoringPosition
   package_name: scoring_position

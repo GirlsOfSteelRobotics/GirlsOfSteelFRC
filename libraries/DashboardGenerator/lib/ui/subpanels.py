@@ -135,18 +135,22 @@ class ShapeWidget(QWidget):
             self.width_txt.show()
             self.height_txt.show()
             self.radius_txt.hide()
+            self.rotates_box.show()
 
             self.width_lbl.show()
             self.height_lbl.show()
             self.radius_lbl.hide()
+            self.rotates_lbl.show()
         elif self.type_combo.currentText() in ["Arc", "Circle"]:
             self.width_txt.hide()
             self.height_txt.hide()
             self.radius_txt.show()
+            self.rotates_box.hide()
 
             self.width_lbl.hide()
             self.height_lbl.hide()
             self.radius_lbl.show()
+            self.rotates_lbl.hide()
         else:
             raise
 
@@ -161,6 +165,7 @@ class ShapeWidget(QWidget):
         if isinstance(shapes_config, Rectangle):
             set_text_if_not_null(self.width_txt, shapes_config.width)
             set_text_if_not_null(self.height_txt, shapes_config.height)
+            self.rotates_box.setChecked(shapes_config.rotates)
         elif isinstance(shapes_config, Arc) or isinstance(shapes_config, Circle):
             set_text_if_not_null(self.radius_txt, shapes_config.radius)
 

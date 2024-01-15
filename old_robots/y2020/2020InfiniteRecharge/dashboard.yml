@@ -64,17 +64,77 @@ widgets:
       name: speed
       dasboard_constant: WINCH_SPEED
   shapes:
-    - { type: Circle, name: robotShooterCurrentRPM }
-    - { type: Arc, name: shooterHood }
-    - { type: Circle, name: robotShooterGoalRPM }
-    - { type: Circle, name: shooterHandoff }
-    - { type: Circle, name: shooterSecondary }
-    - { type: Circle, name: shooterTop }
-    - { type: Rectangle, name: robotConveyor }
-    - { type: Rectangle, name: robotIntake }
-    - { type: Rectangle, name: controlPanel }
-    - { type: Rectangle, name: winch }
-    - { type: Rectangle, name: lift }
+  - type: Circle
+    name: robotShooterCurrentRPM
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Arc
+    name: shooterHood
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: robotShooterGoalRPM
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: shooterHandoff
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: shooterSecondary
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: shooterTop
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Rectangle
+    name: robotConveyor
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: robotIntake
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: controlPanel
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: winch
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: lift
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
 - table: Led
   package_name: leds
   widget_name: Infinite Recharge LEDS

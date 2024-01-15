@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 
 public class {{widget.table}}Controller {
@@ -40,6 +41,10 @@ public class {{widget.table}}Controller {
     {% for shape in widget.shapes %}
     @FXML
     private {{shape.type}} m_{{shape.name}};
+{% endfor %}
+
+{% for shape in widget.shapes  if shape.rotates %}
+    private Rotate m_{{shape.name}}Rotation;
 {% endfor %}
 
     @FXML
@@ -75,6 +80,11 @@ public class {{widget.table}}Controller {
         m_{{ shape.name }}.setRadiusY({{shape.name.camel_to_upper_snake()}}_HEIGHT);
         m_{{ shape.name }}.setRadiusX({{shape.name.camel_to_upper_snake()}}_WIDTH);
 {%- endif %}
+{% endfor %}
+
+{% for shape in widget.shapes  if shape.rotates %}
+    m_{{shape.name}}Rotation = new Rotate();
+    m_{{shape.name}}.getTransforms().add(m_{{shape.name}}Rotation);
 {% endfor %}
     }
 
