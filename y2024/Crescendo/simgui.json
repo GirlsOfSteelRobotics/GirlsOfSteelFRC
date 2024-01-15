@@ -158,6 +158,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/test commands/shooterTuning": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter100": {
         "window": {
           "visible": true
@@ -189,6 +194,19 @@
         "window": {
           "visible": true
         }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "Shooter Subsystem": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      },
+      "SwerveDrive": {
+        "open": true
       }
     }
   },
