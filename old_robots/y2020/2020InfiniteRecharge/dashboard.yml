@@ -1,0 +1,174 @@
+base_package: com.gos.infinite_recharge.sd_widgets
+plugin_summary: Widget for the 2020 Girls of Steel
+plugin_name: GirlsOfSteelPlugin2020
+widgets:
+- table: SuperStructure
+  package_name: super_structure
+  widget_name: Infinite Recharge Super Structure Widget
+  sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+  children_tables:
+  - table: ControlPanel
+    table_name: CONTROL_PANEL_TABLE_NAME
+    entries:
+    - type: double
+      name: speed
+      dasboard_constant: CONTROL_PANEL_SPEED
+  - table: Lift
+    table_name: LIFT_TABLE_NAME
+    entries:
+    - type: double
+      name: speed
+      dasboard_constant: LIFT_SPEED
+  - table: ShooterConveyor
+    table_name: SHOOTER_CONVEYOR_TABLE_NAME
+    entries:
+    - type: double
+      name: speed
+      dasboard_constant: SHOOTER_CONVEYOR_SPEED
+    - type: boolean
+      name: handoffBallSensor
+      dasboard_constant: CONVEYOR_HANDOFF_BALL_SENSOR
+    - type: boolean
+      name: secondaryBallSensor
+      dasboard_constant: CONVEYOR_SECONDARY_BALL_SENSOR
+    - type: boolean
+      name: topBallSensor
+      dasboard_constant: CONVEYOR_TOP_BALL_SENSOR
+  - table: ShooterIntake
+    table_name: SHOOTER_INTAKE_TABLE_NAME
+    entries:
+    - type: double
+      name: speed
+      dasboard_constant: SHOOTER_INTAKE_SPEED
+    - type: boolean
+      name: position
+      dasboard_constant: SHOOTER_INTAKE_POSITION
+  - table: ShooterWheels
+    table_name: SHOOTER_WHEELS_TABLE_NAME
+    entries:
+    - type: double
+      name: currentRpm
+      dasboard_constant: SHOOTER_WHEELS_GOAL_RPM
+      sim_incr: '10'
+    - type: double
+      name: goalRpm
+      dasboard_constant: SHOOTER_WHEELS_CURRENT_RPM
+      sim_incr: '10'
+    - type: double
+      name: speed
+      dasboard_constant: SHOOTER_WHEELS_SPEED
+  - table: Winch
+    table_name: WINCH_TABLE_NAME
+    entries:
+    - type: double
+      name: speed
+      dasboard_constant: WINCH_SPEED
+  shapes:
+  - type: Circle
+    name: robotShooterCurrentRPM
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Arc
+    name: shooterHood
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: robotShooterGoalRPM
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: shooterHandoff
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: shooterSecondary
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Circle
+    name: shooterTop
+    x: null
+    y: null
+    color: null
+    radius: null
+  - type: Rectangle
+    name: robotConveyor
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: robotIntake
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: controlPanel
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: winch
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+  - type: Rectangle
+    name: lift
+    x: null
+    y: null
+    color: null
+    height: null
+    width: null
+- table: Led
+  package_name: leds
+  widget_name: Infinite Recharge LEDS
+  sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+  children_tables:
+  - table: Led
+    table_name: LED_SIM_TABLE_NAME
+    entries:
+    - type: String
+      name: values
+      dasboard_constant: LED_VALUES
+  shapes: []
+- table: ControlPanel
+  package_name: control_panel
+  widget_name: Infinite Recharge Control Panel Widget
+  sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+  children_tables:
+  - table: ControlPanel
+    table_name: CONTROL_PANEL_TABLE_NAME
+    entries:
+    - type: Double
+      name: simAngle
+      dasboard_constant: CONTROL_PANEL_SIM_WHEEL_ANGLE
+    - type: Double
+      name: simR
+      dasboard_constant: CONTROL_PANEL_SIM_WHEEL_R_COLOR
+    - type: Double
+      name: simG
+      dasboard_constant: CONTROL_PANEL_SIM_WHEEL_G_COLOR
+    - type: Double
+      name: simB
+      dasboard_constant: CONTROL_PANEL_SIM_WHEEL_B_COLOR
+    - type: String
+      name: colorSeen
+      dasboard_constant: CONTROL_PANEL_COLOR_SEEN
+  shapes: []
+manual_widgets: []

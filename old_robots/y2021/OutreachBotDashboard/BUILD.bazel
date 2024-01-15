@@ -10,5 +10,6 @@ shuffleboard_widget(
 gos_java_binary(
     name = "Main",
     main_class = "com.gos.outreach.shuffleboard.super_structure.SuperStructureStandaloneMain",
+    tags = ["no-roborio"],
     runtime_deps = [":OutreachBotDashboard"],
 )

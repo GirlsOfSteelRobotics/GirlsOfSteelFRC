@@ -8,60 +8,48 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystemInterface;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
-    public static final PathConstraints FASTER_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(120), Units.inchesToMeters(120));
-    public static final PathConstraints NOT_AS_FAST_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(70), Units.inchesToMeters(70));
-
     public TWOPieceNodesCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw, AutoPivotHeight pivotHeightType, String pathStart, String pathMiddle, String pathEnd) {
-        PathPlannerTrajectory firstPiece = PathPlanner.loadPath(pathStart, FASTER_PATH_CONSTRAINTS, true);
-        Command driveToFirstPiece = chassis.createPathPlannerBuilder(firstPiece);
 
-        List<PathPlannerTrajectory> getSecondPiece = PathPlanner.loadPathGroup(pathMiddle, false, NOT_AS_FAST_PATH_CONSTRAINTS);
         Map<String, Command> eventMap = new HashMap<>();
         eventMap.put("GrabPiece", CombinedCommandsUtil.goToGroundPickup(armPivot, armExtension, 10, 200000));
-        Command driveToGetSecondPiece = chassis.createPathPlannerBuilderNoPoseReset(getSecondPiece, eventMap);
 
-
-        PathPlannerTrajectory scoreSecondPiece = PathPlanner.loadPath(pathEnd, FASTER_PATH_CONSTRAINTS, false);
-        Command driveToScoreSecondPiece = chassis.createPathPlannerBuilderNoPoseReset(scoreSecondPiece);
+        Command driveToFirstPiece = chassis.createFollowPathCommand(pathStart);
+        Command driveToGetSecondPiece = chassis.createFollowPathCommandNoPoseReset(pathMiddle);
+        Command driveToScoreSecondPiece = chassis.createFollowPathCommandNoPoseReset(pathEnd);
 
         //score piece
         addCommands(new ScorePieceCommandGroup(armPivot, armExtension, claw, pivotHeightType, GamePieceType.CONE));
 
         //first part
         addCommands(driveToFirstPiece
-            .alongWith(armPivot.commandPivotArmToAngleHold(-10))
+            .alongWith(armPivot.createPivotToAngleAndHoldCommand(-10))
             .alongWith(Commands.waitSeconds(0.25)
-                .andThen(armExtension.commandMiddleRetract())));
+                .andThen(armExtension.createMiddleExtensionCommand())));
 
         //turn 180
-        addCommands(chassis.createTurnPID(0));
+        addCommands(chassis.createTurnToAngleCommand(0));
 
         //drive second part
         addCommands(driveToGetSecondPiece
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //turn 180
-        addCommands(chassis.createTurnPID(180)
+        addCommands(chassis.createTurnToAngleCommand(180)
             .alongWith(CombinedCommandsUtil.moveToScore(pivotHeightType, GamePieceType.CUBE, armPivot))
-            .raceWith(claw.createHoldPiece()));
+            .raceWith(claw.createHoldPieceCommand()));
 
 
         //third part
         addCommands(driveToScoreSecondPiece
-            .alongWith(armPivot.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE))
+            .alongWith(armPivot.createMoveArmToPieceScorePositionAndHoldCommand(pivotHeightType, GamePieceType.CUBE))
             .raceWith(claw.createMoveClawIntakeInCommand()));
 
         //score piece

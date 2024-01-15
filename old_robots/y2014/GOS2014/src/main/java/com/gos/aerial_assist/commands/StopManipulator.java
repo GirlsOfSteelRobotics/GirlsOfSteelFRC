@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
  * @author appasamysm
  */
 //Is this nessisary?
-public class StopManipulator extends CommandBase {
+public class StopManipulator extends GosCommandBase {
 
     private final Manipulator m_manipulator;
 

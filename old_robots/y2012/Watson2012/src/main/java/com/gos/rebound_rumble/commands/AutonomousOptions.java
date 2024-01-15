@@ -8,7 +8,7 @@ import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
 @SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveParameterList"})
-public class AutonomousOptions extends CommandBase {
+public class AutonomousOptions extends GosCommandBase {
 
     private static final double KEY_SPEED = Shooter.KEY_SPEED;
     private static final double FACE_START = 0.0;

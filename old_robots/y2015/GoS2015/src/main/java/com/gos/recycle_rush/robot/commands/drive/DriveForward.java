@@ -1,9 +1,9 @@
 package com.gos.recycle_rush.robot.commands.drive;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 
-public class DriveForward extends CommandBase {
+public class DriveForward extends Command {
     private final Chassis m_chassis;
 
     public DriveForward(Chassis chassis) {

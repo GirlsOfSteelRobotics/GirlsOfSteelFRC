@@ -1,9 +1,9 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.ShooterConveyor;
 
-public class ConveyorAdvanceOneUnit extends CommandBase {
+public class ConveyorAdvanceOneUnit extends Command {
     private final ShooterConveyor m_shooterConveyor;
 
     public ConveyorAdvanceOneUnit(ShooterConveyor shooterConveyor) {

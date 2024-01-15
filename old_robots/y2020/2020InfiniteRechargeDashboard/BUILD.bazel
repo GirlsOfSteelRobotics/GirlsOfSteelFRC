@@ -10,17 +10,20 @@ shuffleboard_widget(
 gos_java_binary(
     name = "SuperStructureMain",
     main_class = "com.gos.infinite_recharge.sd_widgets.super_structure.SuperStructureStandaloneMain",
+    tags = ["no-roborio"],
     runtime_deps = [":2020InfiniteRechargeDashboard"],
 )
 
 gos_java_binary(
     name = "LedsMain",
     main_class = "com.gos.infinite_recharge.sd_widgets.leds.LedStandaloneMain",
+    tags = ["no-roborio"],
     runtime_deps = [":2020InfiniteRechargeDashboard"],
 )
 
 gos_java_binary(
     name = "ControlPanelMain",
     main_class = "com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelStandaloneMain",
+    tags = ["no-roborio"],
     runtime_deps = [":2020InfiniteRechargeDashboard"],
 )

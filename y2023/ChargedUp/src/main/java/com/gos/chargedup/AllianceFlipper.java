@@ -1,9 +1,9 @@
 package com.gos.chargedup;
 
+import com.gos.lib.GetAllianceUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import org.littletonrobotics.frc2023.FieldConstants;
 
 public class AllianceFlipper {
@@ -27,14 +27,14 @@ public class AllianceFlipper {
     }
 
     public static Translation2d maybeFlip(Translation2d translation) {
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+        if (GetAllianceUtil.isRedAlliance()) {
             return flip(translation);
         }
         return translation;
     }
 
     public static Pose2d maybeFlip(Pose2d pose) {
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+        if (GetAllianceUtil.isRedAlliance()) {
             return flip(pose);
         }
         return pose;

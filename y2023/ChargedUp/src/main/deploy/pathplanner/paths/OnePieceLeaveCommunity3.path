@@ -1,0 +1,59 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.3,
+        "y": 2.1750268145086054
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2796024019528955,
+        "y": 1.4101168877421886
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 3.122376481719788,
+        "y": 0.7408388276492202
+      },
+      "prevControl": {
+        "x": 2.2246504066842387,
+        "y": 0.7408388276492202
+      },
+      "nextControl": {
+        "x": 3.736425496880782,
+        "y": 0.7408388276492202
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 6.54,
+        "y": 0.74
+      },
+      "prevControl": {
+        "x": 5.54,
+        "y": 0.74
+      },
+      "nextControl": null,
+      "isLocked": false
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.2192,
+    "maxAcceleration": 1.2192,
+    "maxAngularVelocity": 360,
+    "maxAngularAcceleration": 360
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0
+  },
+  "reversed": true,
+  "folder": "LeaveCommunity"
+}

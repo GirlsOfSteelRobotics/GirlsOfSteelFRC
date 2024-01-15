@@ -1,52 +1,47 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
-import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPoint;
-import com.pathplanner.lib.auto.BaseAutoBuilder;
-import com.pathplanner.lib.auto.RamseteAutoBuilder;
-import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.controller.RamseteController;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.photonvision.EstimatedRobotPose;
-import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -90,15 +85,11 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
-    private final SparkMaxPIDController m_leftPIDcontroller;
-    private final SparkMaxPIDController m_rightPIDcontroller;
+    private final SparkPIDController m_leftPIDcontroller;
+    private final SparkPIDController m_rightPIDcontroller;
 
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
-
-
-    private final NetworkTableEntry m_trajectoryLeftWheelSpeedGoal;
-    private final NetworkTableEntry m_trajectoryRightWheelSpeedGoal;
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(true, "Chassis Trajectory Max Velocity", 60);
 
@@ -114,10 +105,10 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public TankDriveChassisSubsystem() {
 
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
 
         m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft.restoreFactoryDefaults();
@@ -179,20 +170,19 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         m_networkTableEntries.addDouble("Right Position", () -> Units.metersToInches(m_rightEncoder.getPosition()));
         m_networkTableEntries.addDouble("Rigth Velocity", () -> Units.metersToInches(m_rightEncoder.getVelocity()));
 
-        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Chassis Subsystem");
-        m_trajectoryLeftWheelSpeedGoal = loggingTable.getEntry("Trajectory Velocity Left Wheel Speed Goal");
-        m_trajectoryRightWheelSpeedGoal = loggingTable.getEntry("Trajectory Velocity Right Wheel Speed Goal");
-
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
 
-        PPRamseteCommand.setLoggingCallbacks(
-            m_field::setTrajectory,
-            m_field::setTrajectorySetpoint,
-            this::logTrajectoryChassisSetpoint,
-            this::logTrajectoryErrors
+        AutoBuilder.configureRamsete(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry,
+            this::getChassisSpeed,
+            this::setChassisSpeed,
+            new ReplanningConfig(),
+            GetAllianceUtil::isRedAlliance,
+            this
         );
 
         if (RobotBase.isSimulation()) {
@@ -207,25 +197,12 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
                 new RevMotorControllerSimWrapper(m_leaderRight),
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
-                new CtrePigeonImuWrapper(m_gyro));
+                new Pigeon2Wrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
     }
 
-
-
-    private void logTrajectoryChassisSetpoint(ChassisSpeeds chassisSpeeds) {
-        DifferentialDriveWheelSpeeds wheelSpeeds = K_DRIVE_KINEMATICS.toWheelSpeeds(chassisSpeeds);
-
-        m_trajectoryVelocitySetpointX.setNumber(chassisSpeeds.vxMetersPerSecond);
-        m_trajectoryVelocitySetpointY.setNumber(chassisSpeeds.vyMetersPerSecond);
-        m_trajectoryVelocitySetpointAngle.setNumber(chassisSpeeds.omegaRadiansPerSecond);
-
-        m_trajectoryLeftWheelSpeedGoal.setNumber(Units.metersToInches(wheelSpeeds.leftMetersPerSecond));
-        m_trajectoryRightWheelSpeedGoal.setNumber(Units.metersToInches(wheelSpeeds.rightMetersPerSecond));
-    }
-
-    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupPidValues(SparkPIDController pidController) {
         if (Constants.IS_ROBOT_BLOSSOM) {
             return new RevPidPropertyBuilder("Chassis", true, pidController, 0)
                 .addP(0.6)
@@ -298,7 +275,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     @Override
-    public void turnPID(double angleGoal) {
+    public void turnToAngle(double angleGoal) {
         SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
         steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
@@ -375,54 +352,32 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     @Override
-    public CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse) {
-        PathPlannerTrajectory traj1 = PathPlanner.generatePath(
-            new PathConstraints(Units.inchesToMeters(m_onTheFlyMaxVelocity.getValue()), Units.inchesToMeters(m_onTheFlyMaxAcceleration.getValue())),
-            reverse,
-            new PathPoint(start.getTranslation(), getPose().getRotation()),
-            new PathPoint(end.getTranslation(), end.getRotation())
-        );
-
-        return new PPRamseteCommand(
-            traj1,
-            this::getPose, // Pose supplier
-            new RamseteController(),
-            K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
-            this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
-            false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-            this // Requires this drive subsystem
-        ).finallyDo((interrupted) -> {
-            m_field.clearTrajectory();
-        });
-
-    }
-
-    @Override
-    public void resetStickyFaultsChassis() {
+    public void clearStickyFaults() {
         m_leaderLeft.clearFaults();
         m_leaderRight.clearFaults();
         m_followerLeft.clearFaults();
         m_followerRight.clearFaults();
     }
 
-    ////////////////////
-    // Command Factories
-    ////////////////////
-
     @Override
-    protected void lockDriveTrain() {
-        drivetrainToBrakeMode();
+    public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
+        Command followPathCommand = AutoBuilder.followPath(path);
+        if (resetPose) {
+            return Commands.runOnce(() -> resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand);
+        }
+        return followPathCommand;
     }
 
     @Override
-    protected void unlockDriveTrain() {
-        drivetrainToCoastMode();
-    }
+    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
+        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        PathPlannerPath path = new PathPlannerPath(
+            bezierPoints,
+            new PathConstraints(m_onTheFlyMaxVelocity.getValue(), m_onTheFlyMaxAcceleration.getValue(), 0, 0),
+            new GoalEndState(0.0, Rotation2d.fromDegrees(0)) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
+        );
 
-    public CommandBase commandChassisVelocity() {
-        return this.runEnd(
-            () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
-            this::stop).withName("Chassis: Tune Velocity");
+        return createFollowPathCommand(path, false);
     }
 
     public void drivetrainToBrakeMode() {
@@ -441,43 +396,60 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     }
 
+    @Override
+    protected void lockDriveTrain() {
+        drivetrainToBrakeMode();
+    }
 
     @Override
-    public CommandBase syncOdometryWithPoseEstimator() {
+    protected void unlockDriveTrain() {
+        drivetrainToCoastMode();
+    }
+
+    @Override
+    public ChassisSpeeds getChassisSpeed() {
+        return K_DRIVE_KINEMATICS.toChassisSpeeds(new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity()));
+    }
+
+    @Override
+    public void setChassisSpeed(ChassisSpeeds chassisSpeeds) {
+        DifferentialDriveWheelSpeeds diffSpeeds = K_DRIVE_KINEMATICS.toWheelSpeeds(chassisSpeeds);
+        smartVelocityControl(diffSpeeds.leftMetersPerSecond, diffSpeeds.rightMetersPerSecond);
+    }
+
+    ////////////////////
+    // Command Factories
+    ////////////////////
+
+    public Command commandChassisVelocity() {
+        return this.runEnd(
+            () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
+            this::stop).withName("Chassis: Tune Velocity");
+    }
+
+
+    @Override
+    public Command createSyncOdometryWithPoseEstimatorCommand() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()))
             .withName("Sync Odometry /w Pose");
     }
 
     @Override
-    public CommandBase selfTestMotors() {
+    public Command createSelfTestMotorsCommand() {
         return new SequentialCommandGroup(createIsLeftMotorMoving(), createIsRightMotorMoving());
-    }
-
-    @Override
-    protected BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter) {
-        return new RamseteAutoBuilder(
-            this::getPose, // Pose supplier
-            poseSetter,
-            new RamseteController(),
-            K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
-            this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
-            eventMap,
-            true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-            this);
     }
 
     ////////////////
     // Checklists
     ////////////////
-    public CommandBase createIsLeftMotorMoving() {
+    public Command createIsLeftMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderLeft, "Chassis: Leader left motor", 1.0);
     }
 
-    public CommandBase createIsRightMotorMoving() {
+    public Command createIsRightMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
 
 
 }
-

@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public abstract class DriveJoystickBase extends CommandBase {
+public abstract class DriveJoystickBase extends Command {
 
     protected final Chassis m_chassis;
 

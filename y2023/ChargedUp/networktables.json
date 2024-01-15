@@ -8,14 +8,6 @@
     }
   },
   {
-    "name": "/Preferences/Chassis auto engage kP",
-    "type": "double",
-    "value": 0.02,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
     "value": 0.01,
@@ -152,15 +144,15 @@
     }
   },
   {
-    "name": "/Preferences/Wheel PID.mm.kp",
+    "name": "/Preferences/SwerveTranslation.mm.kp",
     "type": "double",
-    "value": 0.0005,
+    "value": 2.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Wheel PID.mm.kd",
+    "name": "/Preferences/SwerveTranslation.mm.kd",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -168,23 +160,63 @@
     }
   },
   {
-    "name": "/Preferences/Wheel PID.mm.kff",
+    "name": "/Preferences/SwerveRotation.mm.kp",
     "type": "double",
-    "value": 0.33,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Azimuth PID.mm.kp",
+    "name": "/Preferences/SwerveRotation.mm.kd",
     "type": "double",
-    "value": 0.005,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Azimuth PID.mm.kd",
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kff",
+    "type": "double",
+    "value": 0.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Turning PID.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Turning PID.mm.kd",
     "type": "double",
     "value": 0.0,
     "properties": {

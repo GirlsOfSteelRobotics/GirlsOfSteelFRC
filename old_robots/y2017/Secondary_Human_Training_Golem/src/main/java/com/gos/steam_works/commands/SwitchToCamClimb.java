@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Camera;
 
 /**
  *
  */
-public class SwitchToCamClimb extends CommandBase {
+public class SwitchToCamClimb extends Command {
 
     private final Camera m_camera;
 

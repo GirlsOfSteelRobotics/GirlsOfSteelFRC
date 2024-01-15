@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class Turn180 extends CommandBase {
+public class Turn180 extends Command {
 
     public Turn180(Chassis chassis) {
         addRequirements(chassis);

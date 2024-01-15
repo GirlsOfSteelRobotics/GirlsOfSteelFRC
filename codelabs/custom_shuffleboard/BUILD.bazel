@@ -10,5 +10,6 @@ shuffleboard_widget(
 gos_java_binary(
     name = "Main",
     main_class = "com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureStandaloneMain",
+    tags = ["no-roborio"],
     runtime_deps = [":custom_shuffleboard"],
 )

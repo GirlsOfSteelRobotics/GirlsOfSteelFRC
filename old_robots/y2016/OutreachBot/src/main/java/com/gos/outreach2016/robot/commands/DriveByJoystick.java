@@ -1,14 +1,14 @@
 package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.outreach2016.robot.subsystems.DriveSystem;
 
 /**
  *
  */
-public class DriveByJoystick extends CommandBase {
+public class DriveByJoystick extends Command {
 
     private final DriveSystem m_driveSystem;
     public final Joystick m_driveStick;

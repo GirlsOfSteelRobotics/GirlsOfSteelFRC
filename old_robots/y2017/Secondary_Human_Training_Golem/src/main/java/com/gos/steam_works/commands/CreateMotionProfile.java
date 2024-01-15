@@ -1,6 +1,6 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.RobotMap;
 import com.gos.steam_works.subsystems.Chassis;
 
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  *
  */
-public class CreateMotionProfile extends CommandBase {
+public class CreateMotionProfile extends Command {
     private static final double DURATION = 20.0;
     private static final double ERROR = 0; // TODO: change
 

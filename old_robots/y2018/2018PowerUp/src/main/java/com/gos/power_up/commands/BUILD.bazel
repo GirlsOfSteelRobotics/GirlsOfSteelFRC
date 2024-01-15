@@ -8,8 +8,9 @@ gos_java_library(
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up:RobotMap",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up:Vision",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/subsystems",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-phoenix//libraries/java/api-java",
+        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
     ],
 )

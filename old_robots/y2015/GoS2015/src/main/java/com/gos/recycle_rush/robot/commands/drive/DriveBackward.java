@@ -1,10 +1,10 @@
 package com.gos.recycle_rush.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 
-public class DriveBackward extends CommandBase {
+public class DriveBackward extends Command {
     private final Joystick m_joystick;
     private final Chassis m_chassis;
 

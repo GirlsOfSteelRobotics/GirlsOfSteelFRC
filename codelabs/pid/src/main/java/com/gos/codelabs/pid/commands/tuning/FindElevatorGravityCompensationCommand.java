@@ -1,9 +1,9 @@
 package com.gos.codelabs.pid.commands.tuning;
 
 import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class FindElevatorGravityCompensationCommand extends CommandBase {
+public class FindElevatorGravityCompensationCommand extends Command {
 
     private final ElevatorSubsystem m_elevator;
 

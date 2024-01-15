@@ -5,7 +5,7 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/wpilib/wpimath",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@maven//:org_snobotv2_snobot_sim_java_base",
     ],
 )

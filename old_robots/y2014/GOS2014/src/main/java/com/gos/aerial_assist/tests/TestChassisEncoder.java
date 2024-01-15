@@ -11,7 +11,7 @@
 // *
 // * @author user
 // */
-//public class TestChassisEncoder extends CommandBase{
+//public class TestChassisEncoder extends Command{
 //
 //    public TestChassisEncoder() {
 //        addRequirements(chassis);

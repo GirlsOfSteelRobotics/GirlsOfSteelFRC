@@ -3,17 +3,16 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.Constants.DriveConstants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
 
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.navx.NavxWrapper;
@@ -36,7 +35,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.numbers.N2;
 
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +57,10 @@ public class Chassis extends SubsystemBase {
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
 
-    private final SparkMaxPIDController m_leftPidController;
-    private final SparkMaxPIDController m_rightPidController;
+    private final SparkPIDController m_leftPidController;
+    private final SparkPIDController m_rightPidController;
 
-    private final Gyro m_gyro;
+    private final AHRS m_gyro;
 
     private final DifferentialDrive m_drive;
 

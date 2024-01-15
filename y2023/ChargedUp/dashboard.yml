@@ -1,0 +1,123 @@
+base_package: com.gos.chargedup.shuffleboard
+plugin_summary: Widgets for the Charged Up Robot
+plugin_name: ChargedUpRobot
+widgets:
+- table: SuperStructure
+  package_name: super_structure
+  widget_name: Charged Up Bot Super Structure Widget
+  sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+  children_tables:
+  - table: SuperStructure
+    table_name: SUPER_STRUCTURE
+    entries:
+    - type: double
+      name: armAngle
+      dasboard_constant: ARM_ANGLE
+      sim_incr: '2'
+    - type: double
+      name: armGoalAngle
+      dasboard_constant: ARM_GOAL_ANGLE
+      sim_incr: '2'
+    - type: double
+      name: armSpeed
+      dasboard_constant: ARM_SPEED
+    - type: boolean
+      name: intakeDown
+      dasboard_constant: INTAKE_DOWN
+    - type: boolean
+      name: armExtension1
+      dasboard_constant: ARM_EXTENSION1
+    - type: boolean
+      name: armExtension2
+      dasboard_constant: ARM_EXTENSION2
+    - type: double
+      name: intakeSpeed
+      dasboard_constant: INTAKE_SPEED
+    - type: double
+      name: turretSpeed
+      dasboard_constant: TURRET_SPEED
+    - type: double
+      name: turretAngle
+      dasboard_constant: TURRET_ANGLE
+      sim_incr: '2'
+    - type: double
+      name: turretGoalAngle
+      dasboard_constant: TURRET_GOAL_ANGLE
+      sim_incr: '2'
+    - type: double
+      name: robotAngle
+      dasboard_constant: ROBOT_ANGLE
+      sim_incr: '2'
+  shapes:
+  - type: Rectangle
+    name: chassis
+    x: '35'
+    y: MAX_HEIGHT - 6
+    color: palevioletred
+    height: '6'
+    width: '30'
+  - type: Rectangle
+    name: turret
+    x: '38.5'
+    y: MAX_HEIGHT - 9.5
+    color: palevioletred
+    height: '9.5'
+    width: '15.5'
+  - type: Rectangle
+    name: armBase
+    x: '45'
+    y: MAX_HEIGHT - 28
+    color: powderblue
+    height: '18.5'
+    width: '2'
+  - type: Rectangle
+    name: arm
+    x: ARM_BASE_X + 1
+    y: ARM_BASE_Y
+    color: pink
+    height: '15'
+    width: '1'
+  - type: Rectangle
+    name: armGoal
+    color: transparent
+  - type: Circle
+    name: armJoint
+    x: ARM_BASE_X + 1
+    y: ARM_BASE_Y
+    color: palevioletred
+    radius: '1'
+  - type: Rectangle
+    name: claw
+    x: ARM_X - 1
+    y: ARM_Y + 15
+    color: lightskyblue
+    height: '10'
+    width: '2'
+  - type: Rectangle
+    name: intake
+    x: CHASSIS_X + 30
+    y: CHASSIS_Y
+    color: plum
+    height: '15'
+    width: '6'
+  - type: Rectangle
+    name: chassisTopDown
+    x: '10'
+    y: '10'
+    color: coral
+    height: '20'
+    width: '14'
+  - type: Rectangle
+    name: turretTopDown
+    x: CHASSIS_TOP_DOWN_X + (CHASSIS_TOP_DOWN_WIDTH - TURRET_TOP_DOWN_WIDTH) / 2
+    y: CHASSIS_TOP_DOWN_Y + CHASSIS_TOP_DOWN_HEIGHT / 2 - TURRET_TOP_DOWN_HEIGHT
+    color: chartreuse
+    height: '15'
+    width: '3'
+  - type: Rectangle
+    name: turretTopDownGoal
+    color: transparent
+
+manual_widgets:
+- table: ScoringPosition
+  package_name: scoring_position

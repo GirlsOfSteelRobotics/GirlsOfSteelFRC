@@ -8,13 +8,13 @@ package com.gos.ultimate_ascent.tests;
 
 import com.gos.ultimate_ascent.subsystems.Gripper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.ultimate_ascent.commands.CommandBase;
+import com.gos.ultimate_ascent.commands.GosCommandBase;
 
 /**
  * @author sam
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class Climber extends CommandBase {
+public class Climber extends GosCommandBase {
 
     private final com.gos.ultimate_ascent.subsystems.Climber m_climber;
     private final Gripper m_gripper;

@@ -9,7 +9,6 @@ gos_java_library(
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/commands",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

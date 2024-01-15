@@ -2,9 +2,9 @@ package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class TimedDriveStraight extends CommandBase {
+public class TimedDriveStraight extends Command {
 
     private final Chassis m_chassis;
     private final Timer m_timer;

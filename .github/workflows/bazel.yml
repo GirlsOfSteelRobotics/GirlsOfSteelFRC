@@ -13,12 +13,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # TODO(PJ) Mac seems flakey on github. Turning it off for now
-        # platform: [ubuntu-latest, macos-latest, windows-latest]
-        platform: [ubuntu-latest, windows-latest]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with: { python-version: '3.10.8' }
+      - name: Build allowing failure # TODO(PJ) Mac seems flakey on github. Turning it off for now
+        run: bazel test //... -k --config=remote --config=ci || true
       - name: Build
         run: bazel test //... -k --config=remote --config=ci
 
@@ -79,7 +81,7 @@ jobs:
           GO111MODULE=on go get github.com/bazelbuild/buildtools/buildozer@5.1.0
 
       - name: Prep unused deps
-        run:  bazel query --tool_tag=unused_deps --keep_going "kind('(kt|java|android)_*', //...)" && bazel build --tool_tag=unused_deps --keep_going //... --config=remote
+        run:  bazel query --tool_tag=unused_deps --keep_going "kind('(kt|java|android)_*', //...)" && bazel build --tool_tag=unused_deps --keep_going //... --config=remote || true
 
       - name: Run unused deps
         run: unused_deps -cquery //... > buildozer-cmds.sh

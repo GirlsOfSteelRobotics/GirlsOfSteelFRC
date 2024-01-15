@@ -6,7 +6,7 @@ gos_java_library(
     visibility = ["//old_robots/y2016/TeamSquirtle:__subpackages__"],
     deps = [
         "//old_robots/y2016/TeamSquirtle/src/main/java/com/gos/preseason2016/team_squirtle/robot/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

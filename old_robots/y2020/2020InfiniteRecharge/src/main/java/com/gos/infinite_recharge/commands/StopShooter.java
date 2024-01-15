@@ -1,10 +1,10 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Shooter;
 
 
-public class StopShooter extends CommandBase {
+public class StopShooter extends Command {
 
     private final Shooter m_shooter;
 

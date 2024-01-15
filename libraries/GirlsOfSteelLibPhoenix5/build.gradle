@@ -1,0 +1,21 @@
+plugins {
+    id "java"
+    id "edu.wpi.first.GradleRIO" version "2024.1.1"
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+dependencies {
+    implementation wpi.java.deps.wpilib()
+    implementation wpi.java.vendor.java()
+    implementation project(":libraries:GirlsOfSteelLib")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+ext.groupId = "com.gos.lib.ctre"
+apply from: "${rootDir}/build_scripts/gradle/publish_java.gradle"

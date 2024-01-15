@@ -15,7 +15,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  *
  * @author Heather, Jisue
  */
-public class CollectorWheelForwardAutoVer extends CommandBase {
+public class CollectorWheelForwardAutoVer extends GosCommandBase {
 
 
     private static final double TIME = 2.5; //when 3 seconds pass it will drop the ball
@@ -37,7 +37,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     @Override
     public void initialize() {
         m_startTime = Timer.getFPGATimestamp();
-        m_camera.setIsHot(hotAtLeastOnce()); //CommandBase.camera.isGoalHot(); //Get is hot here
+        m_camera.setIsHot(hotAtLeastOnce()); //Command.camera.isGoalHot(); //Get is hot here
         System.out.println("CAMERA IS HOT?::: " + m_camera.isHot());
 
     }
@@ -62,7 +62,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     @Override
     public boolean isFinished() {
         return Timer.getFPGATimestamp() - m_startTime > TIME;
-        //return CommandBase.collector.isCollectorEngaged();
+        //return Command.collector.isCollectorEngaged();
     }
 
     /**

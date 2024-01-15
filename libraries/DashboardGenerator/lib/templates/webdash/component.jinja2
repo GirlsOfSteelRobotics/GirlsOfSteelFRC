@@ -1,7 +1,12 @@
 import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js"
-import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./{{widget.package_name.replace("_", "-")}}/renderer"
-import { {{widget.table}}Data } from "./{{widget.package_name.replace("_", "-")}}/datatypes"
+import { customElement, property } from "lit/decorators.js";
+import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./{{widget.package_name.as_dash()}}/renderer";
+import { {{widget.table}}Data
+{%- if widget.has_nested_tables -%}
+    {%- for child in widget.children_tables -%}
+    , {{child.table}}Data
+    {%- endfor -%}
+{%- endif %} } from "./{{widget.package_name.as_dash()}}/datatypes";
 
 /* tslint:disable */
 
@@ -9,30 +14,82 @@ export const elementConfig = {
   dashboard: {
     displayName: "{{widget.table}}",
   },
+{%- if widget.has_nested_tables %}
+  slots: [{ name: '', allowedChildren: [
+{%- for child in widget.children_tables -%}
+"{{subtable_name(widget, child)}}"{% if not loop.last %}, {%endif%}
+{%- endfor -%}
+] }],
+{%- endif %}
   properties: {
+{%- if not widget.has_nested_tables %}
 {%- for child in widget.children_tables %}
   {%- for variable in child.entries %}
-    {{variable.name}}: { type: "{%- if variable.type == "double" %}Number{%- elif variable.type == "boolean" %}Boolean{% else %} UHOH {% endif %}", {% if loop.first %}primary: true{%else%}reflect: true{%endif%} },
+    {{variable.name}}: { type: "{{javascript_type(variable.type)}}", {% if loop.first %}primary: true{%else%}reflect: true{%endif%} },
   {%- endfor %}
 {%- endfor %}
+{%- endif %}
+  },
+  demos: [
+    {
+      html: `
+      <{{widget.package_name.as_dash()}} source-key="/{{widget.table}}" source-provider="NetworkTables" style="width: 460px; height: 315px;">
+{%- if widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+        <{{subtable_name(widget, child)}} source-provider="NetworkTables" source-key="/{{widget.table}}/{{child.table}}"></{{subtable_name(widget, child)}}>
+{%- endfor %}
+{%- endif %}
+      </{{widget.package_name.as_dash()}}>
+    `,
+    },
+  ],
+};
+
+
+{% if widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+export const {{child.table.lower_first_char()}}ElementConfig = {
+  dashboard: {
+    displayName: "{{child.table}}",
+  },
+  properties: {
+  {%- for variable in child.entries %}
+    {{variable.name}}: { type: "{{javascript_type(variable.type)}}", {% if loop.first %}primary: true{%else%}reflect: true{%endif%} },
+  {%- endfor %}
   }
 };
 
-@customElement("{{widget.package_name.replace("_", "-")}}")
+
+@customElement("{{subtable_name(widget, child)}}")
+export class {{child.table}} extends LitElement {
+  static properties = controlPanelElementConfig.properties;
+
+}
+{%- endfor %}
+{%- endif %}
+
+@customElement("{{widget.package_name.as_dash()}}")
 export class {{widget.table}} extends LitElement {
+{%- if not widget.has_nested_tables %}
   static properties = elementConfig.properties;
 
 {% for child in widget.children_tables %}
   {%- for variable in child.entries %}
-  @property({ type: {% if variable.type == "double" %}Number{%- elif variable.type == "boolean" %}Boolean{% else %} UHOH {% endif %} }) {{variable.name}} = {% if variable.type == "double" %}0{%- elif variable.type == "boolean" %}true{% else %} UHOH {% endif %};
+  @property({ type: {{javascript_type(variable.type)}} }) {{variable.name}} = {{variable.default_value()}};
   {%- endfor %}
 {%- endfor %}
+{%- endif %}
 
   renderer = new Renderer();
 
   firstUpdated() {
     const canvas = this.shadowRoot?.querySelector("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+{% if widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+    this.{{child.table.lower_first_char()}} = this.children[{{loop.index0}}];
+{%- endfor %}
+{%- endif %}
 
     const updateObjectsAndDrawings = () => {
       this.renderRobot(canvas, ctx);
@@ -59,22 +116,22 @@ export class {{widget.table}} extends LitElement {
 
   {%- for child in widget.children_tables %}
 
-    const {{lower_first_char(child.table)}}Info: {{child.table}}Data = {
+    const {{child.table.lower_first_char()}}Info: {{child.table}}Data = {
     {%- for variable in child.entries %}
-      {{variable.name}}: this.{{variable.name}},
+      {{variable.name}}: this.{% if widget.has_nested_tables %}{{child.table.lower_first_char()}}.{% endif %}{{variable.name}},
     {%- endfor %}
     };
   {%- endfor %}
 
-{%- if widget.children_tables|length != 1 %}
-      const {{lower_first_char(widget.table)}}Info: {{widget.table}}Data = {
+{%- if widget.has_nested_tables %}
+    const {{widget.table.lower_first_char()}}Info: {{widget.table}}Data = {
 {%- for child in widget.children_tables %}
-        {{lower_first_char(child.table)}} : {{lower_first_char(child.table)}}Data,
+      {{child.table.lower_first_char()}} : {{child.table.lower_first_char()}}Info,
 {%- endfor %}
-      };
+    };
 {%- endif %}
 
-    this.renderer.render(ctx, {{lower_first_char(widget.table)}}Info);
+    this.renderer.render(ctx, {{widget.table.lower_first_char()}}Info);
 
     ctx.restore();
   }

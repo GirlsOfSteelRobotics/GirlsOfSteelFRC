@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class AutoDoNothing extends CommandBase {
+public class AutoDoNothing extends Command {
 
     public AutoDoNothing(Chassis chassis) {
         // Use requires() here to declare subsystem dependencies

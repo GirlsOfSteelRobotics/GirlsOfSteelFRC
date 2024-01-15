@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 
 public class {{widget.table}}Controller {
@@ -15,20 +16,21 @@ public class {{widget.table}}Controller {
     private static final double MAX_WIDTH = 1; // TODO figure out real value
     private static final double MAX_HEIGHT = 1; // TODO figure out real value
 {% for shape in widget.shapes %}
-    {%- if shape.type == "Rectangle" %}
-    private static final double {{camel_to_snake(shape.name).upper()}}_HEIGHT = 1; // TODO figure out real value
-    private static final double {{camel_to_snake(shape.name).upper()}}_WIDTH = 1; // TODO figure out real value
-    {%- elif shape.type == "Arc" %}
-    private static final double {{camel_to_snake(shape.name).upper()}}_HEIGHT = 1; // TODO figure out real value
-    private static final double {{camel_to_snake(shape.name).upper()}}_WIDTH = 1; // TODO figure out real value
+    {%- if shape.type == "Rectangle" or shape.type == "Arc" %}
+    private static final double {{shape.name.camel_to_upper_snake()}}_HEIGHT = {{ shape.height + ";" if shape.height else "1; // TODO figure out real value" }}
+    private static final double {{shape.name.camel_to_upper_snake()}}_WIDTH = {{ shape.width + ";" if shape.width else "1; // TODO figure out real value" }}
     {%- elif shape.type == "Circle" %}
-    private static final double {{camel_to_snake(shape.name).upper()}}_RADIUS = 1; // TODO figure out real value
+    private static final double {{shape.name.camel_to_upper_snake()}}_RADIUS = {{shape.radius + ";" if shape.radius else "1; // TODO figure out real value" }}
+    {%- else %}
+    -----------------------------
+    -- Unknown Shape {{ shape }}
+    -----------------------------
     {%- endif %}
     {%- endfor %}
 
 {% for shape in widget.shapes %}
-    private static final double {{camel_to_snake(shape.name).upper()}}_X = 1; // TODO figure out real value
-    private static final double {{camel_to_snake(shape.name).upper()}}_Y = 1; // TODO figure out real value
+    private static final double {{shape.name.camel_to_upper_snake()}}_X = {{shape.x + ";" if shape.x else "1; // TODO figure out real value" }}
+    private static final double {{shape.name.camel_to_upper_snake()}}_Y = {{shape.y + ";" if shape.y else "1; // TODO figure out real value" }}
 {%- endfor %}
 
     @FXML
@@ -36,10 +38,13 @@ public class {{widget.table}}Controller {
 
     @FXML
     private Pane m_pane;
-
     {% for shape in widget.shapes %}
     @FXML
     private {{shape.type}} m_{{shape.name}};
+{% endfor %}
+
+{% for shape in widget.shapes  if shape.rotates %}
+    private Rotate m_{{shape.name}}Rotation;
 {% endfor %}
 
     @FXML
@@ -51,9 +56,7 @@ public class {{widget.table}}Controller {
         m_pane.setMinHeight(MAX_HEIGHT * minWidthMultiplier);
         m_pane.setMinWidth(MAX_WIDTH * minWidthMultiplier);
 
-        DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
-            return Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
-        }, m_pane.widthProperty(), m_pane.heightProperty());
+        DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT), m_pane.widthProperty(), m_pane.heightProperty());
 
         Scale scale = new Scale();
         scale.xProperty().bind(scaleBinding);
@@ -61,28 +64,32 @@ public class {{widget.table}}Controller {
 
         m_group.getTransforms().add(scale);
         ///////////////////////////////////////////////////////////
-
 {% for shape in widget.shapes %}
 {%- if shape.type == "Rectangle" %}
-        m_{{ shape.name }}.setX({{camel_to_snake(shape.name).upper()}}_X);
-        m_{{ shape.name }}.setY({{camel_to_snake(shape.name).upper()}}_Y);
-        m_{{ shape.name }}.setHeight({{camel_to_snake(shape.name).upper()}}_HEIGHT);
-        m_{{ shape.name }}.setWidth({{camel_to_snake(shape.name).upper()}}_WIDTH);
+        m_{{ shape.name }}.setX({{shape.name.camel_to_upper_snake()}}_X);
+        m_{{ shape.name }}.setY({{shape.name.camel_to_upper_snake()}}_Y);
+        m_{{ shape.name }}.setHeight({{shape.name.camel_to_upper_snake()}}_HEIGHT);
+        m_{{ shape.name }}.setWidth({{shape.name.camel_to_upper_snake()}}_WIDTH);
 {%- elif shape.type == "Circle" %}
-        m_{{ shape.name }}.setCenterX({{camel_to_snake(shape.name).upper()}}_X);
-        m_{{ shape.name }}.setCenterY({{camel_to_snake(shape.name).upper()}}_Y);
-        m_{{ shape.name }}.setRadius({{camel_to_snake(shape.name).upper()}}_RADIUS);
+        m_{{ shape.name }}.setCenterX({{shape.name.camel_to_upper_snake()}}_X);
+        m_{{ shape.name }}.setCenterY({{shape.name.camel_to_upper_snake()}}_Y);
+        m_{{ shape.name }}.setRadius({{shape.name.camel_to_upper_snake()}}_RADIUS);
 {%- elif shape.type == "Arc" %}
-        m_{{ shape.name }}.setCenterX({{camel_to_snake(shape.name).upper()}}_X);
-        m_{{ shape.name }}.setCenterY({{camel_to_snake(shape.name).upper()}}_Y);
-        m_{{ shape.name }}.setRadiusY({{camel_to_snake(shape.name).upper()}}_HEIGHT);
-        m_{{ shape.name }}.setRadiusX({{camel_to_snake(shape.name).upper()}}_WIDTH);
+        m_{{ shape.name }}.setCenterX({{shape.name.camel_to_upper_snake()}}_X);
+        m_{{ shape.name }}.setCenterY({{shape.name.camel_to_upper_snake()}}_Y);
+        m_{{ shape.name }}.setRadiusY({{shape.name.camel_to_upper_snake()}}_HEIGHT);
+        m_{{ shape.name }}.setRadiusX({{shape.name.camel_to_upper_snake()}}_WIDTH);
 {%- endif %}
+{% endfor %}
+
+{% for shape in widget.shapes  if shape.rotates %}
+    m_{{shape.name}}Rotation = new Rotate();
+    m_{{shape.name}}.getTransforms().add(m_{{shape.name}}Rotation);
 {% endfor %}
     }
 
 {% for child in widget.children_tables %}
-    public void update{{child.table}}({{child.table}}Data {{lower_first_char(child.table)}}Data) {
+    public void update{{child.table}}({{child.table}}Data {{child.table.lower_first_char()}}Data) {
         // TODO implement
     }
 {% endfor %}

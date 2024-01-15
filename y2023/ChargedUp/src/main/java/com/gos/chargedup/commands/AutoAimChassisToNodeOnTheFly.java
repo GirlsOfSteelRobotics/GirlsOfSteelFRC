@@ -12,11 +12,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.function.Supplier;
 
-public class AutoAimChassisToNodeOnTheFly extends CommandBase {
+public class AutoAimChassisToNodeOnTheFly extends Command {
 
     // TODO get values
     protected static final double SHIFT_Y_CHASSIS_POS = Units.inchesToMeters(.5);
@@ -79,7 +79,7 @@ public class AutoAimChassisToNodeOnTheFly extends CommandBase {
             goalAngle -= 360;
         }
 
-        m_chassisSubsystem.turnPID(goalAngle);
+        m_chassisSubsystem.turnToAngle(goalAngle);
 
         if (m_clawAlignedCheck.isClawAtPoint(nodePosAbs, m_chassisSubsystem.getYaw())) {
             m_ledManagerSubsystem.setClawIsAligned(true);

@@ -10,9 +10,9 @@ package com.gos.deep_space.commands;
 import com.gos.deep_space.subsystems.BabyDrive;
 import com.gos.deep_space.subsystems.Chassis;
 import com.gos.lib.sensors.LidarLite;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class LidarDriveForward extends CommandBase {
+public class LidarDriveForward extends Command {
 
     private static final double LIDAR_TOLERANCE = 1.0;
     private static final double DRIVE_SPEED = 0.4;

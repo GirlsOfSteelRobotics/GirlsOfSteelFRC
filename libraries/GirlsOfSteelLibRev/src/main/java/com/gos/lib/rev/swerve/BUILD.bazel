@@ -1,0 +1,21 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "swerve",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/logging",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/swerve",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/alerts",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/properties/pid",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-revlib//libraries/java/revlib-java",
+        "@maven//:org_snobotv2_snobot_sim_java_base",
+        "@maven//:org_snobotv2_snobot_sim_java_revlib",
+        "@maven//:org_snobotv2_snobot_swerve_sim",
+    ],
+)

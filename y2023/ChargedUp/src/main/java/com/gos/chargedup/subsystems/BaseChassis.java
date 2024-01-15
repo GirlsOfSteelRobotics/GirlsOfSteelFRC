@@ -1,19 +1,19 @@
 package com.gos.chargedup.subsystems;
 
-import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
 import com.gos.chargedup.RectangleInterface;
-import com.gos.lib.ctre.PigeonAlerts;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.phoenix6.alerts.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.BaseAutoBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -23,27 +23,21 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public abstract class BaseChassis extends SubsystemBase implements ChassisSubsystemInterface {
     protected static final double PITCH_LOWER_LIMIT = -3.0;
     protected static final double PITCH_UPPER_LIMIT = 3.0;
     protected final HeavyDoubleProperty m_turnPidAllowableError;
 
-    protected final WPI_Pigeon2 m_gyro;
+    protected final Pigeon2 m_gyro;
 
     protected final GosField m_field;
 
@@ -109,8 +103,8 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         m_networkTableEntries.addBoolean("Field/flip", this::isRedAllianceFlipped);
         m_networkTableEntries.addDouble("Gyro Angle (deg)", this::getYaw);
 
-        m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
-        m_gyro.configFactoryDefault();
+        m_gyro = new Pigeon2(Constants.PIGEON_PORT);
+        m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         if (Constants.IS_ROBOT_BLOSSOM) {
             m_networkTableEntries.addDouble("Gyro Rate", () -> -m_gyro.getRate());
         } else {
@@ -162,15 +156,15 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         return closestNode;
     }
 
-    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
     @Override
     public double getPitch() {
-        return m_gyro.getRoll();
+        // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
+        return m_gyro.getRoll().getValue();
     }
 
     @Override
     public double getYaw() {
-        return m_gyro.getYaw();
+        return m_gyro.getYaw().getValue();
     }
 
     @Override
@@ -196,7 +190,7 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     }
 
     public boolean isRedAllianceFlipped() {
-        return DriverStation.getAlliance() == DriverStation.Alliance.Red;
+        return GetAllianceUtil.isRedAlliance();
     }
 
     @Override
@@ -204,91 +198,44 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         return (this.isInCommunityZone() || this.isInLoadingZone());
     }
 
+    protected abstract void lockDriveTrain();
+
+    protected abstract void unlockDriveTrain();
+
+    //////////////////////////////
+    // Commands
+    //////////////////////////////
     @Override
     @SuppressWarnings("PMD.AvoidReassigningParameters")
-    public CommandBase driveToPoint(Pose2d point, boolean reverse) {
+    public Command createDriveToPointCommand(Pose2d point, boolean reverse) {
         point = AllianceFlipper.maybeFlip(point);
         System.out.println("flipped point" + point);
-        return driveToPointNoFlip(getPose(), point, reverse);
+        return createDriveToPointNoFlipCommand(getPose(), point, reverse);
     }
 
     @Override
-    public CommandBase createAutoEngageCommand() {
+    public Command createAutoEngageCommand() {
         return this.runOnce(this::lockDriveTrain)
             .andThen(runEnd(this::autoEngage, () -> m_tryingToEngage = false))
             .finallyDo((interrupted) -> unlockDriveTrain()).withName("Auto Engage");
     }
 
-    protected abstract void lockDriveTrain();
-
-    protected abstract void unlockDriveTrain();
-
     @Override
-    public CommandBase createResetOdometry(Pose2d pose2d) {
+    public Command createResetOdometryCommand(Pose2d pose2d) {
         return this.run(() -> resetOdometry(pose2d))
             .ignoringDisable(true)
             .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
-    protected abstract BaseAutoBuilder createPathPlannerAutoBuilder(Map<String, Command> eventMap, Consumer<Pose2d> poseSetter);
-
     @Override
-    public CommandBase createPathPlannerBuilder(PathPlannerTrajectory trajectory) {
-        return createPathPlannerBuilder(new HashMap<>()).fullAuto(trajectory);
+    public Command createDeferredDriveToPointCommand(Pose2d point, boolean reverse) {
+        return new ProxyCommand(() -> createDriveToPointCommand(point, reverse));
     }
 
     @Override
-    public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory) {
-        return createPathPlannerBuilder(new HashMap<>()).fullAuto(trajectory);
-    }
-
-    @Override
-    public CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
-        return createPathPlannerBuilder(events).fullAuto(trajectory);
-    }
-
-    private BaseAutoBuilder createPathPlannerBuilder(Map<String, Command> eventMap) {
-        return createPathPlannerAutoBuilder(eventMap, this::resetOdometry);
-    }
-
-    @Override
-    public CommandBase createPathPlannerBuilderNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events) {
-        return createPathPlannerBuilderNoPoseReset(events).fullAuto(trajectory);
-    }
-
-    @Override
-    public CommandBase createPathPlannerBuilderNoPoseReset(PathPlannerTrajectory trajectory) {
-        return createPathPlannerBuilderNoPoseReset(new HashMap<>()).fullAuto(trajectory);
-    }
-
-    private BaseAutoBuilder createPathPlannerBuilderNoPoseReset(Map<String, Command> eventMap) {
-        return createPathPlannerAutoBuilder(eventMap, (Pose2d pose) -> {
-        });
-    }
-
-    @Override
-    public CommandBase createDriveToPoint(Pose2d point, boolean reverse) {
-        return new ProxyCommand(() -> driveToPoint(point, reverse));
-    }
-
-    @Override
-    public CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle) {
-        return Commands.runOnce(
-            () -> {
-                PathPlannerTrajectory.PathPlannerState initialState = trajectory.getInitialState();
-                initialState =
-                    PathPlannerTrajectory.transformStateForAlliance(
-                        initialState, DriverStation.getAlliance());
-                Pose2d startPose = new Pose2d(initialState.poseMeters.getTranslation(), startAngle);
-                resetOdometry(startPose);
-            });
-
-    }
-
-    @Override
-    public CommandBase createTurnPID(double angleGoal) {
+    public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
-            .andThen(this.run(() -> turnPID(angleGoal))
+            .andThen(this.run(() -> turnToAngle(angleGoal))
                 .until(this::turnPIDIsAtAngle)
                 .withName("Chassis to Angle" + angleGoal));
     }

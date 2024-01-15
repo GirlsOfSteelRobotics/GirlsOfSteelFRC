@@ -1,13 +1,13 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shifters.Speed;
 
 /**
  *
  */
-public class ShiftUp extends CommandBase {
+public class ShiftUp extends Command {
 
     private final Shifters m_shifters;
 

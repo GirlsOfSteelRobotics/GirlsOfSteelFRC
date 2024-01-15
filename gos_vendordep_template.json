@@ -14,7 +14,12 @@
     },
     {
       "groupId": "com.gos.lib.ctre",
-      "artifactId": "GirlsOfSteelLibCtre",
+      "artifactId": "GirlsOfSteelLibPhoenix5",
+      "version": "$VERSION"
+    },
+    {
+      "groupId": "com.gos.lib.ctre",
+      "artifactId": "GirlsOfSteelLibPhoenix6",
       "version": "$VERSION"
     },
     {

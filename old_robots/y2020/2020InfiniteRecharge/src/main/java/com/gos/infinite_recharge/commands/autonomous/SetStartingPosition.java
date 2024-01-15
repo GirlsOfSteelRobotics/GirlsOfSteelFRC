@@ -3,9 +3,9 @@ package com.gos.infinite_recharge.commands.autonomous;
 import com.gos.infinite_recharge.subsystems.Chassis;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class SetStartingPosition extends CommandBase {
+public class SetStartingPosition extends Command {
 
     private final Chassis m_chassis;
     private final double m_xValue;

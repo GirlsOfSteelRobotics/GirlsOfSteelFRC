@@ -1,14 +1,10 @@
 package com.gos.chargedup.subsystems;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-
-import java.util.List;
-import java.util.Map;
 
 public interface ChassisSubsystemInterface extends Subsystem {
     double findingClosestNodeY(double yPositionButton);
@@ -17,12 +13,11 @@ public interface ChassisSubsystemInterface extends Subsystem {
 
     void stop();
 
-    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
     double getPitch();
 
     double getYaw();
 
-    void turnPID(double angleGoal);
+    void turnToAngle(double angleGoal);
 
     boolean turnPIDIsAtAngle();
 
@@ -38,34 +33,39 @@ public interface ChassisSubsystemInterface extends Subsystem {
 
     boolean canExtendArm();
 
-    @SuppressWarnings("PMD.AvoidReassigningParameters")
-    CommandBase driveToPoint(Pose2d point, boolean reverse);
+    void clearStickyFaults();
 
-    CommandBase driveToPointNoFlip(Pose2d start, Pose2d end, boolean reverse);
+    void setChassisSpeed(ChassisSpeeds speed);
 
-    void resetStickyFaultsChassis();
+    ChassisSpeeds getChassisSpeed();
 
-    CommandBase createAutoEngageCommand();
+    Command createDriveToPointCommand(Pose2d point, boolean reverse);
 
-    CommandBase createResetOdometry(Pose2d pose2d);
+    Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse);
 
-    CommandBase syncOdometryWithPoseEstimator();
+    Command createAutoEngageCommand();
 
-    CommandBase createPathPlannerBuilder(PathPlannerTrajectory trajectory);
+    Command createResetOdometryCommand(Pose2d pose2d);
 
-    CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory);
+    Command createSyncOdometryWithPoseEstimatorCommand();
 
-    CommandBase createPathPlannerBuilder(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
+    default Command createFollowPathCommand(String pathFilename) {
+        return createFollowPathCommand(pathFilename, true);
+    }
 
-    CommandBase createPathPlannerBuilderNoPoseReset(List<PathPlannerTrajectory> trajectory, Map<String, Command> events);
+    default Command createFollowPathCommand(String pathFilename, boolean resetPose) {
+        return createFollowPathCommand(PathPlannerPath.fromPathFile(pathFilename), resetPose);
+    }
 
-    CommandBase createPathPlannerBuilderNoPoseReset(PathPlannerTrajectory trajectory);
+    Command createFollowPathCommand(PathPlannerPath path, boolean resetPose);
 
-    CommandBase createDriveToPoint(Pose2d point, boolean reverse);
+    default Command createFollowPathCommandNoPoseReset(String pathFile)  {
+        return createFollowPathCommand(pathFile, false);
+    }
 
-    CommandBase resetPose(PathPlannerTrajectory trajectory, Rotation2d startAngle);
+    Command createDeferredDriveToPointCommand(Pose2d point, boolean reverse);
 
-    CommandBase createTurnPID(double angleGoal);
+    Command createTurnToAngleCommand(double angleGoal);
 
-    CommandBase selfTestMotors();
+    Command createSelfTestMotorsCommand();
 }

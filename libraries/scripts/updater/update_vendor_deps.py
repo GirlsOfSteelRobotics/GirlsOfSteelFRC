@@ -4,22 +4,28 @@ Downloads the latest version of the vendor dependences, and replaces all copies 
 import os
 import shutil
 import tempfile
-from libraries.scripts.updater.utils import walk_with_blacklist, auto_retry_download
+from libraries.scripts.updater.utils import (
+    walk_with_blacklist,
+    auto_retry_download,
+    PINNED_VSCODE_WPILIB_COMMITISH,
+)
 from libraries.scripts.git.git_python_wrappers import commit_all_changes
 
 CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "gos_vendor_cache")
 
 
 def download_latest_vendordeps(ignore_cache):
-    year = "2023"
+    year = "2024"
     # fmt: off
     vendor_dep_urls = {}
     vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/releases/{year}/NavX.json"
     vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc{year}-latest.json"
+    vendor_dep_urls["Phoenix6.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc{year}-latest.json"
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
     vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
-    vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/PhotonLib-json/1.0/PhotonLib-json-1.0.json"
-    vendor_dep_urls["PathplannerLib.json"] = "http://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json"
+    vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/photonlib-json/1.0/photonlib-json-1.0.json"
+    vendor_dep_urls["PathplannerLib.json"] = "https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json"
+    vendor_dep_urls["WPILibNewCommands.json"] = f"https://raw.githubusercontent.com/wpilibsuite/allwpilib/{PINNED_VSCODE_WPILIB_COMMITISH}/wpilibNewCommands/WPILibNewCommands.json"
     # fmt: on
 
     vendor_files = []
@@ -52,9 +58,7 @@ def update_vendor_deps(ignore_cache=True, auto_commit=True):
     for root, dirs, files in walk_with_blacklist("."):
         if root.endswith("vendordeps"):
             for vendor_file in files:
-                if vendor_file in ["WPILibNewCommands.json"]:
-                    continue
-                elif vendor_file in vendor_replacements:
+                if vendor_file in vendor_replacements:
                     new_file = os.path.join(CACHE_DIRECTORY, vendor_replacements[vendor_file])
                     file_to_write = os.path.join(root, vendor_replacements[vendor_file])
                     os.remove(os.path.join(root, vendor_file))

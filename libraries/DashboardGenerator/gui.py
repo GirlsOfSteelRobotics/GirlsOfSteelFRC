@@ -10,11 +10,12 @@ from libraries.DashboardGenerator.generate_dashboard import (
     generate_dashboard,
     get_this_directory,
 )
-from libraries.DashboardGenerator.lib.ui.subpanels import load_ui_file
+from libraries.DashboardGenerator.lib.dashboard_config import DashboardConfig
+from libraries.DashboardGenerator.lib.ui.subpanels import load_ui_file, TopLevelConfigWidget
 
 
 class Window(QMainWindow):
-    DEFAULT_FILE_DIR = os.path.join(get_this_directory(), "..", "..", "y2023", "ChargedUpDashboard")
+    DEFAULT_FILE_DIR = os.path.join(get_this_directory(), "..", "..", "y2024", "Crescendo")
     DEFAULT_FILE = os.path.join(DEFAULT_FILE_DIR, "dashboard.yml")
 
     def __init__(self, parent=None):
@@ -23,6 +24,8 @@ class Window(QMainWindow):
         self.centralwidget.setLayout(self.main_layout)
         self.config_file = None
         self.actionSave.setEnabled(False)
+
+        self.toplevel_widget: TopLevelConfigWidget
 
         self.setStyleSheet(qdarkstyle.load_stylesheet())
 
@@ -70,25 +73,19 @@ class Window(QMainWindow):
         msg.exec_()
 
     def load_config(self, config_file):
-        with open(config_file, "r") as f:
-            config = yaml.safe_load(f)
+        config = DashboardConfig.from_yaml_file(config_file)
 
         self.toplevel_widget.config_to_view(config)
 
-        widget_config = config["widgets"][0]
-        self.widget_toplevel_widget.config_to_view(widget_config)
-
         # Now that we have a config, we can enable the save button
         self.config_file = config_file
-        self.actionSave.setEnabled(False)
+        self.actionSave.setEnabled(True)
 
     def save_config(self):
         config = self.toplevel_widget.view_to_config()
-        widget_config = self.widget_toplevel_widget.view_to_config()
-        config["widgets"] = [widget_config]
 
         with open(self.config_file, "w") as f:
-            yaml.dump(config, f, sort_keys=False, indent=19)
+            yaml.dump(config.to_dict(), f, sort_keys=False, indent=19)
 
 
 def main():

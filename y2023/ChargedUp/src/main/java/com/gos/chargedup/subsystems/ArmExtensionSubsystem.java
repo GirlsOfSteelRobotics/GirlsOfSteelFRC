@@ -6,12 +6,9 @@ import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.DoubleSupplier;
 
@@ -118,96 +115,63 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_topPiston.set(TOP_PISTON_RETRACTED);
     }
 
-    ///////////////////////
-    // Command Factories
-    ///////////////////////
-
-    public CommandBase commandBottomPistonExtended() {
-        return runOnce(this::setBottomPistonExtended).withName("Arm Piston: Bottom Extended");
-    }
-
-    public CommandBase commandBottomPistonRetracted() {
-        return runOnce(this::setBottomPistonRetracted).withName("Arm Piston: Bottom Retracted");
-    }
-
-    public CommandBase commandTopPistonExtended() {
-        return runOnce(this::setTopPistonExtended).withName("Arm Piston: Top Extended");
-    }
-
-    public CommandBase commandTopPistonRetracted() {
-        return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
-    }
-
-    public CommandBase commandFullRetractPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.run(this::fullRetract),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
-
-    public CommandBase commandFullRetract() {
-        return run(this::fullRetract).unless(this::isFullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
-    }
-
-    public CommandBase commandMiddleRetractPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.run(this::middleRetract).withName("ArmPistonsMiddleRetract"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
-
-    public CommandBase commandMiddleRetract() {
-        return run(this::middleRetract).unless(this::isMiddleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
-    }
-
-    public CommandBase commandFullExtendPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.run(this::out).withName("Arm Pistons: FullExtend").withTimeout(PNEUMATICS_WAIT),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
-
-    public CommandBase commandFullExtend() {
-        return run(this::out).unless(this::isFullExtend).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
-    }
-
-    // TODO Are these ones necessary
-    public CommandBase commandOutPrevention(ChassisSubsystemInterface cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            this.run(this::out).withName("ArmPistonsOut"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
-
-    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height, GamePieceType gamePiece) {
-        if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CONE) {
-            return commandFullExtend();
-        }
-        else if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CUBE) {
-            return commandMiddleRetract();
-        }
-        else if (height == AutoPivotHeight.MEDIUM && gamePiece == GamePieceType.CONE) {
-            return commandMiddleRetract();
-        }
-        else if (height == AutoPivotHeight.MEDIUM && gamePiece == GamePieceType.CUBE) {
-            return commandFullRetract();
-        }
-        else {
-            return commandFullRetract();
-        }
-    }
-
     ////////////////
     // Checklists
     ////////////////
-
-
-    public CommandBase createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
+    public Command createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
     }
 
-    public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
+    public Command createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
-}
 
+    ///////////////////////
+    // Command Factories
+    ///////////////////////
+    public Command createExtendBottomPistonCommand() {
+        return runOnce(this::setBottomPistonExtended).withName("Arm Piston: Bottom Extended");
+    }
+
+    public Command createRetractBottomPistonCommand() {
+        return runOnce(this::setBottomPistonRetracted).withName("Arm Piston: Bottom Retracted");
+    }
+
+    public Command createExtendTopPistonCommand() {
+        return runOnce(this::setTopPistonExtended).withName("Arm Piston: Top Extended");
+    }
+
+    public Command createRetractTopPistonCommand() {
+        return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
+    }
+
+    public Command createFullRetractCommand() {
+        return run(this::fullRetract).unless(this::isFullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
+    }
+
+    public Command createMiddleExtensionCommand() {
+        return run(this::middleRetract).unless(this::isMiddleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
+    }
+
+    public Command createFullExtensionCommand() {
+        return run(this::out).unless(this::isFullExtend).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
+    }
+
+    public Command createArmToSpecifiedHeightCommand(AutoPivotHeight height, GamePieceType gamePiece) {
+        if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CONE) {
+            return createFullExtensionCommand();
+        }
+        else if (height == AutoPivotHeight.HIGH && gamePiece == GamePieceType.CUBE) {
+            return createMiddleExtensionCommand();
+        }
+        else if (height == AutoPivotHeight.MEDIUM && gamePiece == GamePieceType.CONE) {
+            return createMiddleExtensionCommand();
+        }
+        else if (height == AutoPivotHeight.MEDIUM && gamePiece == GamePieceType.CUBE) {
+            return createFullRetractCommand();
+        }
+        else {
+            return createFullRetractCommand();
+        }
+    }
+}

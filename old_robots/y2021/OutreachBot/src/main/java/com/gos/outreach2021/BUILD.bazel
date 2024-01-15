@@ -17,8 +17,8 @@ gos_java_robot(
     deps = [
         "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021/commands",
         "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021/subsystems",
-        "@bazelrio//libraries/java/wpilib/hal",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/hal",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

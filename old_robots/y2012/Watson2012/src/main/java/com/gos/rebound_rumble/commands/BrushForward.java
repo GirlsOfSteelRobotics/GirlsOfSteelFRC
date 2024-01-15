@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Collector;
 
-public class BrushForward extends CommandBase {
+public class BrushForward extends GosCommandBase {
     private final Collector m_collector;
 
     public BrushForward(Collector collector) {

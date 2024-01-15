@@ -1,9 +1,9 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.ShooterIntake;
 
-public class TogglePiston extends CommandBase {
+public class TogglePiston extends Command {
 
     private final ShooterIntake m_shooterIntake;
 

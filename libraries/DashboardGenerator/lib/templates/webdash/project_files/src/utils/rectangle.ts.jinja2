@@ -20,7 +20,6 @@ export class Rectangle extends Shape {
 
   setRotation(degrees: number) {
     this.rotation = (-degrees - 90) * Math.PI / 180.0;
-    // this.rotation = (-degrees) * Math.PI / 180.0
   }
 
   rotateAround(degrees: number, x: number, y: number) {
@@ -35,6 +34,10 @@ export class Rectangle extends Shape {
 
   rotateAroundOrigin(degrees: number) {
     this.rotateAround(degrees, this.x, this.y);
+  }
+
+  rotateAroundEnd(degrees: number) {
+    this.rotateAround(degrees, this.x + this.width, this.y + this.height);
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -53,7 +56,6 @@ export class Rectangle extends Shape {
       ctx.translate(rotX, rotY);
       ctx.rotate(this.rotation);
       ctx.translate(-rotX, -rotY);
-      // console.log("Non rotation point" + this.rotation)
     }
 
 

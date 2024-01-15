@@ -1,12 +1,12 @@
 package com.gos.outreach2021.commands;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.outreach2021.subsystems.LimelightSubsystem;
 import com.gos.outreach2021.subsystems.Shooter;
 
 
-public class LimelightHoodControlCommand extends CommandBase {
+public class LimelightHoodControlCommand extends Command {
     private final LimelightSubsystem m_limelightSubsystem;
     private final Shooter m_shooter;
     private static final double HOOD_MAX = 85;

@@ -1,0 +1,4 @@
+alias(
+    name = "RapidReact",
+    actual = "//old_robots/y2022/RapidReact/src/main/java/com/gos/rapidreact",
+)

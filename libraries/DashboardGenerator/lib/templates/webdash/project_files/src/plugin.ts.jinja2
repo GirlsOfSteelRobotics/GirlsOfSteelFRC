@@ -1,16 +1,28 @@
-{%- for widget in overall_config.widgets %}
-import './{{widget.package_name.replace("_", "-")}}';
-{%- endfor %}
-{%- for widget in overall_config.widgets %}
-import {elementConfig as {{lower_first_char(widget.table)}}Elements } from "./{{widget.package_name.replace("_", "-")}}"
-{%- endfor %}
 import { FrcDashboard } from '@frc-web-components/fwc';
+{%- for widget in overall_config.widgets %}
+import './{{widget.package_name.as_dash()}}';
+{%- endfor %}
+
+{%- for widget in overall_config.widgets %}
+import {elementConfig as {{lower_first_char(widget.table)}}Elements
+{%- if widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+, {{lower_first_char(child.table)}}ElementConfig
+{%- endfor %}
+{%- endif -%}
+} from "./{{widget.package_name.as_dash()}}";
+{%- endfor %}
 
 export default function addPlugin(dashboard: FrcDashboard) {
   dashboard.addElements({
 {%- for widget in overall_config.widgets %}
-    '{{widget.package_name.replace("_", "-")}}': {{lower_first_char(widget.table)}}Elements,
+    "{{widget.package_name.as_dash()}}": {{lower_first_char(widget.table)}}Elements,
+  {%- if widget.has_nested_tables %}
+  {%- for child in widget.children_tables %}
+    "{{subtable_name(widget, child)}}": {{lower_first_char(child.table)}}ElementConfig,
+  {%- endfor %}
+  {%- endif %}
 {%- endfor %}
-  } as any, 'Girls of Steel');
+  } as any, "Girls of Steel");
 }
 

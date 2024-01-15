@@ -2,12 +2,12 @@ package com.gos.power_up.commands;
 
 import com.gos.power_up.Blobs;
 import com.gos.power_up.subsystems.Lift;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class LiftByVision extends CommandBase {
+public class LiftByVision extends Command {
     private final Blobs m_blobs;
     private final Lift m_lift;
 

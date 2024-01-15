@@ -2,7 +2,7 @@
 //
 //import edu.wpi.first.wpilibj.networktables.NetworkTable;
 //
-//public class FindCameraFunction extends CommandBase {
+//public class FindCameraFunction extends Command {
 //
 //
 //    protected void initialize() {

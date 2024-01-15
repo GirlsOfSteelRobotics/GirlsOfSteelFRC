@@ -1,13 +1,13 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.GripPipelineListener;
 import com.gos.steam_works.subsystems.Chassis;
 
 /**
  *
  */
-public class TurnToGear extends CommandBase {
+public class TurnToGear extends Command {
 
     private final GripPipelineListener m_pipelineListener;
     private final Chassis m_chassis;

@@ -1,9 +1,9 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Lift;
 
-public class HangerLift extends CommandBase {
+public class HangerLift extends Command {
     private final Lift m_hangerLift;
     private final boolean m_lift;
 

@@ -1,12 +1,12 @@
 package com.gos.outreach2016.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.outreach2016.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class PivotDown extends CommandBase {
+public class PivotDown extends Command {
 
     private final Manipulator m_manipulator;
 

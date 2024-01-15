@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-{%- if widget.children_tables|length != 1 %}
+{%- if widget.has_nested_tables %}
 import java.util.HashMap;
 {%- endif %}
 import java.util.Map;
@@ -27,24 +27,24 @@ public class {{widget.table}}StandaloneMain {
     private final {{widget.table}}Widget m_controller;
 {% for child in widget.children_tables %}
   {%- for entry in child.entries %}
-    {%- if is_array(entry) %}
-      {%- for i in range(5) %}
-    private {{entry.type[:-2]}} m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{{i}};
+    {%- if entry.type.is_array %}
+      {%- for i in range(entry.type.array_size) %}
+    private {{entry.type.base_type}} m_{{child.combined_variable_name(entry)}}{{i}};
       {%- endfor %}
     {%- else %}
-    private {{entry.type}} m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}};
+    private {{entry.type}} m_{{child.combined_variable_name(entry)}};
     {%- endif %}
   {%- endfor %}
 {%- endfor %}
 
 {% for child in widget.children_tables %}
   {%- for entry in child.entries %}
-    {%- if is_array(entry) %}
-      {%- for i in range(5) %}
-    private final Label m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{{i}}Label = new Label("{{get_keys(child, entry, i)}} -> {{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}");
+    {%- if entry.type.is_array %}
+      {%- for i in range(entry.type.array_size) %}
+    private final Label m_{{child.combined_variable_name(entry)}}{{i}}Label = new Label("{{get_keys(child, entry, i)}} -> {{child.combined_variable_name(entry)}} {{i}}");
       {%- endfor %}
     {%- else %}
-    private final Label m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label = new Label("{{get_keys(child, entry)}} -> {{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}");
+    private final Label m_{{child.combined_variable_name(entry)}}Label = new Label("{{get_keys(child, entry)}} -> {{child.combined_variable_name(entry)}}");
     {%- endif %}
   {%- endfor %}
 {%- endfor %}
@@ -57,12 +57,12 @@ public class {{widget.table}}StandaloneMain {
             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 {% for child in widget.children_tables %}
   {%- for entry in child.entries %}
-    {%- if is_array(entry) %}
-      {%- for i in range(5) %}
-        labelPane.getChildren().add(m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{{i}}Label);
+    {%- if entry.type.is_array %}
+      {%- for i in range(entry.type.array_size) %}
+        labelPane.getChildren().add(m_{{child.combined_variable_name(entry)}}{{i}}Label);
       {%- endfor %}
     {%- else %}
-        labelPane.getChildren().add(m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label);
+        labelPane.getChildren().add(m_{{child.combined_variable_name(entry)}}Label);
     {%- endif %}
   {%- endfor %}
 {%- endfor %}
@@ -74,9 +74,9 @@ public class {{widget.table}}StandaloneMain {
 {% for child in widget.children_tables %}
             // {{child.table}}
   {%- for entry in child.entries %}
-    {%- if is_array(entry) %}
-      {%- for i in range(5) %}
-    {{ on_key_pressed(child, entry, i) }}
+    {%- if entry.type.is_array %}
+      {%- for i in range(entry.type.array_size) %}
+{{ on_key_pressed(child, entry, i) }}
       {%- endfor %}
     {%- else %}
 {{ on_key_pressed(child, entry) }}
@@ -97,9 +97,9 @@ public class {{widget.table}}StandaloneMain {
 {% for child in widget.children_tables %}
             // {{child.table}}
   {%- for entry in child.entries %}
-    {%- if is_array(entry) %}
-      {%- for i in range(5) %}
-{{ on_key_pressed(child, entry, i) }}
+    {%- if entry.type.is_array %}
+      {%- for i in range(entry.type.array_size) %}
+{{ on_key_released(child, entry, i) }}
       {%- endfor %}
     {%- else %}
 {{ on_key_released(child, entry) }}
@@ -116,18 +116,18 @@ public class {{widget.table}}StandaloneMain {
     private void handleUpdate() {
 
         try {
-{% if widget.children_tables|length == 1 %}
+{% if not widget.has_nested_tables %}
             {{widget.children_tables[0].table}}Data data = new {{widget.children_tables[0].table}}Data(
             {%- for entry in widget.children_tables[0].entries %}
-              {%- if is_array(entry) %}
-                new {{entry.type}}{ {%- for i in range(5) %}m_{{lower_first_char(widget.children_tables[0].table)}}{{cap_first_char(entry.name)}}{{i}}{% if not loop.last %}, {%endif%}{%- endfor %} },
+              {%- if entry.type.is_array %}
+                new {{entry.type}}{ {%- for i in range(entry.type.array_size) %}m_{{widget.children_tables[0].table.lower_first_char()}}{{entry.name.upper_first_char()}}{{i}}{% if not loop.last %}, {%endif%}{%- endfor %} }{% if not loop.last %},{%endif%}
               {%- else %}
-                m_{{lower_first_char(widget.children_tables[0].table)}}{{cap_first_char(entry.name)}}{% if not loop.last %},{%endif%}
+                m_{{widget.children_tables[0].combined_variable_name(entry)}}{% if not loop.last %},{%endif%}
               {%- endif %}
             {%- endfor %}
             );
 
-            final SuperStructureData oldData =  m_controller.dataProperty().getValue();
+            final {{widget.table}}Data oldData =  m_controller.dataProperty().getValue();
             Map<String, Object> changes = data.changesFrom(oldData);
             System.out.println(changes);
 
@@ -137,12 +137,12 @@ public class {{widget.table}}StandaloneMain {
 {% for child in widget.children_tables %}
             map.putAll(new {{child.table}}Data(
   {%- for entry in child.entries %}
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{% if not loop.last %},{%endif%}
+                m_{{child.combined_variable_name(entry)}}{% if not loop.last %},{%endif%}
   {%- endfor %}
                 ).asMap(SmartDashboardNames.{{child.table_name}} + "/"));
 {% endfor %}
 
-            final SuperStructureData oldData =  m_controller.dataProperty().getValue();
+            final {{widget.table}}Data oldData =  m_controller.dataProperty().getValue();
             Map<String, Object> changes = data.changesFrom(oldData);
             System.out.println(changes);
 
@@ -157,7 +157,7 @@ public class {{widget.table}}StandaloneMain {
 
         @Override
         public void start(Stage primaryStage) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("{{camel_to_snake(widget.table)}}_widget.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("{{widget.table.as_snake_case()}}_widget.fxml"));
             Pane root = loader.load();
             {{widget.table}}Widget controller = loader.getController();
 

@@ -6,9 +6,9 @@ gos_java_library(
     visibility = ["//old_robots/y2016/OutreachBot:__subpackages__"],
     deps = [
         "//old_robots/y2016/OutreachBot/src/main/java/com/gos/outreach2016/robot:RobotMap",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-phoenix//libraries/java/api-java",
+        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
     ],
 )

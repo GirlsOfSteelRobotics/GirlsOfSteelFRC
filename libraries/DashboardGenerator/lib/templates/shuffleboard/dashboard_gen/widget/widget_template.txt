@@ -6,12 +6,12 @@ import edu.wpi.first.shuffleboard.api.widget.SimpleAnnotatedWidget;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
-{% if widget.children_tables|length != 1 %}
+{% if widget.has_nested_tables %}
 import java.util.Map;
 {% endif %}
 
 @Description(name = SmartDashboardNames.WIDGET_NAME, dataTypes = {% raw %}{{% endraw %}{{widget.table}}Data.class})
-@ParametrizedController("{{camel_to_snake(widget.table)}}_widget.fxml")
+@ParametrizedController("{{widget.table.as_snake_case()}}_widget.fxml")
 public class {{widget.table}}Widget extends SimpleAnnotatedWidget<{{widget.table}}Data> {
     @FXML
     private Pane m_root;
@@ -28,7 +28,7 @@ public class {{widget.table}}Widget extends SimpleAnnotatedWidget<{{widget.table
     public void initialize() {
 
         dataOrDefault.addListener((ignored, oldData, newData) -> {
-{%- if widget.children_tables|length == 1 %}
+{%- if not widget.has_nested_tables %}
             m_widgetController.update{{widget.children_tables[0].table}}(newData);
 {%- else %}
             final Map<String, Object> changes = newData.changesFrom(oldData);

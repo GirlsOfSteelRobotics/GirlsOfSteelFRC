@@ -1,9 +1,9 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Winch;
 
-public class WinchWind extends CommandBase {
+public class WinchWind extends Command {
 
     private final Winch m_winchWind;
     private final boolean m_wind;

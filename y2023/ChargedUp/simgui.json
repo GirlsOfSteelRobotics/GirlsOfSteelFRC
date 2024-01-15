@@ -88,6 +88,12 @@
       "/Shuffleboard/AutomatedTurret/Mid Cone Right": "Command",
       "/Shuffleboard/AutomatedTurret/Mid Cube": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis Auto Engage": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speed (0,0,1)": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speed (0,0,360deg)": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speed (0,1,0)": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speed (1,0,0)": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speeds Percent 0% 100%": "Command",
+      "/Shuffleboard/ChassisTestCommands/Chassis Speeds Percent 0% 5%": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis To Angle 0": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis To Angle 180": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis set position: (0, 0, -90 deg)": "Command",
@@ -97,6 +103,32 @@
       "/Shuffleboard/ChassisTestCommands/Chassis: Sync Odometry": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis: Tune Velocity": "Command",
       "/Shuffleboard/ChassisTestCommands/Chassis: teleop dock and engage": "Command",
+      "/Shuffleboard/ChassisTestCommands/Lock wheels": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[0]   45deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[0]  180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[0] -180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[0] 0deg  1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[0] 0deg  2mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[0] 0deg -1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[1]   45deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[1]  180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[1] -180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[1] 0deg  1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[1] 0deg  2mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[1] 0deg -1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[2]   45deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[2]  180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[2] -180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[2] 0deg  1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[2] 0deg  2mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[2] 0deg -1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[3]   45deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[3]  180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[3] -180deg 0mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[3] 0deg  1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[3] 0deg  2mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve Module[3] 0deg -1mps": "Command",
+      "/Shuffleboard/ChassisTestCommands/Swerve reset position: (0, 0, 0)": "Command",
       "/Shuffleboard/ClawTestCommands/Claw: In": "Command",
       "/Shuffleboard/ClawTestCommands/Claw: Out": "Command",
       "/Shuffleboard/Debug/Field": "Field2d",
@@ -147,6 +179,10 @@
       "/Shuffleboard/SwerveDriveTestCommands/Swerve Module 2": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/Swerve Module 3": "Command",
       "/Shuffleboard/SwerveDriveTestCommands/Swerve reset position: (0, 0, 0)": "Command",
+      "/Shuffleboard/SwerveTestCommands/Swerve: Test Strafe": "Command",
+      "/Shuffleboard/SwerveTestCommands/Swerve: Test Straight": "Command",
+      "/Shuffleboard/SwerveTestCommands/Swerve: Test Turn in Line 180": "Command",
+      "/Shuffleboard/SwerveTestCommands/Swerve: test Strafe": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Retracted": "Command",
       "/Shuffleboard/TestCommands/Arm Full Extend": "Command",
@@ -310,7 +346,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/SwerveDriveTestCommands/Swerve reset position: (0, 0, 0)": {
+      "/Shuffleboard/SwerveTestCommands/Swerve: Test Straight": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/SwerveTestCommands/Swerve: Test Turn in Line 180": {
         "window": {
           "visible": true
         }
@@ -465,11 +506,6 @@
         "window": {
           "visible": true
         }
-      },
-      "/SmartDashboard/SwerveField": {
-        "window": {
-          "visible": true
-        }
       }
     }
   },
@@ -491,6 +527,15 @@
           "open": true
         },
         "open": true
+      },
+      "SwerveDrive": {
+        "BL": {
+          "open": true
+        },
+        "FR": {
+          "open": true
+        },
+        "open": true
       }
     }
   },
@@ -498,17 +543,16 @@
     "Plot <0>": {
       "plots": [
         {
-          "height": 605,
-          "series": [
+          "axis": [
             {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/FL Current Angle: "
+              "autoFit": true
             },
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 403,
+          "series": [
             {
               "color": [
                 0.3333333432674408,
@@ -516,7 +560,7 @@
                 0.4078431725502014,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/FL Current Velocity: "
+              "id": "NT:/SwerveDrive/FR/Goal Velocity"
             },
             {
               "color": [
@@ -525,7 +569,17 @@
                 0.32156863808631897,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/FL Goal Velocity: "
+              "id": "NT:/SwerveDrive/FR/Current Velocity"
+            },
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SwerveDrive/FR/Current Angle",
+              "yAxis": 1
             },
             {
               "color": [
@@ -534,9 +588,11 @@
                 0.32156863808631897,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/FL Goal Angle: "
+              "id": "NT:/SwerveDrive/FR/Goal Angle",
+              "yAxis": 1
             }
-          ]
+          ],
+          "yaxis2": true
         }
       ]
     }

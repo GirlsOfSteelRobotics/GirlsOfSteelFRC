@@ -8,9 +8,9 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.BabyDrive;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class BabyDriveBackwards extends CommandBase {
+public class BabyDriveBackwards extends Command {
     private static final double BABYDRIVE_SPEED = 0.4;
 
     private final BabyDrive m_babyDrive;

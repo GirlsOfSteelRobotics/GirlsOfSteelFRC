@@ -8,18 +8,18 @@ import java.util.Map;
 @SuppressWarnings("PMD.DataClass")
 public class {{widget.table}}Data extends ComplexData<{{widget.table}}Data> {
 {% for child in widget.children_tables %}
-    private final {{child.table}}Data m_{{lower_first_char(child.table)}};
+    private final {{child.table}}Data m_{{child.table.lower_first_char()}};
 {%- endfor %}
 
     public {{widget.table}}Data() {
 {% for child in widget.children_tables %}
-        m_{{lower_first_char(child.table)}} = new {{child.table}}Data();
+        m_{{child.table.lower_first_char()}} = new {{child.table}}Data();
 {%- endfor %}
     }
 
     public {{widget.table}}Data(Map<String, Object> map) {
 {% for child in widget.children_tables %}
-        m_{{lower_first_char(child.table)}} = new {{child.table}}Data(SmartDashboardNames.{{child.table_name}} + "/", map);
+        m_{{child.table.lower_first_char()}} = new {{child.table}}Data(SmartDashboardNames.{{child.table_name}} + "/", map);
 {%- endfor %}
     }
 
@@ -27,13 +27,13 @@ public class {{widget.table}}Data extends ComplexData<{{widget.table}}Data> {
     public Map<String, Object> asMap() {
         Map<String, Object> map = new HashMap<>();
 {% for child in widget.children_tables %}
-        map.putAll(m_{{lower_first_char(child.table)}}.asMap(SmartDashboardNames.{{child.table_name}} + "/"));
+        map.putAll(m_{{child.table.lower_first_char()}}.asMap(SmartDashboardNames.{{child.table_name}} + "/"));
 {%- endfor %}
         return map;
     }
 {% for child in widget.children_tables %}
     public {{child.table}}Data get{{child.table}}() {
-        return m_{{lower_first_char(child.table)}};
+        return m_{{child.table.lower_first_char()}};
     }
 {% endfor %}
 }

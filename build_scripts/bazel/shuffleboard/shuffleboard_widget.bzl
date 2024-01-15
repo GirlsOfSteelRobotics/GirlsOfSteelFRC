@@ -50,7 +50,7 @@ def shuffleboard_widget(name, package, generation_config_file, srcs = None, **kw
             "@maven_javafx//:org_openjfx_javafx_fxml",
             "@maven_javafx//:org_openjfx_javafx_graphics",
             "@maven//:com_google_guava_guava",
-            "@bazelrio//libraries/java/wpilib/shuffleboard",
+            "@bzlmodrio-allwpilib//libraries/java/shuffleboard-api",
         ] + select({
             "@bazel_tools//src/conditions:darwin": [
                 "@maven_javafx//:org_openjfx_javafx_controls_mac",

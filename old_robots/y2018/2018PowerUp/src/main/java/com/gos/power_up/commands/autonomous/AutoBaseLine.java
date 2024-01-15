@@ -3,12 +3,12 @@ package com.gos.power_up.commands.autonomous;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class AutoBaseLine extends CommandBase {
+public class AutoBaseLine extends Command {
 
     private int m_time;
 

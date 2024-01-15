@@ -2,9 +2,9 @@ package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class AutoDriveStraightTimedCommand extends CommandBase {
+public class AutoDriveStraightTimedCommand extends Command {
 
     private final ChassisSubsystem m_chassis;
     private final Timer m_timer;

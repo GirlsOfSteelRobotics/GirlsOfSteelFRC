@@ -1,10 +1,10 @@
 package com.gos.codelabs.pid.commands.auton;
 
 import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.lib.DeadbandHelper;
 
-public class DriveStraightDistancePositionControlCommand extends CommandBase {
+public class DriveStraightDistancePositionControlCommand extends Command {
 
     private final ChassisSubsystem m_chassis;
     private final double m_distance;

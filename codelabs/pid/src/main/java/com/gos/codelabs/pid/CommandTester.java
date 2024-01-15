@@ -22,7 +22,7 @@ import com.gos.codelabs.pid.commands.tuning.TuneShooterRpmCommand;
 import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
 import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.pid.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class CommandTester {
 
@@ -82,8 +82,8 @@ public class CommandTester {
 
     }
 
-    private void addCommand(String name, CommandBase command) {
-        CommandBase namedCommand =  command.andThen(() -> SmartDashboard.putBoolean("Auton Running", false));
+    private void addCommand(String name, Command command) {
+        Command namedCommand =  command.andThen(() -> SmartDashboard.putBoolean("Auton Running", false));
         namedCommand.setName(name);
         Shuffleboard.getTab("Command Tester").add(name, namedCommand);
     }

@@ -3,9 +3,9 @@ package com.gos.infinite_recharge.commands;
 import com.gos.infinite_recharge.subsystems.Limelight;
 import com.gos.lib.DeadbandHelper;
 import com.gos.infinite_recharge.subsystems.Chassis;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class AlignLeftRight extends CommandBase {
+public class AlignLeftRight extends Command {
 
     private final Limelight m_limelight;
     private final Chassis m_chassis;

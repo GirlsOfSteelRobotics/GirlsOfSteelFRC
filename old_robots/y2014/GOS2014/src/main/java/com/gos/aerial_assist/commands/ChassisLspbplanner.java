@@ -13,7 +13,7 @@ import com.gos.aerial_assist.subsystems.Driving;
 /**
  * @author Sylvie
  */
-public class ChassisLspbplanner extends CommandBase {
+public class ChassisLspbplanner extends GosCommandBase {
 
     private final Chassis m_chassis;
     private final LspbPidPlanner m_leftChassisPlanner;

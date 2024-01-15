@@ -5,7 +5,7 @@ gos_java_robot(
     srcs = glob(["src/main/java/**/*.java"]),
     main_class = "com.gos.codelabs.first_code_lab.Main",
     deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-phoenix//libraries/java/wpiapi-java",
     ],
 )

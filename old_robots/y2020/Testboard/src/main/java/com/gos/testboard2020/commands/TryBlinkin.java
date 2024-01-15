@@ -1,9 +1,9 @@
 package com.gos.testboard2020.commands;
 
 import com.gos.testboard2020.subsystems.Blinkin;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class TryBlinkin extends CommandBase {
+public class TryBlinkin extends Command {
 
     private final Blinkin m_blinkin;
 

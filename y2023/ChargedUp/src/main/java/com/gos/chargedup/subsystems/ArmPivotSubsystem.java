@@ -6,19 +6,19 @@ import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
-import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -39,14 +38,14 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
+import static com.revrobotics.SparkAbsoluteEncoder.Type.kDutyCycle;
 
 
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 1.5);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(true, "Pivot Arm Allowable Velocity Error", 20);
+    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(Constants.DEFAULT_LOCK_PROPERTIES, "Pivot Arm Allowable Velocity Error", 20);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
@@ -104,14 +103,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
-    private final SparkMaxPIDController m_sparkPidController;
+    private final SparkPIDController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
 
     private final ProfiledPIDController m_wpiPidController;
     private final PidProperty m_wpiPidProperties;
     private final ArmFeedForwardProperty m_wpiFeedForward;
 
-    private final SparkMaxAbsoluteEncoder m_absoluteEncoder;
+    private final SparkAbsoluteEncoder m_absoluteEncoder;
 
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
@@ -129,7 +128,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public ArmPivotSubsystem() {
-        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotMotor.setInverted(true);
@@ -187,7 +186,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
-                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY);
+                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
@@ -246,19 +245,19 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return m_absoluteEncoder.getVelocity();
     }
 
-    private PidProperty setupSparkPidValues(SparkMaxPIDController pidController) {
+    private PidProperty setupSparkPidValues(SparkPIDController pidController) {
         ///
         // Full retract:
         // kp=0.000400
         // kf=0.005000
         // kd=0.005000
         if (Constants.IS_ROBOT_BLOSSOM) {
-            return new RevPidPropertyBuilder("Pivot Arm", false, pidController, 0)
+            return new RevPidPropertyBuilder("Pivot Arm", Constants.DEFAULT_LOCK_PROPERTIES, pidController, 0)
                 .addP(0.03)
                 .addD(0)
                 .build();
         } else {
-            return new RevPidPropertyBuilder("Pivot Arm", true, pidController, 0)
+            return new RevPidPropertyBuilder("Pivot Arm", Constants.DEFAULT_LOCK_PROPERTIES, pidController, 0)
                 .addP(0.0045) // 0.0058
                 .addD(0.045)
                 .build();
@@ -362,7 +361,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return isMotionProfileFinished() && Math.abs(error) <= allowableError && Math.abs(velocity) < allowableVelocityError;
     }
 
-    public void clearStickyFaultsArmPivot() {
+    public void clearStickyFaults() {
         m_pivotMotor.clearFaults();
     }
 
@@ -405,115 +404,112 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return Math.abs(getArmAngleDeg2() - getAbsoluteEncoderAngle2()) < 1;
     }
 
+    ////////////////
+    // Checklists
+    ////////////////
+    public Command createIsPivotMotorMovingChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
+    }
 
     ///////////////////////
     // Command Factories
     ///////////////////////
-    public CommandBase createPivotToCoastMode() {
+    public Command createPivotToCoastModeCommand() {
         return this.runEnd(
             () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
             () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
             .ignoringDisable(true).withName("Pivot to Coast");
     }
 
-    public CommandBase createResetPivotEncoder() {
-        return createResetPivotEncoder(MIN_ANGLE_DEG);
+    public Command createResetPivotEncoderCommand() {
+        return createResetPivotEncoderCommand(MIN_ANGLE_DEG);
     }
 
-    public CommandBase createResetPivotEncoder(double angle) {
+    public Command createResetPivotEncoderCommand(double angle) {
         return this.run(() -> resetPivotEncoder(angle))
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (" + angle + ")");
     }
 
-    public CommandBase createSyncEncoderToAbsoluteEncoder() {
+    public Command createSyncEncoderToAbsoluteEncoderCommand() {
         return this.run(this::syncMotorEncoderToAbsoluteEncoder)
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (Abs Encoder Val)");
     }
 
-    public CommandBase commandPivotArmUp() {
-        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
+    public Command createPivotUpCommand() {
+        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
-    public CommandBase commandPivotArmDown() {
-        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
+    public Command createPivotDownCommand() {
+        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
-    private CommandBase createResetWpiPidController() {
+    private Command createResetWpiPidControllerCommand() {
         return runOnce(this::resetWpiPidController);
     }
 
-    private CommandBase commandBasePivotToAngle(double angle, Runnable endBehavior, DoubleSupplier allowablePositionError, DoubleSupplier allowableVelocityError) {
-        return createResetWpiPidController()
+    private Command createBasePivotToAngleCommand(double angle, Runnable endBehavior, DoubleSupplier allowablePositionError, DoubleSupplier allowableVelocityError) {
+        return createResetWpiPidControllerCommand()
             .andThen(runEnd(() -> pivotArmToAngle2(angle), endBehavior))
             .until(() -> isArmAtAngle(angle, allowablePositionError.getAsDouble(), allowableVelocityError.getAsDouble()))
             .withName("Pivot To " + angle);
     }
 
-    private CommandBase commandBasePivotToAngle(double angle, Runnable endBehavior, double allowablePositionError, double allowableVelocityError) {
-        return commandBasePivotToAngle(angle, endBehavior, () -> allowablePositionError, () -> allowableVelocityError);
+    private Command createBasePivotToAngleCommand(double angle, Runnable endBehavior, double allowablePositionError, double allowableVelocityError) {
+        return createBasePivotToAngleCommand(angle, endBehavior, () -> allowablePositionError, () -> allowableVelocityError);
     }
 
-    private CommandBase commandBasePivotToAngle(double angle, Runnable endBehavior) {
-        return commandBasePivotToAngle(angle, endBehavior, ALLOWABLE_ERROR::getValue, ALLOWABLE_VELOCITY_ERROR::getValue);
+    private Command createBasePivotToAngleCommand(double angle, Runnable endBehavior) {
+        return createBasePivotToAngleCommand(angle, endBehavior, ALLOWABLE_ERROR::getValue, ALLOWABLE_VELOCITY_ERROR::getValue);
     }
 
-    public CommandBase commandPivotArmToAngleHold(double angle) {
-        return commandBasePivotToAngle(angle, () -> {})
+    public Command createPivotToAngleAndHoldCommand(double angle) {
+        return createBasePivotToAngleCommand(angle, () -> {})
             .withName("Arm to Angle And Hold" + angle);
     }
 
-    public CommandBase commandPivotArmToAngleHold(double angle, double allowableError, double velocityAllowableError) {
-        return commandBasePivotToAngle(angle, () -> {}, allowableError, velocityAllowableError)
+    public Command createPivotToAngleAndHoldCommand(double angle, double allowableError, double velocityAllowableError) {
+        return createBasePivotToAngleCommand(angle, () -> {}, allowableError, velocityAllowableError)
             .withName("Arm to Angle And Hold" + angle);
     }
 
-    public CommandBase commandPivotArmToAngleNonHold(double angle) {
-        return commandBasePivotToAngle(angle, this::pivotArmStop)
+    public Command createPivotArmToAngleNonHoldCommand(double angle) {
+        return createBasePivotToAngleCommand(angle, this::pivotArmStop)
             .withName("Arm to Angle" + angle);
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight height, GamePieceType gamePieceType) {
+    public Command createMoveArmToPieceScorePositionAndHoldCommand(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
-        return commandPivotArmToAngleHold(angle).withName("Score [" + height + "," + gamePieceType + "] and Hold");
+        return createPivotToAngleAndHoldCommand(angle).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionDifferenceAndHold(AutoPivotHeight height, GamePieceType gamePieceType, double heightChange) {
+    public Command createMoveArmToPieceScorePositionDifferenceAndHoldCommand(AutoPivotHeight height, GamePieceType gamePieceType, double heightChange) {
         double angle = getArmAngleForScoring(height, gamePieceType);
-        return commandPivotArmToAngleHold(angle + heightChange).withName("Score [" + height + "," + gamePieceType + "] and Hold");
+        return createPivotToAngleAndHoldCommand(angle + heightChange).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight height, GamePieceType gamePieceType) {
-        double angle = getArmAngleForScoring(height, gamePieceType);
-        return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
+    public Command createGoHomeCommand() {
+        return createPivotArmToAngleNonHoldCommand(HOME_ANGLE);
     }
 
-    public CommandBase commandGoHome() {
-        return commandPivotArmToAngleNonHold(HOME_ANGLE);
+    public Command createGoToGroundPickupCommand() {
+        return createPivotArmToAngleNonHoldCommand(GROUND_PICKUP_ANGLE);
     }
 
-    public CommandBase commandGoToGroundPickup() {
-        return commandPivotArmToAngleNonHold(GROUND_PICKUP_ANGLE);
+    public Command createGoToGroundPickupAndHoldCommand() {
+        return createPivotToAngleAndHoldCommand(GROUND_PICKUP_ANGLE);
     }
 
-    public CommandBase commandGoToGroundPickupAndHold() {
-        return commandPivotArmToAngleHold(GROUND_PICKUP_ANGLE);
+    public Command createGoToGroundPickupAndHoldCommand(double allowableError, double velocityAllowableError) {
+        return createPivotToAngleAndHoldCommand(GROUND_PICKUP_ANGLE, allowableError, velocityAllowableError);
     }
 
-    public CommandBase commandGoToGroundPickupAndHold(double allowableError, double velocityAllowableError) {
-        return commandPivotArmToAngleHold(GROUND_PICKUP_ANGLE, allowableError, velocityAllowableError);
+    public Command createGoToHpPickupHoldCommand() {
+        return createPivotToAngleAndHoldCommand(HUMAN_PLAYER_ANGLE);
     }
 
-    public CommandBase commandHpPickupNoHold() {
-        return commandPivotArmToAngleNonHold(HUMAN_PLAYER_ANGLE);
-    }
-
-    public CommandBase commandHpPickupHold() {
-        return commandPivotArmToAngleHold(HUMAN_PLAYER_ANGLE);
-    }
-
-    public Command commandGoToAutoNodePosition(Supplier<AutoAimNodePositions> nodeSupplier) {
+    public Command createGoToAutoNodePositionCommand(Supplier<AutoAimNodePositions> nodeSupplier) {
         return runEnd(() -> {
             AutoAimNodePositions position = nodeSupplier.get();
             if (position == null || position == AutoAimNodePositions.NONE) {
@@ -522,13 +518,4 @@ public class ArmPivotSubsystem extends SubsystemBase {
             pivotArmToAngle2(position.getTargetPitch());
         }, this::pivotArmStop);
     }
-
-    ////////////////
-    // Checklists
-    ////////////////
-
-    public CommandBase createIsPivotMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
-    }
 }
-

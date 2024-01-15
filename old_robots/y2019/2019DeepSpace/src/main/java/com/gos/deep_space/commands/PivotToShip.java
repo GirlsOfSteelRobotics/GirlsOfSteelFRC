@@ -8,9 +8,9 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Pivot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class PivotToShip extends CommandBase {
+public class PivotToShip extends Command {
     private final Pivot m_pivot;
 
     public PivotToShip(Pivot pivot) {

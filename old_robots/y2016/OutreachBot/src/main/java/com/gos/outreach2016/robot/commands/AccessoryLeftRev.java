@@ -1,13 +1,13 @@
 package com.gos.outreach2016.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
 import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
 
 /**
  *
  */
-public class AccessoryLeftRev extends CommandBase {
+public class AccessoryLeftRev extends Command {
 
     private final AccessoryMotors m_accessoryMotors;
 

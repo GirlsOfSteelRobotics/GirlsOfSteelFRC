@@ -1,13 +1,13 @@
 package com.gos.recycle_rush.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Collector;
 
 /**
  *
  */
-public class AutoCollector extends CommandBase {
+public class AutoCollector extends Command {
 
     private final Collector m_collector;
     private final Timer m_timer;

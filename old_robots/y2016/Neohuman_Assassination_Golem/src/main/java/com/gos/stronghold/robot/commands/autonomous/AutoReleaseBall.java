@@ -1,13 +1,13 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.stronghold.robot.subsystems.Claw;
 
 /**
  *
  */
-public class AutoReleaseBall extends CommandBase {
+public class AutoReleaseBall extends Command {
 
     private final Claw m_claw;
     private final Timer m_tim;

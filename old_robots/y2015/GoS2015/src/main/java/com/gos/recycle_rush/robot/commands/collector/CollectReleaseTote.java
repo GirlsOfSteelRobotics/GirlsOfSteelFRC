@@ -1,12 +1,12 @@
 package com.gos.recycle_rush.robot.commands.collector;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Collector;
 
 /**
  *
  */
-public class CollectReleaseTote extends CommandBase {
+public class CollectReleaseTote extends Command {
 
     private final Collector m_collector;
 

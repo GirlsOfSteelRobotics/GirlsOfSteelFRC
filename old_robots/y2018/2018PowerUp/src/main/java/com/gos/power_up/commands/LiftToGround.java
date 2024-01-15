@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Lift;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  *
  */
-public class LiftToGround extends CommandBase {
+public class LiftToGround extends Command {
     private final Lift m_lift;
 
 

@@ -1,12 +1,12 @@
 package com.gos.recycle_rush.robot.commands.tests;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.recycle_rush.robot.subsystems.Lifter;
 
 /**
  *
  */
-public class LifterTests extends CommandBase {
+public class LifterTests extends Command {
 
     private final Lifter m_lifter;
 

@@ -7,14 +7,13 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
-import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -37,7 +36,7 @@ public class ClawSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
     public ClawSubsystem() {
-        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_clawMotor.restoreFactoryDefaults();
 
         m_clawMotor.setInverted(true);
@@ -50,9 +49,9 @@ public class ClawSubsystem extends SubsystemBase {
         m_currentLimit = new HeavyIntegerProperty(m_clawMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
 
         m_networkTableEntries = new LoggingUtil("Claw Subsystem");
-        m_networkTableEntries.addDouble("Current Amps", () -> m_clawMotor.getOutputCurrent());
-        m_networkTableEntries.addDouble("Output", () -> m_clawMotor.getAppliedOutput());
-        m_networkTableEntries.addDouble("Velocity (RPM)", () -> m_clawEncoder.getVelocity());
+        m_networkTableEntries.addDouble("Current Amps", m_clawMotor::getOutputCurrent);
+        m_networkTableEntries.addDouble("Output", m_clawMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Velocity (RPM)", m_clawEncoder::getVelocity);
     }
 
     //intake close
@@ -85,14 +84,21 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotorErrorAlerts.checkAlerts();
     }
 
-    public void clearStickyFaultsClaw() {
+    public void clearStickyFaults() {
         m_clawMotor.clearFaults();
+    }
+
+    //////////////
+    // Checklists
+    //////////////
+    public Command createIsClawMotorMovingChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_clawMotor, "Claw: Motor", 1.0);
     }
 
     /////////////////////
     // Command Factories
     /////////////////////
-    public CommandBase createMoveClawIntakeInCommand() {
+    public Command createMoveClawIntakeInCommand() {
         return this.runEnd(this::moveClawIntakeIn, this::stopIntake).withName("ClawIntakeIn");
     }
 
@@ -100,30 +106,23 @@ public class ClawSubsystem extends SubsystemBase {
         return this.run(this::moveClawIntakeIn);
     }
 
-    public CommandBase createMoveClawIntakeInWithTimeoutCommand() {
+    public Command createMoveClawIntakeInWithTimeoutCommand() {
         return createMoveClawIntakeInCommand().withTimeout(AUTO_INTAKE_TIME);
     }
 
-    public CommandBase createMoveClawIntakeOutCommand() {
+    public Command createMoveClawIntakeOutCommand() {
         return this.runEnd(this::moveClawIntakeOut, this::stopIntake).withName("ClawIntakeOut");
     }
 
-    public CommandBase createMoveClawIntakeOutWithTimeoutCommand() {
+    public Command createMoveClawIntakeOutWithTimeoutCommand() {
         return createMoveClawIntakeOutCommand().withTimeout(AUTO_EJECTION_TIME);
     }
 
-    public CommandBase createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {
+    public Command createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {
         return this.createMoveClawIntakeInCommand().alongWith(new CheckRumbleCommand(joystick, this::hasGamePiece));
     }
 
-    public CommandBase createHoldPiece() {
+    public Command createHoldPieceCommand() {
         return this.run(this::holdPiece);
-    }
-
-    //////////////
-    // Checklists
-    //////////////
-    public CommandBase createIsClawMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_clawMotor, "Claw: Motor", 1.0);
     }
 }

@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "autos",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2022/MEPI:__subpackages__"],
+    deps = [
+        "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/commands",
+        "//old_robots/y2022/MEPI/src/main/java/com/scra/mepi/rapid_react/subsystems",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+    ],
+)

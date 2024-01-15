@@ -2,9 +2,9 @@ package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.subsystems.Chassis;
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class GoToPosition extends CommandBase {
+public class GoToPosition extends Command {
 
     private static final double MAX_SPEED = .8;
 

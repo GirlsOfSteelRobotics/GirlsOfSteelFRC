@@ -6,8 +6,8 @@ gos_java_library(
     visibility = ["//old_robots/y2021/OutreachBot:__subpackages__"],
     deps = [
         "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
 )

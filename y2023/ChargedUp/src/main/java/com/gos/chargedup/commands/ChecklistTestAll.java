@@ -14,10 +14,10 @@ public class ChecklistTestAll extends SequentialCommandGroup {
         setName("Self Test Checklist");
 
         //chassis
-        addCommands(chassis.selfTestMotors());
+        addCommands(chassis.createSelfTestMotorsCommand());
 
         //arm
-        addCommands(armPivot.createIsPivotMotorMoving());
+        addCommands(armPivot.createIsPivotMotorMovingChecklist());
         addCommands(armExtension.createIsArmBottomPneumaticMoving(pressureSupplier));
         addCommands(armExtension.createIsArmTopPneumaticMoving(pressureSupplier));
 
@@ -25,7 +25,7 @@ public class ChecklistTestAll extends SequentialCommandGroup {
         //addCommands(turret.createIsTurretMotorMoving());
 
         //claw
-        addCommands(claw.createIsClawMotorMoving());
+        addCommands(claw.createIsClawMotorMovingChecklist());
 
     }
 

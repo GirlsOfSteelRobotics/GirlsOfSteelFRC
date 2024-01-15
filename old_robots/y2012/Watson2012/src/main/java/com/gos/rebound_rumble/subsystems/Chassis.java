@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.EncoderGoSPidController;
 
@@ -56,7 +55,7 @@ public class Chassis extends SubsystemBase {
     private final Jaguar m_rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
     private final Jaguar m_leftJags = new Jaguar(RobotMap.LEFT_JAGS);
     //create gyro
-    private final Gyro m_gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
+    private final AnalogGyro m_gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
     //create stuff for encoders
     //CHANGE FOR REAL WATSON:
     private final Encoder m_rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,

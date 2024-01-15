@@ -3,11 +3,11 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.SparkMaxRelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkRelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase {
     private final SimableCANSparkMax m_master;
     private final SimableCANSparkMax m_follower;
     private final RelativeEncoder m_encoder;
-    private final SparkMaxPIDController m_pidController;
+    private final SparkPIDController m_pidController;
 
     private final Limelight m_limelight;
 
@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase {
     public Shooter(ShuffleboardTab driveDisplayTab, Limelight limelight) {
         m_master = new SimableCANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new SimableCANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
-        m_encoder  = m_master.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 8192);
+        m_encoder  = m_master.getEncoder(SparkRelativeEncoder.Type.kQuadrature, 8192);
         m_pidController = m_master.getPIDController();
 
         m_master.restoreFactoryDefaults();

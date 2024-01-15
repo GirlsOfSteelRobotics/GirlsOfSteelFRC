@@ -18,20 +18,20 @@ jobs:
       - name: Install Dependencies
         run: pip3 install -r requirements.txt
 
-      - name: Re-gen Codelab
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=codelabs/custom_shuffleboard/dashboard.yml
-
       - name: Re-gen 2020
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2020/2020InfiniteRechargeDashboard/dashboard.yml
+        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2020/2020InfiniteRecharge/dashboard.yml
 
       - name: Re-gen 2021
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2021/OutreachBotDashboard/dashboard.yml
+        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2021/OutreachBot/dashboard.yml
 
       - name: Re-gen 2022
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=y2022/RapidReactDashboard/dashboard.yml
+        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2022/RapidReact/dashboard.yml
 
       - name: Re-gen 2023
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=y2023/ChargedUpDashboard/dashboard.yml
+        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=y2023/ChargedUp/dashboard.yml
+
+      - name: Re-gen 2024
+        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=y2024/Crescendo/dashboard.yml
 
       - name: Check output
         run: git --no-pager diff --exit-code HEAD

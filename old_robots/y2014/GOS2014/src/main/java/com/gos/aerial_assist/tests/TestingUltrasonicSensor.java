@@ -6,13 +6,13 @@
 
 package com.gos.aerial_assist.tests;
 
-import com.gos.aerial_assist.commands.CommandBase;
+import com.gos.aerial_assist.commands.GosCommandBase;
 import com.gos.aerial_assist.subsystems.UltrasonicSensor;
 
 /**
  * @author
  */
-public class TestingUltrasonicSensor extends CommandBase {
+public class TestingUltrasonicSensor extends GosCommandBase {
 
     private final UltrasonicSensor m_ultra;
 

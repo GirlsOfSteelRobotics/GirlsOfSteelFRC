@@ -1,12 +1,12 @@
 package com.gos.preseason2017.team1.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2017.team1.robot.subsystems.DriveSystem;
 
 /**
  *
  */
-public class AutoDoNothing extends CommandBase {
+public class AutoDoNothing extends Command {
 
     public AutoDoNothing(DriveSystem chassis) {
         // Use requires() here to declare subsystem dependencies

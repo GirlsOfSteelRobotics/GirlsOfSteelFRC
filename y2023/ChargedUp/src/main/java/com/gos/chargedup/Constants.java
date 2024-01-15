@@ -5,7 +5,6 @@
 
 package com.gos.chargedup;
 
-import com.pathplanner.lib.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
@@ -69,9 +68,6 @@ public final class Constants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
-    //Auto velocity and acceleration
-    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
-
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;
 
@@ -92,6 +88,8 @@ public final class Constants {
     public static final DigitalInput ROBOT_NAME = new DigitalInput(IS_BLOSSOM_DIO);
     public static final boolean IS_ROBOT_BLOSSOM = RobotBase.isReal();
     public static final boolean IS_SWERVE = RobotBase.isReal() ? IS_ROBOT_BLOSSOM : true; // NOPMD(SimplifiedTernary)
+
+    public static final boolean DEFAULT_LOCK_PROPERTIES = RobotBase.isReal();
 
     static {
         SmartDashboard.putBoolean("Is Blossom", IS_ROBOT_BLOSSOM);

@@ -16,8 +16,8 @@ gos_java_library(
     ],
     visibility = ["//old_robots/y2018/2018PowerUp:__subpackages__"],
     deps = [
-        "@bazelrio//libraries/java/opencv",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bzlmodrio-allwpilib//libraries/java/cameraserver",
+        "@bzlmodrio-opencv//libraries/java/opencv",
     ],
 )
 
@@ -27,7 +27,7 @@ gos_java_library(
     visibility = ["//old_robots/y2018/2018PowerUp:__subpackages__"],
     deps = [
         ":RobotMap",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )
 
@@ -51,7 +51,7 @@ gos_java_robot(
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/commands",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/commands/autonomous",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/subsystems",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],
 )

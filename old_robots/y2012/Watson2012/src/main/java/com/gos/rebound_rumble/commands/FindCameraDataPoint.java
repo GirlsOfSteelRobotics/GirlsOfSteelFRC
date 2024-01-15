@@ -3,7 +3,7 @@
 //import edu.wpi.first.wpilibj.networktables.NetworkTable;
 //import com.gos.girlsofsteel.objects.Camera;
 //
-//public class FindCameraDataPoint extends CommandBase {
+//public class FindCameraDataPoint extends Command {
 //
 //    public static final double ErrorThreshold = .01;
 //

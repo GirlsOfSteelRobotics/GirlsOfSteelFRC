@@ -1,9 +1,9 @@
 package com.gos.steam_works.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.steam_works.subsystems.Agitator;
 
-public class Agitate extends CommandBase {
+public class Agitate extends Command {
 
     private final Agitator m_agitator;
     private int m_loopCounter;

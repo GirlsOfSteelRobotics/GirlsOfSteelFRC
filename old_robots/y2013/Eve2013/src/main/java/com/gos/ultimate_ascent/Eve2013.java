@@ -139,7 +139,7 @@ public class Eve2013 extends TimedRobot {
     public void teleopInit() {
         //Testing
         //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        //  System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
+        //  System.out.println("Gryo: " + Command.chassis.getGyroAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
@@ -169,7 +169,7 @@ public class Eve2013 extends TimedRobot {
     public void teleopPeriodic() {
         //Testing
         //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        //    System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
+        //    System.out.println("Gryo: " + Command.chassis.getGyroAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", m_shooter.isTimeToShoot());
@@ -212,7 +212,7 @@ public class Eve2013 extends TimedRobot {
     public void disabledPeriodic() {
         //Testing
         //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        //       System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
+        //       System.out.println("Gryo: " + Command.chassis.getGyroAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
@@ -230,7 +230,7 @@ public class Eve2013 extends TimedRobot {
     public void disabledInit() {
         //Testing
         //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        //        System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
+        //        System.out.println("Gryo: " + Command.chassis.getGyroAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
