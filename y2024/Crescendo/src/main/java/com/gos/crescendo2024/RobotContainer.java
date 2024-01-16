@@ -70,6 +70,10 @@ public class RobotContainer {
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
         shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
+        shuffleboardTab.add("testShooter50", m_shooterSubsystem.createSetRPMCommand(50));
+        shuffleboardTab.add("testShooter100", m_shooterSubsystem.createSetRPMCommand(100));
+        shuffleboardTab.add("resetShooter", m_shooterSubsystem.createStopShooterCommand());
+
         shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
         shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
         shuffleboardTab.add("Chassis to 45", m_chassisSubsystem.createTurnToAngleCommand(45));
@@ -78,7 +82,9 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
 
+
     }
+
 
 
     /**

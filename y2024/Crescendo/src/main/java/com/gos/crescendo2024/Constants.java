@@ -34,6 +34,7 @@ public final class Constants {
     public static final int FRONT_RIGHT_AZIMUTH = 26;
     public static final int BACK_LEFT_AZIMUTH = 27;
     public static final int BACK_RIGHT_AZIMUTH = 28;
+    public static final int SHOOTER_MOTOR = 8;
 
     public static final int ARM_PIVOT = 33;
 
