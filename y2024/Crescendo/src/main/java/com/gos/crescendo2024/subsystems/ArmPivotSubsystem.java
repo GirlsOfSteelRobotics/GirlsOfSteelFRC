@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    private static final double ARM_PIVOT_SPEED = .5;
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 1.5);
     private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
 
@@ -38,14 +37,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private final SparkPIDController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
-    private final ProfiledPIDController m_wpiPidController;
-    private final PidProperty m_wpiPidProperties;
     private final ArmFeedForwardProperty m_wpiFeedForward;
     private double m_armGoalAngle;
-
-    private final NetworkTableEntry m_profilePositionGoalEntry;
-    private final NetworkTableEntry m_profileVelocityGoalEntry;
-    private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -78,9 +71,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .addMaxVelocity(80)
             .build();
 
-        m_wpiPidController = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
-        m_wpiPidProperties = new WpiProfiledPidPropertyBuilder("Arm Pivot Profile", false, m_wpiPidController)
-            .build();
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
             .addKff(0)
             .addKg(0);
@@ -90,11 +80,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_networkTableEntriesPivot.addDouble("Abs Encoder Value", m_pivotAbsEncoder::getPosition);
         m_networkTableEntriesPivot.addDouble("Rel Encoder Value", m_pivotMotorEncoder::getPosition);
 
-
-        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Pivot Subsystem");
-        m_profilePositionGoalEntry = loggingTable.getEntry("Profile Angle Goal");
-        m_profileVelocityGoalEntry = loggingTable.getEntry("Profile Velocity Goal");
-        m_pidArbitraryFeedForwardEntry = loggingTable.getEntry("Arbitrary FF");
 
         m_armPivotMotorErrorAlerts = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor");
 
@@ -108,50 +93,31 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armPivotMotorErrorAlerts.checkAlerts();
 
         m_sparkPidProperties.updateIfChanged();
-        m_wpiPidProperties.updateIfChanged();
         m_wpiFeedForward.updateIfChanged();
     }
 
     public void clearStickyFaults() { m_pivotMotor.clearFaults(); }
 
-    public void setArmPivotSpeed(double speed) {
-        m_pivotMotor.set(speed);
-    }
-    public void pivotArmUp() { m_pivotMotor.set(ARM_PIVOT_SPEED); }
-    public void pivotArmDown() { m_pivotMotor.set(-ARM_PIVOT_SPEED); }
-
-    private void resetWpiPidController() {
-        m_wpiPidController.reset(m_pivotMotorEncoder.getPosition(), m_pivotMotorEncoder.getVelocity());
-    }
-    private boolean isMotionProfileFinished() {
-        return m_wpiPidController.getSetpoint().equals(m_wpiPidController.getGoal());
-    }
-
     public void moveArmToAngle(double goalAngle) {
         m_armGoalAngle = goalAngle;
-        m_wpiPidController.calculate(m_pivotMotorEncoder.getPosition(), m_armGoalAngle);
-        TrapezoidProfile.State profileSetpointDegrees = m_wpiPidController.getSetpoint();
-        m_profileVelocityGoalEntry.setNumber(profileSetpointDegrees.velocity);
-        m_profilePositionGoalEntry.setNumber(profileSetpointDegrees.position);
+        double currentAngle = m_pivotMotorEncoder.getPosition();
 
         double feedForwardVolts = m_wpiFeedForward.calculate(
-            Units.degreesToRadians(profileSetpointDegrees.position),
-            Units.degreesToRadians(profileSetpointDegrees.velocity));
-        m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts);
+            Units.degreesToRadians(currentAngle),
+            Units.degreesToRadians(0));
 
-        if (isMotionProfileFinished()) {
-            m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
-        } else {
-            m_pivotMotor.setVoltage(feedForwardVolts);
-        }
+        m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+
+    }
+
+    public void stopArmMotor(){
+        m_pivotMotor.set(0);
     }
 
     // Command Factory //
 
-    private Command createResetWpiPidControllerCommand() { return runOnce(this::resetWpiPidController); }
     public Command createMoveArmToAngle(double goalAngle) {
-        return createResetWpiPidControllerCommand()
-            .andThen(runOnce(() -> moveArmToAngle(goalAngle)));
+        return runEnd(()->moveArmToAngle(goalAngle),this::stopArmMotor);
     }
 
 }
