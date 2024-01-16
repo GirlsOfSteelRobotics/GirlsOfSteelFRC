@@ -144,26 +144,19 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/intake in": "Command",
+      "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/Shuffleboard/test commands/testShooter100": "Command",
       "/Shuffleboard/test commands/testShooter50": "Command",
       "/Shuffleboard/test commands/testShooter50?": "Command",
+      "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
       "/Shuffleboard/test commands/resetShooter": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/shooterTuning": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/testShooter100": {
         "window": {
           "visible": true
         }
@@ -191,6 +184,11 @@
             "visible": true
           }
         },
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
         "window": {
           "visible": true
         }
