@@ -17,53 +17,53 @@ public final class Phoenix6TalonPidPropertyBuilder extends PidProperty.Builder i
         super(baseName, isConstant);
         m_motor = motor;
         switch (slot) {
-            case 1:
-                m_slot = SlotConfigs.from(new Slot1Configs());
-                break;
-            case 2:
-                m_slot = SlotConfigs.from(new Slot2Configs());
-                break;
-            case 0:
-            default:
-                m_slot = SlotConfigs.from(new Slot0Configs());
+        case 1:
+            m_slot = SlotConfigs.from(new Slot1Configs());
+            break;
+        case 2:
+            m_slot = SlotConfigs.from(new Slot2Configs());
+            break;
+        case 0:
+        default:
+            m_slot = SlotConfigs.from(new Slot0Configs());
         }
     }
 
     @Override
     public IPidPropertyBuilder addP(double defaultValue) {
-        addP(defaultValue, (double gain) -> {m_slot.kP = gain; m_motor.getConfigurator().apply(m_slot);});
+        addP(defaultValue, (double gain) -> { m_slot.kP = gain; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
     @Override
     public IPidPropertyBuilder addI(double defaultValue) {
-        addI(defaultValue, (double gain) -> {m_slot.kI = gain; m_motor.getConfigurator().apply(m_slot);});
+        addI(defaultValue, (double gain) -> { m_slot.kI = gain; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
     @Override
     public IPidPropertyBuilder addD(double defaultValue) {
-        addD(defaultValue, (double gain) -> {m_slot.kD = gain; m_motor.getConfigurator().apply(m_slot);});
+        addD(defaultValue, (double gain) -> { m_slot.kD = gain; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
     public IPidPropertyBuilder addKV(double defaultValue) {
-        addGenericProperty("kV", defaultValue, (double gain) -> {m_slot.kV = gain; m_motor.getConfigurator().apply(m_slot);});
+        addGenericProperty("kV", defaultValue, (double gain) -> { m_slot.kV = gain; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
     public IPidPropertyBuilder addKS(double defaultValue) {
-        addGenericProperty("kS", defaultValue, (double gain) -> {m_slot.kS = gain; m_motor.getConfigurator().apply(m_slot);});
+        addGenericProperty("kS", defaultValue, (double gain) -> { m_slot.kS = gain; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
     public IPidPropertyBuilder addKG(double defaultValue, GravityTypeValue gravityType) {
-        addGenericProperty("kG", defaultValue, (double gain) -> {m_slot.kG = gain; m_slot.GravityType = gravityType; m_motor.getConfigurator().apply(m_slot);});
+        addGenericProperty("kG", defaultValue, (double gain) -> { m_slot.kG = gain; m_slot.GravityType = gravityType; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
     public IPidPropertyBuilder addKA(double defaultValue) {
-        addGenericProperty("kA", defaultValue, (double gain) -> {m_slot.kA = gain; m_motor.getConfigurator().apply(m_slot);});
+        addGenericProperty("kA", defaultValue, (double gain) -> { m_slot.kA = gain; m_motor.getConfigurator().apply(m_slot); } );
         return this;
     }
 
