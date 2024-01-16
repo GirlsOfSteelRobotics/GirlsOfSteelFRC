@@ -8,16 +8,25 @@ package com.gos.crescendo2024.subsystems;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.Constants;
+import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -46,6 +55,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final ProfiledPIDController m_turnAnglePID;
     private final PidProperty m_turnAnglePIDProperties;
+    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
+
+    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
+
 
     @SuppressWarnings("PMD.UnnecessaryConstructor") // TODO remove
     public ChassisSubsystem() {
@@ -77,10 +90,35 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
+        AutoBuilder.configureHolonomic(
+            this::getPose,
+            this::resetOdometry,
+            this::getChassisSpeed,
+            this::setChassisSpeed,
+            new HolonomicPathFollowerConfig(
+                new PIDConstants(5, 0, 0),
+                new PIDConstants(5, 0, 0),
+                MAX_TRANSLATION_SPEED,
+                WHEEL_BASE,
+                new ReplanningConfig(),
+                0.02),
+            GetAllianceUtil::isRedAlliance,
+            this
+        );
+
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);
+    }
 
+    public void resetOdometry(Pose2d pose2d) {
+        m_swerveDrive.resetOdometry(pose2d);
+    }
+    public void setChassisSpeed(ChassisSpeeds speed) {
+        m_swerveDrive.setChassisSpeeds(speed);
+    }
 
+    public ChassisSpeeds getChassisSpeed() {
+        return m_swerveDrive.getChassisSpeed();
     }
 
     @Override
@@ -148,12 +186,18 @@ public class ChassisSubsystem extends SubsystemBase {
         return followPathCommand;
     }
 
-    public Command CreateDriveToPoint (Pose2d start, Pose2d end, boolean reverse)
-    {
+    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end) {
         List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
-            new PathConstraints(m_)
-        )
+            new PathConstraints(m_driveToPointMaxVelocity.getValue(), m_driveToPointMaxAcceleration.getValue(), 0, 0),
+            new GoalEndState(0.0, Rotation2d.fromDegrees(0)) // change for holonomic "forward"
+        );
+        return createPathCommand(path, false);
     }
+
+    public Command testDriveToPoint(ChassisSubsystem swerve) {
+        return swerve.createDriveToPointNoFlipCommand(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), new Pose2d(new Translation2d(50, 30), new Rotation2d(180)));
+    }
+
 }

@@ -50,7 +50,7 @@ public class RobotContainer {
 
         m_shooterSubsystem = new ShooterSubsystem();
 
-        m_autonomousFactory = new Autos();
+        m_autonomousFactory = new Autos(m_chassisSubsystem);
 
         m_armPivotSubsystem = new ArmPivotSubsystem();
 
@@ -73,7 +73,7 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
-
+        shuffleboardTab.add("test drive to point", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem));
     }
 
 

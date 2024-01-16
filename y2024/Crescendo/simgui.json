@@ -17,15 +17,17 @@
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
+      "/Shuffleboard/test commands/test drive to point": "Command",
+      "/SmartDashboard/Auto Mode Select": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/Chassis to -180": {
+      "/Shuffleboard/test commands/test drive to point": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Chassis to 90": {
+      "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true
         }
