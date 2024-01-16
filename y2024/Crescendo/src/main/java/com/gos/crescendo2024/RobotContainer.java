@@ -50,7 +50,7 @@ public class RobotContainer {
 
         m_shooterSubsystem = new ShooterSubsystem();
 
-        m_autonomousFactory = new Autos(m_chassisSubsystem);
+        m_autonomousFactory = new Autos();
 
         m_armPivotSubsystem = new ArmPivotSubsystem();
 

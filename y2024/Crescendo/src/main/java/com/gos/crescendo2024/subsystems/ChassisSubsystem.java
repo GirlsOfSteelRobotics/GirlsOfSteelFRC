@@ -9,11 +9,9 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.GetAllianceUtil;
-import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
-import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
@@ -113,6 +111,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public void resetOdometry(Pose2d pose2d) {
         m_swerveDrive.resetOdometry(pose2d);
     }
+
     public void setChassisSpeed(ChassisSpeeds speed) {
         m_swerveDrive.setChassisSpeeds(speed);
     }
@@ -176,11 +175,9 @@ public class ChassisSubsystem extends SubsystemBase {
                 .withName("Chassis to Angle" + angleGoal));
     }
 
-    public Command createPathCommand(PathPlannerPath path, boolean resetPose)
-    {
+    public Command createPathCommand(PathPlannerPath path, boolean resetPose) {
         Command followPathCommand = AutoBuilder.followPath(path);
-        if(resetPose)
-        {
+        if (resetPose) {
             return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand);
         }
         return followPathCommand;
