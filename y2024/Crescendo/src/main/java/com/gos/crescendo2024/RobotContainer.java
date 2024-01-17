@@ -30,17 +30,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
-
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
-    private final Autos m_autonomousFactory;
     private final IntakeSubsystem m_intakeSubsystem;
 
+    // Joysticks
     private final CommandXboxController m_driverController =
         new CommandXboxController(Constants.DRIVER_JOYSTICK);
 
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_JOYSTICK);
+
+    private final Autos m_autonomousFactory;
 
 
     /**
@@ -48,14 +49,11 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_chassisSubsystem = new ChassisSubsystem();
-
         m_shooterSubsystem = new ShooterSubsystem();
+        m_armPivotSubsystem = new ArmPivotSubsystem();
+        m_intakeSubsystem = new IntakeSubsystem();
 
         m_autonomousFactory = new Autos();
-
-        m_armPivotSubsystem = new ArmPivotSubsystem();
-
-        m_intakeSubsystem = new IntakeSubsystem();
 
         // Configure the trigger bindings
         configureBindings();
@@ -85,14 +83,7 @@ public class RobotContainer {
         shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
         shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
-
-
-
-
-
     }
-
-
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -105,8 +96,9 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
+
+        m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
     }
 
 

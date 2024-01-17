@@ -33,7 +33,5 @@ public class TeleopSwerveDrive extends Command {
             yPercent * TRANSLATION_DAMPING.getValue(),
             rotPercent * ROTATION_DAMPING.getValue(),
             true);
-
-        System.out.println("Implement me!" + m_subsystem);
     }
 }
