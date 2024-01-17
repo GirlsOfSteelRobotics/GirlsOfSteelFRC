@@ -25,9 +25,6 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    // private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 1.5);
-    // private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
-
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
