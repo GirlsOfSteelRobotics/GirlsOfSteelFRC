@@ -93,6 +93,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterEncoder.getVelocity();
     }
 
+    public double getShooterMotorPercentage(){
+        return m_shooterMotor.getAppliedOutput();
+    }
+
     // Command Factories
 
     public Command createTunePercentShootCommand() {

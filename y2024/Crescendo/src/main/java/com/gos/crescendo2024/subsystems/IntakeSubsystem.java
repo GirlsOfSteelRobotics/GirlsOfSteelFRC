@@ -61,6 +61,9 @@ public class  IntakeSubsystem extends SubsystemBase {
         return !m_photoelectricSensor.get();
     }
 
+    public double getIntakeMotorPercentage(){
+        return m_intakeMotor.getAppliedOutput();
+    }
     //commands
     public Command createMoveIntakeInCommand() {
         return this.runEnd(this::intakeIn, this::intakeStop).withName("IntakeSubsystemIn");
