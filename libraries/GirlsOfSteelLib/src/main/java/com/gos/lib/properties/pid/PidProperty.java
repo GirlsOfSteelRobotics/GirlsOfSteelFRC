@@ -76,6 +76,11 @@ public class PidProperty {
             return this;
         }
 
+        protected  Builder addGenericProperty(String suffix, double defaultValue, DoubleConsumer setter) {
+            m_properties.add(createDoubleProperty(suffix, defaultValue, setter));
+            return this;
+        }
+
         public PidProperty build() {
             return new PidProperty(m_properties);
         }
