@@ -2,10 +2,8 @@ package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
-import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
-import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
@@ -15,18 +13,20 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 1.5);
-    private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
+    // private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 1.5);
+    // private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 20);
 
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
@@ -39,6 +39,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final PidProperty m_sparkPidProperties;
     private final ArmFeedForwardProperty m_wpiFeedForward;
     private double m_armGoalAngle;
+    private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -62,8 +63,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder.setZeroOffset(0);
 
         m_sparkPidController = m_pivotMotor.getPIDController();
-        m_sparkPidController.setFeedbackDevice(m_pivotMotorEncoder);
-        m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", true, m_sparkPidController, 0)
+        m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
+        m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
             .addP(0)
             .addI(0)
             .addD(0)
@@ -85,6 +86,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_pivotMotor.burnFlash();
         m_followMotor.burnFlash();
+
+        if (RobotBase.isSimulation()) {
+            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), 252, 1,
+                0.381, 0, Units.degreesToRadians(90), true, 0);
+            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
+                RevEncoderSimWrapper.create(m_pivotMotor), true);
+        }
+
     }
 
     @Override
@@ -96,11 +105,22 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_wpiFeedForward.updateIfChanged();
     }
 
-    public void clearStickyFaults() { m_pivotMotor.clearFaults(); }
+
+    public void clearStickyFaults() {
+        m_pivotMotor.clearFaults();
+    }
+
 
     public void moveArmToAngle(double goalAngle) {
         m_armGoalAngle = goalAngle;
-        double currentAngle = m_pivotMotorEncoder.getPosition();
+        double currentAngle;
+
+        if (RobotBase.isSimulation()) {
+            currentAngle = m_pivotMotorEncoder.getPosition();
+        }
+        else {
+            currentAngle = m_pivotAbsEncoder.getPosition();
+        }
 
         double feedForwardVolts = m_wpiFeedForward.calculate(
             Units.degreesToRadians(currentAngle),
@@ -110,14 +130,23 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     }
 
-    public void stopArmMotor(){
+    @Override
+    public void simulationPeriodic() {
+        m_pivotSimulator.update();
+    }
+
+    public void stopArmMotor() {
         m_pivotMotor.set(0);
+    }
+
+    public void setArmMotorSpeed(double speed) {
+        m_pivotMotor.set(speed);
     }
 
     // Command Factory //
 
     public Command createMoveArmToAngle(double goalAngle) {
-        return runEnd(()->moveArmToAngle(goalAngle),this::stopArmMotor);
+        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
     }
 
 }

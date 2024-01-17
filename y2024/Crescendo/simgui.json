@@ -1,7 +1,7 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [8]": {
+      "SPARK MAX [33]": {
         "header": {
           "open": true
         }
@@ -15,6 +15,12 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/arm to -45": "Command",
+      "/Shuffleboard/test commands/arm to 0": "Command",
+      "/Shuffleboard/test commands/arm to 45": "Command",
+      "/Shuffleboard/test commands/arm to 90": "Command",
+      "/Shuffleboard/test commands/intake in": "Command",
+      "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/SmartDashboard/Field": "Field2d"
@@ -26,6 +32,16 @@
         }
       },
       "/Shuffleboard/test commands/Chassis to 90": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/arm to 45": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/arm to 90": {
         "window": {
           "visible": true
         }
@@ -45,12 +61,18 @@
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true
       }
     },
     "transitory": {
+      "Arm Pivot Subsystem": {
+        "open": true
+      },
       "Shuffleboard": {
         "open": true,
         "test commands": {
@@ -171,6 +193,35 @@
       "window": {
         "visible": false
       }
+    },
+    "Plot <2>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 286,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Rel Encoder Value"
+            }
+          ]
+        }
+      ]
     }
   }
 }

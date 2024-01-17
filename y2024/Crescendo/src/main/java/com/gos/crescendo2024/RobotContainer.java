@@ -77,6 +77,13 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
+        shuffleboardTab.add("arm to 45", m_armPivotSubsystem.createMoveArmToAngle(45));
+        shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
+        shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
+        shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
+
+
+
 
     }
 
