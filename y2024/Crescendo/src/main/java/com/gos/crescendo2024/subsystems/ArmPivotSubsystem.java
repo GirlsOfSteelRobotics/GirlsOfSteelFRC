@@ -114,8 +114,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         if (RobotBase.isSimulation()) {
             currentAngle = m_pivotMotorEncoder.getPosition();
-        }
-        else {
+        } else {
             currentAngle = m_pivotAbsEncoder.getPosition();
         }
 
