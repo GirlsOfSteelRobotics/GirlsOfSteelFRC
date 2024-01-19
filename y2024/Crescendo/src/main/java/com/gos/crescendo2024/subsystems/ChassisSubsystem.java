@@ -41,7 +41,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final ProfiledPIDController m_turnAnglePID;
     private final PidProperty m_turnAnglePIDProperties;
 
-    @SuppressWarnings("PMD.UnnecessaryConstructor") // TODO remove
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
@@ -132,6 +131,9 @@ public class ChassisSubsystem extends SubsystemBase {
     // Command Factories
     /////////////////////////////////////
 
+    public Command createResetGyroCommand() {
+        return runOnce(() -> m_gyro.setYaw(0));
+    }
 
     public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
