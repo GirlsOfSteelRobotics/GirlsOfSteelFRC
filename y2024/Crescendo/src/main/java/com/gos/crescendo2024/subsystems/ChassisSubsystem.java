@@ -14,6 +14,7 @@ import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -22,7 +23,11 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.photonvision.EstimatedRobotPose;
+import org.photonvision.proto.Photon;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
+
+import java.util.Optional;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
@@ -39,6 +44,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final ProfiledPIDController m_turnAnglePID;
     private final PidProperty m_turnAnglePIDProperties;
+    private final PhotonVisionSubsystem m_photonVisionSubsystem;
+    private final DifferentialDrivePoseEstimator m_poseEstimator;
+
 
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
@@ -68,7 +76,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
-
+        m_photonVisionSubsystem = new PhotonVisionSubsystem();
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);
 
@@ -80,6 +88,12 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.periodic();
         m_field.setRobotPose(m_swerveDrive.getEstimatedPosition());
         m_turnAnglePIDProperties.updateIfChanged();
+        Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_poseEstimator.getEstimatedPosition());
+        if (cameraResult.isPresent()){
+            EstimatedRobotPose camPose = cameraResult.get();
+            Pose2d pose2d = camPose.estimatedPose.toPose2d();
+            m_poseEstimator.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+        }
     }
 
 
