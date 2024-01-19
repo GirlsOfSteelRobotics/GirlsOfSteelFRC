@@ -85,7 +85,7 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
         //hard coded sorry will fix asap
-        shuffleboardTab.add("turn to face point", m_chassisSubsystem.createTurnToFacePoint(new Pose2d(new Translation2d(0,0), new Rotation2d())));
+        //shuffleboardTab.add("turn to face point", m_chassisSubsystem.createTurnToFacePoint(new Pose2d(new Translation2d(0,0), new Rotation2d())));
 
     }
 

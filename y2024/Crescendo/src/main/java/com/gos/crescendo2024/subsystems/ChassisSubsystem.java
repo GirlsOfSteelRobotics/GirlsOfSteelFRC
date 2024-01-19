@@ -104,22 +104,22 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void turnToAngle(double angleGoal) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
-        double steerVoltage = m_turnAnglePID.calculate(angleCurrentDegree, angleGoal);
+        double steerVelocity = m_turnAnglePID.calculate(angleCurrentDegree, angleGoal);
         //TODO add ff
 
         if (turnPIDIsAngle()) {
-            steerVoltage = 0;
+            steerVelocity = 0;
         }
-        ChassisSpeeds speeds = new ChassisSpeeds(0, 0, steerVoltage);
+        ChassisSpeeds speeds = new ChassisSpeeds(0, 0, steerVelocity);
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
-    public void turnToFacePoint(Pose2d point) {
+    public void turnToFacePoint(Pose2d point, double xVel, double yVel) {
         //DOES NOT HAVE ALLOWABLE ERROR YET
         Pose2d robotPose = getPose();
-        double xDiff = Math.abs(point.getX() - robotPose.getX());
-        double yDiff = Math.abs(point.getY()) - robotPose.getY();
-        double updateAngle = Math.toDegrees(Math.atan(yDiff/xDiff));
+        double xDiff = point.getX() - robotPose.getX();
+        double yDiff = point.getY() - robotPose.getY();
+        double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
         turnToAngle((updateAngle));
     }
 
@@ -141,8 +141,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     //no worky
-    public Command createTurnToFacePoint(Pose2d point) {
-        return run(() -> turnToFacePoint(point));
-    }
+//    public Command createTurnToFacePoint(Pose2d point) {
+//        return run(() -> turnToFacePoint(point));
+//    }
 
 }
