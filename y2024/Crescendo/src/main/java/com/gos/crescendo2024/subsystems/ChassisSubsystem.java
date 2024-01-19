@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.opencv.core.Mat;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
@@ -113,6 +112,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
+    public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
+        double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
+        double steerVelocity = m_turnAnglePID.calculate(angleCurrentDegree, angle);
+        ChassisSpeeds speeds = new ChassisSpeeds(xVel, yVel, steerVelocity);
+        m_swerveDrive.setChassisSpeeds(speeds);
+    }
+
     public void turnToFacePoint(Pose2d point, double xVel, double yVel) {
         //DOES NOT HAVE ALLOWABLE ERROR YET
         Pose2d robotPose = getPose();
@@ -120,6 +126,10 @@ public class ChassisSubsystem extends SubsystemBase {
         double yDiff = point.getY() - robotPose.getY();
         double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
         turnToAngle((updateAngle));
+    }
+
+    public void davidDrive(double x, double y, double angle) {
+        turnToAngleWithVelocity(x, y, angle);
     }
 
     /////////////////////////////////////
@@ -142,9 +152,5 @@ public class ChassisSubsystem extends SubsystemBase {
                 .withName("Chassis to Angle" + angleGoal));
     }
 
-    //no worky
-//    public Command createTurnToFacePoint(Pose2d point) {
-//        return run(() -> turnToFacePoint(point));
-//    }
 
 }

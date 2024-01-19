@@ -144,6 +144,10 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/arm to -45": "Command",
+      "/Shuffleboard/test commands/arm to 0": "Command",
+      "/Shuffleboard/test commands/arm to 45": "Command",
+      "/Shuffleboard/test commands/arm to 90": "Command",
       "/Shuffleboard/test commands/intake in": "Command",
       "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
@@ -184,6 +188,11 @@
             "visible": true
           }
         },
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/turn to face point": {
         "window": {
           "visible": true
         }
