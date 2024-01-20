@@ -206,5 +206,37 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Chassis On the Fly Max Velocity",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis On the Fly Max Acceleration",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis On the Fly Max Angular Velocity",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis On the Fly Max Angular Acceleration",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

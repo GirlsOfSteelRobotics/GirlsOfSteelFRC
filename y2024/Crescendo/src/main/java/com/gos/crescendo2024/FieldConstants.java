@@ -2,9 +2,13 @@ package com.gos.crescendo2024;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
 public class FieldConstants {
+
+    public static final Translation2d AMP_CENTER =
+        new Translation2d(Units.inchesToMeters(72.455), Units.inchesToMeters(322.996));
 
     public static final class Speaker {
 

@@ -8,10 +8,9 @@ package com.gos.crescendo2024.subsystems;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.GoSField24;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.pid.PidProperty;
-import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
@@ -23,22 +22,16 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
@@ -55,13 +48,17 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
-    private final Field2d m_field;
+    private final GoSField24 m_field;
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
-    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
 
-    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+
+    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
+
+    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
 
     @SuppressWarnings("PMD.UnnecessaryConstructor") // TODO remove
@@ -106,8 +103,11 @@ public class ChassisSubsystem extends SubsystemBase {
             this
         );
 
-        m_field = new Field2d();
-        SmartDashboard.putData("Field", m_field);
+        m_field = new GoSField24();
+        SmartDashboard.putData("Field", m_field.getSendable());
+
+        PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
+        PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -125,7 +125,7 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
-        m_field.setRobotPose(m_swerveDrive.getEstimatedPosition());
+        m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
         m_turnAnglePIDProperties.updateIfChanged();
     }
 
@@ -196,15 +196,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {
-        return runOnce(() -> m_turnAnglePIDVelocity.reset())
-            .andThen(this.run(() -> turnToAngle(angleGoal))
-                .until(this::turnPIDIsAngle)
-                .withName("Chassis to Angle" + angleGoal));
-    }
-
-
-    public Command createTurnToAngleCommand(double angleGoal) {
-        return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
+        return runOnce(m_turnAnglePIDVelocity::reset)
             .andThen(this.run(() -> turnToAngle(angleGoal))
                 .until(this::turnPIDIsAngle)
                 .withName("Chassis to Angle" + angleGoal));
@@ -218,18 +210,22 @@ public class ChassisSubsystem extends SubsystemBase {
         return followPathCommand;
     }
 
-    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end) {
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+    public Command createDriveToPointNoFlipCommand(Pose2d end) {
+        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(getPose(), end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
-            new PathConstraints(m_driveToPointMaxVelocity.getValue(), m_driveToPointMaxAcceleration.getValue(), 0, 0),
-            new GoalEndState(0.0, Rotation2d.fromDegrees(0)) // change for holonomic "forward"
+            new PathConstraints(
+                Units.inchesToMeters(m_driveToPointMaxVelocity.getValue()),
+                Units.inchesToMeters(m_driveToPointMaxAcceleration.getValue()),
+                Units.degreesToRadians(m_angularMaxVelocity.getValue()),
+                Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
+            new GoalEndState(0.0, end.getRotation()) // change for holonomic "forward"
         );
         return createPathCommand(path, false);
     }
 
-    public Command testDriveToPoint(ChassisSubsystem swerve) {
-        return swerve.createDriveToPointNoFlipCommand(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), new Pose2d(new Translation2d(50, 30), new Rotation2d(180)));
+    public Command testDriveToPoint(ChassisSubsystem swerve, Pose2d endPoint) {
+        return swerve.createDriveToPointNoFlipCommand(endPoint);
     }
 
 }
