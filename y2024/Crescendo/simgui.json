@@ -140,6 +140,10 @@
     },
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/PP Paths/Curve Path": "Command",
+      "/Shuffleboard/PP Paths/S-Curve Path": "Command",
+      "/Shuffleboard/PP Paths/SplinePath": "Command",
+      "/Shuffleboard/PP Paths/StraightLinePath": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
@@ -171,16 +175,6 @@
         }
       },
       "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to amp": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to speaker": {
         "window": {
           "visible": true
         }
