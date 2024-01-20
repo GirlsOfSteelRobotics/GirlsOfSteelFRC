@@ -7,7 +7,8 @@ package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
-import com.gos.crescendo2024.commands.TeleopSwerveDrive;
+import com.gos.crescendo2024.commands.DavidDriveSwerve;
+import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
@@ -33,17 +34,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
-
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
-    private final Autos m_autonomousFactory;
     private final IntakeSubsystem m_intakeSubsystem;
 
+    // Joysticks
     private final CommandXboxController m_driverController =
         new CommandXboxController(Constants.DRIVER_JOYSTICK);
 
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_JOYSTICK);
+
+    private final Autos m_autonomousFactory;
 
 
     /**
@@ -51,14 +53,11 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_chassisSubsystem = new ChassisSubsystem();
-
         m_shooterSubsystem = new ShooterSubsystem();
+        m_armPivotSubsystem = new ArmPivotSubsystem();
+        m_intakeSubsystem = new IntakeSubsystem();
 
         m_autonomousFactory = new Autos();
-
-        m_armPivotSubsystem = new ArmPivotSubsystem();
-
-        m_intakeSubsystem = new IntakeSubsystem();
 
         // Configure the trigger bindings
         configureBindings();
@@ -86,18 +85,16 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
+        shuffleboardTab.add("David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        shuffleboardTab.add("Turn to point drive", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+
+        //arm
         shuffleboardTab.add("arm to 45", m_armPivotSubsystem.createMoveArmToAngle(45));
         shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
         shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
 
-
-
-
-
     }
-
-
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -109,9 +106,10 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-
+        m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
+
+        m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
     }
 
 
