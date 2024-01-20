@@ -3,12 +3,11 @@ package com.gos.lib.phoenix6.properties.pid;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.Slot2Configs;
-import com.ctre.phoenix6.hardware.core.CoreTalonFX;
 import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.hardware.core.CoreTalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
-import com.gos.lib.properties.pid.IPidPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
 
 import java.util.ArrayList;
