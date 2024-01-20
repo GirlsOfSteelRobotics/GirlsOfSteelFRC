@@ -22,6 +22,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
+import com.gos.crescendo2024.SpeakerLookupTable;
 
 public class ShooterSubsystem extends SubsystemBase {
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
@@ -32,6 +33,12 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
+
+    private final SpeakerLookupTable m_speakerTable;
+    //TODO need to switch values
+    public static final double MAX_SHOOTER_RPM = 0.0;
+
+    public static final double TARMAC_EDGE_RPM_HIGH = 0.0;
 
 
     public ShooterSubsystem() {
@@ -56,6 +63,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotor::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotor::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
+
+        m_speakerTable = new SpeakerLookupTable();
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
@@ -91,6 +100,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getRPM() {
         return m_shooterEncoder.getVelocity();
+    }
+
+    public void shootUsingSpeakerLookupTable(double distance)
+    {
+        setPidRpm(m_speakerTable.getVelocityTable(distance));
     }
 
     // Command Factories
