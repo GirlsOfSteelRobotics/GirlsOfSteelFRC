@@ -144,6 +144,8 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/David Drive": "Command",
+      "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
       "/Shuffleboard/test commands/arm to 45": "Command",
@@ -160,6 +162,16 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Turn to point drive": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/resetShooter": {
         "window": {
           "visible": true
@@ -192,11 +204,6 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/turn to face point": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "window": {
           "visible": true
@@ -219,5 +226,8 @@
   },
   "NetworkTables Info": {
     "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

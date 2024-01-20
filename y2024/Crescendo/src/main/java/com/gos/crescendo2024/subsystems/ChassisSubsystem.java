@@ -9,10 +9,12 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -37,7 +39,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final Field2d m_field;
 
-    private final ProfiledPIDController m_turnAnglePID;
+    private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
 
     public ChassisSubsystem() {
@@ -56,23 +58,18 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
         //TODO need change pls
-        m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
-        m_turnAnglePID.enableContinuousInput(0, 360);
-        m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+       m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
+        m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
+        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
             .addP(0)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
             .build();
-
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);
-
-
     }
 
     @Override
@@ -97,12 +94,12 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean turnPIDIsAngle() {
-        return m_turnAnglePID.atGoal();
+        return m_turnAnglePIDVelocity.atSetpoint();
     }
 
     public void turnToAngle(double angleGoal) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
-        double steerVelocity = m_turnAnglePID.calculate(angleCurrentDegree, angleGoal);
+        double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angleGoal);
         //TODO add ff
 
         if (turnPIDIsAngle()) {
@@ -114,22 +111,25 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
-        double steerVelocity = m_turnAnglePID.calculate(angleCurrentDegree, angle);
+        double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angle);
         ChassisSpeeds speeds = new ChassisSpeeds(xVel, yVel, steerVelocity);
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
     public void turnToFacePoint(Pose2d point, double xVel, double yVel) {
-        //DOES NOT HAVE ALLOWABLE ERROR YET
         Pose2d robotPose = getPose();
         double xDiff = point.getX() - robotPose.getX();
         double yDiff = point.getY() - robotPose.getY();
         double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
-        turnToAngle((updateAngle));
+        turnToAngleWithVelocity(xVel, yVel, updateAngle);
     }
 
     public void davidDrive(double x, double y, double angle) {
         turnToAngleWithVelocity(x, y, angle);
+    }
+
+    public void turnToPointDrive(double x, double y, Pose2d point) {
+        turnToFacePoint(point, x, y);
     }
 
     /////////////////////////////////////
@@ -146,11 +146,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {
-        return runOnce(() -> m_turnAnglePID.reset(getPose().getRotation().getDegrees()))
+        return runOnce(() -> m_turnAnglePIDVelocity.reset())
             .andThen(this.run(() -> turnToAngle(angleGoal))
                 .until(this::turnPIDIsAngle)
                 .withName("Chassis to Angle" + angleGoal));
     }
-
-
 }
