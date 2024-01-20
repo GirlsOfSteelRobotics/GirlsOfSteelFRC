@@ -33,7 +33,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
+
+import java.util.Optional;
 
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
+    private final PhotonVisionSubsystem m_photonVisionSubsystem;
     private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
 
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
@@ -84,6 +88,9 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
+        m_photonVisionSubsystem = new PhotonVisionSubsystem();
+        m_field = new Field2d();
+        SmartDashboard.putData("Field", m_field);
 
         AutoBuilder.configureHolonomic(
             this::getPose,
@@ -125,6 +132,12 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.periodic();
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
         m_turnAnglePIDProperties.updateIfChanged();
+        Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+        if (cameraResult.isPresent()) {
+            EstimatedRobotPose camPose = cameraResult.get();
+            Pose2d pose2d = camPose.estimatedPose.toPose2d();
+            m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+        }
     }
 
 

@@ -135,6 +135,10 @@ public class RevSwerveChassis {
         return m_poseEstimator.getEstimatedPosition();
     }
 
+    public void addVisionMeasurement(Pose2d pose, double timestampSeconds) {
+        m_poseEstimator.addVisionMeasurement(pose, timestampSeconds);
+    }
+
     public Pose2d getOdometryPosition() {
         return m_odometry.getPoseMeters();
     }
