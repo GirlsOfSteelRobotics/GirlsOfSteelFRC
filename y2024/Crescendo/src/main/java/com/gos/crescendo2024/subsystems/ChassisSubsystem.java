@@ -89,8 +89,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
         m_photonVisionSubsystem = new PhotonVisionSubsystem();
-        m_field = new Field2d();
-        SmartDashboard.putData("Field", m_field);
 
         AutoBuilder.configureHolonomic(
             this::getPose,
