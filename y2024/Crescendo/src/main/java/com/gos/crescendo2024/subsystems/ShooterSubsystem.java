@@ -12,6 +12,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -23,7 +25,7 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 import com.gos.crescendo2024.SpeakerLookupTable;
-
+import com.gos.crescendo2024.FieldConstants;
 public class ShooterSubsystem extends SubsystemBase {
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
     private final SimableCANSparkMax m_shooterMotor;
@@ -102,9 +104,12 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterEncoder.getVelocity();
     }
 
-    public void shootUsingSpeakerLookupTable(double distance)
+    public void shootUsingSpeakerLookupTable(Pose2d roboMan)
     {
-        setPidRpm(m_speakerTable.getVelocityTable(distance));
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Translation2d roboManTranslation =  roboMan.getTranslation();
+        double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
+        setPidRpm(m_speakerTable.getVelocityTable(distanceToSpeaker));
     }
 
     // Command Factories
