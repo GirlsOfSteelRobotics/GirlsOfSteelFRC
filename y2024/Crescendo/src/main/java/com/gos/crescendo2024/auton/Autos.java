@@ -11,8 +11,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public final class Autos {
     private final SendableChooser<Command> m_autonChooser;
 
+    public enum AutoMode {
+        DRIVE_TO_POINT_TEST
+    }
+
     public Autos() {
         m_autonChooser = new SendableChooser<>();
+
     }
 
     public Command getSelectedAutonomous() {

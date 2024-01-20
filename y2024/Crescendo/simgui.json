@@ -155,6 +155,9 @@
       "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
+      "/Shuffleboard/test commands/test drive to amp": "Command",
+      "/Shuffleboard/test commands/test drive to point": "Command",
+      "/Shuffleboard/test commands/test drive to speaker": "Command",
       "/Shuffleboard/test commands/testShooter100": "Command",
       "/Shuffleboard/test commands/testShooter50": "Command",
       "/Shuffleboard/test commands/testShooter50?": "Command",
@@ -172,27 +175,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/arm to 0": {
+      "/Shuffleboard/test commands/test drive to amp": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/arm to 45": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/arm to 90": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/intake in": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/intake out": {
+      "/Shuffleboard/test commands/test drive to speaker": {
         "window": {
           "visible": true
         }
@@ -225,6 +213,32 @@
         }
       },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "length": 0.10000000149011612,
+          "style": "Box/Image",
+          "weight": 1.0,
+          "width": 0.10000000149011612
+        },
+        "Trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
+        "TrajectoryTargetPose": {
+          "arrowColor": [
+            0.13555556535720825,
+            0.269728422164917,
+            0.6000000238418579,
+            255.0
+          ],
+          "style": "Line"
+        },
+        "bottom": 544,
+        "builtin": "2024 Crescendo",
+        "height": 8.013679504394531,
+        "left": 46,
+        "right": 1088,
+        "top": 36,
+        "width": 16.541748046875,
         "window": {
           "visible": true
         }
@@ -245,9 +259,7 @@
     }
   },
   "NetworkTables Info": {
-    "Clients": {
-      "open": true
-    }
+    "visible": true
   },
   "NetworkTables View": {
     "visible": false
