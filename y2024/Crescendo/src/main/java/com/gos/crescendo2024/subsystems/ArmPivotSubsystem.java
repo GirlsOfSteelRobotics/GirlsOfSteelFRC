@@ -127,9 +127,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public void stopArmMotor() {
         m_pivotMotor.set(0);
+        m_armGoalAngle = Double.MIN_VALUE;
     }
 
-    public double getAngle(){
+    public double getAngle() {
         if (RobotBase.isSimulation()) {
             return m_pivotMotorEncoder.getPosition();
         }
@@ -151,7 +152,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public double getArmAngleGoal() {
         return m_armGoalAngle;
     }
-    public double getPivotMotorPercentage(){
+
+    public double getPivotMotorPercentage() {
         return m_pivotMotor.getAppliedOutput();
     }
 }

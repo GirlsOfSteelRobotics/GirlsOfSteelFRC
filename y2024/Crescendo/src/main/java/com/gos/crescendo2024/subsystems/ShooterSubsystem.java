@@ -93,7 +93,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterEncoder.getVelocity();
     }
 
-    public double getShooterMotorPercentage(){
+    public double getShooterMotorPercentage() {
         return m_shooterMotor.getAppliedOutput();
     }
 

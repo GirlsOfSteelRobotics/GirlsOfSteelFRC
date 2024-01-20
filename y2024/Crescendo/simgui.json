@@ -172,7 +172,27 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/resetShooter": {
+      "/Shuffleboard/test commands/arm to 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/arm to 45": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/arm to 90": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/intake in": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/intake out": {
         "window": {
           "visible": true
         }
@@ -225,7 +245,9 @@
     }
   },
   "NetworkTables Info": {
-    "visible": true
+    "Clients": {
+      "open": true
+    }
   },
   "NetworkTables View": {
     "visible": false
