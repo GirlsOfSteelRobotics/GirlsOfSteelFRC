@@ -126,4 +126,9 @@ public class ShooterSubsystem extends SubsystemBase {
         return this.run(this::stopShooter).withName("stop shooter");
     }
 
+    public Command createShootUsingSpeakerTableCommand(Pose2d roboMan)
+    {
+        return this.runEnd(() -> this.shootUsingSpeakerLookupTable(roboMan), this::stopShooter).withName("shoot from robot pose");
+    }
+
 }

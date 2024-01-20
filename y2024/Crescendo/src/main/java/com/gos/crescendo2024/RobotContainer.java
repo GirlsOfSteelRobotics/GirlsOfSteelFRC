@@ -90,6 +90,8 @@ public class RobotContainer {
         shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
 
+        shuffleboardTab.add("shoot from robot pose", m_shooterSubsystem.createShootUsingSpeakerTableCommand(m_chassisSubsystem.getPose()));
+
     }
 
     /**
