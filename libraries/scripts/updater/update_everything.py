@@ -26,6 +26,7 @@ def update_everything():
     if run_replacements_in_steps:
         run_standard_replacement(auto_commit=False)
         run_our_additional_replacements(auto_commit=False)
+        run_smart_spotless(commands=["spotlessGroovyGradleApply"])
         commit_all_changes("Auto-Update: Ran replacements")
     else:
         run_all_replacements()

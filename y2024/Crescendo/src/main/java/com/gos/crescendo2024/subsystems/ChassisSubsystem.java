@@ -12,6 +12,8 @@ import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
@@ -28,11 +30,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
@@ -51,7 +57,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final Field2d m_field;
 
-    private final ProfiledPIDController m_turnAnglePID;
+    private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
     private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(true, "Chassis On the Fly Max Acceleration", 48);
 
@@ -73,18 +79,14 @@ public class ChassisSubsystem extends SubsystemBase {
             MAX_TRANSLATION_SPEED,
             MAX_ROTATION_SPEED);
 
-
         //TODO need change pls
-        m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
-        m_turnAnglePID.enableContinuousInput(0, 360);
-        m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+        m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
+        m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
+        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
             .addP(0)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
             .build();
-
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
@@ -142,21 +144,43 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean turnPIDIsAngle() {
-        return m_turnAnglePID.atGoal();
+        return m_turnAnglePIDVelocity.atSetpoint();
     }
 
     public void turnToAngle(double angleGoal) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
-        double steerVoltage = m_turnAnglePID.calculate(angleCurrentDegree, angleGoal);
+        double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angleGoal);
         //TODO add ff
 
         if (turnPIDIsAngle()) {
-            steerVoltage = 0;
+            steerVelocity = 0;
         }
-        ChassisSpeeds speeds = new ChassisSpeeds(0, 0, steerVoltage);
+        ChassisSpeeds speeds = new ChassisSpeeds(0, 0, steerVelocity);
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
+    public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
+        double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
+        double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angle);
+        ChassisSpeeds speeds = new ChassisSpeeds(xVel, yVel, steerVelocity);
+        m_swerveDrive.setChassisSpeeds(speeds);
+    }
+
+    public void turnToFacePoint(Pose2d point, double xVel, double yVel) {
+        Pose2d robotPose = getPose();
+        double xDiff = point.getX() - robotPose.getX();
+        double yDiff = point.getY() - robotPose.getY();
+        double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
+        turnToAngleWithVelocity(xVel, yVel, updateAngle);
+    }
+
+    public void davidDrive(double x, double y, double angle) {
+        turnToAngleWithVelocity(x, y, angle);
+    }
+
+    public void turnToPointDrive(double x, double y, Pose2d point) {
+        turnToFacePoint(point, x, y);
+    }
 
     /////////////////////////////////////
     // Checklists
@@ -166,6 +190,17 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
+
+    public Command createResetGyroCommand() {
+        return runOnce(() -> m_gyro.setYaw(0));
+    }
+
+    public Command createTurnToAngleCommand(double angleGoal) {
+        return runOnce(() -> m_turnAnglePIDVelocity.reset())
+            .andThen(this.run(() -> turnToAngle(angleGoal))
+                .until(this::turnPIDIsAngle)
+                .withName("Chassis to Angle" + angleGoal));
+    }
 
 
     public Command createTurnToAngleCommand(double angleGoal) {
