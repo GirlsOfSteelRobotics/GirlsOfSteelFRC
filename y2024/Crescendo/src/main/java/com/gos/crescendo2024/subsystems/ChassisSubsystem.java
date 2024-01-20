@@ -60,8 +60,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
-
-    @SuppressWarnings("PMD.UnnecessaryConstructor") // TODO remove
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
@@ -219,7 +217,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(m_driveToPointMaxAcceleration.getValue()),
                 Units.degreesToRadians(m_angularMaxVelocity.getValue()),
                 Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
-            new GoalEndState(0.0, end.getRotation()) // change for holonomic "forward"
+            new GoalEndState(0.0, end.getRotation())
         );
         return createPathCommand(path, false);
     }
