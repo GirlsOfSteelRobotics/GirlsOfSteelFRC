@@ -144,8 +144,8 @@ public class SuperStructureController {
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
 
-        m_armRectRotation.setAngle(90-superStructureData.getPivotMotorAngle());
-        m_pivotAngleGoalRotation.setAngle(90-superStructureData.getGoalAngle());
+        m_armRectRotation.setAngle(90 - superStructureData.getPivotMotorAngle());
+        m_pivotAngleGoalRotation.setAngle(90 - superStructureData.getGoalAngle());
 
         m_pivotMotor.setFill(Utils.getMotorColor(superStructureData.getPivotMotorPercentage()));
         m_shooterMotor.setFill(Utils.getMotorColor(superStructureData.getShooterMotorPercentage()));
