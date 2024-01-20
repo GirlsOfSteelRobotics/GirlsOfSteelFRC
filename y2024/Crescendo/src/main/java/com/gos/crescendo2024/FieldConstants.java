@@ -8,11 +8,11 @@ public class FieldConstants {
 
     public static final class Speaker {
 
-        public static double fieldLength = Units.inchesToMeters(651.223);
-        public static double fieldWidth = Units.inchesToMeters(323.277);
+        public static final double FIELD_LENGTH = Units.inchesToMeters(651.223);
+        public static final double FIELD_WIDTH = Units.inchesToMeters(323.277);
 
         /** Center of the speaker opening (blue alliance) */
-        public static Pose2d centerSpeakerOpening =
-            new Pose2d(0.0, fieldWidth - Units.inchesToMeters(104.0), new Rotation2d());
+        public static final Pose2d CENTER_SPEAKER_OPENING =
+            new Pose2d(0.0, FIELD_WIDTH - Units.inchesToMeters(104.0), new Rotation2d());
     }
 }

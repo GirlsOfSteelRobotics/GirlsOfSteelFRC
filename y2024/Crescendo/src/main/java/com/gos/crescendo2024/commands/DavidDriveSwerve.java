@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class DavidDriveSwerve extends BaseTeleopSwerve {
 
     private double m_lastAngle;
+
     public DavidDriveSwerve(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
         super(chassisSubsystem, joystick);
-
     }
 
     @Override
@@ -16,7 +16,6 @@ public class DavidDriveSwerve extends BaseTeleopSwerve {
         double joyStickAngle;
         if (Math.sqrt(xRight * xRight + yRight * yRight) > 0.75) {
             joyStickAngle = Math.toDegrees(Math.atan2(xRight, yRight));
-            System.out.println(yRight + " " + xRight + " " + joyStickAngle);
             m_lastAngle = joyStickAngle;
         }
         else {
