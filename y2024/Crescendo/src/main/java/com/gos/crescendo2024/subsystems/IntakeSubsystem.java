@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.crescendo2024.Constants;
 
-public class  IntakeSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
     private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(true, "Intake_Out_Speed", -1);
     private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(true, "Intake_In_Speed", 1);
     public static final GosIntProperty INTAKE_CURRENT_LIMIT = new GosIntProperty(true, "IntakeCurrentLimit", 25);
