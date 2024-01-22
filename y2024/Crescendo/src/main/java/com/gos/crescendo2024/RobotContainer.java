@@ -7,15 +7,21 @@ package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
-import com.gos.crescendo2024.commands.TeleopSwerveDrive;
+import com.gos.crescendo2024.commands.DavidDriveSwerve;
+import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -60,6 +66,8 @@ public class RobotContainer {
 
         createTestCommands();
 
+        SmartDashboard.putData("super structure", new SuperstructureSendable());
+
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
@@ -79,10 +87,19 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
+        shuffleboardTab.add("test drive to speaker", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+        shuffleboardTab.add("test drive to amp", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))));
+
+        //hard coded sorry will fix asap
+        shuffleboardTab.add("David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        shuffleboardTab.add("Turn to point drive", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+
+        //arm
         shuffleboardTab.add("arm to 45", m_armPivotSubsystem.createMoveArmToAngle(45));
         shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
         shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
+
     }
 
     /**
@@ -95,7 +112,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
+        m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
@@ -111,4 +128,27 @@ public class RobotContainer {
         // An example command will be run in autonomous
         return m_autonomousFactory.getSelectedAutonomous();
     }
+
+    private class SuperstructureSendable implements Sendable {
+
+        @Override
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
+
+            builder.addDoubleProperty(
+                SmartDashboardNames.PIVOT_MOTOR_ANGLE, m_armPivotSubsystem::getAngle, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.GOAL_ANGLE, m_armPivotSubsystem::getArmAngleGoal, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.SHOOTER_MOTOR_PERCENTAGE, m_shooterSubsystem::getShooterMotorPercentage, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.PIVOT_MOTOR_PERCENTAGE, m_armPivotSubsystem::getPivotMotorPercentage, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.HAS_GAME_PIECE, m_intakeSubsystem::hasGamePiece, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.INTAKE_MOTOR_PERCENTAGE, m_intakeSubsystem::getIntakeMotorPercentage, null);
+
+        }
+    }
+
 }

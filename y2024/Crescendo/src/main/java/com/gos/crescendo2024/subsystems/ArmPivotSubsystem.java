@@ -110,14 +110,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public void moveArmToAngle(double goalAngle) {
         m_armGoalAngle = goalAngle;
-        double currentAngle;
-
-        if (RobotBase.isSimulation()) {
-            currentAngle = m_pivotMotorEncoder.getPosition();
-        }
-        else {
-            currentAngle = m_pivotAbsEncoder.getPosition();
-        }
+        double currentAngle = getAngle();
 
         double feedForwardVolts = m_wpiFeedForward.calculate(
             Units.degreesToRadians(currentAngle),
@@ -134,6 +127,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public void stopArmMotor() {
         m_pivotMotor.set(0);
+        m_armGoalAngle = Double.MIN_VALUE;
+    }
+
+    public double getAngle() {
+        if (RobotBase.isSimulation()) {
+            return m_pivotMotorEncoder.getPosition();
+        }
+        else {
+            return m_pivotAbsEncoder.getPosition();
+        }
     }
 
     public void setArmMotorSpeed(double speed) {
@@ -146,4 +149,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
     }
 
+    public double getArmAngleGoal() {
+        return m_armGoalAngle;
+    }
+
+    public double getPivotMotorPercentage() {
+        return m_pivotMotor.getAppliedOutput();
+    }
 }
