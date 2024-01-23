@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.46,
+        "y": 3.61
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.0893260067436183,
+        "y": 1.3331213495505865
+      },
+      "isLocked": false,
+      "linkedName": "TwoNotesSpeakerOppSidePt1"
+    },
+    {
+      "anchor": {
+        "x": 7.59,
+        "y": 0.7624410159761787
+      },
+      "prevControl": {
+        "x": 4.672050242147425,
+        "y": 0.8276394861405129
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "TwoNotesSpeakerOppSide",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
