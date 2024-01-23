@@ -26,7 +26,7 @@ public class ArmPivotJoystickCommand extends Command {
     @Override
     public void execute() {
         double yPercent = -MathUtil.applyDeadband(m_joystick.getLeftY() * DAMPING.getValue(), ARM_PIVOT_JOYSTICK_DEADBAND);
-        m_armPivotSubsystem.setArmPivotSpeed(yPercent);
+        m_armPivotSubsystem.setArmMotorSpeed(yPercent);
     }
 
 }

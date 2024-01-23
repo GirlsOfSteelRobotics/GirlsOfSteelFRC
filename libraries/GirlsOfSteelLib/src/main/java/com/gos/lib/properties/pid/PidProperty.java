@@ -11,8 +11,7 @@ import java.util.function.DoubleConsumer;
 public class PidProperty {
     private final List<HeavyDoubleProperty> m_properties;
 
-
-    /* default */ PidProperty(List<HeavyDoubleProperty> properties) {
+    /* default */  public PidProperty(List<HeavyDoubleProperty> properties) {
         m_properties = properties;
     }
 
@@ -73,6 +72,11 @@ public class PidProperty {
 
         protected Builder addMaxAcceleration(double defaultValue, DoubleConsumer setter) {
             m_properties.add(createDoubleProperty("max_acceleration", defaultValue, setter));
+            return this;
+        }
+
+        protected  Builder addGenericProperty(String suffix, double defaultValue, DoubleConsumer setter) {
+            m_properties.add(createDoubleProperty(suffix, defaultValue, setter));
             return this;
         }
 

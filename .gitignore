@@ -576,6 +576,8 @@ gradlew.bat
 WPILib-License.md
 settings.gradle
 
+ctre_sim/
+
 # Simulation GUI and other tools window save file
 *-window.json
 imgui.ini
