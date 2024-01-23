@@ -245,11 +245,7 @@ public class RevSwerveModule {
         // Command driving and turning SPARKS MAX towards their respective setpoints.
         m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
 
-        if (RobotBase.isReal()) {
-            m_desiredState = optimizedDesiredState;
-        } else {
-            m_desiredState = correctedDesiredState;
-        }
+        m_desiredState = optimizedDesiredState;
         m_turningPIDController.setReference(m_desiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
 
     }
