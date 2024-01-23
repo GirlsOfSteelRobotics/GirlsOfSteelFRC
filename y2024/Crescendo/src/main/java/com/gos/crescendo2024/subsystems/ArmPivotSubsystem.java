@@ -2,6 +2,7 @@ package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
@@ -37,6 +38,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final ArmFeedForwardProperty m_wpiFeedForward;
     private double m_armGoalAngle;
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    public static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
+    public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 120); //arbitrary
+    public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle",100); //arbitrary
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
