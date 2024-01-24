@@ -162,6 +162,7 @@
       "/Shuffleboard/test commands/testShooter50": "Command",
       "/Shuffleboard/test commands/testShooter50?": "Command",
       "/Shuffleboard/test commands/turn to face point": "Command",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
@@ -171,16 +172,6 @@
         }
       },
       "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to amp": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to speaker": {
         "window": {
           "visible": true
         }
@@ -208,6 +199,11 @@
             "visible": true
           }
         },
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Auto Chooser": {
         "window": {
           "visible": true
         }
