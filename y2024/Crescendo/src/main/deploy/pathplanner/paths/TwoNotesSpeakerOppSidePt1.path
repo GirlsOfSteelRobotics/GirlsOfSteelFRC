@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.959178305125059,
-        "y": 2.1619902781790303
+        "x": 0.6624312220604063,
+        "y": 4.190373496285566
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3456210118527112,
-        "y": 2.694654549614443
+        "x": 2.2917572288040224,
+        "y": 1.9134948458361523
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TwoNotesSpeakerOppSidePt1"
     },
     {
       "anchor": {
-        "x": 1.46,
-        "y": 3.613761527777509
+        "x": 7.59,
+        "y": 0.7624410159761787
       },
       "prevControl": {
-        "x": 1.3660004226878681,
-        "y": 2.8304317168430777
+        "x": 4.672050242147425,
+        "y": 0.8276394861405129
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "TwoNotesSpeakerOppSide",
-  "previewStartingState": null,
+  "folder": "Two notes speaker opp side",
+  "previewStartingState": {
+    "rotation": -55.467774435599715,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }
