@@ -62,8 +62,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder.setZeroOffset(0);
 
         m_sparkPidController = m_pivotMotor.getPIDController();
-        //m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
-        m_sparkPidController.setFeedbackDevice(m_pivotMotorEncoder);
+        m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
             .addP(0)
             .addI(0)
