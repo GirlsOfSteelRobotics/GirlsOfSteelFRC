@@ -53,6 +53,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_followMotor.setSmartCurrentLimit(60);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
+
+
         m_pivotAbsEncoder = m_pivotMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         m_pivotAbsEncoder.setPositionConversionFactor(360.0);
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
@@ -60,7 +62,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder.setZeroOffset(0);
 
         m_sparkPidController = m_pivotMotor.getPIDController();
-        m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
+        //m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
+        m_sparkPidController.setFeedbackDevice(m_pivotMotorEncoder);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
             .addP(0)
             .addI(0)

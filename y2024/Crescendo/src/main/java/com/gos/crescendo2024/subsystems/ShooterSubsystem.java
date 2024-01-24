@@ -24,7 +24,7 @@ import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
+    public static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
     private final SimableCANSparkMax m_shooterMotor;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
     private final RelativeEncoder m_shooterEncoder;
