@@ -237,4 +237,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return swerve.createDriveToPointNoFlipCommand(endPoint);
     }
 
+    public Command createTurnToPointDrive(double x, double y, Pose2d pose2d) {
+        return runOnce(() -> turnToPointDrive(x, y, pose2d));
+    }
 }

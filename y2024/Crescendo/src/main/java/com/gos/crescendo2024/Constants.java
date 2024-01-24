@@ -40,5 +40,5 @@ public final class Constants {
     public static final int SHOOTER_MOTOR = 32;
 
     //Digital Inputs
-    public static final int INTAKE_SENSOR = 33;
+    public static final int INTAKE_SENSOR = 0;
 }

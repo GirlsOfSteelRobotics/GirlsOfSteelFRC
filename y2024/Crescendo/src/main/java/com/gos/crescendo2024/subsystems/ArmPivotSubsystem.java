@@ -40,8 +40,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
-    public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 120); //arbitrary
-    public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle",100); //arbitrary
+    public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 80); //arbitrary
+    public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle", 75); //arbitrary
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -160,5 +160,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public double getPivotMotorPercentage() {
         return m_pivotMotor.getAppliedOutput();
+    }
+    public boolean isArmAtGoal(){
+
     }
 }
