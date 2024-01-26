@@ -44,5 +44,5 @@ public final class Constants {
     public static final int BACK_RIGHT_AZIMUTH = 28;
 
     //Digital Inputs
-    public static final int INTAKE_SENSOR = 19;
+    public static final int INTAKE_SENSOR = 0;
 }

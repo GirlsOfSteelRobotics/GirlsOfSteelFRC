@@ -127,11 +127,6 @@ public class RobotContainer {
 
         m_operatorController.x().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
-        m_operatorController.b().whileTrue(m_intakeSubsystem.createStopIntakeCommand());
-
-        m_operatorController.leftBumper().whileTrue(m_shooterSubsystem.createSetRPMCommand(-ShooterSubsystem.SHOOTER_SPEED.getValue()));
-        m_operatorController.leftTrigger().whileTrue(m_shooterSubsystem.createSetRPMCommand(ShooterSubsystem.SHOOTER_SPEED.getValue()));
-        m_operatorController.y().whileTrue(m_shooterSubsystem.createStopShooterCommand());
     }
 
 
