@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [8]": {
         "header": {
@@ -145,6 +150,10 @@
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
+      "/Shuffleboard/test commands/Intake Piece": "Command",
+      "/Shuffleboard/test commands/Shoot Piece": "Command",
+      "/Shuffleboard/test commands/Shooting to Amp": "Command",
+      "/Shuffleboard/test commands/Shooting to Speaker": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
@@ -259,6 +268,12 @@
     }
   },
   "NetworkTables Info": {
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "open": true
+    },
     "visible": true
   },
   "NetworkTables View": {
