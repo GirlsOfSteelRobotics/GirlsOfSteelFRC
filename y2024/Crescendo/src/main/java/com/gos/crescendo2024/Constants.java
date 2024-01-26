@@ -20,7 +20,10 @@ public final class Constants {
     public static final int OPERATOR_JOYSTICK = 1;
 
     // CAN ID's
-    public static final int INTAKE_MOTOR = 18;
+    public static final int INTAKE_MOTOR = 10;
+    public static final int SHOOTER_MOTOR_LEADER = 15;
+    public static final int SHOOTER_MOTOR_FOLLOWER = 16;
+
 
 
     public static final int PIGEON_PORT = 20;
@@ -34,11 +37,10 @@ public final class Constants {
     public static final int FRONT_RIGHT_AZIMUTH = 26;
     public static final int BACK_LEFT_AZIMUTH = 27;
     public static final int BACK_RIGHT_AZIMUTH = 28;
-    public static final int SHOOTER_MOTOR = 8;
 
-    public static final int ARM_PIVOT = 33;
+    public static final int ARM_PIVOT = 7;
 
-    public static final int ARM_PIVOT_FOLLOW = 34;
+    public static final int ARM_PIVOT_FOLLOW = 6;
 
     //Digital Inputs
     public static final int INTAKE_SENSOR = 19;

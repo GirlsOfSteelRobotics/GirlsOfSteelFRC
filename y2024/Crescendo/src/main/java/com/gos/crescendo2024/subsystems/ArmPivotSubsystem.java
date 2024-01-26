@@ -47,9 +47,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, CANSparkLowLevel.MotorType.kBrushless);
         m_followMotor.restoreFactoryDefaults();
-        m_followMotor.follow(m_pivotMotor);
+        m_followMotor.follow(m_pivotMotor, true);
         m_followMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followMotor.setInverted(false);
         m_followMotor.setSmartCurrentLimit(60);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
