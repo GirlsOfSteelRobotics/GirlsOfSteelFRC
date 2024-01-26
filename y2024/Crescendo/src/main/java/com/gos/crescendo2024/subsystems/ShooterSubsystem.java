@@ -60,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
-        m_shooterMotorFollower.follow(m_shooterMotorLeader);
+        m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
         m_shooterMotorFollower.burnFlash();
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
