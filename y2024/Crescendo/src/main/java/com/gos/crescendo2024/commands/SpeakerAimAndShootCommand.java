@@ -9,13 +9,13 @@ import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 
 
-public class SpeakerShooterCommand extends Command {
+public class SpeakerAimAndShootCommand extends Command {
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
 
-    public SpeakerShooterCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
@@ -31,7 +31,6 @@ public class SpeakerShooterCommand extends Command {
         m_shooterSubsystem.setPidRpm(ShooterSubsystem.DEFAULT_SHOOTER_RPM.getValue());
 
         boolean isChassisGood = m_chassisSubsystem.isAngleAtGoal();
-        System.out.println(m_armPivotSubsystem.isArmAtGoal() + " " + isChassisGood + " " + m_shooterSubsystem.isShooterAtGoal());
         if (m_armPivotSubsystem.isArmAtGoal() && isChassisGood && m_shooterSubsystem.isShooterAtGoal()) {
             m_intakeSubsystem.intakeIn();
         }

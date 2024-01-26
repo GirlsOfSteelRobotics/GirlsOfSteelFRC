@@ -11,25 +11,19 @@ public class CombinedCommands {
 
     public static Command intakePieceCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
         return armPivot.createMoveArmToAngle(ArmPivotSubsystem.ARM_INTAKE_ANGLE.getValue())
-            .alongWith(intake.createMoveIntakeInCommand()).until(intake::hasGamePiece)
+            .alongWith(intake.createMoveIntakeInCommand())
+            .until(intake::hasGamePiece)
             .withName("Intake Piece");
     }
 
-    public static Command baseShooterCommand(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
-        return armPivot.createMoveArmToAngle(angle)
-            .andThen(shooter.createSetRPMCommand(ShooterSubsystem.SHOOTER_SPEED.getValue()))
-            .withName("Basic Shoot");
-    }
-
-    public static Command speakerShooterCommand(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
-        return new SpeakerShooterCommand(armPivot, chassis, intake, shooter);
+    public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
+        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter);
     }
 
     public static Command ampShooterCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
-        //return baseShooterCommand(armPivot, shooter, ArmPivotSubsystem.ARM_AMP_ANGLE.getValue());
-        return armPivot.createMoveArmToAngle(ArmPivotSubsystem.ARM_AMP_ANGLE.getValue()).until(armPivot::isArmAtGoal).andThen(intake.createMoveIntakeOutCommand());
+        return armPivot.createMoveArmToAngle(ArmPivotSubsystem.ARM_AMP_ANGLE.getValue())
+            .until(armPivot::isArmAtGoal)
+            .andThen(intake.createMoveIntakeOutCommand());
     }
-
-
 }
 

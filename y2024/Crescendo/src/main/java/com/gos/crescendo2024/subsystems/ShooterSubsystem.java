@@ -27,7 +27,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
     public static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
-    private static final double ERROR = 50;
+    private static final double ALLOWABLE_ERROR = 50;
+
     private final SimableCANSparkMax m_shooterMotor;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
     private final RelativeEncoder m_shooterEncoder;
@@ -36,6 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
     private double m_shooterGoalRPM;
+
     public ShooterSubsystem() {
         m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotor.restoreFactoryDefaults();
@@ -100,6 +102,11 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterMotor.getAppliedOutput();
     }
 
+    public boolean isShooterAtGoal() {
+        double error = m_shooterGoalRPM - getRPM();
+        return Math.abs(error) < ALLOWABLE_ERROR;
+    }
+
     // Command Factories
 
     public Command createTunePercentShootCommand() {
@@ -112,10 +119,5 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
-    }
-
-    public boolean isShooterAtGoal() {
-        double error = m_shooterGoalRPM-getRPM();
-        return Math.abs(error)<ERROR;
     }
 }
