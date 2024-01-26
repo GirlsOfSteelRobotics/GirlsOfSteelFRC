@@ -103,8 +103,8 @@ public class RobotContainer {
 
         //Combined Commands
         shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Shooting to Speaker", CombinedCommands.speakerShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem));
-        shuffleboardTab.add("Shooting to Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem));
+        shuffleboardTab.add("Shooting to Speaker", CombinedCommands.speakerShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Shooting to Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Shoot Piece", CombinedCommands.baseShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, 45));
     }
 

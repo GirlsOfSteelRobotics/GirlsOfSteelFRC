@@ -26,6 +26,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 
 public class ArmPivotSubsystem extends SubsystemBase {
+    private static final double ALLOWABLE_ERROR = 1;
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
@@ -161,7 +162,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public double getPivotMotorPercentage() {
         return m_pivotMotor.getAppliedOutput();
     }
-    public boolean isArmAtGoal(){
 
+    public boolean isArmAtGoal() {
+        double error = m_armGoalAngle - getAngle();
+        return Math.abs(error) < ALLOWABLE_ERROR;
     }
 }
