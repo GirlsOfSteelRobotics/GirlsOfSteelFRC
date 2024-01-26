@@ -14,6 +14,7 @@ import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -59,6 +60,8 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
+
+        NamedCommands.registerCommand("shoot", m_intakeSubsystem.createMoveIntakeInCommand().withTimeout(1));
 
         m_autonomousFactory = new Autos();
 
