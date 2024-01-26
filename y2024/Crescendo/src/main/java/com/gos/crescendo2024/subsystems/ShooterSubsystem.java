@@ -37,7 +37,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
-        m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorLeader.restoreFactoryDefaults();
         m_shooterMotorLeader.setInverted(false);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
@@ -52,6 +51,14 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorLeader.setSmartCurrentLimit(60);
         m_shooterMotorLeader.burnFlash();
+
+        m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorFollower.restoreFactoryDefaults();
+        m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_shooterMotorFollower.setSmartCurrentLimit(60);
+        m_shooterMotorFollower.follow(m_shooterMotorLeader);
+        m_shooterMotorFollower.burnFlash();
+
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
 
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
