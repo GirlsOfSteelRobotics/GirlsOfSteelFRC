@@ -7,8 +7,10 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.GoSField24;
+import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -47,7 +49,6 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(360);
 
-
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
@@ -55,7 +56,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
-    private final PhotonVisionSubsystem m_photonVisionSubsystem;
+    private final AprilTagDetection m_photonVisionSubsystem;
+
+    private final ObjectDetection m_objectDetectonSubsystem;
     private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
 
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
@@ -88,7 +91,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
-        m_photonVisionSubsystem = new PhotonVisionSubsystem();
+        m_photonVisionSubsystem = new AprilTagDetection();
+        m_objectDetectonSubsystem = new ObjectDetection();
 
         AutoBuilder.configureHolonomic(
             this::getPose,
@@ -142,6 +146,11 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_swerveDrive.updateSimulator();
+        m_photonVisionSubsystem.updateAprilTagSimulation(getPose());
+        m_objectDetectonSubsystem.updateObjectDetectionSimulation(getPose());
+        m_field.drawPoses(m_objectDetectonSubsystem.objectLocations(getPose()));
+
+
     }
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
