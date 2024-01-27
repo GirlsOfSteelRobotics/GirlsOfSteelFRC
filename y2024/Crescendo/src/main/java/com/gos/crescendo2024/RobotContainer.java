@@ -120,13 +120,24 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        //driver
         m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
+        //faces towards speaker
+        m_driverController.a().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController,FieldConstants.Speaker.CENTER_SPEAKER_OPENING ));
 
-        m_operatorController.x().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
-        m_operatorController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+        //operator
+        m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
+        //move to intake pos
+        m_operatorController.povUp().onTrue(m_armPivotSubsystem.createMoveArmToAngle(ArmPivotSubsystem.ARM_INTAKE_ANGLE.getValue()));
+        // intake
+        m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+        m_operatorController.x().whileTrue(m_intakeSubsystem.createStopIntakeCommand());
+        // shooter
+        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createTunePercentShootCommand());
+        m_operatorController.y().whileTrue(m_shooterSubsystem.createStopShooterCommand());
     }
 
 
