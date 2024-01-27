@@ -240,7 +240,21 @@ public class ChassisSubsystem extends SubsystemBase {
         return createPathCommand(path, false);
     }
 
-    public Command testDriveToPoint(ChassisSubsystem swerve, Pose2d endPoint) {
+    public Command createDriveToPoint(ChassisSubsystem swerve, Pose2d endPoint) {
         return swerve.createDriveToPointNoFlipCommand(endPoint);
     }
+
+    public Command createDriveToDetectedObject() {
+        return defer(() ->
+        {
+            if (!m_objectDetectonSubsystem.objectLocations(getPose()).isEmpty()) {
+                return createDriveToPointNoFlipCommand(m_objectDetectonSubsystem.objectLocations(getPose()).get(0));
+            } else {
+                return Commands.none();
+            }
+        });
+
+
+    }
+
 }

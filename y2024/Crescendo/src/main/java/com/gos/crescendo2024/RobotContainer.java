@@ -92,10 +92,9 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
-        shuffleboardTab.add("test drive to speaker", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
-        shuffleboardTab.add("test drive to amp", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))));
+        shuffleboardTab.add("test drive to speaker", m_chassisSubsystem.createDriveToPoint(m_chassisSubsystem, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+        shuffleboardTab.add("test drive to amp", m_chassisSubsystem.createDriveToPoint(m_chassisSubsystem, new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))));
 
-        //hard coded sorry will fix asap
         shuffleboardTab.add("David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Turn to point drive", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
 
@@ -109,6 +108,9 @@ public class RobotContainer {
         shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Shooting to Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Shooting to Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_intakeSubsystem));
+
+        //driveToDetectedPieceCommands
+        shuffleboardTab.add("Drive to detected piece", m_chassisSubsystem.createDriveToDetectedObject());
     }
 
     /**

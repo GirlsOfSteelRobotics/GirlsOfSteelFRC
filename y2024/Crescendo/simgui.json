@@ -150,6 +150,7 @@
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
+      "/Shuffleboard/test commands/Drive to detected piece": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
@@ -179,6 +180,11 @@
     },
     "windows": {
       "/Shuffleboard/test commands/David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Drive to detected piece": {
         "window": {
           "visible": true
         }
