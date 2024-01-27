@@ -172,7 +172,10 @@
       "/Shuffleboard/test commands/testShooter50?": "Command",
       "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Auto Chooser": "String Chooser",
-      "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
       "/Shuffleboard/test commands/David Drive": {
@@ -181,11 +184,6 @@
         }
       },
       "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/arm to 45": {
         "window": {
           "visible": true
         }
@@ -251,6 +249,17 @@
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -275,8 +284,5 @@
       "open": true
     },
     "visible": true
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }
