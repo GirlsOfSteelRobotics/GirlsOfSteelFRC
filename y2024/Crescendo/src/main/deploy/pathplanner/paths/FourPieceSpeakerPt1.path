@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.0435160963116688,
+        "y": 6.9160426184753385
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7897916336225688,
+        "y": 6.910446727552843
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.4112176717803218,
+        "y": 6.564347927640542
+      },
+      "prevControl": {
+        "x": 1.6069991007499485,
+        "y": 6.562523210453183
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "FourPieceSpeakerPt1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 43.94299326872579,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Four Piece Speaker",
+  "previewStartingState": {
+    "rotation": 62.39669612134464,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
