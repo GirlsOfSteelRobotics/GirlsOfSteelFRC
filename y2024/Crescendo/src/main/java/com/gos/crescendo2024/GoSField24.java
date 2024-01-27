@@ -18,6 +18,8 @@ public class GoSField24 {
     private final FieldObject2d m_trajectorySetpoint;
     private final FieldObject2d m_odometryObject;
 
+    private final FieldObject2d m_drawnNotePoses;
+
     public GoSField24() {
 
         AprilTagFieldLayout aprilTagLayout;
@@ -31,6 +33,7 @@ public class GoSField24 {
 
         FieldObject2d aprilTagObjects = m_field.getObject("AprilTags"); // NOPMD(CloseResource)
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
+        m_drawnNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
 
@@ -64,5 +67,9 @@ public class GoSField24 {
 
     public Sendable getSendable() {
         return m_field;
+    }
+
+    public void drawNotePoses(List<Pose2d> poses) {
+        m_drawnNotePoses.setPoses(poses);
     }
 }

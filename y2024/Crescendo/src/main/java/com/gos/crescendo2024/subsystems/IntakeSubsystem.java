@@ -28,7 +28,8 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_intakeMotor.restoreFactoryDefaults();
         m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_intakeMotor.setSmartCurrentLimit(10);
+        m_intakeMotor.setSmartCurrentLimit(40);
+        m_intakeMotor.setInverted(true);
         m_intakeMotor.burnFlash();
 
         m_intakeEncoder = m_intakeMotor.getEncoder();
@@ -38,10 +39,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_networkTableEntries = new LoggingUtil("Intake Subsystem");
         m_networkTableEntries.addDouble("Current Velocity", m_intakeEncoder::getVelocity);
+        m_networkTableEntries.addDouble("Current (Amps)", m_intakeMotor::getOutputCurrent);
     }
 
     @Override
     public void periodic() {
+        m_networkTableEntries.updateLogs();
         m_intakeAlert.checkAlerts();
     }
 
