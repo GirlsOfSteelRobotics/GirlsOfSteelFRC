@@ -9,6 +9,7 @@ import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.CombinedCommands;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
+import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
@@ -120,7 +121,12 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        if (RobotBase.isReal()) {
+            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        }
+        else {
+            m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
+        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
