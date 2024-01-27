@@ -13,7 +13,6 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.estimation.TargetModel;
 import org.photonvision.simulation.PhotonCameraSim;
-import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.simulation.VisionTargetSim;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -22,50 +21,47 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gos.crescendo2024.FieldConstants.StagingLocations.centerlineTranslations;
-import static com.gos.crescendo2024.FieldConstants.StagingLocations.spikeTranslations;
+import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_TRANSLATIONS;
+import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
 
 public class ObjectDetection {
 
     private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(11), Units.inchesToMeters(15)), new Rotation3d(0, 0, 0));
     private final PhotonCamera m_photonCamera;
-    private final TargetModel targetModel;
-    private final VisionSystemSim visionSim;
+    private final TargetModel m_targetModel;
+    private final VisionSystemSim m_visionSim;
 
-    private final PhotonCameraSim cameraSim;
+    private final PhotonCameraSim m_cameraSim;
 
-    private final GoSField24 m_gosField;
     public ObjectDetection() {
         m_photonCamera = new PhotonCamera("objectDetection");
 
-        visionSim = new VisionSystemSim("objectDetectionSim");
+        m_visionSim = new VisionSystemSim("objectDetectionSim");
 
-        targetModel = new TargetModel(Units.inchesToMeters(18));
+        m_targetModel = new TargetModel(Units.inchesToMeters(18));
 
-        m_gosField = new GoSField24();
+        m_cameraSim = new PhotonCameraSim(m_photonCamera);
+        m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
+        m_cameraSim.enableRawStream(true);
+        m_cameraSim.enableProcessedStream(true);
+        m_cameraSim.enableDrawWireframe(true);
 
-        cameraSim = new PhotonCameraSim(m_photonCamera);
-        visionSim.addCamera(cameraSim, ROBOT_TO_CAMERA);
-        cameraSim.enableRawStream(true);
-        cameraSim.enableProcessedStream(true);
-        cameraSim.enableDrawWireframe(true);
-
-        for (Translation2d centerlineTranslation : centerlineTranslations) {
+        for (Translation2d centerlineTranslation : CENTERLINE_TRANSLATIONS) {
             Pose3d targetPose = new Pose3d(new Translation3d(centerlineTranslation.getX(), centerlineTranslation.getY(), 0), new Rotation3d());
-            VisionTargetSim visionTarget = new VisionTargetSim(targetPose, targetModel);
-            visionSim.addVisionTargets(visionTarget);
+            VisionTargetSim visionTarget = new VisionTargetSim(targetPose, m_targetModel);
+            m_visionSim.addVisionTargets(visionTarget);
         }
 
-        for (Translation2d spikeTranslation : spikeTranslations) {
+        for (Translation2d spikeTranslation : SPIKE_TRANSLATIONS) {
             Pose3d targetPose = new Pose3d(new Translation3d(spikeTranslation.getX(), spikeTranslation.getY(), 0), new Rotation3d());
-            VisionTargetSim visionTarget = new VisionTargetSim(targetPose, targetModel);
-            visionSim.addVisionTargets(visionTarget);
+            VisionTargetSim visionTarget = new VisionTargetSim(targetPose, m_targetModel);
+            m_visionSim.addVisionTargets(visionTarget);
         }
 
     }
 
     public void updateObjectDetectionSimulation(Pose2d chassisLocation) {
-        visionSim.update(chassisLocation);
+        m_visionSim.update(chassisLocation);
     }
 
     public static double calculateDistanceToTarget(
@@ -78,7 +74,7 @@ public class ObjectDetection {
             / (Math.tan(cameraPitchRadians + targetPitchRadians) * Math.cos(targetYawRadians));
     }
 
-    public List<Pose2d> objectLocations(Pose2d ChassisLocation) {
+    public List<Pose2d> objectLocations(Pose2d chassisLocation) {
         List<Pose2d> objectLocationsList = new ArrayList<>();
         PhotonPipelineResult lastestResult = m_photonCamera.getLatestResult();
         for (PhotonTrackedTarget result : lastestResult.getTargets()) {
@@ -91,7 +87,7 @@ public class ObjectDetection {
                 );
             Translation2d relToCamera = PhotonUtils.estimateCameraToTargetTranslation(distance, Rotation2d.fromDegrees(result.getYaw()));
             Transform2d adjustForRot = new Transform2d(relToCamera, new Rotation2d());
-            objectLocationsList.add(ChassisLocation.transformBy(adjustForRot));
+            objectLocationsList.add(chassisLocation.transformBy(adjustForRot));
         }
         return objectLocationsList;
     }

@@ -9,7 +9,6 @@ import edu.wpi.first.math.geometry.Translation3d;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.estimation.TargetModel;
 import org.photonvision.simulation.PhotonCameraSim;
 import org.photonvision.simulation.VisionSystemSim;
 
@@ -22,30 +21,26 @@ public class AprilTagDetection {
     private final PhotonCamera m_photonCamera;
     private final AprilTagFieldLayout m_aprilTagFieldLayout;
     private final PhotonPoseEstimator m_photonPoseEstimator;
-    private final VisionSystemSim visionSim;
-    private final TargetModel targetModel;
-    // The simulation of this camera. Its values used in real robot code will be updated.
-    PhotonCameraSim cameraSim;
+    private final VisionSystemSim m_visionSim;
+    private final PhotonCameraSim m_cameraSim;
 
     public AprilTagDetection() {
         m_photonCamera = new PhotonCamera("aprilTags");
-        visionSim = new VisionSystemSim("aprilTagsSim");
-        // A 0.5 x 0.25 meter rectangular target -- change as needed
-        targetModel  = new TargetModel(0.5, 0.25);
-        cameraSim  = new PhotonCameraSim(m_photonCamera);
-        visionSim.addCamera(cameraSim, ROBOT_TO_CAMERA);
+        m_visionSim = new VisionSystemSim("aprilTagsSim");
+        m_cameraSim  = new PhotonCameraSim(m_photonCamera);
+        m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
 
         try {
             m_aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
-            visionSim.addAprilTags(m_aprilTagFieldLayout);
+            m_visionSim.addAprilTags(m_aprilTagFieldLayout);
             m_photonPoseEstimator = new PhotonPoseEstimator(m_aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_photonCamera, ROBOT_TO_CAMERA);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        cameraSim.enableRawStream(true);
-        cameraSim.enableProcessedStream(true);
-        cameraSim.enableDrawWireframe(true);
+        m_cameraSim.enableRawStream(true);
+        m_cameraSim.enableProcessedStream(true);
+        m_cameraSim.enableDrawWireframe(true);
     }
 
     public Optional<EstimatedRobotPose> getEstimateGlobalPose(Pose2d prevEstimatedRobotPose) {
@@ -54,6 +49,6 @@ public class AprilTagDetection {
     }
 
     public void updateAprilTagSimulation(Pose2d chassisLocation) {
-        visionSim.update(chassisLocation);
+        m_visionSim.update(chassisLocation);
     }
 }

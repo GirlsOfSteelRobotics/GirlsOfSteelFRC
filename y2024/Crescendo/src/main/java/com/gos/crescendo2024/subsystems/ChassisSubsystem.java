@@ -140,6 +140,7 @@ public class ChassisSubsystem extends SubsystemBase {
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
         }
+        m_field.drawNotePoses(m_objectDetectonSubsystem.objectLocations(getPose()));
     }
 
 
@@ -148,9 +149,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.updateSimulator();
         m_photonVisionSubsystem.updateAprilTagSimulation(getPose());
         m_objectDetectonSubsystem.updateObjectDetectionSimulation(getPose());
-        m_field.drawPoses(m_objectDetectonSubsystem.objectLocations(getPose()));
-
-
     }
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
