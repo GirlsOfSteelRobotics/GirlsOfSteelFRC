@@ -8,6 +8,7 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -49,7 +50,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_pivotMotor.setInverted(false);
+        m_pivotMotor.setInverted(true);
         m_pivotMotor.setSmartCurrentLimit(60);
 
         m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, CANSparkLowLevel.MotorType.kBrushless);
@@ -62,8 +63,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder = m_pivotMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         m_pivotAbsEncoder.setPositionConversionFactor(360.0);
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
-        m_pivotAbsEncoder.setInverted(false);
-        m_pivotAbsEncoder.setZeroOffset(0);
+        m_pivotAbsEncoder.setInverted(true);
+        m_pivotAbsEncoder.setZeroOffset(52);
 
         m_sparkPidController = m_pivotMotor.getPIDController();
         m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
@@ -136,6 +137,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armGoalAngle = Double.MIN_VALUE;
     }
 
+
     public double getAngle() {
         if (RobotBase.isSimulation()) {
             return m_pivotMotorEncoder.getPosition();
@@ -166,5 +168,18 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public boolean isArmAtGoal() {
         double error = m_armGoalAngle - getAngle();
         return Math.abs(error) < ALLOWABLE_ERROR;
+    }
+
+    public Command createPivotToCoastModeCommand() {
+        return this.runEnd(
+                () -> {
+                    m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                    m_followMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                },
+                () -> {
+                    m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+                    m_followMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+                })
+            .ignoringDisable(true).withName("Pivot to Coast");
     }
 }
