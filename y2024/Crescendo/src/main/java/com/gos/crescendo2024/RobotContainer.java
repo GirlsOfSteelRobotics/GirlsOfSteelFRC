@@ -104,6 +104,7 @@ public class RobotContainer {
         shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
         shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
+        shuffleboardTab.add("arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
 
         //Combined Commands
         shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
@@ -130,6 +131,9 @@ public class RobotContainer {
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
+
+        m_operatorController.x().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_operatorController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
     }
 
 
