@@ -156,6 +156,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
     }
 
+    public Command createMoveArmToAngleAndToSpeaker()
+    {
+        return runEnd(() -> moveArmToAngle(ARM_SPEAKER_ANGLE.getValue()), this::stopArmMotor).withName("arm to speaker");
+    }
+    public Command createMoveArmtoIntake()
+    {
+        return runEnd(()
+    }
+
     public double getArmAngleGoal() {
         return m_armGoalAngle;
     }

@@ -64,7 +64,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("shoot", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withTimeout(1));
         NamedCommands.registerCommand("intake", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
-
+        NamedCommands.registerCommand("arm", m_armPivotSubsystem.createMoveArmToAngleAndToSpeaker());
         m_autonomousFactory = new Autos();
 
         // Configure the trigger bindings
