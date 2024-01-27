@@ -11,8 +11,7 @@ import java.util.function.DoubleConsumer;
 public class PidProperty {
     private final List<HeavyDoubleProperty> m_properties;
 
-
-    /* default */ PidProperty(List<HeavyDoubleProperty> properties) {
+    /* default */  public PidProperty(List<HeavyDoubleProperty> properties) {
         m_properties = properties;
     }
 

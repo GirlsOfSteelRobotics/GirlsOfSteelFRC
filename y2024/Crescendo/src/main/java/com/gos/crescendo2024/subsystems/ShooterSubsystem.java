@@ -33,7 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
-
+    private double m_shooterGoalRPM;
 
     public ShooterSubsystem() {
         m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
@@ -88,12 +88,21 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setPidRpm(double rpm) {
         this.m_pidController.setReference(rpm, CANSparkBase.ControlType.kVelocity);
+        m_shooterGoalRPM = rpm;
     }
 
     public double getRPM() {
         return m_shooterEncoder.getVelocity();
     }
 
+    public double getShooterMotorPercentage() {
+        return m_shooterMotor.getAppliedOutput();
+    }
+
+    public boolean isShooterAtGoal() {
+        double error = m_shooterGoalRPM - getRPM();
+        return Math.abs(error) < ALLOWABLE_ERROR;
+    }
 
     // Command Factories
 
@@ -108,5 +117,4 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
     }
-
 }
