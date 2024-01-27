@@ -1,6 +1,8 @@
 package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.FieldConstants;
+import com.gos.crescendo2024.SpeakerLookupTable;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -13,6 +15,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -38,6 +42,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private double m_armGoalAngle;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
+    private final SpeakerLookupTable m_speakerTable;
+    //TODO need to switch values
+    public static final double MAX_SHOOTER_ANGLE = 0.0;
+
+    public static final double TARMAC_EDGE_ANGLE_HIGH = 0.0;
+
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
@@ -58,6 +68,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
         m_pivotAbsEncoder.setInverted(false);
         m_pivotAbsEncoder.setZeroOffset(0);
+
+        m_speakerTable = new SpeakerLookupTable();
 
         m_sparkPidController = m_pivotMotor.getPIDController();
         m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
@@ -126,6 +138,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     }
 
+
+    public void pivotUsingSpeakerLookupTable(Pose2d roboMan) {
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Translation2d roboManTranslation =  roboMan.getTranslation();
+        double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
+        moveArmToAngle(m_speakerTable.getVelocityTable(distanceToSpeaker));
+    }
+
     @Override
     public void simulationPeriodic() {
         m_pivotSimulator.update();
@@ -143,6 +163,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createMoveArmToAngle(double goalAngle) {
         return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
+    }
+
+    public Command createPivotUsingSpeakerTableCommand(Pose2d roboMan) {
+        return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
 }

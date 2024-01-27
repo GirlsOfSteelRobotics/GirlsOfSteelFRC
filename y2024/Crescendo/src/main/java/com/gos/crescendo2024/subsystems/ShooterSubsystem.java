@@ -12,8 +12,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -24,9 +22,9 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
-import com.gos.crescendo2024.SpeakerLookupTable;
-import com.gos.crescendo2024.FieldConstants;
+
 public class ShooterSubsystem extends SubsystemBase {
+
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
     private final SimableCANSparkMax m_shooterMotor;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
@@ -35,12 +33,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
-
-    private final SpeakerLookupTable m_speakerTable;
-    //TODO need to switch values
-    public static final double MAX_SHOOTER_RPM = 0.0;
-
-    public static final double TARMAC_EDGE_RPM_HIGH = 0.0;
 
 
     public ShooterSubsystem() {
@@ -65,8 +57,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotor::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotor::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
-
-        m_speakerTable = new SpeakerLookupTable();
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
@@ -104,13 +94,6 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterEncoder.getVelocity();
     }
 
-    public void shootUsingSpeakerLookupTable(Pose2d roboMan)
-    {
-        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
-        Translation2d roboManTranslation =  roboMan.getTranslation();
-        double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
-        setPidRpm(m_speakerTable.getVelocityTable(distanceToSpeaker));
-    }
 
     // Command Factories
 
@@ -124,11 +107,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
-    }
-
-    public Command createShootUsingSpeakerTableCommand(Pose2d roboMan)
-    {
-        return this.runEnd(() -> this.shootUsingSpeakerLookupTable(roboMan), this::stopShooter).withName("shoot from robot pose");
     }
 
 }
