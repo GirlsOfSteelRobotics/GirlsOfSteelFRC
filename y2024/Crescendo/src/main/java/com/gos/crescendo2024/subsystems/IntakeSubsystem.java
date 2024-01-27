@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.crescendo2024.Constants;
@@ -38,11 +39,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_networkTableEntries = new LoggingUtil("Intake Subsystem");
         m_networkTableEntries.addDouble("Current Velocity", m_intakeEncoder::getVelocity);
+
     }
 
     @Override
     public void periodic() {
         m_intakeAlert.checkAlerts();
+
     }
 
     public void intakeIn() {

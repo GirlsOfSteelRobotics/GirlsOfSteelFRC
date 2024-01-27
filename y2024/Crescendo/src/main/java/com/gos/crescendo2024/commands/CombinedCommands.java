@@ -14,6 +14,7 @@ public class CombinedCommands {
             .alongWith(intake.createMoveIntakeInCommand())
             .until(intake::hasGamePiece)
             .withName("Intake Piece");
+
     }
 
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
