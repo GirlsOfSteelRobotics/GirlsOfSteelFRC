@@ -245,8 +245,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToDetectedObject() {
-        return defer(() ->
-        {
+        return defer(() -> {
             if (!m_objectDetectonSubsystem.objectLocations(getPose()).isEmpty()) {
                 return createDriveToPointNoFlipCommand(m_objectDetectonSubsystem.objectLocations(getPose()).get(0));
             } else {
