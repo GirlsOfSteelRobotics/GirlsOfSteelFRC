@@ -26,7 +26,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 public class ShooterSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
-    public static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
+    private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
     private static final double ALLOWABLE_ERROR = 50;
 
     private final SimableCANSparkMax m_shooterMotorLeader;
@@ -124,6 +124,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createSetRPMCommand(double rpm) {
         return this.runEnd(() -> this.setPidRpm(rpm), this::stopShooter).withName("set shooter rpm " + rpm);
+    }
+
+    public Command createRunDefaultRpmCommand() {
+        return this.runEnd(() -> this.setPidRpm(DEFAULT_SHOOTER_RPM.getValue()), this::stopShooter).withName("set shooter default rpm");
     }
 
     public Command createStopShooterCommand() {
