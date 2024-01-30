@@ -137,13 +137,13 @@ public class RobotContainer {
 
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
         //faces towards speaker
-        m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController,FieldConstants.Speaker.CENTER_SPEAKER_OPENING ));
+        m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
 
         //operator
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
         //move to intake pos
-        m_operatorController.povDown().onTrue(m_armPivotSubsystem.createMoveArmToAngle(ArmPivotSubsystem.ARM_INTAKE_ANGLE.getValue()));
-        m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToAngle(ArmPivotSubsystem.ARM_SPEAKER_ANGLE.getValue()));
+        m_operatorController.povDown().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
+        m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
         // intake
         m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
