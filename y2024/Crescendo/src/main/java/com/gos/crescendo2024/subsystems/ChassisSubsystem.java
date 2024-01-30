@@ -43,6 +43,8 @@ import java.util.Optional;
 import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
+    private static final double GYRO_TO_CHASSIS_OFFSET = -90;
+
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 
@@ -208,7 +210,7 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
     public Command createResetGyroCommand() {
-        return runOnce(() -> m_gyro.setYaw(0));
+        return runOnce(() -> m_gyro.setYaw(GYRO_TO_CHASSIS_OFFSET)).ignoringDisable(true);
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {
