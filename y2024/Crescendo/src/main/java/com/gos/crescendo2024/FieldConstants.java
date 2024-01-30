@@ -10,14 +10,14 @@ public class FieldConstants {
     public static final Translation2d AMP_CENTER =
         new Translation2d(Units.inchesToMeters(72.455), Units.inchesToMeters(322.996));
 
-    public static final class Speaker {
-
     public static final double FIELD_LENGTH = Units.inchesToMeters(651.223);
+
     public static final double FIELD_WIDTH = Units.inchesToMeters(323.277);
 
     public static final class Speaker {
-        public static final Pose2d CENTER_SPEAKER_OPENING =
-            new Pose2d(0.0, FIELD_WIDTH - Units.inchesToMeters(104.0), new Rotation2d());
+
+    public static final Pose2d CENTER_SPEAKER_OPENING =
+        new Pose2d(0.0, FIELD_WIDTH - Units.inchesToMeters(104.0), new Rotation2d());
     }
 
     public static final class StagingLocations {
