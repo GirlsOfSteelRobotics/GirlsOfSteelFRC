@@ -11,6 +11,7 @@ public class FieldConstants {
         new Translation2d(Units.inchesToMeters(72.455), Units.inchesToMeters(322.996));
 
     public static final double FIELD_LENGTH = Units.inchesToMeters(651.223);
+
     public static final double FIELD_WIDTH = Units.inchesToMeters(323.277);
 
     public static final class Speaker {
