@@ -221,6 +221,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/test commands/arm to 45": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
