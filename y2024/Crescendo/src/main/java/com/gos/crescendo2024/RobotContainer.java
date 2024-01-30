@@ -83,9 +83,10 @@ public class RobotContainer {
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
         shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
+        shuffleboardTab.add("shooter default RPM", m_shooterSubsystem.createRunDefaultRpmCommand());
         shuffleboardTab.add("testShooter50", m_shooterSubsystem.createSetRPMCommand(50));
         shuffleboardTab.add("testShooter100", m_shooterSubsystem.createSetRPMCommand(100));
-        shuffleboardTab.add("resetShooter", m_shooterSubsystem.createStopShooterCommand());
+        shuffleboardTab.add("shooter stop", m_shooterSubsystem.createStopShooterCommand());
 
         shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
         shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
@@ -102,11 +103,13 @@ public class RobotContainer {
         shuffleboardTab.add("Turn to point drive", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
 
         //arm
-        shuffleboardTab.add("arm to 45", m_armPivotSubsystem.createMoveArmToAngle(45));
-        shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
-        shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
+        shuffleboardTab.add("arm to 45", m_armPivotSubsystem.createMoveArmToAngle(45));
+        shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
+        shuffleboardTab.add("arm to amp angle", m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
+        shuffleboardTab.add("arm to ground intake angle", m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
+        shuffleboardTab.add("arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
 
         //Combined Commands
         shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
