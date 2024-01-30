@@ -24,22 +24,27 @@ import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
-    private final SimableCANSparkMax m_shooterMotor;
+
+    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
+    public static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
+    private static final double ALLOWABLE_ERROR = 50;
+
+    private final SimableCANSparkMax m_shooterMotorLeader;
+    private final SimableCANSparkMax m_shooterMotorFollower;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
     private final RelativeEncoder m_shooterEncoder;
     private final SparkPIDController m_pidController;
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
-
+    private double m_shooterGoalRPM;
 
     public ShooterSubsystem() {
-        m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
-        m_shooterMotor.restoreFactoryDefaults();
-        m_shooterMotor.setInverted(true);
-        m_shooterEncoder = m_shooterMotor.getEncoder();
-        m_pidController = m_shooterMotor.getPIDController();
+        m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorLeader.restoreFactoryDefaults();
+        m_shooterMotorLeader.setInverted(false);
+        m_shooterEncoder = m_shooterMotorLeader.getEncoder();
+        m_pidController = m_shooterMotorLeader.getPIDController();
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
             .addP(0.0)
             .addI(0.0)
@@ -47,19 +52,27 @@ public class ShooterSubsystem extends SubsystemBase {
             .addFF(4.0E-4)
             .build();
 
-        m_shooterMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_shooterMotor.setSmartCurrentLimit(60);
-        m_shooterMotor.burnFlash();
-        m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotor, "shooter motor");
+        m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_shooterMotorLeader.setSmartCurrentLimit(60);
+        m_shooterMotorLeader.burnFlash();
+
+        m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorFollower.restoreFactoryDefaults();
+        m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_shooterMotorFollower.setSmartCurrentLimit(60);
+        m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
+        m_shooterMotorFollower.burnFlash();
+
+        m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
 
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
-        m_networkTableEntries.addDouble("Current Amps", m_shooterMotor::getOutputCurrent);
-        m_networkTableEntries.addDouble("Output", m_shooterMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
+        m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
-            this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotor), RevEncoderSimWrapper.create(this.m_shooterMotor));
+            this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotorLeader), RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
         }
     }
 
@@ -78,15 +91,16 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void tuneShootPercentage() {
-        m_shooterMotor.set(SHOOTER_SPEED.getValue());
+        m_shooterMotorLeader.set(SHOOTER_SPEED.getValue());
     }
 
     public void stopShooter() {
-        m_shooterMotor.set(0);
+        m_shooterMotorLeader.set(0);
     }
 
     public void setPidRpm(double rpm) {
         this.m_pidController.setReference(rpm, CANSparkBase.ControlType.kVelocity);
+        m_shooterGoalRPM = rpm;
     }
 
     public double getRPM() {
@@ -94,7 +108,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getShooterMotorPercentage() {
-        return m_shooterMotor.getAppliedOutput();
+        return m_shooterMotorLeader.getAppliedOutput();
+    }
+
+    public boolean isShooterAtGoal() {
+        double error = m_shooterGoalRPM - getRPM();
+        return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
     // Command Factories
@@ -110,5 +129,4 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
     }
-
 }

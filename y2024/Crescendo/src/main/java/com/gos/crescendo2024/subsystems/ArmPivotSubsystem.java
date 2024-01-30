@@ -2,11 +2,13 @@ package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -25,6 +27,12 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 
 public class ArmPivotSubsystem extends SubsystemBase {
+    public static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
+    public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 80); //arbitrary
+    public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle", 75); //arbitrary
+
+    private static final double ALLOWABLE_ERROR = 1;
+
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
@@ -42,22 +50,21 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_pivotMotor.setInverted(false);
+        m_pivotMotor.setInverted(true);
         m_pivotMotor.setSmartCurrentLimit(60);
 
         m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, CANSparkLowLevel.MotorType.kBrushless);
         m_followMotor.restoreFactoryDefaults();
-        m_followMotor.follow(m_pivotMotor);
+        m_followMotor.follow(m_pivotMotor, true);
         m_followMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followMotor.setInverted(false);
         m_followMotor.setSmartCurrentLimit(60);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
         m_pivotAbsEncoder = m_pivotMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         m_pivotAbsEncoder.setPositionConversionFactor(360.0);
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
-        m_pivotAbsEncoder.setInverted(false);
-        m_pivotAbsEncoder.setZeroOffset(0);
+        m_pivotAbsEncoder.setInverted(true);
+        m_pivotAbsEncoder.setZeroOffset(52);
 
         m_sparkPidController = m_pivotMotor.getPIDController();
         m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
@@ -130,6 +137,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armGoalAngle = Double.MIN_VALUE;
     }
 
+
     public double getAngle() {
         if (RobotBase.isSimulation()) {
             return m_pivotMotorEncoder.getPosition();
@@ -155,5 +163,23 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public double getPivotMotorPercentage() {
         return m_pivotMotor.getAppliedOutput();
+    }
+
+    public boolean isArmAtGoal() {
+        double error = m_armGoalAngle - getAngle();
+        return Math.abs(error) < ALLOWABLE_ERROR;
+    }
+
+    public Command createPivotToCoastModeCommand() {
+        return this.runEnd(
+                () -> {
+                    m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                    m_followMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                },
+                () -> {
+                    m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+                    m_followMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+                })
+            .ignoringDisable(true).withName("Pivot to Coast");
     }
 }

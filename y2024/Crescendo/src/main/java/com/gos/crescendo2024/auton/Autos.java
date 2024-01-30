@@ -5,7 +5,9 @@
 
 package com.gos.crescendo2024.auton;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public final class Autos {
@@ -16,7 +18,8 @@ public final class Autos {
     }
 
     public Autos() {
-        m_autonChooser = new SendableChooser<>();
+        m_autonChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", m_autonChooser);
 
     }
 
