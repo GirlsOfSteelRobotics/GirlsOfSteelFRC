@@ -54,10 +54,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     private final SpeakerLookupTable m_speakerTable;
-    //TODO need to switch values
-    public static final double MAX_SHOOTER_ANGLE = 0.0;
-
-    public static final double TARMAC_EDGE_ANGLE_HIGH = 0.0;
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -162,7 +158,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armGoalAngle = Double.MIN_VALUE;
     }
 
-
     public double getAngle() {
         if (RobotBase.isSimulation()) {
             return m_pivotMotorEncoder.getPosition();
@@ -189,14 +184,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    /////////////////////////////////////
+    // Command Factories
+    /////////////////////////////////////
     public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
-
-    // Command Factory //
-
-    public Command createMoveArmToAngle(double goalAngle) {
+    public Command createMoveArmToAngleCommand(double goalAngle) {
         return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
     }
 

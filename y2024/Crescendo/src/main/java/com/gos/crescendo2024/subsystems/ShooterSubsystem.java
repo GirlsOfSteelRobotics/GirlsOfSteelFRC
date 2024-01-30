@@ -15,7 +15,6 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -81,7 +80,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
         m_pidProperties.updateIfChanged();
-        SmartDashboard.putNumber("shooterRpm", this.getRPM());
 
     }
 
@@ -116,8 +114,9 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    /////////////////////////////////////
     // Command Factories
-
+    /////////////////////////////////////
     public Command createTunePercentShootCommand() {
         return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("TuneShooterPercentage");
     }

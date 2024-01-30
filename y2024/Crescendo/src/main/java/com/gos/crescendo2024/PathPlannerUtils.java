@@ -11,9 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class PathPlannerUtils24 {
+public final class PathPlannerUtils {
 
-    private PathPlannerUtils24() {
+    private PathPlannerUtils() {
 
     }
 
@@ -30,7 +30,7 @@ public final class PathPlannerUtils24 {
                 .map(name -> name.substring(0, name.lastIndexOf(".")))
                 .collect(Collectors.toSet());
         for (String pathName : pathNames) {
-            tab.add(chassis.createPathCommand(PathPlannerPath.fromPathFile(pathName), true).withName(pathName));
+            tab.add(chassis.createFollowPathCommand(PathPlannerPath.fromPathFile(pathName), true).withName(pathName));
         }
     }
 }

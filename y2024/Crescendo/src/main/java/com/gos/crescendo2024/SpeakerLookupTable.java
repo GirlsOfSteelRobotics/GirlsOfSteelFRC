@@ -6,17 +6,17 @@ import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-import static com.gos.crescendo2024.subsystems.ArmPivotSubsystem.MAX_SHOOTER_ANGLE;
-import static com.gos.crescendo2024.subsystems.ArmPivotSubsystem.TARMAC_EDGE_ANGLE_HIGH;
-
 public class SpeakerLookupTable {
+    private static final double MIN_DISTANCE_ANGLE = 10.0;
+    private static final double MAX_DISTANCE_ANGLE = 45.0;
+
     private final NavigableMap<Double, Double> m_list = new TreeMap<>();
 
     public SpeakerLookupTable() {
-        m_list.put(Units.feetToMeters(0), 10.0);
+        m_list.put(Units.feetToMeters(0), MIN_DISTANCE_ANGLE);
         m_list.put(Units.feetToMeters(9), 30.0);
         m_list.put(Units.feetToMeters(18), 40.0);
-        m_list.put(Units.feetToMeters(27), 45.0);
+        m_list.put(Units.feetToMeters(27), MAX_DISTANCE_ANGLE);
 
     }
 
@@ -24,12 +24,12 @@ public class SpeakerLookupTable {
         Map.Entry<Double, Double> floor = m_list.floorEntry(distance);
 
         if (floor == null) {
-            return TARMAC_EDGE_ANGLE_HIGH;
+            return MIN_DISTANCE_ANGLE;
         }
 
         Map.Entry<Double, Double> ceiling = m_list.ceilingEntry(distance);
         if (ceiling == null) {
-            return MAX_SHOOTER_ANGLE;
+            return MAX_DISTANCE_ANGLE;
         }
 
         if (floor.equals(ceiling)) {
