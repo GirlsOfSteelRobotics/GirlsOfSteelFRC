@@ -1,9 +1,4 @@
 {
-  "FMS": {
-    "window": {
-      "visible": false
-    }
-  },
   "Joysticks": {
     "window": {
       "visible": false
@@ -28,10 +23,15 @@
         },
         {},
         {
+          "decKey": 74,
           "incKey": 76
+        },
+        {
+          "decKey": 75,
+          "incKey": 73
         }
       ],
-      "axisCount": 5,
+      "axisCount": 6,
       "buttonCount": 4,
       "buttonKeys": [
         90,
@@ -54,15 +54,6 @@
       "povCount": 1
     },
     {
-      "axisConfig": [
-        {
-          "decKey": 74
-        },
-        {
-          "decKey": 73,
-          "incKey": 75
-        }
-      ],
       "axisCount": 2,
       "buttonCount": 4,
       "buttonKeys": [
@@ -107,7 +98,7 @@
       "guid": "Keyboard0"
     },
     {
-      "useGamepad": true
+      "guid": "Keyboard0"
     }
   ]
 }

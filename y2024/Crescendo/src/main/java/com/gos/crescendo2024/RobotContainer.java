@@ -10,12 +10,14 @@ import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.CombinedCommands;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
 import com.gos.crescendo2024.commands.SpeakerAimAndShootCommand;
+import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -75,44 +77,63 @@ public class RobotContainer {
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
         if (RobotBase.isSimulation()) {
+            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
+            DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
 
-
+        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
     }
 
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
-        shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
-        shuffleboardTab.add("testShooter50", m_shooterSubsystem.createSetRPMCommand(50));
-        shuffleboardTab.add("testShooter100", m_shooterSubsystem.createSetRPMCommand(100));
-        shuffleboardTab.add("resetShooter", m_shooterSubsystem.createStopShooterCommand());
 
-        shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
-        shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
+        addChassisTestCommands(shuffleboardTab);
+        addArmPivotTestCommands(shuffleboardTab);
+        addIntakeTestCommands(shuffleboardTab);
+        addShooterTestCommands(shuffleboardTab);
+
+        shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        shuffleboardTab.add("Teleop: Aim at speaker", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+
+        // Combined Commands
+        shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_intakeSubsystem));
+    }
+
+    private void addChassisTestCommands(ShuffleboardTab shuffleboardTab) {
         shuffleboardTab.add("Chassis to 45", m_chassisSubsystem.createTurnToAngleCommand(45));
         shuffleboardTab.add("Chassis to 90", m_chassisSubsystem.createTurnToAngleCommand(90));
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
-        shuffleboardTab.add("test drive to speaker", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
-        shuffleboardTab.add("test drive to amp", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))));
+        shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
+        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))).withName("Drive To Amp"));
+    }
 
-        //hard coded sorry will fix asap
-        shuffleboardTab.add("David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        shuffleboardTab.add("Turn to point drive", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+    private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
+        shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
+        shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
+    }
 
-        //arm
-        shuffleboardTab.add("arm to 45", m_armPivotSubsystem.createMoveArmToAngle(45));
-        shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
-        shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
-        shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
+    private void addArmPivotTestCommands(ShuffleboardTab shuffleboardTab) {
+        shuffleboardTab.add("Arm to 0", m_armPivotSubsystem.createMoveArmToAngleCommand(0));
+        shuffleboardTab.add("Arm to 45", m_armPivotSubsystem.createMoveArmToAngleCommand(45));
+        shuffleboardTab.add("Arm to 90", m_armPivotSubsystem.createMoveArmToAngleCommand(90));
+        shuffleboardTab.add("Arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
+        shuffleboardTab.add("Arm to amp angle", m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
+        shuffleboardTab.add("Arm to ground intake angle", m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
+        shuffleboardTab.add("Arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
+        shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
+    }
 
-        //Combined Commands
-        shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Shooting to Speaker", CombinedCommands.speakerShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem));
-        shuffleboardTab.add("Shooting to Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem));
-        shuffleboardTab.add("Shoot Piece", CombinedCommands.baseShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, 45));
+    private void addShooterTestCommands(ShuffleboardTab shuffleboardTab) {
+        shuffleboardTab.add("Shooter Percent Output", m_shooterSubsystem.createTunePercentShootCommand());
+        shuffleboardTab.add("shooter RPM: default", m_shooterSubsystem.createRunDefaultRpmCommand());
+        shuffleboardTab.add("Shooter RPM: 3500", m_shooterSubsystem.createSetRPMCommand(3500));
+        shuffleboardTab.add("Shooter RPM: 4000", m_shooterSubsystem.createSetRPMCommand(4000));
+        shuffleboardTab.add("Shooter stop", m_shooterSubsystem.createStopShooterCommand());
     }
 
     /**
@@ -125,10 +146,42 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        /////////////////////////////
+        // Default Commands
+        /////////////////////////////
+        if (RobotBase.isReal()) {
+            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        }
+        else {
+            m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
+        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
+        /////////////////////////////
+        // Driver Controller
+        /////////////////////////////
+        // Chassis
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
+        m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+
+        // Arm
+        m_driverController.leftTrigger().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
+        m_driverController.leftBumper().whileTrue(m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
+        m_driverController.rightBumper().whileTrue(m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
+
+        // This is used to shoot
+        m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+
+        /////////////////////////////
+        // Operator Controller
+        /////////////////////////////
+        // Intake
+        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+
+        // shooter
+        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createTunePercentShootCommand());
+        m_operatorController.a().whileTrue(m_shooterSubsystem.createStopShooterCommand());
     }
 
 
