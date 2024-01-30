@@ -81,7 +81,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
         m_pidProperties.updateIfChanged();
-        SmartDashboard.putNumber("shooterRpm", this.getRPM());
 
     }
 
@@ -116,8 +115,9 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    /////////////////////////////////////
     // Command Factories
-
+    /////////////////////////////////////
     public Command createTunePercentShootCommand() {
         return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("TuneShooterPercentage");
     }

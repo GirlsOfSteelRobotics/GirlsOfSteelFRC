@@ -17,7 +17,7 @@ import com.gos.crescendo2024.Constants;
 public class IntakeSubsystem extends SubsystemBase {
     private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(true, "Intake_Out_Speed", -1);
     private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(true, "Intake_In_Speed", 1);
-    public static final GosIntProperty INTAKE_CURRENT_LIMIT = new GosIntProperty(true, "IntakeCurrentLimit", 25);
+
     private final SimableCANSparkMax m_intakeMotor;
     private final RelativeEncoder m_intakeEncoder;
     private final DigitalInput m_photoelectricSensor;
@@ -67,8 +67,10 @@ public class IntakeSubsystem extends SubsystemBase {
     public double getIntakeMotorPercentage() {
         return m_intakeMotor.getAppliedOutput();
     }
-    //commands
 
+    /////////////////////////////////////
+    // Command Factories
+    /////////////////////////////////////
     public Command createMoveIntakeInCommand() {
         return this.runEnd(this::intakeIn, this::intakeStop).withName("IntakeSubsystemIn");
     }

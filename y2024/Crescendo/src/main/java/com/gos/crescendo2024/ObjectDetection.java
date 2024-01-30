@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.estimation.TargetModel;
@@ -25,39 +26,43 @@ import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_T
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
 
 public class ObjectDetection {
-
     private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(11), Units.inchesToMeters(15)), new Rotation3d(0, 0, 0));
-    private final PhotonCamera m_photonCamera;
-    private final TargetModel m_targetModel;
-    private final VisionSystemSim m_visionSim;
 
+    private final PhotonCamera m_photonCamera;
+
+    private final VisionSystemSim m_visionSim;
     private final PhotonCameraSim m_cameraSim;
 
     public ObjectDetection() {
         m_photonCamera = new PhotonCamera("objectDetection");
 
-        m_visionSim = new VisionSystemSim("objectDetectionSim");
+        TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
 
-        m_targetModel = new TargetModel(Units.inchesToMeters(18));
+        if (RobotBase.isSimulation()) {
+            m_cameraSim = new PhotonCameraSim(m_photonCamera);
+            m_cameraSim.enableRawStream(true);
+            m_cameraSim.enableProcessedStream(true);
+            m_cameraSim.enableDrawWireframe(true);
 
-        m_cameraSim = new PhotonCameraSim(m_photonCamera);
-        m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
-        m_cameraSim.enableRawStream(true);
-        m_cameraSim.enableProcessedStream(true);
-        m_cameraSim.enableDrawWireframe(true);
 
-        for (Translation2d centerlineTranslation : CENTERLINE_TRANSLATIONS) {
-            Pose3d targetPose = new Pose3d(new Translation3d(centerlineTranslation.getX(), centerlineTranslation.getY(), 0), new Rotation3d());
-            VisionTargetSim visionTarget = new VisionTargetSim(targetPose, m_targetModel);
-            m_visionSim.addVisionTargets(visionTarget);
+            m_visionSim = new VisionSystemSim("objectDetectionSim");
+            m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
+
+            for (Translation2d centerlineTranslation : CENTERLINE_TRANSLATIONS) {
+                Pose3d targetPose = new Pose3d(new Translation3d(centerlineTranslation.getX(), centerlineTranslation.getY(), 0), new Rotation3d());
+                VisionTargetSim visionTarget = new VisionTargetSim(targetPose, targetModel);
+                m_visionSim.addVisionTargets(visionTarget);
+            }
+
+            for (Translation2d spikeTranslation : SPIKE_TRANSLATIONS) {
+                Pose3d targetPose = new Pose3d(new Translation3d(spikeTranslation.getX(), spikeTranslation.getY(), 0), new Rotation3d());
+                VisionTargetSim visionTarget = new VisionTargetSim(targetPose, targetModel);
+                m_visionSim.addVisionTargets(visionTarget);
+            }
+        } else {
+            m_cameraSim = null;
+            m_visionSim = null;
         }
-
-        for (Translation2d spikeTranslation : SPIKE_TRANSLATIONS) {
-            Pose3d targetPose = new Pose3d(new Translation3d(spikeTranslation.getX(), spikeTranslation.getY(), 0), new Rotation3d());
-            VisionTargetSim visionTarget = new VisionTargetSim(targetPose, m_targetModel);
-            m_visionSim.addVisionTargets(visionTarget);
-        }
-
     }
 
     public void updateObjectDetectionSimulation(Pose2d chassisLocation) {

@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class TurnToPointSwerveDrive extends BaseTeleopSwerve {
-
     private final Pose2d m_point;
 
     public TurnToPointSwerveDrive(ChassisSubsystem chassisSubsystem, CommandXboxController joystick, Pose2d point) {

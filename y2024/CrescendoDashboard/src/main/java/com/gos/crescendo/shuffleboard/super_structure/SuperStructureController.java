@@ -50,7 +50,7 @@ public class SuperStructureController {
 
     @FXML
     private Pane m_pane;
-    
+
     @FXML
     private Rectangle m_chassis;
 
