@@ -141,6 +141,9 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        /////////////////////////////
+        // Default Commands
+        /////////////////////////////
         if (RobotBase.isReal()) {
             m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         }
@@ -149,18 +152,25 @@ public class RobotContainer {
         }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
+        /////////////////////////////
+        // Driver Controller
+        /////////////////////////////
+        // Chassis
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
-        //faces towards speaker
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
 
-        //move to intake pos
+        // Arm
         m_driverController.leftTrigger().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
         m_driverController.leftBumper().whileTrue(m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
         m_driverController.rightBumper().whileTrue(m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
-        // intake
+
+        // This is used to shoot
         m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
 
-        //operator
+        /////////////////////////////
+        // Operator Controller
+        /////////////////////////////
+        // Intake
         m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 

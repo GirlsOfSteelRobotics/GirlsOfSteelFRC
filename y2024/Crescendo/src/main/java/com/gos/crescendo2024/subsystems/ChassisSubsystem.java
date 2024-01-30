@@ -224,9 +224,9 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
         Command followPathCommand = AutoBuilder.followPath(path);
         if (resetPose) {
-            return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand).withName("Follow Path");
+            return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand).withName("Reset position and follow path");
         }
-        return followPathCommand;
+        return followPathCommand.withName("Follow Path");
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end) {

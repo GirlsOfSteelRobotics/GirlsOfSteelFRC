@@ -1,14 +1,11 @@
 package com.gos.crescendo2024;
 
 import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,6 @@ public class GoSField {
     public GoSField() {
         m_field = new Field2d();
 
-        FieldObject2d aprilTagObjects = m_field.getObject("AprilTags"); // NOPMD(CloseResource)
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
         m_detectedNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
@@ -32,6 +28,7 @@ public class GoSField {
         for (AprilTag tag : FieldConstants.TAG_LAYOUT.getTags()) {
             tagPoses.add(tag.pose.toPose2d());
         }
+        FieldObject2d aprilTagObjects = m_field.getObject("AprilTags"); // NOPMD(CloseResource)
         aprilTagObjects.setPoses(tagPoses);
     }
 

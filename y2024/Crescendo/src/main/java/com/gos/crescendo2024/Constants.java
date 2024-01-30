@@ -16,20 +16,14 @@ package com.gos.crescendo2024;
 public final class Constants {
     // Joystick IDS
     public static final int DRIVER_JOYSTICK = 0;
-
     public static final int OPERATOR_JOYSTICK = 1;
 
     // CAN ID's
-
     public static final int ARM_PIVOT = 6;
-
     public static final int ARM_PIVOT_FOLLOW = 7;
-
     public static final int INTAKE_MOTOR = 10;
     public static final int SHOOTER_MOTOR_LEADER = 15;
     public static final int SHOOTER_MOTOR_FOLLOWER = 16;
-
-
 
     public static final int PIGEON_PORT = 20;
 

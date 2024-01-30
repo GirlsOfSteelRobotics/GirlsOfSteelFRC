@@ -1,9 +1,9 @@
 package com.gos.crescendo2024.subsystems;
 
 
+import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
@@ -12,7 +12,6 @@ import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.crescendo2024.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
     private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(true, "Intake_Out_Speed", -1);
