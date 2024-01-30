@@ -16,6 +16,7 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -74,6 +75,8 @@ public class RobotContainer {
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
         if (RobotBase.isSimulation()) {
+            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
+            DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
 
@@ -103,8 +106,8 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
-        shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
-        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))));
+        shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
+        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))).withName("Drive To Amp"));
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
