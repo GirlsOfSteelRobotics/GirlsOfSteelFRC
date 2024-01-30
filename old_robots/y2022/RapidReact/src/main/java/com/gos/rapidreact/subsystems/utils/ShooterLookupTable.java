@@ -27,7 +27,7 @@ public class ShooterLookupTable {
     /**
      * @param distance  needs to get here from the camera
      */
-    public double getAngleTable(double distance) {
+    public double getVelocityTable(double distance) {
 
         Map.Entry<Double, Double> floor = m_list.floorEntry(distance);
         // Below the min. Just zero it out
