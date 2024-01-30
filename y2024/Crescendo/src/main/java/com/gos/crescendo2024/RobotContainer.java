@@ -139,15 +139,17 @@ public class RobotContainer {
         //faces towards speaker
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
 
-        //operator
-        m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
         //move to intake pos
-        m_operatorController.povDown().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
-        m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
+        m_driverController.leftTrigger().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
+        m_driverController.leftBumper().whileTrue(m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
+        m_driverController.rightBumper().whileTrue(m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         // intake
-        m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+
+        //operator
+        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
-        m_operatorController.x().whileTrue(m_intakeSubsystem.createStopIntakeCommand());
+
         // shooter
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createTunePercentShootCommand());
         m_operatorController.a().whileTrue(m_shooterSubsystem.createStopShooterCommand());

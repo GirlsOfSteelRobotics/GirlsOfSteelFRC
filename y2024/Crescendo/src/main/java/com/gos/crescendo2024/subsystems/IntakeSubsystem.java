@@ -76,8 +76,4 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command createMoveIntakeOutCommand() {
         return this.runEnd(this::intakeOut, this::intakeStop).withName("IntakeSubsystemOut");
     }
-
-    public Command createStopIntakeCommand() {
-        return this.run(this::intakeStop);
-    }
 }
