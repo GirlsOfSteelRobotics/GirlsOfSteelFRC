@@ -15,10 +15,11 @@ public class CombinedCommands {
             .alongWith(intake.createMoveIntakeInCommand())
             .until(intake::hasGamePiece)
             .withName("Intake Piece");
+    }
 
     public static Command baseShooterCommand(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
         return armPivot.createMoveArmToAngle(angle)
-            .andThen(shooter.createSetRPMCommand(ShooterSubsystem.SHOOTER_SPEED.getValue()))
+            .andThen(shooter.createSetRPMCommand(ShooterSubsystem.DEFAULT_SHOOTER_RPM.getValue()))
             .withName("Basic Shoot");
     }
 

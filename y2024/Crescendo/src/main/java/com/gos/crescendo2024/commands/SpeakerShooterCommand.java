@@ -1,14 +1,14 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 
 
-public class SpeakerShooterCommand extends CommandBase {
+public class SpeakerShooterCommand extends Command {
     private final ArmPivotSubsystem armPivotSubsystem;
     private final ChassisSubsystem chassisSubsystem;
     private final IntakeSubsystem intakeSubsystem;
@@ -31,9 +31,9 @@ public class SpeakerShooterCommand extends CommandBase {
 
     @Override
     public void execute() {
-    armPivotSubsystem.moveArmToAngle(ArmPivotSubsystem.ARM_SPEAKER_ANGLE.getValue());
+    armPivotSubsystem.moveArmToAngle(ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE.getValue());
     chassisSubsystem.turnToPointDrive(0, 0, FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
-    shooterSubsystem.setPidRpm(ShooterSubsystem.SHOOTER_SPEED.getValue());
+    shooterSubsystem.setPidRpm(ShooterSubsystem.DEFAULT_SHOOTER_RPM.getValue());
 
     }
 
