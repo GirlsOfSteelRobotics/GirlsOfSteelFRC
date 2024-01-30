@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [8]": {
         "header": {
@@ -166,6 +171,7 @@
       "/Shuffleboard/test commands/testShooter50": "Command",
       "/Shuffleboard/test commands/testShooter50?": "Command",
       "/Shuffleboard/test commands/turn to face point": "Command",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
@@ -174,17 +180,12 @@
           "visible": true
         }
       },
+      "/Shuffleboard/test commands/Intake Piece": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to amp": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to speaker": {
         "window": {
           "visible": true
         }
@@ -216,6 +217,11 @@
           "visible": true
         }
       },
+      "/SmartDashboard/Auto Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "AprilTags": {
           "length": 0.10000000149011612,
@@ -236,12 +242,11 @@
           ],
           "style": "Line"
         },
-        "bottom": 544,
-        "builtin": "2024 Crescendo",
-        "height": 8.013679504394531,
-        "left": 46,
-        "right": 1088,
-        "top": 36,
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
         "width": 16.541748046875,
         "window": {
           "visible": true
@@ -263,10 +268,10 @@
     }
   },
   "NetworkTables Info": {
-    "Connections": {
+    "Clients": {
       "open": true
     },
-    "Server": {
+    "Connections": {
       "open": true
     },
     "visible": true

@@ -26,6 +26,12 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 
 public class ArmPivotSubsystem extends SubsystemBase {
+    public static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
+    public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 80); //arbitrary
+    public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle", 75); //arbitrary
+
+    private static final double ALLOWABLE_ERROR = 1;
+
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
@@ -38,10 +44,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final ArmFeedForwardProperty m_wpiFeedForward;
     private double m_armGoalAngle;
     private SingleJointedArmSimWrapper m_pivotSimulator;
-
-    public static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
-    public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 80); //arbitrary
-    public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle", 75); //arbitrary
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -154,6 +156,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
     }
 
+    public Command createMoveArmToAngleAndToSpeaker()
+    {
+        return runEnd(() -> moveArmToAngle(ARM_SPEAKER_ANGLE.getValue()), this::stopArmMotor).withName("arm to speaker");
+    }
+    public Command createMoveArmtoIntake()
+    {
+        return runEnd(()
+    }
+
     public double getArmAngleGoal() {
         return m_armGoalAngle;
     }
@@ -163,5 +174,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
     public boolean isArmAtGoal(){
 
+    }
+
+    public boolean isArmAtGoal() {
+        double error = m_armGoalAngle - getAngle();
+        return Math.abs(error) < ALLOWABLE_ERROR;
     }
 }
