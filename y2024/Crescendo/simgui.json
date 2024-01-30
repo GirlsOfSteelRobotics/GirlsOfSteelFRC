@@ -1,18 +1,15 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
-      "SPARK MAX [16]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK MAX [8]": {
         "header": {
           "open": true
         }
-      },
-      "window": {
-        "visible": false
       }
     }
   },
@@ -174,17 +171,11 @@
       "/Shuffleboard/test commands/arm to 0": "Command",
       "/Shuffleboard/test commands/arm to 45": "Command",
       "/Shuffleboard/test commands/arm to 90": "Command",
-      "/Shuffleboard/test commands/arm to amp angle": "Command",
       "/Shuffleboard/test commands/arm to coast": "Command",
-      "/Shuffleboard/test commands/arm to default speaker angle": "Command",
-      "/Shuffleboard/test commands/arm to ground intake angle": "Command",
       "/Shuffleboard/test commands/intake in": "Command",
       "/Shuffleboard/test commands/intake out": "Command",
-      "/Shuffleboard/test commands/pivot arm w/ bot pos": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
-      "/Shuffleboard/test commands/shooter default RPM": "Command",
-      "/Shuffleboard/test commands/shooter stop": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/Shuffleboard/test commands/test drive to amp": "Command",
       "/Shuffleboard/test commands/test drive to point": "Command",
@@ -200,17 +191,32 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/PP Paths/Curve Path": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/LeaveWing": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/S-Curve Path": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/SplinePath": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/StraightLinePath": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/David Drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/pivot arm w/ bot pos": {
         "window": {
           "visible": true
         }
@@ -278,18 +284,12 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
   "NetworkTables": {
     "transitory": {
-      "Arm Pivot Subsystem": {
-        "open": true
-      },
       "Shooter Subsystem": {
         "open": true
       },
@@ -306,39 +306,8 @@
       "open": true
     },
     "Server": {
-      "Publishers": {
-        "open": true
-      },
-      "Subscribers": {
-        "open": true
-      },
       "open": true
-    }
-  },
-  "Plot": {
-    "Plot <0>": {
-      "plots": [
-        {
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 234,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/Arm Pivot Subsystem/Rel Encoder Value"
-            }
-          ]
-        }
-      ]
-    }
+    },
+    "visible": true
   }
 }
