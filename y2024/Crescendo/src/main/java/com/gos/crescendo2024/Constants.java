@@ -21,9 +21,9 @@ public final class Constants {
 
     // CAN ID's
 
-    public static final int ARM_PIVOT = 7;
+    public static final int ARM_PIVOT = 6;
 
-    public static final int ARM_PIVOT_FOLLOW = 6;
+    public static final int ARM_PIVOT_FOLLOW = 7;
 
     public static final int INTAKE_MOTOR = 10;
     public static final int SHOOTER_MOTOR_LEADER = 15;
@@ -45,4 +45,6 @@ public final class Constants {
 
     //Digital Inputs
     public static final int INTAKE_SENSOR = 0;
+
+
 }

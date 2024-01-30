@@ -145,6 +145,18 @@
     },
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/PP Paths/Curve Path": "Command",
+      "/Shuffleboard/PP Paths/Example Path": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
+      "/Shuffleboard/PP Paths/LeaveWing": "Command",
+      "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
+      "/Shuffleboard/PP Paths/S-Curve Path": "Command",
+      "/Shuffleboard/PP Paths/SplinePath": "Command",
+      "/Shuffleboard/PP Paths/StraightLinePath": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
@@ -159,6 +171,7 @@
       "/Shuffleboard/test commands/arm to 0": "Command",
       "/Shuffleboard/test commands/arm to 45": "Command",
       "/Shuffleboard/test commands/arm to 90": "Command",
+      "/Shuffleboard/test commands/arm to coast": "Command",
       "/Shuffleboard/test commands/intake in": "Command",
       "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
@@ -172,15 +185,38 @@
       "/Shuffleboard/test commands/testShooter50?": "Command",
       "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Auto Chooser": "String Chooser",
-      "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/David Drive": {
+      "/Shuffleboard/PP Paths/Curve Path": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Turn to point drive": {
+      "/Shuffleboard/PP Paths/LeaveWing": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/S-Curve Path": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/SplinePath": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/StraightLinePath": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/David Drive": {
         "window": {
           "visible": true
         }
@@ -217,11 +253,6 @@
           "visible": true
         }
       },
-      "/SmartDashboard/Auto Chooser": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "AprilTags": {
           "length": 0.10000000149011612,
@@ -251,6 +282,14 @@
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875
       }
     }
   },
@@ -275,8 +314,5 @@
       "open": true
     },
     "visible": true
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }
