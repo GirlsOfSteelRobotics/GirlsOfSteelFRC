@@ -16,6 +16,7 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -74,6 +75,8 @@ public class RobotContainer {
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
         if (RobotBase.isSimulation()) {
+            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
+            DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
 

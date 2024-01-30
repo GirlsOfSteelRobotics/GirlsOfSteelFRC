@@ -241,9 +241,6 @@
           "window": {
             "visible": true
           }
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Auto Chooser": {
@@ -253,10 +250,41 @@
       },
       "/SmartDashboard/Field": {
         "AprilTags": {
-          "length": 0.10000000149011612,
-          "style": "Box/Image",
+          "color": [
+            0.0,
+            255.0,
+            217.49996948242188,
+            255.0
+          ],
+          "image": "../../libraries/shared_images/tag-blue.png",
+          "length": 0.8999999761581421,
+          "width": 0.8999999761581421
+        },
+        "Notes": {
+          "arrows": false,
+          "color": [
+            0.720588207244873,
+            0.49888473749160767,
+            0.035322971642017365,
+            255.0
+          ],
+          "length": 0.45719999074935913,
           "weight": 1.0,
-          "width": 0.10000000149011612
+          "width": 0.45719999074935913
+        },
+        "OldOdometry": {
+          "arrowColor": [
+            0.10947717726230621,
+            0.656862735748291,
+            0.640762984752655,
+            255.0
+          ],
+          "color": [
+            0.0,
+            255.0,
+            179.99998474121094,
+            255.0
+          ]
         },
         "Trajectory": {
           "arrows": false,
@@ -280,14 +308,6 @@
         "window": {
           "visible": true
         }
-      },
-      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": {
-        "bottom": 1476,
-        "height": 8.210550308227539,
-        "left": 150,
-        "right": 2961,
-        "top": 79,
-        "width": 16.541748046875
       }
     }
   },
@@ -313,7 +333,8 @@
         "open": true
       },
       "open": true
-    }
+    },
+    "visible": true
   },
   "NetworkTables View": {
     "visible": false
