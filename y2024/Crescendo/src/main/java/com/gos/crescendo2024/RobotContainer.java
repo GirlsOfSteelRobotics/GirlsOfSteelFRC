@@ -76,6 +76,8 @@ public class RobotContainer {
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
+
+        PathPlannerUtils24.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
     }
 
     private void createTestCommands() {
