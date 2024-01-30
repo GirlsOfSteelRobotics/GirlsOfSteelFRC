@@ -30,6 +30,8 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
+import java.util.function.Supplier;
+
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
@@ -143,9 +145,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
 
-    public void pivotUsingSpeakerLookupTable(Pose2d roboMan) {
+    public void pivotUsingSpeakerLookupTable(Supplier<Pose2d> roboMan) {
         Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
-        Translation2d roboManTranslation =  roboMan.getTranslation();
+        Translation2d roboManTranslation =  roboMan.get().getTranslation();
         double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
         moveArmToAngle(m_speakerTable.getVelocityTable(distanceToSpeaker));
     }
@@ -186,7 +188,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         double error = m_armGoalAngle - getAngle();
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
-    public Command createPivotUsingSpeakerTableCommand(Pose2d roboMan) {
+
+    public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 

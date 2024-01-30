@@ -1,5 +1,7 @@
 package com.gos.crescendo2024;
 
+import edu.wpi.first.math.util.Units;
+
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -8,15 +10,13 @@ import static com.gos.crescendo2024.subsystems.ArmPivotSubsystem.MAX_SHOOTER_ANG
 import static com.gos.crescendo2024.subsystems.ArmPivotSubsystem.TARMAC_EDGE_ANGLE_HIGH;
 
 public class SpeakerLookupTable {
-
     private final NavigableMap<Double, Double> m_list = new TreeMap<>();
 
-
     public SpeakerLookupTable() {
-        m_list.put(0.0, 10.0);
-        m_list.put(1.0, 30.0);
-        m_list.put(2.0, 40.0);
-        m_list.put(3.0, 45.0);
+        m_list.put(Units.feetToMeters(0), 10.0);
+        m_list.put(Units.feetToMeters(9), 30.0);
+        m_list.put(Units.feetToMeters(18), 40.0);
+        m_list.put(Units.feetToMeters(27), 45.0);
 
     }
 
@@ -45,8 +45,7 @@ public class SpeakerLookupTable {
 
 
     private double interpolate(double distance, double distance1, double angle1, double distance2, double angle2) {
-        double velocity;
-        velocity = angle1 + (angle2 - angle1) * ((distance - distance1) / (distance2 - distance1));
-        return velocity;
+        return angle1 + (angle2 - angle1) * ((distance - distance1) / (distance2 - distance1));
+
     }
 }
