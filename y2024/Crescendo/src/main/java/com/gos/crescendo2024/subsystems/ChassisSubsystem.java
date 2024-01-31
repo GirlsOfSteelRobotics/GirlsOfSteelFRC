@@ -193,7 +193,7 @@ public class ChassisSubsystem extends SubsystemBase {
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
     }
 
-    public void turnBUTTToFacePoint(Pose2d point, double xVel, double yVel) {
+    public void turnButtToFacePoint(Pose2d point, double xVel, double yVel) {
         Pose2d robotPose = getPose();
         double xDiff = point.getX() - robotPose.getX();
         double yDiff = point.getY() - robotPose.getY();

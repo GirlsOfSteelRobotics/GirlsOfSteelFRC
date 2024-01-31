@@ -27,6 +27,7 @@ public class SpeakerAimAndShootCommand extends Command {
         addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
     }
 
+    @Override
     public void initialize() {
 
         m_intakeTimer.reset();
@@ -40,7 +41,7 @@ public class SpeakerAimAndShootCommand extends Command {
     @Override
     public void execute() {
         m_armPivotSubsystem.moveArmToAngle(ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE.getValue());
-        m_chassisSubsystem.turnBUTTToFacePoint(FieldConstants.Speaker.CENTER_SPEAKER_OPENING,0, 0);
+        m_chassisSubsystem.turnButtToFacePoint(FieldConstants.Speaker.CENTER_SPEAKER_OPENING, 0, 0);
         m_shooterSubsystem.setPidRpm(ShooterSubsystem.DEFAULT_SHOOTER_RPM.getValue());
 
         if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {

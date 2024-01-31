@@ -16,8 +16,8 @@ public class TurnToPointSwerveDrive extends BaseTeleopSwerve {
     @Override
     protected void handleJoystick(double xLeft, double yLeft, double xRight, double yRight) {
         m_subsystem.turnToFacePoint(
-            m_point,yLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
+            m_point, yLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
             xLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED
-            );
+        );
     }
 }
