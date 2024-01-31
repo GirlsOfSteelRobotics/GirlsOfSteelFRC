@@ -30,7 +30,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -43,6 +43,12 @@
                 "type": "path",
                 "data": {
                   "pathName": "TwoNotesSpeakerOppSidePt2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "runShooter"
                 }
               }
             ]

@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -64,9 +65,10 @@ public class RobotContainer {
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
 
-        NamedCommands.registerCommand("shoot", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("shoot", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         NamedCommands.registerCommand("intake", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
         NamedCommands.registerCommand("arm", m_armPivotSubsystem.createMoveArmToAngleAndToSpeaker());
+        NamedCommands.registerCommand("runShooter", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
 
         // Configure the trigger bindings

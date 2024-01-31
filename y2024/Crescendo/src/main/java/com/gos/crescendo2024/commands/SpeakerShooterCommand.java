@@ -32,7 +32,7 @@ public class SpeakerShooterCommand extends Command {
     @Override
     public void execute() {
     armPivotSubsystem.moveArmToAngle(ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE.getValue());
-    chassisSubsystem.turnToPointDrive(0, 0, FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
+    chassisSubsystem.turnToFacePoint(FieldConstants.Speaker.CENTER_SPEAKER_OPENING, 0, 0);
     shooterSubsystem.setPidRpm(ShooterSubsystem.DEFAULT_SHOOTER_RPM.getValue());
 
     }
