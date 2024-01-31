@@ -40,5 +40,8 @@ public final class Constants {
     //Digital Inputs
     public static final int INTAKE_SENSOR = 0;
 
+    //PWM
+    public static final int LED_PORT = 0;
+
 
 }
