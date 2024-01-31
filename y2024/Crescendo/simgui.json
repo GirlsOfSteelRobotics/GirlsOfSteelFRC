@@ -6,6 +6,16 @@
       }
     },
     "Other Devices": {
+      "SPARK MAX [23]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [8]": {
         "header": {
           "open": true
@@ -145,25 +155,57 @@
     },
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/PP Paths/Curve Path": "Command",
+      "/Shuffleboard/PP Paths/Example Path": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
+      "/Shuffleboard/PP Paths/LeaveWing": "Command",
+      "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
+      "/Shuffleboard/PP Paths/S-Curve Path": "Command",
+      "/Shuffleboard/PP Paths/SplinePath": "Command",
+      "/Shuffleboard/PP Paths/StraightLinePath": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/test commands/Arm to 0": "Command",
+      "/Shuffleboard/test commands/Arm to 45": "Command",
+      "/Shuffleboard/test commands/Arm to 90": "Command",
+      "/Shuffleboard/test commands/Arm to amp angle": "Command",
+      "/Shuffleboard/test commands/Arm to coast": "Command",
+      "/Shuffleboard/test commands/Arm to default speaker angle": "Command",
+      "/Shuffleboard/test commands/Arm to ground intake angle": "Command",
+      "/Shuffleboard/test commands/Arm to speaker (from pose)": "Command",
+      "/Shuffleboard/test commands/Auto-Intake Piece": "Command",
+      "/Shuffleboard/test commands/Auto-Shoot in Amp": "Command",
+      "/Shuffleboard/test commands/Auto-Shoot in Speaker": "Command",
+      "/Shuffleboard/test commands/Chassis drive to amp": "Command",
+      "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
-      "/Shuffleboard/test commands/Drive to detected piece": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
+      "/Shuffleboard/test commands/Shooter Percent Output": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: 3500": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: 4000": "Command",
+      "/Shuffleboard/test commands/Shooter stop": "Command",
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
       "/Shuffleboard/test commands/Shooting to Speaker": "Command",
+      "/Shuffleboard/test commands/Teleop: Aim at speaker": "Command",
+      "/Shuffleboard/test commands/Teleop: David Drive": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
       "/Shuffleboard/test commands/arm to 45": "Command",
       "/Shuffleboard/test commands/arm to 90": "Command",
+      "/Shuffleboard/test commands/arm to coast": "Command",
       "/Shuffleboard/test commands/intake in": "Command",
       "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
+      "/Shuffleboard/test commands/shooter RPM: default": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/Shuffleboard/test commands/test drive to amp": "Command",
       "/Shuffleboard/test commands/test drive to point": "Command",
@@ -179,21 +221,6 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/David Drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Drive to detected piece": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -228,10 +255,41 @@
       },
       "/SmartDashboard/Field": {
         "AprilTags": {
-          "length": 0.10000000149011612,
-          "style": "Box/Image",
+          "color": [
+            0.0,
+            255.0,
+            217.49996948242188,
+            255.0
+          ],
+          "image": "../../libraries/shared_images/tag-blue.png",
+          "length": 0.8999999761581421,
+          "width": 0.8999999761581421
+        },
+        "Notes": {
+          "arrows": false,
+          "color": [
+            0.720588207244873,
+            0.49888473749160767,
+            0.035322971642017365,
+            255.0
+          ],
+          "length": 0.45719999074935913,
           "weight": 1.0,
-          "width": 0.10000000149011612
+          "width": 0.45719999074935913
+        },
+        "OldOdometry": {
+          "arrowColor": [
+            0.10947717726230621,
+            0.656862735748291,
+            0.640762984752655,
+            255.0
+          ],
+          "color": [
+            0.0,
+            255.0,
+            179.99998474121094,
+            255.0
+          ]
         },
         "Trajectory": {
           "arrows": false,
@@ -256,7 +314,7 @@
           "visible": true
         }
       },
-      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": {
+      "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": {
         "bottom": 1476,
         "height": 8.210550308227539,
         "left": 150,
@@ -290,5 +348,8 @@
       "open": true
     },
     "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

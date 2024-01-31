@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class TurnToPointSwerveDrive extends BaseTeleopSwerve {
-
     private final Pose2d m_point;
 
     public TurnToPointSwerveDrive(ChassisSubsystem chassisSubsystem, CommandXboxController joystick, Pose2d point) {
@@ -16,9 +15,9 @@ public class TurnToPointSwerveDrive extends BaseTeleopSwerve {
 
     @Override
     protected void handleJoystick(double xLeft, double yLeft, double xRight, double yRight) {
-        m_subsystem.turnToPointDrive(
-            yLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
-            xLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
-            m_point);
+        m_subsystem.turnToFacePoint(
+            m_point, yLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
+            xLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED
+        );
     }
 }

@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -26,7 +26,13 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -38,7 +44,13 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -50,7 +62,13 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
           }
         }
       ]

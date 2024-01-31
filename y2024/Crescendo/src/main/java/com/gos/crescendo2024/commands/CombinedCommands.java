@@ -10,20 +10,23 @@ public class CombinedCommands {
 
 
     public static Command intakePieceCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
-        return armPivot.createMoveArmToAngle(ArmPivotSubsystem.ARM_INTAKE_ANGLE.getValue())
+        return armPivot.createMoveArmToGroundIntakeAngleCommand()
             .alongWith(intake.createMoveIntakeInCommand())
             .until(intake::hasGamePiece)
             .withName("Intake Piece");
     }
 
+
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
-        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter);
+        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter)
+            .withName("Auto shoot into speaker");
     }
 
     public static Command ampShooterCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
-        return armPivot.createMoveArmToAngle(ArmPivotSubsystem.ARM_AMP_ANGLE.getValue())
+        return armPivot.createMoveArmToAmpAngleCommand()
             .until(armPivot::isArmAtGoal)
-            .andThen(intake.createMoveIntakeOutCommand());
+            .andThen(intake.createMoveIntakeOutCommand())
+            .withName("Auto shoot into amp");
     }
 }
 

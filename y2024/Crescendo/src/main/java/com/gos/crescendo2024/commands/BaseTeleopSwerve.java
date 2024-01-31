@@ -18,8 +18,7 @@ public abstract class BaseTeleopSwerve extends Command {
     public BaseTeleopSwerve(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
         m_subsystem = chassisSubsystem;
         m_joystick = joystick;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
+
         addRequirements(chassisSubsystem);
     }
 

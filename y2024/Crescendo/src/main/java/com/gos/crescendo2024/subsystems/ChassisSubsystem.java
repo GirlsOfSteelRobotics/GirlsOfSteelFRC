@@ -43,6 +43,8 @@ import java.util.Optional;
 import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
+    private static final double GYRO_TO_CHASSIS_OFFSET = -90;
+
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 
@@ -52,19 +54,16 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
-    private final GoSField24 m_field;
+    private final GoSField m_field;
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
     private final AprilTagDetection m_photonVisionSubsystem;
-
     private final ObjectDetection m_objectDetectonSubsystem;
+
     private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
-
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
-
     private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
-
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
     public ChassisSubsystem() {
@@ -110,7 +109,7 @@ public class ChassisSubsystem extends SubsystemBase {
             this
         );
 
-        m_field = new GoSField24();
+        m_field = new GoSField();
         SmartDashboard.putData("Field", m_field.getSendable());
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
@@ -132,8 +131,12 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
+
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
+        m_field.setOdometry(m_swerveDrive.getOdometryPosition());
+        m_field.drawNotePoses(m_objectDetectionSubsystem.objectLocations(getPose()));
         m_turnAnglePIDProperties.updateIfChanged();
+
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         if (cameraResult.isPresent()) {
             EstimatedRobotPose camPose = cameraResult.get();
@@ -190,13 +193,19 @@ public class ChassisSubsystem extends SubsystemBase {
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
     }
 
+    public void turnButtToFacePoint(Pose2d point, double xVel, double yVel) {
+        Pose2d robotPose = getPose();
+        double xDiff = point.getX() - robotPose.getX();
+        double yDiff = point.getY() - robotPose.getY();
+        double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
+        updateAngle += 180;
+        turnToAngleWithVelocity(xVel, yVel, updateAngle);
+    }
+
     public void davidDrive(double x, double y, double angle) {
         turnToAngleWithVelocity(x, y, angle);
     }
 
-    public void turnToPointDrive(double x, double y, Pose2d point) {
-        turnToFacePoint(point, x, y);
-    }
 
     /////////////////////////////////////
     // Checklists
@@ -208,22 +217,22 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
     public Command createResetGyroCommand() {
-        return runOnce(() -> m_gyro.setYaw(0));
+        return runOnce(() -> m_gyro.setYaw(GYRO_TO_CHASSIS_OFFSET)).ignoringDisable(true).withName("Reset Gyro");
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(m_turnAnglePIDVelocity::reset)
             .andThen(this.run(() -> turnToAngle(angleGoal))
-                .until(this::isAngleAtGoal)
-                .withName("Chassis to Angle" + angleGoal));
+                .until(this::isAngleAtGoal))
+            .withName("Chassis to Angle: " + angleGoal);
     }
 
-    public Command createPathCommand(PathPlannerPath path, boolean resetPose) {
+    public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
         Command followPathCommand = AutoBuilder.followPath(path);
         if (resetPose) {
-            return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand);
+            return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand).withName("Reset position and follow path");
         }
-        return followPathCommand;
+        return followPathCommand.withName("Follow Path");
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end) {
@@ -237,11 +246,11 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
             new GoalEndState(0.0, end.getRotation())
         );
-        return createPathCommand(path, false);
+        return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
 
-    public Command createDriveToPoint(ChassisSubsystem swerve, Pose2d endPoint) {
-        return swerve.createDriveToPointNoFlipCommand(endPoint);
+    public Command createDriveToPointCommand(Pose2d endPoint) {
+        return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
     }
 
     public Command createDriveToDetectedObject() {
