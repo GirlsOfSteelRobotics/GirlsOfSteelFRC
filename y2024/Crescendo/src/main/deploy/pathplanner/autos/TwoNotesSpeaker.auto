@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -26,7 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "intake"
+            "name": "IntakePiece"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "arm"
+                  "name": "MoveArmToSpeakerAngle"
                 }
               },
               {
@@ -48,7 +48,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "runShooter"
+                  "name": "ShooterDefaultRpm"
                 }
               }
             ]
@@ -57,7 +57,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "AimAndShootIntoSpeaker"
           }
         }
       ]
