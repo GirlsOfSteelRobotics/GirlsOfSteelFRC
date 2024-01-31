@@ -16,6 +16,7 @@ public class CombinedCommands {
             .withName("Intake Piece");
     }
 
+
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
         return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter)
             .withName("Auto shoot into speaker");

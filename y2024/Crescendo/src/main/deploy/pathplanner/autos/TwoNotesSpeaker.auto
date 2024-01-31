@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -26,19 +26,38 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "IntakePiece"
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "TwoNotesSpeakerOppSidePt2"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveArmToSpeakerAngle"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNotesSpeakerOppSidePt2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterDefaultRpm"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "AimAndShootIntoSpeaker"
           }
         }
       ]

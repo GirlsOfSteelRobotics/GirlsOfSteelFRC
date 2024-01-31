@@ -45,6 +45,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         m_networkTableEntries.updateLogs();
         m_intakeAlert.checkAlerts();
+
     }
 
     public void intakeIn() {
