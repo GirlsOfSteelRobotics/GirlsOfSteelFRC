@@ -187,13 +187,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
-    public Command createMoveArmToAngle(double goalAngle) {
-        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
-    }
 
-    public Command createMoveArmToAngleAndToSpeaker() {
-        return runEnd(() -> moveArmToAngle(ARM_DEFAULT_SPEAKER_ANGLE.getValue()), this::stopArmMotor).withName("arm to speaker");
-    }
 
     public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");

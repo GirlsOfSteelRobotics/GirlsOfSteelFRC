@@ -54,8 +54,6 @@ public class SpeakerAimAndShootCommand extends Command {
     @Override
     public boolean isFinished() {
 
-        System.out.println(m_intakeTimer.get());
-
         return m_intakeTimer.hasElapsed(1);
     }
 

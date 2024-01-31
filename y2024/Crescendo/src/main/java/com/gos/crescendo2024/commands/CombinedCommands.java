@@ -16,11 +16,6 @@ public class CombinedCommands {
             .withName("Intake Piece");
     }
 
-    public static Command baseShooterCommand(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
-        return armPivot.createMoveArmToAngle(angle)
-            .andThen(shooter.createSetRPMCommand(ShooterSubsystem.DEFAULT_SHOOTER_RPM.getValue()))
-            .withName("Basic Shoot");
-    }
 
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
         return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter)

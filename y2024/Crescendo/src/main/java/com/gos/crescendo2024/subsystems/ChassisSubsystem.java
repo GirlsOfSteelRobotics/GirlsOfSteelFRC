@@ -252,8 +252,4 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
     }
-
-    public Command createTurnToPointDrive(double x, double y, Pose2d pose2d) {
-        return runOnce(() -> turnToFacePoint(pose2d, x, y));
-    }
 }

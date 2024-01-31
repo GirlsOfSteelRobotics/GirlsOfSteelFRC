@@ -66,7 +66,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
-        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToAngleAndToSpeaker());
+        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
 
