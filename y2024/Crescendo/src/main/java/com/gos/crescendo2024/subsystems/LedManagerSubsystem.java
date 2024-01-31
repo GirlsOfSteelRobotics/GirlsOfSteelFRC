@@ -2,13 +2,13 @@ package com.gos.crescendo2024.subsystems;
 
 
 import com.gos.crescendo2024.Constants;
-import com.gos.crescendo2024.led_patterns.Teleop;
+import com.gos.crescendo2024.led_patterns.TeleopPattern;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LEDSubsystem extends SubsystemBase {
+public class LedManagerSubsystem extends SubsystemBase {
 
     private static final int MAX_INDEX_LED = 30;
 
@@ -17,9 +17,9 @@ public class LEDSubsystem extends SubsystemBase {
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
 
-    private final Teleop m_LEDTeleop;
+    private final TeleopPattern m_telopPattern;
 
-    public LEDSubsystem() {
+    public LedManagerSubsystem() {
 
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
@@ -30,7 +30,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.setData(m_buffer);
         m_led.start();
 
-        m_LEDTeleop = new Teleop(MAX_INDEX_LED, m_buffer);
+        m_telopPattern = new TeleopPattern(MAX_INDEX_LED, m_buffer);
 
     }
 
@@ -39,7 +39,7 @@ public class LEDSubsystem extends SubsystemBase {
         clear();
 
         if (DriverStation.isTeleop()) {
-            m_LEDTeleop.writeLED();
+            m_telopPattern.writeLED();
         }
 
         // driverPracticePatterns();
