@@ -20,7 +20,7 @@ public class GoSField {
         m_field = new Field2d();
 
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
-        m_drawnNotePoses = m_field.getObject("Notes");
+        m_detectedNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
 
@@ -53,6 +53,6 @@ public class GoSField {
     }
 
     public void drawNotePoses(List<Pose2d> poses) {
-        m_drawnNotePoses.setPoses(poses);
+        m_detectedNotePoses.setPoses(poses);
     }
 }

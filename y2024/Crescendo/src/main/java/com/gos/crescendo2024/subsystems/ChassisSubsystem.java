@@ -9,7 +9,7 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
-import com.gos.crescendo2024.GoSField24;
+import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -134,7 +134,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
         m_field.setOdometry(m_swerveDrive.getOdometryPosition());
-        m_field.drawNotePoses(m_objectDetectionSubsystem.objectLocations(getPose()));
+        m_field.drawNotePoses(m_objectDetectonSubsystem.objectLocations(getPose()));
         m_turnAnglePIDProperties.updateIfChanged();
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
