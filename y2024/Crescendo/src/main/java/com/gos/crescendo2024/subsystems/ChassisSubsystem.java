@@ -28,6 +28,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
@@ -137,6 +138,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setOdometry(m_swerveDrive.getOdometryPosition());
         m_field.drawNotePoses(m_objectDetectionSubsystem.objectLocations(getPose()));
         m_turnAnglePIDProperties.updateIfChanged();
+        m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         if (cameraResult.isPresent()) {
@@ -181,7 +183,9 @@ public class ChassisSubsystem extends SubsystemBase {
     public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angle);
-        ChassisSpeeds speeds = new ChassisSpeeds(xVel, yVel, steerVelocity);
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xVel, yVel, steerVelocity, getPose().getRotation());
+
+
         m_swerveDrive.setChassisSpeeds(speeds);
     }
 
@@ -195,8 +199,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void turnButtToFacePoint(Pose2d point, double xVel, double yVel) {
         Pose2d robotPose = getPose();
-        double xDiff = point.getX() - robotPose.getX();
-        double yDiff = point.getY() - robotPose.getY();
+        turnButtToFacePoint(robotPose, point, xVel, yVel);
+    }
+
+    public void turnButtToFacePoint(Pose2d currentPos, Pose2d endPos, double xVel, double yVel) {
+        double xDiff = endPos.getX() - currentPos.getX();
+        double yDiff = endPos.getY() - currentPos.getY();
         double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
         updateAngle += 180;
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
@@ -205,6 +213,25 @@ public class ChassisSubsystem extends SubsystemBase {
     public void davidDrive(double x, double y, double angle) {
         turnToAngleWithVelocity(x, y, angle);
     }
+
+    public Pose2d getFuturePose() {
+        return getFuturePose(.3);
+    }
+
+    private Pose2d getFuturePose(double seconds) {
+        ChassisSpeeds currentRobotVelocity = m_swerveDrive.getChassisSpeed();
+        ChassisSpeeds currentFieldVelocity = ChassisSpeeds.fromRobotRelativeSpeeds(currentRobotVelocity, getPose().getRotation());
+        Pose2d currentPos = m_swerveDrive.getEstimatedPosition();
+        Pose2d deltaPos = new Pose2d(
+            currentFieldVelocity.vxMetersPerSecond * seconds,
+            currentFieldVelocity.vyMetersPerSecond * seconds,
+            new Rotation2d(currentFieldVelocity.omegaRadiansPerSecond * seconds));
+        Pose2d futurePos = new Pose2d(currentPos.getX() + deltaPos.getX(), currentPos.getY() + deltaPos.getY(), new Rotation2d());
+        System.out.println(currentFieldVelocity + " " + deltaPos);
+
+        return futurePos;
+    }
+
 
 
     /////////////////////////////////////

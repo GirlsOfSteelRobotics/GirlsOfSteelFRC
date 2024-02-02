@@ -174,7 +174,7 @@ public class RevSwerveChassis {
 
         ChassisSpeeds desiredSpeed;
         if (fieldRelative) {
-            desiredSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, m_gyroAngleSupplier.get());
+            desiredSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, getEstimatedPosition().getRotation());
         } else {
             desiredSpeed = new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
         }

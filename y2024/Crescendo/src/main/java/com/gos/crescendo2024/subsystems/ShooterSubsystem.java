@@ -114,6 +114,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
