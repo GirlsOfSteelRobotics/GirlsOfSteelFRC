@@ -2,6 +2,8 @@ package com.gos.crescendo2024.subsystems;
 
 
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.led_patterns.AutoPattern;
+import com.gos.crescendo2024.led_patterns.HasPiecePattern;
 import com.gos.crescendo2024.led_patterns.TeleopPattern;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -17,10 +19,15 @@ public class LedManagerSubsystem extends SubsystemBase {
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
 
-    private final TeleopPattern m_telopPattern;
+    private final TeleopPattern m_teleopPattern;
+    private final HasPiecePattern m_hasPiecePattern;
+    private final AutoPattern m_autoPattern;
+    private final IntakeSubsystem m_intakeSubsystem;
 
-    public LedManagerSubsystem() {
 
+
+    public LedManagerSubsystem(IntakeSubsystem intakeSubsystem) {
+        m_intakeSubsystem = intakeSubsystem;
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
 
@@ -30,7 +37,9 @@ public class LedManagerSubsystem extends SubsystemBase {
         m_led.setData(m_buffer);
         m_led.start();
 
-        m_telopPattern = new TeleopPattern(MAX_INDEX_LED, m_buffer);
+        m_teleopPattern = new TeleopPattern(MAX_INDEX_LED, m_buffer);
+        m_hasPiecePattern = new HasPiecePattern(MAX_INDEX_LED, m_buffer);
+        m_autoPattern = new AutoPattern(MAX_INDEX_LED, m_buffer);
 
     }
 
@@ -39,9 +48,14 @@ public class LedManagerSubsystem extends SubsystemBase {
         clear();
 
         if (DriverStation.isTeleop()) {
-            m_telopPattern.writeLED();
+            m_teleopPattern.writeLED();
         }
-
+        if (m_intakeSubsystem.hasGamePiece()) {
+            m_hasPiecePattern.writeHasPiecePattern();
+        }
+        if (DriverStation.isAutonomous()) {
+            m_autoPattern.writeAutoPattern();
+        }
         // driverPracticePatterns();
         m_led.setData(m_buffer);
     }
