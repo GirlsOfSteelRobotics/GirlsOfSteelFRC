@@ -2,13 +2,17 @@ package com.gos.crescendo2024.subsystems;
 
 
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.led_patterns.AlertErrorPattern;
 import com.gos.crescendo2024.led_patterns.AutoPattern;
 import com.gos.crescendo2024.led_patterns.HasPiecePattern;
 import com.gos.crescendo2024.led_patterns.TeleopPattern;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.util.Alert;
 
 public class LedManagerSubsystem extends SubsystemBase {
 
@@ -23,6 +27,7 @@ public class LedManagerSubsystem extends SubsystemBase {
     private final HasPiecePattern m_hasPiecePattern;
     private final AutoPattern m_autoPattern;
     private final IntakeSubsystem m_intakeSubsystem;
+    private final AlertErrorPattern m_alert;
 
 
 
@@ -40,6 +45,8 @@ public class LedManagerSubsystem extends SubsystemBase {
         m_teleopPattern = new TeleopPattern(MAX_INDEX_LED, m_buffer);
         m_hasPiecePattern = new HasPiecePattern(MAX_INDEX_LED, m_buffer);
         m_autoPattern = new AutoPattern(MAX_INDEX_LED, m_buffer);
+        m_alert = new AlertErrorPattern(MAX_INDEX_LED, m_buffer);
+
 
     }
 
@@ -57,7 +64,9 @@ public class LedManagerSubsystem extends SubsystemBase {
     }
 
     public void disabledPatterns() {
-
+        if (Alert.hasErrors()) {
+            m_alert.write
+        }
     }
 
     @Override
