@@ -199,6 +199,8 @@
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
       "/Shuffleboard/test commands/Shooting to Speaker": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker": "Command",
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": "Command",
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
       "/Shuffleboard/test commands/Teleop: David Drive": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
@@ -226,6 +228,21 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Teleop: David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -310,6 +327,14 @@
           "style": "Line"
         },
         "bottom": 1476,
+        "futurePosition": {
+          "color": [
+            0.9051849246025085,
+            0.2888888716697693,
+            1.0,
+            255.0
+          ]
+        },
         "height": 8.210550308227539,
         "left": 150,
         "right": 2961,
