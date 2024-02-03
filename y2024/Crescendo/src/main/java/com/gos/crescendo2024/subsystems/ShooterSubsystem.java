@@ -24,9 +24,9 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 3500);
+    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 4000);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
-    private static final double ALLOWABLE_ERROR = 50;
+    private static final double ALLOWABLE_ERROR = 70;
 
     private final SimableCANSparkMax m_shooterMotorLeader;
     private final SimableCANSparkMax m_shooterMotorFollower;

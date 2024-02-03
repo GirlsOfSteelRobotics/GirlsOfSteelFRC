@@ -246,5 +246,37 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.kff",
+    "type": "double",
+    "value": 0.0007,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/intakeAngle",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/speakerScoreAngle",
+    "type": "double",
+    "value": 80.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ampScoreAngle",
+    "type": "double",
+    "value": 75.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

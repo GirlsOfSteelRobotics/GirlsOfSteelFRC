@@ -32,6 +32,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,9 +41,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
-import java.util.Optional;
-
 import java.util.List;
+import java.util.Optional;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
@@ -86,6 +86,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         //TODO need change pls
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
+        m_turnAnglePIDVelocity.setTolerance(5);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
             .addP(0.2)
@@ -121,6 +122,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_logging = new LoggingUtil("Chassis");
         m_logging.addDouble("GyroAngle", m_gyro::getAngle);
+        m_logging.addDouble("PoseAngle", () -> getPose().getRotation().getDegrees());
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -171,6 +173,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean isAngleAtGoal() {
+        SmartDashboard.putNumber("chassisSetPoint", m_turnAnglePIDVelocity.getSetpoint());
+
         return m_turnAnglePIDVelocity.atSetpoint();
     }
 
@@ -288,5 +292,16 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
+    }
+
+    public Command createResetPoseCommand(Pose2d pose) {
+        return runOnce(() -> resetOdometry(pose));
+    }
+
+    public Command createPushForwardModeCommand() {
+        SwerveModuleState state = new SwerveModuleState(0, new Rotation2d());
+        return run(() -> {
+            m_swerveDrive.setModuleStates(state);
+        });
     }
 }
