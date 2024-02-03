@@ -162,6 +162,12 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/PP Paths/Curve Path": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
+      "/Shuffleboard/PP Paths/FiveNotePt0": "Command",
+      "/Shuffleboard/PP Paths/FiveNotePt1": "Command",
+      "/Shuffleboard/PP Paths/FiveNotePt2": "Command",
+      "/Shuffleboard/PP Paths/FiveNotePt3": "Command",
+      "/Shuffleboard/PP Paths/FiveNotePt4": "Command",
+      "/Shuffleboard/PP Paths/FiveNotePt5": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
@@ -228,6 +234,46 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/PP Paths/FiveNotePt0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/FiveNotePt1": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/FiveNotePt2": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/FiveNotePt3": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/FiveNotePt4": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/PP Paths/FiveNotePt5": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Auto-Intake Piece": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Auto-Shoot in Speaker": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": {
         "window": {
           "visible": true
