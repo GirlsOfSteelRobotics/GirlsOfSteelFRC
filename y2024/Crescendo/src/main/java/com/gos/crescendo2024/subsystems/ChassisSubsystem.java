@@ -44,7 +44,7 @@ import java.util.Optional;
 import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
-    private static final double GYRO_TO_CHASSIS_OFFSET = -90;
+    private static final double GYRO_TO_CHASSIS_OFFSET = 90;
 
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
@@ -71,6 +71,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
+
 
         RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
             Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
@@ -244,7 +245,7 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
     public Command createResetGyroCommand() {
-        return runOnce(() -> m_gyro.setYaw(GYRO_TO_CHASSIS_OFFSET)).ignoringDisable(true).withName("Reset Gyro");
+        return runOnce(() -> m_gyro.setYaw(0)).ignoringDisable(true).withName("Reset Gyro");
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {
