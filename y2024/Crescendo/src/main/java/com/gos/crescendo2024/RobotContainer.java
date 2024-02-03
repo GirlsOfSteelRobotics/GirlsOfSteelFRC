@@ -9,7 +9,6 @@ import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.CombinedCommands;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
-import com.gos.crescendo2024.commands.SpeakerAimAndShootCommand;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
@@ -17,7 +16,6 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
-import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -66,12 +64,7 @@ public class RobotContainer {
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
         m_ledSubsystem = new LedManagerSubsystem();
-
-        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
-        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
-        NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
-        m_autonomousFactory = new Autos();
+        m_autonomousFactory = new Autos(m_chassisSubsystem, m_armPivotSubsystem, m_intakeSubsystem, m_shooterSubsystem);
 
         // Configure the trigger bindings
         configureBindings();

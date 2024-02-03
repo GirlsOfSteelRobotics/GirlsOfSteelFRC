@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.87,
-        "y": 6.42
+        "x": 2.16,
+        "y": 5.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.304209739680858,
-        "y": 6.356523334191011
+        "x": 2.1564538976046443,
+        "y": 5.521990567363096
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.21,
-        "y": 5.53
+        "x": 2.18,
+        "y": 4.493714390272381
       },
       "prevControl": {
-        "x": 2.017844817250103,
-        "y": 5.989037381013645
+        "x": 2.1619174991904484,
+        "y": 4.746607407906759
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,20 +32,20 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -27.699472808054914,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Five Note Speaker",
   "previewStartingState": {
-    "rotation": 30.96375653207352,
+    "rotation": -6.881723630637013,
     "velocity": 0
   },
   "useDefaultConstraints": false

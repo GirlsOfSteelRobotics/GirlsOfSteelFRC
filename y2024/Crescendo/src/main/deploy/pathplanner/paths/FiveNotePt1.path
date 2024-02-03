@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.65,
-        "y": 6.07
+        "x": 0.9071790655429648,
+        "y": 6.633578385640183
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.002284501708145,
-        "y": 6.315531622402647
+        "x": 1.2476042902390643,
+        "y": 6.789221664934944
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FiveNotePt1"
     },
     {
       "anchor": {
-        "x": 2.3454717390579116,
-        "y": 6.58
+        "x": 2.0646509539464577,
+        "y": 6.98
       },
       "prevControl": {
-        "x": 1.9931872373497663,
-        "y": 6.334468377597354
+        "x": 1.626938900139168,
+        "y": 6.834137988204318
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,22 +30,33 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 38.08877288097541,
+    "rotation": 1.1233027140753948,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Five Note Speaker",
   "previewStartingState": {
-    "rotation": 38.088772880975384,
+    "rotation": 57.875001559612414,
     "velocity": 0
   },
   "useDefaultConstraints": false

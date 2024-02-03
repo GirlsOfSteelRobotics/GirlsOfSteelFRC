@@ -2,21 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.12,
-      "y": 6.96
+      "x": 0.91,
+      "y": 6.63
     },
-    "rotation": 31.52819941643373
+    "rotation": 24.57
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FiveNotePt0"
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -54,15 +48,34 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "AimAndShootIntoSpeaker"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveArmToSpeakerAngle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterDefaultRpm"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FiveNotePt3"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "FiveNotePt3"
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -81,24 +94,6 @@
           "type": "path",
           "data": {
             "pathName": "FiveNotePt4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimAndShootIntoSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FiveNotePt5"
           }
         },
         {
