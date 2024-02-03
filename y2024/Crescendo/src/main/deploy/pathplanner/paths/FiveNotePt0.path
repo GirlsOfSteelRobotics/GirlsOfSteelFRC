@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.65,
-        "y": 6.07
+        "x": 1.0964630511835785,
+        "y": 6.917586578996305
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.002284501708145,
-        "y": 6.315531622402647
+        "x": 1.4167216891000742,
+        "y": 6.394497470399362
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.3454717390579116,
-        "y": 6.58
+        "x": 1.65,
+        "y": 6.074238832482867
       },
       "prevControl": {
-        "x": 1.9931872373497663,
-        "y": 6.334468377597354
+        "x": 1.4380722649611741,
+        "y": 6.405172758329912
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FiveNotePt1"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 38.08877288097541,
+    "rotation": 34.286876977208976,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 38.088772880975384,
+    "rotation": 33.23171106797935,
     "velocity": 0
   },
   "useDefaultConstraints": false

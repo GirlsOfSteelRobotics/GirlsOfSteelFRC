@@ -1,0 +1,121 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.12,
+      "y": 6.96
+    },
+    "rotation": 31.52819941643373
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FiveNotePt0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FiveNotePt1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FiveNotePt2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FiveNotePt3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FiveNotePt4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FiveNotePt5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
