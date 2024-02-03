@@ -12,6 +12,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
@@ -50,7 +51,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double TRACK_WIDTH = 0.381;
 
     public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
-    public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(360);
+    public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(720);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -67,6 +68,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
     private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
+
+    private final LoggingUtil m_logging;
 
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
@@ -103,7 +106,7 @@ public class ChassisSubsystem extends SubsystemBase {
             this::setChassisSpeed,
             new HolonomicPathFollowerConfig(
                 new PIDConstants(5, 0, 0),
-                new PIDConstants(5, 0, 0),
+                new PIDConstants(10, 0, 0),
                 MAX_TRANSLATION_SPEED,
                 WHEEL_BASE,
                 new ReplanningConfig(),
@@ -117,6 +120,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
+
+        m_logging = new LoggingUtil("Chassis");
+        m_logging.addDouble("GyroAngle", m_gyro::getAngle);
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -134,6 +140,7 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
+        m_logging.updateLogs();
 
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
         m_field.setOdometry(m_swerveDrive.getOdometryPosition());
@@ -227,10 +234,12 @@ public class ChassisSubsystem extends SubsystemBase {
             currentFieldVelocity.vxMetersPerSecond * seconds,
             currentFieldVelocity.vyMetersPerSecond * seconds,
             new Rotation2d(currentFieldVelocity.omegaRadiansPerSecond * seconds));
-        Pose2d futurePos = new Pose2d(currentPos.getX() + deltaPos.getX(), currentPos.getY() + deltaPos.getY(), new Rotation2d());
-        System.out.println(currentFieldVelocity + " " + deltaPos);
 
-        return futurePos;
+        return new Pose2d(currentPos.getX() + deltaPos.getX(), currentPos.getY() + deltaPos.getY(), new Rotation2d());
+    }
+
+    private void resetGyro() {
+        m_gyro.setYaw(0);
     }
 
 
@@ -245,7 +254,9 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
     public Command createResetGyroCommand() {
-        return runOnce(() -> m_gyro.setYaw(0)).ignoringDisable(true).withName("Reset Gyro");
+        return runOnce(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {

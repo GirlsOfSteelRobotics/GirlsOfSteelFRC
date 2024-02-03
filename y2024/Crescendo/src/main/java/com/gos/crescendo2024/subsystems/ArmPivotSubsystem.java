@@ -136,7 +136,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             Units.degreesToRadians(0));
 
 
-        m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+        m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kSmartMotion, 0, feedForwardVolts);
         SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
     }
 
