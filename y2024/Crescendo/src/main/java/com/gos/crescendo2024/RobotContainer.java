@@ -17,12 +17,13 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.photonvision.PhotonCamera;
 
 
 /**
@@ -67,10 +69,10 @@ public class RobotContainer {
         m_intakeSubsystem = new IntakeSubsystem();
         m_ledSubsystem = new LedManagerSubsystem();
 
-//        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-//        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
-//        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
-//        NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
+        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
+        NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
 
         // Configure the trigger bindings
@@ -87,6 +89,8 @@ public class RobotContainer {
         }
 
         PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+
+        PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
     }
 
     private void createTestCommands() {
@@ -125,7 +129,9 @@ public class RobotContainer {
 
     private void addArmPivotTestCommands(ShuffleboardTab shuffleboardTab) {
         shuffleboardTab.add("Arm to 0", m_armPivotSubsystem.createMoveArmToAngleCommand(0));
+        shuffleboardTab.add("Arm to 30", m_armPivotSubsystem.createMoveArmToAngleCommand(30));
         shuffleboardTab.add("Arm to 45", m_armPivotSubsystem.createMoveArmToAngleCommand(45));
+        shuffleboardTab.add("Arm to 60", m_armPivotSubsystem.createMoveArmToAngleCommand(60));
         shuffleboardTab.add("Arm to 90", m_armPivotSubsystem.createMoveArmToAngleCommand(90));
         shuffleboardTab.add("Arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
         shuffleboardTab.add("Arm to amp angle", m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
@@ -171,12 +177,15 @@ public class RobotContainer {
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Arm
-        m_driverController.leftTrigger().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
         m_driverController.leftBumper().whileTrue(m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
         m_driverController.rightBumper().whileTrue(m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
 
-        // This is used to shoot
+        // Shoot & Intake
         m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_driverController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand().alongWith(m_shooterSubsystem.createSetRPMCommand(2000)));
+        //spit out
+        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+
 
         /////////////////////////////
         // Operator Controller
@@ -184,10 +193,12 @@ public class RobotContainer {
         // Intake
         m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+        m_operatorController.a().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
 
         // shooter
-        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createTunePercentShootCommand());
-        m_operatorController.a().whileTrue(m_shooterSubsystem.createStopShooterCommand());
+        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
+
+        PropertyManager.printDynamicProperties();
     }
 
 

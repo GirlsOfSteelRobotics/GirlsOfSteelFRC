@@ -45,8 +45,6 @@ import java.util.Optional;
 import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
-    private static final double GYRO_TO_CHASSIS_OFFSET = 90;
-
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 
@@ -90,7 +88,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
-            .addP(0)
+            .addP(0.2)
             .addI(0)
             .addD(0)
             .build();

@@ -24,7 +24,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
+    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 3500);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
     private static final double ALLOWABLE_ERROR = 50;
 
@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
             .addP(0.0)
             .addI(0.0)
             .addD(0.0)
-            .addFF(4.0E-4)
+            .addFF(0.000174)
             .build();
 
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
