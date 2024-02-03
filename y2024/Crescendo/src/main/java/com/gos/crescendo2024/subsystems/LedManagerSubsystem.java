@@ -43,18 +43,31 @@ public class LedManagerSubsystem extends SubsystemBase {
 
     }
 
+    public void enabledPatterns() {
+        if (DriverStation.isTeleop()) {
+            m_teleopPattern.writeLED();
+        } else if (DriverStation.isAutonomous()) {
+            m_autoPattern.writeAutoPattern();
+        }
+
+        if (m_intakeSubsystem.hasGamePiece()) {
+            m_hasPiecePattern.writeHasPiecePattern();
+        }
+
+    }
+
+    public void disabledPatterns() {
+
+    }
+
     @Override
     public void periodic() {
         clear();
 
-        if (DriverStation.isTeleop()) {
-            m_teleopPattern.writeLED();
-        }
-        if (m_intakeSubsystem.hasGamePiece()) {
-            m_hasPiecePattern.writeHasPiecePattern();
-        }
-        if (DriverStation.isAutonomous()) {
-            m_autoPattern.writeAutoPattern();
+        if (DriverStation.isEnabled()) {
+            enabledPatterns();
+        } else {
+            disabledPatterns();
         }
         // driverPracticePatterns();
         m_led.setData(m_buffer);
