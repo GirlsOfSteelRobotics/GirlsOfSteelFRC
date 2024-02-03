@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.151637700665675,
+        "y": 6.933593179167379
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.5411654073604713,
+        "y": 6.446683545803753
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.427340940091133,
+        "y": 6.485636316468363
+      },
+      "prevControl": {
+        "x": 1.784620224044719,
+        "y": 6.222705114454244
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "FiveNotePt2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 42.510447078433174,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 29.427456403189776,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
