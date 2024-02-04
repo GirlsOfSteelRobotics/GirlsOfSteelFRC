@@ -1,6 +1,6 @@
-import './super-structure';
+import { addElements } from '@frc-web-components/app';
 import {superStructureElementConfig} from './super-structure';
-import { addElements, addThemeRules } from '@frc-web-components/app';
+
 
 addElements({
   'super-structure': superStructureElementConfig

@@ -1,3 +1,5 @@
+/* eslint import/no-unresolved: "off" */
+/* eslint import/no-extraneous-dependencies: "off" */
 import {
   addElements,
   addSourceProvider,

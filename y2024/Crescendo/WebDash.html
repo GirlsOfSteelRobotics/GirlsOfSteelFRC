@@ -34,7 +34,7 @@
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
-        source-key="/Shuffleboard/test commands/Teleop: Aim at speaker"
+        source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)"
     ></frc-robot-command><super-structure
         source-key="/SmartDashboard/super structure"
         source-provider="NetworkTables"
@@ -63,7 +63,11 @@
         game="Crescendo"
         grid-size="1"
     >
-    </frc-field-wrapper></dashboard-tab><dashboard-tab
+    </frc-field-wrapper><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(25px, 138px); width: 195px; height: 50px;"
+        source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -136,7 +140,6 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -167,7 +170,6 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -198,7 +200,6 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -261,6 +262,7 @@
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(2px, 18px); width: 207px; height: 50px;"
@@ -305,7 +307,6 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -336,7 +337,6 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -366,7 +366,6 @@
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(55px, 69px); width: 178px; height: 50px;"
@@ -394,7 +393,6 @@
         source-key="/Preferences/Intake_In_Speed"
         has-controls=""
         has-value=""
-        placeholder=""
         min="NaN"
         max="NaN"
         hascontrols=""
@@ -402,17 +400,17 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-185"
+            id="vaadin-number-field-7"
             aria-labelledby="label-vaadin-number-field-205"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
             tabindex="0"
         ><label
             slot="label"
             id="label-vaadin-number-field-205"
-            for="vaadin-number-field-185"
+            for="vaadin-number-field-7"
         >Label</label>
         <div
             slot="error-message"
