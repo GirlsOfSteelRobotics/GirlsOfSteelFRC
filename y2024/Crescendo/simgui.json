@@ -172,6 +172,7 @@
       "/Shuffleboard/PP Paths/StraightLinePath": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
       "/Shuffleboard/test commands/Arm to 0": "Command",
       "/Shuffleboard/test commands/Arm to 30": "Command",
       "/Shuffleboard/test commands/Arm to 45": "Command",
@@ -187,6 +188,9 @@
       "/Shuffleboard/test commands/Auto-Shoot in Speaker": "Command",
       "/Shuffleboard/test commands/Chassis Push": "Command",
       "/Shuffleboard/test commands/Chassis Set Pose Origin": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top": "Command",
       "/Shuffleboard/test commands/Chassis drive to amp": "Command",
       "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
@@ -234,11 +238,6 @@
     },
     "windows": {
       "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": {
         "window": {
           "visible": true
         }
@@ -355,10 +354,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },

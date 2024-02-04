@@ -241,7 +241,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private void resetGyro() {
-        m_gyro.setYaw(0);
+        Pose2d currentPose = getPose();
+        resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
 
 
@@ -295,7 +296,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createResetPoseCommand(Pose2d pose) {
-        return runOnce(() -> resetOdometry(pose));
+        return runOnce(() -> resetOdometry(pose))
+            .ignoringDisable(true)
+            .withName("Reset Pose " + pose);
     }
 
     public Command createPushForwardModeCommand() {

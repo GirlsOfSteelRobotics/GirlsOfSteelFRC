@@ -48,7 +48,6 @@
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -219,7 +218,15 @@
             display-name="Rel Velocity"
             source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
         ></frc-line-chart-data>
-    </frc-line-chart></dashboard-tab><dashboard-tab
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/Arm Pivot Subsystem/Abs Encoder Velocity"
+        ></frc-line-chart-data></frc-line-chart><frc-boolean-box
+        source-provider="NetworkTables"
+        source-key="/Arm Pivot Subsystem/Arm At Goal"
+        style="transform: translate(156.2px, 93.6px);"
+        label="Arm At Goal"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
@@ -317,7 +324,12 @@
             id="error-message-vaadin-number-field-382"
             hidden=""
         ></div>
-    </vaadin-number-field></dashboard-tab><dashboard-tab
+    </vaadin-number-field><frc-boolean-box
+        source-provider="NetworkTables"
+        source-key="/Shooter Subsystem/Shooter At Goal"
+        style="transform: translate(296px, 48px);"
+        label="Shooter At Goal"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
@@ -337,6 +349,7 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -373,4 +386,27 @@
         desiredstates="[0,0,0,0,0,0,0,0]"
         sizeleftright="4"
         sizefrontback="5"
-    ></frc-swerve-drivebase></dashboard-tab>
+    ></frc-swerve-drivebase><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(314px, 80px);"
+        source-key="/Chassis/At Angle Setpoint"
+    ></frc-boolean-box><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom"
+        style="transform: translate(675px, 54px);"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(694px, 136px);"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(698px, 210px);"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top"
+    ></frc-robot-command><frc-field-wrapper
+        source-key="/SmartDashboard/Field"
+        source-provider="NetworkTables"
+        style="transform: translate(98px, 441px);"
+        game="Crescendo"
+        grid-size="1"
+    >
+    </frc-field-wrapper></dashboard-tab>
