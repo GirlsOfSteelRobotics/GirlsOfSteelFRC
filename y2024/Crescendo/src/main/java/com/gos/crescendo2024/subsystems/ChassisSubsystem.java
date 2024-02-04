@@ -256,7 +256,7 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
     public Command createResetGyroCommand() {
-        return runOnce(this::resetGyro)
+        return run(this::resetGyro)
             .ignoringDisable(true)
             .withName("Reset Gyro");
     }
