@@ -10,15 +10,48 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class Autos {
-    private final SendableChooser<Command> m_autonChooser;
+
+    public enum AutoModes {
+        FOUR_NOTE("FourNoteSpeaker"),
+        LEAVE_WING("LeaveWing"),
+        PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
+        PRELOAD_AND_CENTER_LINE("TwoNotesSpeaker");
+
+        public final String m_modeName;
+
+        AutoModes(String modeName) {
+            m_modeName = modeName;
+        }
+    }
+
+    private static final AutoModes DEFAULT_MODE = AutoModes.PRELOAD_AND_CENTER_LINE;
+
+    private final SendableChooser<AutoModes> m_autonChooser;
+
+    private final Map<AutoModes, Command> m_modes;
 
     public Autos() {
-        m_autonChooser = AutoBuilder.buildAutoChooser();
+        m_autonChooser = new SendableChooser<>();
+        m_modes = new HashMap<>();
+
+        for (AutoModes mode : AutoModes.values()) {
+            if (mode == DEFAULT_MODE) {
+                m_autonChooser.setDefaultOption(mode.m_modeName, mode);
+            } else {
+                m_autonChooser.addOption(mode.m_modeName, mode);
+            }
+            m_modes.put(mode, AutoBuilder.buildAuto(mode.m_modeName));
+        }
+
         SmartDashboard.putData("Auto Chooser", m_autonChooser);
     }
 
     public Command getSelectedAutonomous() {
-        return m_autonChooser.getSelected();
+        AutoModes mode = m_autonChooser.getSelected();
+        return m_modes.get(mode);
     }
 }
