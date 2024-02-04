@@ -1,13 +1,13 @@
-import { Arc } from "../utils/arc";
+/* eslint camelcase: "off" */
 import { Circle } from "../utils/circle";
-import { getClampedColor, setShapesBooleanColor, setShapesMotorColor, setShapesMotorColorStroke } from "../utils/color_utils";
+import { getMotorColor } from "../utils/color_utils";
 import { Rectangle } from "../utils/rectangle";
 
 import { SuperStructureData } from "./datatypes";
 
 
-export const MAX_WIDTH = 1; // TODO figure out real value
-export const MAX_HEIGHT = 1; // TODO figure out real value
+export const MAX_WIDTH = 15; // TODO figure out real value
+export const MAX_HEIGHT = 15; // TODO figure out real value
 
 
 const CHASSIS_HEIGHT = 2;
@@ -62,7 +62,26 @@ export class Renderer {
 
 
   private updateSuperStructure(superStructureData: SuperStructureData) {
-    // TODO update
+    this.m_pivotMotor.fillColor = getMotorColor(superStructureData.pivotMotorPercentage);
+    this.m_shooterMotor.fillColor = getMotorColor(superStructureData.shooterMotorPercentage);
+    this.m_intakeMotor.fillColor = getMotorColor(superStructureData.intakeMotorPercentage);
+    this.m_shooterRect.strokeColor = "black"
+    this.m_shooterRect.strokeWidth = 0.1
+    this.m_pivotAngleGoal.strokeColor = "black"
+    this.m_pivotAngleGoal.strokeWidth = 0.1
+
+    if (superStructureData.hasGamePiece) {
+        this.m_shooterRect.fillColor = "orange"
+    } else {
+        this.m_shooterRect.fillColor = "transparent"
+    }
+
+    this.m_armRect.rotateAroundEnd(180 + superStructureData.pivotMotorAngle)
+    this.m_shooterRect.rotateAroundShapeEnd(180 + superStructureData.pivotMotorAngle, this.m_armRect)
+    this.m_shooterMotor.rotateAroundShapeEnd(180 + superStructureData.pivotMotorAngle, this.m_armRect)
+    this.m_intakeMotor.rotateAroundShapeEnd(180 + superStructureData.pivotMotorAngle, this.m_armRect)
+
+    this.m_pivotAngleGoal.rotateAroundEnd(180 + superStructureData.goalAngle)
   }
 
 

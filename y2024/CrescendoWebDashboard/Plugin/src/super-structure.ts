@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./super-structure/renderer";
 import { SuperStructureData } from "./super-structure/datatypes";
 
-/* tslint:disable */
+
 
 export const superStructureElementConfig = {
   dashboard: {
@@ -26,9 +26,6 @@ export const superStructureElementConfig = {
     },
   ],
 };
-
-
-
 
 @customElement("super-structure")
 export class SuperStructure extends LitElement {
