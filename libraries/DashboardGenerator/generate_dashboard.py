@@ -56,6 +56,9 @@ def main(argv):
         action="store_true",
         help="Force overwriting all of the non-autogenerted files",
     )
+    parser.add_argument(
+        "--generate_web_dashboard", action="store_true", help="If present, will generate web dashboard"
+    )
 
     args = parser.parse_args(argv)
 
@@ -74,6 +77,7 @@ def main(argv):
         args.force_fxml,
         args.force_standalone_main,
         args.force_controller,
+        args.generate_web_dashboard
     )
 
 
@@ -85,7 +89,7 @@ def generate_dashboard(
     force_fxml,
     force_standalone_main,
     force_controller,
-    generate_web_dashboard=False,
+    generate_web_dash=False,
 ):
     this_dir = get_this_directory()
     generator_directory = this_dir
@@ -110,10 +114,10 @@ def generate_dashboard(
         force_controller,
     )
 
-    if generate_web_dashboard:
+    if generate_web_dash:
         generate_web_dashboard(
             generator_directory,
-            project_dir + "Webdash",
+            project_dir + "WebDashboard/Plugin",
             config,
             force_nt_names,
             force_utils,
