@@ -65,10 +65,6 @@ public class SpeakerAimAndShootCommand extends Command {
         if (m_runIntake) {
             m_intakeSubsystem.intakeIn();
         }
-
-        SmartDashboard.putBoolean("isArmGood", m_armPivotSubsystem.isArmAtGoal());
-        SmartDashboard.putBoolean("isChassisGood", m_chassisSubsystem.isAngleAtGoal());
-        SmartDashboard.putBoolean("isShooterGood", m_shooterSubsystem.isShooterAtGoal());
     }
 
     @Override

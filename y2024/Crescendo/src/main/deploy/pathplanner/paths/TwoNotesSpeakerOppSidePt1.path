@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6624312220604063,
-        "y": 4.190373496285566
+        "x": 0.6933452953924437,
+        "y": 4.403274541213847
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.5584417599703366,
-        "y": 1.6913820322817497
+        "x": 1.943922376722271,
+        "y": 2.2372114975693904
       },
       "isLocked": false,
-      "linkedName": "TwoNotesSpeakerOppSidePt1"
+      "linkedName": "SubwooferBottom"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CenterLineNoteBottom"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Two notes speaker opp side",
   "previewStartingState": {
-    "rotation": -55.467774435599715,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

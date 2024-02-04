@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.612259499328159,
-        "y": 0.7624410159761787
+        "x": 8.13729421671062,
+        "y": 0.8005344628052609
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.190529988540894,
-        "y": 0.775326429431485
+        "x": 5.715564705923355,
+        "y": 0.8134198762605671
       },
       "isLocked": false,
-      "linkedName": "TwoNotesSpeakerOppSidePt2"
+      "linkedName": "CenterLineNoteBottom"
     },
     {
       "anchor": {
-        "x": 1.49,
-        "y": 4.031537426942538
+        "x": 0.6933452953924437,
+        "y": 4.403274541213847
       },
       "prevControl": {
-        "x": 2.7746608899324663,
-        "y": 1.0026621579960722
+        "x": 1.97800618532491,
+        "y": 1.3743992722673806
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SubwooferBottom"
     }
   ],
   "rotationTargets": [],
