@@ -26,6 +26,8 @@ public class SpeakerAimAndShootCommand extends Command {
     private final DoubleSupplier m_shooterRpmGoalSupplier;
     private final Supplier<Pose2d> m_robotPoseProvider;
 
+    private boolean m_runIntake;
+
     public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
@@ -44,6 +46,7 @@ public class SpeakerAimAndShootCommand extends Command {
     public void initialize() {
         m_intakeTimer.reset();
         m_intakeTimer.stop();
+        m_runIntake = false;
     }
 
 
@@ -55,9 +58,12 @@ public class SpeakerAimAndShootCommand extends Command {
         m_shooterSubsystem.setPidRpm(m_shooterRpmGoalSupplier.getAsDouble());
 
         if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {
-            m_intakeSubsystem.intakeIn();
-
+            m_runIntake = true;
             m_intakeTimer.start();
+        }
+
+        if (m_runIntake) {
+            m_intakeSubsystem.intakeIn();
         }
 
         SmartDashboard.putBoolean("isArmGood", m_armPivotSubsystem.isArmAtGoal());
