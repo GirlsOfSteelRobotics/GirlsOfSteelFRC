@@ -59,13 +59,16 @@ public class LedManagerSubsystem extends SubsystemBase {
 
         if (m_intakeSubsystem.hasGamePiece()) {
             m_hasPiecePattern.writeHasPiecePattern();
+            m_hasPiecePattern.incrementCycles();
         }
-
+        else {
+            m_hasPiecePattern.resetCycles();
+        }
     }
 
     public void disabledPatterns() {
         if (Alert.hasErrors()) {
-            m_alert.write
+            m_alert.writeAlertErrorPatter();
         }
     }
 

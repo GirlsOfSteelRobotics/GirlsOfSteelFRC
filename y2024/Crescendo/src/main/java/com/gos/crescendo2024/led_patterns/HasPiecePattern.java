@@ -7,13 +7,25 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public class HasPiecePattern {
     private final LEDFlash m_hasPiecePattern;
+    private int m_numCycles;
 
     public HasPiecePattern(int numberOfLEDs, AddressableLEDBuffer buffer) {
-        m_hasPiecePattern = new LEDFlash(buffer, 0 , numberOfLEDs, 1 , Color.kTomato);
-
+        m_hasPiecePattern = new LEDFlash(buffer, 0 , numberOfLEDs, 0.5 , Color.kTomato);
+        m_numCycles = 0;
     }
     public void writeHasPiecePattern() {
-        m_hasPiecePattern.writeLeds();
+        if (m_numCycles <= 100){
+            m_hasPiecePattern.writeLeds();
+        }
+
+
+    }
+    public void incrementCycles() {
+        m_numCycles = m_numCycles + 1;
+    }
+    public void resetCycles() {
+        m_numCycles = 0;
     }
 }
+
 

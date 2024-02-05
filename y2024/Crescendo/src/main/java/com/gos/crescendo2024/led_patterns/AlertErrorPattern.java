@@ -10,7 +10,7 @@ public class AlertErrorPattern {
     private final LEDFlash m_alertErrorPattern;
 
     public AlertErrorPattern(int numLEDs, AddressableLEDBuffer buffer) {
-        m_alertErrorPattern = new LEDFlash(buffer, 0, numLEDs, 2, Color.kYellow)
+        m_alertErrorPattern = new LEDFlash(buffer, 0, numLEDs, 2, Color.kYellow);
     }
 
     public void writeAlertErrorPatter() { m_alertErrorPattern.writeLeds(); }
