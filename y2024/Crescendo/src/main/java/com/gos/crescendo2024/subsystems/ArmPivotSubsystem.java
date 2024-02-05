@@ -34,9 +34,9 @@ import java.util.function.Supplier;
 
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 80); //arbitrary
-    private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle", 75); //arbitrary
+    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 4);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 24);
+    private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(false, "ampScoreAngle", 90);
 
     private static final double ALLOWABLE_ERROR = 1;
 
@@ -73,7 +73,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder.setPositionConversionFactor(360.0);
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
         m_pivotAbsEncoder.setInverted(true);
-        m_pivotAbsEncoder.setZeroOffset(52);
+        m_pivotAbsEncoder.setZeroOffset(50.1);
 
         m_speakerTable = new SpeakerLookupTable();
 
@@ -81,20 +81,22 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
         m_sparkPidController.setPositionPIDWrappingEnabled(true);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
-            .addP(0)
+            .addP(0.0001)
+            .addFF(0.0007)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(80)
-            .addMaxVelocity(80)
+            .addMaxAcceleration(150)
+            .addMaxVelocity(150)
             .build();
 
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
             .addKff(0)
-            .addKg(0);
+            .addKg(0.9);
 
         m_networkTableEntriesPivot = new LoggingUtil("Arm Pivot Subsystem");
         m_networkTableEntriesPivot.addDouble("Output", m_pivotMotor::getAppliedOutput);
         m_networkTableEntriesPivot.addDouble("Abs Encoder Value", m_pivotAbsEncoder::getPosition);
+        m_networkTableEntriesPivot.addDouble("Abs Encoder Velocity", m_pivotAbsEncoder::getVelocity);
         m_networkTableEntriesPivot.addDouble("Rel Encoder Value", m_pivotMotorEncoder::getPosition);
 
 
@@ -136,7 +138,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             Units.degreesToRadians(0));
 
 
-        m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+        m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kSmartMotion, 0, feedForwardVolts);
         SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
     }
 
