@@ -27,7 +27,7 @@ public class AprilTagDetection {
         m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_photonCamera, ROBOT_TO_CAMERA);
 
         if (RobotBase.isSimulation()) {
-            m_cameraSim  = new PhotonCameraSim(m_photonCamera);
+            m_cameraSim = new PhotonCameraSim(m_photonCamera);
             m_cameraSim.enableRawStream(true);
             m_cameraSim.enableProcessedStream(true);
             m_cameraSim.enableDrawWireframe(true);

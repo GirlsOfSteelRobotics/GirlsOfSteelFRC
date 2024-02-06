@@ -8,18 +8,10 @@ import com.gos.crescendo2024.led_patterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.AutoPattern;
 import com.gos.crescendo2024.led_patterns.HasPiecePattern;
 import com.gos.crescendo2024.led_patterns.TeleopPattern;
-import com.gos.lib.led.LEDPattern;
-import com.gos.lib.led.mirrored.MirroredLEDFlash;
-import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.frc2023.util.Alert;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LedManagerSubsystem extends SubsystemBase {
 
@@ -29,7 +21,6 @@ public class LedManagerSubsystem extends SubsystemBase {
 
     private final Autos m_autoModeFactory;
 
-    private final Map<Autos.AutoModes, LEDPattern> m_autonColorMap;
     // Led core
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
@@ -41,7 +32,6 @@ public class LedManagerSubsystem extends SubsystemBase {
     private final AlertPatterns m_alert;
 
     private final AutoModePattern m_autoModePattern;
-
 
 
     public LedManagerSubsystem(IntakeSubsystem intakeSubsystem, Autos autoModeFactory) {
@@ -60,17 +50,9 @@ public class LedManagerSubsystem extends SubsystemBase {
         m_hasPiecePattern = new HasPiecePattern(MAX_INDEX_LED, m_buffer);
         m_autoPattern = new AutoPattern(MAX_INDEX_LED, m_buffer);
         m_alert = new AlertPatterns(MAX_INDEX_LED, m_buffer);
-        m_autonColorMap = createAutonMap();
-        m_autoModePattern = new AutoModePattern(m_autonColorMap, m_buffer);
+        m_autoModePattern = new AutoModePattern(m_buffer, MAX_INDEX_LED);
     }
-    public Map<Autos.AutoModes, LEDPattern> createAutonMap () {
-        Map<Autos.AutoModes, LEDPattern> autonMap = new HashMap<>();
-        autonMap.put(Autos.AutoModes.LEAVE_WING, new MirroredLEDSolidColor(m_buffer, 0, MAX_INDEX_LED, Color.kDenim));
-        autonMap.put(Autos.AutoModes.PRELOAD_AND_LEAVE_WING, new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 1.0, Color.kGreen));
-        autonMap.put(Autos.AutoModes.PRELOAD_AND_CENTER_LINE, new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 1.0, Color.kYellow));
-        autonMap.put(Autos.AutoModes.FOUR_NOTE, new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 1.0, Color.kRed));
-        return autonMap;
-    }
+
     public void enabledPatterns() {
         if (DriverStation.isTeleop()) {
             m_teleopPattern.writeLED();
@@ -81,8 +63,7 @@ public class LedManagerSubsystem extends SubsystemBase {
         if (m_intakeSubsystem.hasGamePiece()) {
             m_hasPiecePattern.writeHasPiecePattern();
             m_hasPiecePattern.incrementCycles();
-        }
-        else {
+        } else {
             m_hasPiecePattern.resetCycles();
         }
     }
@@ -90,14 +71,7 @@ public class LedManagerSubsystem extends SubsystemBase {
     public void disabledPatterns() {
         Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
         m_autoModePattern.writeAutoModePattern(autoMode);
-        if (Alert.hasErrors()) {
-            m_alert.writeAlertErrorPattern();
-        } else if (Alert.hasWarnings()) {
-            m_alert.writeAlertWarningPattern();
-        } else {
-            m_alert.writeNoAlertsPattern();
-        }
-
+        m_alert.writeLEDs();
     }
 
 
