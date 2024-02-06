@@ -3,6 +3,7 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.SpeakerLookupTable;
+import com.gos.crescendo2024.subsystems.sysid.ArmPivotSysId;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
@@ -22,6 +23,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,6 +59,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     private final SpeakerLookupTable m_speakerTable;
+
+    private final ArmPivotSysId m_armPivotSysId;
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -128,6 +132,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
 
+        m_armPivotSysId = new ArmPivotSysId(this);
     }
 
     @Override
@@ -189,12 +194,30 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.set(speed);
     }
 
+    public void setVoltageLeadAndFollow(double outputVolts) {
+        m_pivotMotor.setVoltage(outputVolts);
+        m_followMotor.setVoltage(outputVolts);
+    }
+
     public double getArmAngleGoal() {
         return m_armGoalAngle;
     }
 
+
     public double getPivotMotorPercentage() {
         return m_pivotMotor.getAppliedOutput();
+    }
+
+    public double replaceVoltage() {
+        return m_pivotMotor.get() * RobotController.getBatteryVoltage();
+    }
+
+    public double getEncoderPos() {
+        return m_pivotMotorEncoder.getPosition();
+    }
+
+    public double getEncoderVel() {
+        return m_pivotMotorEncoder.getVelocity();
     }
 
     public boolean isArmAtGoal() {
