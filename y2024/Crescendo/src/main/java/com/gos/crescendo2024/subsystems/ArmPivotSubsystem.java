@@ -38,6 +38,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 24);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(false, "ampScoreAngle", 90);
 
+    private static final double GEAR_RATIO = 72; // TODO get from design
+    private static final boolean USE_ABSOLUTE_ENCODER = false;
+
     private static final double ALLOWABLE_ERROR = 1;
 
     private final SimableCANSparkMax m_pivotMotor;
@@ -68,7 +71,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_followMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_followMotor.setSmartCurrentLimit(60);
 
+        // Request the absolute encoder position / velocity faster than the default period
+        m_pivotMotor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus5, 20);
+        m_pivotMotor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus6, 20);
+
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
+        m_pivotMotorEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
+        m_pivotMotorEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60);
+
         m_pivotAbsEncoder = m_pivotMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         m_pivotAbsEncoder.setPositionConversionFactor(360.0);
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
@@ -78,7 +88,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_speakerTable = new SpeakerLookupTable();
 
         m_sparkPidController = m_pivotMotor.getPIDController();
-        m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
+        if (USE_ABSOLUTE_ENCODER) {
+            m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
+        } else {
+            m_sparkPidController.setFeedbackDevice(m_pivotMotorEncoder);
+        }
         m_sparkPidController.setPositionPIDWrappingEnabled(true);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
             .addP(0.0001)
@@ -95,9 +109,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_networkTableEntriesPivot = new LoggingUtil("Arm Pivot Subsystem");
         m_networkTableEntriesPivot.addDouble("Output", m_pivotMotor::getAppliedOutput);
-        m_networkTableEntriesPivot.addDouble("Abs Encoder Value", m_pivotAbsEncoder::getPosition);
+        m_networkTableEntriesPivot.addDouble("Abs Encoder Position", m_pivotAbsEncoder::getPosition);
         m_networkTableEntriesPivot.addDouble("Abs Encoder Velocity", m_pivotAbsEncoder::getVelocity);
-        m_networkTableEntriesPivot.addDouble("Rel Encoder Value", m_pivotMotorEncoder::getPosition);
+        m_networkTableEntriesPivot.addDouble("Rel Encoder Position", m_pivotMotorEncoder::getPosition);
+        m_networkTableEntriesPivot.addDouble("Rel Encoder Velocity", m_pivotMotorEncoder::getVelocity);
+        m_networkTableEntriesPivot.addBoolean("Arm At Goal", this::isArmAtGoal);
 
 
         m_armPivotMotorErrorAlerts = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor");
@@ -161,11 +177,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        if (RobotBase.isSimulation()) {
-            return m_pivotMotorEncoder.getPosition();
+        if (RobotBase.isReal() && USE_ABSOLUTE_ENCODER) {
+            return m_pivotAbsEncoder.getPosition();
         }
         else {
-            return m_pivotAbsEncoder.getPosition();
+            return m_pivotMotorEncoder.getPosition();
         }
     }
 
@@ -184,6 +200,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public boolean isArmAtGoal() {
         double error = m_armGoalAngle - getAngle();
         return Math.abs(error) < ALLOWABLE_ERROR;
+    }
+
+    private void syncRelativeEncoder() {
+        m_pivotMotorEncoder.setPosition(m_pivotAbsEncoder.getPosition());
     }
 
     /////////////////////////////////////
@@ -209,6 +229,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createMoveArmToDefaultSpeakerAngleCommand() {
         return runEnd(() -> moveArmToAngle(ARM_DEFAULT_SPEAKER_ANGLE.getValue()), this::stopArmMotor).withName("arm to default speaker angle");
+    }
+
+    public Command createSyncRelativeEncoderCommand() {
+        return run(this::syncRelativeEncoder).ignoringDisable(true).withName("arm: sync encoder");
     }
 
     public Command createPivotToCoastModeCommand() {

@@ -3,37 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6624312220604063,
-        "y": 4.190373496285566
+        "x": 0.7167669684840067,
+        "y": 4.391563704668065
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.5584417599703366,
-        "y": 1.6913820322817497
+        "x": 1.9673440498138342,
+        "y": 2.2255006610236086
       },
       "isLocked": false,
-      "linkedName": "TwoNotesSpeakerOppSidePt1"
+      "linkedName": "SubwooferBottom"
     },
     {
       "anchor": {
-        "x": 8.13729421671062,
-        "y": 0.8005344628052609
+        "x": 8.230788769269848,
+        "y": 0.4736132549188178
       },
       "prevControl": {
-        "x": 5.219344458858045,
-        "y": 0.8657329329695949
+        "x": 5.312839011417274,
+        "y": 0.5388117250831521
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CenterLineNoteBottom"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -45,7 +51,7 @@
   "reversed": false,
   "folder": "Two notes speaker opp side",
   "previewStartingState": {
-    "rotation": -55.467774435599715,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
