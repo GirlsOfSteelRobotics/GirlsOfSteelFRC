@@ -34,7 +34,7 @@ public class ObjectDetection {
     private final PhotonCameraSim m_cameraSim;
 
     public ObjectDetection() {
-        m_photonCamera = new PhotonCamera("objectDetection");
+        m_photonCamera = new PhotonCamera("TestLimelight1");
 
         TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
 
