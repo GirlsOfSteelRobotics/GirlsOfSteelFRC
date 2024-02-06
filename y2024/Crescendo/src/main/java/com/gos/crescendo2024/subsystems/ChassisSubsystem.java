@@ -123,6 +123,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging = new LoggingUtil("Chassis");
         m_logging.addDouble("GyroAngle", m_gyro::getAngle);
         m_logging.addDouble("PoseAngle", () -> getPose().getRotation().getDegrees());
+        m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
+        m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -173,8 +175,6 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean isAngleAtGoal() {
-        SmartDashboard.putNumber("chassisSetPoint", m_turnAnglePIDVelocity.getSetpoint());
-
         return m_turnAnglePIDVelocity.atSetpoint();
     }
 
@@ -241,7 +241,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private void resetGyro() {
-        m_gyro.setYaw(0);
+        Pose2d currentPose = getPose();
+        resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
 
 
@@ -294,7 +295,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createResetPoseCommand(Pose2d pose) {
-        return runOnce(() -> resetOdometry(pose));
+        return runOnce(() -> resetOdometry(pose))
+            .ignoringDisable(true)
+            .withName("Reset Pose " + pose);
     }
 
     public Command createPushForwardModeCommand() {

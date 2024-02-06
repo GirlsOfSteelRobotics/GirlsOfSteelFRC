@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6624312220604063,
-      "y": 4.452013186419797
+      "x": 0.7167669684840067,
+      "y": 4.391563704668065
     },
-    "rotation": -59.17670341656153
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TwoNotesSpeakerOppSidePt1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNotesSpeakerOppSidePt1"
+                }
+              }
+            ]
           }
         },
         {

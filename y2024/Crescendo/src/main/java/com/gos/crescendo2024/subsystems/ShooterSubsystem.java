@@ -68,6 +68,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
+        m_networkTableEntries.addBoolean("Shooter At Goal", this::isShooterAtGoal);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
