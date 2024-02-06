@@ -46,7 +46,7 @@ public final class Autos {
         m_modes = new HashMap<>();
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter));
-        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(armPivot, intake).withTimeout(1));
+        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(armPivot, intake));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", armPivot.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", shooter.createRunDefaultRpmCommand());
 
