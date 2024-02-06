@@ -12,6 +12,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
@@ -31,6 +32,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -39,18 +41,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
+import java.util.List;
 import java.util.Optional;
 
-import java.util.List;
-
 public class ChassisSubsystem extends SubsystemBase {
-    private static final double GYRO_TO_CHASSIS_OFFSET = -90;
-
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 
     public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
-    public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(360);
+    public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(720);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -68,9 +67,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
+    private final LoggingUtil m_logging;
+
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
+
 
         RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
             Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
@@ -84,9 +86,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
         //TODO need change pls
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
+        m_turnAnglePIDVelocity.setTolerance(5);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
-            .addP(0)
+            .addP(0.2)
             .addI(0)
             .addD(0)
             .build();
@@ -102,7 +105,7 @@ public class ChassisSubsystem extends SubsystemBase {
             this::setChassisSpeed,
             new HolonomicPathFollowerConfig(
                 new PIDConstants(5, 0, 0),
-                new PIDConstants(5, 0, 0),
+                new PIDConstants(10, 0, 0),
                 MAX_TRANSLATION_SPEED,
                 WHEEL_BASE,
                 new ReplanningConfig(),
@@ -116,6 +119,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
+
+        m_logging = new LoggingUtil("Chassis");
+        m_logging.addDouble("GyroAngle", m_gyro::getAngle);
+        m_logging.addDouble("PoseAngle", () -> getPose().getRotation().getDegrees());
+        m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
+        m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -133,6 +142,7 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
+        m_logging.updateLogs();
 
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
         m_field.setOdometry(m_swerveDrive.getOdometryPosition());
@@ -226,10 +236,13 @@ public class ChassisSubsystem extends SubsystemBase {
             currentFieldVelocity.vxMetersPerSecond * seconds,
             currentFieldVelocity.vyMetersPerSecond * seconds,
             new Rotation2d(currentFieldVelocity.omegaRadiansPerSecond * seconds));
-        Pose2d futurePos = new Pose2d(currentPos.getX() + deltaPos.getX(), currentPos.getY() + deltaPos.getY(), new Rotation2d());
-        System.out.println(currentFieldVelocity + " " + deltaPos);
 
-        return futurePos;
+        return new Pose2d(currentPos.getX() + deltaPos.getX(), currentPos.getY() + deltaPos.getY(), new Rotation2d());
+    }
+
+    private void resetGyro() {
+        Pose2d currentPose = getPose();
+        resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
 
 
@@ -244,7 +257,9 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
 
     public Command createResetGyroCommand() {
-        return runOnce(() -> m_gyro.setYaw(GYRO_TO_CHASSIS_OFFSET)).ignoringDisable(true).withName("Reset Gyro");
+        return run(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 
     public Command createTurnToAngleCommand(double angleGoal) {
@@ -278,5 +293,18 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
+    }
+
+    public Command createResetPoseCommand(Pose2d pose) {
+        return runOnce(() -> resetOdometry(pose))
+            .ignoringDisable(true)
+            .withName("Reset Pose " + pose);
+    }
+
+    public Command createPushForwardModeCommand() {
+        SwerveModuleState state = new SwerveModuleState(0, new Rotation2d());
+        return run(() -> {
+            m_swerveDrive.setModuleStates(state);
+        });
     }
 }

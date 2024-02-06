@@ -72,10 +72,14 @@ public class IntakeSubsystem extends SubsystemBase {
     // Command Factories
     /////////////////////////////////////
     public Command createMoveIntakeInCommand() {
-        return this.runEnd(this::intakeIn, this::intakeStop).withName("IntakeSubsystemIn");
+        return this.runEnd(this::intakeIn, this::intakeStop).withName("Intake In");
     }
 
     public Command createMoveIntakeOutCommand() {
-        return this.runEnd(this::intakeOut, this::intakeStop).withName("IntakeSubsystemOut");
+        return this.runEnd(this::intakeOut, this::intakeStop).withName("Intake Out");
+    }
+
+    public Command createIntakeUntilPieceCommand() {
+        return createMoveIntakeInCommand().until(this::hasGamePiece).withName("Intake Till Piece");
     }
 }

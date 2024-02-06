@@ -17,29 +17,54 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class Autos {
-    private final SendableChooser<Command> m_autonChooser;
-    private final ChassisSubsystem m_chassis;
-    private final ArmPivotSubsystem m_armPivot;
-    private final IntakeSubsystem m_intake;
-    private final ShooterSubsystem m_shooter;
+
+    public enum AutoModes {
+        FOUR_NOTE("FourNoteSpeaker"),
+        LEAVE_WING("LeaveWing"),
+        PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
+        PRELOAD_AND_CENTER_LINE("TwoNotesSpeaker");
+
+        public final String m_modeName;
+
+        AutoModes(String modeName) {
+            m_modeName = modeName;
+        }
+    }
+
+    private static final AutoModes DEFAULT_MODE = AutoModes.PRELOAD_AND_CENTER_LINE;
+
+    private final SendableChooser<AutoModes> m_autonChooser;
+
+    private final Map<AutoModes, Command> m_modes;
 
     public Autos(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, IntakeSubsystem intake, ShooterSubsystem shooter) {
-        m_chassis = chassis;
-        m_armPivot = armPivot;
-        m_intake = intake;
-        m_shooter = shooter;
+        m_autonChooser = new SendableChooser<>();
+        m_modes = new HashMap<>();
 
-        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivot, m_chassis, m_intake, m_shooter));
-        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivot, m_intake).withTimeout(1));
-        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivot.createMoveArmToDefaultSpeakerAngleCommand());
-        NamedCommands.registerCommand("ShooterDefaultRpm", m_shooter.createRunDefaultRpmCommand());
+        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter));
+        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(armPivot, intake).withTimeout(1));
+        NamedCommands.registerCommand("MoveArmToSpeakerAngle", armPivot.createMoveArmToDefaultSpeakerAngleCommand());
+        NamedCommands.registerCommand("ShooterDefaultRpm", shooter.createRunDefaultRpmCommand());
 
-        m_autonChooser = AutoBuilder.buildAutoChooser();
+
+        for (AutoModes mode : AutoModes.values()) {
+            if (mode == DEFAULT_MODE) {
+                m_autonChooser.setDefaultOption(mode.m_modeName, mode);
+            } else {
+                m_autonChooser.addOption(mode.m_modeName, mode);
+            }
+            m_modes.put(mode, AutoBuilder.buildAuto(mode.m_modeName));
+        }
+
         SmartDashboard.putData("Auto Chooser", m_autonChooser);
     }
 
     public Command getSelectedAutonomous() {
-        return m_autonChooser.getSelected();
+        AutoModes mode = m_autonChooser.getSelected();
+        return m_modes.get(mode);
     }
 }

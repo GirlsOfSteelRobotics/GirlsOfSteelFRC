@@ -162,12 +162,6 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/PP Paths/Curve Path": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
-      "/Shuffleboard/PP Paths/FiveNotePt0": "Command",
-      "/Shuffleboard/PP Paths/FiveNotePt1": "Command",
-      "/Shuffleboard/PP Paths/FiveNotePt2": "Command",
-      "/Shuffleboard/PP Paths/FiveNotePt3": "Command",
-      "/Shuffleboard/PP Paths/FiveNotePt4": "Command",
-      "/Shuffleboard/PP Paths/FiveNotePt5": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
@@ -178,8 +172,11 @@
       "/Shuffleboard/PP Paths/StraightLinePath": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
       "/Shuffleboard/test commands/Arm to 0": "Command",
+      "/Shuffleboard/test commands/Arm to 30": "Command",
       "/Shuffleboard/test commands/Arm to 45": "Command",
+      "/Shuffleboard/test commands/Arm to 60": "Command",
       "/Shuffleboard/test commands/Arm to 90": "Command",
       "/Shuffleboard/test commands/Arm to amp angle": "Command",
       "/Shuffleboard/test commands/Arm to coast": "Command",
@@ -189,6 +186,11 @@
       "/Shuffleboard/test commands/Auto-Intake Piece": "Command",
       "/Shuffleboard/test commands/Auto-Shoot in Amp": "Command",
       "/Shuffleboard/test commands/Auto-Shoot in Speaker": "Command",
+      "/Shuffleboard/test commands/Chassis Push": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Origin": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top": "Command",
       "/Shuffleboard/test commands/Chassis drive to amp": "Command",
       "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
@@ -208,6 +210,7 @@
       "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
       "/Shuffleboard/test commands/Teleop: David Drive": "Command",
+      "/Shuffleboard/test commands/Teleop: Normal Swerve Drive": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
@@ -234,6 +237,16 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Teleop: David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -341,10 +354,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },

@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public abstract class BaseTeleopSwerve extends Command {
 
     protected static final double JOYSTICK_DEADBAND = 0.025;
-    protected static final GosDoubleProperty TRANSLATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickTranslationDamping", 0.4);
-    protected static final GosDoubleProperty ROTATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickRotationDamping", 0.4);
+    protected static final GosDoubleProperty TRANSLATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickTranslationDamping", 1);
+    protected static final GosDoubleProperty ROTATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickRotationDamping", 1);
     protected final ChassisSubsystem m_subsystem;
     protected final CommandXboxController m_joystick;
 

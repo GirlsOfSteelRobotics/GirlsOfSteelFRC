@@ -24,9 +24,9 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
+    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 4000);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
-    private static final double ALLOWABLE_ERROR = 50;
+    private static final double ALLOWABLE_ERROR = 70;
 
     private final SimableCANSparkMax m_shooterMotorLeader;
     private final SimableCANSparkMax m_shooterMotorFollower;
@@ -45,10 +45,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
-            .addP(0.0)
+            .addP(0.0002)
             .addI(0.0)
             .addD(0.0)
-            .addFF(4.0E-4)
+            .addFF(0.000174)
             .build();
 
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -68,6 +68,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
+        m_networkTableEntries.addBoolean("Shooter At Goal", this::isShooterAtGoal);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
