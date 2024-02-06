@@ -9,9 +9,9 @@ public class AlertPatterns {
     private final LEDFlash m_alertWarningPattern;
     private final LEDFlash m_noAlertsPattern;
     public AlertPatterns(int numLEDs, AddressableLEDBuffer buffer) {
-        m_alertErrorPattern = new LEDFlash(buffer, 0, numLEDs, 2, Color.kRed);
-        m_alertWarningPattern = new LEDFlash(buffer, 0, numLEDs, 2, Color.kYellow);
-        m_noAlertsPattern = new LEDFlash(buffer, 0, numLEDs, 2, Color.kGreen);
+        m_alertErrorPattern = new LEDFlash(buffer, numLEDs/2, numLEDs, 2, Color.kRed);
+        m_alertWarningPattern = new LEDFlash(buffer, numLEDs/2, numLEDs, 2, Color.kYellow);
+        m_noAlertsPattern = new LEDFlash(buffer, numLEDs/2, numLEDs, 2, Color.kGreen);
     }
 
     public void writeAlertErrorPattern() { m_alertErrorPattern.writeLeds(); }
