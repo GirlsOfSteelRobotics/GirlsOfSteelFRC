@@ -3,7 +3,7 @@ package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.auton.Autos;
-import com.gos.crescendo2024.led_patterns.AlertErrorPattern;
+import com.gos.crescendo2024.led_patterns.AlertPatterns;
 import com.gos.crescendo2024.led_patterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.AutoPattern;
 import com.gos.crescendo2024.led_patterns.HasPiecePattern;
@@ -11,13 +11,10 @@ import com.gos.crescendo2024.led_patterns.TeleopPattern;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
-import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.util.Alert;
 
@@ -41,7 +38,7 @@ public class LedManagerSubsystem extends SubsystemBase {
     private final HasPiecePattern m_hasPiecePattern;
     private final AutoPattern m_autoPattern;
 
-    private final AlertErrorPattern m_alert;
+    private final AlertPatterns m_alert;
 
     private final AutoModePattern m_autoModePattern;
 
@@ -62,7 +59,7 @@ public class LedManagerSubsystem extends SubsystemBase {
         m_teleopPattern = new TeleopPattern(MAX_INDEX_LED, m_buffer);
         m_hasPiecePattern = new HasPiecePattern(MAX_INDEX_LED, m_buffer);
         m_autoPattern = new AutoPattern(MAX_INDEX_LED, m_buffer);
-        m_alert = new AlertErrorPattern(MAX_INDEX_LED, m_buffer);
+        m_alert = new AlertPatterns(MAX_INDEX_LED, m_buffer);
         m_autonColorMap = createAutonMap();
         m_autoModePattern = new AutoModePattern(m_autonColorMap, m_buffer);
     }
@@ -94,9 +91,15 @@ public class LedManagerSubsystem extends SubsystemBase {
         Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
         m_autoModePattern.writeAutoModePattern(autoMode);
         if (Alert.hasErrors()) {
-            m_alert.writeAlertErrorPatter();
+            m_alert.writeAlertErrorPattern();
+        } else if (Alert.hasWarnings()) {
+            m_alert.writeAlertWarningPattern();
+        } else {
+            m_alert.writeNoAlertsPattern();
         }
+
     }
+
 
     @Override
     public void periodic() {
