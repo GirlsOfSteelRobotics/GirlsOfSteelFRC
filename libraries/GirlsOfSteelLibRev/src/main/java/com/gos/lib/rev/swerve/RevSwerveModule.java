@@ -189,6 +189,14 @@ public class RevSwerveModule {
         }
     }
 
+    // Request the absolute encoder position / velocity faster than the default period
+    public void changeModuleAbsEncoderFeedback(CANSparkLowLevel.PeriodicFrame posFrame, CANSparkLowLevel.PeriodicFrame velFrame, int periodMs) {
+        m_drivingSparkMax.setPeriodicFramePeriod(posFrame, periodMs);
+        m_drivingSparkMax.setPeriodicFramePeriod(velFrame, periodMs);
+        m_turningSparkMax.setPeriodicFramePeriod(posFrame, periodMs);
+        m_turningSparkMax.setPeriodicFramePeriod(velFrame, periodMs);
+    }
+
     public void periodic() {
         // Apply chassis angular offset to the encoder position to get the position
         // relative to the chassis.

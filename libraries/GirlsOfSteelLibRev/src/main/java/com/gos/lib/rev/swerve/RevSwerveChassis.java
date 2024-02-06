@@ -1,6 +1,7 @@
 package com.gos.lib.rev.swerve;
 
 import com.gos.lib.swerve.SwerveDrivePublisher;
+import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -103,6 +104,9 @@ public class RevSwerveChassis {
                 m_backRight.getSimWrapper());
             m_simulator = new SwerveSimWrapper(chassisConstants.m_wheelBase, chassisConstants.m_trackWidth, 64.0, 1.0, moduleSims, gyroSimulator);
         }
+
+        // Request the absolute encoder position / velocity faster than the default period
+
     }
 
     public void periodic() {
@@ -124,6 +128,14 @@ public class RevSwerveChassis {
 
     public void updateSimulator() {
         m_simulator.update();
+    }
+
+    // Request the absolute encoder position / velocity faster than the default period
+    public void changeAbsEncoderFeedback(CANSparkLowLevel.PeriodicFrame posFrame, CANSparkLowLevel.PeriodicFrame velFrame, int periodMs) {
+        m_frontLeft.changeModuleAbsEncoderFeedback(posFrame, velFrame, periodMs);
+        m_backLeft.changeModuleAbsEncoderFeedback(posFrame, velFrame, periodMs);
+        m_frontRight.changeModuleAbsEncoderFeedback(posFrame, velFrame, periodMs);
+        m_backRight.changeModuleAbsEncoderFeedback(posFrame, velFrame, periodMs);
     }
 
     /**

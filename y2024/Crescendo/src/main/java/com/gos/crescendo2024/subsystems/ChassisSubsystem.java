@@ -27,6 +27,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
+import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -97,6 +98,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
         m_photonVisionSubsystem = new AprilTagDetection();
         m_objectDetectionSubsystem = new ObjectDetection();
+
+        // Request the absolute encoder position / velocity faster than the default period
+        //kStatus5 for position, kStatus6 for vel - idk man
+        m_swerveDrive.changeAbsEncoderFeedback(CANSparkLowLevel.PeriodicFrame.kStatus5, CANSparkLowLevel.PeriodicFrame.kStatus6, 20);
 
         AutoBuilder.configureHolonomic(
             this::getPose,
