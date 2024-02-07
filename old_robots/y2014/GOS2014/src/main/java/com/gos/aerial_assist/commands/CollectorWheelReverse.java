@@ -13,7 +13,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  *
  * @author Abby, Sophia, Sonia
  */
-public class CollectorWheelReverse extends GosCommandBaseBase {
+public class CollectorWheelReverse extends GosCommandBase {
 
     private final Collector m_collector;
 

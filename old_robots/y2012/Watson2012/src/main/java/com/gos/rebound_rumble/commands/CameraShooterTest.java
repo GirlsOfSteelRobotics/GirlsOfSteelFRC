@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class CameraShooterTest extends GosCommandBaseBase {
+public class CameraShooterTest extends GosCommandBase {
     private final Shooter m_shooter;
     private final Collector m_collector;
     private double m_speed;

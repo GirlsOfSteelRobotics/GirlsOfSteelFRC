@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
 /**
  * @author Abby
  */
-public class ManipulatorManualDown extends GosCommandBaseBase {
+public class ManipulatorManualDown extends GosCommandBase {
 
     private final Manipulator m_manipulator;
 

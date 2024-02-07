@@ -12,7 +12,7 @@ import com.gos.rebound_rumble.subsystems.Chassis;
  * the PID controller (which needs to be initialized if using the move method)
  * right now I commented out the move & the PID
  */
-public class ManualTuneCamera extends GosCommandBaseBase {
+public class ManualTuneCamera extends GosCommandBase {
 
     private final Chassis m_chassis;
 

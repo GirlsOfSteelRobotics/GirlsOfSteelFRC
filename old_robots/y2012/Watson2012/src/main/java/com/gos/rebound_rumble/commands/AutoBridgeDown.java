@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Bridge;
 
-public class AutoBridgeDown extends GosCommandBaseBase {
+public class AutoBridgeDown extends GosCommandBase {
     private final Bridge m_bridge;
 
     public AutoBridgeDown(Bridge bridge) {

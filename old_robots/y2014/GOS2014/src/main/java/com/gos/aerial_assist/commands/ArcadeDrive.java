@@ -13,7 +13,7 @@ import com.gos.aerial_assist.subsystems.Driving;
 /**
  * @author Mackenzie
  */
-public class ArcadeDrive extends GosCommandBaseBase {
+public class ArcadeDrive extends GosCommandBase {
 
     private final Chassis m_chassis;
     private final Joystick m_joystick1; //randomly picked right joystick from robot map

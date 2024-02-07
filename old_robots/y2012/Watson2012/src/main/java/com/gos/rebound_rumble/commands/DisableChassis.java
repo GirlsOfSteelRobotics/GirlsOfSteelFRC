@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class DisableChassis extends GosCommandBaseBase {
+public class DisableChassis extends GosCommandBase {
     private final Chassis m_chassis;
 
     public DisableChassis(Chassis chassis) {

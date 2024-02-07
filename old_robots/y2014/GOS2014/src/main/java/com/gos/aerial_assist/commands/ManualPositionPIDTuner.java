@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Driving;
 
-public class ManualPositionPIDTuner extends GosCommandBaseBase {
+public class ManualPositionPIDTuner extends GosCommandBase {
     private static final double OFF_BY = 0.05;
     private static final boolean PID = false;
 
