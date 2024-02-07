@@ -89,7 +89,7 @@ public class ObjectDetection {
                 ROBOT_TO_CAMERA.getRotation().getY(),
                 Units.degreesToRadians(result.getPitch()),
                 Units.degreesToRadians(result.getYaw())
-                );
+            );
             Translation2d relToCamera = PhotonUtils.estimateCameraToTargetTranslation(distance, Rotation2d.fromDegrees(result.getYaw()));
             Transform2d adjustForRot = new Transform2d(relToCamera, new Rotation2d());
             objectLocationsList.add(chassisLocation.transformBy(adjustForRot));
