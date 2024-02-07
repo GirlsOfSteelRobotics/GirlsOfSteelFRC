@@ -186,20 +186,20 @@ public class RobotContainer {
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
-        m_driverController.leftBumper().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
-        m_driverController.leftBumper().and(m_driverController.rightTrigger()).whileTrue(
+        m_driverController.leftTrigger().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
+        m_driverController.leftTrigger().and(m_driverController.leftBumper()).whileTrue(
             CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //Speaker Shooting
-        m_driverController.rightBumper().whileTrue(
-
+        m_driverController.rightTrigger().whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem));
-        m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
+
+        m_driverController.rightTrigger().and(m_driverController.rightBumper()).whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
                     .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
 
         //go to floor
-        m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        m_driverController.b().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
@@ -208,13 +208,13 @@ public class RobotContainer {
         // Operator Controller
         /////////////////////////////
         // Intake
-        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
-        m_operatorController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
-        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
-        m_operatorController.a().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
+        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
+        m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+
 
         // shooter
-        m_operatorController.leftTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
+        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
     }
