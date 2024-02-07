@@ -22,7 +22,7 @@ public class AprilTagDetection {
     private final PhotonCameraSim m_cameraSim;
 
     public AprilTagDetection() {
-        m_photonCamera = new PhotonCamera("aprilTags");
+        m_photonCamera = new PhotonCamera("AprilTag1");
 
         m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_photonCamera, ROBOT_TO_CAMERA);
 
@@ -32,7 +32,7 @@ public class AprilTagDetection {
             m_cameraSim.enableProcessedStream(true);
             m_cameraSim.enableDrawWireframe(true);
 
-            m_visionSim = new VisionSystemSim("aprilTagsSim");
+            m_visionSim = new VisionSystemSim("AprilTag1");
             m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
             m_visionSim.addAprilTags(FieldConstants.TAG_LAYOUT);
         } else {
