@@ -34,7 +34,7 @@ public class ObjectDetection {
     private final PhotonCameraSim m_cameraSim;
 
     public ObjectDetection() {
-        m_photonCamera = new PhotonCamera("objectDetection");
+        m_photonCamera = new PhotonCamera("ObjectDetection");
 
         TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
 
@@ -45,7 +45,7 @@ public class ObjectDetection {
             m_cameraSim.enableDrawWireframe(true);
 
 
-            m_visionSim = new VisionSystemSim("objectDetectionSim");
+            m_visionSim = new VisionSystemSim("ObjectDetection");
             m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
 
             for (Translation2d centerlineTranslation : CENTERLINE_TRANSLATIONS) {
