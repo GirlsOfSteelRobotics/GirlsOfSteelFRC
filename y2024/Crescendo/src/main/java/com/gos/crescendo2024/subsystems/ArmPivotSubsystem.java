@@ -167,7 +167,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public void pivotUsingSpeakerLookupTable(Supplier<Pose2d> roboMan) {
         Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
-        Translation2d roboManTranslation =  roboMan.get().getTranslation();
+        Translation2d roboManTranslation = roboMan.get().getTranslation();
         double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
         moveArmToAngle(m_speakerTable.getVelocityTable(distanceToSpeaker));
     }
