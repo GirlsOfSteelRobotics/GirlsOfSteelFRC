@@ -40,7 +40,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 24);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(false, "ampScoreAngle", 90);
 
-    private static final double GEAR_RATIO = 72; // TODO get from design
+    private static final double GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
     private static final boolean USE_ABSOLUTE_ENCODER = false;
 
     private static final double ALLOWABLE_ERROR = 1;
