@@ -13,7 +13,7 @@ import com.gos.aerial_assist.subsystems.Collector;
 /**
  * @author The two lees (minus jisue)
  */
-public class CollectorUpALittle extends GosCommandBase {
+public class CollectorUpALittle extends GosCommandBaseBase {
 
     private static final double PUT_DOWN_TIME = 0.15;
 

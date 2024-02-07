@@ -2,7 +2,7 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Chassis;
 
-public class ToggleGyro extends GosCommandBase {
+public class ToggleGyro extends GosCommandBaseBase {
 
     private final Chassis m_chassis;
 

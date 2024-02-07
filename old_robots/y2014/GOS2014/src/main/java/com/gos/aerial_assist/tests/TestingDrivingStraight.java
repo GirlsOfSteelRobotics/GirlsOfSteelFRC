@@ -8,14 +8,14 @@
 package com.gos.aerial_assist.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.aerial_assist.commands.GosCommandBase;
+import com.gos.aerial_assist.commands.GosCommandBaseBase;
 import com.gos.aerial_assist.subsystems.Chassis;
 
 /**
  * @author Blank...
  * This needs to be tested by the end of 2/13/14
  */
-public class TestingDrivingStraight extends GosCommandBase {
+public class TestingDrivingStraight extends GosCommandBaseBase {
 
     private final Chassis m_chassis;
 

@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Gripper;
 /**
  * @author sam
  */
-public class OpenAllGrippers extends GosCommandBase {
+public class OpenAllGrippers extends GosCommandBaseBase {
 
     private final Gripper m_gripper;
 

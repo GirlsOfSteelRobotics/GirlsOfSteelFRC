@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class MoveToSetPoint extends GosCommandBase {
+public class MoveToSetPoint extends GosCommandBaseBase {
 
     private final Chassis m_chassis;
     private double m_timeFinished = -1;

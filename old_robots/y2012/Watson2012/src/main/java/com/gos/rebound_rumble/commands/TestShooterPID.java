@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class TestShooterPID extends GosCommandBase {
+public class TestShooterPID extends GosCommandBaseBase {
 
     private final Shooter m_shooter;
 

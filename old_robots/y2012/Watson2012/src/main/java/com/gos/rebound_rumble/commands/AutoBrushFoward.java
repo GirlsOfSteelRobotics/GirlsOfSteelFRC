@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Collector;
 
-public class AutoBrushFoward extends GosCommandBase {
+public class AutoBrushFoward extends GosCommandBaseBase {
     private final Collector m_collector;
 
     public AutoBrushFoward(Collector collector) {

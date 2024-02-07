@@ -16,7 +16,7 @@ import com.gos.ultimate_ascent.subsystems.Shooter;
 /**
  * @author Sylvie
  */
-public class ShooterTuning extends GosCommandBase {
+public class ShooterTuning extends GosCommandBaseBase {
 
     private final Shooter m_shooter;
     private double m_batteryVoltage;

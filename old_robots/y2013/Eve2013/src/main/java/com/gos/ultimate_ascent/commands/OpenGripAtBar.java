@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Gripper;
 /**
  * @author sam
  */
-public class OpenGripAtBar extends GosCommandBase {
+public class OpenGripAtBar extends GosCommandBaseBase {
     private final Gripper m_gripper;
 
     public OpenGripAtBar(Gripper gripper) {

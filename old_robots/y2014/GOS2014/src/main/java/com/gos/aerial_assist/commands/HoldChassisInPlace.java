@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Chassis;
 /**
  * @author sophia, sonia
  */
-public class HoldChassisInPlace extends GosCommandBase {
+public class HoldChassisInPlace extends GosCommandBaseBase {
 
     private final Chassis m_chassis;
     private double m_setPoint;

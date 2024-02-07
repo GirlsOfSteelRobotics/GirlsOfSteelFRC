@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
 /**
  * @author user
  */
-public class PivotArmToJoystick extends GosCommandBase {
+public class PivotArmToJoystick extends GosCommandBaseBase {
 
     private final Joystick m_operator;
     private final Manipulator m_manipulator;
