@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
@@ -122,7 +123,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double replaceVoltage() {
-        return m_shooterMotorLeader.get() * RobotController.getBatteryVoltage();
+        return m_shooterMotorLeader.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
 
     public double getEncoderPos() {
@@ -158,5 +159,20 @@ public class ShooterSubsystem extends SubsystemBase {
         return this.run(this::stopShooter).withName("stop shooter");
     }
 
+    public Command createShooterSysIdQuasistaticForward() {
+        return m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward);
+    }
+
+    public Command createShooterSysIdQuasistaticBackward() {
+        return m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse);
+    }
+
+    public Command createShooterSysIdDynamicForward() {
+        return m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward);
+    }
+
+    public Command createShooterSysIdDynamicBackward() {
+        return m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse);
+    }
 
 }

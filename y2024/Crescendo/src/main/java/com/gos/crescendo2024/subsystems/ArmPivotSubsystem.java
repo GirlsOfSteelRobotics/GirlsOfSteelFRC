@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -209,7 +210,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public double replaceVoltage() {
-        return m_pivotMotor.get() * RobotController.getBatteryVoltage();
+        return m_pivotMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
 
     public double getEncoderPos() {
@@ -270,4 +271,22 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 })
             .ignoringDisable(true).withName("Pivot to Coast");
     }
+
+    public Command createArmSysIdQuasistaticForward() {
+        return m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward);
+    }
+
+    public Command createArmSysIdQuasistaticBackward() {
+        return m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse);
+    }
+
+
+    public Command createArmSysIdDynamicForward() {
+        return m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward);
+    }
+
+    public Command createArmSysIdDynamicBackward() {
+        return m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse);
+    }
+
 }

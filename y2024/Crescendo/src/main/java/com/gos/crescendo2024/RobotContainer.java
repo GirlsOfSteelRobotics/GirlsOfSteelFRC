@@ -147,6 +147,13 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
+
+        shuffleboardTab.add("Arm SysId Dynamic Forward", m_armPivotSubsystem.createArmSysIdDynamicForward().withName("Shooter Dyn F"));
+        shuffleboardTab.add("Arm SysId Dynamic Backward", m_armPivotSubsystem.createArmSysIdDynamicBackward().withName("Shooter Dyn B"));
+
+        shuffleboardTab.add("Arm SysId Quasistatic Forward", m_armPivotSubsystem.createArmSysIdQuasistaticForward().withName("Shooter Quas F"));
+        shuffleboardTab.add("Arm SysId Quasistatic Backward", m_armPivotSubsystem.createArmSysIdQuasistaticBackward().withName("Shooter Quas B"));
+
     }
 
     private void addShooterTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -155,6 +162,13 @@ public class RobotContainer {
         shuffleboardTab.add("Shooter RPM: 3500", m_shooterSubsystem.createSetRPMCommand(3500));
         shuffleboardTab.add("Shooter RPM: 4000", m_shooterSubsystem.createSetRPMCommand(4000));
         shuffleboardTab.add("Shooter stop", m_shooterSubsystem.createStopShooterCommand());
+
+        shuffleboardTab.add("Shooter SysId Dynamic Forward", m_shooterSubsystem.createShooterSysIdDynamicForward().withName("Shooter Dyn F"));
+        shuffleboardTab.add("Shooter SysId Dynamic Backward", m_shooterSubsystem.createShooterSysIdDynamicBackward().withName("Shooter Dyn B"));
+
+        shuffleboardTab.add("Shooter SysId Quasistatic Forward", m_shooterSubsystem.createShooterSysIdQuasistaticForward().withName("Shooter Quas F"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Backward", m_shooterSubsystem.createShooterSysIdQuasistaticBackward().withName("Shooter Quas B"));
+
     }
 
     /**

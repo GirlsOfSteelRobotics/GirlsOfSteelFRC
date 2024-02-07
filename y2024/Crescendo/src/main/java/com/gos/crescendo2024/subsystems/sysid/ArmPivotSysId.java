@@ -7,6 +7,7 @@ import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import java.util.function.Consumer;
@@ -50,5 +51,14 @@ public class ArmPivotSysId {
         };
     }
 
+    ///////////////////////
+    // Command Factories
+    ///////////////////////
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return m_routine.quasistatic(direction);
+    }
 
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return m_routine.dynamic(direction);
+    }
 }
