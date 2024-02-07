@@ -49,7 +49,6 @@ public class SpeakerAimAndShootCommand extends Command {
     }
 
 
-
     @Override
     public void execute() {
         m_armPivotSubsystem.moveArmToAngle(m_armAngleGoalSupplier.getAsDouble());
