@@ -11,11 +11,6 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [23]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK MAX [6]": {
         "header": {
           "open": true
@@ -25,6 +20,17 @@
         "header": {
           "open": true
         }
+      }
+    },
+    "RoboRIO": {
+      "5V Rail": {
+        "open": true
+      },
+      "6V Rail": {
+        "open": true
+      },
+      "window": {
+        "visible": true
       }
     }
   },
@@ -173,6 +179,10 @@
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
       "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
+      "/Shuffleboard/test commands/Arm SysId Dynamic Backward": "Command",
+      "/Shuffleboard/test commands/Arm SysId Dynamic Forward": "Command",
+      "/Shuffleboard/test commands/Arm SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/test commands/Arm SysId Quasistatic Forward": "Command",
       "/Shuffleboard/test commands/Arm to 0": "Command",
       "/Shuffleboard/test commands/Arm to 30": "Command",
       "/Shuffleboard/test commands/Arm to 45": "Command",
@@ -203,6 +213,10 @@
       "/Shuffleboard/test commands/Shooter Percent Output": "Command",
       "/Shuffleboard/test commands/Shooter RPM: 3500": "Command",
       "/Shuffleboard/test commands/Shooter RPM: 4000": "Command",
+      "/Shuffleboard/test commands/Shooter SysId Dynamic Backward": "Command",
+      "/Shuffleboard/test commands/Shooter SysId Dynamic Forward": "Command",
+      "/Shuffleboard/test commands/Shooter SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/test commands/Shooter SysId Quasistatic Forward": "Command",
       "/Shuffleboard/test commands/Shooter stop": "Command",
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
       "/Shuffleboard/test commands/Shooting to Speaker": "Command",
@@ -237,12 +251,22 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": {
+      "/Shuffleboard/test commands/Shooter SysId Dynamic Backward": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Teleop: David Drive": {
+      "/Shuffleboard/test commands/Shooter SysId Dynamic Forward": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Shooter SysId Quasistatic Backward": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Shooter SysId Quasistatic Forward": {
         "window": {
           "visible": true
         }
@@ -354,7 +378,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
