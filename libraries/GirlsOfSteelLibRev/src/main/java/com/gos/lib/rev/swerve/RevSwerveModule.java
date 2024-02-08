@@ -170,6 +170,7 @@ public class RevSwerveModule {
         m_logger.addDouble("Current Angle", () -> m_currentState.angle.getDegrees());
         m_logger.addDouble("Goal Velocity", () -> m_desiredState.speedMetersPerSecond);
         m_logger.addDouble("Current Velocity", () -> m_currentState.speedMetersPerSecond);
+        m_logger.addDouble("Drive Percent Output", m_drivingSparkMax::getAppliedOutput);
 
         m_logger.addDouble("Abs Encoder", m_turningAbsoluteEncoder::getPosition);
         m_logger.addDouble("Rel Encoder", m_turningRelativeEncoder::getPosition);

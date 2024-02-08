@@ -12,13 +12,17 @@ public class DavidDriveSwerve extends BaseTeleopSwerve {
     }
 
     @Override
+    public void initialize() {
+        m_lastAngle = m_subsystem.getPose().getRotation().getDegrees();
+    }
+
+    @Override
     protected void handleJoystick(double xLeft, double yLeft, double xRight, double yRight) {
         double joyStickAngle;
         if (Math.sqrt(xRight * xRight + yRight * yRight) > 0.75) {
             joyStickAngle = Math.toDegrees(Math.atan2(xRight, yRight));
             m_lastAngle = joyStickAngle;
-        }
-        else {
+        } else {
             joyStickAngle = m_lastAngle;
         }
 

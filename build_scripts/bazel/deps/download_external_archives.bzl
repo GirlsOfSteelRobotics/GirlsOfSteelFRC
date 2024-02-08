@@ -17,8 +17,8 @@ def download_external_archives():
     )
 
     # Download bzlmodrio <3
-    BZLMODRIO_COMMITISH = "b6df7e5c6b1101fff490f1a64578d7a1156737ff"
-    BZLMODRIO_SHA256 = "35af365d570f3b7037660f66979ed38c700935046edfc968406ad29dbfdb7e5d"
+    BZLMODRIO_COMMITISH = "5101388bd4166de1f16dfee39d0c7abaeb0f585d"
+    BZLMODRIO_SHA256 = "8c98dd4a81df630efa4eae66203224c36a6258d05263d918c9d8a550742aa743"
     http_archive(
         name = "bzlmodrio",
         url = "https://github.com/bzlmodRio/bzlmodRio/archive/{}.tar.gz".format(BZLMODRIO_COMMITISH),

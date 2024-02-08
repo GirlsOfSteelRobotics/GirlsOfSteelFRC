@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0435160963116688,
-        "y": 6.9160426184753385
+        "x": 0.6933452953924437,
+        "y": 6.686887667641241
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7897916336225688,
-        "y": 6.910446727552843
+        "x": 1.0664935539921219,
+        "y": 7.333199410291734
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SubwooferTop"
     },
     {
       "anchor": {
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Four Piece Speaker",
   "previewStartingState": {
-    "rotation": 62.39669612134464,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

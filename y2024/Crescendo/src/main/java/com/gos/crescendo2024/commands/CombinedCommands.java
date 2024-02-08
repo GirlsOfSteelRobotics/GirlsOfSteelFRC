@@ -22,10 +22,20 @@ public class CombinedCommands {
             .withName("Auto shoot into speaker");
     }
 
-    public static Command ampShooterCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
+    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
+        return armPivot.createMoveArmToDefaultSpeakerAngleCommand()
+            .alongWith(shooter.createSetRPMCommand(4000));
+    }
+
+    public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
-            .until(armPivot::isArmAtGoal)
-            .andThen(intake.createMoveIntakeOutCommand())
+            .alongWith(shooter.createSetRPMCommand(400))
+            .withName("Prepare Amp Shot");
+    }
+
+    public static Command ampShooterCommand(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, IntakeSubsystem intake) {
+        return prepareAmpShot(armPivot, shooter)
+            .alongWith(intake.createMoveIntakeInCommand())
             .withName("Auto shoot into amp");
     }
 }

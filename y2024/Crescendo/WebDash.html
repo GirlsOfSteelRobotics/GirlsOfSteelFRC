@@ -48,7 +48,6 @@
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -66,7 +65,7 @@
         <frc-line-chart-data
             source-provider="NetworkTables"
             display-name="Absolute Encoder Angle"
-            source-key="/Arm Pivot Subsystem/Abs Encoder Value"
+            source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         ></frc-line-chart-data>
         <frc-line-chart-data
             source-provider="NetworkTables"
@@ -115,24 +114,23 @@
         has-label=""
         source-provider="NetworkTables"
         style="transform: translate(272px, 609px);"
-        source-key="/Arm Pivot Subsystem/Rel Encoder Value"
-        placeholder=""
+        source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-627"
+            id="vaadin-number-field-2"
             aria-labelledby="label-vaadin-number-field-632"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-632"
-            for="vaadin-number-field-627"
+            for="vaadin-number-field-2"
         >Rel Arm Angle</label>
         <div
             slot="error-message"
@@ -147,23 +145,22 @@
         source-provider="NetworkTables"
         style="transform: translate(423px, 608px);"
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-628"
+            id="vaadin-number-field-3"
             aria-labelledby="label-vaadin-number-field-633"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-633"
-            for="vaadin-number-field-628"
+            for="vaadin-number-field-3"
         >Percent Output</label>
         <div
             slot="error-message"
@@ -177,31 +174,59 @@
         has-label=""
         source-provider="NetworkTables"
         style="transform: translate(272px, 700px);"
-        source-key="/Arm Pivot Subsystem/Abs Encoder Value"
-        placeholder=""
+        source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-684"
+            id="vaadin-number-field-4"
             aria-labelledby="label-vaadin-number-field-689"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-689"
-            for="vaadin-number-field-684"
+            for="vaadin-number-field-4"
         >Abs Arm ANgle</label>
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-453"
             hidden=""
         ></div>
-    </vaadin-number-field></dashboard-tab><dashboard-tab
+    </vaadin-number-field><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Arm Resync Encoder"
+        style="transform: translate(19px, 516px);"
+    ></frc-robot-command><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(836.012px, 314.401px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis
+            source-provider="NetworkTables"
+            min="-90"
+            max="90"
+        ></frc-line-chart-axis>
+
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Rel Velocity"
+            source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
+        ></frc-line-chart-data>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/Arm Pivot Subsystem/Abs Encoder Velocity"
+        ></frc-line-chart-data></frc-line-chart><frc-boolean-box
+        source-provider="NetworkTables"
+        source-key="/Arm Pivot Subsystem/Arm At Goal"
+        style="transform: translate(156.2px, 93.6px);"
+        label="Arm At Goal"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
@@ -247,23 +272,22 @@
         source-provider="NetworkTables"
         style="transform: translate(305px, 555px);"
         source-key="/Shooter Subsystem/Velocity (RPM)"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-551"
+            id="vaadin-number-field-5"
             aria-labelledby="label-vaadin-number-field-556"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-556"
-            for="vaadin-number-field-551"
+            for="vaadin-number-field-5"
         >Shooter RPM</label>
         <div
             slot="error-message"
@@ -278,30 +302,34 @@
         source-provider="NetworkTables"
         style="transform: translate(306px, 635px);"
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-575"
+            id="vaadin-number-field-6"
             aria-labelledby="label-vaadin-number-field-580"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-580"
-            for="vaadin-number-field-575"
+            for="vaadin-number-field-6"
         >Percent Output</label>
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-382"
             hidden=""
         ></div>
-    </vaadin-number-field></dashboard-tab><dashboard-tab
+    </vaadin-number-field><frc-boolean-box
+        source-provider="NetworkTables"
+        source-key="/Shooter Subsystem/Shooter At Goal"
+        style="transform: translate(296px, 48px);"
+        label="Shooter At Goal"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
@@ -321,6 +349,7 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -357,4 +386,27 @@
         desiredstates="[0,0,0,0,0,0,0,0]"
         sizeleftright="4"
         sizefrontback="5"
-    ></frc-swerve-drivebase></dashboard-tab>
+    ></frc-swerve-drivebase><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(314px, 80px);"
+        source-key="/Chassis/At Angle Setpoint"
+    ></frc-boolean-box><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom"
+        style="transform: translate(675px, 54px);"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(694px, 136px);"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(698px, 210px);"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top"
+    ></frc-robot-command><frc-field-wrapper
+        source-key="/SmartDashboard/Field"
+        source-provider="NetworkTables"
+        style="transform: translate(98px, 441px);"
+        game="Crescendo"
+        grid-size="1"
+    >
+    </frc-field-wrapper></dashboard-tab>
