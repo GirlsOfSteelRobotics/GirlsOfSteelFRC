@@ -246,11 +246,28 @@
       "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Arm to 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Arm to 45": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Arm to 90": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Shooter SysId Dynamic Backward": {
         "window": {
           "visible": true
@@ -386,7 +403,15 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
+      "Arm Pivot Subsystem": {
+        "open": true
+      },
       "Shooter Subsystem": {
         "open": true
       },
@@ -407,7 +432,44 @@
     },
     "visible": true
   },
-  "NetworkTables View": {
-    "visible": false
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 338,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Setpoint Velocity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Rel Encoder Velocity"
+            }
+          ]
+        }
+      ]
+    }
   }
 }

@@ -170,7 +170,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.02,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -250,7 +250,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kff",
     "type": "double",
-    "value": 0.0007,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -275,6 +275,38 @@
     "name": "/Preferences/ampScoreAngle",
     "type": "double",
     "value": 75.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Profile PID.mm.max_velocity",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Profile PID.mm.max_acceleration",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Profile PID.mm.max_velocity",
+    "type": "double",
+    "value": 50.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Profile PID.mm.max_acceleration",
+    "type": "double",
+    "value": 50.0,
     "properties": {
       "persistent": true
     }
