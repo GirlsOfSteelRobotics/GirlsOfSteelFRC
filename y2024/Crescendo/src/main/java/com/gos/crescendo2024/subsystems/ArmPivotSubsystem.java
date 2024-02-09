@@ -38,7 +38,7 @@ import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 4);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 24);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 20);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(false, "ampScoreAngle", 90);
 
     private static final double GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
@@ -100,7 +100,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
         m_sparkPidController.setPositionPIDWrappingEnabled(true);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
-            .addP(0.0001)
+            .addP(0.005)
             .addI(0)
             .addD(0)
             .build();
@@ -112,7 +112,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
             .addKs(0)
             .addKff(0)
-            .addKg(0.9);
+            .addKg(0.8);
 
         m_networkTableEntriesPivot = new LoggingUtil("Arm Pivot Subsystem");
         m_networkTableEntriesPivot.addDouble("Output", m_pivotMotor::getAppliedOutput);

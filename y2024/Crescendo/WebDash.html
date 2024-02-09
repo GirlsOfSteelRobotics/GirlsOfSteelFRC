@@ -48,10 +48,11 @@
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(240px, 120px);"
+        style="transform: translate(240px, 120px); width: 631.2px; height: 400px;"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
@@ -70,7 +71,7 @@
         <frc-line-chart-data
             source-provider="NetworkTables"
             display-name="Relative Encoder Angle"
-            source-key="/Arm Pivot Subsystem/Rel Encoder Value"
+            source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         ></frc-line-chart-data><frc-line-chart-data
             source-provider="NetworkTables"
             display-name="Goal Angle"
@@ -117,6 +118,7 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -147,6 +149,7 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -177,6 +180,7 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -204,7 +208,7 @@
     ></frc-robot-command><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(836.012px, 314.401px);"
+        style="transform: translate(836.012px, 127.201px);"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
@@ -221,6 +225,15 @@
         <frc-line-chart-data
             source-provider="NetworkTables"
             source-key="/Arm Pivot Subsystem/Abs Encoder Velocity"
+            display-name="Abs  Velocity"
+        ></frc-line-chart-data><frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Rel Velocity"
+            source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
+        ></frc-line-chart-data><frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Setpoint Velocity"
+            source-key="/Arm Pivot Subsystem/Setpoint Velocity"
         ></frc-line-chart-data></frc-line-chart><frc-boolean-box
         source-provider="NetworkTables"
         source-key="/Arm Pivot Subsystem/Arm At Goal"
@@ -274,6 +287,7 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -304,6 +318,7 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -349,7 +364,6 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
