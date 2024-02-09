@@ -64,14 +64,6 @@
     }
   },
   {
-    "name": "/Preferences/Shooter(AllowableError))",
-    "type": "double",
-    "value": 50.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
     "value": 0.002,
@@ -128,22 +120,6 @@
     }
   },
   {
-    "name": "/Preferences/Chassis to angle.mm.max_acceleration",
-    "type": "double",
-    "value": 360.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.max_velocity",
-    "type": "double",
-    "value": 360.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/ArmPivotJoystickTranslationDamping",
     "type": "double",
     "value": 0.4,
@@ -154,7 +130,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
     "type": "double",
-    "value": 0.0,
+    "value": 2.5,
     "properties": {
       "persistent": true
     }
@@ -170,7 +146,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.02,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -187,22 +163,6 @@
     "name": "/Preferences/Arm Pivot.mm.kd",
     "type": "double",
     "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
-    "type": "double",
-    "value": 80.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.max_velocity",
-    "type": "double",
-    "value": 80.0,
     "properties": {
       "persistent": true
     }
@@ -248,14 +208,6 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/intakeAngle",
     "type": "double",
     "value": 20.0,
@@ -275,22 +227,6 @@
     "name": "/Preferences/ampScoreAngle",
     "type": "double",
     "value": 75.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Profile PID.mm.max_velocity",
-    "type": "double",
-    "value": 20.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Profile PID.mm.max_acceleration",
-    "type": "double",
-    "value": 20.0,
     "properties": {
       "persistent": true
     }

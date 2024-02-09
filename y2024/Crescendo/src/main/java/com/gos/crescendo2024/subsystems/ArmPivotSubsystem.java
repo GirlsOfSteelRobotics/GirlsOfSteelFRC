@@ -160,6 +160,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
 
     public void moveArmToAngle(double goalAngle) {
+        if (Math.abs(m_armGoalAngle - goalAngle) > 2) {
+            m_profilePID.reset(getAngle(), getEncoderVel());
+        }
+
         m_armGoalAngle = goalAngle;
         double currentAngle = getAngle();
         m_profilePID.calculate(currentAngle, goalAngle);

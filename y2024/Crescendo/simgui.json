@@ -268,26 +268,6 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Shooter SysId Dynamic Backward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Shooter SysId Dynamic Forward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Shooter SysId Quasistatic Backward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Shooter SysId Quasistatic Forward": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -412,11 +392,11 @@
       "Arm Pivot Subsystem": {
         "open": true
       },
-      "Shooter Subsystem": {
-        "open": true
-      },
-      "Shuffleboard": {
-        "open": true
+      "SmartDashboard": {
+        "open": true,
+        "super structure": {
+          "open": true
+        }
       },
       "SwerveDrive": {
         "open": true
@@ -439,6 +419,9 @@
           "axis": [
             {
               "autoFit": true
+            },
+            {
+              "autoFit": true
             }
           ],
           "backgroundColor": [
@@ -447,7 +430,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 338,
+          "height": 385,
           "series": [
             {
               "color": [
@@ -466,8 +449,29 @@
                 1.0
               ],
               "id": "NT:/Arm Pivot Subsystem/Rel Encoder Velocity"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Rel Encoder Position",
+              "yAxis": 1
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/super structure/GoalAngle",
+              "yAxis": 1
             }
-          ]
+          ],
+          "yaxis2": true
         }
       ]
     }
