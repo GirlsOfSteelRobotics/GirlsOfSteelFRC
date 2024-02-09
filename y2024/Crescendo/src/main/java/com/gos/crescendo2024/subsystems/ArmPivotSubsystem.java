@@ -105,6 +105,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .addD(0)
             .build();
         m_profilePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        m_profilePID.enableContinuousInput(0, 360);
         m_profilePidProperties = new WpiProfiledPidPropertyBuilder("Arm Profile PID", false, m_profilePID)
             .addMaxVelocity(20)
             .addMaxAcceleration(20)
@@ -134,6 +135,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+
+        syncRelativeEncoder();
     }
 
     @Override
