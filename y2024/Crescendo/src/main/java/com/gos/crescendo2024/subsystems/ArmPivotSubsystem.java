@@ -104,12 +104,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .addI(0)
             .addD(0)
             .build();
-        m_profilePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0,0));
+        m_profilePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         m_profilePidProperties = new WpiProfiledPidPropertyBuilder("Arm Profile PID", false, m_profilePID)
             .addMaxVelocity(20)
             .addMaxAcceleration(20)
             .build();
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
+            .addKs(0)
             .addKff(0)
             .addKg(0.9);
 
@@ -120,8 +121,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_networkTableEntriesPivot.addDouble("Rel Encoder Position", m_pivotMotorEncoder::getPosition);
         m_networkTableEntriesPivot.addDouble("Rel Encoder Velocity", m_pivotMotorEncoder::getVelocity);
         m_networkTableEntriesPivot.addBoolean("Arm At Goal", this::isArmAtGoal);
-        m_networkTableEntriesPivot.addDouble("Setpoint Position", ()->m_profilePID.getSetpoint().position);
-        m_networkTableEntriesPivot.addDouble("Setpoint Velocity", ()->m_profilePID.getSetpoint().velocity);
+        m_networkTableEntriesPivot.addDouble("Setpoint Position", () -> m_profilePID.getSetpoint().position);
+        m_networkTableEntriesPivot.addDouble("Setpoint Velocity", () -> m_profilePID.getSetpoint().velocity);
         m_armPivotMotorErrorAlerts = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor");
 
         m_pivotMotor.burnFlash();
@@ -142,9 +143,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_sparkPidProperties.updateIfChanged();
         m_wpiFeedForward.updateIfChanged();
-
         m_profilePidProperties.updateIfChanged();
-
     }
 
 
@@ -161,13 +160,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armGoalAngle = goalAngle;
         double currentAngle = getAngle();
         m_profilePID.calculate(currentAngle, goalAngle);
-        TrapezoidProfile.State Setpoint = m_profilePID.getSetpoint();
+        TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
         double feedForwardVolts = m_wpiFeedForward.calculate(
             Units.degreesToRadians(currentAngle),
-            Units.degreesToRadians(Setpoint.velocity));
+            Units.degreesToRadians(setpoint.velocity));
 
 
-        m_sparkPidController.setReference(Setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+        m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
         SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
     }
 
