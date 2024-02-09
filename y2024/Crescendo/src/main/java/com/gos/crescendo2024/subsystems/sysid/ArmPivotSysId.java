@@ -4,6 +4,7 @@ import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
@@ -28,7 +29,10 @@ public class ArmPivotSysId {
     public ArmPivotSysId(ArmPivotSubsystem armPivot) {
         m_armPivot = armPivot;
         m_routine = new SysIdRoutine(
-            new SysIdRoutine.Config(),
+            new SysIdRoutine.Config(
+                Units.Volts.of(.25).per(Units.Seconds.of(1.0)),
+                Units.Volts.of(2.5),
+                Units.Seconds.of(10.0)),
             new SysIdRoutine.Mechanism(this.voltageMotors(), this.logMotors(), armPivot)
         );
     }
