@@ -38,7 +38,6 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.Supplier;
 
-
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 4);
     public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 24);
