@@ -7,6 +7,7 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
@@ -17,9 +18,11 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -32,7 +35,6 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.Supplier;
-
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 4);
@@ -53,6 +55,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private final SparkPIDController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
+    private final ProfiledPIDController m_profilePID;
+    private final PidProperty m_profilePidProperties;
     private final ArmFeedForwardProperty m_wpiFeedForward;
     private double m_armGoalAngle = Double.MIN_VALUE;
     private SingleJointedArmSimWrapper m_pivotSimulator;
@@ -97,14 +101,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_sparkPidController.setPositionPIDWrappingEnabled(true);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
             .addP(0.0001)
-            .addFF(0.0007)
             .addI(0)
             .addD(0)
-            .addMaxAcceleration(150)
-            .addMaxVelocity(150)
             .build();
-
+        m_profilePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        m_profilePidProperties = new WpiProfiledPidPropertyBuilder("Arm Profile PID", false, m_profilePID)
+            .addMaxVelocity(20)
+            .addMaxAcceleration(20)
+            .build();
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
+            .addKs(0)
             .addKff(0)
             .addKg(0.9);
 
@@ -115,8 +121,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_networkTableEntriesPivot.addDouble("Rel Encoder Position", m_pivotMotorEncoder::getPosition);
         m_networkTableEntriesPivot.addDouble("Rel Encoder Velocity", m_pivotMotorEncoder::getVelocity);
         m_networkTableEntriesPivot.addBoolean("Arm At Goal", this::isArmAtGoal);
-
-
+        m_networkTableEntriesPivot.addDouble("Setpoint Position", () -> m_profilePID.getSetpoint().position);
+        m_networkTableEntriesPivot.addDouble("Setpoint Velocity", () -> m_profilePID.getSetpoint().velocity);
         m_armPivotMotorErrorAlerts = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor");
 
         m_pivotMotor.burnFlash();
@@ -137,6 +143,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_sparkPidProperties.updateIfChanged();
         m_wpiFeedForward.updateIfChanged();
+        m_profilePidProperties.updateIfChanged();
     }
 
 
@@ -146,15 +153,20 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
 
     public void moveArmToAngle(double goalAngle) {
+        if (Math.abs(m_armGoalAngle - goalAngle) > 2) {
+            m_profilePID.reset(getAngle(), getEncoderVel());
+        }
+
         m_armGoalAngle = goalAngle;
         double currentAngle = getAngle();
-
+        m_profilePID.calculate(currentAngle, goalAngle);
+        TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
         double feedForwardVolts = m_wpiFeedForward.calculate(
             Units.degreesToRadians(currentAngle),
-            Units.degreesToRadians(0));
+            Units.degreesToRadians(setpoint.velocity));
 
 
-        m_sparkPidController.setReference(m_armGoalAngle, CANSparkMax.ControlType.kSmartMotion, 0, feedForwardVolts);
+        m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
         SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
     }
 
