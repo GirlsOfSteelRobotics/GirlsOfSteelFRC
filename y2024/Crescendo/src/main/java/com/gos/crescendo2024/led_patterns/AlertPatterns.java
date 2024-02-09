@@ -18,24 +18,11 @@ public class AlertPatterns {
 
     public void writeLEDs() {
         if (Alert.hasErrors()) {
-            writeAlertErrorPattern();
+            m_alertErrorPattern.writeLeds();
         } else if (Alert.hasWarnings()) {
-            writeAlertWarningPattern();
+            m_alertWarningPattern.writeLeds();
         } else {
-            writeNoAlertsPattern();
+            m_noAlertsPattern.writeLeds();
         }
     }
-
-    public void writeAlertErrorPattern() {
-        m_alertErrorPattern.writeLeds();
-    }
-
-    public void writeAlertWarningPattern() {
-        m_alertWarningPattern.writeLeds();
-    }
-
-    public void writeNoAlertsPattern() {
-        m_noAlertsPattern.writeLeds();
-    }
-
 }

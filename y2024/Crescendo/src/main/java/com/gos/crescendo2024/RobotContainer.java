@@ -17,6 +17,8 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import com.gos.crescendo2024.subsystems.sysid.ArmPivotSysId;
+import com.gos.crescendo2024.subsystems.sysid.ShooterSysId;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
@@ -32,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
 
@@ -48,6 +51,10 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
+
+    // SysId
+    private final ArmPivotSysId m_armPivotSysId;
+    private final ShooterSysId m_shooterSysId;
 
     // Joysticks
     private final CommandXboxController m_driverController =
@@ -69,6 +76,11 @@ public class RobotContainer {
         m_intakeSubsystem = new IntakeSubsystem();
 
 
+
+        m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
+        m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
+
+
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
@@ -80,6 +92,7 @@ public class RobotContainer {
         configureBindings();
 
         createTestCommands();
+        createSysIdCommands();
 
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
@@ -111,6 +124,21 @@ public class RobotContainer {
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    }
+
+    private void createSysIdCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("SysId");
+
+
+        shuffleboardTab.add("Arm SysId Dynamic Forward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Arm Dyn F"));
+        shuffleboardTab.add("Arm SysId Dynamic Backward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Arm Dyn B"));
+        shuffleboardTab.add("Arm SysId Quasistatic Forward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Arm Quas F"));
+        shuffleboardTab.add("Arm SysId Quasistatic Backward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Arm Quas B"));
+
+        shuffleboardTab.add("Shooter SysId Dynamic Forward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Shooter Dyn F"));
+        shuffleboardTab.add("Shooter SysId Dynamic Backward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Shooter Dyn B"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Forward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Shooter Quas F"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Backward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Shooter Quas B"));
     }
 
     private void addChassisTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -149,12 +177,6 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
 
-        shuffleboardTab.add("Arm SysId Dynamic Forward", m_armPivotSubsystem.createArmSysIdDynamicForward().withName("Shooter Dyn F"));
-        shuffleboardTab.add("Arm SysId Dynamic Backward", m_armPivotSubsystem.createArmSysIdDynamicBackward().withName("Shooter Dyn B"));
-
-        shuffleboardTab.add("Arm SysId Quasistatic Forward", m_armPivotSubsystem.createArmSysIdQuasistaticForward().withName("Shooter Quas F"));
-        shuffleboardTab.add("Arm SysId Quasistatic Backward", m_armPivotSubsystem.createArmSysIdQuasistaticBackward().withName("Shooter Quas B"));
-
     }
 
     private void addShooterTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -163,13 +185,6 @@ public class RobotContainer {
         shuffleboardTab.add("Shooter RPM: 3500", m_shooterSubsystem.createSetRPMCommand(3500));
         shuffleboardTab.add("Shooter RPM: 4000", m_shooterSubsystem.createSetRPMCommand(4000));
         shuffleboardTab.add("Shooter stop", m_shooterSubsystem.createStopShooterCommand());
-
-        shuffleboardTab.add("Shooter SysId Dynamic Forward", m_shooterSubsystem.createShooterSysIdDynamicForward().withName("Shooter Dyn F"));
-        shuffleboardTab.add("Shooter SysId Dynamic Backward", m_shooterSubsystem.createShooterSysIdDynamicBackward().withName("Shooter Dyn B"));
-
-        shuffleboardTab.add("Shooter SysId Quasistatic Forward", m_shooterSubsystem.createShooterSysIdQuasistaticForward().withName("Shooter Quas F"));
-        shuffleboardTab.add("Shooter SysId Quasistatic Backward", m_shooterSubsystem.createShooterSysIdQuasistaticBackward().withName("Shooter Quas B"));
-
     }
 
     /**
@@ -231,6 +246,7 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
+        // PropertyManager.purgeExtraKeys();
     }
 
 

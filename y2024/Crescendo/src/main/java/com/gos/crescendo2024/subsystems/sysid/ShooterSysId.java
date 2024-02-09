@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-import java.util.function.Consumer;
-
 import static edu.wpi.first.units.MutableMeasure.mutable;
 import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
@@ -33,26 +31,22 @@ public class ShooterSysId {
                 Units.Volts.of(1.0).per(Units.Seconds.of(1.0)),
                 Units.Volts.of(7.0),
                 Units.Seconds.of(10.0)),
-            new SysIdRoutine.Mechanism(this.voltageMotors(), this.logMotors(), shooter)
+            new SysIdRoutine.Mechanism(this::setVoltage, this::logMotors, shooter)
         );
     }
 
-    private Consumer<Measure<Voltage>> voltageMotors() {
-        return (Measure<Voltage> volts) -> {
-            m_shooter.setVoltageLeadAndFollow(volts.in(Volts));
-        };
+    private void setVoltage(Measure<Voltage> volts) {
+        m_shooter.setVoltage(volts.in(Volts));
     }
 
-    private Consumer<SysIdRoutineLog> logMotors() {
-        return log -> {
-            log.motor("shooter")
-                .voltage(
-                    m_appliedVoltage.mut_replace(
-                        m_shooter.replaceVoltage(), Volts))
-                .angularPosition(m_rotations.mut_replace(m_shooter.getEncoderPos(), Rotations))
-                .angularVelocity(
-                    m_velocity.mut_replace(m_shooter.getEncoderVel(), RotationsPerSecond));
-        };
+    private void logMotors(SysIdRoutineLog log) {
+        log.motor("shooter")
+            .voltage(
+                m_appliedVoltage.mut_replace(
+                    m_shooter.getVoltage(), Volts))
+            .angularPosition(m_rotations.mut_replace(m_shooter.getEncoderPos(), Rotations))
+            .angularVelocity(
+                m_velocity.mut_replace(m_shooter.getRPM(), RotationsPerSecond));
     }
 
     ///////////////////////
