@@ -3,7 +3,6 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.SpeakerLookupTable;
-import com.gos.crescendo2024.subsystems.sysid.ArmPivotSysId;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
@@ -31,7 +30,6 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -64,8 +62,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     private final SpeakerLookupTable m_speakerTable;
-
-    private final ArmPivotSysId m_armPivotSysId;
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -137,8 +133,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
-
-        m_armPivotSysId = new ArmPivotSysId(this);
     }
 
     @Override
@@ -204,13 +198,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
     }
 
+    public double getEncoderVel() {
+        return m_pivotMotorEncoder.getVelocity();
+    }
+
     public void setArmMotorSpeed(double speed) {
         m_pivotMotor.set(speed);
     }
 
-    public void setVoltageLeadAndFollow(double outputVolts) {
+    public void setVoltage(double outputVolts) {
         m_pivotMotor.setVoltage(outputVolts);
-        m_followMotor.setVoltage(outputVolts);
     }
 
     public double getArmAngleGoal() {
@@ -222,16 +219,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return m_pivotMotor.getAppliedOutput();
     }
 
-    public double replaceVoltage() {
+    public double getVoltage() {
+        if (RobotBase.isReal()) {
+            return m_pivotMotor.getBusVoltage();
+        }
         return m_pivotMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
-    }
-
-    public double getEncoderPos() {
-        return m_pivotMotorEncoder.getPosition();
-    }
-
-    public double getEncoderVel() {
-        return m_pivotMotorEncoder.getVelocity();
     }
 
     public boolean isArmAtGoal() {
@@ -284,22 +276,4 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 })
             .ignoringDisable(true).withName("Pivot to Coast");
     }
-
-    public Command createArmSysIdQuasistaticForward() {
-        return m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward);
-    }
-
-    public Command createArmSysIdQuasistaticBackward() {
-        return m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse);
-    }
-
-
-    public Command createArmSysIdDynamicForward() {
-        return m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward);
-    }
-
-    public Command createArmSysIdDynamicBackward() {
-        return m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse);
-    }
-
 }
