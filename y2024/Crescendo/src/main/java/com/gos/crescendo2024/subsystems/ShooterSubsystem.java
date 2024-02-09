@@ -1,7 +1,6 @@
 package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
-import com.gos.crescendo2024.subsystems.sysid.ShooterSysId;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -19,7 +18,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
@@ -40,7 +38,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
     private double m_shooterGoalRPM;
-    private final ShooterSysId m_shooterSysId;
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
@@ -79,8 +76,6 @@ public class ShooterSubsystem extends SubsystemBase {
             this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotorLeader), RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
         }
 
-        m_shooterSysId = new ShooterSysId(this);
-
     }
 
     @Override
@@ -109,9 +104,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterGoalRPM = rpm;
     }
 
-    public void setVoltageLeadAndFollow(double outputVolts) {
+    public void setVoltage(double outputVolts) {
         m_shooterMotorLeader.setVoltage(outputVolts);
-        m_shooterMotorFollower.setVoltage(outputVolts);
     }
 
     public double getRPM() {
@@ -122,16 +116,15 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterMotorLeader.getAppliedOutput();
     }
 
-    public double replaceVoltage() {
+    public double getVoltage() {
+        if (RobotBase.isReal()) {
+            return m_shooterMotorLeader.getBusVoltage();
+        }
         return m_shooterMotorLeader.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
 
     public double getEncoderPos() {
         return m_shooterEncoder.getPosition();
-    }
-
-    public double getEncoderVel() {
-        return m_shooterEncoder.getVelocity();
     }
 
     public boolean isShooterAtGoal() {
@@ -158,21 +151,4 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
     }
-
-    public Command createShooterSysIdQuasistaticForward() {
-        return m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward);
-    }
-
-    public Command createShooterSysIdQuasistaticBackward() {
-        return m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse);
-    }
-
-    public Command createShooterSysIdDynamicForward() {
-        return m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward);
-    }
-
-    public Command createShooterSysIdDynamicBackward() {
-        return m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse);
-    }
-
 }
