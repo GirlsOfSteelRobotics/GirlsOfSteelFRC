@@ -132,6 +132,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    public void clearStickyFaults() {
+        m_shooterMotorLeader.clearFaults();
+        m_shooterMotorFollower.clearFaults();
+    }
 
     /////////////////////////////////////
     // Command Factories

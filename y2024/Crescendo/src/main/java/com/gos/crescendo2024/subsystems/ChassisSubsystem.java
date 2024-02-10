@@ -139,6 +139,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_swerveDrive.getChassisSpeed();
     }
 
+    public void clearStickyFaults() {
+        m_swerveDrive.clearStickyFaults();
+    }
+
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
@@ -306,4 +310,6 @@ public class ChassisSubsystem extends SubsystemBase {
             m_swerveDrive.setModuleStates(state);
         });
     }
+
+
 }

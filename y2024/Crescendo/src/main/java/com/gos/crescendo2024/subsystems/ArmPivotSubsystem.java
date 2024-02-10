@@ -41,6 +41,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 20);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(false, "ampScoreAngle", 90);
 
+    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 32);
+    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 32);
+    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 32);
+
+
     private static final double GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
     private static final boolean USE_ABSOLUTE_ENCODER = false;
 
@@ -139,6 +144,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
         syncRelativeEncoder();
     }
 
+    public void clearStickyFaults() {
+        m_pivotMotor.clearFaults();
+        m_followMotor.clearFaults();
+    }
+
     @Override
     public void periodic() {
         m_networkTableEntriesPivot.updateLogs();
@@ -150,9 +160,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
 
-    public void clearStickyFaults() {
-        m_pivotMotor.clearFaults();
-    }
 
 
     public void moveArmToAngle(double goalAngle) {

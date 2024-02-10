@@ -16,24 +16,24 @@
     },
     {
       "anchor": {
-        "x": 2.3554839656263162,
-        "y": 5.543278238286734
+        "x": 2.36,
+        "y": 5.54
       },
       "prevControl": {
-        "x": 2.110942185130819,
-        "y": 5.5640877515756495
+        "x": 2.115456796157324,
+        "y": 5.560792780131305
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FourPieceSpeakerPt2"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
