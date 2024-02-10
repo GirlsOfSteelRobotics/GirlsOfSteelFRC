@@ -24,6 +24,8 @@ public final class Constants {
     public static final int INTAKE_MOTOR = 10;
     public static final int SHOOTER_MOTOR_LEADER = 15;
     public static final int SHOOTER_MOTOR_FOLLOWER = 16;
+    public static final int HANGER_MOTOR_PRIMARY = 4;
+    public static final int HANGER_MOTOR_SECONDARY = 5;
 
     public static final int PIGEON_PORT = 20;
 
