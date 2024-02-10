@@ -40,6 +40,33 @@ public class SpeakerAimAndShootCommand extends Command {
 
         addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
     }
+    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, Supplier<Pose2d> poseSupplier, DoubleSupplier shooterRpmGoalSupplier, DoubleSupplier armAngleGoalSupplier) {
+        this.m_armPivotSubsystem = armPivotSubsystem;
+        this.m_chassisSubsystem = chassisSubsystem;
+        this.m_intakeSubsystem = intakeSubsystem;
+        this.m_shooterSubsystem = shooterSubsystem;
+        this.m_intakeTimer = new Timer();
+
+        m_armAngleGoalSupplier = armAngleGoalSupplier;
+        m_shooterRpmGoalSupplier = shooterRpmGoalSupplier;
+        m_robotPoseProvider = poseSupplier;
+
+        addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
+    }
+    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, Supplier<Pose2d> poseSupplier) {
+        this.m_armPivotSubsystem = armPivotSubsystem;
+        this.m_chassisSubsystem = chassisSubsystem;
+        this.m_intakeSubsystem = intakeSubsystem;
+        this.m_shooterSubsystem = shooterSubsystem;
+        this.m_intakeTimer = new Timer();
+
+        m_armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
+        m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        m_robotPoseProvider = poseSupplier;
+
+        addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
+    }
+
 
     @Override
     public void initialize() {

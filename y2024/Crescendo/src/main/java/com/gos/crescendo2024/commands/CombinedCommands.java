@@ -4,7 +4,11 @@ import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 public class CombinedCommands {
 
@@ -19,6 +23,15 @@ public class CombinedCommands {
 
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
         return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter)
+            .withName("Auto shoot into speaker");
+    }
+
+    public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake, Supplier<Pose2d> poseSupplier, DoubleSupplier shooterRpmGoalSupplier, DoubleSupplier armAngleGoalSupplier) {
+        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, poseSupplier, shooterRpmGoalSupplier, armAngleGoalSupplier)
+            .withName("Auto shoot into speaker");
+    }
+    public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake, Supplier<Pose2d> poseSupplier) {
+        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, poseSupplier)
             .withName("Auto shoot into speaker");
     }
 

@@ -246,6 +246,8 @@
       "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"

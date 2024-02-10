@@ -34,6 +34,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.photonvision.PhotonCamera;
 
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -48,6 +51,7 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
+    private final Supplier<Pose2d> m_robotPoseProvider;
 
     // Joysticks
     private final CommandXboxController m_driverController =
@@ -67,6 +71,7 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
+        m_robotPoseProvider = m_chassisSubsystem::getFuturePose;
 
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
@@ -110,6 +115,7 @@ public class RobotContainer {
         // Combined Commands
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_robotPoseProvider));
         shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
     }
 
