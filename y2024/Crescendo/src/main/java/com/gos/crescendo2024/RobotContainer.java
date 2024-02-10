@@ -14,6 +14,7 @@ import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.crescendo2024.subsystems.HangerSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
@@ -51,7 +52,7 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
-
+    private final HangerSubsystem m_hangerSubsystem;
     // SysId
     private final ArmPivotSysId m_armPivotSysId;
     private final ShooterSysId m_shooterSysId;
@@ -187,6 +188,13 @@ public class RobotContainer {
         shuffleboardTab.add("Shooter stop", m_shooterSubsystem.createStopShooterCommand());
     }
 
+    private void addHangerTestCommands(ShuffleboardTab shuffleboardTab) {
+        shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp());
+        shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown());
+        shuffleboardTab.add("Stop Hanger", m_hangerSubsystem.createHangerStop());
+    }
+
+
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
      * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
@@ -281,5 +289,4 @@ public class RobotContainer {
 
         }
     }
-
 }
