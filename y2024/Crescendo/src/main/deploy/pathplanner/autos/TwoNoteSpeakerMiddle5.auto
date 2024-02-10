@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.356139746680443,
+      "y": 5.531293435066112
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNoteSpeakerMiddle5Pt1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePiece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNoteSpeakerMiddle5Pt2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

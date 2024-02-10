@@ -1,0 +1,81 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4048307100172925,
+        "y": 5.472864279061892
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.69697649003839,
+        "y": 5.034645609030246
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.8391698513676933,
+        "y": 4.89
+      },
+      "prevControl": {
+        "x": 2.1399160805686543,
+        "y": 4.89
+      },
+      "nextControl": {
+        "x": 4.760979421342541,
+        "y": 4.89
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.178714886689594,
+        "y": 4.40753573618739
+      },
+      "prevControl": {
+        "x": 4.666939410212431,
+        "y": 4.783534045435918
+      },
+      "nextControl": {
+        "x": 5.772989704184077,
+        "y": 3.9709256661914436
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.656750402468776,
+        "y": 4.060826342293255
+      },
+      "prevControl": {
+        "x": 6.1083777683569584,
+        "y": 4.021873571623776
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "TwoNoteSpeaker3End"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 1.1457628381751785,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

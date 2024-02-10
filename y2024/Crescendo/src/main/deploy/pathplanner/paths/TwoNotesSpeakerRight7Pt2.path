@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.230788769269848,
+        "y": 0.4736132549188178
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.809059258482583,
+        "y": 0.48649866837412403
+      },
+      "isLocked": false,
+      "linkedName": "CenterLineNoteBottom"
+    },
+    {
+      "anchor": {
+        "x": 1.1364568882983936,
+        "y": 4.509192864539576
+      },
+      "prevControl": {
+        "x": 1.8976612637741923,
+        "y": 3.6777234697890884
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.5,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.31074112497757,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Two notes speaker opp side",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

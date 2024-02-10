@@ -1,0 +1,75 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7167669684840067,
+      "y": 4.391563704668065
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNotesSpeakerRight7Pt1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveArmToSpeakerAngle"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNotesSpeakerRight7Pt2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterDefaultRpm"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

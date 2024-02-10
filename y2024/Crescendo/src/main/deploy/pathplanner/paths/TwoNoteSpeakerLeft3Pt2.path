@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.617797631799297,
+        "y": 7.410764619868505
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.835708373676834,
+        "y": 7.01149872050318
+      },
+      "isLocked": false,
+      "linkedName": "TwoNoteSpeaker5Pt1End"
+    },
+    {
+      "anchor": {
+        "x": 4.482099592906184,
+        "y": 6.6998765551505
+      },
+      "prevControl": {
+        "x": 5.835708373676834,
+        "y": 7.02123691317055
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 12.264773727341343,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
