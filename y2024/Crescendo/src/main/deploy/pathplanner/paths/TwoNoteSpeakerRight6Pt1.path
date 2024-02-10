@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8131896577298128,
-        "y": 1.7918742743071507
+        "x": 2.305127100988079,
+        "y": 1.8301743942257334
       },
       "isLocked": false,
       "linkedName": "SubwooferBottom"
@@ -20,8 +20,8 @@
         "y": 2.2008315428256005
       },
       "prevControl": {
-        "x": 6.010995841683261,
-        "y": 1.1296303494149111
+        "x": 5.995782725442397,
+        "y": 1.517510877868308
       },
       "nextControl": null,
       "isLocked": false,

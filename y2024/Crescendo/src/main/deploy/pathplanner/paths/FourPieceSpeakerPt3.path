@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4084716379039748,
-        "y": 5.2332312524887055
+        "x": 2.121207385483711,
+        "y": 5.042638758368695
       },
       "isLocked": false,
       "linkedName": "FourPieceSpeakerPt2"
@@ -20,8 +20,8 @@
         "y": 4.473929985887628
       },
       "prevControl": {
-        "x": 1.3570116063812914,
-        "y": 4.974629649728481
+        "x": 2.1579913285845844,
+        "y": 4.760628527928665
       },
       "nextControl": null,
       "isLocked": false,
