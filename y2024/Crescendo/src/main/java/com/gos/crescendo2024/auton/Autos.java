@@ -17,9 +17,16 @@ public final class Autos {
 
     public enum AutoModes {
         FOUR_NOTE("FourNoteSpeaker"),
+        TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
+        TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
+        TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
+        TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
+        TWO_NOTE_RIGHT_6("TwoNoteSpeakerRight6"),
+        TWO_NOTE_RIGHT_7("TwoNoteSpeakerRight7"),
         LEAVE_WING("LeaveWing"),
         PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
         PRELOAD_AND_CENTER_LINE("TwoNotesSpeaker");
+
 
         public final String m_modeName;
 
