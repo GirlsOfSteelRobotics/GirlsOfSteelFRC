@@ -1,6 +1,7 @@
 package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.revrobotics.CANSparkLowLevel;
@@ -18,6 +19,7 @@ public class HangerSubsystem extends SubsystemBase {
     private final RelativeEncoder m_hangerSecondaryEncoder;
     private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(true, "Hanger_Down_Speed", -1);
     private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(true, "Hanger_Up_Speed", 1);
+    private final LoggingUtil m_networkTableEntries;
 
     public HangerSubsystem() {
         m_hangerMotorPrimary = new SimableCANSparkMax(Constants.HANGER_MOTOR_PRIMARY, CANSparkLowLevel.MotorType.kBrushless);
@@ -37,11 +39,19 @@ public class HangerSubsystem extends SubsystemBase {
         m_hangerMotorSecondary.setSmartCurrentLimit(60);
         m_hangerMotorSecondary.burnFlash();
 
+        m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
+        m_networkTableEntries.addDouble("Primary Hanger Vel: ", this::getPrimaryHangerSpeed);
+        m_networkTableEntries.addDouble("Secondary Hanger Vel", this::getSecondaryHangerSpeed);
+        m_networkTableEntries.addDouble("Primary Hanger Pos: ", this::getPrimaryHangerHeight);
+        m_networkTableEntries.addDouble("Secondary Hanger Pos", this::getSecondaryHangerHeight);
+
     }
 
     @Override
     public void periodic() {
         m_hangerMotorErrorAlerts.checkAlerts();
+        m_networkTableEntries.updateLogs();
+
     }
 
     public double getPrimaryHangerSpeed() {

@@ -110,7 +110,7 @@ public class RobotContainer {
     }
 
     private void createTestCommands() {
-        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Test Commands");
 
         addChassisTestCommands(shuffleboardTab);
         addArmPivotTestCommands(shuffleboardTab);
@@ -191,9 +191,9 @@ public class RobotContainer {
     }
 
     private void addHangerTestCommands(ShuffleboardTab shuffleboardTab) {
-        shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp());
-        shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown());
-        shuffleboardTab.add("Stop Hanger", m_hangerSubsystem.createHangerStop());
+        shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp().withName("Hanger Up"));
+        shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown().withName("Hanger Down"));
+        shuffleboardTab.add("Stop Hanger", m_hangerSubsystem.createHangerStop().withName("Stop Hanger"));
     }
 
 
