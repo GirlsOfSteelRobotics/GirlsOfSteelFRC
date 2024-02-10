@@ -75,6 +75,7 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
+        m_hangerSubsystem = new HangerSubsystem();
 
 
 
