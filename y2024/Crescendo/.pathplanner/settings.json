@@ -4,7 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "Four Piece Speaker",
+    "Two Note Speaker Right 6",
     "Test Paths",
+    "Two Note Speaker Left 3",
+    "Two Note Speaker Left 4",
+    "Two Note Speaker Middle 5",
+    "Two Note Speaker Middle 6",
     "Two notes speaker opp side"
   ],
   "autoFolders": [],
