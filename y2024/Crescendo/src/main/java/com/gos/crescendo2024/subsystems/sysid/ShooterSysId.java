@@ -4,6 +4,7 @@ import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
@@ -26,12 +27,15 @@ public class ShooterSysId {
     public ShooterSysId(ShooterSubsystem shooter) {
         m_shooter = shooter;
         m_routine = new SysIdRoutine(
-            new SysIdRoutine.Config(),
-            new SysIdRoutine.Mechanism(this::voltageMotors, this::logMotors, shooter)
+            new SysIdRoutine.Config(
+                Units.Volts.of(1.0).per(Units.Seconds.of(1.0)),
+                Units.Volts.of(7.0),
+                Units.Seconds.of(10.0)),
+            new SysIdRoutine.Mechanism(this::setVoltage, this::logMotors, shooter)
         );
     }
 
-    private void voltageMotors(Measure<Voltage> volts) {
+    private void setVoltage(Measure<Voltage> volts) {
         m_shooter.setVoltage(volts.in(Volts));
     }
 

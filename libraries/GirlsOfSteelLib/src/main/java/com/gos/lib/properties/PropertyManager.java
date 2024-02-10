@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import edu.wpi.first.wpilibj.Preferences;
+import org.littletonrobotics.frc2023.util.Alert;
 
 /**
  * This class contains basic configurable properties. There is an interface
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.Preferences;
  */
 public final class PropertyManager {
 
+    private static final Alert PROPERTY_MISMATCH_ALERT = new Alert("Properties Mismatch", Alert.AlertType.WARNING);
     private static boolean purgeConstantPreferenceKeys;
 
     private static final Set<String> REGISTERED_KEYS = new HashSet<>();
@@ -59,6 +61,7 @@ public final class PropertyManager {
         // Print all the properties that do not match their default
         for (BaseProperty<?> prop : DYNAMIC_PROPERTIES) {
             if (!prop.m_default.equals(prop.getValue())) {
+                PROPERTY_MISMATCH_ALERT.set(true);
                 System.err.println(prop.m_constructionStackTrace);
             }
         }
