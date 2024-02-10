@@ -217,6 +217,7 @@
       "/Shuffleboard/Test Commands/Chassis to 45": "Command",
       "/Shuffleboard/Test Commands/Chassis to 90": "Command",
       "/Shuffleboard/Test Commands/Hanger Down": "Command",
+      "/Shuffleboard/Test Commands/Hanger Stop": "Command",
       "/Shuffleboard/Test Commands/Hanger Up": "Command",
       "/Shuffleboard/Test Commands/Shooter Percent Output": "Command",
       "/Shuffleboard/Test Commands/Shooter RPM: 3500": "Command",
@@ -313,27 +314,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Arm to 0": {
+      "/Shuffleboard/Test Commands/Hanger Stop": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Arm to 45": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Arm to 90": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Hanger Down": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Hanger Up": {
+      "/Shuffleboard/Test Commands/Hanger Up": {
         "window": {
           "visible": true
         }
@@ -361,11 +347,6 @@
             "visible": true
           }
         },
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Auto Chooser": {
         "window": {
           "visible": true
         }
@@ -546,7 +527,10 @@
           ],
           "yaxis2": true
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

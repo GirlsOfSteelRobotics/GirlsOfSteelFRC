@@ -42,8 +42,8 @@ public class HangerSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
         m_networkTableEntries.addDouble("Primary Hanger Vel: ", this::getPrimaryHangerSpeed);
         m_networkTableEntries.addDouble("Secondary Hanger Vel", this::getSecondaryHangerSpeed);
-        m_networkTableEntries.addDouble("Primary Hanger Pos: ", this::getPrimaryHangerHeight);
-        m_networkTableEntries.addDouble("Secondary Hanger Pos", this::getSecondaryHangerHeight);
+        m_networkTableEntries.addDouble("Primary Hanger Pos: ", m_hangerPrimaryEncoder::getPosition);
+        m_networkTableEntries.addDouble("Secondary Hanger Pos", m_hangerSecondaryEncoder::getPosition);
 
     }
 
@@ -60,14 +60,6 @@ public class HangerSubsystem extends SubsystemBase {
 
     public double getSecondaryHangerSpeed() {
         return m_hangerMotorSecondary.getAppliedOutput();
-    }
-
-    public double getPrimaryHangerHeight() {
-        return m_hangerPrimaryEncoder.getPosition();
-    }
-
-    public double getSecondaryHangerHeight() {
-        return m_hangerSecondaryEncoder.getPosition();
     }
 
     public void setPrimaryHangerSpeed(double speed) {
