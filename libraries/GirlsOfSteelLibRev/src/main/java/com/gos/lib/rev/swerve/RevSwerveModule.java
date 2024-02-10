@@ -72,6 +72,10 @@ public class RevSwerveModule {
         m_drivingSparkMax.restoreFactoryDefaults();
         m_turningSparkMax.restoreFactoryDefaults();
 
+        // Request the absolute encoder position / velocity faster than the default period
+        m_turningSparkMax.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus5, 20);
+        m_turningSparkMax.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus6, 20);
+
         // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
         m_turningRelativeEncoder = m_turningSparkMax.getEncoder();

@@ -44,7 +44,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
     private static final boolean USE_ABSOLUTE_ENCODER = false;
 
-    private static final double ALLOWABLE_ERROR = 1;
+    private static final double ALLOWABLE_ERROR = 1.7;
 
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
@@ -119,7 +119,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_networkTableEntriesPivot.addDouble("Output", m_pivotMotor::getAppliedOutput);
         m_networkTableEntriesPivot.addDouble("Abs Encoder Position", m_pivotAbsEncoder::getPosition);
         m_networkTableEntriesPivot.addDouble("Abs Encoder Velocity", m_pivotAbsEncoder::getVelocity);
-        m_networkTableEntriesPivot.addDouble("Rel Encoder Position", m_pivotMotorEncoder::getPosition);
+        m_networkTableEntriesPivot.addDouble("Rel Encoder Position", () -> m_pivotMotorEncoder.getPosition() % 360);
         m_networkTableEntriesPivot.addDouble("Rel Encoder Velocity", m_pivotMotorEncoder::getVelocity);
         m_networkTableEntriesPivot.addBoolean("Arm At Goal", this::isArmAtGoal);
         m_networkTableEntriesPivot.addDouble("Setpoint Position", () -> m_profilePID.getSetpoint().position);
@@ -230,7 +230,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public boolean isArmAtGoal() {
         double error = m_armGoalAngle - getAngle();
-        return Math.abs(error) < ALLOWABLE_ERROR;
+        if (error > 360) {
+            error = error - 360;
+        }
+        if (error < 0) {
+            error = error + 360;
+        }
+        return Math.abs(error % 360) < ALLOWABLE_ERROR;
     }
 
     private void syncRelativeEncoder() {
