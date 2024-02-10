@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.712145713733896,
-        "y": 6.5245890871378425
+        "x": 6.8207002075051175,
+        "y": 6.19157227666718
       },
       "isLocked": false,
       "linkedName": "TwoNoteSpeaker4Pt1End"
@@ -20,8 +20,8 @@
         "y": 6.544065472472582
       },
       "prevControl": {
-        "x": 5.553300786316876,
-        "y": 6.787520289156829
+        "x": 5.480406914673634,
+        "y": 6.621340234694667
       },
       "nextControl": null,
       "isLocked": false,
