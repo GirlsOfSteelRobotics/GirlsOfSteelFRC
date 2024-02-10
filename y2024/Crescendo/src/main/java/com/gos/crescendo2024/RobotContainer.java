@@ -116,6 +116,7 @@ public class RobotContainer {
         addArmPivotTestCommands(shuffleboardTab);
         addIntakeTestCommands(shuffleboardTab);
         addShooterTestCommands(shuffleboardTab);
+        addHangerTestCommands(shuffleboardTab);
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Teleop: Normal Swerve Drive", new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));

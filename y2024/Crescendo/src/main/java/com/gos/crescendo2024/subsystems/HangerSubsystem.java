@@ -14,7 +14,8 @@ public class HangerSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_hangerMotorPrimary;
     private final SimableCANSparkMax m_hangerMotorSecondary;
     private final SparkMaxAlerts m_hangerMotorErrorAlerts;
-    private final RelativeEncoder m_hangerEncoder;
+    private final RelativeEncoder m_hangerPrimaryEncoder;
+    private final RelativeEncoder m_hangerSecondaryEncoder;
     private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(true, "Hanger_Down_Speed", -1);
     private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(true, "Hanger_Up_Speed", 1);
 
@@ -22,7 +23,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_hangerMotorPrimary = new SimableCANSparkMax(Constants.HANGER_MOTOR_PRIMARY, CANSparkLowLevel.MotorType.kBrushless);
         m_hangerMotorPrimary.restoreFactoryDefaults();
         m_hangerMotorPrimary.setInverted(false);
-        m_hangerEncoder = m_hangerMotorPrimary.getEncoder();
+        m_hangerPrimaryEncoder = m_hangerMotorPrimary.getEncoder();
         m_hangerMotorPrimary.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_hangerMotorPrimary.setSmartCurrentLimit(60);
         m_hangerMotorPrimary.burnFlash();
@@ -31,6 +32,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_hangerMotorSecondary = new SimableCANSparkMax(Constants.HANGER_MOTOR_SECONDARY, CANSparkLowLevel.MotorType.kBrushless);
         m_hangerMotorSecondary.restoreFactoryDefaults();
         m_hangerMotorSecondary.setInverted(false);
+        m_hangerSecondaryEncoder = m_hangerMotorSecondary.getEncoder();
         m_hangerMotorSecondary.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_hangerMotorSecondary.setSmartCurrentLimit(60);
         m_hangerMotorSecondary.burnFlash();
@@ -48,6 +50,14 @@ public class HangerSubsystem extends SubsystemBase {
 
     public double getSecondaryHangerSpeed() {
         return m_hangerMotorSecondary.getAppliedOutput();
+    }
+
+    public double getPrimaryHangerHeight() {
+        return m_hangerPrimaryEncoder.getPosition();
+    }
+
+    public double getSecondaryHangerHeight() {
+        return m_hangerSecondaryEncoder.getPosition();
     }
 
     public void setPrimaryHangerSpeed(double speed) {
@@ -95,9 +105,5 @@ public class HangerSubsystem extends SubsystemBase {
     public Command createHangerStop() {
         return this.run(this::stopHanger);
     }
-
-    //hanger up
-    //hanger down
-    //hanger stop
 }
 
