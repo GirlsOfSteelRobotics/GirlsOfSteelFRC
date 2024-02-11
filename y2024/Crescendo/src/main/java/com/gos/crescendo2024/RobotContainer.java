@@ -224,14 +224,14 @@ public class RobotContainer {
 
         // Amp Scoring
         m_driverController.leftBumper().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
-        m_driverController.leftBumper().and(m_driverController.leftBumper()).whileTrue(
+        m_driverController.leftBumper().and(m_driverController.rightTrigger()).whileTrue(
             CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem));
 
-        m_driverController.rightTrigger().and(m_driverController.rightBumper()).whileTrue(
+        m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
                     .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
 
