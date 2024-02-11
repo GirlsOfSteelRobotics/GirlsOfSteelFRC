@@ -1,6 +1,7 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
+import com.gos.crescendo2024.SpeakerLookupTable;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
@@ -24,7 +25,6 @@ public class SpeakerAimAndShootCommand extends Command {
     private final DoubleSupplier m_armAngleGoalSupplier;
     private final DoubleSupplier m_shooterRpmGoalSupplier;
     private final Supplier<Pose2d> m_robotPoseProvider;
-
     private boolean m_runIntake;
 
     public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
