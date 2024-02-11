@@ -222,8 +222,8 @@ public class RobotContainer {
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
-        m_driverController.leftTrigger().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
-        m_driverController.leftTrigger().and(m_driverController.leftBumper()).whileTrue(
+        m_driverController.leftBumper().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
+        m_driverController.leftBumper().and(m_driverController.leftBumper()).whileTrue(
             CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //Speaker Shooting
@@ -235,7 +235,7 @@ public class RobotContainer {
                     .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
 
         //go to floor
-        m_driverController.b().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
