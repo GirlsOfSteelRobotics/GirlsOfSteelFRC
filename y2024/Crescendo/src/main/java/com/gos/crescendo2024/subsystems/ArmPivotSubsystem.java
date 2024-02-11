@@ -262,13 +262,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return runOnce(this::resetPidController);
     }
 
+    public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
+        return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
+    }
+
     private Command createMoveArmToAngleCommand(DoubleSupplier angleSupplier) {
         return createResetPidControllerCommand().andThen(
             runEnd(() -> moveArmToAngle(angleSupplier.getAsDouble()), this::stopArmMotor));
-    }
-
-    public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
-        return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
     public Command createMoveArmToAngleCommand(double goalAngle) {
