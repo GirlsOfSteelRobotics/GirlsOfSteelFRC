@@ -218,7 +218,8 @@ public class RobotContainer {
         // Driver Controller
         /////////////////////////////
         // Chassis
-        m_driverController.start().whileTrue(m_chassisSubsystem.createResetGyroCommand());
+        m_driverController.start().and(m_driverController.back())
+            .whileTrue(m_chassisSubsystem.createResetGyroCommand());
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
