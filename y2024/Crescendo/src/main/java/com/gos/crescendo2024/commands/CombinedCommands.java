@@ -22,7 +22,7 @@ public class CombinedCommands {
 
 
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
-        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter)
+        return SpeakerAimAndShootCommand.createWithDefaults(armPivot, chassis, intake, shooter)
             .withName("Auto shoot into speaker");
     }
 
