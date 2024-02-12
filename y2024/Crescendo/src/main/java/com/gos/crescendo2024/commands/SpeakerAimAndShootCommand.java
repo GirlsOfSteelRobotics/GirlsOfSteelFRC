@@ -27,20 +27,13 @@ public class SpeakerAimAndShootCommand extends Command {
     private final Supplier<Pose2d> m_robotPoseProvider;
     private boolean m_runIntake;
 
-    private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
-        this.m_armPivotSubsystem = armPivotSubsystem;
-        this.m_chassisSubsystem = chassisSubsystem;
-        this.m_intakeSubsystem = intakeSubsystem;
-        this.m_shooterSubsystem = shooterSubsystem;
-        this.m_intakeTimer = new Timer();
-
-        m_armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
-        m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
-        m_robotPoseProvider = m_chassisSubsystem::getPose;
-
-        addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
-    }
-    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, Supplier<Pose2d> poseSupplier, DoubleSupplier shooterRpmGoalSupplier, DoubleSupplier armAngleGoalSupplier) {
+    private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem,
+                                     ChassisSubsystem chassisSubsystem,
+                                     IntakeSubsystem intakeSubsystem,
+                                     ShooterSubsystem shooterSubsystem,
+                                     Supplier<Pose2d> poseSupplier,
+                                     DoubleSupplier shooterRpmGoalSupplier,
+                                     DoubleSupplier armAngleGoalSupplier) {
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
@@ -54,34 +47,53 @@ public class SpeakerAimAndShootCommand extends Command {
         addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
     }
 
-    public static SpeakerAimAndShootCommand createWithDefaults(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
-        return new SpeakerAimAndShootCommand(armPivotSubsystem, chassisSubsystem, intakeSubsystem, shooterSubsystem);
+    public static SpeakerAimAndShootCommand createWithDefaults(
+        ArmPivotSubsystem armPivotSubsystem,
+        ChassisSubsystem chassisSubsystem,
+        IntakeSubsystem intakeSubsystem,
+        ShooterSubsystem shooterSubsystem) {
+        DoubleSupplier m_armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
+        DoubleSupplier m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> m_robotPoseProvider = chassisSubsystem::getPose;
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            m_robotPoseProvider,
+            m_shooterRpmGoalSupplier,
+            m_armAngleGoalSupplier);
     }
-    public static SpeakerAimAndShootCommand createWithFixedArmAngle(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, Supplier<Pose2d> poseSupplier, DoubleSupplier shooterRpmGoalSupplier, DoubleSupplier armAngleGoalSupplier) {
-        return new SpeakerAimAndShootCommand(armPivotSubsystem, chassisSubsystem, intakeSubsystem, shooterSubsystem, poseSupplier, shooterRpmGoalSupplier, armAngleGoalSupplier);
+    public static SpeakerAimAndShootCommand createWithFixedArmAngle(ArmPivotSubsystem armPivotSubsystem,
+                                                                    ChassisSubsystem chassisSubsystem,
+                                                                    IntakeSubsystem intakeSubsystem,
+                                                                    ShooterSubsystem shooterSubsystem,
+                                                                    DoubleSupplier armAngleGoalSupplier) {
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> m_robotPoseProvider = chassisSubsystem::getPose;
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            m_robotPoseProvider,
+            shooterRpmGoalSupplier,
+            armAngleGoalSupplier);
     }
 
-    public static SpeakerAimAndShootCommand createShootWhileDrive(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+    public static SpeakerAimAndShootCommand createShootWhileDrive(ArmPivotSubsystem armPivotSubsystem,
+                                                                  ChassisSubsystem chassisSubsystem,
+                                                                  IntakeSubsystem intakeSubsystem,
+                                                                  ShooterSubsystem shooterSubsystem) {
         DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
-        return new SpeakerAimAndShootCommand(armPivotSubsystem, chassisSubsystem, intakeSubsystem, shooterSubsystem, pose, shooterRpmGoalSupplier, pivotAngle);
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            pose,
+            shooterRpmGoalSupplier,
+            pivotAngle);
     }
-
-    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, Supplier<Pose2d> poseSupplier) {
-        this.m_armPivotSubsystem = armPivotSubsystem;
-        this.m_chassisSubsystem = chassisSubsystem;
-        this.m_intakeSubsystem = intakeSubsystem;
-        this.m_shooterSubsystem = shooterSubsystem;
-        this.m_intakeTimer = new Timer();
-
-        m_armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
-        m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
-        m_robotPoseProvider = poseSupplier;
-
-        addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
-    }
-
 
     @Override
     public void initialize() {

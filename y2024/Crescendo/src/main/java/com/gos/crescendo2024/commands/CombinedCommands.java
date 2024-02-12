@@ -20,21 +20,6 @@ public class CombinedCommands {
             .withName("Intake Piece");
     }
 
-
-    public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
-        return SpeakerAimAndShootCommand.createWithDefaults(armPivot, chassis, intake, shooter)
-            .withName("Auto shoot into speaker");
-    }
-
-    public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake, Supplier<Pose2d> poseSupplier, DoubleSupplier shooterRpmGoalSupplier, DoubleSupplier armAngleGoalSupplier) {
-        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, poseSupplier, shooterRpmGoalSupplier, armAngleGoalSupplier)
-            .withName("Auto shoot into speaker");
-    }
-    public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake, Supplier<Pose2d> poseSupplier) {
-        return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, poseSupplier)
-            .withName("Auto shoot into speaker");
-    }
-
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToDefaultSpeakerAngleCommand()
             .alongWith(shooter.createSetRPMCommand(4000));
