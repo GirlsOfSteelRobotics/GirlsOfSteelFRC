@@ -16,6 +16,8 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import com.gos.crescendo2024.subsystems.sysid.ArmPivotSysId;
+import com.gos.crescendo2024.subsystems.sysid.ShooterSysId;
 import com.gos.lib.properties.PropertyManager;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,8 +30,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
 
@@ -46,6 +50,10 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
+
+    // SysId
+    private final ArmPivotSysId m_armPivotSysId;
+    private final ShooterSysId m_shooterSysId;
 
     // Joysticks
     private final CommandXboxController m_driverController =
@@ -68,10 +76,19 @@ public class RobotContainer {
         m_ledSubsystem = new LedManagerSubsystem();
         m_autonomousFactory = new Autos(m_chassisSubsystem, m_armPivotSubsystem, m_intakeSubsystem, m_shooterSubsystem);
 
+
+
+        m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
+        m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
+
+        m_autonomousFactory = new Autos();
+        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
+
         // Configure the trigger bindings
         configureBindings();
 
         createTestCommands();
+        createSysIdCommands();
 
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
@@ -103,6 +120,23 @@ public class RobotContainer {
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+        shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
+    }
+
+    private void createSysIdCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("SysId");
+
+
+        shuffleboardTab.add("Arm SysId Dynamic Forward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Arm Dyn F"));
+        shuffleboardTab.add("Arm SysId Dynamic Backward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Arm Dyn B"));
+        shuffleboardTab.add("Arm SysId Quasistatic Forward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Arm Quas F"));
+        shuffleboardTab.add("Arm SysId Quasistatic Backward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Arm Quas B"));
+
+        shuffleboardTab.add("Shooter SysId Dynamic Forward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Shooter Dyn F"));
+        shuffleboardTab.add("Shooter SysId Dynamic Backward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Shooter Dyn B"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Forward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Shooter Quas F"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Backward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Shooter Quas B"));
     }
 
     private void addChassisTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -140,6 +174,7 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
+
     }
 
     private void addShooterTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -165,8 +200,7 @@ public class RobotContainer {
         /////////////////////////////
         if (RobotBase.isReal()) {
             m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        }
-        else {
+        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
         }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
@@ -175,7 +209,8 @@ public class RobotContainer {
         // Driver Controller
         /////////////////////////////
         // Chassis
-        m_driverController.start().whileTrue(m_chassisSubsystem.createResetGyroCommand());
+        m_driverController.start().and(m_driverController.back())
+            .whileTrue(m_chassisSubsystem.createResetGyroCommand());
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
@@ -185,8 +220,8 @@ public class RobotContainer {
 
         //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
-
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem));
+
         m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
                     .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
@@ -201,15 +236,16 @@ public class RobotContainer {
         // Operator Controller
         /////////////////////////////
         // Intake
-        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
-        m_operatorController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
-        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
-        m_operatorController.a().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
+        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
+        m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+
 
         // shooter
-        m_operatorController.leftTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
+        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
+        // PropertyManager.purgeExtraKeys();
     }
 
 
@@ -222,6 +258,14 @@ public class RobotContainer {
         // An example command will be run in autonomous
         return m_autonomousFactory.getSelectedAutonomous();
     }
+
+    private void resetStickyFaults() {
+        m_chassisSubsystem.clearStickyFaults();
+        m_armPivotSubsystem.clearStickyFaults();
+        m_intakeSubsystem.clearStickyFaults();
+        m_shooterSubsystem.clearStickyFaults();
+    }
+
 
     private class SuperstructureSendable implements Sendable {
 

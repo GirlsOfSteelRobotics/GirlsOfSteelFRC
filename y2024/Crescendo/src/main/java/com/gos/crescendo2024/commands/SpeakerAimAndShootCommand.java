@@ -28,13 +28,18 @@ public class SpeakerAimAndShootCommand extends Command {
     private boolean m_runIntake;
 
     public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+        this(armPivotSubsystem, chassisSubsystem, intakeSubsystem, shooterSubsystem, ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue);
+    }
+
+    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, DoubleSupplier pivotAngle) {
+
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
         this.m_shooterSubsystem = shooterSubsystem;
         this.m_intakeTimer = new Timer();
 
-        m_armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
+        m_armAngleGoalSupplier = pivotAngle;
         m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
         m_robotPoseProvider = m_chassisSubsystem::getPose;
 
@@ -47,7 +52,6 @@ public class SpeakerAimAndShootCommand extends Command {
         m_intakeTimer.stop();
         m_runIntake = false;
     }
-
 
 
     @Override

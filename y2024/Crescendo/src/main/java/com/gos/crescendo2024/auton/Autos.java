@@ -67,4 +67,8 @@ public final class Autos {
         AutoModes mode = m_autonChooser.getSelected();
         return m_modes.get(mode);
     }
+
+    public AutoModes autoModeLightSignal() {
+        return m_autonChooser.getSelected();
+    }
 }

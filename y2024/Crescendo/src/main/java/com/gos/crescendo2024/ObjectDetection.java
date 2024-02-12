@@ -34,7 +34,7 @@ public class ObjectDetection {
     private final PhotonCameraSim m_cameraSim;
 
     public ObjectDetection() {
-        m_photonCamera = new PhotonCamera("objectDetection");
+        m_photonCamera = new PhotonCamera("ObjectDetection");
 
         TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
 
@@ -45,7 +45,7 @@ public class ObjectDetection {
             m_cameraSim.enableDrawWireframe(true);
 
 
-            m_visionSim = new VisionSystemSim("objectDetectionSim");
+            m_visionSim = new VisionSystemSim("ObjectDetection");
             m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
 
             for (Translation2d centerlineTranslation : CENTERLINE_TRANSLATIONS) {
@@ -89,7 +89,7 @@ public class ObjectDetection {
                 ROBOT_TO_CAMERA.getRotation().getY(),
                 Units.degreesToRadians(result.getPitch()),
                 Units.degreesToRadians(result.getYaw())
-                );
+            );
             Translation2d relToCamera = PhotonUtils.estimateCameraToTargetTranslation(distance, Rotation2d.fromDegrees(result.getYaw()));
             Transform2d adjustForRot = new Transform2d(relToCamera, new Rotation2d());
             objectLocationsList.add(chassisLocation.transformBy(adjustForRot));

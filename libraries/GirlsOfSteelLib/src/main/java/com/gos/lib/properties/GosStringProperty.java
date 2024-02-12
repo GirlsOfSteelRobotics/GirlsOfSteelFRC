@@ -20,4 +20,8 @@ public class GosStringProperty {
     public String getName() {
         return m_impl.getName();
     }
+
+    public void resetValue() {
+        m_impl.resetValue();
+    }
 }

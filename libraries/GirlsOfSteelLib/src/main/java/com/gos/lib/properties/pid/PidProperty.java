@@ -1,5 +1,6 @@
 package com.gos.lib.properties.pid;
 
+import com.gos.lib.properties.BaseHeavyProperty;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
 
@@ -24,6 +25,10 @@ public class PidProperty {
         for (HeavyDoubleProperty property : m_properties) {
             property.updateIfChanged(forceUpdate);
         }
+    }
+
+    public final void resetValues() {
+        m_properties.forEach(BaseHeavyProperty::resetValue);
     }
 
     public static class Builder {
