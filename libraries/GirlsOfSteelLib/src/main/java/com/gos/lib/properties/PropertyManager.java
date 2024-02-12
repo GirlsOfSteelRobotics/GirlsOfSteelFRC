@@ -77,7 +77,8 @@ public final class PropertyManager {
         TypeT getValue();
 
         String getName();
-        default void resetValue() {};
+
+        void resetValue();
     }
 
     /* default */ static class ConstantProperty<TypeT> implements IProperty<TypeT> {
@@ -102,6 +103,11 @@ public final class PropertyManager {
         @Override
         public String getName() {
             return m_name;
+        }
+
+        @Override
+        public void resetValue() {
+            // Do nothing as it's a constant value
         }
     }
 
