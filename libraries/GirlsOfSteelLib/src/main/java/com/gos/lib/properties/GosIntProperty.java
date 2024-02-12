@@ -22,4 +22,9 @@ public class GosIntProperty implements PropertyManager.IProperty<Integer> {
     public String getName() {
         return m_impl.getName();
     }
+
+    @Override
+    public void resetValue() {
+        m_impl.resetValue();
+    }
 }

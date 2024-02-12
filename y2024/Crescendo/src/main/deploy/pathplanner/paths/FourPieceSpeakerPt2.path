@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4216095874741788,
-        "y": 6.569172397054951
+        "x": 2.280604472254163,
+        "y": 6.967665113981081
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9311570127958642,
-        "y": 6.182940994495778
+        "x": 1.759498611658454,
+        "y": 6.391383338734061
       },
       "isLocked": false,
       "linkedName": "FourPieceSpeakerPt1"
     },
     {
       "anchor": {
-        "x": 2.2,
-        "y": 5.525086266457521
+        "x": 2.5380920739602786,
+        "y": 5.1959051879556695
       },
       "prevControl": {
-        "x": 1.925026355612385,
-        "y": 6.146157051394903
+        "x": 1.7165840113741015,
+        "y": 5.477915418395699
       },
       "nextControl": null,
       "isLocked": false,
@@ -40,7 +40,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0.0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "Four Piece Speaker",
