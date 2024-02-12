@@ -5,12 +5,12 @@
 ><frc-sendable-chooser
         source-provider="NetworkTables"
         selected="leave wing"
-        style="transform: translate(118px, 144px);"
+        style="transform: translate(37px, 143px);"
         source-key="/SmartDashboard/Auto Chooser"
         options="[]"
     ></frc-sendable-chooser><frc-basic-fms-info
         source-provider="NetworkTables"
-        style="transform: translate(132px, 61px);"
+        style="transform: translate(22px, 15px);"
         source-key="/FMSInfo"
     ></frc-basic-fms-info></dashboard-tab><dashboard-tab
     tab-name="Pit"
@@ -27,7 +27,11 @@
         errors="[]"
         warnings="[]"
         infos="[]"
-    ></frc-network-alerts></dashboard-tab><dashboard-tab
+    ></frc-network-alerts><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(76px, 203px);"
+        source-key="/Shuffleboard/test commands/Chassis Push"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
@@ -38,11 +42,11 @@
     ></frc-robot-command><super-structure
         source-key="/SmartDashboard/super structure"
         source-provider="NetworkTables"
-        style="width: 460px; height: 315px; transform: translate(336px, 264px);"
+        style="width: 460px; height: 315px; transform: translate(734px, 255px);"
     >
     </super-structure><frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(25px, 17px); width: 273px; height: 72px;"
+        style="transform: translate(25px, 17px); width: 223px; height: 44px;"
         source-key="/Shuffleboard/test commands/Teleop: David Drive"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
@@ -59,7 +63,7 @@
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
         source-provider="NetworkTables"
-        style="transform: translate(379px, 12px);"
+        style="transform: translate(723px, 0px);"
         game="Crescendo"
         grid-size="1"
     >
@@ -67,7 +71,22 @@
         source-provider="NetworkTables"
         style="transform: translate(25px, 138px); width: 195px; height: 50px;"
         source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)"
-    ></frc-robot-command></dashboard-tab><dashboard-tab
+    ></frc-robot-command><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(334px, 52px);"
+        source-key="/Arm Pivot Subsystem/Arm At Goal"
+        label="Arm At Goal"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(332px, 135px);"
+        source-key="/Shooter Subsystem/Shooter At Goal"
+        label="Shooter At Goal"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(333px, 215px);"
+        source-key="/Chassis/At Angle Setpoint"
+        label="Chassis At Goal"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -140,6 +159,7 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -166,10 +186,11 @@
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(423px, 608px);"
+        style="transform: translate(551px, 609px);"
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -191,15 +212,16 @@
             hidden=""
         ></div>
     </vaadin-number-field><vaadin-number-field
-        label="Abs Arm ANgle"
+        label="Abs Arm Angle"
         value="0"
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(272px, 700px);"
+        style="transform: translate(412px, 608px); width: 128px; height: 73px;"
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -232,15 +254,10 @@
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
             source-provider="NetworkTables"
-            min="-20"
-            max="20"
+            min="-50"
+            max="50"
         ></frc-line-chart-axis>
 
-        <frc-line-chart-data
-            source-provider="NetworkTables"
-            display-name="Rel Velocity"
-            source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
-        ></frc-line-chart-data>
         <frc-line-chart-data
             source-provider="NetworkTables"
             source-key="/Arm Pivot Subsystem/Abs Encoder Velocity"
@@ -249,7 +266,8 @@
             source-provider="NetworkTables"
             display-name="Rel Velocity"
             source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
-        ></frc-line-chart-data><frc-line-chart-data
+        ></frc-line-chart-data>
+        <frc-line-chart-data
             source-provider="NetworkTables"
             display-name="Setpoint Velocity"
             source-key="/Arm Pivot Subsystem/Setpoint Velocity"
@@ -262,7 +280,6 @@
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(2px, 18px); width: 207px; height: 50px;"
@@ -307,6 +324,7 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -337,6 +355,7 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -362,7 +381,37 @@
         source-key="/Shooter Subsystem/Shooter At Goal"
         style="transform: translate(296px, 48px);"
         label="Shooter At Goal"
-    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    ></frc-boolean-box><vaadin-number-field
+        label="Shooter Goal"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(466px, 551px);"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-224"
+            aria-labelledby="label-vaadin-number-field-224"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-224"
+            for="vaadin-number-field-224"
+        >Shooter Goal</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-171"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab><dashboard-tab
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
@@ -380,63 +429,12 @@
         source-key="/SmartDashboard/super structure/HasGamePiece"
         true-color="#ffa200"
         false-color="#b4a7a7"
-    ></frc-boolean-box><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(350px, 128px);"
-        source-key="/Shuffleboard/test commands/intake until piece"
-    ></frc-robot-command><vaadin-number-field
-        label="Label"
-        value="0"
-        has-label=""
-        source-provider="NetworkTables"
-        style="transform: translate(253px, 314px);"
-        source-key="/Preferences/Intake_In_Speed"
-        has-controls=""
-        has-value=""
-        min="NaN"
-        max="NaN"
-        hascontrols=""
-    ><input
-            slot="input"
-            value="0"
-            type="number"
-            id="vaadin-number-field-7"
-            aria-labelledby="label-vaadin-number-field-205"
-            aria-describedby=""
-            min="NaN"
-            max="NaN"
-            step="any"
-            tabindex="0"
-        ><label
-            slot="label"
-            id="label-vaadin-number-field-205"
-            for="vaadin-number-field-7"
-        >Label</label>
-        <div
-            slot="error-message"
-            id="error-message-vaadin-number-field-152"
-            hidden=""
-        ></div>
-    </vaadin-number-field><frc-line-chart
-        chart-title="Line Chart"
-        source-provider="NetworkTables"
-        style="transform: translate(586px, 78px);"
-    >
-        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
-        <frc-line-chart-axis source-provider="NetworkTables"></frc-line-chart-axis>
-        <frc-line-chart-axis
-            side="right"
-            source-provider="NetworkTables"
-        ></frc-line-chart-axis>
-        <frc-line-chart-data
-            source-provider="NetworkTables"
-            display-name="Current (Amps)"
-            source-key="/Intake Subsystem/Current (Amps)"
-        ></frc-line-chart-data>
-    </frc-line-chart></dashboard-tab><dashboard-tab
+        label="Has Piece"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -466,7 +464,7 @@
 
     <frc-swerve-drivebase
         source-provider="NetworkTables"
-        style="transform: translate(440px, 360px); width: 210px; height: 265px;"
+        style="transform: translate(683px, 334px); width: 210px; height: 265px;"
         source-key="/SwerveDrive"
         wheellocations="[2.5,2,2.5,-2,-2.5,2,-2.5,-2]"
         measuredstates="[0,0,0,0,0,0,0,0]"
@@ -492,7 +490,7 @@
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
         source-provider="NetworkTables"
-        style="transform: translate(98px, 441px);"
+        style="transform: translate(26px, 389px);"
         game="Crescendo"
         grid-size="1"
     >
