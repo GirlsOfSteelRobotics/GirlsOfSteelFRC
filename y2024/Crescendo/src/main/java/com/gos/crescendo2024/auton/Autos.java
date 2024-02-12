@@ -5,7 +5,14 @@
 
 package com.gos.crescendo2024.auton;
 
+import com.gos.crescendo2024.commands.CombinedCommands;
+import com.gos.crescendo2024.commands.SpeakerAimAndShootCommand;
+import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
+import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.crescendo2024.subsystems.IntakeSubsystem;
+import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,9 +41,18 @@ public final class Autos {
 
     private final Map<AutoModes, Command> m_modes;
 
-    public Autos() {
+    public Autos(ChassisSubsystem chassis, ArmPivotSubsystem armPivot, IntakeSubsystem intake, ShooterSubsystem shooter) {
         m_autonChooser = new SendableChooser<>();
         m_modes = new HashMap<>();
+
+        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter));
+        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(armPivot, intake));
+        NamedCommands.registerCommand("MoveArmToSpeakerAngle", armPivot.createMoveArmToDefaultSpeakerAngleCommand());
+        NamedCommands.registerCommand("ShooterDefaultRpm", shooter.createRunDefaultRpmCommand());
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
+
 
         for (AutoModes mode : AutoModes.values()) {
             if (mode == DEFAULT_MODE) {
