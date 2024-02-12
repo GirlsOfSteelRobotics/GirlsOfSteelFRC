@@ -4,5 +4,8 @@ gos_java_library(
     name = "properties",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
-    deps = ["@bzlmodrio-allwpilib//libraries/java/wpilibj"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+    ],
 )
