@@ -171,16 +171,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.005,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.kff",
-    "type": "double",
-    "value": 0.0025,
+    "value": 0.1,
     "properties": {
       "persistent": true,
       "retained": true
@@ -203,29 +194,12 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
-    "type": "double",
-    "value": 20.0,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.max_velocity",
-    "type": "double",
-    "value": 20.0,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
     "type": "double",
-    "value": 0.0,
+    "value": 3.3,
     "properties": {
-      "persistent": true
+      "persistent": true,
+      "retained": true
     }
   },
   {
@@ -256,7 +230,32 @@
   {
     "name": "/Preferences/ArmPivotJoystickTranslationDamping",
     "type": "double",
-    "value": 0.4,
+    "value": 0.2,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Profile PID.mm.max_velocity",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Profile PID.mm.max_acceleration",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot Profile ff.aff.ks",
+    "type": "double",
+    "value": 0.0,
     "properties": {
       "persistent": true
     }

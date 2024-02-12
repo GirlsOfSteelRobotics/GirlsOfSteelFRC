@@ -178,6 +178,14 @@
       "/Shuffleboard/PP Paths/StraightLinePath": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/SysId/Arm SysId Dynamic Backward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Dynamic Forward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Dynamic Backward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Dynamic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Quasistatic Forward": "Command",
       "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
       "/Shuffleboard/test commands/Arm SysId Dynamic Backward": "Command",
       "/Shuffleboard/test commands/Arm SysId Dynamic Forward": "Command",
@@ -253,22 +261,17 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/Shooter SysId Dynamic Backward": {
+      "/Shuffleboard/test commands/Arm to 0": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Shooter SysId Dynamic Forward": {
+      "/Shuffleboard/test commands/Arm to 45": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Shooter SysId Quasistatic Backward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Shooter SysId Quasistatic Forward": {
+      "/Shuffleboard/test commands/Arm to 90": {
         "window": {
           "visible": true
         }
@@ -388,12 +391,20 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
-      "Shooter Subsystem": {
+      "Arm Pivot Subsystem": {
         "open": true
       },
-      "Shuffleboard": {
-        "open": true
+      "SmartDashboard": {
+        "open": true,
+        "super structure": {
+          "open": true
+        }
       },
       "SwerveDrive": {
         "open": true
@@ -406,10 +417,70 @@
     },
     "Server": {
       "open": true
-    },
-    "visible": true
+    }
   },
-  "NetworkTables View": {
-    "visible": false
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            },
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 385,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Setpoint Velocity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Rel Encoder Velocity"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Rel Encoder Position",
+              "yAxis": 1
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/super structure/GoalAngle",
+              "yAxis": 1
+            }
+          ],
+          "yaxis2": true
+        }
+      ]
+    }
   }
 }

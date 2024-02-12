@@ -28,7 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.restoreFactoryDefaults();
         m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_intakeMotor.setSmartCurrentLimit(40);
-        m_intakeMotor.setInverted(true);
+        m_intakeMotor.setInverted(false);
         m_intakeMotor.burnFlash();
 
         m_intakeEncoder = m_intakeMotor.getEncoder();
@@ -66,6 +66,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public double getIntakeMotorPercentage() {
         return m_intakeMotor.getAppliedOutput();
+    }
+
+    public void clearStickyFaults() {
+        m_intakeMotor.clearFaults();
     }
 
     /////////////////////////////////////

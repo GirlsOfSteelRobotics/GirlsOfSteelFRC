@@ -1,5 +1,6 @@
 package com.gos.lib.properties.feedforward;
 
+import com.gos.lib.properties.BaseHeavyProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
 
 import java.util.ArrayList;
@@ -30,5 +31,9 @@ public class BaseFeedForwardProperty {
         for (HeavyDoubleProperty property : m_properties) {
             property.updateIfChanged(forceUpdate);
         }
+    }
+
+    public final void resetValues() {
+        m_properties.forEach(BaseHeavyProperty::resetValue);
     }
 }
