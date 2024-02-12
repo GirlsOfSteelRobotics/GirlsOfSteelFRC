@@ -57,7 +57,9 @@ def main(argv):
         help="Force overwriting all of the non-autogenerted files",
     )
     parser.add_argument(
-        "--generate_web_dashboard", action="store_true", help="If present, will generate web dashboard"
+        "--generate_web_dashboard",
+        action="store_true",
+        help="If present, will generate web dashboard",
     )
 
     args = parser.parse_args(argv)
@@ -77,7 +79,7 @@ def main(argv):
         args.force_fxml,
         args.force_standalone_main,
         args.force_controller,
-        args.generate_web_dashboard
+        args.generate_web_dashboard,
     )
 
 
