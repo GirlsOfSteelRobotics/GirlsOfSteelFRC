@@ -73,16 +73,12 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        m_ledSubsystem = new LedManagerSubsystem();
         m_autonomousFactory = new Autos(m_chassisSubsystem, m_armPivotSubsystem, m_intakeSubsystem, m_shooterSubsystem);
-
-
+        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
 
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
 
-        m_autonomousFactory = new Autos();
-        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
 
         // Configure the trigger bindings
         configureBindings();

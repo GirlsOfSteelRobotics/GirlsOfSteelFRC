@@ -49,6 +49,9 @@ public final class Autos {
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(armPivot, intake));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", armPivot.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", shooter.createRunDefaultRpmCommand());
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
 
 
         for (AutoModes mode : AutoModes.values()) {
