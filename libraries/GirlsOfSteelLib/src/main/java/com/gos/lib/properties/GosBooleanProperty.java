@@ -20,4 +20,8 @@ public class GosBooleanProperty {
     public String getName() {
         return m_impl.getName();
     }
+
+    public void resetValue() {
+        m_impl.resetValue();
+    }
 }

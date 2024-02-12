@@ -22,4 +22,9 @@ public class GosDoubleProperty implements PropertyManager.IProperty<Double> {
     public String getName() {
         return m_impl.getName();
     }
+
+    @Override
+    public void resetValue() {
+        m_impl.resetValue();
+    }
 }

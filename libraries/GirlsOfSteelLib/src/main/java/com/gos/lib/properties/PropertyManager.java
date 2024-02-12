@@ -77,6 +77,7 @@ public final class PropertyManager {
         TypeT getValue();
 
         String getName();
+        default void resetValue() {};
     }
 
     /* default */ static class ConstantProperty<TypeT> implements IProperty<TypeT> {
@@ -154,6 +155,11 @@ public final class PropertyManager {
         @Override
         public String getName() {
             return m_key;
+        }
+
+        @Override
+        public void resetValue() {
+            m_setter.accept(m_key, m_default);
         }
     }
 }

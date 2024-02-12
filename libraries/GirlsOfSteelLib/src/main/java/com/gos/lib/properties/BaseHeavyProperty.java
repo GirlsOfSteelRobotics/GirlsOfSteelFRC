@@ -27,4 +27,8 @@ public class BaseHeavyProperty<T> {
             m_lastValue = newValue;
         }
     }
+
+    public final void resetValue() {
+        m_property.resetValue();
+    }
 }
