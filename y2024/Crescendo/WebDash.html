@@ -2,6 +2,7 @@
     tab-name="Drivers"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-sendable-chooser
         source-provider="NetworkTables"
         selected="leave wing"
@@ -12,26 +13,14 @@
         source-provider="NetworkTables"
         style="transform: translate(22px, 15px);"
         source-key="/FMSInfo"
-    ></frc-basic-fms-info></dashboard-tab><dashboard-tab
-    tab-name="Pit"
-    slot="tab"
-    source-provider="NetworkTables"
-><frc-robot-command
+    ></frc-basic-fms-info><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(60px, 86px);"
-        source-key="/Shuffleboard/test commands/Arm to coast"
-    ></frc-robot-command><frc-network-alerts
-        source-provider="NetworkTables"
-        style="transform: translate(299px, 101px);"
-        source-key="/SmartDashboard/Alerts"
-        errors="[]"
-        warnings="[]"
-        infos="[]"
-    ></frc-network-alerts><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(76px, 203px);"
-        source-key="/Shuffleboard/test commands/Chassis Push"
-    ></frc-robot-command></dashboard-tab><dashboard-tab
+        style="transform: translate(402px, 110px);"
+        source-key="/Intake Subsystem/Has Piece"
+        true-color="#ff7300"
+        false-color="#e7dede"
+        label="Has Piece"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
@@ -55,7 +44,7 @@
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(40px, 273px); width: 122px; height: 50px;"
-        source-key="/Shuffleboard/test commands/Auto-Shoot in Speaker"
+        source-key="/Shuffleboard/test commands/SpeakerAimAndShoot Default Values"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(46px, 345px);"
@@ -159,7 +148,6 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -190,7 +178,6 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -221,7 +208,6 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -324,7 +310,6 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -355,7 +340,6 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -388,23 +372,22 @@
         has-label=""
         source-provider="NetworkTables"
         style="transform: translate(466px, 551px);"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-224"
+            id="vaadin-number-field-7"
             aria-labelledby="label-vaadin-number-field-224"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-224"
-            for="vaadin-number-field-224"
+            for="vaadin-number-field-7"
         >Shooter Goal</label>
         <div
             slot="error-message"
@@ -434,7 +417,6 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -478,14 +460,14 @@
     ></frc-boolean-box><frc-robot-command
         source-provider="NetworkTables"
         source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom"
-        style="transform: translate(675px, 54px);"
+        style="transform: translate(675px, 54px); width: 134.4px; height: 63.6px;"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(694px, 136px);"
+        style="transform: translate(694px, 136px); width: 100px; height: 58px;"
         source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(698px, 210px);"
+        style="transform: translate(698px, 210px); width: 100px; height: 61.2px;"
         source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top"
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
@@ -494,4 +476,24 @@
         game="Crescendo"
         grid-size="1"
     >
-    </frc-field-wrapper></dashboard-tab>
+    </frc-field-wrapper></dashboard-tab><dashboard-tab
+    tab-name="Pit"
+    slot="tab"
+    source-provider="NetworkTables"
+    source-key="/Shuffleboard/test commands/Arm to coast"
+><frc-network-alerts
+        source-provider="NetworkTables"
+        style="transform: translate(688px, 152px);"
+        source-key="/SmartDashboard/Alerts"
+        errors="[]"
+        warnings="[]"
+        infos="[]"
+    ></frc-network-alerts><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(1079px, 104px);"
+        source-key="/Shuffleboard/test commands/Arm to coast"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(1088px, 220px);"
+        source-key="/Shuffleboard/test commands/Chassis Push"
+    ></frc-robot-command></dashboard-tab>
