@@ -39,6 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("Intake Subsystem");
         m_networkTableEntries.addDouble("Current Velocity", m_intakeEncoder::getVelocity);
         m_networkTableEntries.addDouble("Current (Amps)", m_intakeMotor::getOutputCurrent);
+        m_networkTableEntries.addBoolean("Has Piece", this::hasGamePiece);
     }
 
     @Override

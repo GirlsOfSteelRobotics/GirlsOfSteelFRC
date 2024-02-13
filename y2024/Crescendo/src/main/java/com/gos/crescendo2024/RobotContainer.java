@@ -121,14 +121,14 @@ public class RobotContainer {
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Teleop: Normal Swerve Drive", new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-        shuffleboardTab.add("Teleop: Aim at speaker (current pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
-        shuffleboardTab.add("Teleop: Aim at speaker (predicted pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getFuturePose));
+        shuffleboardTab.add("Teleop: Aim at speaker (current pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose).withName("Turn To Speaker (current)"));
+        shuffleboardTab.add("Teleop: Aim at speaker (predicted pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getFuturePose).withName("Turn To Speaker (prediction)"));
 
         //SpeakerAimAndShootCommands:
-        shuffleboardTab.add("SpeakerAimAndShoot Default Values", SpeakerAimAndShootCommand.createWithDefaults(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-        shuffleboardTab.add("SpeakerAimAndShoot Fixed Values", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, () -> 20));
-        shuffleboardTab.add("SpeakerAimAndShoot Shoot While Driving", SpeakerAimAndShootCommand.createShootWhileDrive(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-        shuffleboardTab.add("SpeakerAimAndShoot Shoot While Stationary", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+        shuffleboardTab.add("SpeakerAimAndShoot Default Values", SpeakerAimAndShootCommand.createWithDefaults(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withName("AimAndShoot w/ defaults"));
+        shuffleboardTab.add("SpeakerAimAndShoot Fixed Values", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, () -> 20).withName("AimAndShoot @ 20deg"));
+        shuffleboardTab.add("SpeakerAimAndShoot Shoot While Driving", SpeakerAimAndShootCommand.createShootWhileDrive(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withName("AimAndShoot on the move"));
+        shuffleboardTab.add("SpeakerAimAndShoot Shoot While Stationary", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withName("AimAndShoot with lookup"));
 
         // Combined Commands
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
@@ -233,13 +233,16 @@ public class RobotContainer {
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
-        m_driverController.leftBumper().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
+        m_driverController.leftBumper().whileTrue(
+            CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem)
+                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
         m_driverController.leftBumper().and(m_driverController.rightTrigger()).whileTrue(
             CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
-            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem));
+            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
+                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
