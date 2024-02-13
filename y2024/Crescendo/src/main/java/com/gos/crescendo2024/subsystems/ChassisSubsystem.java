@@ -308,7 +308,7 @@ public class ChassisSubsystem extends SubsystemBase {
         SwerveModuleState state = new SwerveModuleState(0, new Rotation2d());
         return run(() -> {
             m_swerveDrive.setModuleStates(state);
-        });
+        }).withName("Chassis Push Forward");
     }
 
 

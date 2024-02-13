@@ -217,6 +217,8 @@
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/Clear Sticky Faults": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
+      "/Shuffleboard/test commands/Hanger Down": "Command",
+      "/Shuffleboard/test commands/Hanger Up": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
       "/Shuffleboard/test commands/Shooter Percent Output": "Command",
@@ -293,6 +295,9 @@
           "window": {
             "visible": true
           }
+        },
+        "window": {
+          "visible": true
         }
       },
       "/SmartDashboard/Field": {
@@ -370,7 +375,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },

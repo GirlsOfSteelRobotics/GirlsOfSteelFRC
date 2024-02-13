@@ -54,6 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorLeader.setSmartCurrentLimit(60);
+        m_shooterMotorLeader.enableVoltageCompensation(10);
         m_shooterMotorLeader.burnFlash();
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
