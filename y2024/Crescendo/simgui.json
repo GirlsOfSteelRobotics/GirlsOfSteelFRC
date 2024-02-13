@@ -1,22 +1,12 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
-    "DIO": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
-      "SPARK MAX [4]": {
+      "SPARK MAX [25]": {
         "header": {
           "open": true
         }
       },
-      "SPARK MAX [5]": {
+      "SPARK MAX [6]": {
         "header": {
           "open": true
         }
@@ -25,6 +15,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     },
     "RoboRIO": {
@@ -33,9 +26,11 @@
       },
       "6V Rail": {
         "open": true
-      },
+      }
+    },
+    "Timing": {
       "window": {
-        "visible": true
+        "visible": false
       }
     }
   },
@@ -191,46 +186,6 @@
       "/Shuffleboard/SysId/Shooter SysId Dynamic Forward": "Command",
       "/Shuffleboard/SysId/Shooter SysId Quasistatic Backward": "Command",
       "/Shuffleboard/SysId/Shooter SysId Quasistatic Forward": "Command",
-      "/Shuffleboard/Test Commands/Arm Resync Encoder": "Command",
-      "/Shuffleboard/Test Commands/Arm to 0": "Command",
-      "/Shuffleboard/Test Commands/Arm to 30": "Command",
-      "/Shuffleboard/Test Commands/Arm to 45": "Command",
-      "/Shuffleboard/Test Commands/Arm to 60": "Command",
-      "/Shuffleboard/Test Commands/Arm to 90": "Command",
-      "/Shuffleboard/Test Commands/Arm to amp angle": "Command",
-      "/Shuffleboard/Test Commands/Arm to coast": "Command",
-      "/Shuffleboard/Test Commands/Arm to default speaker angle": "Command",
-      "/Shuffleboard/Test Commands/Arm to ground intake angle": "Command",
-      "/Shuffleboard/Test Commands/Arm to speaker (from pose)": "Command",
-      "/Shuffleboard/Test Commands/Auto-Intake Piece": "Command",
-      "/Shuffleboard/Test Commands/Auto-Shoot in Amp": "Command",
-      "/Shuffleboard/Test Commands/Auto-Shoot in Speaker": "Command",
-      "/Shuffleboard/Test Commands/Chassis Push": "Command",
-      "/Shuffleboard/Test Commands/Chassis Set Pose Origin": "Command",
-      "/Shuffleboard/Test Commands/Chassis Set Pose Subwoofer Bottom": "Command",
-      "/Shuffleboard/Test Commands/Chassis Set Pose Subwoofer Mid": "Command",
-      "/Shuffleboard/Test Commands/Chassis Set Pose Subwoofer Top": "Command",
-      "/Shuffleboard/Test Commands/Chassis drive to amp": "Command",
-      "/Shuffleboard/Test Commands/Chassis drive to speaker": "Command",
-      "/Shuffleboard/Test Commands/Chassis to -180": "Command",
-      "/Shuffleboard/Test Commands/Chassis to -45": "Command",
-      "/Shuffleboard/Test Commands/Chassis to 45": "Command",
-      "/Shuffleboard/Test Commands/Chassis to 90": "Command",
-      "/Shuffleboard/Test Commands/Hanger Down": "Command",
-      "/Shuffleboard/Test Commands/Hanger Stop": "Command",
-      "/Shuffleboard/Test Commands/Hanger Up": "Command",
-      "/Shuffleboard/Test Commands/Shooter Percent Output": "Command",
-      "/Shuffleboard/Test Commands/Shooter RPM: 3500": "Command",
-      "/Shuffleboard/Test Commands/Shooter RPM: 4000": "Command",
-      "/Shuffleboard/Test Commands/Shooter stop": "Command",
-      "/Shuffleboard/Test Commands/Stop Hanger": "Command",
-      "/Shuffleboard/Test Commands/Teleop: Aim at speaker (current pose)": "Command",
-      "/Shuffleboard/Test Commands/Teleop: Aim at speaker (predicted pose)": "Command",
-      "/Shuffleboard/Test Commands/Teleop: David Drive": "Command",
-      "/Shuffleboard/Test Commands/Teleop: Normal Swerve Drive": "Command",
-      "/Shuffleboard/Test Commands/intake in": "Command",
-      "/Shuffleboard/Test Commands/intake out": "Command",
-      "/Shuffleboard/Test Commands/shooter RPM: default": "Command",
       "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
       "/Shuffleboard/test commands/Arm SysId Dynamic Backward": "Command",
       "/Shuffleboard/test commands/Arm SysId Dynamic Forward": "Command",
@@ -260,9 +215,8 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/Clear Sticky Faults": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
-      "/Shuffleboard/test commands/Hanger Down": "Command",
-      "/Shuffleboard/test commands/Hanger Up": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
       "/Shuffleboard/test commands/Shooter Percent Output": "Command",
@@ -275,7 +229,10 @@
       "/Shuffleboard/test commands/Shooter stop": "Command",
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
       "/Shuffleboard/test commands/Shooting to Speaker": "Command",
-      "/Shuffleboard/test commands/Stop Hanger": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Fixed Values": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Driving": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Stationary": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
@@ -309,17 +266,7 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/Test Commands/Hanger Down": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Test Commands/Hanger Stop": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Test Commands/Hanger Up": {
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": {
         "window": {
           "visible": true
         }
@@ -346,9 +293,6 @@
           "window": {
             "visible": true
           }
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Field": {
@@ -426,10 +370,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
@@ -441,9 +382,6 @@
     },
     "transitory": {
       "Arm Pivot Subsystem": {
-        "open": true
-      },
-      "Hanger Subsystem": {
         "open": true
       },
       "SmartDashboard": {
@@ -466,6 +404,9 @@
     },
     "visible": true
   },
+  "NetworkTables View": {
+    "visible": false
+  },
   "Plot": {
     "Plot <0>": {
       "plots": [
@@ -484,7 +425,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 0,
+          "height": 234,
           "series": [
             {
               "color": [
