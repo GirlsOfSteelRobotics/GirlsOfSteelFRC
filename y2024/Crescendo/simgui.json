@@ -1,16 +1,11 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
-    "DIO": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
+      "SPARK MAX [25]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [6]": {
         "header": {
           "open": true
@@ -20,6 +15,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     },
     "RoboRIO": {
@@ -28,9 +26,11 @@
       },
       "6V Rail": {
         "open": true
-      },
+      }
+    },
+    "Timing": {
       "window": {
-        "visible": true
+        "visible": false
       }
     }
   },
@@ -215,6 +215,7 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/Clear Sticky Faults": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
@@ -228,6 +229,10 @@
       "/Shuffleboard/test commands/Shooter stop": "Command",
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
       "/Shuffleboard/test commands/Shooting to Speaker": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Fixed Values": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Driving": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Stationary": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
@@ -261,17 +266,7 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/Arm to 0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Arm to 45": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Arm to 90": {
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": {
         "window": {
           "visible": true
         }
@@ -298,14 +293,6 @@
           "window": {
             "visible": true
           }
-        },
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Auto Chooser": {
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Field": {
@@ -383,10 +370,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
@@ -417,7 +401,11 @@
     },
     "Server": {
       "open": true
-    }
+    },
+    "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {
@@ -437,7 +425,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 385,
+          "height": 234,
           "series": [
             {
               "color": [
@@ -480,7 +468,10 @@
           ],
           "yaxis2": true
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }
