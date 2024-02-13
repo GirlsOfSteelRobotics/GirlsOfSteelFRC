@@ -232,6 +232,7 @@
       "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": "Command",
       "/Shuffleboard/test commands/SpeakerAimAndShoot Fixed Values": "Command",
       "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Driving": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Stationary": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": "Command",
       "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
@@ -292,6 +293,9 @@
           "window": {
             "visible": true
           }
+        },
+        "window": {
+          "visible": true
         }
       },
       "/SmartDashboard/Field": {
@@ -369,7 +373,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -400,7 +407,8 @@
     },
     "Server": {
       "open": true
-    }
+    },
+    "visible": true
   },
   "NetworkTables View": {
     "visible": false

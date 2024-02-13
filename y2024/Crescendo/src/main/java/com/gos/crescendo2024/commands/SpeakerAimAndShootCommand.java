@@ -121,6 +121,25 @@ public class SpeakerAimAndShootCommand extends Command {
             null);
     }
 
+    public static SpeakerAimAndShootCommand driverControllerPractice(ArmPivotSubsystem armPivotSubsystem,
+                                                                     ChassisSubsystem chassisSubsystem,
+                                                                     IntakeSubsystem intakeSubsystem,
+                                                                     ShooterSubsystem shooterSubsystem,
+                                                                     CommandXboxController controller) {
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
+        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsiadded ngSpeakerLookupTable(pose);
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            pose,
+            shooterRpmGoalSupplier,
+            pivotAngle,
+            controller);
+
+    }
+
     @Override
     public void initialize() {
         m_intakeTimer.reset();
