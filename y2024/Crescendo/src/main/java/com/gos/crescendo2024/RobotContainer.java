@@ -38,10 +38,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -55,7 +51,6 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
-    private final Supplier<Pose2d> m_robotPoseProvider;
 
     // SysId
     private final ArmPivotSysId m_armPivotSysId;
@@ -79,9 +74,6 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        m_robotPoseProvider = m_chassisSubsystem::getFuturePose;
-
-
 
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
@@ -131,7 +123,7 @@ public class RobotContainer {
 
         //SpeakerAimAndShootCommands:
         shuffleboardTab.add("SpeakerAimAndShoot Default Values", SpeakerAimAndShootCommand.createWithDefaults(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-        shuffleboardTab.add("SpeakerAimAndShoot Fixed Values", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ()-> 20));
+        shuffleboardTab.add("SpeakerAimAndShoot Fixed Values", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, () -> 20));
         shuffleboardTab.add("SpeakerAimAndShoot Shoot While Driving", SpeakerAimAndShootCommand.createShootWhileDrive(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         shuffleboardTab.add("SpeakerAimAndShoot Shoot While Stationary", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
 

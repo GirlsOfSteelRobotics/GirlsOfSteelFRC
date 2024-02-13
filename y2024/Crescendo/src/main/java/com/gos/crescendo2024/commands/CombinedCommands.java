@@ -1,14 +1,9 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
-import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
-
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 
 public class CombinedCommands {
 

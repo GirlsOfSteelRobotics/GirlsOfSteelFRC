@@ -1,7 +1,6 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
-import com.gos.crescendo2024.SpeakerLookupTable;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
@@ -17,7 +16,7 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 
-public class SpeakerAimAndShootCommand extends Command {
+public final class SpeakerAimAndShootCommand extends Command {
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
@@ -29,7 +28,7 @@ public class SpeakerAimAndShootCommand extends Command {
     private final Supplier<Pose2d> m_robotPoseProvider;
     private boolean m_runIntake;
 
-    private CommandXboxController m_controller;
+    private final CommandXboxController m_controller;
 
     private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem,
                                      ChassisSubsystem chassisSubsystem,
@@ -58,30 +57,31 @@ public class SpeakerAimAndShootCommand extends Command {
         ChassisSubsystem chassisSubsystem,
         IntakeSubsystem intakeSubsystem,
         ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier m_armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
-        DoubleSupplier m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
-        Supplier<Pose2d> m_robotPoseProvider = chassisSubsystem::getPose;
+        DoubleSupplier armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
             intakeSubsystem,
             shooterSubsystem,
-            m_robotPoseProvider,
-            m_shooterRpmGoalSupplier,
-            m_armAngleGoalSupplier,
+            robotPoseProvider,
+            shooterRpmGoalSupplier,
+            armAngleGoalSupplier,
             null);
     }
+
     public static SpeakerAimAndShootCommand createWithFixedArmAngle(ArmPivotSubsystem armPivotSubsystem,
                                                                     ChassisSubsystem chassisSubsystem,
                                                                     IntakeSubsystem intakeSubsystem,
                                                                     ShooterSubsystem shooterSubsystem,
                                                                     DoubleSupplier armAngleGoalSupplier) {
         DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
-        Supplier<Pose2d> m_robotPoseProvider = chassisSubsystem::getPose;
+        Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
             intakeSubsystem,
             shooterSubsystem,
-            m_robotPoseProvider,
+            robotPoseProvider,
             shooterRpmGoalSupplier,
             armAngleGoalSupplier,
             null);
@@ -128,7 +128,7 @@ public class SpeakerAimAndShootCommand extends Command {
                                                                      CommandXboxController controller) {
         DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
-        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsiadded ngSpeakerLookupTable(pose);
+        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
             intakeSubsystem,
@@ -157,8 +157,9 @@ public class SpeakerAimAndShootCommand extends Command {
         if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {
             m_runIntake = true;
             m_intakeTimer.start();
-            if (m_controller != null)
+            if (m_controller != null) {
                 m_controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.50);
+            }
         }
 
         if (m_runIntake) {
