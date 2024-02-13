@@ -12,13 +12,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HangerSubsystem extends SubsystemBase {
-    private final SimableCANSparkMax m_hangerMotorPrimary;
-    private final SimableCANSparkMax m_hangerMotorSecondary;
-    private final SparkMaxAlerts m_hangerMotorErrorAlerts;
-    private final RelativeEncoder m_hangerPrimaryEncoder;
-    private final RelativeEncoder m_hangerSecondaryEncoder;
     private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(true, "Hanger_Down_Speed", -1);
     private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(true, "Hanger_Up_Speed", 1);
+
+    private final SimableCANSparkMax m_hangerMotorPrimary;
+    private final RelativeEncoder m_hangerPrimaryEncoder;
+    private final SparkMaxAlerts m_hangerPrimaryMotorErrorAlerts;
+
+    private final SimableCANSparkMax m_hangerMotorSecondary;
+    private final RelativeEncoder m_hangerSecondaryEncoder;
+    private final SparkMaxAlerts m_hangerSecondaryMotorErrorAlerts;
+
     private final LoggingUtil m_networkTableEntries;
 
     public HangerSubsystem() {
@@ -29,7 +33,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_hangerMotorPrimary.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_hangerMotorPrimary.setSmartCurrentLimit(60);
         m_hangerMotorPrimary.burnFlash();
-        m_hangerMotorErrorAlerts = new SparkMaxAlerts(m_hangerMotorPrimary, "hanger motor");
+        m_hangerPrimaryMotorErrorAlerts = new SparkMaxAlerts(m_hangerMotorPrimary, "hanger a");
 
         m_hangerMotorSecondary = new SimableCANSparkMax(Constants.HANGER_MOTOR_SECONDARY, CANSparkLowLevel.MotorType.kBrushless);
         m_hangerMotorSecondary.restoreFactoryDefaults();
@@ -38,6 +42,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_hangerMotorSecondary.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_hangerMotorSecondary.setSmartCurrentLimit(60);
         m_hangerMotorSecondary.burnFlash();
+        m_hangerSecondaryMotorErrorAlerts = new SparkMaxAlerts(m_hangerMotorSecondary, "hanger b");
 
         m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
         m_networkTableEntries.addDouble("Primary Hanger Vel: ", this::getPrimaryHangerSpeed);
@@ -49,9 +54,14 @@ public class HangerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_hangerMotorErrorAlerts.checkAlerts();
+        m_hangerPrimaryMotorErrorAlerts.checkAlerts();
+        m_hangerSecondaryMotorErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
+    }
 
+    public void clearStickyFaults() {
+        m_hangerMotorPrimary.clearFaults();
+        m_hangerMotorSecondary.clearFaults();
     }
 
     public double getPrimaryHangerSpeed() {
@@ -97,15 +107,11 @@ public class HangerSubsystem extends SubsystemBase {
     // Command Factories
     /////////////////////////////////////
     public Command createHangerUp() {
-        return this.run(this::runHangerUp);
+        return this.runEnd(this::runHangerUp, this::stopHanger);
     }
 
     public Command createHangerDown() {
-        return this.run(this::runHangerDown);
-    }
-
-    public Command createHangerStop() {
-        return this.run(this::stopHanger);
+        return this.runEnd(this::runHangerDown, this::stopHanger);
     }
 }
 
