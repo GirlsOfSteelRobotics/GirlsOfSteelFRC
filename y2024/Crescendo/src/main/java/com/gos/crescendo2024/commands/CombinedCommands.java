@@ -38,14 +38,13 @@ public class CombinedCommands {
 
     public static Command vibrateIfReadyToShoot(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
         return Commands.runEnd(() -> {
-                boolean isReady = chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
-                if (isReady) {
-                    controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
-                } else {
-                    controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
-                }
-
-            },
+            boolean isReady = chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
+            if (isReady) {
+                controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+            } else {
+                controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+            }
+        },
             () -> controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0));
     }
 }
