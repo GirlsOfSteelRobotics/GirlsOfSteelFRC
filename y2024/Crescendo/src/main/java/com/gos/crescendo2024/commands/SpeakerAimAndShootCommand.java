@@ -128,7 +128,7 @@ public class SpeakerAimAndShootCommand extends Command {
                                                                      CommandXboxController controller) {
         DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
-        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsiadded ngSpeakerLookupTable(pose);
+        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
             intakeSubsystem,
