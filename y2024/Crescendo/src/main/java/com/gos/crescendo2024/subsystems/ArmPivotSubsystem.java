@@ -34,6 +34,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
@@ -41,10 +42,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "speakerScoreAngle", 20);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(false, "ampScoreAngle", 90);
 
+    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 32);
+    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 32);
+    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 32);
+
+
     private static final double GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
     private static final boolean USE_ABSOLUTE_ENCODER = false;
 
-    private static final double ALLOWABLE_ERROR = 1;
+    private static final double ALLOWABLE_ERROR = 1.7;
 
     private final SimableCANSparkMax m_pivotMotor;
     private final SimableCANSparkMax m_followMotor;
@@ -119,7 +125,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_networkTableEntriesPivot.addDouble("Output", m_pivotMotor::getAppliedOutput);
         m_networkTableEntriesPivot.addDouble("Abs Encoder Position", m_pivotAbsEncoder::getPosition);
         m_networkTableEntriesPivot.addDouble("Abs Encoder Velocity", m_pivotAbsEncoder::getVelocity);
-        m_networkTableEntriesPivot.addDouble("Rel Encoder Position", m_pivotMotorEncoder::getPosition);
+        m_networkTableEntriesPivot.addDouble("Rel Encoder Position", () -> m_pivotMotorEncoder.getPosition() % 360);
         m_networkTableEntriesPivot.addDouble("Rel Encoder Velocity", m_pivotMotorEncoder::getVelocity);
         m_networkTableEntriesPivot.addBoolean("Arm At Goal", this::isArmAtGoal);
         m_networkTableEntriesPivot.addDouble("Setpoint Position", () -> m_profilePID.getSetpoint().position);
@@ -139,6 +145,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
         syncRelativeEncoder();
     }
 
+    public void clearStickyFaults() {
+        m_pivotMotor.clearFaults();
+        m_followMotor.clearFaults();
+    }
+
     @Override
     public void periodic() {
         m_networkTableEntriesPivot.updateLogs();
@@ -150,14 +161,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
 
-    public void clearStickyFaults() {
-        m_pivotMotor.clearFaults();
-    }
 
 
     public void moveArmToAngle(double goalAngle) {
         if (Math.abs(m_armGoalAngle - goalAngle) > 2) {
-            m_profilePID.reset(getAngle(), getEncoderVel());
+            resetPidController();
         }
 
         m_armGoalAngle = goalAngle;
@@ -171,6 +179,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
         SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+    }
+
+    private void resetPidController() {
+        m_profilePID.reset(getAngle(), getEncoderVel());
     }
 
 
@@ -230,7 +242,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public boolean isArmAtGoal() {
         double error = m_armGoalAngle - getAngle();
-        return Math.abs(error) < ALLOWABLE_ERROR;
+        if (error > 360) {
+            error = error - 360;
+        }
+        if (error < 0) {
+            error = error + 360;
+        }
+        return Math.abs(error % 360) < ALLOWABLE_ERROR;
     }
 
     private void syncRelativeEncoder() {
@@ -240,26 +258,33 @@ public class ArmPivotSubsystem extends SubsystemBase {
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
-
+    private Command createResetPidControllerCommand() {
+        return runOnce(this::resetPidController);
+    }
 
     public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
+    private Command createMoveArmToAngleCommand(DoubleSupplier angleSupplier) {
+        return createResetPidControllerCommand().andThen(
+            runEnd(() -> moveArmToAngle(angleSupplier.getAsDouble()), this::stopArmMotor));
+    }
+
     public Command createMoveArmToAngleCommand(double goalAngle) {
-        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
+        return createMoveArmToAngleCommand(() -> goalAngle).withName("arm to " + goalAngle);
     }
 
     public Command createMoveArmToGroundIntakeAngleCommand() {
-        return runEnd(() -> moveArmToAngle(ARM_INTAKE_ANGLE.getValue()), this::stopArmMotor).withName("arm to ground intake angle");
+        return createMoveArmToAngleCommand(ARM_INTAKE_ANGLE::getValue).withName("arm to ground intake angle");
     }
 
     public Command createMoveArmToAmpAngleCommand() {
-        return runEnd(() -> moveArmToAngle(ARM_AMP_ANGLE.getValue()), this::stopArmMotor).withName("arm to amp angle");
+        return createMoveArmToAngleCommand(ARM_AMP_ANGLE::getValue).withName("arm to amp angle");
     }
 
     public Command createMoveArmToDefaultSpeakerAngleCommand() {
-        return runEnd(() -> moveArmToAngle(ARM_DEFAULT_SPEAKER_ANGLE.getValue()), this::stopArmMotor).withName("arm to default speaker angle");
+        return createMoveArmToAngleCommand(ARM_DEFAULT_SPEAKER_ANGLE::getValue).withName("arm to default speaker angle");
     }
 
     public Command createSyncRelativeEncoderCommand() {

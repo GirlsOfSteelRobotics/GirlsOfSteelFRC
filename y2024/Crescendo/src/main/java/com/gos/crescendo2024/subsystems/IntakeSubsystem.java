@@ -68,6 +68,10 @@ public class IntakeSubsystem extends SubsystemBase {
         return m_intakeMotor.getAppliedOutput();
     }
 
+    public void clearStickyFaults() {
+        m_intakeMotor.clearFaults();
+    }
+
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////

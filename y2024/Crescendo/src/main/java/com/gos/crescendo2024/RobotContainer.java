@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -87,6 +88,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
+
         m_autonomousFactory = new Autos();
         m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
 
@@ -127,6 +132,8 @@ public class RobotContainer {
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+        shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
     }
 
     private void createSysIdCommands() {
@@ -221,7 +228,8 @@ public class RobotContainer {
         // Driver Controller
         /////////////////////////////
         // Chassis
-        m_driverController.start().whileTrue(m_chassisSubsystem.createResetGyroCommand());
+        m_driverController.start().and(m_driverController.back())
+            .whileTrue(m_chassisSubsystem.createResetGyroCommand());
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
@@ -231,8 +239,8 @@ public class RobotContainer {
 
         //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
-
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem));
+
         m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
                     .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
@@ -247,13 +255,13 @@ public class RobotContainer {
         // Operator Controller
         /////////////////////////////
         // Intake
-        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
-        m_operatorController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
-        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
-        m_operatorController.a().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
+        m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
+        m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+        m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+
 
         // shooter
-        m_operatorController.leftTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
+        m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
@@ -269,6 +277,14 @@ public class RobotContainer {
         // An example command will be run in autonomous
         return m_autonomousFactory.getSelectedAutonomous();
     }
+
+    private void resetStickyFaults() {
+        m_chassisSubsystem.clearStickyFaults();
+        m_armPivotSubsystem.clearStickyFaults();
+        m_intakeSubsystem.clearStickyFaults();
+        m_shooterSubsystem.clearStickyFaults();
+    }
+
 
     private class SuperstructureSendable implements Sendable {
 
