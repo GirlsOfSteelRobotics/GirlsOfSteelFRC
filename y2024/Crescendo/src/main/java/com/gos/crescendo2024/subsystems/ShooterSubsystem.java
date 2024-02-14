@@ -5,6 +5,7 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
@@ -155,5 +156,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
+    }
+
+    public Command createMoveLeaderShooterChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_shooterMotorLeader, "Shooter: Move Leader", 1.0);
+    }
+
+    public Command createMoveFollowerShooterChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_shooterMotorFollower, "Shooter: Move Follower", 1.0);
     }
 }

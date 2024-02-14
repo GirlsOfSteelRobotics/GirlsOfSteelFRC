@@ -9,6 +9,7 @@ import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.CombinedCommands;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
+import com.gos.crescendo2024.commands.RunAllChecklistsCommand;
 import com.gos.crescendo2024.commands.SpeakerAimAndShootCommand;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
@@ -25,6 +26,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -98,6 +100,7 @@ public class RobotContainer {
         createSysIdCommands();
 
         SmartDashboard.putData("super structure", new SuperstructureSendable());
+        SmartDashboard.putData("Run Checklists", new RunAllChecklistsCommand(m_armPivotSubsystem, m_hangerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);

@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonUtils;
 import org.photonvision.estimation.TargetModel;
 import org.photonvision.simulation.PhotonCameraSim;
@@ -29,12 +30,14 @@ public class ObjectDetection {
     private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(11), Units.inchesToMeters(15)), new Rotation3d(0, 0, 0));
 
     private final PhotonCamera m_photonCamera;
+    private final PhotonPoseEstimator m_poseEstimator;
 
     private final VisionSystemSim m_visionSim;
     private final PhotonCameraSim m_cameraSim;
 
     public ObjectDetection() {
         m_photonCamera = new PhotonCamera("ObjectDetection");
+        m_poseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_photonCamera, ROBOT_TO_CAMERA);
 
         TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
 
@@ -43,7 +46,6 @@ public class ObjectDetection {
             m_cameraSim.enableRawStream(true);
             m_cameraSim.enableProcessedStream(true);
             m_cameraSim.enableDrawWireframe(true);
-
 
             m_visionSim = new VisionSystemSim("ObjectDetection");
             m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
@@ -95,5 +97,12 @@ public class ObjectDetection {
             objectLocationsList.add(chassisLocation.transformBy(adjustForRot));
         }
         return objectLocationsList;
+    }
+
+    public Pose2d getClosestNote(List<Pose2d> objectLocations) {
+        if (m_poseEstimator.update().isEmpty()) {
+
+        }
+        return new Pose2d();
     }
 }

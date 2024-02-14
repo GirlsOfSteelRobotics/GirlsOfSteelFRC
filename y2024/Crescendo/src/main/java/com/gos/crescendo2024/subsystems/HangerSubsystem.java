@@ -4,6 +4,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -112,6 +113,10 @@ public class HangerSubsystem extends SubsystemBase {
 
     public Command createHangerDown() {
         return this.runEnd(this::runHangerDown, this::stopHanger);
+    }
+
+    public Command createMoveHangerChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_hangerMotorPrimary, "Hanger: Move Up", 1.0);
     }
 }
 

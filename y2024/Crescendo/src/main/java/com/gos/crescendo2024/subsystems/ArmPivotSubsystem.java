@@ -9,6 +9,7 @@ import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase;
@@ -259,6 +260,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotorEncoder.setPosition(m_pivotAbsEncoder.getPosition());
     }
 
+    private void moveArmPivotChecklist(double angle) {
+        moveArmToAngle(angle);
+
+        if (!isArmAtGoal()) {
+            throw new RuntimeException("it blew up...jk the arm isnt at the angle");
+        }
+    }
+
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
@@ -307,4 +316,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 })
             .ignoringDisable(true).withName("Pivot to Coast");
     }
+
+    public Command createMoveArmPivotChecklist(DoubleSupplier angleSupplier) {
+        return this.runEnd(() -> moveArmPivotChecklist(angleSupplier.getAsDouble()), this::stopArmMotor);
+
+    }
+
 }
