@@ -319,7 +319,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createMoveArmPivotChecklist(DoubleSupplier angleSupplier) {
         return this.runEnd(() -> moveArmPivotChecklist(angleSupplier.getAsDouble()), this::stopArmMotor);
-
     }
 
 }
