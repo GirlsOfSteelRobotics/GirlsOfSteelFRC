@@ -35,6 +35,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -161,11 +162,15 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDProperties.updateIfChanged();
         m_field.setFuturePose(getFuturePose(0.3));
 
-        Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (cameraResult.isPresent()) {
-            EstimatedRobotPose camPose = cameraResult.get();
-            Pose2d pose2d = camPose.estimatedPose.toPose2d();
-            m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+
+        // TODO hack
+        if (DriverStation.isDisabled()) {
+            Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+            if (cameraResult.isPresent()) {
+                EstimatedRobotPose camPose = cameraResult.get();
+                Pose2d pose2d = camPose.estimatedPose.toPose2d();
+                m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+            }
         }
     }
 

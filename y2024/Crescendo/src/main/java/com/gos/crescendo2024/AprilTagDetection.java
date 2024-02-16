@@ -24,7 +24,9 @@ public class AprilTagDetection {
             -(ROBOT_WIDTH / 2 - 0.04), // 4cm from back
              -(ROBOT_LENGTH / 2 - 0.27), // 27cm from right side
             .235),
-        new Rotation3d(0, Math.toRadians(34), Math.toRadians(180)));
+        new Rotation3d(0, Math.toRadians(-34), Math.toRadians(180)) // Negative because camera upside down?
+//        new Rotation3d(0, Math.toRadians(34), Math.toRadians(180))
+        );
 
     private static final String CAMERA_NAME = "AprilTag1";
 

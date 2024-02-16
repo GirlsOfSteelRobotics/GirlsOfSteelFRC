@@ -369,6 +369,17 @@
           "visible": true
         }
       },
+      "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": {
         "bottom": 1476,
         "height": 8.210550308227539,
@@ -393,13 +404,9 @@
         "open": true
       },
       "SmartDashboard": {
-        "open": true,
         "super structure": {
           "open": true
         }
-      },
-      "SwerveDrive": {
-        "open": true
       }
     }
   },
@@ -411,9 +418,6 @@
       "open": true
     },
     "visible": true
-  },
-  "NetworkTables View": {
-    "visible": false
   },
   "Plot": {
     "Plot <0>": {

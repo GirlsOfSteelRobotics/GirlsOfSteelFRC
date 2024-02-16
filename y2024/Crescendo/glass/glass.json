@@ -90,6 +90,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/test commands/Teleop: David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "AprilTag1 detected tags": {
           "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-orange.png"
