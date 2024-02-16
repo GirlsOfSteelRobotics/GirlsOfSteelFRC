@@ -9,6 +9,7 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
@@ -124,6 +125,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging.addDouble("PoseAngle", () -> getPose().getRotation().getDegrees());
         m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
         m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
+        m_logging.addDouble("Distance to Speaker", this::getDistanceToSpeaker);
+    }
+
+    public double getDistanceToSpeaker() {
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Translation2d roboManTranslation = getPose().getTranslation();
+        return roboManTranslation.getDistance(speaker.getTranslation());
     }
 
     public void resetOdometry(Pose2d pose2d) {

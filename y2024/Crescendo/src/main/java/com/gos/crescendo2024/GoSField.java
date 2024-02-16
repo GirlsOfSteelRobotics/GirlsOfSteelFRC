@@ -47,6 +47,8 @@ public class GoSField {
                             .transformBy(targetUsed.getBestCameraToTarget());
                     aprilTags.add(bestTransformPosition.toPose2d());
                 }
+            } else {
+                m_estimatedPose.setPoses();
             }
 
             m_aprilTags.setPoses(aprilTags);

@@ -4,6 +4,9 @@
       "Arm Subsystem": {
         "open": false
       },
+      "Chassis": {
+        "open": true
+      },
       "SmartDashboard": {
         "superStructure": {
           "open": false
@@ -82,9 +85,17 @@
       "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
+        "AprilTag1 detected tags": {
+          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-orange.png"
+        },
         "AprilTags": {
-          "image": "C:\\Users\\Girls of Steel\\Documents\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png",
+          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png",
           "length": 0.8999999761581421,
           "width": 0.8999999761581421
         },
@@ -116,12 +127,14 @@
         },
         "bottom": 1476,
         "futurePosition": {
+          "arrows": false,
           "color": [
             255.0,
             0.0,
             251.77218627929688,
             255.0
-          ]
+          ],
+          "style": "Hidden"
         },
         "height": 8.210550308227539,
         "left": 150,

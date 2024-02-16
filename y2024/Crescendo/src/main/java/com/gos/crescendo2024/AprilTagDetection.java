@@ -15,13 +15,16 @@ import org.photonvision.simulation.VisionSystemSim;
 import java.util.Optional;
 
 public class AprilTagDetection {
+    private static final double ROBOT_WIDTH = Units.inchesToMeters(28);
+    private static final double ROBOT_LENGTH = Units.inchesToMeters(28);
+
     //TODO: Update values by putting values in it
     private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
         new Translation3d(
-            -(Units.inchesToMeters(28 - 10.5)),
-            -(Units.inchesToMeters(28) - 0.04),
+            -(ROBOT_WIDTH / 2 - 0.04), // 4cm from back
+             -(ROBOT_LENGTH / 2 - 0.27), // 27cm from right side
             .235),
-        new Rotation3d(0, Math.toRadians(30), Math.toRadians(180)));
+        new Rotation3d(0, Math.toRadians(34), Math.toRadians(180)));
 
     private static final String CAMERA_NAME = "AprilTag1";
 
@@ -36,7 +39,8 @@ public class AprilTagDetection {
         m_photonCamera = new PhotonCamera(CAMERA_NAME);
         m_field = new GoSField.CameraObject(field, CAMERA_NAME, ROBOT_TO_CAMERA);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_photonCamera, ROBOT_TO_CAMERA);
+        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, ROBOT_TO_CAMERA);
+        m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
             m_cameraSim = new PhotonCameraSim(m_photonCamera);
