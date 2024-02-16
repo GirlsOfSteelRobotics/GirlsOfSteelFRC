@@ -15,14 +15,22 @@ import java.util.Optional;
 
 public class AprilTagDetection {
     //TODO: Update values by putting values in it
-    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
+        new Translation3d(0, 0, 0),
+        new Rotation3d(0, 0, 0));
+
+    private static final String CAMERA_NAME = "AprilTag1";
+
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
     private final VisionSystemSim m_visionSim;
     private final PhotonCameraSim m_cameraSim;
 
-    public AprilTagDetection() {
-        m_photonCamera = new PhotonCamera("AprilTag1");
+    private final GoSField.CameraObject m_field;
+
+    public AprilTagDetection(GoSField field) {
+        m_photonCamera = new PhotonCamera(CAMERA_NAME);
+        m_field = new GoSField.CameraObject(field, CAMERA_NAME, ROBOT_TO_CAMERA);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_photonCamera, ROBOT_TO_CAMERA);
 
@@ -32,7 +40,7 @@ public class AprilTagDetection {
             m_cameraSim.enableProcessedStream(true);
             m_cameraSim.enableDrawWireframe(true);
 
-            m_visionSim = new VisionSystemSim("AprilTag1");
+            m_visionSim = new VisionSystemSim(CAMERA_NAME);
             m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
             m_visionSim.addAprilTags(FieldConstants.TAG_LAYOUT);
         } else {
@@ -43,7 +51,9 @@ public class AprilTagDetection {
 
     public Optional<EstimatedRobotPose> getEstimateGlobalPose(Pose2d prevEstimatedRobotPose) {
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        return m_photonPoseEstimator.update();
+        Optional<EstimatedRobotPose> result = m_photonPoseEstimator.update();
+        m_field.setCameraResult(result);
+        return result;
     }
 
     public void updateAprilTagSimulation(Pose2d chassisLocation) {

@@ -73,6 +73,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
 
+        m_field = new GoSField();
+        SmartDashboard.putData("Field", m_field.getSendable());
 
         RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
             Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
@@ -95,7 +97,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
-        m_photonVisionSubsystem = new AprilTagDetection();
+        m_photonVisionSubsystem = new AprilTagDetection(m_field);
         m_objectDetectionSubsystem = new ObjectDetection();
 
         AutoBuilder.configureHolonomic(
@@ -113,9 +115,6 @@ public class ChassisSubsystem extends SubsystemBase {
             GetAllianceUtil::isRedAlliance,
             this
         );
-
-        m_field = new GoSField();
-        SmartDashboard.putData("Field", m_field.getSendable());
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
