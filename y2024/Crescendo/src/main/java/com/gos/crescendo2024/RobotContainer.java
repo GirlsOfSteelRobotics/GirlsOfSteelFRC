@@ -217,11 +217,11 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-        if (RobotBase.isReal()) {
-            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        } else {
+//        if (RobotBase.isReal()) {
+//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+//        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-        }
+//        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////
