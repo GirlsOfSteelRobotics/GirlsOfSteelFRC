@@ -249,7 +249,6 @@ public class ChassisSubsystem extends SubsystemBase {
         resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
 
-
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
@@ -310,6 +309,5 @@ public class ChassisSubsystem extends SubsystemBase {
             m_swerveDrive.setModuleStates(state);
         }).withName("Chassis Push Forward");
     }
-
 
 }

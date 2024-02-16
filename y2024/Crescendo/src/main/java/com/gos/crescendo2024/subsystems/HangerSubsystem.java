@@ -116,7 +116,11 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public Command createMoveHangerChecklist() {
-        return new SparkMaxMotorsMoveChecklist(this, m_hangerMotorPrimary, "Hanger: Move Up", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_hangerMotorPrimary, "Hanger Primary: Move Up", 1.0);
+    }
+
+    public Command createMoveHangerSecondaryChecklist() {
+        return new SparkMaxMotorsMoveChecklist(this, m_hangerMotorSecondary, "Hanger Secondary: Move Up", 1.0);
     }
 }
 
