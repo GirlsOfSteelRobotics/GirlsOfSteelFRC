@@ -272,7 +272,7 @@ public class RobotContainer {
         // shooter
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
-        PropertyManager.printDynamicProperties(false);
+        PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
     }
 
@@ -292,7 +292,9 @@ public class RobotContainer {
         m_armPivotSubsystem.clearStickyFaults();
         m_intakeSubsystem.clearStickyFaults();
         m_shooterSubsystem.clearStickyFaults();
-        // m_hangerSubsystem.clearStickyFaults();
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_hangerSubsystem.clearStickyFaults();
+        }
     }
 
 

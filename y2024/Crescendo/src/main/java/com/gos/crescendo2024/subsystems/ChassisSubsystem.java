@@ -162,16 +162,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDProperties.updateIfChanged();
         m_field.setFuturePose(getFuturePose(0.3));
 
-
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         if (cameraResult.isPresent()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
-
-            // TODO hacky
-            if (DriverStation.isDisabled()) {
-                m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
-            }
+            m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
         }
     }
 
