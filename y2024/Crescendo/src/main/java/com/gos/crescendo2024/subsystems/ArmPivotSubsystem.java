@@ -39,7 +39,7 @@ import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 5.4);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speakerScoreAngle", 30);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 30);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
 
     public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike top angle", 40);
@@ -94,7 +94,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotAbsEncoder.setPositionConversionFactor(360.0);
         m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
         m_pivotAbsEncoder.setInverted(true);
-        m_pivotAbsEncoder.setZeroOffset(115.912605 - 5.4);
+        m_pivotAbsEncoder.setZeroOffset(115.912605 - 5.4 - 1.4);
 
         m_speakerTable = new SpeakerLookupTable();
 
@@ -194,7 +194,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
         Translation2d roboManTranslation = roboMan.get().getTranslation();
         double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
-        return m_speakerTable.getVelocityTable(distanceToSpeaker);
+        return m_speakerTable.getAngleTable(distanceToSpeaker);
     }
 
     @Override

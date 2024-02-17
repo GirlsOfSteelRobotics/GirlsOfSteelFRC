@@ -84,9 +84,9 @@ public class RobotContainer {
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
 
-        NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createWithDefaults(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+        NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
-        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
+        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
         NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
@@ -225,11 +225,11 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-        if (RobotBase.isReal()) {
-            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        } else {
+//        if (RobotBase.isReal()) {
+//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+//        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-        }
+//        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////
@@ -238,6 +238,7 @@ public class RobotContainer {
         // Chassis
         m_driverController.start().and(m_driverController.back())
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());
+        //face shooter to center speaker
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Amp Scoring
@@ -249,15 +250,17 @@ public class RobotContainer {
 
         //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
-            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
+            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
-            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
+            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
                     .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
 
         //go to floor
         m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+//        //intake in
+//        m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand().withTimeout(3));
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 

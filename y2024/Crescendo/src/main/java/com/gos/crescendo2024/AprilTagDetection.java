@@ -106,7 +106,7 @@ public class AprilTagDetection {
             estStdDevs = MULTI_TAG_STDDEV;
         }
         // Increase std devs based on (average) distance
-        if (numTags == 1 && avgDist > 4) {
+        if (numTags == 1 && avgDist > 2.5) {
             estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
         }
         else {

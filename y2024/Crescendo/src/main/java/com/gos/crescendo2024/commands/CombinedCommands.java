@@ -4,10 +4,13 @@ import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+
+import java.util.function.Supplier;
 
 public class CombinedCommands {
 
@@ -19,14 +22,14 @@ public class CombinedCommands {
             .withName("Intake Piece");
     }
 
-    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
-        return armPivot.createMoveArmToDefaultSpeakerAngleCommand()
+    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, Supplier<Pose2d> pos) {
+        return armPivot.createPivotUsingSpeakerTableCommand(pos)
             .alongWith(shooter.createSetRPMCommand(4000));
     }
 
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
-            .alongWith(shooter.createSetRPMCommand(400))
+            .alongWith(shooter.createSetRPMCommand(800))
             .withName("Prepare Amp Shot");
     }
 
