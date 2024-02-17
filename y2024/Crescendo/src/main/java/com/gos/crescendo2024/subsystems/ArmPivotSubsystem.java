@@ -307,4 +307,18 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 })
             .ignoringDisable(true).withName("Pivot to Coast");
     }
+
+    public Command createPivotToBrakeModeCommand() {
+        return this.runEnd(
+                () -> {
+                    m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+                    m_followMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+
+                },
+                () -> {
+                    m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                    m_followMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                })
+            .ignoringDisable(true).withName("Pivot to Break");
+    }
 }
