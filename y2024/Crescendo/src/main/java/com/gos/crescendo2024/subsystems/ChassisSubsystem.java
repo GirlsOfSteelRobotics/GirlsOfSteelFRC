@@ -165,8 +165,8 @@ public class ChassisSubsystem extends SubsystemBase {
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         if (cameraResult.isPresent()) {
             EstimatedRobotPose camPose = cameraResult.get();
-            Pose2d pose2d = camPose.estimatedPose.toPose2d();
-            m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+            Pose2d camEstPose = camPose.estimatedPose.toPose2d();
+            m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
         }
     }
 

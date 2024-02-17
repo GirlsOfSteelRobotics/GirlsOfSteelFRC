@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [25]": {
         "header": {
@@ -296,6 +301,11 @@
             "visible": true
           }
         },
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Auto Chooser": {
         "window": {
           "visible": true
         }

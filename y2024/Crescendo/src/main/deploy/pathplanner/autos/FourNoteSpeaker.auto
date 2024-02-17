@@ -18,19 +18,19 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakePiece"
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "FourPieceSpeakerPt1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
                 }
               }
             ]
@@ -43,7 +43,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -68,7 +68,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
