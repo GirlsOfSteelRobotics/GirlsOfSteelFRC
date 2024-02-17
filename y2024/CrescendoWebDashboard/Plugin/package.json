@@ -1,0 +1,49 @@
+{
+  "name": "example-lit-plugin",
+  "private": true,
+  "version": "0.1.0",
+  "displayName": "SuperStructurePlugin",
+  "description": "GOS 2024 Super Structure Plugin",
+  "author": "Girls of Steel",
+  "email": "girlsofsteelrobotics@gmail.com",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "plugin"
+  ],
+  "main": "./plugin/index.js",
+  "module": "./plugin/index.js",
+  "types": "./plugin/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./plugin/index.d.ts",
+      "import": "./plugin/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*",
+    "lint:format": "eslint src/**/* --fix"
+  },
+  "dependencies": {
+    "@frc-web-components/app": "^0.2.0",
+    "lit": "^2.7.6"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest-dom": "^3.9.2",
+    "eslint-plugin-monorepo": "^0.3.2",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-testing-library": "^5.0.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.7.0"
+  }
+}

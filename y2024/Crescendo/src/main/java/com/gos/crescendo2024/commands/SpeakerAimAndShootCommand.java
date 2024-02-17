@@ -7,14 +7,16 @@ import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 
-public class SpeakerAimAndShootCommand extends Command {
+public final class SpeakerAimAndShootCommand extends Command {
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
@@ -24,26 +26,118 @@ public class SpeakerAimAndShootCommand extends Command {
     private final DoubleSupplier m_armAngleGoalSupplier;
     private final DoubleSupplier m_shooterRpmGoalSupplier;
     private final Supplier<Pose2d> m_robotPoseProvider;
-
     private boolean m_runIntake;
 
-    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
-        this(armPivotSubsystem, chassisSubsystem, intakeSubsystem, shooterSubsystem, ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue);
-    }
+    private final CommandXboxController m_controller;
 
-    public SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem, ChassisSubsystem chassisSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, DoubleSupplier pivotAngle) {
-
+    private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem,
+                                     ChassisSubsystem chassisSubsystem,
+                                     IntakeSubsystem intakeSubsystem,
+                                     ShooterSubsystem shooterSubsystem,
+                                     Supplier<Pose2d> poseSupplier,
+                                     DoubleSupplier shooterRpmGoalSupplier,
+                                     DoubleSupplier armAngleGoalSupplier,
+                                      CommandXboxController controller) {
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
         this.m_shooterSubsystem = shooterSubsystem;
         this.m_intakeTimer = new Timer();
+        this.m_controller = controller;
 
-        m_armAngleGoalSupplier = pivotAngle;
-        m_shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
-        m_robotPoseProvider = m_chassisSubsystem::getPose;
+        m_armAngleGoalSupplier = armAngleGoalSupplier;
+        m_shooterRpmGoalSupplier = shooterRpmGoalSupplier;
+        m_robotPoseProvider = poseSupplier;
 
         addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
+    }
+
+    public static SpeakerAimAndShootCommand createWithDefaults(
+        ArmPivotSubsystem armPivotSubsystem,
+        ChassisSubsystem chassisSubsystem,
+        IntakeSubsystem intakeSubsystem,
+        ShooterSubsystem shooterSubsystem) {
+        DoubleSupplier armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            robotPoseProvider,
+            shooterRpmGoalSupplier,
+            armAngleGoalSupplier,
+            null);
+    }
+
+    public static SpeakerAimAndShootCommand createWithFixedArmAngle(ArmPivotSubsystem armPivotSubsystem,
+                                                                    ChassisSubsystem chassisSubsystem,
+                                                                    IntakeSubsystem intakeSubsystem,
+                                                                    ShooterSubsystem shooterSubsystem,
+                                                                    DoubleSupplier armAngleGoalSupplier) {
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            robotPoseProvider,
+            shooterRpmGoalSupplier,
+            armAngleGoalSupplier,
+            null);
+    }
+
+    public static SpeakerAimAndShootCommand createShootWhileDrive(ArmPivotSubsystem armPivotSubsystem,
+                                                                  ChassisSubsystem chassisSubsystem,
+                                                                  IntakeSubsystem intakeSubsystem,
+                                                                  ShooterSubsystem shooterSubsystem) {
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
+        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            pose,
+            shooterRpmGoalSupplier,
+            pivotAngle,
+            null);
+    }
+
+    public static SpeakerAimAndShootCommand createShootWhileStationary(ArmPivotSubsystem armPivotSubsystem,
+                                                                  ChassisSubsystem chassisSubsystem,
+                                                                  IntakeSubsystem intakeSubsystem,
+                                                                  ShooterSubsystem shooterSubsystem) {
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> pose = chassisSubsystem::getPose;
+        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            pose,
+            shooterRpmGoalSupplier,
+            pivotAngle,
+            null);
+    }
+
+    public static SpeakerAimAndShootCommand driverControllerPractice(ArmPivotSubsystem armPivotSubsystem,
+                                                                     ChassisSubsystem chassisSubsystem,
+                                                                     IntakeSubsystem intakeSubsystem,
+                                                                     ShooterSubsystem shooterSubsystem,
+                                                                     CommandXboxController controller) {
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
+        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
+        return new SpeakerAimAndShootCommand(armPivotSubsystem,
+            chassisSubsystem,
+            intakeSubsystem,
+            shooterSubsystem,
+            pose,
+            shooterRpmGoalSupplier,
+            pivotAngle,
+            controller);
+
     }
 
     @Override
@@ -63,6 +157,9 @@ public class SpeakerAimAndShootCommand extends Command {
         if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {
             m_runIntake = true;
             m_intakeTimer.start();
+            if (m_controller != null) {
+                m_controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.50);
+            }
         }
 
         if (m_runIntake) {

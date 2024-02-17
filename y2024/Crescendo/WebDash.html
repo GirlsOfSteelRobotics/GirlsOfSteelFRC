@@ -1,36 +1,41 @@
 <dashboard-tab
-    tab-name="TeleOperated"
+    tab-name="Drivers"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-sendable-chooser
         source-provider="NetworkTables"
         selected="leave wing"
-        style="transform: translate(166px, 86px);"
+        style="transform: translate(37px, 143px);"
         source-key="/SmartDashboard/Auto Chooser"
         options="[]"
-    ></frc-sendable-chooser><frc-network-alerts
+    ></frc-sendable-chooser><frc-basic-fms-info
         source-provider="NetworkTables"
-        style="transform: translate(166px, 216px);"
-        source-key="/SmartDashboard/Alerts"
-        errors="[]"
-        warnings="[]"
-        infos="[]"
-    ></frc-network-alerts></dashboard-tab><dashboard-tab
-    tab-name="Test Commands"
+        style="transform: translate(22px, 15px);"
+        source-key="/FMSInfo"
+    ></frc-basic-fms-info><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(402px, 110px);"
+        source-key="/Intake Subsystem/Has Piece"
+        true-color="#ff7300"
+        false-color="#e7dede"
+        label="Has Piece"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
-        source-key="/Shuffleboard/test commands/Teleop: Aim at speaker"
+        source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)"
     ></frc-robot-command><super-structure
         source-key="/SmartDashboard/super structure"
         source-provider="NetworkTables"
-        style="width: 460px; height: 315px; transform: translate(267px, 28px);"
+        style="width: 460px; height: 315px; transform: translate(734px, 255px);"
     >
     </super-structure><frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(25px, 17px); width: 170px; height: 50px;"
+        style="transform: translate(25px, 17px); width: 223px; height: 44px;"
         source-key="/Shuffleboard/test commands/Teleop: David Drive"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
@@ -39,16 +44,41 @@
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(40px, 273px); width: 122px; height: 50px;"
-        source-key="/Shuffleboard/test commands/Auto-Shoot in Speaker"
+        source-key="/Shuffleboard/test commands/SpeakerAimAndShoot Default Values"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(46px, 345px);"
         source-key="/Shuffleboard/test commands/Auto-Shoot in Amp"
-    ></frc-robot-command></dashboard-tab><dashboard-tab
+    ></frc-robot-command><frc-field-wrapper
+        source-key="/SmartDashboard/Field"
+        source-provider="NetworkTables"
+        style="transform: translate(723px, 0px);"
+        game="Crescendo"
+        grid-size="1"
+    >
+    </frc-field-wrapper><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(25px, 138px); width: 195px; height: 50px;"
+        source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)"
+    ></frc-robot-command><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(334px, 52px);"
+        source-key="/Arm Pivot Subsystem/Arm At Goal"
+        label="Arm At Goal"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(332px, 135px);"
+        source-key="/Shooter Subsystem/Shooter At Goal"
+        label="Shooter At Goal"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(333px, 215px);"
+        source-key="/Chassis/At Angle Setpoint"
+        label="Chassis At Goal"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -144,7 +174,7 @@
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(423px, 608px);"
+        style="transform: translate(551px, 609px);"
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
@@ -169,12 +199,12 @@
             hidden=""
         ></div>
     </vaadin-number-field><vaadin-number-field
-        label="Abs Arm ANgle"
+        label="Abs Arm Angle"
         value="0"
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(272px, 700px);"
+        style="transform: translate(412px, 608px); width: 128px; height: 73px;"
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
@@ -210,15 +240,10 @@
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
             source-provider="NetworkTables"
-            min="-20"
-            max="20"
+            min="-50"
+            max="50"
         ></frc-line-chart-axis>
 
-        <frc-line-chart-data
-            source-provider="NetworkTables"
-            display-name="Rel Velocity"
-            source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
-        ></frc-line-chart-data>
         <frc-line-chart-data
             source-provider="NetworkTables"
             source-key="/Arm Pivot Subsystem/Abs Encoder Velocity"
@@ -227,7 +252,8 @@
             source-provider="NetworkTables"
             display-name="Rel Velocity"
             source-key="/Arm Pivot Subsystem/Rel Encoder Velocity"
-        ></frc-line-chart-data><frc-line-chart-data
+        ></frc-line-chart-data>
+        <frc-line-chart-data
             source-provider="NetworkTables"
             display-name="Setpoint Velocity"
             source-key="/Arm Pivot Subsystem/Setpoint Velocity"
@@ -339,7 +365,36 @@
         source-key="/Shooter Subsystem/Shooter At Goal"
         style="transform: translate(296px, 48px);"
         label="Shooter At Goal"
-    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    ></frc-boolean-box><vaadin-number-field
+        label="Shooter Goal"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(466px, 551px);"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-7"
+            aria-labelledby="label-vaadin-number-field-224"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-224"
+            for="vaadin-number-field-7"
+        >Shooter Goal</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-171"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab><dashboard-tab
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
@@ -355,6 +410,9 @@
         source-provider="NetworkTables"
         style="transform: translate(73px, 252px);"
         source-key="/SmartDashboard/super structure/HasGamePiece"
+        true-color="#ffa200"
+        false-color="#b4a7a7"
+        label="Has Piece"
     ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Chassis"
     slot="tab"
@@ -388,7 +446,7 @@
 
     <frc-swerve-drivebase
         source-provider="NetworkTables"
-        style="transform: translate(440px, 360px); width: 210px; height: 265px;"
+        style="transform: translate(683px, 334px); width: 210px; height: 265px;"
         source-key="/SwerveDrive"
         wheellocations="[2.5,2,2.5,-2,-2.5,2,-2.5,-2]"
         measuredstates="[0,0,0,0,0,0,0,0]"
@@ -402,20 +460,40 @@
     ></frc-boolean-box><frc-robot-command
         source-provider="NetworkTables"
         source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom"
-        style="transform: translate(675px, 54px);"
+        style="transform: translate(675px, 54px); width: 134.4px; height: 63.6px;"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(694px, 136px);"
+        style="transform: translate(694px, 136px); width: 100px; height: 58px;"
         source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(698px, 210px);"
+        style="transform: translate(698px, 210px); width: 100px; height: 61.2px;"
         source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top"
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
         source-provider="NetworkTables"
-        style="transform: translate(98px, 441px);"
+        style="transform: translate(26px, 389px);"
         game="Crescendo"
         grid-size="1"
     >
-    </frc-field-wrapper></dashboard-tab>
+    </frc-field-wrapper></dashboard-tab><dashboard-tab
+    tab-name="Pit"
+    slot="tab"
+    source-provider="NetworkTables"
+    source-key="/Shuffleboard/test commands/Arm to coast"
+><frc-network-alerts
+        source-provider="NetworkTables"
+        style="transform: translate(688px, 152px);"
+        source-key="/SmartDashboard/Alerts"
+        errors="[]"
+        warnings="[]"
+        infos="[]"
+    ></frc-network-alerts><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(1079px, 104px);"
+        source-key="/Shuffleboard/test commands/Arm to coast"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(1088px, 220px);"
+        source-key="/Shuffleboard/test commands/Chassis Push"
+    ></frc-robot-command></dashboard-tab>

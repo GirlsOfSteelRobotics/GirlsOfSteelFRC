@@ -73,4 +73,3 @@ export class Rectangle extends Shape {
   }
 }
 
-

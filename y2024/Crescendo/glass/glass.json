@@ -1,0 +1,174 @@
+{
+  "NetworkTables": {
+    "transitory": {
+      "Arm Subsystem": {
+        "open": false
+      },
+      "Chassis": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "test commands": {
+          "open": true
+        }
+      },
+      "SmartDashboard": {
+        "Alerts": {
+          "open": true,
+          "string[]##v_/SmartDashboard/Alerts/errors": {
+            "open": true
+          },
+          "string[]##v_/SmartDashboard/Alerts/warnings": {
+            "open": true
+          }
+        },
+        "open": true,
+        "superStructure": {
+          "open": false
+        }
+      },
+      "Turret Subsystem": {
+        "open": false
+      }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/PP Paths/Curve Path": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
+      "/Shuffleboard/PP Paths/LeaveWing": "Command",
+      "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
+      "/Shuffleboard/PP Paths/S-Curve Path": "Command",
+      "/Shuffleboard/PP Paths/SplinePath": "Command",
+      "/Shuffleboard/PP Paths/StraightLinePath": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/SysId/Arm SysId Dynamic Backward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Dynamic Forward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Dynamic Backward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Dynamic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Quasistatic Forward": "Command",
+      "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
+      "/Shuffleboard/test commands/Arm to 0": "Command",
+      "/Shuffleboard/test commands/Arm to 30": "Command",
+      "/Shuffleboard/test commands/Arm to 45": "Command",
+      "/Shuffleboard/test commands/Arm to 60": "Command",
+      "/Shuffleboard/test commands/Arm to 90": "Command",
+      "/Shuffleboard/test commands/Arm to amp angle": "Command",
+      "/Shuffleboard/test commands/Arm to coast": "Command",
+      "/Shuffleboard/test commands/Arm to default speaker angle": "Command",
+      "/Shuffleboard/test commands/Arm to ground intake angle": "Command",
+      "/Shuffleboard/test commands/Arm to speaker (from pose)": "Command",
+      "/Shuffleboard/test commands/Auto-Intake Piece": "Command",
+      "/Shuffleboard/test commands/Auto-Shoot in Amp": "Command",
+      "/Shuffleboard/test commands/Chassis Push": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Origin": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top": "Command",
+      "/Shuffleboard/test commands/Chassis drive to amp": "Command",
+      "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
+      "/Shuffleboard/test commands/Chassis to -180": "Command",
+      "/Shuffleboard/test commands/Chassis to -45": "Command",
+      "/Shuffleboard/test commands/Chassis to 45": "Command",
+      "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/Clear Sticky Faults": "Command",
+      "/Shuffleboard/test commands/Hanger Down": "Command",
+      "/Shuffleboard/test commands/Hanger Up": "Command",
+      "/Shuffleboard/test commands/Shooter Percent Output": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: 3500": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: 4000": "Command",
+      "/Shuffleboard/test commands/Shooter stop": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Fixed Values": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Driving": "Command",
+      "/Shuffleboard/test commands/SpeakerAimAndShoot Shoot While Stationary": "Command",
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (current pose)": "Command",
+      "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
+      "/Shuffleboard/test commands/Teleop: David Drive": "Command",
+      "/Shuffleboard/test commands/Teleop: Normal Swerve Drive": "Command",
+      "/Shuffleboard/test commands/intake in": "Command",
+      "/Shuffleboard/test commands/intake out": "Command",
+      "/Shuffleboard/test commands/shooter RPM: default": "Command",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d"
+    },
+    "windows": {
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Teleop: David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "AprilTag1 detected tags": {
+          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-orange.png"
+        },
+        "AprilTags": {
+          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png",
+          "length": 0.8999999761581421,
+          "width": 0.8999999761581421
+        },
+        "Notes": {
+          "arrows": false,
+          "color": [
+            0.720588207244873,
+            0.49888473749160767,
+            0.035322971642017365,
+            255.0
+          ],
+          "length": 0.45719999074935913,
+          "weight": 1.0,
+          "width": 0.45719999074935913
+        },
+        "OldOdometry": {
+          "arrowColor": [
+            0.10947717726230621,
+            0.656862735748291,
+            0.640762984752655,
+            255.0
+          ],
+          "color": [
+            0.0,
+            255.0,
+            179.99998474121094,
+            255.0
+          ]
+        },
+        "bottom": 1476,
+        "futurePosition": {
+          "arrows": false,
+          "color": [
+            255.0,
+            0.0,
+            251.77218627929688,
+            255.0
+          ],
+          "style": "Hidden"
+        },
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "localhost"
+  }
+}
