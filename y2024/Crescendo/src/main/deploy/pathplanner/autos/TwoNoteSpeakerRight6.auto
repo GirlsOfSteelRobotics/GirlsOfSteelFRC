@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "TwoNoteSpeakerRight6Pt1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNoteSpeakerRight6Pt1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
           }
         },
         {
@@ -44,6 +51,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoPiece",
   "choreoAuto": false
 }

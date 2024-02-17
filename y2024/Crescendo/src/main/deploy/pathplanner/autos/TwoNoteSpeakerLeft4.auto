@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7502903555425439,
-      "y": 6.59
+      "x": 0.7398459580581958,
+      "y": 6.694858784124826
     },
     "rotation": 45.0
   },
@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "TwoNoteSpeakerLeft4Pt1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNoteSpeakerLeft4Pt1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
           }
         },
         {
@@ -44,6 +51,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoPiece",
   "choreoAuto": false
 }
