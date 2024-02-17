@@ -25,8 +25,8 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 4000);
-    private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
+    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterDefaultRpm", 4000);
+    private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeed", 0.5);
     private static final double ALLOWABLE_ERROR = 125;
 
     private final SimableCANSparkMax m_shooterMotorLeader;
@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setInverted(false);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
             .addP(0.000)
             .addI(0.0)
             .addD(0.0)

@@ -17,6 +17,9 @@
           "open": true,
           "string[]##v_/SmartDashboard/Alerts/errors": {
             "open": true
+          },
+          "string[]##v_/SmartDashboard/Alerts/warnings": {
+            "open": true
           }
         },
         "open": true,

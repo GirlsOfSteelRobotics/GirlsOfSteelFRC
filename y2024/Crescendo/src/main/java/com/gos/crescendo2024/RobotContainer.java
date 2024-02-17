@@ -266,7 +266,7 @@ public class RobotContainer {
         // shooter
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
-        PropertyManager.printDynamicProperties();
+        PropertyManager.printDynamicProperties(false);
         // PropertyManager.purgeExtraKeys();
     }
 
