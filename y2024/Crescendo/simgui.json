@@ -1,12 +1,12 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [25]": {
+      "SPARK MAX [21]": {
         "header": {
           "open": true
         }
       },
-      "SPARK MAX [6]": {
+      "SPARK MAX [25]": {
         "header": {
           "open": true
         }
@@ -15,9 +15,6 @@
         "header": {
           "open": true
         }
-      },
-      "window": {
-        "visible": false
       }
     },
     "RoboRIO": {
@@ -240,6 +237,10 @@
       "/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)": "Command",
       "/Shuffleboard/test commands/Teleop: David Drive": "Command",
       "/Shuffleboard/test commands/Teleop: Normal Swerve Drive": "Command",
+      "/Shuffleboard/test commands/Teleop: Set Back Left Module": "Command",
+      "/Shuffleboard/test commands/Teleop: Set Back Right Module": "Command",
+      "/Shuffleboard/test commands/Teleop: Set Front Left Module": "Command",
+      "/Shuffleboard/test commands/Teleop: Set Front Right Module": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
@@ -273,6 +274,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/test commands/Teleop: Set Front Right Module": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -295,9 +301,6 @@
           "window": {
             "visible": true
           }
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Field": {
@@ -375,10 +378,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
@@ -390,6 +390,9 @@
     },
     "transitory": {
       "Arm Pivot Subsystem": {
+        "open": true
+      },
+      "Chassis": {
         "open": true
       },
       "SmartDashboard": {
@@ -404,13 +407,15 @@
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
     "Connections": {
       "open": true
     },
     "Server": {
       "open": true
-    },
-    "visible": true
+    }
   },
   "NetworkTables View": {
     "visible": false

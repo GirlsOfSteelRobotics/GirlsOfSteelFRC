@@ -67,6 +67,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
+    private final GosDoubleProperty m_selectedModuleSpeed = new GosDoubleProperty(false, "Selected Module Velocity", 2);
+
+    private final GosDoubleProperty m_selectedModuleAngle = new GosDoubleProperty(false, "Selected Module Angle", 0);
+
     private final LoggingUtil m_logging;
 
     public ChassisSubsystem() {
@@ -249,6 +253,9 @@ public class ChassisSubsystem extends SubsystemBase {
         resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
 
+    public void setModuleState(int moduleId, double degrees, double velocity) {
+        setModuleState(moduleId, degrees, velocity);
+    }
 
     /////////////////////////////////////
     // Checklists
@@ -311,5 +318,8 @@ public class ChassisSubsystem extends SubsystemBase {
         }).withName("Chassis Push Forward");
     }
 
+    public Command commandSetModuleState(int moduleId) {
+        return this.run(() -> m_swerveDrive.setModuleState(moduleId, m_selectedModuleSpeed.getValue(), m_selectedModuleAngle.getValue())).withName("Module " + moduleId + "(" + m_selectedModuleSpeed.getValue() + ", " + m_selectedModuleAngle.getValue() + ")");
+    }
 
 }

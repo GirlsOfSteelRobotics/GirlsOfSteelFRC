@@ -124,6 +124,13 @@ public class RobotContainer {
         shuffleboardTab.add("Teleop: Aim at speaker (current pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose).withName("Turn To Speaker (current)"));
         shuffleboardTab.add("Teleop: Aim at speaker (predicted pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getFuturePose).withName("Turn To Speaker (prediction)"));
 
+        //Individual Module Tests
+        shuffleboardTab.add("Teleop: Set Front Left Module", m_chassisSubsystem.commandSetModuleState(0));
+        shuffleboardTab.add("Teleop: Set Front Right Module", m_chassisSubsystem.commandSetModuleState(1));
+        shuffleboardTab.add("Teleop: Set Back Left Module", m_chassisSubsystem.commandSetModuleState(2));
+        shuffleboardTab.add("Teleop: Set Back Right Module", m_chassisSubsystem.commandSetModuleState(3));
+
+
         //SpeakerAimAndShootCommands:
         shuffleboardTab.add("SpeakerAimAndShoot Default Values", SpeakerAimAndShootCommand.createWithDefaults(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withName("AimAndShoot w/ defaults"));
         shuffleboardTab.add("SpeakerAimAndShoot Fixed Values", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, () -> 20).withName("AimAndShoot @ 20deg"));
