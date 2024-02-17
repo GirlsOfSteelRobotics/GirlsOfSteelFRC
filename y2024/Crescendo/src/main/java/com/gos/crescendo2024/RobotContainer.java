@@ -52,7 +52,7 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
-    // private final HangerSubsystem m_hangerSubsystem;
+    private final HangerSubsystem m_hangerSubsystem;
     // SysId
     private final ArmPivotSysId m_armPivotSysId;
     private final ShooterSysId m_shooterSysId;
@@ -75,7 +75,11 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        // m_hangerSubsystem = new HangerSubsystem();
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_hangerSubsystem = new HangerSubsystem();
+        } else {
+            m_hangerSubsystem = null;
+        }
 
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
@@ -117,7 +121,9 @@ public class RobotContainer {
         addArmPivotTestCommands(shuffleboardTab);
         addIntakeTestCommands(shuffleboardTab);
         addShooterTestCommands(shuffleboardTab);
-        addHangerTestCommands(shuffleboardTab);
+        if (Constants.IS_COMPETITION_ROBOT) {
+            addHangerTestCommands(shuffleboardTab);
+        }
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Teleop: Normal Swerve Drive", new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
@@ -199,8 +205,8 @@ public class RobotContainer {
     }
 
     private void addHangerTestCommands(ShuffleboardTab shuffleboardTab) {
-        // shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp().withName("Hanger Up"));
-        // shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown().withName("Hanger Down"));
+        shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp().withName("Hanger Up"));
+        shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown().withName("Hanger Down"));
     }
 
 
@@ -217,11 +223,11 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-//        if (RobotBase.isReal()) {
-//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-//        } else {
+        if (RobotBase.isReal()) {
+            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-//        }
+        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////
