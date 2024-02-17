@@ -189,7 +189,6 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to 60", m_armPivotSubsystem.createMoveArmToAngleCommand(60));
         shuffleboardTab.add("Arm to 90", m_armPivotSubsystem.createMoveArmToAngleCommand(90));
         shuffleboardTab.add("Arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
-        shuffleboardTab.add("Arm to brake", m_armPivotSubsystem.createPivotToBrakeModeCommand());
         shuffleboardTab.add("Arm to amp angle", m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
         shuffleboardTab.add("Arm to ground intake angle", m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
         shuffleboardTab.add("Arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
