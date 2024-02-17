@@ -36,11 +36,9 @@ public class AprilTagDetection {
     );
 
     private static final String CAMERA_NAME = "AprilTag1";
-
-
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);
     private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.5, 0.5, 1);
-    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
     private final VisionSystemSim m_visionSim;
