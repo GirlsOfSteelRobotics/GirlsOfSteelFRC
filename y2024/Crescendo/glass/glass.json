@@ -7,7 +7,19 @@
       "Chassis": {
         "open": true
       },
+      "Shuffleboard": {
+        "test commands": {
+          "open": true
+        }
+      },
       "SmartDashboard": {
+        "Alerts": {
+          "open": true,
+          "string[]##v_/SmartDashboard/Alerts/errors": {
+            "open": true
+          }
+        },
+        "open": true,
         "superStructure": {
           "open": false
         }
