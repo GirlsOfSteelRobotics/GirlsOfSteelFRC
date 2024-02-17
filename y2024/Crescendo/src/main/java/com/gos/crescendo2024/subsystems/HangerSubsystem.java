@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HangerSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(true, "Hanger_Down_Speed", -1);
-    private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(true, "Hanger_Up_Speed", 1);
+    private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Hanger_Down_Speed", -1);
+    private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Hanger_Up_Speed", 1);
 
     private final SimableCANSparkMax m_hangerMotorPrimary;
     private final RelativeEncoder m_hangerPrimaryEncoder;

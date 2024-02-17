@@ -14,6 +14,10 @@ package com.gos.crescendo2024;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
+
+    public static final boolean IS_COMPETITION_ROBOT = false;
+
     // Joystick IDS
     public static final int DRIVER_JOYSTICK = 0;
     public static final int OPERATOR_JOYSTICK = 1;

@@ -75,7 +75,11 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        m_hangerSubsystem = new HangerSubsystem();
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_hangerSubsystem = new HangerSubsystem();
+        } else {
+            m_hangerSubsystem = null;
+        }
 
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
@@ -117,7 +121,9 @@ public class RobotContainer {
         addArmPivotTestCommands(shuffleboardTab);
         addIntakeTestCommands(shuffleboardTab);
         addShooterTestCommands(shuffleboardTab);
-        addHangerTestCommands(shuffleboardTab);
+        if (Constants.IS_COMPETITION_ROBOT) {
+            addHangerTestCommands(shuffleboardTab);
+        }
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Teleop: Normal Swerve Drive", new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
@@ -286,7 +292,9 @@ public class RobotContainer {
         m_armPivotSubsystem.clearStickyFaults();
         m_intakeSubsystem.clearStickyFaults();
         m_shooterSubsystem.clearStickyFaults();
-        m_hangerSubsystem.clearStickyFaults();
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_hangerSubsystem.clearStickyFaults();
+        }
     }
 
 

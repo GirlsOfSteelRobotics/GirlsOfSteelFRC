@@ -115,7 +115,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.0015,
+    "value": 0.0,
     "properties": {
       "persistent": true,
       "retained": true
@@ -140,7 +140,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.00018,
+    "value": 0.00022,
     "properties": {
       "persistent": true,
       "retained": true
@@ -149,7 +149,7 @@
   {
     "name": "/Preferences/intakeAngle",
     "type": "double",
-    "value": 0.0,
+    "value": 5.4,
     "properties": {
       "persistent": true,
       "retained": true
@@ -158,7 +158,7 @@
   {
     "name": "/Preferences/speakerScoreAngle",
     "type": "double",
-    "value": 32.0,
+    "value": 30.0,
     "properties": {
       "persistent": true,
       "retained": true
@@ -267,7 +267,7 @@
   {
     "name": "/Preferences/arm spike top angle",
     "type": "double",
-    "value": 32.0,
+    "value": 40.0,
     "properties": {
       "persistent": true
     }
@@ -284,6 +284,22 @@
     "name": "/Preferences/arm spike bottom angle",
     "type": "double",
     "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Intake_Out_Speed",
+    "type": "double",
+    "value": -1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Intake_In_Speed",
+    "type": "double",
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
