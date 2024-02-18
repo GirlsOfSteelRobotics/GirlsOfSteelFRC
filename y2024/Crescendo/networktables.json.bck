@@ -254,5 +254,29 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/arm spike top angle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike middle angle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike bottom angle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
