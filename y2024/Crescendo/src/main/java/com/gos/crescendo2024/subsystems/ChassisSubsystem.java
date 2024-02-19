@@ -82,10 +82,11 @@ public class ChassisSubsystem extends SubsystemBase {
             Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            RevSwerveModuleConstants.DriveMotorTeeth.T14,
-            WHEEL_BASE, TRACK_WIDTH,
-            MAX_TRANSLATION_SPEED,
-            MAX_ROTATION_SPEED);
+            RevSwerveModuleConstants.DriveMotor.NEO, RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
+            WHEEL_BASE,
+            TRACK_WIDTH,
+            MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
 
         //TODO need change pls
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);

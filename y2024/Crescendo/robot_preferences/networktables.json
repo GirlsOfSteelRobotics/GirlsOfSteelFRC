@@ -149,7 +149,7 @@
   {
     "name": "/Preferences/intakeAngle",
     "type": "double",
-    "value": 5.4,
+    "value": 0.0,
     "properties": {
       "persistent": true,
       "retained": true
@@ -300,6 +300,14 @@
     "name": "/Preferences/Intake_In_Speed",
     "type": "double",
     "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/defaultSpeakerScoreAngle",
+    "type": "double",
+    "value": 47.0,
     "properties": {
       "persistent": true
     }
