@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import com.gos.rebound_rumble.objects.Camera;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class ShootBestFitLine extends GosCommandBase {
+public class ShootBestFitLine extends GosCommandBaseBase {
 
     private final Joystick m_operatorJoystick;
     private final Shooter m_shooter;

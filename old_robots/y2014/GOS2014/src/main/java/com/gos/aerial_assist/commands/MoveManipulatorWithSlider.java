@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Manipulator;
 /**
  * @author appasamysm
  */
-public class MoveManipulatorWithSlider extends GosCommandBase {
+public class MoveManipulatorWithSlider extends GosCommandBaseBase {
 
     //Joystick thinks top is zero
     //Joystick thinks bottom is full

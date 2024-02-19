@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-public class TuneI extends GosCommandBase {
+public class TuneI extends GosCommandBaseBase {
 
     private final double m_setpoint;
     private final double m_bI;

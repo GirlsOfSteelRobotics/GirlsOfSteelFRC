@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Collector;
 
-public class ReverseCollectors extends GosCommandBase {
+public class ReverseCollectors extends GosCommandBaseBase {
     private final Collector m_collector;
 
     public ReverseCollectors(Collector collector) {

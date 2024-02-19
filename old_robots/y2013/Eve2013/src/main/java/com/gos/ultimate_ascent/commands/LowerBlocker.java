@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Feeder;
 /**
  * @author GirlsOfSTEEL
  */
-public class LowerBlocker extends GosCommandBase {
+public class LowerBlocker extends GosCommandBaseBase {
 
     private final Feeder m_feeder;
 

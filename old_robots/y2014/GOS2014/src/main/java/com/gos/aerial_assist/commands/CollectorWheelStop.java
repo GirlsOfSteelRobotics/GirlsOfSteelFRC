@@ -15,7 +15,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  * @author Abby, Sophia, Sonia
  */
 //This is a seperate command to stop the wheel aside from the automatic
-public class CollectorWheelStop extends GosCommandBase {
+public class CollectorWheelStop extends GosCommandBaseBase {
 
     private final Collector m_collector;
 

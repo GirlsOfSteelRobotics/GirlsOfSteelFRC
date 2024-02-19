@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class TestShootUsingTable extends GosCommandBase {
+public class TestShootUsingTable extends GosCommandBaseBase {
     private final Shooter m_shooter;
     private final OI m_oi;
 

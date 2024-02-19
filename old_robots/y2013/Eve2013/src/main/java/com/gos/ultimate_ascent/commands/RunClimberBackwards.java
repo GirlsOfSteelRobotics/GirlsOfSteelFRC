@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Climber;
 /**
  * @author sam
  */
-public class RunClimberBackwards extends GosCommandBase {
+public class RunClimberBackwards extends GosCommandBaseBase {
 
     private final Climber m_climber;
 

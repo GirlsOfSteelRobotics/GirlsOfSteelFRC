@@ -7,13 +7,13 @@ package com.gos.aerial_assist.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.RobotMap;
-import com.gos.aerial_assist.commands.GosCommandBase;
+import com.gos.aerial_assist.commands.GosCommandBaseBase;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
  * @author sophia
  */
-public class TestManipulator extends GosCommandBase {
+public class TestManipulator extends GosCommandBaseBase {
 
     private final Manipulator m_manipulator;
     private double m_speed;
