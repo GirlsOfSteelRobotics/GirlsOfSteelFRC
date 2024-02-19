@@ -50,7 +50,10 @@ public class RevSwerveChassis {
 
     /** Creates a new DriveSubsystem. */
     public RevSwerveChassis(RevSwerveChassisConstants chassisConstants, Supplier<Rotation2d> gyroAngleSupplier, BaseGyroWrapper gyroSimulator) {
-        RevSwerveModuleConstants moduleConstants = new RevSwerveModuleConstants(chassisConstants.m_moduleDriveTeeth);
+        RevSwerveModuleConstants moduleConstants = new RevSwerveModuleConstants(
+            chassisConstants.m_driveMotor,
+            chassisConstants.m_moduleDrivePinionTeeth,
+            chassisConstants.m_moduleDriveSpurTeeth);
 
         m_frontLeft = new RevSwerveModule(
             "FL",

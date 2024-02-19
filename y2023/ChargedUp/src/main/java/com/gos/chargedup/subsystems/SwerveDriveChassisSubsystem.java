@@ -36,11 +36,12 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
             Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            RevSwerveModuleConstants.DriveMotorTeeth.T14,
-            WHEEL_BASE, TRACK_WIDTH,
+            RevSwerveModuleConstants.DriveMotor.NEO, RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
+            WHEEL_BASE,
+            TRACK_WIDTH,
             MAX_TRANSLATION_SPEED,
-            MAX_ROTATION_SPEED
-        );
+            MAX_ROTATION_SPEED);
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         AutoBuilder.configureHolonomic(

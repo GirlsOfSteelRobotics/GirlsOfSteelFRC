@@ -24,7 +24,7 @@ public class AutoModePattern {
         autonMap.put(Autos.AutoModes.LEAVE_WING, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kDenim));
         autonMap.put(Autos.AutoModes.PRELOAD_AND_LEAVE_WING, new LEDFlash(buffer, startIndex, startIndex +  numLeds, 1.0, Color.kGreen));
         autonMap.put(Autos.AutoModes.PRELOAD_AND_CENTER_LINE, new LEDFlash(buffer, startIndex, startIndex +  numLeds, 1.0, Color.kYellow));
-        autonMap.put(Autos.AutoModes.FOUR_NOTE, new LEDFlash(buffer, startIndex,startIndex +   numLeds, 1.0, Color.kRed));
+        autonMap.put(Autos.AutoModes.FOUR_NOTE, new LEDFlash(buffer, startIndex, startIndex +   numLeds, 1.0, Color.kRed));
         autonMap.put(Autos.AutoModes.PRELOAD_AND_SHOOT, new LEDMovingPixel(buffer, startIndex, startIndex +  numLeds, Color.kWhite));
         return autonMap;
     }

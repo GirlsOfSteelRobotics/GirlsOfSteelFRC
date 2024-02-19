@@ -3,10 +3,7 @@ package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.auton.Autos;
-import com.gos.crescendo2024.led_patterns.subpatterns.AlertPatterns;
-import com.gos.crescendo2024.led_patterns.subpatterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.DisabledPatterns;
-import com.gos.crescendo2024.led_patterns.subpatterns.HasPiecePattern;
 import com.gos.crescendo2024.led_patterns.EnabledPatterns;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;

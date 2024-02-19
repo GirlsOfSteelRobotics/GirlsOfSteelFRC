@@ -2,7 +2,6 @@ package com.gos.crescendo2024.led_patterns;
 
 import com.gos.crescendo2024.led_patterns.subpatterns.HasPiecePattern;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
-import com.gos.lib.led.LEDRainbow;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 public class EnabledPatterns {
