@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Climber;
 /**
  * @author sam
  */
-public class TipRobotOver extends GosCommandBaseBase {
+public class TipRobotOver extends GosCommandBase {
 
 
     private final Climber m_climber;

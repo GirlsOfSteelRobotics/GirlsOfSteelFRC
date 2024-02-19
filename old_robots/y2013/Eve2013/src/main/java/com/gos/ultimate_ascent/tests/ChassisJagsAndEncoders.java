@@ -5,13 +5,13 @@
 
 package com.gos.ultimate_ascent.tests;
 
-import com.gos.ultimate_ascent.commands.GosCommandBaseBase;
+import com.gos.ultimate_ascent.commands.GosCommandBase;
 import com.gos.ultimate_ascent.subsystems.Chassis;
 
 /**
  * @author sophia
  */
-public class ChassisJagsAndEncoders extends GosCommandBaseBase {
+public class ChassisJagsAndEncoders extends GosCommandBase {
     //copied from KiwiDrive code
 
     private final Chassis m_chassis;

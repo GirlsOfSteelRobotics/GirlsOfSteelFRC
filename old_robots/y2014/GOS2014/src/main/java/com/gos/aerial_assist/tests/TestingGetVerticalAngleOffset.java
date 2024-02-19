@@ -10,9 +10,9 @@ package com.gos.aerial_assist.tests;
  * @author Resetar
  */
 
-import com.gos.aerial_assist.commands.GosCommandBaseBase;
+import com.gos.aerial_assist.commands.GosCommandBase;
 
-public class TestingGetVerticalAngleOffset extends GosCommandBaseBase {
+public class TestingGetVerticalAngleOffset extends GosCommandBase {
 
     // Called just before this Command runs the first time
     @Override

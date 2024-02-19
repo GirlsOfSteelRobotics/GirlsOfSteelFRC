@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class DriveVelocityChassisTuning extends GosCommandBaseBase {
+public class DriveVelocityChassisTuning extends GosCommandBase {
     private final Chassis m_chassis;
 
     public DriveVelocityChassisTuning(Chassis chassis) {

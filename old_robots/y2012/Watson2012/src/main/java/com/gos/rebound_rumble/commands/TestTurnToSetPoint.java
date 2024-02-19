@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TestTurnToSetPoint extends GosCommandBaseBase {
+public class TestTurnToSetPoint extends GosCommandBase {
 
     private final Chassis m_chassis;
     private double m_degreesToTurn;

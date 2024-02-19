@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TurnToSetPoint extends GosCommandBaseBase {
+public class TurnToSetPoint extends GosCommandBase {
 
     private final Chassis m_chassis;
     private final double m_degreesToTurn;

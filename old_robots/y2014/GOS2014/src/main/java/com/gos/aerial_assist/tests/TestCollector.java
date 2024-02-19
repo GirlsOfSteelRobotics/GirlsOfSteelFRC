@@ -8,13 +8,13 @@ package com.gos.aerial_assist.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.RobotMap;
-import com.gos.aerial_assist.commands.GosCommandBaseBase;
+import com.gos.aerial_assist.commands.GosCommandBase;
 import com.gos.aerial_assist.subsystems.Collector;
 
 /**
  * @author Abby
  */
-public class TestCollector extends GosCommandBaseBase {
+public class TestCollector extends GosCommandBase {
 
     private final Collector m_collector;
 

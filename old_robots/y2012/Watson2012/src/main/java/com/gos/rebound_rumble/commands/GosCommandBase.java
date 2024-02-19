@@ -4,15 +4,15 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public abstract class GosCommandBaseBase extends Command {
+public abstract class GosCommandBase extends Command {
 
     protected Timer m_timer;
 
-    public GosCommandBaseBase(String name) {
+    public GosCommandBase(String name) {
         setName(name);
     }
 
-    public GosCommandBaseBase() {
+    public GosCommandBase() {
         super();
     }
 

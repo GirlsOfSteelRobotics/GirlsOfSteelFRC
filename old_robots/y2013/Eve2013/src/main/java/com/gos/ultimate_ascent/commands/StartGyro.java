@@ -2,7 +2,7 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Chassis;
 
-public class StartGyro extends GosCommandBaseBase {
+public class StartGyro extends GosCommandBase {
 
     private final Chassis m_chassis;
     private int m_angle;

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TestDriveSlowVelocity extends GosCommandBaseBase {
+public class TestDriveSlowVelocity extends GosCommandBase {
 
     private final Chassis m_chassis;
     private final Joystick m_driverJoystick;

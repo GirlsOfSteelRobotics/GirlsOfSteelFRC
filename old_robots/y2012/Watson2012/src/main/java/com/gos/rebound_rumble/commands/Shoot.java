@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class Shoot extends GosCommandBaseBase {
+public class Shoot extends GosCommandBase {
 
     private final Shooter m_shooter;
     private final OI m_oi;

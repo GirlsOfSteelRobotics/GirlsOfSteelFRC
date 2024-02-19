@@ -2,7 +2,7 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Chassis;
 
-public class DisableRotation extends GosCommandBaseBase {
+public class DisableRotation extends GosCommandBase {
 
     private final Chassis m_chassis;
 

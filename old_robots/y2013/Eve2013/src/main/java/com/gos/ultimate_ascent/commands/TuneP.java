@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @SuppressWarnings({"PMD.TooManyFields", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-public class TuneP extends GosCommandBaseBase {
+public class TuneP extends GosCommandBase {
 
     //set to what TuneI gives
     private double m_rightI;

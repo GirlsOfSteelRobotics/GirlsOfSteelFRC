@@ -3,7 +3,7 @@ package com.gos.ultimate_ascent.commands;
 import com.gos.ultimate_ascent.subsystems.Chassis;
 import com.gos.ultimate_ascent.subsystems.DriveFlag;
 
-public class HoldChassis extends GosCommandBaseBase {
+public class HoldChassis extends GosCommandBase {
 
     private final Chassis m_chassis;
 
