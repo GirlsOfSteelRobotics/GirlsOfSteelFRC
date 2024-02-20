@@ -49,8 +49,16 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 
-    public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
+    public static final double MAX_TRANSLATION_SPEED;
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(720);
+
+    static {
+        if (Constants.IS_COMPETITION_ROBOT) {
+            MAX_TRANSLATION_SPEED = 5.5; // Theoretically 5.74
+        } else {
+            MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
+        }
+    }
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -77,12 +85,20 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field = new GoSField();
         SmartDashboard.putData("Field", m_field.getSendable());
 
+        RevSwerveModuleConstants.DriveMotor motorType;
+        if (Constants.IS_COMPETITION_ROBOT) {
+            motorType = RevSwerveModuleConstants.DriveMotor.VORTEX;
+        } else {
+            motorType = RevSwerveModuleConstants.DriveMotor.NEO;
+        }
+
         RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
             Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
             Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            RevSwerveModuleConstants.DriveMotor.NEO, RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            motorType,
+            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
             RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
             WHEEL_BASE,
             TRACK_WIDTH,

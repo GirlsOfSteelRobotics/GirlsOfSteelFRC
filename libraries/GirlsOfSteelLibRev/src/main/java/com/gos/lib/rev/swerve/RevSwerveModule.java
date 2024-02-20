@@ -6,10 +6,13 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SimableRevDevice;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -28,7 +31,7 @@ import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 public class RevSwerveModule {
     private final String m_moduleName;
 
-    private final SimableCANSparkMax m_drivingSparkMax;
+    private final CANSparkBase m_drivingSparkMax;
     private final SimableCANSparkMax m_turningSparkMax;
 
     private final RelativeEncoder m_drivingEncoder;
@@ -41,7 +44,7 @@ public class RevSwerveModule {
     private final SparkPIDController m_turningPIDController;
     private final PidProperty m_turningPIDProperty;
 
-    private final SparkMaxAlerts m_wheelAlerts;
+//    private final SparkMaxAlerts m_wheelAlerts;
     private final SparkMaxAlerts m_azimuthAlerts;
 
     private final double m_chassisAngularOffset;
@@ -64,7 +67,17 @@ public class RevSwerveModule {
     public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset) {
         m_moduleName = moduleName;
 
-        m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+        switch(moduleConstants.m_driveMotorType) {
+        case NEO:
+            m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+            break;
+        case VORTEX:
+            m_drivingSparkMax = new SimableCANSparkFlex(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+            break;
+        default:
+            throw new IllegalArgumentException();
+        }
+
         m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkLowLevel.MotorType.kBrushless);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
@@ -124,7 +137,7 @@ public class RevSwerveModule {
             .addD(0)
             .build();
 
-        m_wheelAlerts = new SparkMaxAlerts(m_drivingSparkMax, "SwerveModuleDrive: " + moduleName);
+//        m_wheelAlerts = new SparkMaxAlerts(m_drivingSparkMax, "SwerveModuleDrive: " + moduleName);
         m_azimuthAlerts = new SparkMaxAlerts(m_turningSparkMax, "SwerveModuleTurning: " + moduleName);
 
         m_drivingSparkMax.setIdleMode(RevSwerveModuleConstants.DRIVING_MOTOR_IDLE_MODE);
@@ -146,14 +159,14 @@ public class RevSwerveModule {
                 16.0,
                 0.001
             );
-            m_simWrapper = new SwerveModuleSimWrapper(
-                moduleSim,
-                new RevMotorControllerSimWrapper(m_drivingSparkMax),
-                new RevMotorControllerSimWrapper(m_turningSparkMax),
-                RevEncoderSimWrapper.create(m_drivingSparkMax),
-                RevEncoderSimWrapper.create(m_turningSparkMax),
-                RevSwerveModuleConstants.WHEEL_DIAMETER_METERS * Math.PI,
-                false);
+//            m_simWrapper = new SwerveModuleSimWrapper(
+//                moduleSim,
+//                new RevMotorControllerSimWrapper((SimableRevDevice) m_drivingSparkMax),
+//                new RevMotorControllerSimWrapper(m_turningSparkMax),
+//                RevEncoderSimWrapper.create((SimableRevDevice) m_drivingSparkMax),
+//                RevEncoderSimWrapper.create(m_turningSparkMax),
+//                RevSwerveModuleConstants.WHEEL_DIAMETER_METERS * Math.PI,
+//                false);
         }
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
@@ -207,7 +220,7 @@ public class RevSwerveModule {
 
         m_logger.updateLogs();
         m_azimuthAlerts.checkAlerts();
-        m_wheelAlerts.checkAlerts();
+//        m_wheelAlerts.checkAlerts();
     }
 
     public SwerveModuleState getDesiredState() {
