@@ -1,4 +1,4 @@
-package com.gos.crescendo2024.led_patterns;
+package com.gos.crescendo2024.led_patterns.subpatterns;
 
 import com.gos.lib.led.LEDFlash;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -9,7 +9,7 @@ public class HasPiecePattern {
     private int m_numCycles;
     private boolean m_hasPiece;
 
-    public HasPiecePattern(int numberOfLEDs, AddressableLEDBuffer buffer) {
+    public HasPiecePattern(AddressableLEDBuffer buffer, int numberOfLEDs) {
         m_hasPiecePattern = new LEDFlash(buffer, 0, numberOfLEDs, 0.25, Color.kTomato);
         m_numCycles = 0;
     }
@@ -30,5 +30,3 @@ public class HasPiecePattern {
         }
     }
 }
-
-

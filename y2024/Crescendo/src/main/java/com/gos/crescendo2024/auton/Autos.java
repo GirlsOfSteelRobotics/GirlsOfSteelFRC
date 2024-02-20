@@ -25,7 +25,8 @@ public final class Autos {
         TWO_NOTE_RIGHT_6("TwoNoteSpeakerRight6"),
         TWO_NOTE_RIGHT_7("TwoNotesSpeakerRight7"),
         LEAVE_WING("LeaveWing"),
-        PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing");
+        PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
+        PRELOAD_AND_SHOOT("JustShoot");
 
 
         public final String m_modeName;

@@ -12,7 +12,6 @@ public final class RevSwerveModuleConstants {
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
     // Calculations required for driving motor conversion factors and feed forward
-    public static final double DRIVING_MOTOR_FREE_SPEED_RPS = NeoMotorConstants.FREE_SPEED_RPM / 60;
     public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
     public static final double WHEEL_CIRCUMFERENCE_METERS = WHEEL_DIAMETER_METERS * Math.PI;
 
@@ -39,23 +38,51 @@ public final class RevSwerveModuleConstants {
         public static final double FREE_SPEED_RPM = 5676;
     }
 
-    public enum DriveMotorTeeth {
-        T12(12, Units.feetToMeters(13.51)),
-        T13(13, Units.feetToMeters(14.63)),
-        T14(14, Units.feetToMeters(15.76));
+    public static final class VortexMotorConstants {
+        public static final double FREE_SPEED_RPM = 6784;
+    }
+
+    public enum DriveMotorPinionTeeth {
+        T12(12),
+        T13(13),
+        T14(14),
+        T15(15),
+        T16(16);
 
         public final int m_teeth;
-        public final double m_theoreticalFreeSpeedMps;
 
-        DriveMotorTeeth(int teeth, double theoreticalFreeSpeedMps) {
+        DriveMotorPinionTeeth(int teeth) {
             m_teeth = teeth;
-            m_theoreticalFreeSpeedMps = theoreticalFreeSpeedMps;
         }
     }
 
-    public RevSwerveModuleConstants(DriveMotorTeeth teeth) {
-        m_drivingMotorReduction = (45.0 * 22) / (teeth.m_teeth * 15);
-        m_driveWheelFreeSpeedRps = (DRIVING_MOTOR_FREE_SPEED_RPS * WHEEL_CIRCUMFERENCE_METERS)
+    public enum DriveMotorSpurTeeth {
+        T19(19),
+        T20(20),
+        T21(21),
+        T22(22);
+
+        public final int m_teeth;
+
+        DriveMotorSpurTeeth(int teeth) {
+            m_teeth = teeth;
+        }
+    }
+
+    public enum DriveMotor {
+        NEO(NeoMotorConstants.FREE_SPEED_RPM / 60),
+        VORTEX(VortexMotorConstants.FREE_SPEED_RPM / 60);
+
+        public final double m_freeSpeedRps;
+
+        DriveMotor(double freeSpeedRps) {
+            m_freeSpeedRps = freeSpeedRps;
+        }
+    }
+
+    public RevSwerveModuleConstants(DriveMotor driveMotor, DriveMotorPinionTeeth pinionTeeth, DriveMotorSpurTeeth spurTeeth) {
+        m_drivingMotorReduction = (45.0 * spurTeeth.m_teeth) / (pinionTeeth.m_teeth * 15);
+        m_driveWheelFreeSpeedRps = (driveMotor.m_freeSpeedRps * WHEEL_CIRCUMFERENCE_METERS)
             / m_drivingMotorReduction;
 
         m_drivingEncoderPositionFactor = (WHEEL_DIAMETER_METERS * Math.PI)

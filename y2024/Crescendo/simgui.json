@@ -285,11 +285,6 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/SpeakerAimAndShoot Default Values": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
