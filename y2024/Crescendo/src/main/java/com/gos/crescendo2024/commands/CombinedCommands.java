@@ -51,4 +51,3 @@ public class CombinedCommands {
             () -> controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0));
     }
 }
-
