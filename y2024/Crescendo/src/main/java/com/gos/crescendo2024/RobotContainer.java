@@ -257,7 +257,7 @@ public class RobotContainer {
         //go to floor
         m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         //spit out
-        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand().alongWith(m_shooterSubsystem.createSetRPMCommand(-500)));
 
 
         /////////////////////////////

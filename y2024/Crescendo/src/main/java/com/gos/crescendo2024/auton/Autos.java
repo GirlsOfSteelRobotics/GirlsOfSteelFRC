@@ -19,6 +19,7 @@ public final class Autos {
         FOUR_NOTE("FourNoteSpeaker"),
         TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
         TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
+        TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2"),
         TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
         TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
         TWO_NOTE_RIGHT_6("TwoNoteSpeakerRight6"),
