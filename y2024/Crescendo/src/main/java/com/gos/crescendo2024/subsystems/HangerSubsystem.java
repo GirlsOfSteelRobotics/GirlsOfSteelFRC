@@ -114,4 +114,3 @@ public class HangerSubsystem extends SubsystemBase {
         return this.runEnd(this::runHangerDown, this::stopHanger);
     }
 }
-
