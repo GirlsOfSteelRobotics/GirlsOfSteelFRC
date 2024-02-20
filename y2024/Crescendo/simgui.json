@@ -185,6 +185,8 @@
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft3Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle6Pt1": "Command",
@@ -403,7 +405,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },

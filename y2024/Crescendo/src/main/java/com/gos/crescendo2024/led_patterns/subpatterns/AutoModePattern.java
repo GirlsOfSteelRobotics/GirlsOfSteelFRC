@@ -21,10 +21,10 @@ public class AutoModePattern {
 
     private Map<Autos.AutoModes, LEDPattern> createAutonMap(AddressableLEDBuffer buffer, int startIndex, int numLeds) {
         Map<Autos.AutoModes, LEDPattern> autonMap = new HashMap<>();
-        autonMap.put(Autos.AutoModes.LEAVE_WING, new MirroredLEDSolidColor(buffer, 0,  maxIndexLED, Color.kDenim));
-        autonMap.put(Autos.AutoModes.PRELOAD_AND_LEAVE_WING, new MirroredLEDFlash(buffer, 0,  maxIndexLED, 1.0, Color.kGreen));
-        autonMap.put(Autos.AutoModes.TWO_NOTE_RIGHT_6, new MirroredLEDFlash(buffer, 0,  maxIndexLED, 1.0, Color.kYellow));
-        autonMap.put(Autos.AutoModes.FOUR_NOTE, new MirroredLEDFlash(buffer, 0,  maxIndexLED, 1.0, Color.kRed));
+        autonMap.put(Autos.AutoModes.LEAVE_WING, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kDenim));
+        autonMap.put(Autos.AutoModes.PRELOAD_AND_LEAVE_WING, new LEDFlash(buffer, startIndex, startIndex +  numLeds, 1.0, Color.kGreen));
+        autonMap.put(Autos.AutoModes.FOUR_NOTE, new LEDFlash(buffer, startIndex, startIndex +   numLeds, 1.0, Color.kRed));
+        autonMap.put(Autos.AutoModes.PRELOAD_AND_SHOOT, new LEDMovingPixel(buffer, startIndex, startIndex +  numLeds, Color.kWhite));
         return autonMap;
     }
 
