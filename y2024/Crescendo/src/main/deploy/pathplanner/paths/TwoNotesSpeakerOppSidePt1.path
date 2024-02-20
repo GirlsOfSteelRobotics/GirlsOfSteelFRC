@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7167669684840067,
-        "y": 4.391563704668065
+        "x": 0.7019699576222576,
+        "y": 4.3850900124160495
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9673440498138342,
-        "y": 2.2255006610236086
+        "x": 1.9525470389520858,
+        "y": 2.219026968771593
       },
       "isLocked": false,
       "linkedName": "SubwooferBottom"
@@ -38,8 +38,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -51,7 +51,7 @@
   "reversed": false,
   "folder": "Two notes speaker opp side",
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": -60.01836063115066,
     "velocity": 0
   },
   "useDefaultConstraints": false
