@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7167669684840067,
-        "y": 4.39
+        "x": 0.7019699576222576,
+        "y": 4.3850900124160495
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.305127100988079,
-        "y": 1.8301743942257334
+        "x": 2.29033009012633,
+        "y": 1.8252644066417831
       },
       "isLocked": false,
       "linkedName": "SubwooferBottom"
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two Note Speaker Right 6",
+  "folder": null,
   "previewStartingState": {
     "rotation": -56.52372170389737,
     "velocity": 0
