@@ -21,6 +21,7 @@ import org.littletonrobotics.frc2023.util.Alert;
 public final class PropertyManager {
 
     private static final Alert PROPERTY_MISMATCH_ALERT = new Alert("Properties Mismatch", Alert.AlertType.WARNING);
+    private static final Alert HAS_DYNAMIC_PROPERTIES = new Alert("Using Dynamic GOS Properties", Alert.AlertType.INFO);
     private static boolean purgeConstantPreferenceKeys;
 
     private static final Set<String> REGISTERED_KEYS = new HashSet<>();
@@ -149,6 +150,7 @@ public final class PropertyManager {
             m_constructionStackTrace = sb.toString();
 
             DYNAMIC_PROPERTIES.add(this);
+            HAS_DYNAMIC_PROPERTIES.set(true);
         }
 
         @Override

@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.5380920739602786,
-        "y": 5.1959051879556695
+        "x": 2.36,
+        "y": 5.54
       },
       "prevControl": {
-        "x": 1.7165840113741015,
-        "y": 5.477915418395699
+        "x": 1.5384919374138228,
+        "y": 5.822010230440029
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FourPieceSpeakerPt2"
     }
   ],
   "rotationTargets": [],

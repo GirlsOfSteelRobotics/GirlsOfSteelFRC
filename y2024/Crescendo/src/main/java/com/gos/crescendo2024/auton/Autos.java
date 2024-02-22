@@ -19,7 +19,8 @@ public final class Autos {
         FOUR_NOTE("FourNoteSpeaker"),
         LEAVE_WING("LeaveWing"),
         PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
-        PRELOAD_AND_CENTER_LINE("TwoNotesSpeaker");
+        PRELOAD_AND_CENTER_LINE("TwoNotesSpeaker"),
+        PRELOAD_AND_SHOOT("JustShoot");
 
         public final String m_modeName;
 

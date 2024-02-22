@@ -278,5 +278,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Intake_Out_Speed",
+    "type": "double",
+    "value": -1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Intake_In_Speed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

@@ -1,4 +1,4 @@
-package com.gos.crescendo2024.led_patterns;
+package com.gos.crescendo2024.led_patterns.subpatterns;
 
 import com.gos.lib.led.LEDFlash;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -10,10 +10,10 @@ public class AlertPatterns {
     private final LEDFlash m_alertWarningPattern;
     private final LEDFlash m_noAlertsPattern;
 
-    public AlertPatterns(int numLEDs, AddressableLEDBuffer buffer) {
-        m_alertErrorPattern = new LEDFlash(buffer, numLEDs / 2, numLEDs, 2, Color.kRed);
-        m_alertWarningPattern = new LEDFlash(buffer, numLEDs / 2, numLEDs, 2, Color.kYellow);
-        m_noAlertsPattern = new LEDFlash(buffer, numLEDs / 2, numLEDs, 2, Color.kGreen);
+    public AlertPatterns(AddressableLEDBuffer buffer, int startIndex, int numLEDs) {
+        m_alertErrorPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kRed);
+        m_alertWarningPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kYellow);
+        m_noAlertsPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kGreen);
     }
 
     public void writeLEDs() {

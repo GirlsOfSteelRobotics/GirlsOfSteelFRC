@@ -3,11 +3,8 @@ package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.auton.Autos;
-import com.gos.crescendo2024.led_patterns.AlertPatterns;
-import com.gos.crescendo2024.led_patterns.AutoModePattern;
-import com.gos.crescendo2024.led_patterns.AutoPattern;
-import com.gos.crescendo2024.led_patterns.HasPiecePattern;
-import com.gos.crescendo2024.led_patterns.TeleopPattern;
+import com.gos.crescendo2024.led_patterns.DisabledPatterns;
+import com.gos.crescendo2024.led_patterns.EnabledPatterns;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -17,57 +14,25 @@ public class LedManagerSubsystem extends SubsystemBase {
 
     private static final int MAX_INDEX_LED = 30;
 
-    private final IntakeSubsystem m_intakeSubsystem;
-
-    private final Autos m_autoModeFactory;
-
     // Led core
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
 
-    private final TeleopPattern m_teleopPattern;
-    private final HasPiecePattern m_hasPiecePattern;
-    private final AutoPattern m_autoPattern;
-
-    private final AlertPatterns m_alert;
-
-    private final AutoModePattern m_autoModePattern;
+    private final EnabledPatterns m_enabledPatterns;
+    private final DisabledPatterns m_disabledPatterns;
 
 
     public LedManagerSubsystem(IntakeSubsystem intakeSubsystem, Autos autoModeFactory) {
-        m_autoModeFactory = autoModeFactory;
-        m_intakeSubsystem = intakeSubsystem;
+        // Setup LED's
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
-
         m_led.setLength(m_buffer.getLength());
-
-        // Set the data
         m_led.setData(m_buffer);
         m_led.start();
 
-        m_teleopPattern = new TeleopPattern(MAX_INDEX_LED, m_buffer);
-        m_hasPiecePattern = new HasPiecePattern(MAX_INDEX_LED, m_buffer);
-        m_autoPattern = new AutoPattern(MAX_INDEX_LED, m_buffer);
-        m_alert = new AlertPatterns(MAX_INDEX_LED, m_buffer);
-        m_autoModePattern = new AutoModePattern(m_buffer, MAX_INDEX_LED);
-    }
-
-    public void enabledPatterns() {
-        if (DriverStation.isTeleop()) {
-            m_teleopPattern.writeLED();
-        } else if (DriverStation.isAutonomous()) {
-            m_autoPattern.writeAutoPattern();
-        }
-
-        m_hasPiecePattern.update(m_intakeSubsystem.hasGamePiece());
-        m_hasPiecePattern.writeLeds();
-    }
-
-    public void disabledPatterns() {
-        Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
-        m_autoModePattern.writeAutoModePattern(autoMode);
-        m_alert.writeLEDs();
+        // Patterns
+        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intakeSubsystem);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory);
     }
 
 
@@ -76,11 +41,11 @@ public class LedManagerSubsystem extends SubsystemBase {
         clear();
 
         if (DriverStation.isEnabled()) {
-            enabledPatterns();
+            m_enabledPatterns.writeLED();
         } else {
-            disabledPatterns();
+            m_disabledPatterns.writeAutoPattern();
         }
-        // driverPracticePatterns();
+
         m_led.setData(m_buffer);
     }
 
@@ -90,4 +55,3 @@ public class LedManagerSubsystem extends SubsystemBase {
         }
     }
 }
-
