@@ -30,7 +30,7 @@ jobs:
         run: python3 -m libraries.scripts.updater.update_everything
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         env:
           GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_KEY }}
         with:
