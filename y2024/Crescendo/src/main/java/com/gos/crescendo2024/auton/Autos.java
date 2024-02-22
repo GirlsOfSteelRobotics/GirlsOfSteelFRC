@@ -19,13 +19,13 @@ public final class Autos {
         FOUR_NOTE("FourNoteSpeaker"),
         TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
         TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
+        TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2"),
         TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
         TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
         TWO_NOTE_RIGHT_6("TwoNoteSpeakerRight6"),
-        TWO_NOTE_RIGHT_7("TwoNoteSpeakerRight7"),
+        TWO_NOTE_RIGHT_7("TwoNotesSpeakerRight7"),
         LEAVE_WING("LeaveWing"),
         PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
-        PRELOAD_AND_CENTER_LINE("TwoNotesSpeaker"),
         PRELOAD_AND_SHOOT("JustShoot");
 
 
@@ -36,7 +36,7 @@ public final class Autos {
         }
     }
 
-    private static final AutoModes DEFAULT_MODE = AutoModes.PRELOAD_AND_CENTER_LINE;
+    private static final AutoModes DEFAULT_MODE = AutoModes.TWO_NOTE_RIGHT_6;
 
     private final SendableChooser<AutoModes> m_autonChooser;
 

@@ -36,8 +36,8 @@
         "y": 5.7650100590829885
       },
       "prevControl": {
-        "x": 6.2739270437022485,
-        "y": 6.904378601165269
+        "x": 6.849837018218845,
+        "y": 6.614056032016235
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,7 +65,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Two Note Speaker Left 4",
   "previewStartingState": {
     "rotation": 61.189206257026925,
     "velocity": 0

@@ -30,9 +30,9 @@ public class AprilTagDetection {
     private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
         new Translation3d(
             -(ROBOT_WIDTH / 2 - 0.04), // 4cm from back
-             -(ROBOT_LENGTH / 2 - 0.27), // 27cm from right side
+             -(ROBOT_LENGTH / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
             .235),
-        new Rotation3d(0, Math.toRadians(-34), Math.toRadians(180)) // Negative because camera upside down?
+        new Rotation3d(0, Math.toRadians(-34), Math.toRadians(178)) // Negative because camera upside down?
     );
 
     private static final String CAMERA_NAME = "AprilTag1";

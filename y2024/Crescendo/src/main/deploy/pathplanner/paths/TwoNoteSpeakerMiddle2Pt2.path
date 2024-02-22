@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.5462105189545605,
-        "y": 6.694858784124826
+        "x": 2.3679949214391995,
+        "y": 4.391563704668065
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.462977266121541,
-        "y": 6.694858784124826
+        "x": 2.262597392527166,
+        "y": 4.215901156481343
       },
       "isLocked": false,
-      "linkedName": "TwoNoteSpeaker5Pt1End"
+      "linkedName": "TwoNoteSpeakerMiddle2End"
     },
     {
       "anchor": {
-        "x": 4.482099592906184,
-        "y": 6.69
+        "x": 2.21575404634404,
+        "y": 3.7826002042874274
       },
       "prevControl": {
-        "x": 4.482099592906184,
-        "y": 6.6624505926265085
+        "x": 2.2274648828898216,
+        "y": 4.005106098657276
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TwoNoteSpeakerMiddle2Part2End"
     }
   ],
   "rotationTargets": [],
@@ -33,17 +33,20 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 12.264773727341343,
+    "rotation": -41.98721249581667,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two Note Speaker Left 3",
-  "previewStartingState": null,
+  "folder": "TwoNoteSpeakerMiddle2",
+  "previewStartingState": {
+    "rotation": -25.11483488614446,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

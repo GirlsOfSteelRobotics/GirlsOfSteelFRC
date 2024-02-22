@@ -8,36 +8,52 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9793840773921174,
-        "y": 4.810667177680737
+        "x": 2.280604472254163,
+        "y": 4.96294021498347
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.07,
-        "y": 4.89
+        "x": 2.9181928193359727,
+        "y": 4.864849700047807
       },
       "prevControl": {
-        "x": 1.809983878033529,
-        "y": 4.89
+        "x": 2.441838503536321,
+        "y": 4.763804845181214
       },
       "nextControl": {
-        "x": 4.824877115573906,
-        "y": 4.89
+        "x": 3.525127880500387,
+        "y": 4.993593500900864
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.654037089244662,
-        "y": 2.454433407594551
+        "x": 4.965832318617936,
+        "y": 4.331482525085139
       },
       "prevControl": {
-        "x": 7.507815524536903,
-        "y": 3.049764063904719
+        "x": 4.554856359831656,
+        "y": 4.785157284784279
+      },
+      "nextControl": {
+        "x": 5.4378929217458145,
+        "y": 3.81037666448943
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.675582793715625,
+        "y": 2.430978798206669
+      },
+      "prevControl": {
+        "x": 7.577492278779962,
+        "y": 3.6387182633520196
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +75,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Two Note Speaker Middle 6",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

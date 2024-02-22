@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.72,
-      "y": 4.39
+      "x": 1.3211271852889754,
+      "y": 5.52870983292987
     },
-    "rotation": -60.005525317046796
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteSpeakerRight6Pt1"
+                  "pathName": "TwoNoteSpeakerMiddle2Pt1"
                 }
               },
               {
@@ -37,15 +37,21 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "TwoNoteSpeakerRight6Pt2"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNoteSpeakerMiddle2Pt2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNoteSpeakerMiddle2Pt3"
           }
         }
       ]

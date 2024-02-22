@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "TwoNoteSpeakerMiddle6Pt1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TwoNoteSpeakerMiddle6Pt1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
           }
         },
         {

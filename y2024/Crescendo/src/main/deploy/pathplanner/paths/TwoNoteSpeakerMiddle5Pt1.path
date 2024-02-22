@@ -8,59 +8,70 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.69697649003839,
-        "y": 5.034645609030246
+        "x": 1.7436109406380302,
+        "y": 5.317467955255343
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8391698513676933,
-        "y": 4.89
+        "x": 2.9163675718655786,
+        "y": 4.8075737677651045
       },
       "prevControl": {
-        "x": 2.1399160805686543,
-        "y": 4.89
+        "x": 2.5763775915781193,
+        "y": 4.719428217320208
       },
       "nextControl": {
-        "x": 4.760979421342541,
-        "y": 4.89
+        "x": 3.506387988818568,
+        "y": 4.960542024012176
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TwoNoteSpeaker3End"
     },
     {
       "anchor": {
-        "x": 5.178714886689594,
-        "y": 4.40753573618739
+        "x": 4.599018390583365,
+        "y": 4.8075737677651045
       },
       "prevControl": {
-        "x": 4.666939410212431,
-        "y": 4.783534045435918
+        "x": 4.300366080767653,
+        "y": 5.04795245615336
       },
       "nextControl": {
-        "x": 5.772989704184077,
-        "y": 3.9709256661914436
+        "x": 5.2415388238566285,
+        "y": 4.290423175130527
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.656750402468776,
-        "y": 4.060826342293255
+        "x": 4.5462105189545605,
+        "y": 6.694858784124826
       },
       "prevControl": {
-        "x": 6.1083777683569584,
-        "y": 4.021873571623776
+        "x": 4.424914876076343,
+        "y": 6.676648277428747
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TwoNoteSpeaker3End"
+      "linkedName": "TwoNoteSpeaker5Pt1End"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": -61.32685351056502,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 17.000094453638724,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -75,7 +86,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Two Note Speaker Middle 5",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
