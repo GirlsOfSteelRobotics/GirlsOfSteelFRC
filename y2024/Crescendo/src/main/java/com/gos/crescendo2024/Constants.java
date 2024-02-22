@@ -16,7 +16,7 @@ package com.gos.crescendo2024;
 public final class Constants {
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
 
-    public static final boolean IS_COMPETITION_ROBOT = true;
+    public static final boolean IS_COMPETITION_ROBOT = false;
 
     // Joystick IDS
     public static final int DRIVER_JOYSTICK = 0;

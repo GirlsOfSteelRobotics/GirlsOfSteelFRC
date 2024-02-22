@@ -56,7 +56,7 @@ public class ChassisSubsystem extends SubsystemBase {
         if (Constants.IS_COMPETITION_ROBOT) {
             MAX_TRANSLATION_SPEED = 5.5; // Theoretically 5.74
         } else {
-            MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
+            MAX_TRANSLATION_SPEED = 3.9624; // 13fps, Theoretically 4.8
         }
     }
 

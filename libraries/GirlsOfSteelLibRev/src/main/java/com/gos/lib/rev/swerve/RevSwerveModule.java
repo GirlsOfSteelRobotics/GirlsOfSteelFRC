@@ -161,9 +161,9 @@ public class RevSwerveModule {
             );
             m_simWrapper = new SwerveModuleSimWrapper(
                 moduleSim,
-                new RevMotorControllerSimWrapper((SimableRevDevice) m_drivingSparkMax),
+                new RevMotorControllerSimWrapper(m_drivingSparkMax),
                 new RevMotorControllerSimWrapper(m_turningSparkMax),
-                RevEncoderSimWrapper.create((SimableRevDevice) m_drivingSparkMax),
+                RevEncoderSimWrapper.create(m_drivingSparkMax),
                 RevEncoderSimWrapper.create(m_turningSparkMax),
                 RevSwerveModuleConstants.WHEEL_DIAMETER_METERS * Math.PI,
                 false);
