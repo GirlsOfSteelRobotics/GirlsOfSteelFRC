@@ -44,7 +44,7 @@ public class RevSwerveModule {
     private final SparkPIDController m_turningPIDController;
     private final PidProperty m_turningPIDProperty;
 
-//    private final SparkMaxAlerts m_wheelAlerts;
+    private final SparkMaxAlerts m_wheelAlerts;
     private final SparkMaxAlerts m_azimuthAlerts;
 
     private final double m_chassisAngularOffset;
@@ -137,7 +137,7 @@ public class RevSwerveModule {
             .addD(0)
             .build();
 
-//        m_wheelAlerts = new SparkMaxAlerts(m_drivingSparkMax, "SwerveModuleDrive: " + moduleName);
+        m_wheelAlerts = new SparkMaxAlerts(m_drivingSparkMax, "SwerveModuleDrive: " + moduleName);
         m_azimuthAlerts = new SparkMaxAlerts(m_turningSparkMax, "SwerveModuleTurning: " + moduleName);
 
         m_drivingSparkMax.setIdleMode(RevSwerveModuleConstants.DRIVING_MOTOR_IDLE_MODE);
@@ -159,14 +159,14 @@ public class RevSwerveModule {
                 16.0,
                 0.001
             );
-//            m_simWrapper = new SwerveModuleSimWrapper(
-//                moduleSim,
-//                new RevMotorControllerSimWrapper((SimableRevDevice) m_drivingSparkMax),
-//                new RevMotorControllerSimWrapper(m_turningSparkMax),
-//                RevEncoderSimWrapper.create((SimableRevDevice) m_drivingSparkMax),
-//                RevEncoderSimWrapper.create(m_turningSparkMax),
-//                RevSwerveModuleConstants.WHEEL_DIAMETER_METERS * Math.PI,
-//                false);
+            m_simWrapper = new SwerveModuleSimWrapper(
+                moduleSim,
+                new RevMotorControllerSimWrapper((SimableRevDevice) m_drivingSparkMax),
+                new RevMotorControllerSimWrapper(m_turningSparkMax),
+                RevEncoderSimWrapper.create((SimableRevDevice) m_drivingSparkMax),
+                RevEncoderSimWrapper.create(m_turningSparkMax),
+                RevSwerveModuleConstants.WHEEL_DIAMETER_METERS * Math.PI,
+                false);
         }
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
@@ -220,7 +220,7 @@ public class RevSwerveModule {
 
         m_logger.updateLogs();
         m_azimuthAlerts.checkAlerts();
-//        m_wheelAlerts.checkAlerts();
+        m_wheelAlerts.checkAlerts();
     }
 
     public SwerveModuleState getDesiredState() {
