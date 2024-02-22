@@ -9,6 +9,7 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
@@ -62,10 +63,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final ObjectDetection m_objectDetectionSubsystem;
 
-    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
-    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
-    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
-    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
+    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Velocity", 48);
+    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Velocity", 180);
+    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Acceleration", 180);
 
     private final LoggingUtil m_logging;
 
@@ -73,29 +74,32 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
 
+        m_field = new GoSField();
+        SmartDashboard.putData("Field", m_field.getSendable());
 
         RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
             Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
             Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            RevSwerveModuleConstants.DriveMotorTeeth.T14,
-            WHEEL_BASE, TRACK_WIDTH,
-            MAX_TRANSLATION_SPEED,
-            MAX_ROTATION_SPEED);
+            RevSwerveModuleConstants.DriveMotor.NEO, RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
+            WHEEL_BASE,
+            TRACK_WIDTH,
+            MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
 
         //TODO need change pls
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
-        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
+        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", Constants.DEFAULT_CONSTANT_PROPERTIES, m_turnAnglePIDVelocity)
             .addP(0.2)
             .addI(0)
             .addD(0)
             .build();
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
-        m_photonVisionSubsystem = new AprilTagDetection();
+        m_photonVisionSubsystem = new AprilTagDetection(m_field);
         m_objectDetectionSubsystem = new ObjectDetection();
 
         AutoBuilder.configureHolonomic(
@@ -114,9 +118,6 @@ public class ChassisSubsystem extends SubsystemBase {
             this
         );
 
-        m_field = new GoSField();
-        SmartDashboard.putData("Field", m_field.getSendable());
-
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
 
@@ -125,6 +126,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging.addDouble("PoseAngle", () -> getPose().getRotation().getDegrees());
         m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
         m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
+        m_logging.addDouble("Distance to Speaker", this::getDistanceToSpeaker);
+    }
+
+    public double getDistanceToSpeaker() {
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Translation2d roboManTranslation = getPose().getTranslation();
+        return roboManTranslation.getDistance(speaker.getTranslation());
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -137,6 +145,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public ChassisSpeeds getChassisSpeed() {
         return m_swerveDrive.getChassisSpeed();
+    }
+
+    public void clearStickyFaults() {
+        m_swerveDrive.clearStickyFaults();
     }
 
     @Override
@@ -153,8 +165,8 @@ public class ChassisSubsystem extends SubsystemBase {
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         if (cameraResult.isPresent()) {
             EstimatedRobotPose camPose = cameraResult.get();
-            Pose2d pose2d = camPose.estimatedPose.toPose2d();
-            m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+            Pose2d camEstPose = camPose.estimatedPose.toPose2d();
+            m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
         }
     }
 
@@ -304,6 +316,8 @@ public class ChassisSubsystem extends SubsystemBase {
         SwerveModuleState state = new SwerveModuleState(0, new Rotation2d());
         return run(() -> {
             m_swerveDrive.setModuleStates(state);
-        });
+        }).withName("Chassis Push Forward");
     }
+
+
 }

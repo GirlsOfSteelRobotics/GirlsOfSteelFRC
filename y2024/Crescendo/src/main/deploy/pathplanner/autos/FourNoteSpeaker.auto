@@ -18,33 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "FourPieceSpeakerPt1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimAndShootIntoSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FourPieceSpeakerPt2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakePiece"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FourPieceSpeakerPt1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
           }
         },
         {
@@ -54,15 +43,47 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "FourPieceSpeakerPt3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FourPieceSpeakerPt2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "IntakePiece"
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FourPieceSpeakerPt3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
           }
         },
         {

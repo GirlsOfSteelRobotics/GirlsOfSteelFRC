@@ -1,5 +1,6 @@
 package com.gos.crescendo2024.commands;
 
+import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.MathUtil;
@@ -10,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public abstract class BaseTeleopSwerve extends Command {
 
     protected static final double JOYSTICK_DEADBAND = 0.025;
-    protected static final GosDoubleProperty TRANSLATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickTranslationDamping", 1);
-    protected static final GosDoubleProperty ROTATION_DAMPING = new GosDoubleProperty(false, "SwerveJoystickRotationDamping", 1);
+    protected static final GosDoubleProperty TRANSLATION_DAMPING = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "SwerveJoystickTranslationDamping", 1);
+    protected static final GosDoubleProperty ROTATION_DAMPING = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "SwerveJoystickRotationDamping", 1);
     protected final ChassisSubsystem m_subsystem;
     protected final CommandXboxController m_joystick;
 
