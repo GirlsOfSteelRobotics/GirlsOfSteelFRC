@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "DIO": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK MAX [25]": {
         "header": {
@@ -177,6 +172,7 @@
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
       "/Shuffleboard/PP Paths/LeaveWing": "Command",
+      "/Shuffleboard/PP Paths/New TwoNoteSpeakerMiddle1pt2": "Command",
       "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
       "/Shuffleboard/PP Paths/S-Curve Path": "Command",
       "/Shuffleboard/PP Paths/SplinePath": "Command",
@@ -185,10 +181,14 @@
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft3Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle6Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle6Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerRight6Pt1": "Command",
@@ -309,9 +309,6 @@
           "window": {
             "visible": true
           }
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Auto Chooser": {
@@ -394,10 +391,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       },
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": {
         "bottom": 1476,
@@ -405,10 +399,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
@@ -435,8 +426,10 @@
     },
     "Server": {
       "open": true
-    },
-    "visible": true
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {

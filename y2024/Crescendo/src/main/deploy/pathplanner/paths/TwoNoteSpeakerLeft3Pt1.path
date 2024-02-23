@@ -20,31 +20,15 @@
         "y": 6.315403722200523
       },
       "prevControl": {
-        "x": 1.7115136224628653,
-        "y": 6.317443752432636
+        "x": 1.7115095066110992,
+        "y": 6.315403722200523
       },
       "nextControl": {
-        "x": 2.7682925204711935,
-        "y": 6.313179538176574
+        "x": 5.217084114736109,
+        "y": 6.315403722200523
       },
       "isLocked": false,
       "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 4.5462105189545605,
-        "y": 6.694858784124826
-      },
-      "prevControl": {
-        "x": 3.36616968504858,
-        "y": 6.075025033812268
-      },
-      "nextControl": {
-        "x": 5.545449292949761,
-        "y": 7.219723601465984
-      },
-      "isLocked": false,
-      "linkedName": "TwoNoteSpeaker5Pt1End"
     },
     {
       "anchor": {
@@ -57,12 +41,12 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TwoNoteSpeaker3Pt1End"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 1.0,
       "rotationDegrees": 0.0,
       "rotateFast": false
     }
@@ -81,7 +65,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two Note Speaker Left 3",
+  "folder": "TwoNoteSpeakerLeft3",
   "previewStartingState": {
     "rotation": 60.75117366277257,
     "velocity": 0

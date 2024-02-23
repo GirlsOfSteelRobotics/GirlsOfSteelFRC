@@ -3,66 +3,88 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.5462105189545605,
-        "y": 6.694858784124826
+        "x": 7.797038952473896,
+        "y": 4.0840735315555845
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.116442560927075,
-        "y": 6.59287994662678
+        "x": 7.896829220892516,
+        "y": 4.090546732382044
       },
       "isLocked": false,
       "linkedName": "TwoNoteSpeaker5Pt1End"
     },
     {
       "anchor": {
-        "x": 4.963228524504964,
-        "y": 4.4215110258082095
+        "x": 5.070894151813367,
+        "y": 4.4544177308906
       },
       "prevControl": {
-        "x": 6.325374425371744,
-        "y": 3.918901040996403
+        "x": 5.922857032333055,
+        "y": 3.9308155439045427
       },
       "nextControl": {
-        "x": 4.118234017826149,
-        "y": 4.733300442711088
+        "x": 4.083309620253327,
+        "y": 5.061370724245208
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.154682027199015,
-        "y": 5.56513084632203
+        "x": 2.9105529890257786,
+        "y": 4.783612574743946
       },
       "prevControl": {
-        "x": 4.234808256661766,
-        "y": 5.302899549898479
+        "x": 3.44494611473158,
+        "y": 4.840010106679279
+      },
+      "nextControl": {
+        "x": 2.376159863319977,
+        "y": 4.727215042808614
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.5834862747419731,
+        "y": 4.783612574743946
+      },
+      "prevControl": {
+        "x": 2.1015342328823383,
+        "y": 4.752019230724847
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -1.3832288485755744,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two Note Speaker Middle 5",
+  "folder": "TwoNoteSpeakerMiddle5",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
