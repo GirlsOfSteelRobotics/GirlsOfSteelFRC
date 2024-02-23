@@ -93,7 +93,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
 
         m_autonomousFactory = new Autos();
-        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
+        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
 
         // Configure the trigger bindings
         configureBindings();

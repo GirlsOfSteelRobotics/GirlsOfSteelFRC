@@ -6,9 +6,11 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
@@ -28,7 +30,7 @@ import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 public class RevSwerveModule {
     private final String m_moduleName;
 
-    private final SimableCANSparkMax m_drivingSparkMax;
+    private final CANSparkBase m_drivingSparkMax;
     private final SimableCANSparkMax m_turningSparkMax;
 
     private final RelativeEncoder m_drivingEncoder;
@@ -60,11 +62,21 @@ public class RevSwerveModule {
      * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
      * Encoder.
      */
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset) {
         m_moduleName = moduleName;
 
-        m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+        switch (moduleConstants.m_driveMotorType) {
+        case NEO:
+            m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+            break;
+        case VORTEX:
+            m_drivingSparkMax = new SimableCANSparkFlex(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+            break;
+        default:
+            throw new IllegalArgumentException();
+        }
+
         m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkLowLevel.MotorType.kBrushless);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring

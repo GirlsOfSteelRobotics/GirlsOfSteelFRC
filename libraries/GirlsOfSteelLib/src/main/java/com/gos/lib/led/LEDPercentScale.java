@@ -26,11 +26,11 @@ public class LEDPercentScale extends LEDBase {
 
     @Override
     public void writeLeds() {
-        double ledProportion = Math.abs(m_distanceError / m_maxDistance);
-        int ledOn = (int) (ledProportion * m_maxIndex);
-        if (ledOn > m_maxDistance) {
-            ledOn = m_maxIndex - m_minIndex;
-        }
+        double distanceError = Math.min(m_distanceError, m_maxDistance);
+        double ledProportion = Math.abs(distanceError / m_maxDistance);
+        int ledOn = (int) (ledProportion * (m_maxIndex - m_minIndex));
+
         setLEDs(m_minIndex, m_minIndex + ledOn, m_color.red, m_color.green, m_color.blue);
+
     }
 }

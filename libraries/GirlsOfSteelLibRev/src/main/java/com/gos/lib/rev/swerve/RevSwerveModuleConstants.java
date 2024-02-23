@@ -27,7 +27,7 @@ public final class RevSwerveModuleConstants {
     public static final int DRIVING_MOTOR_CURRENT_LIMIT = 50; // amps
     public static final int TURNING_MOTOR_CURRENT_LIMIT = 20; // amps
 
-    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
+    public final DriveMotor m_driveMotorType;
     public final double m_drivingMotorReduction;
     public final double m_driveWheelFreeSpeedRps;
 
@@ -81,6 +81,8 @@ public final class RevSwerveModuleConstants {
     }
 
     public RevSwerveModuleConstants(DriveMotor driveMotor, DriveMotorPinionTeeth pinionTeeth, DriveMotorSpurTeeth spurTeeth) {
+        m_driveMotorType = driveMotor;
+
         m_drivingMotorReduction = (45.0 * spurTeeth.m_teeth) / (pinionTeeth.m_teeth * 15);
         m_driveWheelFreeSpeedRps = (driveMotor.m_freeSpeedRps * WHEEL_CIRCUMFERENCE_METERS)
             / m_drivingMotorReduction;

@@ -27,11 +27,6 @@
       "6V Rail": {
         "open": true
       }
-    },
-    "Timing": {
-      "window": {
-        "visible": false
-      }
     }
   },
   "NTProvider": {
@@ -184,8 +179,10 @@
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt3": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5pt1": "Command",
@@ -309,6 +306,9 @@
           "window": {
             "visible": true
           }
+        },
+        "window": {
+          "visible": true
         }
       },
       "/SmartDashboard/Auto Chooser": {
@@ -391,7 +391,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       },
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": {
         "bottom": 1476,
@@ -399,11 +402,20 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "Transitory Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true
@@ -426,10 +438,8 @@
     },
     "Server": {
       "open": true
-    }
-  },
-  "NetworkTables View": {
-    "visible": false
+    },
+    "visible": true
   },
   "Plot": {
     "Plot <0>": {
