@@ -294,5 +294,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/defaultSpeakerScoreAngle",
+    "type": "double",
+    "value": 30.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/autoTimeoutSeconds",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

@@ -5,12 +5,17 @@
 
 package com.gos.crescendo2024.auton;
 
+import com.gos.crescendo2024.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public final class Autos {
@@ -35,6 +40,9 @@ public final class Autos {
 
     private final Map<AutoModes, Command> m_modes;
 
+    private static final GosDoubleProperty AUTON_TIMEOUT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "autoTimeoutSeconds", 0);
+
+
     public Autos() {
         m_autonChooser = new SendableChooser<>();
         m_modes = new HashMap<>();
@@ -45,7 +53,7 @@ public final class Autos {
             } else {
                 m_autonChooser.addOption(mode.m_modeName, mode);
             }
-            m_modes.put(mode, AutoBuilder.buildAuto(mode.m_modeName));
+            m_modes.put(mode, new DeferredCommand(() -> new WaitCommand(AUTON_TIMEOUT.getValue()), new HashSet<>()).andThen(AutoBuilder.buildAuto(mode.m_modeName)));
         }
 
         SmartDashboard.putData("Auto Chooser", m_autonChooser);
