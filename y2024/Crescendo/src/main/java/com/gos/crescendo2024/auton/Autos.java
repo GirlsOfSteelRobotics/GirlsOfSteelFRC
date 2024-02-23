@@ -21,18 +21,24 @@ import java.util.Map;
 public final class Autos {
 
     public enum AutoModes {
+        //four note auto
         FOUR_NOTE("FourNoteSpeaker"),
+        //two note autos - left
+        TWO_NOTE_LEFT_0("TwoNoteSpeakerMiddle0"),
+        TWO_NOTE_LEFT_1("TwoNoteSpeakerMiddle1"),
         TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
         TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
-        TWO_NOTE_MIDDLE_0("TwoNoteSpeakerMiddle0"),
-        TWO_NOTE_MIDDLE_1("TwoNoteSpeakerMiddle1"),
+        //two note autos - middle
         TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2"),
         TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
         TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
+        //two note autos - right
         TWO_NOTE_RIGHT_6("TwoNoteSpeakerRight6"),
         TWO_NOTE_RIGHT_7("TwoNotesSpeakerRight7"),
+        //leave wing
         LEAVE_WING("LeaveWing"),
         PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
+        //just shoot preload
         PRELOAD_AND_SHOOT("JustShoot");
 
 
