@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.3679949214391995,
-        "y": 4.391563704668065
+        "x": 2.291006242747955,
+        "y": 4.255590195640653
       },
       "prevControl": {
-        "x": 1.8410072768790315,
-        "y": 4.953683858865577
+        "x": 1.764018598187787,
+        "y": 4.817710349838165
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "TwoNoteSpeakerMiddle2",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

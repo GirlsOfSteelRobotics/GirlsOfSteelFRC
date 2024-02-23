@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.3679949214391995,
-        "y": 4.391563704668065
+        "x": 2.291006242747955,
+        "y": 4.255590195640653
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.262597392527166,
-        "y": 4.215901156481343
+        "x": 2.1856087138359213,
+        "y": 4.079927647453931
       },
       "isLocked": false,
       "linkedName": "TwoNoteSpeakerMiddle2End"
@@ -20,8 +20,8 @@
         "y": 3.7826002042874274
       },
       "prevControl": {
-        "x": 2.2274648828898216,
-        "y": 4.005106098657276
+        "x": 2.2273063011633822,
+        "y": 4.0022966890307865
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.98721249581667,
+    "rotation": -41.99000000000001,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "TwoNoteSpeakerMiddle2",
+  "folder": null,
   "previewStartingState": {
     "rotation": -25.11483488614446,
     "velocity": 0

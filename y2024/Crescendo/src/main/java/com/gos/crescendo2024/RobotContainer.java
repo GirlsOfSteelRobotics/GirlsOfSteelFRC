@@ -224,13 +224,13 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-
-//        if (RobotBase.isReal()) {
-//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-//        } else {
-            m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-//        }
+        // if (RobotBase.isReal()) {
+        //      m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        // } else {
+        //      m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
+        // }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
+        m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
 
         /////////////////////////////
         // Driver Controller
@@ -261,7 +261,7 @@ public class RobotContainer {
         m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
 
         //spit out
-        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand().alongWith(m_shooterSubsystem.createSetRPMCommand(-700)));
+        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
 
         /////////////////////////////
