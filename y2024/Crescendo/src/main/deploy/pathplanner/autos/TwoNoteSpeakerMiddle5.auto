@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteSpeakerMiddle5pt1"
+                  "pathName": "TwoNoteSpeakerMiddle5Pt1"
                 }
               },
               {
@@ -45,6 +45,6 @@
       ]
     }
   },
-  "folder": "TwoPiece",
+  "folder": "TwoPieceExperimental",
   "choreoAuto": false
 }
