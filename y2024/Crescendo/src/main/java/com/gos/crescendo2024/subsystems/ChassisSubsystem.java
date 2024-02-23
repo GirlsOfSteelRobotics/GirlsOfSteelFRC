@@ -273,7 +273,13 @@ public class ChassisSubsystem extends SubsystemBase {
         resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
 
+    public boolean isNoteDetected() {
+        return !m_objectDetectionSubsystem.objectLocations(getPose()).isEmpty();
+    }
 
+    public int numAprilTagsSeen() {
+        return m_photonVisionSubsystem.getLatestResult().targets.size();
+    }
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////

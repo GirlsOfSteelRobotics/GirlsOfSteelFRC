@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "DIO": {
       "window": {
         "visible": true
@@ -273,6 +278,11 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Shooter RPM: 4000": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -391,7 +401,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -403,6 +416,9 @@
     },
     "transitory": {
       "Arm Pivot Subsystem": {
+        "open": true
+      },
+      "Shooter Subsystem": {
         "open": true
       },
       "SmartDashboard": {
