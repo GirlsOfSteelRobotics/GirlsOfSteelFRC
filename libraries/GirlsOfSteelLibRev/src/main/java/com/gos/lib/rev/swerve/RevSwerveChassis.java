@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class RevSwerveChassis {
-    private final double m_maxSpeedMetersPerSecond;
-    private final double m_maxAngularSpeed;
+    public final double m_maxSpeedMetersPerSecond;
+    public final double m_maxAngularSpeed;
 
     private final SwerveDriveKinematics m_kinematics;
 

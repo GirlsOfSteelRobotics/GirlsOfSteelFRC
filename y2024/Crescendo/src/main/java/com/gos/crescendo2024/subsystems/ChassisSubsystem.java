@@ -260,6 +260,9 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
+    private void chassisDriveChecklist() {
+        m_swerveDrive.setChassisSpeeds();
+    }
 
 
     /////////////////////////////////////
