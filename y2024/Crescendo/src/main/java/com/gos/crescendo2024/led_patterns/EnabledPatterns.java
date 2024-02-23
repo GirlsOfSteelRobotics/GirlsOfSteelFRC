@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.led_patterns;
 
-import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.led_patterns.subpatterns.AprilTagPattern;
 import com.gos.crescendo2024.led_patterns.subpatterns.HasPiecePattern;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
@@ -8,7 +7,6 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.led.LEDBoolean;
-import com.gos.lib.led.LEDPercentScale;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -43,7 +41,7 @@ public class EnabledPatterns {
         m_armGood.setStateAndWrite(m_arm.isArmAtGoal());
         m_shooterGood.setStateAndWrite(m_shooter.isShooterAtGoal());
         m_chassisGood.setStateAndWrite(m_chassis.isAngleAtGoal());
-        m_noteSeen.setStateAndWrite(m_chassis.NoteDetection());
+        m_noteSeen.setStateAndWrite(m_chassis.isNoteDetected());
         m_aprilTagsSeen.writeLED();
     }
 }
