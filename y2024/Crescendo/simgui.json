@@ -27,6 +27,11 @@
       "6V Rail": {
         "open": true
       }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
+      }
     }
   },
   "NTProvider": {
@@ -179,10 +184,8 @@
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt1": "Command",
-      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt2": "Command",
-      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt3": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5pt1": "Command",
@@ -410,12 +413,6 @@
     }
   },
   "NetworkTables": {
-    "Retained Values": {
-      "open": false
-    },
-    "Transitory Values": {
-      "open": false
-    },
     "persistent": {
       "Preferences": {
         "open": true
@@ -440,6 +437,9 @@
       "open": true
     },
     "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {
