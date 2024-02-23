@@ -302,5 +302,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/autoTimeoutSeconds",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
