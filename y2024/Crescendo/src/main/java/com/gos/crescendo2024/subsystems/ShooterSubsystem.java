@@ -158,6 +158,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return this.run(this::stopShooter).withName("stop shooter");
     }
 
+    /////////////////////////////////////
+    // Checklists
+    /////////////////////////////////////
+
     public Command createMoveLeaderShooterChecklist() {
         return new SparkMaxMotorsMoveChecklist(this, m_shooterMotorLeader, "Shooter: Move Leader", 1.0);
     }

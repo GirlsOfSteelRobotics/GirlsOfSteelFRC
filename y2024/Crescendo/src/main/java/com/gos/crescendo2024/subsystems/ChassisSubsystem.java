@@ -35,6 +35,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -69,6 +70,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Acceleration", 180);
 
     private final LoggingUtil m_logging;
+    private final Timer m_timer;
 
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
@@ -127,6 +129,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
         m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
         m_logging.addDouble("Distance to Speaker", this::getDistanceToSpeaker);
+
+        m_timer = new Timer();
     }
 
     public double getDistanceToSpeaker() {
@@ -260,8 +264,27 @@ public class ChassisSubsystem extends SubsystemBase {
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
-    private void chassisDriveChecklist() {
-        m_swerveDrive.setChassisSpeeds();
+
+    private void chassisDriveChecklist(double goalSpeed) {
+        m_timer.reset();
+        m_timer.start();
+
+        m_swerveDrive.setChassisSpeeds(new ChassisSpeeds(goalSpeed, 0, 0));
+
+        if (!m_swerveDrive.getChassisSpeed().equals(goalSpeed) && m_timer.get() > 10) {
+            throw new RuntimeException("It no drive forwards correctly :(");
+        }
+    }
+
+    private void chassisSteerChecklist(double goalSpeed) {
+        m_timer.reset();
+        m_timer.start();
+
+        m_swerveDrive.setChassisSpeeds(new ChassisSpeeds(0, 0, goalSpeed));
+
+        if (!m_swerveDrive.getChassisSpeed().equals(goalSpeed) && m_timer.get() > 10) {
+            throw new RuntimeException("Objection, your honor! It no turn correctly");
+        }
     }
 
 
@@ -319,6 +342,14 @@ public class ChassisSubsystem extends SubsystemBase {
         return run(() -> {
             m_swerveDrive.setModuleStates(state);
         }).withName("Chassis Push Forward");
+    }
+
+    public Command createChassisDriveChecklist(double goalSpeed) {
+        return runEnd(() -> chassisDriveChecklist(goalSpeed), () -> setChassisSpeed(new ChassisSpeeds()));
+    }
+
+    public Command createChassisSteerChecklist(double goalSpeed) {
+        return runEnd(() -> chassisSteerChecklist(goalSpeed), () -> setChassisSpeed(new ChassisSpeeds()));
     }
 
 }

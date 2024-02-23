@@ -294,5 +294,29 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/defaultSpeakerScoreAngle",
+    "type": "double",
+    "value": 30.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger_Down_Speed",
+    "type": "double",
+    "value": -1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger_Up_Speed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

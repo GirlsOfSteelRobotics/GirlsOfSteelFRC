@@ -89,7 +89,11 @@ public class IntakeSubsystem extends SubsystemBase {
         return createMoveIntakeInCommand().until(this::hasGamePiece).withName("Intake Till Piece");
     }
 
+    /////////////////////////////////////
+    // Checklists
+    /////////////////////////////////////
+
     public Command createMoveIntakeChecklist() {
-        return new SparkMaxMotorsMoveChecklist(this, m_intakeMotor,"Intake: Move In", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_intakeMotor, "Intake: Move In", 1.0);
     }
 }

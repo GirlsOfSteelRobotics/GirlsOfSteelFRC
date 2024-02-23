@@ -107,6 +107,7 @@ public class HangerSubsystem extends SubsystemBase {
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
+
     public Command createHangerUp() {
         return this.runEnd(this::runHangerUp, this::stopHanger);
     }
@@ -114,6 +115,11 @@ public class HangerSubsystem extends SubsystemBase {
     public Command createHangerDown() {
         return this.runEnd(this::runHangerDown, this::stopHanger);
     }
+
+
+    /////////////////////////////////////
+    // Checklists
+    /////////////////////////////////////
 
     public Command createMoveHangerChecklist() {
         return new SparkMaxMotorsMoveChecklist(this, m_hangerMotorPrimary, "Hanger Primary: Move Up", 1.0);

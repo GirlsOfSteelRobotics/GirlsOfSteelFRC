@@ -9,7 +9,6 @@ import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
-import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase;
@@ -35,6 +34,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
+import edu.wpi.first.wpilibj.Timer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
@@ -59,6 +59,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final AbsoluteEncoder m_pivotAbsEncoder;
     private final LoggingUtil m_networkTableEntriesPivot;
     private final SparkMaxAlerts m_armPivotMotorErrorAlerts;
+    private final Timer m_timer;
 
     private final SparkPIDController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
@@ -144,6 +145,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
 
         syncRelativeEncoder();
+        m_timer = new Timer();
     }
 
     public void clearStickyFaults() {
@@ -160,9 +162,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_wpiFeedForward.updateIfChanged();
         m_profilePidProperties.updateIfChanged();
     }
-
-
-
 
     public void moveArmToAngle(double goalAngle) {
         if (Math.abs(m_armGoalAngle - goalAngle) > 2) {
@@ -260,10 +259,17 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotorEncoder.setPosition(m_pivotAbsEncoder.getPosition());
     }
 
+    /////////////////////////////////////
+    // Checklists
+    /////////////////////////////////////
+
     private void moveArmPivotChecklist(double angle) {
+        m_timer.reset();
+        m_timer.start();
+
         moveArmToAngle(angle);
 
-        if (!isArmAtGoal()) {
+        if (!isArmAtGoal() && m_timer.get() > 5) {
             throw new RuntimeException("it blew up...jk the arm isnt at the angle");
         }
     }
@@ -317,8 +323,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .ignoringDisable(true).withName("Pivot to Coast");
     }
 
-    public Command createMoveArmPivotChecklist(DoubleSupplier angleSupplier) {
-        return this.runEnd(() -> moveArmPivotChecklist(angleSupplier.getAsDouble()), this::stopArmMotor);
+    public Command createMoveArmPivotChecklist(double goalAngle) {
+        return this.runEnd(() -> moveArmPivotChecklist(goalAngle), this::stopArmMotor);
     }
 
 }
