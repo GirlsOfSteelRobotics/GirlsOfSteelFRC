@@ -306,7 +306,7 @@
   {
     "name": "/Preferences/autoTimeoutSeconds",
     "type": "double",
-    "value": 5.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }

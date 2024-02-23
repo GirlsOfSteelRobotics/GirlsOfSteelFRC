@@ -37,6 +37,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNoteSpeakerMiddle2Pt2"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
@@ -45,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoNoteSpeakerMiddle2Pt2"
+            "pathName": "TwoNoteSpeakerMiddle2Pt3"
           }
         }
       ]

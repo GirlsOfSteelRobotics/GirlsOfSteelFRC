@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [25]": {
         "header": {
@@ -440,9 +445,6 @@
       "open": true
     },
     "visible": true
-  },
-  "NetworkTables View": {
-    "visible": false
   },
   "Plot": {
     "Plot <0>": {
