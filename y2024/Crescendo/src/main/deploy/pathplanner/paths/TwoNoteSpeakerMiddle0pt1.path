@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3571648195927977,
-        "y": 5.575737667766062
+        "x": 0.6933452953924437,
+        "y": 6.686887667641241
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4571648195927978,
-        "y": 5.575737667766062
+        "x": 0.7933452953924438,
+        "y": 6.686887667641241
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SubwooferTop"
     },
     {
       "anchor": {
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "TwoNoteSpeakerMiddle0",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

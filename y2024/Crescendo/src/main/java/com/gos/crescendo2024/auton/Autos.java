@@ -17,9 +17,9 @@ public final class Autos {
 
     public enum AutoModes {
         FOUR_NOTE("FourNoteSpeaker"),
+        TWO_NOTE_LEFT_0("TwoNoteSpeakerLeft0"),
         TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
         TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
-        TWO_NOTE_MIDDLE_0("TwoNoteSpeakerMiddle0"),
         TWO_NOTE_MIDDLE_1("TwoNoteSpeakerMiddle1"),
         TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2"),
         TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
