@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LedManagerSubsystem extends SubsystemBase {
 
-    private static final int MAX_INDEX_LED = 30;
+    private static final int MAX_INDEX_LED = 70;
 
     // Led core
     protected final AddressableLEDBuffer m_buffer;
@@ -22,7 +22,7 @@ public class LedManagerSubsystem extends SubsystemBase {
     private final DisabledPatterns m_disabledPatterns;
 
 
-    public LedManagerSubsystem(IntakeSubsystem intakeSubsystem, Autos autoModeFactory) {
+    public LedManagerSubsystem(IntakeSubsystem intakeSubsystem, Autos autoModeFactory, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         // Setup LED's
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
@@ -31,8 +31,8 @@ public class LedManagerSubsystem extends SubsystemBase {
         m_led.start();
 
         // Patterns
-        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intakeSubsystem);
-        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory);
+        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intakeSubsystem, chassis, arm, shooter);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory, chassis);
     }
 
 
