@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SimableRevDevice;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -63,11 +62,11 @@ public class RevSwerveModule {
      * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
      * Encoder.
      */
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset) {
         m_moduleName = moduleName;
 
-        switch(moduleConstants.m_driveMotorType) {
+        switch (moduleConstants.m_driveMotorType) {
         case NEO:
             m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
             break;
