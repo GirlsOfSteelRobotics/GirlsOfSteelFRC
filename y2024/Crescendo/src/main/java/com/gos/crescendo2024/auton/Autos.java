@@ -19,6 +19,8 @@ public final class Autos {
         FOUR_NOTE("FourNoteSpeaker"),
         TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
         TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
+        TWO_NOTE_MIDDLE_0("TwoNoteSpeakerMiddle0"),
+        TWO_NOTE_MIDDLE_1("TwoNoteSpeakerMiddle1"),
         TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2"),
         TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
         TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
@@ -27,6 +29,7 @@ public final class Autos {
         LEAVE_WING("LeaveWing"),
         PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing"),
         PRELOAD_AND_SHOOT("JustShoot");
+
 
 
         public final String m_modeName;

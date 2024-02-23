@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.4048307100172925,
-      "y": 5.472864279061892
-    },
-    "rotation": 0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -24,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteSpeakerMiddle5Pt1"
+                  "pathName": "TwoNoteSpeakerMiddle5pt1"
                 }
               },
               {
