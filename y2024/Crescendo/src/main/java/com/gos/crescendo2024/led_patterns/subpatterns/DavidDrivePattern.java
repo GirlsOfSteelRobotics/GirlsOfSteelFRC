@@ -8,15 +8,14 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public class DavidDrivePattern {
     private final LEDBoolean m_davidDriveOn;
-    private final ChassisSubsystem m_chassis;
+    private final boolean m_isDavidDrive;
 
     public DavidDrivePattern(AddressableLEDBuffer buffer, int startIndex, int numLEDs, ChassisSubsystem chassis) {
         m_davidDriveOn = new LEDBoolean(buffer, startIndex, startIndex + numLEDs, Color.kGreen, Color.kRed);
-        m_chassis = chassis;
+        m_isDavidDrive = chassis.getDefaultCommand() instanceof DavidDriveSwerve;
     }
 
     public void writeLED() {
-        boolean status = m_chassis.getDefaultCommand()instanceof DavidDriveSwerve;
-        m_davidDriveOn.setStateAndWrite(status);
+        m_davidDriveOn.setStateAndWrite(m_isDavidDrive);
     }
 }

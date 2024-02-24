@@ -17,9 +17,16 @@ public class DisabledPatterns {
     public DisabledPatterns(AddressableLEDBuffer buffer, int numberOfLEDs, Autos autoModeFactory, ChassisSubsystem chassis) {
         m_autoModeFactory = autoModeFactory;
 
-        m_alert = new AlertPatterns(buffer, numberOfLEDs / 2, numberOfLEDs / 2);
-        m_autoModePattern = new AutoModePattern(buffer, 0, numberOfLEDs / 2);
-        m_davidDriveOn = new DavidDrivePattern(buffer, 0, 10, chassis);
+        int davidDriveCount = 10;
+        int autoCount = (int) (numberOfLEDs * 0.70 - davidDriveCount) + 1;
+        int alertCount = numberOfLEDs - autoCount - davidDriveCount;
+
+        int autoStart = davidDriveCount;
+        int alertStart = autoStart + autoCount;
+
+        m_davidDriveOn = new DavidDrivePattern(buffer, 0, davidDriveCount, chassis);
+        m_autoModePattern = new AutoModePattern(buffer, autoStart, autoCount);
+        m_alert = new AlertPatterns(buffer, alertStart, alertCount);
     }
 
     public void writeAutoPattern() {
