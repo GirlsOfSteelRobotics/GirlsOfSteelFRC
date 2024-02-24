@@ -1,13 +1,23 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.79,
+  "robotLength": 0.79,
   "holonomicMode": true,
   "pathFolders": [
     "Four Piece Speaker",
     "Test Paths",
-    "Two notes speaker opp side"
+    "TwoNoteSpeakerLeft3",
+    "TwoNoteSpeakerLeft4",
+    "TwoNoteSpeakerMiddle1",
+    "TwoNoteSpeakerMiddle2",
+    "TwoNoteSpeakerMiddle5",
+    "TwoNoteSpeakerMiddle6",
+    "TwoNoteSpeakerRight6",
+    "TwoNotesSpeakerRight7"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "TwoPieceExperimental",
+    "TwoPiece"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

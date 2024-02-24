@@ -36,12 +36,12 @@ public class EnabledPatterns {
     }
 
     public void writeLED() {
-        m_hasPiecePattern.update(m_intake.hasGamePiece());
-        m_hasPiecePattern.writeLeds();
         m_armGood.setStateAndWrite(m_arm.isArmAtGoal());
         m_shooterGood.setStateAndWrite(m_shooter.isShooterAtGoal());
         m_chassisGood.setStateAndWrite(m_chassis.isAngleAtGoal());
         m_noteSeen.setStateAndWrite(m_chassis.isNoteDetected());
         m_aprilTagsSeen.writeLED();
+        m_hasPiecePattern.update(m_intake.hasGamePiece());
+        m_hasPiecePattern.writeLeds();
     }
 }

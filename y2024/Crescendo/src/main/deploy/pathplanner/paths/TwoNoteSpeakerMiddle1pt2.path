@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7019699576222576,
-        "y": 4.3850900124160495
+        "x": 2.2830253179303357,
+        "y": 5.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8404092828469647,
-        "y": 1.4919919106982173
+        "x": 2.383025317930336,
+        "y": 5.56
       },
       "isLocked": false,
-      "linkedName": "SubwooferBottom"
+      "linkedName": "TwoNoteSpeakerMiddle1End"
     },
     {
       "anchor": {
-        "x": 6.526042161499081,
-        "y": 1.347327274807222
+        "x": 2.7768175837103555,
+        "y": 5.56
       },
       "prevControl": {
-        "x": 5.99337789006367,
-        "y": 1.336882877328097
+        "x": 2.6768175837103554,
+        "y": 5.56
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,10 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TwoNoteSpeakerMiddle1",
   "previewStartingState": {
-    "rotation": -63.91412671810921,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

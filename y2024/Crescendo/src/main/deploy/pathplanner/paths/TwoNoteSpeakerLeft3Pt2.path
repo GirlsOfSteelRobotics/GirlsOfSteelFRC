@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.906046406591482,
-        "y": 0.7794096865922215
+        "x": 7.556404678026747,
+        "y": 7.378897313251592
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.484316895804217,
-        "y": 0.7922951000475278
+        "x": 6.733417568393381,
+        "y": 7.101139163750331
       },
       "isLocked": false,
-      "linkedName": "CenterLineNoteBottom"
+      "linkedName": "TwoNoteSpeaker3Pt1End"
     },
     {
       "anchor": {
-        "x": 1.1364568882983936,
-        "y": 4.509192864539576
+        "x": 3.939286876067486,
+        "y": 6.203265338861505
       },
       "prevControl": {
-        "x": 1.8976612637741923,
-        "y": 3.6777234697890884
+        "x": 2.939286876067486,
+        "y": 6.203265338861505
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
-    "maxAcceleration": 2.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.31074112497757,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two notes speaker opp side",
+  "folder": "TwoNoteSpeakerLeft3",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

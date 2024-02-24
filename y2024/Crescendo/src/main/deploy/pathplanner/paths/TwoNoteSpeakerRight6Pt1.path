@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8404092828469647,
-        "y": 1.4919919106982173
+        "x": 2.29033009012633,
+        "y": 1.8252644066417831
       },
       "isLocked": false,
       "linkedName": "SubwooferBottom"
     },
     {
       "anchor": {
-        "x": 6.526042161499081,
-        "y": 1.347327274807222
+        "x": 7.705441365805627,
+        "y": 2.2008315428256005
       },
       "prevControl": {
-        "x": 5.99337789006367,
-        "y": 1.336882877328097
+        "x": 5.995782725442397,
+        "y": 1.517510877868308
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TwoNoteSpeaker2Pt1End"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 24.341089936692345,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TwoNoteSpeakerRight6",
   "previewStartingState": {
-    "rotation": -63.91412671810921,
+    "rotation": -56.52372170389737,
     "velocity": 0
   },
   "useDefaultConstraints": false

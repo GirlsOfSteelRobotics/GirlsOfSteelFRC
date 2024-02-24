@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7019699576222576,
-        "y": 4.3850900124160495
+        "x": 7.71,
+        "y": 2.2008315428256005
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8404092828469647,
-        "y": 1.4919919106982173
+        "x": 5.9766017052081555,
+        "y": 1.197797698086499
       },
       "isLocked": false,
-      "linkedName": "SubwooferBottom"
+      "linkedName": "TwoNoteSpeaker2Pt1End"
     },
     {
       "anchor": {
-        "x": 6.526042161499081,
-        "y": 1.347327274807222
+        "x": 1.0639939666593456,
+        "y": 4.2361138103059135
       },
       "prevControl": {
-        "x": 5.99337789006367,
-        "y": 1.336882877328097
+        "x": 1.5119508293583617,
+        "y": 2.0255440748129425
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -58.76078511179128,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TwoNoteSpeakerRight6",
   "previewStartingState": {
-    "rotation": -63.91412671810921,
+    "rotation": 28.610459665965347,
     "velocity": 0
   },
   "useDefaultConstraints": false
