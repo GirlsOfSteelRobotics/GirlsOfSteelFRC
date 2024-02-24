@@ -5,6 +5,11 @@
         "visible": true
       }
     },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [25]": {
         "header": {
@@ -31,11 +36,6 @@
       },
       "6V Rail": {
         "open": true
-      }
-    },
-    "Timing": {
-      "window": {
-        "visible": false
       }
     }
   },
@@ -182,7 +182,6 @@
       "/Shuffleboard/PP Paths/S-Curve Path": "Command",
       "/Shuffleboard/PP Paths/SplinePath": "Command",
       "/Shuffleboard/PP Paths/StraightLinePath": "Command",
-      "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft0pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft3Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft3Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt1": "Command",
@@ -421,6 +420,12 @@
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "Transitory Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true

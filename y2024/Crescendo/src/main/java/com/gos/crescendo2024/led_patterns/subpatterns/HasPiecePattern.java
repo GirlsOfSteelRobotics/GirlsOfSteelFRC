@@ -10,6 +10,7 @@ public class HasPiecePattern {
     private boolean m_hasPiece;
 
     public HasPiecePattern(AddressableLEDBuffer buffer, int numberOfLEDs) {
+
         m_hasPiecePattern = new LEDFlash(buffer, 0, numberOfLEDs, 0.25, Color.kTomato);
         m_numCycles = 0;
     }
