@@ -15,6 +15,7 @@ import com.gos.crescendo2024.ObjectDetection;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
@@ -67,6 +68,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
+    private final SimpleMotorFeedForwardProperty m_turnAnglePIDFFProperties;
     private final AprilTagDetection m_photonVisionSubsystem;
 
     private final ObjectDetection m_objectDetectionSubsystem;
@@ -109,10 +111,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDVelocity.setTolerance(5);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", Constants.DEFAULT_CONSTANT_PROPERTIES, m_turnAnglePIDVelocity)
-            .addP(0.2)
+            .addP(0.054)
             .addI(0)
             .addD(0)
             .build();
+
+        m_turnAnglePIDFFProperties = new SimpleMotorFeedForwardProperty("chassis to angle ff", false)
+            .addKff(.02); //TODO check
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
         m_photonVisionSubsystem = new AprilTagDetection(m_field);
@@ -210,6 +215,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angleGoal);
         //TODO add ff
+        steerVelocity += m_turnAnglePIDFFProperties.calculate(m_turnAnglePIDVelocity.getSetpoint());
 
         if (isAngleAtGoal()) {
             steerVelocity = 0;
