@@ -1,5 +1,6 @@
 package com.gos.crescendo2024;
 
+import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -33,7 +34,10 @@ public class ObjectDetection {
     private final VisionSystemSim m_visionSim;
     private final PhotonCameraSim m_cameraSim;
 
+    private final ChassisSubsystem m_chassis;
+
     public ObjectDetection() {
+        m_chassis = new ChassisSubsystem();
         m_photonCamera = new PhotonCamera("ObjectDetection");
 
         TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
@@ -95,5 +99,18 @@ public class ObjectDetection {
             objectLocationsList.add(chassisLocation.transformBy(adjustForRot));
         }
         return objectLocationsList;
+    }
+
+    public double getNearestNote(){
+        List<Pose2d> notes = objectLocations(m_chassis.getPose());
+        double minDistance = 0;
+        for(int i = 0; i < notes.size(); i++){
+
+            if(m_chassis.getPose().getY()-notes.get(0).getY() < minDistance){
+                minDistance = m_chassis.getPose().getY()-notes.get(0).getY();
+            }
+        }
+        return minDistance;
+
     }
 }
