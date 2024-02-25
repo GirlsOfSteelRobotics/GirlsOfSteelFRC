@@ -11,7 +11,7 @@ import com.gos.aerial_assist.subsystems.Collector;
 /**
  * @author user
  */
-public class StopCollector extends GosCommandBaseBase {
+public class StopCollector extends GosCommandBase {
 
     private final Collector m_collector;
 

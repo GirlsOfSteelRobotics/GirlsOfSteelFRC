@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.commands;
 
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class DisableShooter extends GosCommandBaseBase {
+public class DisableShooter extends GosCommandBase {
     private final Shooter m_shooter;
 
     public DisableShooter(Shooter shooter) {

@@ -15,7 +15,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  *
  * @author Heather, Jisue
  */
-public class CollectorWheelForwardAutoVer extends GosCommandBaseBase {
+public class CollectorWheelForwardAutoVer extends GosCommandBase {
 
 
     private static final double TIME = 2.5; //when 3 seconds pass it will drop the ball

@@ -10,7 +10,7 @@ import com.gos.ultimate_ascent.subsystems.Climber;
 /**
  * @author sam
  */
-public class StopClimbMotors extends GosCommandBaseBase {
+public class StopClimbMotors extends GosCommandBase {
 
     private final Climber m_climber;
 

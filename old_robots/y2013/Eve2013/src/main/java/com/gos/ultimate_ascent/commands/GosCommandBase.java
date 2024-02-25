@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  * @author Author
  */
 @SuppressWarnings({"PMD.GodClass", "PMD.DataClass"})
-public abstract class GosCommandBaseBase extends Command {
+public abstract class GosCommandBase extends Command {
     protected Timer m_timer;
 
-    public GosCommandBaseBase(String name) {
+    public GosCommandBase(String name) {
         setName(name);
     }
 
-    public GosCommandBaseBase() {
+    public GosCommandBase() {
         super();
     }
 

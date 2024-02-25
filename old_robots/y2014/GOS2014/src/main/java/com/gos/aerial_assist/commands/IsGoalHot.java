@@ -11,7 +11,7 @@ import com.gos.aerial_assist.objects.Camera;
 /**
  * @author Sylvie
  */
-public class IsGoalHot extends GosCommandBaseBase {
+public class IsGoalHot extends GosCommandBase {
 
     private final Camera m_camera;
     private double[] m_hots = new double[10];

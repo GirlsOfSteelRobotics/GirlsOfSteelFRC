@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Sylvie
  * If used in a commandgroup, the entire commandgroup will become uninterruptible
  */
-public class PushPullShooterPiston extends GosCommandBaseBase {
+public class PushPullShooterPiston extends GosCommandBase {
 
     private final Feeder m_feeder;
     private final Shooter m_shooter;
