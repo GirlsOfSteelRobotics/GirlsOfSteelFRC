@@ -49,14 +49,28 @@ public class ArmPivotSysId {
                 m_velocity.mut_replace(m_armPivot.getEncoderVel(), DegreesPerSecond));
     }
 
+    private boolean getAngleLimit(SysIdRoutine.Direction direction) {
+        if (direction == SysIdRoutine.Direction.kForward) {
+            return m_armPivot.getAngle() >= 75;
+        }
+        else {
+            return m_armPivot.getAngle() <= 15;
+        }
+
+    }
+
     ///////////////////////
     // Command Factories
     ///////////////////////
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-        return m_routine.quasistatic(direction);
+        return m_routine.quasistatic(direction)
+            .until(() -> getAngleLimit(direction))
+            .finallyDo(m_armPivot::stopArmMotor);
     }
 
     public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-        return m_routine.dynamic(direction);
+        return m_routine.dynamic(direction)
+            .until(() -> getAngleLimit(direction))
+            .finallyDo(m_armPivot::stopArmMotor);
     }
 }

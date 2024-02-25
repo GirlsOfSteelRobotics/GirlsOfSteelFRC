@@ -73,7 +73,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_pivotMotor.setInverted(false);
+
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_pivotMotor.setInverted(true);
+        } else {
+            m_pivotMotor.setInverted(false);
+        }
         m_pivotMotor.setSmartCurrentLimit(60);
 
         m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, CANSparkLowLevel.MotorType.kBrushless);
