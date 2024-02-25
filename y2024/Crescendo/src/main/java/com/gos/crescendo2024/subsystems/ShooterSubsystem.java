@@ -13,6 +13,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -38,6 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
     private double m_shooterGoalRPM;
+    private final DigitalInput m_photoelectricSensor;
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
@@ -66,11 +68,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
 
+        m_photoelectricSensor = new DigitalInput(Constants.SHOOTER_SENSOR);
+
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
         m_networkTableEntries.addBoolean("Shooter At Goal", this::isShooterAtGoal);
+        m_networkTableEntries.addBoolean("Is Piece in Shooter", this::isPieceInShooter);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
@@ -131,6 +136,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isShooterAtGoal() {
         double error = m_shooterGoalRPM - getRPM();
         return Math.abs(error) < ALLOWABLE_ERROR;
+    }
+
+    public boolean isPieceInShooter() {
+        return !m_photoelectricSensor.get();
     }
 
     public void clearStickyFaults() {
