@@ -8,7 +8,7 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Shooter;
 
-public class Shoot extends GosCommandBase {
+public class Shoot extends GosCommandBaseBase {
 
     private final boolean m_camera;
 

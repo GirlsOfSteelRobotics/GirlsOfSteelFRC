@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TestSetPointTurret extends GosCommandBase {
+public class TestSetPointTurret extends GosCommandBaseBase {
 
     private final Turret m_turret;
     private double m_angle;

@@ -3,9 +3,9 @@ package com.gos.ultimate_ascent.tests;
 import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.ultimate_ascent.commands.GosCommandBase;
+import com.gos.ultimate_ascent.commands.GosCommandBaseBase;
 
-public class ShooterJags extends GosCommandBase {
+public class ShooterJags extends GosCommandBaseBase {
 
     private static final double WAIT_TIME = 1.0;
 
