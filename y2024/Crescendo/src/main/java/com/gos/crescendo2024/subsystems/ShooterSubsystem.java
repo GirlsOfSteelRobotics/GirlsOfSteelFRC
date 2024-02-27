@@ -33,6 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_shooterMotorLeader;
     private final SimableCANSparkMax m_shooterMotorFollower;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
+    private final SparkMaxAlerts m_shooterFollowerErrorAlerts;
     private final RelativeEncoder m_shooterEncoder;
     private final SparkPIDController m_pidController;
     private final PidProperty m_pidProperties;
@@ -44,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorLeader.restoreFactoryDefaults();
-        m_shooterMotorLeader.setInverted(false);
+        m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
         m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
@@ -58,15 +59,18 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setSmartCurrentLimit(60);
         m_shooterMotorLeader.enableVoltageCompensation(10);
         m_shooterMotorLeader.burnFlash();
+        m_shooterMotorLeader.setClosedLoopRampRate(.5);
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
-        m_shooterMotorFollower.follow(m_shooterMotorLeader, false);
+        m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
         m_shooterMotorFollower.burnFlash();
+        m_shooterMotorFollower.setClosedLoopRampRate(.5);
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
+        m_shooterFollowerErrorAlerts = new SparkMaxAlerts(m_shooterMotorFollower, "shooter follower");
 
         m_photoelectricSensor = new DigitalInput(Constants.SHOOTER_SENSOR);
 
@@ -87,6 +91,7 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_shooterMotorErrorAlerts.checkAlerts();
+        m_shooterFollowerErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
         m_pidProperties.updateIfChanged();
 
