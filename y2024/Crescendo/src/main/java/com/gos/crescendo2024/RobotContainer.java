@@ -98,8 +98,12 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
+        // These three should be off for competition
         createTestCommands();
         createSysIdCommands();
+        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+
+        createEllieCommands();
 
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
@@ -109,12 +113,24 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
 
-        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
-
         PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
 
     }
 
+    private void createEllieCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Ellie");
+
+        shuffleboardTab.add("Arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
+        shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
+        shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
+
+        if (Constants.HAS_HANGER) {
+            addHangerTestCommands(shuffleboardTab);
+        }
+    }
+
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
 
@@ -144,6 +160,7 @@ public class RobotContainer {
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
     }
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void createSysIdCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("SysId");
 

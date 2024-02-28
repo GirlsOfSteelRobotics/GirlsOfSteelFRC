@@ -49,10 +49,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
         m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
-            .addP(0.000)
+            .addP(1.5e-4)
             .addI(0.0)
             .addD(0.0)
-            .addFF(0.000220)
+            .addFF(0.000185)
             .build();
 
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);

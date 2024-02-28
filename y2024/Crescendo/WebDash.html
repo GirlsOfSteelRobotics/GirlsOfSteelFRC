@@ -2,7 +2,6 @@
     tab-name="Drivers"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-sendable-chooser
         source-provider="NetworkTables"
         selected="leave wing"
@@ -82,7 +81,7 @@
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(240px, 120px); width: 631.2px; height: 400px;"
+        style="transform: translate(206.4px, 314.413px); width: 631.2px; height: 400px;"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
@@ -148,6 +147,7 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -178,6 +178,7 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -208,6 +209,7 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -235,7 +237,7 @@
     ></frc-robot-command><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(836.012px, 127.201px);"
+        style="transform: translate(192.012px, 0.001003px);"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
@@ -310,6 +312,7 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -340,6 +343,7 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -374,6 +378,7 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -417,6 +422,7 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -476,7 +482,11 @@
         game="Crescendo"
         grid-size="1"
     >
-    </frc-field-wrapper></dashboard-tab><dashboard-tab
+    </frc-field-wrapper><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(285px, 212px);"
+        source-key="/Shuffleboard/test commands/Teleop: Normal Swerve Drive"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Pit"
     slot="tab"
     source-provider="NetworkTables"
@@ -496,4 +506,28 @@
         source-provider="NetworkTables"
         style="transform: translate(1088px, 220px);"
         source-key="/Shuffleboard/test commands/Chassis Push"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(151px, 99px);"
+        source-key="/Shuffleboard/test commands/Clear Sticky Faults"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
+    tab-name="SysId"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/SysId/Arm SysId Dynamic Forward"
+        style="transform: translate(107px, 66px);"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/SysId/Arm SysId Dynamic Backward"
+        style="transform: translate(150px, 137px);"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/SysId/Arm SysId Quasistatic Forward"
+        style="transform: translate(142px, 200px);"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/SysId/Arm SysId Quasistatic Backward"
+        style="transform: translate(166px, 288px);"
     ></frc-robot-command></dashboard-tab>

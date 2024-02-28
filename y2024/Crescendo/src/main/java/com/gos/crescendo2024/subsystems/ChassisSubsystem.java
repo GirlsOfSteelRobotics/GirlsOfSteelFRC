@@ -7,6 +7,7 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
@@ -146,7 +147,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToSpeaker() {
-        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
@@ -219,7 +220,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
-        double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
+        double angleCurrentDegree = getPose().getRotation().getDegrees();
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angle);
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xVel, yVel, steerVelocity, getPose().getRotation());
 
