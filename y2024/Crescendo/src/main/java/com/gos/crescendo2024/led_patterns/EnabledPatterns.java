@@ -6,7 +6,6 @@ import com.gos.crescendo2024.led_patterns.subpatterns.InShooterPattern;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
-import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.led.LEDBoolean;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -14,16 +13,18 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public class EnabledPatterns {
     private final IntakeSubsystem m_intake;
+    private final ArmPivotSubsystem m_arm;
+    private final ChassisSubsystem m_chassis;
+    private final ShooterSubsystem m_shooter;
+
     private final LEDBoolean m_armGood;
     private final LEDBoolean m_chassisGood;
     private final LEDBoolean m_shooterGood;
     private final LEDBoolean m_noteSeen;
     private final AprilTagPattern m_aprilTagsSeen;
     private final HasPiecePattern m_hasPiecePattern;
-    private final ArmPivotSubsystem m_arm;
-    private final ChassisSubsystem m_chassis;
-    private final ShooterSubsystem m_shooter;
     private final InShooterPattern m_inShooterPattern;
+
     public EnabledPatterns(AddressableLEDBuffer buffer, int numberOfLeds, IntakeSubsystem intake, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         m_intake = intake;
         m_inShooterPattern = new InShooterPattern(buffer, numberOfLeds);

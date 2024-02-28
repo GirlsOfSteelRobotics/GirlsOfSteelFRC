@@ -222,14 +222,22 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        double angle;
         if (RobotBase.isReal() && USE_ABSOLUTE_ENCODER) {
-            angle = m_pivotAbsEncoder.getPosition();
+            return getAbsoluteEncoderAngle();
         }
         else {
-            angle = m_pivotMotorEncoder.getPosition();
+            return getRelativeEncoderAngle();
         }
+    }
 
+
+    public double getRelativeEncoderAngle() {
+        double angle =  m_pivotMotorEncoder.getPosition();
+        return MathUtil.inputModulus(angle, -180, 180);
+    }
+
+    public double getAbsoluteEncoderAngle() {
+        double angle = m_pivotAbsEncoder.getPosition();
         return MathUtil.inputModulus(angle, -180, 180);
     }
 

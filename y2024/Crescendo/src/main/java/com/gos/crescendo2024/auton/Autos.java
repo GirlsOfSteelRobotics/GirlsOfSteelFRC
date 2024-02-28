@@ -64,7 +64,7 @@ public final class Autos {
 
     private final Map<AutoModes, Command> m_modes;
 
-    private static final GosDoubleProperty AUTON_TIMEOUT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "autoTimeoutSeconds", 0);
+    public static final GosDoubleProperty AUTON_TIMEOUT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "autoTimeoutSeconds", 0);
 
 
     public Autos() {
