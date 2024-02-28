@@ -27,6 +27,11 @@ public class CombinedCommands {
             .alongWith(shooter.createSetRPMCommand(4000));
     }
 
+    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
+        return armPivot.createMoveArmToAngleCommand(angle)
+            .alongWith(shooter.createSetRPMCommand(4000));
+    }
+
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
             .alongWith(shooter.createSetRPMCommand(800))
