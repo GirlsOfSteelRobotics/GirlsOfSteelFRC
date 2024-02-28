@@ -13,6 +13,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -32,17 +33,19 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_shooterMotorLeader;
     private final SimableCANSparkMax m_shooterMotorFollower;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
+    private final SparkMaxAlerts m_shooterFollowerErrorAlerts;
     private final RelativeEncoder m_shooterEncoder;
     private final SparkPIDController m_pidController;
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
     private double m_shooterGoalRPM;
+    private final DigitalInput m_photoelectricSensor;
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorLeader.restoreFactoryDefaults();
-        m_shooterMotorLeader.setInverted(false);
+        m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
         m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
@@ -56,21 +59,27 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setSmartCurrentLimit(60);
         m_shooterMotorLeader.enableVoltageCompensation(10);
         m_shooterMotorLeader.burnFlash();
+        m_shooterMotorLeader.setClosedLoopRampRate(.5);
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
-        m_shooterMotorFollower.follow(m_shooterMotorLeader, false);
+        m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
         m_shooterMotorFollower.burnFlash();
+        m_shooterMotorFollower.setClosedLoopRampRate(.5);
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
+        m_shooterFollowerErrorAlerts = new SparkMaxAlerts(m_shooterMotorFollower, "shooter follower");
+
+        m_photoelectricSensor = new DigitalInput(Constants.SHOOTER_SENSOR);
 
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
         m_networkTableEntries.addBoolean("Shooter At Goal", this::isShooterAtGoal);
+        m_networkTableEntries.addBoolean("Is Piece in Shooter", this::isPieceInShooter);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
@@ -82,6 +91,7 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_shooterMotorErrorAlerts.checkAlerts();
+        m_shooterFollowerErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
         m_pidProperties.updateIfChanged();
 
@@ -131,6 +141,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isShooterAtGoal() {
         double error = m_shooterGoalRPM - getRPM();
         return Math.abs(error) < ALLOWABLE_ERROR;
+    }
+
+    public boolean isPieceInShooter() {
+        return !m_photoelectricSensor.get();
     }
 
     public void clearStickyFaults() {

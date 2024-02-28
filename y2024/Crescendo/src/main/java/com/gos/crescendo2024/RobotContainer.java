@@ -75,7 +75,7 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        if (Constants.IS_COMPETITION_ROBOT) {
+        if (Constants.HAS_HANGER) {
             m_hangerSubsystem = new HangerSubsystem();
         } else {
             m_hangerSubsystem = null;
@@ -122,7 +122,7 @@ public class RobotContainer {
         addArmPivotTestCommands(shuffleboardTab);
         addIntakeTestCommands(shuffleboardTab);
         addShooterTestCommands(shuffleboardTab);
-        if (Constants.IS_COMPETITION_ROBOT) {
+        if (Constants.HAS_HANGER) {
             addHangerTestCommands(shuffleboardTab);
         }
 
@@ -295,7 +295,7 @@ public class RobotContainer {
         m_armPivotSubsystem.clearStickyFaults();
         m_intakeSubsystem.clearStickyFaults();
         m_shooterSubsystem.clearStickyFaults();
-        if (Constants.IS_COMPETITION_ROBOT) {
+        if (Constants.HAS_HANGER) {
             m_hangerSubsystem.clearStickyFaults();
         }
     }

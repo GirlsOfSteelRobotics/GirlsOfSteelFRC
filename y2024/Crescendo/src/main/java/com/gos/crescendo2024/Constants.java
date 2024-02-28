@@ -16,7 +16,9 @@ package com.gos.crescendo2024;
 public final class Constants {
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
 
-    public static final boolean IS_COMPETITION_ROBOT = false;
+    public static final boolean IS_COMPETITION_ROBOT = true;
+
+    public static final boolean HAS_HANGER = false;
 
     // Joystick IDS
     public static final int DRIVER_JOYSTICK = 0;
@@ -33,8 +35,8 @@ public final class Constants {
 
     public static final int PIGEON_PORT = 20;
 
-    public static final int FRONT_RIGHT_WHEEL = 21;
-    public static final int BACK_RIGHT_WHEEL = 22;
+    public static final int FRONT_RIGHT_WHEEL = 22;
+    public static final int BACK_RIGHT_WHEEL = 21;
     public static final int FRONT_LEFT_WHEEL = 23;
     public static final int BACK_LEFT_WHEEL = 24;
 
@@ -45,6 +47,7 @@ public final class Constants {
 
     //Digital Inputs
     public static final int INTAKE_SENSOR = 0;
+    public static final int SHOOTER_SENSOR = 1;
 
     //PWM
     public static final int LED_PORT = 0;
