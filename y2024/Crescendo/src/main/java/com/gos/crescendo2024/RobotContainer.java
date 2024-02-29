@@ -98,8 +98,12 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
+        // These three should be off for competition
         createTestCommands();
         createSysIdCommands();
+        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+
+        createEllieCommands();
 
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
@@ -109,12 +113,24 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
 
-        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
-
         PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
 
     }
 
+    private void createEllieCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Ellie");
+
+        shuffleboardTab.add("Arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
+        shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
+        shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
+
+        if (Constants.HAS_HANGER) {
+            addHangerTestCommands(shuffleboardTab);
+        }
+    }
+
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
 
@@ -144,6 +160,7 @@ public class RobotContainer {
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
     }
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void createSysIdCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("SysId");
 
@@ -240,27 +257,27 @@ public class RobotContainer {
         //face shooter to center speaker
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
+        // Intake-to-shoot
+        m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
+
         // Amp Scoring
         m_driverController.leftBumper().whileTrue(
             CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem)
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
-        m_driverController.leftBumper().and(m_driverController.rightTrigger()).whileTrue(
-            CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
-        m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
-            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
-                    .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
-
         //go to floor
         m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
 
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+
+        //override angle to middle subwoofer shot
+        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, 7));
 
 
         /////////////////////////////

@@ -1,5 +1,6 @@
 package com.gos.crescendo2024.subsystems;
 
+import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.SpeakerLookupTable;
@@ -39,9 +40,9 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 5.4);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 30);
-    private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
+    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 358);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 37);
+    private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 95);
 
     public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike top angle", 40);
     public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike middle angle", 32);
@@ -118,7 +119,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_sparkPidController.setPositionPIDWrappingMinInput(0);
         m_sparkPidController.setPositionPIDWrappingMaxInput(360);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_sparkPidController, 0)
-            .addP(0.13)
+            .addP(0.14)
             .addI(0)
             .addD(0)
             .build();
@@ -130,8 +131,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .build();
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", Constants.DEFAULT_CONSTANT_PROPERTIES)
             .addKs(0)
-            .addKff(3.3)
-            .addKg(0.8);
+            .addKff(2.2)
+            .addKg(1.2);
 
         m_networkTableEntriesPivot = new LoggingUtil("Arm Pivot Subsystem");
         m_networkTableEntriesPivot.addDouble("Output", m_pivotMotor::getAppliedOutput);
@@ -205,7 +206,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public double getPivotAngleUsingSpeakerLookupTable(Supplier<Pose2d> roboMan) {
-        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
         Translation2d roboManTranslation = roboMan.get().getTranslation();
         double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
         return m_speakerTable.getAngleTable(distanceToSpeaker);

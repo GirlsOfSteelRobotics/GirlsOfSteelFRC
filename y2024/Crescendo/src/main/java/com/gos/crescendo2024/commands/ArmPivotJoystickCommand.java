@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class ArmPivotJoystickCommand extends Command {
 
     private static final double ARM_PIVOT_JOYSTICK_DEADBAND = 0.025;
-    private static final GosDoubleProperty DAMPING = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ArmPivotJoystickTranslationDamping", 0.2);
+    private static final GosDoubleProperty DAMPING = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ArmPivotJoystickTranslationDamping", 1.0);
     private final CommandXboxController m_joystick;
 
     private final ArmPivotSubsystem m_armPivotSubsystem;

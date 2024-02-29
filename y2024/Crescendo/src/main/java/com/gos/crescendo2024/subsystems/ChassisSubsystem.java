@@ -7,6 +7,7 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
@@ -59,6 +60,8 @@ public class ChassisSubsystem extends SubsystemBase {
             MAX_TRANSLATION_SPEED = 3.9624; // 13fps, Theoretically 4.8
         }
     }
+
+    private static final boolean USE_APRIL_TAGS = false;
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -146,7 +149,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToSpeaker() {
-        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
@@ -179,7 +182,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (cameraResult.isPresent()) {
+        if (USE_APRIL_TAGS && cameraResult.isPresent()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
@@ -219,7 +222,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
-        double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
+        double angleCurrentDegree = getPose().getRotation().getDegrees();
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angle);
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xVel, yVel, steerVelocity, getPose().getRotation());
 
