@@ -45,6 +45,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "defaultSpeakerScoreAngle", 9);
     public static final GosDoubleProperty ARM_DEFAULT_SIDE_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 95);
+    private static final double ARM_MAX_ANGLE = 90;
 
     public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 25);
     public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 9);
@@ -190,7 +191,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_armGoalAngle = goalAngle;
         double currentAngle = getAngle();
-        if (currentAngle < 100 || goalAngle<currentAngle) {
+        if (currentAngle < ARM_MAX_ANGLE || MathUtil.inputModulus(goalAngle, -180, 180) < MathUtil.inputModulus(currentAngle, -180, 180)) {
            m_profilePID.calculate(currentAngle, goalAngle);
            TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
            double feedForwardVolts = m_wpiFeedForward.calculate(
@@ -203,6 +204,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
         else{
          stopArmMotor();
+
         }
     }
 
@@ -249,11 +251,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public void setArmMotorSpeed(double speed) {
-        if (getAngle() < 100 || speed<0) {
+        if (getAngle() < ARM_MAX_ANGLE || speed<0) {
             m_pivotMotor.set(speed);
         }
         else{
-            stopArmMotor();
+            m_sparkPidController.setReference(ARM_MAX_ANGLE, CANSparkBase.ControlType.kPosition);
+//            stopArmMotor();
         }
     }
 
