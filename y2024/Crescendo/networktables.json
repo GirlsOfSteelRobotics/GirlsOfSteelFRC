@@ -310,5 +310,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Hack Lookup Table",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

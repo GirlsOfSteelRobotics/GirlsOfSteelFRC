@@ -190,15 +190,20 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_armGoalAngle = goalAngle;
         double currentAngle = getAngle();
-        m_profilePID.calculate(currentAngle, goalAngle);
-        TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
-        double feedForwardVolts = m_wpiFeedForward.calculate(
-            Units.degreesToRadians(currentAngle),
-            Units.degreesToRadians(setpoint.velocity));
+        if (currentAngle < 100 || goalAngle<currentAngle) {
+           m_profilePID.calculate(currentAngle, goalAngle);
+           TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
+           double feedForwardVolts = m_wpiFeedForward.calculate(
+               Units.degreesToRadians(currentAngle),
+               Units.degreesToRadians(setpoint.velocity));
 
 
-        m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
-        SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+           m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+           SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+        }
+        else{
+         stopArmMotor();
+        }
     }
 
     private void resetPidController() {
@@ -244,7 +249,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public void setArmMotorSpeed(double speed) {
-        m_pivotMotor.set(speed);
+        if (getAngle() < 100 || speed<0) {
+            m_pivotMotor.set(speed);
+        }
+        else{
+            stopArmMotor();
+        }
     }
 
     public void setVoltage(double outputVolts) {

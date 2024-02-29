@@ -171,6 +171,10 @@
     },
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Ellie/Arm Resync Encoder": "Command",
+      "/Shuffleboard/Ellie/Arm to coast": "Command",
+      "/Shuffleboard/Ellie/Chassis Set Pose Subwoofer Mid": "Command",
+      "/Shuffleboard/Ellie/Clear Sticky Faults": "Command",
       "/Shuffleboard/PP Paths/Curve Path": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
