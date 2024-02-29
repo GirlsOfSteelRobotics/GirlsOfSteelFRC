@@ -26,6 +26,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -41,12 +42,13 @@ import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 358);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 37);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "defaultSpeakerScoreAngle", 9);
+    public static final GosDoubleProperty ARM_DEFAULT_SIDE_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 95);
 
-    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike top angle", 40);
-    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike middle angle", 32);
-    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike bottom angle", 32);
+    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 25);
+    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 9);
+    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 25);
 
 
     private static final double GEAR_RATIO;
@@ -169,6 +171,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (DriverStation.isDisabled()) {
+            syncRelativeEncoder();
+        }
         m_networkTableEntriesPivot.updateLogs();
         m_armPivotMotorErrorAlerts.checkAlerts();
         m_armPivotFollowerErrorAlerts.checkAlerts();
@@ -269,6 +274,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private void syncRelativeEncoder() {
         m_pivotMotorEncoder.setPosition(m_pivotAbsEncoder.getPosition());
+    }
+
+    public boolean areArmEncodersGood() {
+        return Math.abs(m_pivotMotorEncoder.getPosition() - m_pivotAbsEncoder.getPosition()) <= ALLOWABLE_ERROR;
     }
 
     /////////////////////////////////////

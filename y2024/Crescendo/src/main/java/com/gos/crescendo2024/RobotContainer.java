@@ -85,6 +85,7 @@ public class RobotContainer {
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+        NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.ARM_DEFAULT_SIDE_SPEAKER_ANGLE::getValue));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
@@ -99,9 +100,9 @@ public class RobotContainer {
         configureBindings();
 
         // These three should be off for competition
-        createTestCommands();
-        createSysIdCommands();
-        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+         createTestCommands();
+        // createSysIdCommands();
+        // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
         createEllieCommands();
 
@@ -293,7 +294,7 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
-        // PropertyManager.purgeExtraKeys();
+         //PropertyManager.purgeExtraKeys();
     }
 
 
@@ -304,7 +305,11 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
+        System.out.println("Arm synced: " + m_armPivotSubsystem.areArmEncodersGood());
+        System.out.println("Selected Auto" + m_autonomousFactory.autoModeLightSignal());
+
         return m_autonomousFactory.getSelectedAutonomous();
+
     }
 
     private void resetStickyFaults() {
