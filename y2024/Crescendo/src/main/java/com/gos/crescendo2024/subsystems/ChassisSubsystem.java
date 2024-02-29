@@ -61,6 +61,8 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    private static final boolean USE_APRIL_TAGS = false;
+
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
@@ -180,10 +182,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (cameraResult.isPresent()) {
+        if (USE_APRIL_TAGS && cameraResult.isPresent()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-            //m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
+            m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
         }
     }
 

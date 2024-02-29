@@ -23,17 +23,33 @@ import java.util.List;
 import java.util.Optional;
 
 public class AprilTagDetection {
-    private static final double ROBOT_WIDTH = Units.inchesToMeters(28);
-    private static final double ROBOT_LENGTH = Units.inchesToMeters(28);
+    private static final Transform3d ROBOT_TO_CAMERA;
 
-    //TODO: Update values by putting values in it
-    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
-        new Translation3d(
-            -(ROBOT_WIDTH / 2 - 0.04), // 4cm from back
-             -(ROBOT_LENGTH / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
-            .235),
-        new Rotation3d(0, Math.toRadians(-34), Math.toRadians(178)) // Negative because camera upside down?
-    );
+    static {
+        if (Constants.IS_COMPETITION_ROBOT) {
+            final double robotWidth = Units.inchesToMeters(28);
+            final double robotLength = Units.inchesToMeters(28);
+
+            ROBOT_TO_CAMERA = new Transform3d(
+                new Translation3d(
+                    -(robotWidth / 2 - 0.04), // 4cm from back
+                    -(robotLength / 2 - .42), // 42cm from right side
+                    .235),
+                new Rotation3d(0, Math.toRadians(-34), Math.toRadians(180))
+            );
+        } else {
+            final double robotWidth = Units.inchesToMeters(28);
+            final double robotLength = Units.inchesToMeters(28);
+
+            ROBOT_TO_CAMERA = new Transform3d(
+                new Translation3d(
+                    -(robotWidth / 2 - 0.04), // 4cm from back
+                    -(robotLength / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
+                    .235),
+                new Rotation3d(0, Math.toRadians(-34), Math.toRadians(178))
+            );
+        }
+    }
 
     private static final String CAMERA_NAME = "AprilTag1";
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);
