@@ -27,6 +27,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -253,7 +254,8 @@ public class RobotContainer {
         // Driver Controller
         /////////////////////////////
         //Slow / reg chassis speed
-        m_driverController.povUp().whileTrue(ChassisSubsystem.setIsSlowMode(true));
+        m_driverController.povUp().whileTrue(m_chassisSubsystem.setIsSlowMode(false));
+        m_driverController.povDown().whileTrue(m_chassisSubsystem.setIsSlowMode(true));
 
         // Chassis
         m_driverController.start().and(m_driverController.back())
@@ -275,7 +277,10 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //go to floor
-        m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        m_driverController.leftTrigger().whileTrue(
+            CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
+                .andThen(Commands.run(()->m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1)).withTimeout(1))
+                .finallyDo(()->m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0)));
 
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());

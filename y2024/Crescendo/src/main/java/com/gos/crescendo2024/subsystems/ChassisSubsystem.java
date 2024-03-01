@@ -266,7 +266,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public void davidDrive(double x, double y, double angle) {
         if (m_isSlowTeleop) {
             turnToAngleWithVelocity(x * m_translationJoystickDampening.getValue(), y * m_translationJoystickDampening.getValue(),
-                angle * m_rotationJoystickDampening.getValue());
+                angle);
         } else {
             turnToAngleWithVelocity(x, y, angle);
         }
