@@ -286,7 +286,7 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
         //override angle to middle subwoofer shot
-        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, 7)
+        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, 11)
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
 

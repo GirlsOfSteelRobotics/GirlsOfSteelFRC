@@ -27,15 +27,15 @@ public class AprilTagDetection {
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            final double robotWidth = Units.inchesToMeters(28);
-            final double robotLength = Units.inchesToMeters(28);
+            final double robotWidth = Units.inchesToMeters(25);
+            final double robotLength = Units.inchesToMeters(25);
 
             ROBOT_TO_CAMERA = new Transform3d(
                 new Translation3d(
-                    -(robotWidth / 2 - 0.04), // 4cm from back
-                    -(robotLength / 2 - .42), // 42cm from right side
+                    -(robotWidth / 2 - Units.inchesToMeters(2.5)), // 4cm from back
+                    0,
                     .235),
-                new Rotation3d(0, Math.toRadians(-34), Math.toRadians(180))
+                new Rotation3d(0, Math.toRadians(-40), Math.toRadians(180))
             );
         } else {
             final double robotWidth = Units.inchesToMeters(28);

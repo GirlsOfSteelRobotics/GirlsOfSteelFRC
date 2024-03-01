@@ -61,7 +61,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    private static final boolean USE_APRIL_TAGS = false;
+    private static final boolean USE_APRIL_TAGS = true;
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;

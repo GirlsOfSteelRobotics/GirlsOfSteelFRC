@@ -13,9 +13,9 @@ public class SpeakerLookupTable {
     public SpeakerLookupTable() {
         // tuned 2/27
         m_table.put(SUBWOOFER_SIZE + HACK_VALUE.getValue(), 9.0);
-        m_table.put(SUBWOOFER_SIZE + Units.feetToMeters(2)+ HACK_VALUE.getValue(), 25.0);
-        m_table.put(SUBWOOFER_SIZE + Units.feetToMeters(4)+ HACK_VALUE.getValue(), 35.0);
-        m_table.put(SUBWOOFER_SIZE + Units.feetToMeters(6)+ HACK_VALUE.getValue(), 37.0);
+        m_table.put(1.8, 25.0);
+        m_table.put(2.45 , 35.0);
+        m_table.put(2.96, 37.0);
 
     }
 
