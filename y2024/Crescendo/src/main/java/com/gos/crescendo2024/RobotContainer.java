@@ -252,6 +252,9 @@ public class RobotContainer {
         /////////////////////////////
         // Driver Controller
         /////////////////////////////
+        //Slow / reg chassis speed
+        m_driverController.povUp().whileTrue(ChassisSubsystem.setIsSlowMode(true));
+
         // Chassis
         m_driverController.start().and(m_driverController.back())
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());

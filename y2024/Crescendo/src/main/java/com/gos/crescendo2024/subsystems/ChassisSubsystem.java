@@ -78,8 +78,14 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Acceleration", 48);
     private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Velocity", 180);
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Acceleration", 180);
+    private final GosDoubleProperty m_translationJoystickDampening = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
+    private final GosDoubleProperty m_rotationJoystickDampening = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
+
+
 
     private final LoggingUtil m_logging;
+
+    private boolean m_isSlowTeleop;
 
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
@@ -198,7 +204,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
-        m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
+        if (m_isSlowTeleop) {
+            m_swerveDrive.driveWithJoysticks(xPercent * m_translationJoystickDampening.getValue(), yPercent * m_translationJoystickDampening.getValue(),
+                rotPercent * m_rotationJoystickDampening.getValue(), fieldRelative);
+        } else {
+            m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
+        }
+
     }
 
     public Pose2d getPose() {
@@ -252,7 +264,12 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void davidDrive(double x, double y, double angle) {
-        turnToAngleWithVelocity(x, y, angle);
+        if (m_isSlowTeleop) {
+            turnToAngleWithVelocity(x * m_translationJoystickDampening.getValue(), y * m_translationJoystickDampening.getValue(),
+                angle * m_rotationJoystickDampening.getValue());
+        } else {
+            turnToAngleWithVelocity(x, y, angle);
+        }
     }
 
     public Pose2d getFuturePose() {
@@ -342,6 +359,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return run(() -> {
             m_swerveDrive.setModuleStates(state);
         }).withName("Chassis Push Forward");
+    }
+
+    public Command setIsSlowMode(boolean setBoolean) {
+        return runOnce(() -> m_isSlowTeleop = setBoolean);
     }
 
 
