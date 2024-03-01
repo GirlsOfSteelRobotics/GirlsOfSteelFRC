@@ -42,7 +42,7 @@ import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 358);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(false, "defaultSpeakerScoreAngle", 7);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(true, "defaultSpeakerScoreAngle", 9); //TODO changeeee
     public static final GosDoubleProperty ARM_DEFAULT_SIDE_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 95);
     private static final double ARM_MAX_ANGLE = 90;

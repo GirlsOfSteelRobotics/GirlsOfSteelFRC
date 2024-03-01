@@ -85,7 +85,7 @@ public class RobotContainer {
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
         m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
 
-        NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue));
+        NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem,() -> 9)); //TODO no
         NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.ARM_DEFAULT_SIDE_SPEAKER_ANGLE::getValue));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
