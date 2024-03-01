@@ -74,10 +74,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final ObjectDetection m_objectDetectionSubsystem;
 
-    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Velocity", 48);
-    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Acceleration", 48);
-    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Velocity", 180);
-    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Acceleration", 180);
+    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
+    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
+    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
     private final GosDoubleProperty m_translationJoystickDampening = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
     private final GosDoubleProperty m_rotationJoystickDampening = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
 
@@ -341,11 +341,16 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
             new GoalEndState(0.0, end.getRotation())
         );
+        path.preventFlipping = true;
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
 
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
+    }
+
+    public Command createDriveToPointMaybeFlippedCommand(Pose2d endPoint) {
+        return defer(() -> createDriveToPointNoFlipCommand(AllianceFlipper.maybeFlip(endPoint))).withName("Drive to " + endPoint);
     }
 
     public Command createResetPoseCommand(Pose2d pose) {

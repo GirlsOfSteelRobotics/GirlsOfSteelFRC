@@ -193,7 +193,7 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis Set Pose Subwoofer Top", m_chassisSubsystem.createResetPoseCommand(new Pose2d(0.6933452953924437,        6.686887667641241, Rotation2d.fromDegrees(60))).withName("Reset Pose Subwoofer Top"));
 
         shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
-        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))).withName("Drive To Amp"));
+        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(14.7, 7.8, Rotation2d.fromDegrees(90))).withName("Drive To Amp"));
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -279,7 +279,10 @@ public class RobotContainer {
         //go to floor
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
-                .andThen(Commands.run(()->m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1)).withTimeout(1))
+                .andThen(Commands.run(()-> {
+                    System.out.println("Should be rumbling");
+                    m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+                }).withTimeout(1))
                 .finallyDo(()->m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0)));
 
         //spit out

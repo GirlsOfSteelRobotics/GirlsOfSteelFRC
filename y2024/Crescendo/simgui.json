@@ -295,6 +295,11 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Chassis drive to amp": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
