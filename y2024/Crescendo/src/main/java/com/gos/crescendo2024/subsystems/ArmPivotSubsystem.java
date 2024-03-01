@@ -42,7 +42,8 @@ import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 358);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(true, "defaultSpeakerScoreAngle", 9); //TODO changeeee
+    public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 9);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 9); //TODO changeeee
     public static final GosDoubleProperty ARM_DEFAULT_SIDE_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 95);
     private static final double ARM_MAX_ANGLE = 90;
@@ -327,6 +328,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createSyncRelativeEncoderCommand() {
         return run(this::syncRelativeEncoder).ignoringDisable(true).withName("arm: sync encoder");
+    }
+
+    public Command createMoveArmToTunableSpeakerAngleCommand() {
+        return createMoveArmToAngleCommand(ARM_TUNABLE_SPEAKER_ANGLE::getValue).withName("arm to tunable speaker angle");
     }
 
     public Command createPivotToCoastModeCommand() {

@@ -318,5 +318,29 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/TranslationJoystickDampening",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/RotationJoystickDampening",
+    "type": "double",
+    "value": 0.7,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/RED DRIVING BROKEN?",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

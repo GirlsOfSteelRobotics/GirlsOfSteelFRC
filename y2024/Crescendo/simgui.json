@@ -300,6 +300,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/test commands/Teleop: David Drive": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/testShooter50": {
         "/Shuffleboard/test commands/Chassis to -180": {
           "window": {
@@ -454,8 +459,7 @@
     },
     "Server": {
       "open": true
-    },
-    "visible": true
+    }
   },
   "Plot": {
     "Plot <0>": {

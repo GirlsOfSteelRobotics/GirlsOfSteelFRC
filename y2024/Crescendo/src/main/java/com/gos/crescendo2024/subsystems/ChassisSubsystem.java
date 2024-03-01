@@ -13,6 +13,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
+import com.gos.crescendo2024.commands.BaseTeleopSwerve;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -188,7 +189,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (USE_APRIL_TAGS && cameraResult.isPresent()) {
+        if (USE_APRIL_TAGS && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
