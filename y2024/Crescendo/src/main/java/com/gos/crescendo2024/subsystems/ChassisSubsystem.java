@@ -346,13 +346,36 @@ public class ChassisSubsystem extends SubsystemBase {
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
 
+    public Command createDriveToPointWithButtNoFlipCommand(Pose2d end, boolean rotateFast) {
+        Pose2d currentPose = getPose();
+        Translation2d poseDiff = end.getTranslation().minus(currentPose.getTranslation());
+
+
+        // The bezier pose's rotation must describe the direction of travel, so we should use the angle that points to our destination
+        Pose2d bezierStartingPose = new Pose2d(currentPose.getTranslation(), poseDiff.getAngle());
+
+        // Similarly to the starting bezier pose, we must describe the rotation of travel.
+        // Since we want to back our butt in, we need to flip it to indicate we can arrive backwards
+        Pose2d bezierEndPose = new Pose2d(end.getTranslation(), end.getRotation().unaryMinus());
+
+        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(bezierStartingPose, bezierEndPose);
+        PathPlannerPath path = new PathPlannerPath(
+            bezierPoints,
+            new PathConstraints(
+                Units.inchesToMeters(m_driveToPointMaxVelocity.getValue()),
+                Units.inchesToMeters(m_driveToPointMaxAcceleration.getValue()),
+                Units.degreesToRadians(m_angularMaxVelocity.getValue()),
+                Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
+            new GoalEndState(0.0, end.getRotation(), rotateFast)
+        );
+        path.preventFlipping = true;
+        return createFollowPathCommand(path, false).withName("Follow Path (Butt) to " + end);
+    }
+
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
     }
 
-    public Command createDriveToPointMaybeFlippedCommand(Pose2d endPoint) {
-        return defer(() -> createDriveToPointNoFlipCommand(AllianceFlipper.maybeFlip(endPoint))).withName("Drive to " + endPoint);
-    }
 
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetOdometry(pose))
@@ -372,4 +395,11 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
 
+    public Command createDriveToAmpCommand() {
+        // TODO get pose in terms of blue
+        Pose2d redPose = new Pose2d(14.7, 7.8, Rotation2d.fromDegrees(90));
+        Pose2d bluePose = AllianceFlipper.flip(redPose);
+        return defer(() -> createDriveToPointWithButtNoFlipCommand(
+            new Pose2d(AllianceFlipper.maybeFlip(bluePose.getTranslation()), Rotation2d.fromDegrees(-90)), true));
+    }
 }
