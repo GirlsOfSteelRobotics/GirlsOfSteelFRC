@@ -6,6 +6,7 @@ import com.gos.crescendo2024.led_patterns.subpatterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.subpatterns.DavidDrivePattern;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class DisabledPatterns {
 
@@ -30,10 +31,12 @@ public class DisabledPatterns {
     }
 
     public void writeAutoPattern() {
-        Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
-        m_autoModePattern.writeAutoModePattern(autoMode);
-        m_alert.writeLEDs();
-        m_davidDriveOn.writeLED();
+        if (DriverStation.isFMSAttached()) {
+            Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
+            m_autoModePattern.writeAutoModePattern(autoMode);
+            m_alert.writeLEDs();
+            m_davidDriveOn.writeLED();
+        }
     }
 
 }

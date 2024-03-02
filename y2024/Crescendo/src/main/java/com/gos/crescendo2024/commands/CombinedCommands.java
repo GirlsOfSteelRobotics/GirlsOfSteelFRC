@@ -55,4 +55,11 @@ public class CombinedCommands {
         },
             () -> controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0));
     }
+
+//    public static Command vibrateIfReadyToShootPleaseChangeName(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
+//        return Commands.runEnd(() -> {
+//            boolean isReady =
+//        })
+//    }
+
 }

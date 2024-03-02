@@ -37,6 +37,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -189,7 +190,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (USE_APRIL_TAGS && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue()) {
+        if (USE_APRIL_TAGS && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue() && !DriverStation.isAutonomousEnabled()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
