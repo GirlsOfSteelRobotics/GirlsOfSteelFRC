@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.199991521238392,
-        "y": 2.4007214918852084
+        "x": 1.9839896290262855,
+        "y": 3.3725858401140054
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.647029154258022,
-        "y": 0.03513250963734445
+        "x": 2.60221165235483,
+        "y": 2.4709865111598974
       },
       "isLocked": false,
-      "linkedName": "TwoNoteSpeaker2Pt1End"
+      "linkedName": "TwoNoteSpeaker7Pt2End"
     },
     {
       "anchor": {
-        "x": 1.0639939666593456,
-        "y": 4.2361138103059135
+        "x": 6.6658719337410135,
+        "y": 0.8080477216589235
       },
       "prevControl": {
-        "x": 1.44283883432246,
-        "y": 1.7097821356840999
+        "x": 2.672476671629519,
+        "y": 1.6746496260467554
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TwoNoteSpeaker6Pt2End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -58.76078511179128,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "TwoNoteSpeakerRight6",
+  "folder": "TwoNotesSpeakerRight7",
   "previewStartingState": {
-    "rotation": 28.610459665965347,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

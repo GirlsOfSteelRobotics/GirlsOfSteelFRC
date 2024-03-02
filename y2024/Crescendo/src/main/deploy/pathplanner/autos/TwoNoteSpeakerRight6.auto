@@ -47,6 +47,12 @@
           "data": {
             "name": "AimAndShootIntoSpeaker"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNoteSpeakerRight6Pt3"
+          }
         }
       ]
     }
