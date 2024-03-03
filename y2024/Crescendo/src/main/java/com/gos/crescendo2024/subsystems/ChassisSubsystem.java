@@ -118,7 +118,6 @@ public class ChassisSubsystem extends SubsystemBase {
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
 
-        //TODO need change pls
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
@@ -218,6 +217,15 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    public void davidDrive(double x, double y, double angle) {
+        if (m_isSlowTeleop) {
+            turnToAngleWithVelocity(x * m_translationJoystickDampening.getValue(), y * m_translationJoystickDampening.getValue(),
+                angle);
+        } else {
+            turnToAngleWithVelocity(x, y, angle);
+        }
+    }
+
     public Pose2d getPose() {
         return m_swerveDrive.getEstimatedPosition();
     }
@@ -229,7 +237,6 @@ public class ChassisSubsystem extends SubsystemBase {
     public void turnToAngle(double angleGoal) {
         double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angleGoal);
-        //TODO add ff
 
         if (isAngleAtGoal()) {
             steerVelocity = 0;
@@ -255,26 +262,12 @@ public class ChassisSubsystem extends SubsystemBase {
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
     }
 
-    public void turnButtToFacePoint(Pose2d point, double xVel, double yVel) {
-        Pose2d robotPose = getPose();
-        turnButtToFacePoint(robotPose, point, xVel, yVel);
-    }
-
     public void turnButtToFacePoint(Pose2d currentPos, Pose2d endPos, double xVel, double yVel) {
         double xDiff = endPos.getX() - currentPos.getX();
         double yDiff = endPos.getY() - currentPos.getY();
         double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
         updateAngle += 180;
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
-    }
-
-    public void davidDrive(double x, double y, double angle) {
-        if (m_isSlowTeleop) {
-            turnToAngleWithVelocity(x * m_translationJoystickDampening.getValue(), y * m_translationJoystickDampening.getValue(),
-                angle);
-        } else {
-            turnToAngleWithVelocity(x, y, angle);
-        }
     }
 
     public Pose2d getFuturePose() {
@@ -305,6 +298,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public int numAprilTagsSeen() {
         return m_photonVisionSubsystem.getLatestResult().targets.size();
     }
+
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
