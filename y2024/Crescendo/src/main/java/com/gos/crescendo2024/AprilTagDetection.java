@@ -28,7 +28,7 @@ public class AprilTagDetection {
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
             final double robotWidth = Units.inchesToMeters(25);
-            final double robotLength = Units.inchesToMeters(25);
+            // final double robotLength = Units.inchesToMeters(25);
 
             ROBOT_TO_CAMERA = new Transform3d(
                 new Translation3d(

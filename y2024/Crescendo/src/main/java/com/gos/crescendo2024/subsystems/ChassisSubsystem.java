@@ -16,6 +16,7 @@ import com.gos.crescendo2024.ObjectDetection;
 import com.gos.crescendo2024.commands.BaseTeleopSwerve;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
@@ -63,7 +64,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    private static final boolean USE_APRIL_TAGS = true;
+    private static final GosBooleanProperty USE_APRIL_TAGS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis: Use AprilTags", true);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -80,6 +81,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
     private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
+
+    // TODO(gpr) Update property name to reflect it is "chassis slow mode damping"
     private final GosDoubleProperty m_translationJoystickDampening = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
     private final GosDoubleProperty m_rotationJoystickDampening = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
 
@@ -190,7 +193,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (USE_APRIL_TAGS && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue() && !DriverStation.isAutonomousEnabled()) {
+        // TODO(gpr) We should get tags working in auto
+        if (USE_APRIL_TAGS.getValue() && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue() && !DriverStation.isAutonomousEnabled()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
@@ -212,7 +216,6 @@ public class ChassisSubsystem extends SubsystemBase {
         } else {
             m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
         }
-
     }
 
     public Pose2d getPose() {
@@ -351,10 +354,6 @@ public class ChassisSubsystem extends SubsystemBase {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
     }
 
-    public Command createDriveToPointMaybeFlippedCommand(Pose2d endPoint) {
-        return defer(() -> createDriveToPointNoFlipCommand(AllianceFlipper.maybeFlip(endPoint))).withName("Drive to " + endPoint);
-    }
-
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetOdometry(pose))
             .ignoringDisable(true)
@@ -368,7 +367,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }).withName("Chassis Push Forward");
     }
 
-    public Command setIsSlowMode(boolean setBoolean) {
+    public Command createSetSlowModeCommand(boolean setBoolean) {
         return runOnce(() -> m_isSlowTeleop = setBoolean);
     }
 

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public abstract class BaseTeleopSwerve extends Command {
-
+    // TODO(gpr) Triple check having this be false works for red and blue, then remove the property
     public static final GosBooleanProperty RED_DRIVING_BROKEN = new GosBooleanProperty(false, "RED DRIVING BROKEN?", false);
 
     protected static final double JOYSTICK_DEADBAND = 0.025;
@@ -44,6 +44,5 @@ public abstract class BaseTeleopSwerve extends Command {
         }
 
         handleJoystick(leftX, leftY, rightX, rightY);
-
     }
 }
