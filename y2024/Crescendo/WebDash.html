@@ -147,7 +147,6 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -178,7 +177,6 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -209,7 +207,6 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -312,7 +309,6 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -343,7 +339,6 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -378,7 +373,6 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -403,6 +397,7 @@
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(55px, 69px); width: 178px; height: 50px;"
@@ -418,11 +413,17 @@
         true-color="#ffa200"
         false-color="#b4a7a7"
         label="Has Piece"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(181.8px, 250.4px);"
+        source-key="/Shooter Subsystem/Is Piece in Shooter"
+        true-color="#ff8800"
+        false-color="#f0e0e0"
+        label="Piece In Shooter"
     ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"

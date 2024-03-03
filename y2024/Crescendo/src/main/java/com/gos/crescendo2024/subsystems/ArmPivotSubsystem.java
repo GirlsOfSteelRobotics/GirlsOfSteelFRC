@@ -26,6 +26,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -40,13 +41,16 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 358);
-    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 37);
-    private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 95);
+    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 358);
+    public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 9);
+    public static final GosDoubleProperty ARM_DEFAULT_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 9); //TODO changeeee
+    public static final GosDoubleProperty ARM_DEFAULT_SIDE_SPEAKER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSideSpeakerScoreAngle", 15);
+    private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
+    private static final double ARM_MAX_ANGLE = 90;
 
-    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike top angle", 40);
-    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike middle angle", 32);
-    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike bottom angle", 32);
+    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 25);
+    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 9);
+    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 25);
 
 
     private static final double GEAR_RATIO;
@@ -169,6 +173,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (DriverStation.isDisabled()) {
+            syncRelativeEncoder();
+        }
         m_networkTableEntriesPivot.updateLogs();
         m_armPivotMotorErrorAlerts.checkAlerts();
         m_armPivotFollowerErrorAlerts.checkAlerts();
@@ -185,15 +192,21 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_armGoalAngle = goalAngle;
         double currentAngle = getAngle();
-        m_profilePID.calculate(currentAngle, goalAngle);
-        TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
-        double feedForwardVolts = m_wpiFeedForward.calculate(
-            Units.degreesToRadians(currentAngle),
-            Units.degreesToRadians(setpoint.velocity));
+        if (currentAngle < ARM_MAX_ANGLE || MathUtil.inputModulus(goalAngle, -180, 180) < MathUtil.inputModulus(currentAngle, -180, 180)) {
+           m_profilePID.calculate(currentAngle, goalAngle);
+           TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
+           double feedForwardVolts = m_wpiFeedForward.calculate(
+               Units.degreesToRadians(currentAngle),
+               Units.degreesToRadians(setpoint.velocity));
 
 
-        m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
-        SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+           m_sparkPidController.setReference(setpoint.position, CANSparkMax.ControlType.kPosition, 0, feedForwardVolts);
+           SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+        }
+        else{
+         stopArmMotor();
+
+        }
     }
 
     private void resetPidController() {
@@ -239,7 +252,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public void setArmMotorSpeed(double speed) {
-        m_pivotMotor.set(speed);
+        if (getAngle() < ARM_MAX_ANGLE || speed<0) {
+            m_pivotMotor.set(speed);
+        }
+        else{
+            m_sparkPidController.setReference(ARM_MAX_ANGLE, CANSparkBase.ControlType.kPosition);
+//            stopArmMotor();
+        }
     }
 
     public void setVoltage(double outputVolts) {
@@ -269,6 +288,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private void syncRelativeEncoder() {
         m_pivotMotorEncoder.setPosition(m_pivotAbsEncoder.getPosition());
+    }
+
+    public boolean areArmEncodersGood() {
+        return Math.abs(m_pivotMotorEncoder.getPosition() - m_pivotAbsEncoder.getPosition()) <= ALLOWABLE_ERROR;
     }
 
     /////////////////////////////////////
@@ -305,6 +328,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createSyncRelativeEncoderCommand() {
         return run(this::syncRelativeEncoder).ignoringDisable(true).withName("arm: sync encoder");
+    }
+
+    public Command createMoveArmToTunableSpeakerAngleCommand() {
+        return createMoveArmToAngleCommand(ARM_TUNABLE_SPEAKER_ANGLE::getValue).withName("arm to tunable speaker angle");
     }
 
     public Command createPivotToCoastModeCommand() {

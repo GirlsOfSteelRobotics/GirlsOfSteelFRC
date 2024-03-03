@@ -34,7 +34,7 @@
   {
     "name": "/Preferences/Chassis to angle.mm.kp",
     "type": "double",
-    "value": 0.052,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
@@ -74,7 +74,7 @@
   {
     "name": "/Preferences/Swerve Driving PID.mm.kff",
     "type": "double",
-    "value": 0.174171,
+    "value": 0.1741712492980422,
     "properties": {
       "persistent": true
     }
@@ -114,7 +114,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 2e-05,
+    "value": 0.00015,
     "properties": {
       "persistent": true
     }
@@ -146,7 +146,7 @@
   {
     "name": "/Preferences/intakeAngle",
     "type": "double",
-    "value": 5.4,
+    "value": 358.0,
     "properties": {
       "persistent": true
     }
@@ -154,7 +154,7 @@
   {
     "name": "/Preferences/defaultSpeakerScoreAngle",
     "type": "double",
-    "value": 30.0,
+    "value": 37.0,
     "properties": {
       "persistent": true
     }
@@ -162,7 +162,7 @@
   {
     "name": "/Preferences/ampScoreAngle",
     "type": "double",
-    "value": 90.0,
+    "value": 95.0,
     "properties": {
       "persistent": true
     }
@@ -194,7 +194,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.13,
+    "value": 0.14,
     "properties": {
       "persistent": true
     }
@@ -242,7 +242,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
     "type": "double",
-    "value": 3.3,
+    "value": 2.2,
     "properties": {
       "persistent": true
     }
@@ -250,7 +250,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kg",
     "type": "double",
-    "value": 0.8,
+    "value": 1.2,
     "properties": {
       "persistent": true
     }
@@ -266,7 +266,7 @@
   {
     "name": "/Preferences/Intake_In_Speed",
     "type": "double",
-    "value": 1.0,
+    "value": 0.8,
     "properties": {
       "persistent": true
     }
@@ -306,7 +306,7 @@
   {
     "name": "/Preferences/ArmPivotJoystickTranslationDamping",
     "type": "double",
-    "value": 0.2,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }

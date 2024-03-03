@@ -14,9 +14,9 @@ package com.gos.crescendo2024;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
-
     public static final boolean IS_COMPETITION_ROBOT = true;
+
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
 
     public static final boolean HAS_HANGER = false;
 
@@ -46,8 +46,8 @@ public final class Constants {
     public static final int BACK_LEFT_AZIMUTH = 28;
 
     //Digital Inputs
-    public static final int INTAKE_SENSOR = 0;
-    public static final int SHOOTER_SENSOR = 1;
+    public static final int INTAKE_SENSOR = 1;
+    public static final int SHOOTER_SENSOR = 0;
 
     //PWM
     public static final int LED_PORT = 0;

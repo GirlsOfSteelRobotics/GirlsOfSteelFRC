@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAndShootIntoSpeaker"
+            "name": "AimAndShootIntoSideSpeaker"
           }
         },
         {
@@ -65,6 +65,12 @@
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TwoNotesSpeakerRight7Pt3"
           }
         }
       ]

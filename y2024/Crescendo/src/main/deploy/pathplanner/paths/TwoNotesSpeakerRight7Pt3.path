@@ -3,50 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5905008158090483,
-        "y": 7.003080254377342
+        "x": 1.9839896290262855,
+        "y": 3.3725858401140054
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.069394955213339,
-        "y": 6.426798479130322
+        "x": 2.60221165235483,
+        "y": 2.4709865111598974
       },
       "isLocked": false,
-      "linkedName": "FourPieceSpeakerPt1"
+      "linkedName": "TwoNoteSpeaker7Pt2End"
     },
     {
       "anchor": {
-        "x": 2.36,
-        "y": 5.54
+        "x": 6.6658719337410135,
+        "y": 0.8080477216589235
       },
       "prevControl": {
-        "x": 1.5384919374138228,
-        "y": 5.822010230440029
+        "x": 2.672476671629519,
+        "y": 1.6746496260467554
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FourPieceSpeakerPt2"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
-    "rotateFast": true
+    "rotation": 0,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "Four Piece Speaker",
+  "folder": "TwoNotesSpeakerRight7",
   "previewStartingState": {
-    "rotation": 42.574736917615034,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
