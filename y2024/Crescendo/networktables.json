@@ -342,5 +342,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/tunableSpeakerAngle",
+    "type": "double",
+    "value": 9.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

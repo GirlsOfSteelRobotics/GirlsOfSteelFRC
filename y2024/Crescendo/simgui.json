@@ -228,6 +228,7 @@
       "/Shuffleboard/test commands/Arm to default speaker angle": "Command",
       "/Shuffleboard/test commands/Arm to ground intake angle": "Command",
       "/Shuffleboard/test commands/Arm to speaker (from pose)": "Command",
+      "/Shuffleboard/test commands/Arm to tunable speaker angle": "Command",
       "/Shuffleboard/test commands/Auto-Intake Piece": "Command",
       "/Shuffleboard/test commands/Auto-Shoot in Amp": "Command",
       "/Shuffleboard/test commands/Auto-Shoot in Speaker": "Command",
@@ -238,6 +239,7 @@
       "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top": "Command",
       "/Shuffleboard/test commands/Chassis drive to amp": "Command",
       "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
+      "/Shuffleboard/test commands/Chassis set Pose Subwoofer Mid + Hack Dist": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
@@ -459,7 +461,11 @@
     },
     "Server": {
       "open": true
-    }
+    },
+    "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {

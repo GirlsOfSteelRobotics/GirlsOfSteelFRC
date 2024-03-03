@@ -16,7 +16,8 @@ public class EnabledPatterns {
     private final LEDBoolean m_chassisGood;
     private final LEDBoolean m_shooterGood;
     private final LEDBoolean m_noteSeen;
-    private final AprilTagPattern m_aprilTagsSeen;
+//    private final AprilTagPattern m_aprilTagsSeen;
+    private final LEDBoolean m_hasPieceConstant;
     private final HasPiecePattern m_hasPiecePattern;
     private final ArmPivotSubsystem m_arm;
     private final ChassisSubsystem m_chassis;
@@ -29,7 +30,8 @@ public class EnabledPatterns {
         m_chassisGood = new LEDBoolean(buffer, 10, 20, Color.kGreen, Color.kRed);
         m_shooterGood = new LEDBoolean(buffer, 20, 30, Color.kGreen, Color.kRed);
         m_noteSeen = new LEDBoolean(buffer, 30, 40, Color.kOrange, Color.kBlack);
-        m_aprilTagsSeen = new AprilTagPattern(buffer, 40, 52, chassis);
+//        m_aprilTagsSeen = new AprilTagPattern(buffer, 40, 52, chassis);
+        m_hasPieceConstant = new LEDBoolean(buffer, 40, 52,  Color.kTomato, Color.kBlack);
         m_chassis = chassis;
         m_shooter = shooter;
         m_arm = arm;
@@ -40,7 +42,8 @@ public class EnabledPatterns {
         m_shooterGood.setStateAndWrite(m_shooter.isShooterAtGoal());
         m_chassisGood.setStateAndWrite(m_chassis.isAngleAtGoal());
         m_noteSeen.setStateAndWrite(m_chassis.isNoteDetected());
-        m_aprilTagsSeen.writeLED();
+//        m_aprilTagsSeen.writeLED();
+        m_hasPieceConstant.setStateAndWrite(m_intake.hasGamePiece());
         m_hasPiecePattern.update(m_intake.hasGamePiece());
         m_hasPiecePattern.writeLeds();
     }

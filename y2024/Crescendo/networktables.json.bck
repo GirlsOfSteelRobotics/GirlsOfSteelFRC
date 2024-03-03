@@ -338,7 +338,7 @@
   {
     "name": "/Preferences/RED DRIVING BROKEN?",
     "type": "boolean",
-    "value": true,
+    "value": false,
     "properties": {
       "persistent": true
     }

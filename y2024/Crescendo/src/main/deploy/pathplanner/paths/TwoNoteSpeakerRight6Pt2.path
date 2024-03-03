@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.199991521238392,
-        "y": 2.4007214918852084
+        "x": 7.766690569044476,
+        "y": 2.3772998187936465
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.647029154258022,
-        "y": 0.03513250963734445
+        "x": 6.326257673913349,
+        "y": 0.5621201541975123
       },
       "isLocked": false,
       "linkedName": "TwoNoteSpeaker2Pt1End"
     },
     {
       "anchor": {
-        "x": 1.0639939666593456,
-        "y": 4.2361138103059135
+        "x": 1.3959954881393342,
+        "y": 3.946551915928368
       },
       "prevControl": {
-        "x": 1.44283883432246,
-        "y": 1.7097821356840999
+        "x": 2.5085249599885775,
+        "y": 1.1242403083950245
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
