@@ -9,7 +9,6 @@ import com.gos.lib.alerts.PowerDistributionAlerts;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.littletonrobotics.frc2023.util.Alert;
@@ -28,6 +27,7 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
 
     private final PowerDistribution m_powerDistribution = new PowerDistribution();
+    // TODO(gpr) Add breaker whitelist to remove constant fault/sticky fault
     private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution, List.of(
     ));
 
@@ -61,7 +61,6 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_powerDistributionAlert.checkAlerts();
-
     }
 
 

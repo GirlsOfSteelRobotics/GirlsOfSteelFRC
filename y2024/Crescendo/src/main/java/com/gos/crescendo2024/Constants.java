@@ -5,6 +5,8 @@
 
 package com.gos.crescendo2024;
 
+import edu.wpi.first.wpilibj.RobotBase;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -14,7 +16,8 @@ package com.gos.crescendo2024;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean IS_COMPETITION_ROBOT = true;
+    // TODO(gpr) When we get the prototype up and running this should be decided by a jumper
+    public static final boolean IS_COMPETITION_ROBOT = RobotBase.isReal();
 
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
 

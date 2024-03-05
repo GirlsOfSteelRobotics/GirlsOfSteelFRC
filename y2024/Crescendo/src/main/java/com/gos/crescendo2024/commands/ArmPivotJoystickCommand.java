@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.commands;
 
-import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.MathUtil;
@@ -11,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class ArmPivotJoystickCommand extends Command {
 
     private static final double ARM_PIVOT_JOYSTICK_DEADBAND = 0.025;
+    // TODO(gpr) Remove "Translation" from from property name
     private static final GosDoubleProperty DAMPING = new GosDoubleProperty(false, "ArmPivotJoystickTranslationDamping", 1.0);
     private final CommandXboxController m_joystick;
 

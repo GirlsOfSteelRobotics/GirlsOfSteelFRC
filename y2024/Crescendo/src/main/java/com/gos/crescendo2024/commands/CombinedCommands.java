@@ -24,16 +24,19 @@ public class CombinedCommands {
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, Supplier<Pose2d> pos) {
         return armPivot.createPivotUsingSpeakerTableCommand(pos)
+            // TODO(gpr) Make a `shooter.createSetSpeakerRPMCommand` and make 4000 a constant / GosDoubleProperty
             .alongWith(shooter.createSetRPMCommand(4000));
     }
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
         return armPivot.createMoveArmToAngleCommand(angle)
+            // TODO(gpr) Make a `shooter.createSetSpeakerRPMCommand` and make 4000 a constant / GosDoubleProperty
             .alongWith(shooter.createSetRPMCommand(4000));
     }
 
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
+            // TODO(gpr) Make a `shooter.createSetAmpRPMCommand` and make 800 a constant / GosDoubleProperty
             .alongWith(shooter.createSetRPMCommand(800))
             .withName("Prepare Amp Shot");
     }
@@ -47,6 +50,7 @@ public class CombinedCommands {
     public static Command vibrateIfReadyToShoot(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
         return Commands.runEnd(() -> {
             boolean isReady = chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
+            // TODO(gpr) Create a generic VibrateWhenTrue command that takes a boolean supplier as a constructor argument
             if (isReady) {
                 controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
             } else {
@@ -55,11 +59,4 @@ public class CombinedCommands {
         },
             () -> controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0));
     }
-
-//    public static Command vibrateIfReadyToShootPleaseChangeName(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
-//        return Commands.runEnd(() -> {
-//            boolean isReady =
-//        })
-//    }
-
 }

@@ -102,7 +102,7 @@ public class RobotContainer {
         configureBindings();
 
         // These three should be off for competition
-         createTestCommands();
+        createTestCommands();
         // createSysIdCommands();
         // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
@@ -258,8 +258,8 @@ public class RobotContainer {
         // Driver Controller
         /////////////////////////////
         //Slow / reg chassis speed
-        m_driverController.povUp().whileTrue(m_chassisSubsystem.setIsSlowMode(false));
-        m_driverController.povDown().whileTrue(m_chassisSubsystem.setIsSlowMode(true));
+        m_driverController.povUp().whileTrue(m_chassisSubsystem.createSetSlowModeCommand(false));
+        m_driverController.povDown().whileTrue(m_chassisSubsystem.createSetSlowModeCommand(true));
 
         // Chassis
         m_driverController.start().and(m_driverController.back())
@@ -281,13 +281,14 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //go to floor
+        // TODO(gpr) Create a generic "VibrateForTime" command that takes a number of seconds as an constructor argument
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
-                .andThen(Commands.run(()-> {
+                .andThen(Commands.run(() -> {
                     System.out.println("Should be rumbling");
                     m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
                 }).withTimeout(1))
-                .finallyDo(()->m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0)));
+                .finallyDo(() -> m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0)));
 
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
@@ -297,6 +298,7 @@ public class RobotContainer {
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //override angle to middle subwoofer shot
+        // TODO(gpr) Fix magic number
         m_driverController.rightBumper().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, 11)
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
@@ -314,7 +316,7 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
-         //PropertyManager.purgeExtraKeys();
+        // PropertyManager.purgeExtraKeys();
     }
 
 
@@ -329,7 +331,6 @@ public class RobotContainer {
         System.out.println("Selected Auto" + m_autonomousFactory.autoModeLightSignal());
 
         return m_autonomousFactory.getSelectedAutonomous();
-
     }
 
     private void resetStickyFaults() {
