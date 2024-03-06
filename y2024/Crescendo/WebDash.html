@@ -147,6 +147,7 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -177,6 +178,7 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -207,6 +209,7 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -309,6 +312,7 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -339,6 +343,7 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -373,6 +378,7 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -397,7 +403,6 @@
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(55px, 69px); width: 178px; height: 50px;"
@@ -512,23 +517,40 @@
         style="transform: translate(151px, 99px);"
         source-key="/Shuffleboard/test commands/Clear Sticky Faults"
     ></frc-robot-command></dashboard-tab><dashboard-tab
-    tab-name="SysId"
+    tab-name="Hanger"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
-        source-key="/Shuffleboard/SysId/Arm SysId Dynamic Forward"
-        style="transform: translate(107px, 66px);"
+        style="transform: translate(166px, 412px);"
+        source-key="/Shuffleboard/test commands/Left Hanger Up"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        source-key="/Shuffleboard/SysId/Arm SysId Dynamic Backward"
-        style="transform: translate(150px, 137px);"
+        style="transform: translate(338px, 436px);"
+        source-key="/Shuffleboard/test commands/Right Hanger Up"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        source-key="/Shuffleboard/SysId/Arm SysId Quasistatic Forward"
-        style="transform: translate(142px, 200px);"
+        style="transform: translate(493px, 432px);"
+        source-key="/Shuffleboard/test commands/Hanger Up"
     ></frc-robot-command><frc-robot-command
         source-provider="NetworkTables"
-        source-key="/Shuffleboard/SysId/Arm SysId Quasistatic Backward"
-        style="transform: translate(166px, 288px);"
-    ></frc-robot-command></dashboard-tab>
+        style="transform: translate(210px, 544px);"
+        source-key="/Shuffleboard/test commands/Left Hanger Down"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(358px, 553px);"
+        source-key="/Shuffleboard/test commands/Right Hanger Down"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(560px, 576px);"
+        source-key="/Shuffleboard/test commands/Hanger Down"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Hanger to Coast"
+        style="transform: translate(572px, 278px);"
+    ></frc-robot-command><frc-preferences-wrapper
+        source-key="/Preferences"
+        source-provider="NetworkTables"
+        style="transform: translate(120px, 75px); width: 429.2px; height: 332.4px;"
+    ></frc-preferences-wrapper></dashboard-tab>
