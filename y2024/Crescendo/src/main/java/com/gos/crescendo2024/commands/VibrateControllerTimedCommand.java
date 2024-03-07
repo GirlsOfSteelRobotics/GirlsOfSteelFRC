@@ -10,12 +10,13 @@ public class VibrateControllerTimedCommand extends Command {
     private final CommandXboxController m_driverController;
     private final Timer m_intakeTimer;
     private final double m_elapsedTime;
+    private final boolean m_isReady;
 
-    public VibrateControllerTimedCommand(CommandXboxController controller, double elapsedTime) {
+    public VibrateControllerTimedCommand(CommandXboxController controller, double elapsedTime, boolean isReady) {
         m_driverController = controller;
         this.m_intakeTimer = new Timer();
         m_elapsedTime = elapsedTime;
-
+        m_isReady = isReady;
     }
 
     @Override
@@ -25,7 +26,9 @@ public class VibrateControllerTimedCommand extends Command {
 
     @Override
     public void execute() {
-        m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+        if (m_isReady) {
+            m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+        }
     }
 
     @Override

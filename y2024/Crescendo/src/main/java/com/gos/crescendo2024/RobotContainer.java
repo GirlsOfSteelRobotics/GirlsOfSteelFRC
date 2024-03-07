@@ -281,10 +281,9 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //go to floor
-        // TODO(gpr) Create a generic "VibrateForTime" command that takes a number of seconds as an constructor argument
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
-                .andThen(new VibrateControllerTimedCommand(m_driverController, 1)));
+                .andThen(new VibrateControllerTimedCommand(m_driverController, 2, m_intakeSubsystem.hasGamePiece())));
 
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
