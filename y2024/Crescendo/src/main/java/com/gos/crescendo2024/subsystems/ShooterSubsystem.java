@@ -26,9 +26,12 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterDefaultRpm", 4000);
+    public static final GosDoubleProperty TUNABLE_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterTunableRpm", 4000);
+    public static final GosDoubleProperty SPEAKER_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeakerShotRpm", 4000);
+    public static final GosDoubleProperty AMP_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterAmpShotRpm", 800);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeed", 0.5);
     private static final double ALLOWABLE_ERROR = 125;
+
 
     private final SimableCANSparkMax m_shooterMotorLeader;
     private final SimableCANSparkMax m_shooterMotorFollower;
@@ -163,8 +166,16 @@ public class ShooterSubsystem extends SubsystemBase {
         return this.runEnd(() -> this.setPidRpm(rpm), this::stopShooter).withName("set shooter rpm " + rpm);
     }
 
-    public Command createRunDefaultRpmCommand() {
-        return this.runEnd(() -> this.setPidRpm(DEFAULT_SHOOTER_RPM.getValue()), this::stopShooter).withName("set shooter default rpm");
+    public Command createRunTunableRpmCommand() {
+        return this.runEnd(() -> this.setPidRpm(TUNABLE_SHOOTER_RPM.getValue()), this::stopShooter).withName("set shooter to tunable rpm");
+    }
+
+    public Command createRunSpeakerShotRPMCommand() {
+        return this.runEnd(() -> this.setPidRpm(SPEAKER_SHOT_SHOOTER_RPM.getValue()), this::stopShooter).withName("set shooter to speaker shot rpm");
+    }
+
+    public Command createRunAmpShotRPMCommand() {
+        return this.runEnd(() -> this.setPidRpm(AMP_SHOT_SHOOTER_RPM.getValue()), this::stopShooter).withName("set shooter to amp shot rpm");
     }
 
     public Command createStopShooterCommand() {
