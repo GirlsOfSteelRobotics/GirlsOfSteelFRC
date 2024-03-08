@@ -58,8 +58,8 @@ public final class SpeakerAimAndShootCommand extends Command {
         ChassisSubsystem chassisSubsystem,
         IntakeSubsystem intakeSubsystem,
         ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier armAngleGoalSupplier = ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.TUNABLE_SHOOTER_RPM::getValue;
         Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
@@ -76,7 +76,7 @@ public final class SpeakerAimAndShootCommand extends Command {
                                                                     IntakeSubsystem intakeSubsystem,
                                                                     ShooterSubsystem shooterSubsystem,
                                                                     DoubleSupplier armAngleGoalSupplier) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.TUNABLE_SHOOTER_RPM::getValue;
         Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
@@ -92,7 +92,7 @@ public final class SpeakerAimAndShootCommand extends Command {
                                                                   ChassisSubsystem chassisSubsystem,
                                                                   IntakeSubsystem intakeSubsystem,
                                                                   ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.TUNABLE_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
@@ -109,7 +109,7 @@ public final class SpeakerAimAndShootCommand extends Command {
                                                                   ChassisSubsystem chassisSubsystem,
                                                                   IntakeSubsystem intakeSubsystem,
                                                                   ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.TUNABLE_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getPose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
@@ -127,7 +127,7 @@ public final class SpeakerAimAndShootCommand extends Command {
                                                                      IntakeSubsystem intakeSubsystem,
                                                                      ShooterSubsystem shooterSubsystem,
                                                                      CommandXboxController controller) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.TUNABLE_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,

@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class ArmPivotJoystickCommand extends Command {
 
     private static final double ARM_PIVOT_JOYSTICK_DEADBAND = 0.025;
-    // TODO(gpr) Remove "Translation" from from property name
-    private static final GosDoubleProperty DAMPING = new GosDoubleProperty(false, "ArmPivotJoystickTranslationDamping", 1.0);
+    private static final GosDoubleProperty JOYSTICK_DAMPING = new GosDoubleProperty(false, "ArmPivotJoystickDamping", 1.0);
     private final CommandXboxController m_joystick;
 
     private final ArmPivotSubsystem m_armPivotSubsystem;
@@ -26,7 +25,7 @@ public class ArmPivotJoystickCommand extends Command {
 
     @Override
     public void execute() {
-        double yPercent = -MathUtil.applyDeadband(m_joystick.getLeftY() * DAMPING.getValue(), ARM_PIVOT_JOYSTICK_DEADBAND);
+        double yPercent = -MathUtil.applyDeadband(m_joystick.getLeftY() * JOYSTICK_DAMPING.getValue(), ARM_PIVOT_JOYSTICK_DEADBAND);
         m_armPivotSubsystem.setArmMotorSpeed(yPercent);
     }
 

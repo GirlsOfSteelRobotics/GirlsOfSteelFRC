@@ -24,20 +24,17 @@ public class CombinedCommands {
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, Supplier<Pose2d> pos) {
         return armPivot.createPivotUsingSpeakerTableCommand(pos)
-            // TODO(gpr) Make a `shooter.createSetSpeakerRPMCommand` and make 4000 a constant / GosDoubleProperty
-            .alongWith(shooter.createSetRPMCommand(4000));
+            .alongWith(shooter.createRunSpeakerShotRPMCommand());
     }
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
         return armPivot.createMoveArmToAngleCommand(angle)
-            // TODO(gpr) Make a `shooter.createSetSpeakerRPMCommand` and make 4000 a constant / GosDoubleProperty
-            .alongWith(shooter.createSetRPMCommand(4000));
+            .alongWith(shooter.createRunSpeakerShotRPMCommand());
     }
 
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
-            // TODO(gpr) Make a `shooter.createSetAmpRPMCommand` and make 800 a constant / GosDoubleProperty
-            .alongWith(shooter.createSetRPMCommand(800))
+            .alongWith(shooter.createRunAmpShotRPMCommand())
             .withName("Prepare Amp Shot");
     }
 

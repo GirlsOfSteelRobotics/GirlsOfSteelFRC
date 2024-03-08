@@ -64,6 +64,14 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    private static final GosDoubleProperty ON_THE_FLY_MAX_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
+
+    private static final GosDoubleProperty SLOW_MODE_TRANSLATION_DAMPENING = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
+    private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
+
     private static final GosBooleanProperty USE_APRIL_TAGS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis: Use AprilTags", true);
 
     private final RevSwerveChassis m_swerveDrive;
@@ -76,17 +84,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final AprilTagDetection m_photonVisionSubsystem;
 
     private final ObjectDetection m_objectDetectionSubsystem;
-
-    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
-    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
-    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
-    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
-
-    // TODO(gpr) Update property name to reflect it is "chassis slow mode damping"
-    private final GosDoubleProperty m_translationJoystickDampening = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
-    private final GosDoubleProperty m_rotationJoystickDampening = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
-
-
 
     private final LoggingUtil m_logging;
 
@@ -210,8 +207,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
         if (m_isSlowTeleop) {
-            m_swerveDrive.driveWithJoysticks(xPercent * m_translationJoystickDampening.getValue(), yPercent * m_translationJoystickDampening.getValue(),
-                rotPercent * m_rotationJoystickDampening.getValue(), fieldRelative);
+            m_swerveDrive.driveWithJoysticks(xPercent * SLOW_MODE_TRANSLATION_DAMPENING.getValue(), yPercent * SLOW_MODE_TRANSLATION_DAMPENING.getValue(),
+                rotPercent * SLOW_MODE_ROTATION_DAMPENING.getValue(), fieldRelative);
         } else {
             m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
         }
@@ -219,7 +216,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void davidDrive(double x, double y, double angle) {
         if (m_isSlowTeleop) {
-            turnToAngleWithVelocity(x * m_translationJoystickDampening.getValue(), y * m_translationJoystickDampening.getValue(),
+            turnToAngleWithVelocity(x * SLOW_MODE_TRANSLATION_DAMPENING.getValue(), y * SLOW_MODE_TRANSLATION_DAMPENING.getValue(),
                 angle);
         } else {
             turnToAngleWithVelocity(x, y, angle);
@@ -334,10 +331,10 @@ public class ChassisSubsystem extends SubsystemBase {
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             new PathConstraints(
-                Units.inchesToMeters(m_driveToPointMaxVelocity.getValue()),
-                Units.inchesToMeters(m_driveToPointMaxAcceleration.getValue()),
-                Units.degreesToRadians(m_angularMaxVelocity.getValue()),
-                Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
+                Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
+                Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
+                Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
+                Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
             new GoalEndState(0.0, end.getRotation())
         );
         path.preventFlipping = true;
