@@ -49,9 +49,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
 
-    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 25);
-    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 9);
-    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 25);
+    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 40);
+    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 32);
+    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 32);
 
 
     private static final double GEAR_RATIO;

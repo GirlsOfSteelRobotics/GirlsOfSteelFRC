@@ -12,6 +12,7 @@ import com.gos.crescendo2024.commands.DavidDriveSwerve;
 import com.gos.crescendo2024.commands.SpeakerAimAndShootCommand;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
+import com.gos.crescendo2024.commands.VibrateControllerTimedCommand;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.HangerSubsystem;
@@ -28,7 +29,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -233,6 +233,14 @@ public class RobotContainer {
     private void addHangerTestCommands(ShuffleboardTab shuffleboardTab) {
         shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp().withName("Hanger Up"));
         shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown().withName("Hanger Down"));
+
+        shuffleboardTab.add("Left Hanger Up", m_hangerSubsystem.createLeftHangerUp());
+        shuffleboardTab.add("Left Hanger Down", m_hangerSubsystem.createLeftHangerDown());
+
+        shuffleboardTab.add("Right Hanger Up", m_hangerSubsystem.createRightHangerUp());
+        shuffleboardTab.add("Right Hanger Down", m_hangerSubsystem.createRightHangerDown());
+
+        shuffleboardTab.add("Hanger to Coast", m_hangerSubsystem.createSetHangerToCoast().withName("Hanger to Coast"));
     }
 
 
@@ -283,14 +291,9 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //go to floor
-        // TODO(gpr) Create a generic "VibrateForTime" command that takes a number of seconds as an constructor argument
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
-                .andThen(Commands.run(() -> {
-                    System.out.println("Should be rumbling");
-                    m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
-                }).withTimeout(1))
-                .finallyDo(() -> m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0)));
+                .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
