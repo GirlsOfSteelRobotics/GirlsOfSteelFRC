@@ -283,7 +283,7 @@ public class RobotContainer {
         //go to floor
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
-                .andThen(new VibrateControllerTimedCommand(m_driverController, 2, m_intakeSubsystem.hasGamePiece())));
+                .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());

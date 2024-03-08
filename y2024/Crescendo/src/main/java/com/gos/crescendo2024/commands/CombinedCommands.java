@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 public class CombinedCommands {
@@ -44,9 +45,10 @@ public class CombinedCommands {
             .withName("Auto shoot into amp");
     }
 
+    @SuppressWarnings("PMD.LinguisticNaming")
     public static Command vibrateIfReadyToShoot(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
-        boolean isReady = chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
-        return new VibrateControllerTimedCommand(controller, 2, isReady);
+        BooleanSupplier isReadySupplier = () -> chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
+        return new VibrateControllerWhileTrueCommand(controller, isReadySupplier);
 
     }
 }
