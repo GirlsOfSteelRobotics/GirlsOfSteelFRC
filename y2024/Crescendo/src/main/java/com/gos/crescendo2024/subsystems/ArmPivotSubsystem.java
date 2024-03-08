@@ -43,8 +43,8 @@ import java.util.function.Supplier;
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 358);
     public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 9);
-    public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSpeakerScoreAngle", 9); //TODO changeeee
-    public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "defaultSideSpeakerScoreAngle", 15);
+    public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "middleSpeakerScoreAngle", 9); //TODO changeeee
+    public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
@@ -330,8 +330,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return createMoveArmToAngleCommand(ARM_AMP_ANGLE::getValue).withName("arm to amp angle");
     }
 
-    public Command createMoveArmToDefaultSpeakerAngleCommand() {
-        return createMoveArmToAngleCommand(MIDDLE_SUBWOOFER_ANGLE::getValue).withName("arm to default speaker angle");
+    public Command createMoveArmToMiddleSpeakerAngleCommand() {
+        return createMoveArmToAngleCommand(MIDDLE_SUBWOOFER_ANGLE::getValue).withName("arm to middle speaker angle");
+    }
+
+    public Command createMoveArmToSideSpeakerAngleCommand() {
+        return createMoveArmToAngleCommand(SIDE_SUBWOOFER_ANGLE::getValue).withName("arm to side speaker angle");
     }
 
     public Command createSyncRelativeEncoderCommand() {

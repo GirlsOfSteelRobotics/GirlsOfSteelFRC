@@ -213,7 +213,8 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to coast", m_armPivotSubsystem.createPivotToCoastModeCommand());
         shuffleboardTab.add("Arm to amp angle", m_armPivotSubsystem.createMoveArmToAmpAngleCommand());
         shuffleboardTab.add("Arm to ground intake angle", m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
-        shuffleboardTab.add("Arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
+        shuffleboardTab.add("Arm to middle speaker angle", m_armPivotSubsystem.createMoveArmToMiddleSpeakerAngleCommand());
+        shuffleboardTab.add("Arm to side speaker angle", m_armPivotSubsystem.createMoveArmToSideSpeakerAngleCommand());
         shuffleboardTab.add("Arm to tunable speaker angle", m_armPivotSubsystem.createMoveArmToTunableSpeakerAngleCommand());
         shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
