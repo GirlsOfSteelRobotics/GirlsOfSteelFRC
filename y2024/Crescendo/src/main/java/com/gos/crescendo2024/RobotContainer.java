@@ -231,6 +231,14 @@ public class RobotContainer {
     private void addHangerTestCommands(ShuffleboardTab shuffleboardTab) {
         shuffleboardTab.add("Hanger Up", m_hangerSubsystem.createHangerUp().withName("Hanger Up"));
         shuffleboardTab.add("Hanger Down", m_hangerSubsystem.createHangerDown().withName("Hanger Down"));
+
+        shuffleboardTab.add("Left Hanger Up", m_hangerSubsystem.createLeftHangerUp());
+        shuffleboardTab.add("Left Hanger Down", m_hangerSubsystem.createLeftHangerDown());
+
+        shuffleboardTab.add("Right Hanger Up", m_hangerSubsystem.createRightHangerUp());
+        shuffleboardTab.add("Right Hanger Down", m_hangerSubsystem.createRightHangerDown());
+
+        shuffleboardTab.add("Hanger to Coast", m_hangerSubsystem.createSetHangerToCoast().withName("Hanger to Coast"));
     }
 
 

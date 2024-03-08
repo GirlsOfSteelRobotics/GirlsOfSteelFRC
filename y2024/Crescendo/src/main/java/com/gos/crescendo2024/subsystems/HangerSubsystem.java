@@ -4,6 +4,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -12,105 +13,136 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HangerSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Hanger_Down_Speed", -1);
-    private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Hanger_Up_Speed", 1);
+    private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(false, "Hanger_Down_Speed", -0.3);
+    private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(false, "Hanger_Up_Speed", 0.3);
 
-    private final SimableCANSparkMax m_hangerMotorPrimary;
-    private final RelativeEncoder m_hangerPrimaryEncoder;
-    private final SparkMaxAlerts m_hangerPrimaryMotorErrorAlerts;
+    private final SimableCANSparkMax m_leftHangerMotor;
+    private final RelativeEncoder m_leftHangerEncoder;
+    private final SparkMaxAlerts m_leftHangerAlert;
 
-    private final SimableCANSparkMax m_hangerMotorSecondary;
-    private final RelativeEncoder m_hangerSecondaryEncoder;
-    private final SparkMaxAlerts m_hangerSecondaryMotorErrorAlerts;
+    private final SimableCANSparkMax m_rightHangerMotor;
+    private final RelativeEncoder m_rightHangerEncoder;
+    private final SparkMaxAlerts m_rightHangerAlert;
 
     private final LoggingUtil m_networkTableEntries;
 
-    public HangerSubsystem() {
-        m_hangerMotorPrimary = new SimableCANSparkMax(Constants.HANGER_MOTOR_PRIMARY, CANSparkLowLevel.MotorType.kBrushless);
-        m_hangerMotorPrimary.restoreFactoryDefaults();
-        m_hangerMotorPrimary.setInverted(false);
-        m_hangerPrimaryEncoder = m_hangerMotorPrimary.getEncoder();
-        m_hangerMotorPrimary.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_hangerMotorPrimary.setSmartCurrentLimit(60);
-        m_hangerMotorPrimary.burnFlash();
-        m_hangerPrimaryMotorErrorAlerts = new SparkMaxAlerts(m_hangerMotorPrimary, "hanger a");
+    //TODO add limit switches
 
-        m_hangerMotorSecondary = new SimableCANSparkMax(Constants.HANGER_MOTOR_SECONDARY, CANSparkLowLevel.MotorType.kBrushless);
-        m_hangerMotorSecondary.restoreFactoryDefaults();
-        m_hangerMotorSecondary.setInverted(false);
-        m_hangerSecondaryEncoder = m_hangerMotorSecondary.getEncoder();
-        m_hangerMotorSecondary.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_hangerMotorSecondary.setSmartCurrentLimit(60);
-        m_hangerMotorSecondary.burnFlash();
-        m_hangerSecondaryMotorErrorAlerts = new SparkMaxAlerts(m_hangerMotorSecondary, "hanger b");
+    public HangerSubsystem() {
+        m_leftHangerMotor = new SimableCANSparkMax(Constants.HANGER_LEFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_leftHangerMotor.restoreFactoryDefaults();
+        m_leftHangerMotor.setInverted(false);
+        m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
+        m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leftHangerMotor.setSmartCurrentLimit(60);
+        m_leftHangerMotor.burnFlash();
+        m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger a");
+
+        m_rightHangerMotor = new SimableCANSparkMax(Constants.HANGER_RIGHT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_rightHangerMotor.restoreFactoryDefaults();
+        m_rightHangerMotor.setInverted(false);
+        m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
+        m_rightHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_rightHangerMotor.setSmartCurrentLimit(60);
+        m_rightHangerMotor.burnFlash();
+        m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger b");
 
         m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
-        m_networkTableEntries.addDouble("Primary Hanger Vel: ", this::getPrimaryHangerSpeed);
-        m_networkTableEntries.addDouble("Secondary Hanger Vel", this::getSecondaryHangerSpeed);
-        m_networkTableEntries.addDouble("Primary Hanger Pos: ", m_hangerPrimaryEncoder::getPosition);
-        m_networkTableEntries.addDouble("Secondary Hanger Pos", m_hangerSecondaryEncoder::getPosition);
+        m_networkTableEntries.addDouble("Left Output: ", m_leftHangerMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Right Output", m_rightHangerMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Left Pos: ", m_leftHangerEncoder::getPosition);
+        m_networkTableEntries.addDouble("Right Pos", m_rightHangerEncoder::getPosition);
 
     }
 
     @Override
     public void periodic() {
-        m_hangerPrimaryMotorErrorAlerts.checkAlerts();
-        m_hangerSecondaryMotorErrorAlerts.checkAlerts();
+        m_leftHangerAlert.checkAlerts();
+        m_rightHangerAlert.checkAlerts();
         m_networkTableEntries.updateLogs();
     }
 
     public void clearStickyFaults() {
-        m_hangerMotorPrimary.clearFaults();
-        m_hangerMotorSecondary.clearFaults();
+        m_leftHangerMotor.clearFaults();
+        m_rightHangerMotor.clearFaults();
     }
 
-    public double getPrimaryHangerSpeed() {
-        return m_hangerMotorPrimary.getAppliedOutput();
+    private void setLeftMotor(double speed) {
+        m_leftHangerMotor.set(speed);
     }
 
-    public double getSecondaryHangerSpeed() {
-        return m_hangerMotorSecondary.getAppliedOutput();
-    }
-
-    public void setPrimaryHangerSpeed(double speed) {
-        m_hangerMotorPrimary.set(speed);
-    }
-
-    public void setSecondaryHangerSpeed(double speed) {
-        m_hangerMotorSecondary.set(speed);
+    private void setRightMotor(double speed) {
+        m_rightHangerMotor.set(speed);
     }
 
     public void runHangerUp() {
-        setPrimaryHangerSpeed(HANGER_UP_SPEED.getValue());
-        setSecondaryHangerSpeed(HANGER_UP_SPEED.getValue());
+        runLeftHangerUp();
+        runRightHangerUp();
+    }
+
+    public void runLeftHangerUp() {
+        setLeftMotor(HANGER_UP_SPEED.getValue());
+    }
+
+    public void runRightHangerUp() {
+        setRightMotor(HANGER_UP_SPEED.getValue());
     }
 
     public void runHangerDown() {
-        setPrimaryHangerSpeed(HANGER_DOWN_SPEED.getValue());
-        setSecondaryHangerSpeed(HANGER_DOWN_SPEED.getValue());
+        runLeftHangerDown();
+        runRightHangerDown();
+    }
+
+    public void runLeftHangerDown() {
+        setLeftMotor(HANGER_DOWN_SPEED.getValue());
+    }
+
+    public void runRightHangerDown() {
+        setRightMotor(HANGER_DOWN_SPEED.getValue());
     }
 
     public void stopHanger() {
-        stopPrimaryMotor();
-        stopSecondaryMotor();
-    }
-
-    public void stopPrimaryMotor() {
-        m_hangerMotorPrimary.set(0);
-    }
-
-    public void stopSecondaryMotor() {
-        m_hangerMotorSecondary.set(0);
+        m_leftHangerMotor.set(0);
+        m_rightHangerMotor.set(0);
     }
 
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
     public Command createHangerUp() {
-        return this.runEnd(this::runHangerUp, this::stopHanger);
+        return this.runEnd(this::runHangerUp, this::stopHanger).withName("Hanger Up");
     }
 
     public Command createHangerDown() {
-        return this.runEnd(this::runHangerDown, this::stopHanger);
+        return this.runEnd(this::runHangerDown, this::stopHanger).withName("Hanger Down");
+    }
+
+    public Command createLeftHangerUp() {
+        return runEnd(this::runLeftHangerUp, this::stopHanger).withName("Left Hanger Up");
+    }
+
+    public Command createLeftHangerDown() {
+        return runEnd(this::runLeftHangerDown, this::stopHanger).withName("Left Hanger Down");
+    }
+
+    public Command createRightHangerUp() {
+        return runEnd(this::runRightHangerUp, this::stopHanger).withName("Right Hanger Up");
+    }
+
+    public Command createRightHangerDown() {
+        return runEnd(this::runRightHangerDown, this::stopHanger).withName("Right Hanger Down");
+    }
+
+    public Command createSetHangerToCoast() {
+        return this.runEnd(
+                () -> {
+                    m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                    m_rightHangerMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                },
+                () -> {
+                    m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+                    m_leftHangerMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+                })
+            .ignoringDisable(true).withName("Hangers to Coast");
     }
 }

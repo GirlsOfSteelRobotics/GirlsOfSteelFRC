@@ -1,61 +1,5 @@
 [
   {
-    "name": "/Preferences/Chassis On the Fly Max Velocity",
-    "type": "double",
-    "value": 48.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis On the Fly Max Acceleration",
-    "type": "double",
-    "value": 48.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis On the Fly Max Angular Velocity",
-    "type": "double",
-    "value": 180.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis On the Fly Max Angular Acceleration",
-    "type": "double",
-    "value": 180.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.kp",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis to angle.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Swerve Driving PID.mm.kp",
     "type": "double",
     "value": 0.04,
@@ -96,73 +40,9 @@
     }
   },
   {
-    "name": "/Preferences/ShooterDefaultRpm",
-    "type": "double",
-    "value": 4000.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ShooterSpeed",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kp",
-    "type": "double",
-    "value": 0.00015,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kff",
-    "type": "double",
-    "value": 0.000185,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/intakeAngle",
-    "type": "double",
-    "value": 358.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/defaultSpeakerScoreAngle",
     "type": "double",
-    "value": 37.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ampScoreAngle",
-    "type": "double",
-    "value": 95.0,
+    "value": 9.0,
     "properties": {
       "persistent": true
     }
@@ -192,15 +72,7 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.kp",
-    "type": "double",
-    "value": 0.14,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.ki",
+    "name": "/Preferences/Hack Lookup Table",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -208,57 +80,81 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.kd",
+    "name": "/Preferences/ArmPivotJoystickTranslationDamping",
     "type": "double",
-    "value": 0.0,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Arm Profile PID.mm.max_velocity",
+    "name": "/Preferences/TranslationJoystickDampening",
     "type": "double",
-    "value": 120.0,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Arm Profile PID.mm.max_acceleration",
+    "name": "/Preferences/RotationJoystickDampening",
     "type": "double",
-    "value": 120.0,
+    "value": 0.7,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.ks",
+    "name": "/Preferences/Chassis On the Fly Max Velocity",
     "type": "double",
-    "value": 0.0,
+    "value": 48.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
+    "name": "/Preferences/Chassis On the Fly Max Acceleration",
     "type": "double",
-    "value": 2.2,
+    "value": 48.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.kg",
+    "name": "/Preferences/Chassis On the Fly Max Angular Velocity",
     "type": "double",
-    "value": 1.2,
+    "value": 180.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Intake_Out_Speed",
+    "name": "/Preferences/Chassis On the Fly Max Angular Acceleration",
     "type": "double",
-    "value": -1.0,
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/RED DRIVING BROKEN?",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tunableSpeakerAngle",
+    "type": "double",
+    "value": 9.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/intakeAngle",
+    "type": "double",
+    "value": 358.0,
     "properties": {
       "persistent": true
     }
@@ -272,9 +168,17 @@
     }
   },
   {
+    "name": "/Preferences/Led: Always Run Disabled Pattern",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/Hanger_Down_Speed",
     "type": "double",
-    "value": -1.0,
+    "value": -0.3,
     "properties": {
       "persistent": true
     }
@@ -282,39 +186,7 @@
   {
     "name": "/Preferences/Hanger_Up_Speed",
     "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SwerveJoystickTranslationDamping",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SwerveJoystickRotationDamping",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ArmPivotJoystickTranslationDamping",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/autoTimeoutSeconds",
-    "type": "double",
-    "value": 0.0,
+    "value": 0.3,
     "properties": {
       "persistent": true
     }
