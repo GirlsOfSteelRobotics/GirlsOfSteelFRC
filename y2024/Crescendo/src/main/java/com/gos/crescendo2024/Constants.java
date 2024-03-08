@@ -5,7 +5,7 @@
 
 package com.gos.crescendo2024;
 
-import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -16,12 +16,6 @@ import edu.wpi.first.wpilibj.RobotBase;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    // TODO(gpr) When we get the prototype up and running this should be decided by a jumper
-    public static final boolean IS_COMPETITION_ROBOT = RobotBase.isReal();
-
-    public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
-
-    public static final boolean HAS_HANGER = IS_COMPETITION_ROBOT;
 
     // Joystick IDS
     public static final int DRIVER_JOYSTICK = 0;
@@ -49,11 +43,17 @@ public final class Constants {
     public static final int BACK_LEFT_AZIMUTH = 28;
 
     //Digital Inputs
-    public static final int INTAKE_SENSOR = 1;
     public static final int SHOOTER_SENSOR = 0;
+    public static final int INTAKE_SENSOR = 1;
+    public static final int IS_COMPETITION_ROBOT_DIO = 2;
 
     //PWM
     public static final int LED_PORT = 0;
 
+    //Is Comp Bot?
+    public static final DigitalInput IS_COMPETITION_ROBOT_DIGITAL_INPUT = new DigitalInput(IS_COMPETITION_ROBOT_DIO);
+    public static final boolean IS_COMPETITION_ROBOT = !IS_COMPETITION_ROBOT_DIGITAL_INPUT.get();
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
+    public static final boolean HAS_HANGER = IS_COMPETITION_ROBOT;
 
 }
