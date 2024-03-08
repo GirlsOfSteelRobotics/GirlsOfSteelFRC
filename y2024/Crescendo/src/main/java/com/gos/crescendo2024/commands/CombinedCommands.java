@@ -5,15 +5,13 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 public class CombinedCommands {
-
 
     public static Command intakePieceCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
         return armPivot.createMoveArmToGroundIntakeAngleCommand()
@@ -47,16 +45,10 @@ public class CombinedCommands {
             .withName("Auto shoot into amp");
     }
 
+    @SuppressWarnings("PMD.LinguisticNaming")
     public static Command vibrateIfReadyToShoot(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
-        return Commands.runEnd(() -> {
-            boolean isReady = chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
-            // TODO(gpr) Create a generic VibrateWhenTrue command that takes a boolean supplier as a constructor argument
-            if (isReady) {
-                controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
-            } else {
-                controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
-            }
-        },
-            () -> controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0));
+        BooleanSupplier isReadySupplier = () -> chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
+        return new VibrateControllerWhileTrueCommand(controller, isReadySupplier);
+
     }
 }
