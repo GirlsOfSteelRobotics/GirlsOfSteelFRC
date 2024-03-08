@@ -29,6 +29,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -65,6 +66,8 @@ public class RobotContainer {
 
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_JOYSTICK);
+
+    private final Joystick m_driverStationLightsJoystick = new Joystick(3);
 
     private final Autos m_autonomousFactory;
 
@@ -118,6 +121,14 @@ public class RobotContainer {
 
         PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
 
+    }
+
+    int fakeCounter = 0;
+
+    public void periodic() {
+        m_driverStationLightsJoystick.setOutputs(fakeCounter++);
+
+        System.out.println("Sarah button: " + m_driverStationLightsJoystick.getRawButton(1));
     }
 
     private void createEllieCommands() {
