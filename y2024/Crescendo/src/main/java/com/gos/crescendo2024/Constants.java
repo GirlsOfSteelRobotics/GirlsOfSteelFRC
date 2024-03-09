@@ -52,7 +52,7 @@ public final class Constants {
 
     //Is Comp Bot?
     public static final DigitalInput IS_COMPETITION_ROBOT_DIGITAL_INPUT = new DigitalInput(IS_COMPETITION_ROBOT_DIO);
-    public static final boolean IS_COMPETITION_ROBOT = !IS_COMPETITION_ROBOT_DIGITAL_INPUT.get();
+    public static final boolean IS_COMPETITION_ROBOT = IS_COMPETITION_ROBOT_DIGITAL_INPUT.get(); //TODO check this
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
     public static final boolean HAS_HANGER = IS_COMPETITION_ROBOT;
 
