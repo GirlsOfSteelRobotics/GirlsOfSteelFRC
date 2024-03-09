@@ -328,16 +328,6 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Hanger Down": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Hanger Up": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/test commands/Teleop: David Drive": {
         "window": {
           "visible": true

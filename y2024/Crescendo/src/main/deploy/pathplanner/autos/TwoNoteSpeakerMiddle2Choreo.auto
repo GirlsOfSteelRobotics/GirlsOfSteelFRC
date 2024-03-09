@@ -5,7 +5,7 @@
       "x": 1.3211271852889754,
       "y": 5.52870983292987
     },
-    "rotation": 0
+    "rotation": -50.21084482577683
   },
   "command": {
     "type": "sequential",
@@ -46,12 +46,6 @@
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TwoNoteSpeakerMiddle2.3"
           }
         }
       ]
