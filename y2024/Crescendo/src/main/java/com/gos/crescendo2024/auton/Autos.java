@@ -34,7 +34,7 @@ public final class Autos {
         //        TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
         //        TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
         //two note autos - middle
-        TWO_NOTE_MIDDLE_1("TwoNoteSpeakerMiddle1VChoreo", StartPosition.STARTING_LOCATION_MIDDLE),
+        TWO_NOTE_MIDDLE_1("TwoNoteSpeakerMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE),
         TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2Choreo", StartPosition.STARTING_LOCATION_MIDDLE),
         //        TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
         //        TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
@@ -45,7 +45,7 @@ public final class Autos {
         LEAVE_WING("LeaveWingChoreo", StartPosition.CURRENT_LOCATION),
         PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWingChoreo", StartPosition.CURRENT_LOCATION),
         //just shoot preload
-        PRELOAD_AND_SHOOT("JustShootChoreo", StartPosition.CURRENT_LOCATION);
+        PRELOAD_AND_SHOOT("JustShoot", StartPosition.CURRENT_LOCATION);
 
 
 

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.72,
-      "y": 4.39
+      "x": 0.7019699576222576,
+      "y": 4.3850900124160495
     },
-    "rotation": -60.005525317046796
+    "rotation": -72.80983390231816
   },
   "command": {
     "type": "sequential",
@@ -46,12 +46,6 @@
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TwoNoteSpeakerRight6.3"
           }
         }
       ]
