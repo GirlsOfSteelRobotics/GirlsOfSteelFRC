@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -25,6 +26,8 @@ public class HangerSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_rightHangerAlert;
 
     private final LoggingUtil m_networkTableEntries;
+    private final DigitalInput m_upperLimitSwitch;
+    private final DigitalInput m_lowerLimitSwitch;
 
     //TODO add limit switches
 
@@ -46,6 +49,8 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerMotor.setSmartCurrentLimit(60);
         m_rightHangerMotor.burnFlash();
         m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger b");
+        m_upperLimitSwitch = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH);
+        m_lowerLimitSwitch = new DigitalInput(Constants.HANGER_LOWER_LIMIT_SWITCH);
 
         m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
         m_networkTableEntries.addDouble("Left Output: ", m_leftHangerMotor::getAppliedOutput);
@@ -53,7 +58,9 @@ public class HangerSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Left Pos: ", m_leftHangerEncoder::getPosition);
         m_networkTableEntries.addDouble("Right Pos", m_rightHangerEncoder::getPosition);
 
+
     }
+
 
     @Override
     public void periodic() {
