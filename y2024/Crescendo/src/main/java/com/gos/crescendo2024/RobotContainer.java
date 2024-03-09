@@ -288,6 +288,9 @@ public class RobotContainer {
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
+        //One-Button speaker shooting
+        //m_driverController.
+
         //go to floor
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
@@ -314,9 +317,18 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
-
         // shooter
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
+
+        //hanger
+        m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
+        m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
+
+        m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
+        m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
+
+        m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
+        m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
 
         PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
