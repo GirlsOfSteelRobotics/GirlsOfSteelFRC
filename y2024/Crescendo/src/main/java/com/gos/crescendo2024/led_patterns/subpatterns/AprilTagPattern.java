@@ -10,7 +10,7 @@ public class AprilTagPattern {
     private final ChassisSubsystem m_chassis;
 
     public AprilTagPattern(AddressableLEDBuffer buffer, int startIndex, int maxIndex, ChassisSubsystem chassis) {
-        m_aprilTagsDetected = new LEDPercentScale(buffer, startIndex, maxIndex, Color.kDarkTurquoise, 4);
+        m_aprilTagsDetected = new LEDPercentScale(buffer, startIndex, maxIndex, Color.kRoyalBlue, 4);
         m_chassis = chassis;
     }
 
