@@ -325,15 +325,16 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunSpeakerShotRPMCommand());
 
         //hanger
-        m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
-        m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
+        if (Constants.HAS_HANGER) {
+            m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
+            m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
 
-        m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
-        m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
+            m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
+            m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
 
-        m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
-        m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
-
+            m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
+            m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
+        }
         PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
     }

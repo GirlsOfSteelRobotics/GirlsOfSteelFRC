@@ -26,8 +26,11 @@ public class HangerSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_rightHangerAlert;
 
     private final LoggingUtil m_networkTableEntries;
-    private final DigitalInput m_upperLimitSwitch;
-    private final DigitalInput m_lowerLimitSwitch;
+    private final DigitalInput m_upperLimitSwitchLeft;
+    private final DigitalInput m_lowerLimitSwitchLeft;
+
+    private final DigitalInput m_upperLimitSwitchRight;
+    private final DigitalInput m_lowerLimitSwitchRight;
 
     //TODO add limit switches
 
@@ -49,8 +52,10 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerMotor.setSmartCurrentLimit(60);
         m_rightHangerMotor.burnFlash();
         m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger b");
-        m_upperLimitSwitch = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH);
-        m_lowerLimitSwitch = new DigitalInput(Constants.HANGER_LOWER_LIMIT_SWITCH);
+        m_upperLimitSwitchLeft = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH_LEFT);
+        m_lowerLimitSwitchLeft = new DigitalInput(Constants.HANGER_LOWER_LIMIT_SWITCH_LEFT);
+        m_upperLimitSwitchRight = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH_RIGHT);
+        m_lowerLimitSwitchRight = new DigitalInput(Constants.HANGER_LOWER_LIMIT_SWITCH_RIGHT);
 
         m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
         m_networkTableEntries.addDouble("Left Output: ", m_leftHangerMotor::getAppliedOutput);
@@ -88,11 +93,19 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public void runLeftHangerUp() {
-        setLeftMotor(HANGER_UP_SPEED.getValue());
+        if (isLeftUpperLimitSwitchedPressed()) {
+            m_leftHangerMotor.set(0);
+        } else {
+            setLeftMotor(HANGER_UP_SPEED.getValue());
+        }
     }
 
     public void runRightHangerUp() {
-        setRightMotor(HANGER_UP_SPEED.getValue());
+        if (isRightUpperLimitSwitchedPressed()) {
+            m_rightHangerMotor.set(0);
+        } else {
+            setRightMotor(HANGER_UP_SPEED.getValue());
+        }
     }
 
     public void runHangerDown() {
@@ -101,16 +114,40 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public void runLeftHangerDown() {
-        setLeftMotor(HANGER_DOWN_SPEED.getValue());
+        if (isLeftLowerLimitSwitchedPressed()) {
+            m_leftHangerMotor.set(0);
+        } else {
+            setLeftMotor(HANGER_DOWN_SPEED.getValue());
+        }
     }
 
     public void runRightHangerDown() {
-        setRightMotor(HANGER_DOWN_SPEED.getValue());
+        if (isRightLowerLimitSwitchedPressed()) {
+            m_rightHangerMotor.set(0);
+        } else {
+            setRightMotor(HANGER_DOWN_SPEED.getValue());
+        }
     }
 
     public void stopHanger() {
         m_leftHangerMotor.set(0);
         m_rightHangerMotor.set(0);
+    }
+
+    public boolean isRightUpperLimitSwitchedPressed() {
+        return !m_upperLimitSwitchRight.get();
+    }
+
+    public boolean isRightLowerLimitSwitchedPressed() {
+        return !m_lowerLimitSwitchRight.get();
+    }
+
+    public boolean isLeftLowerLimitSwitchedPressed() {
+        return !m_lowerLimitSwitchLeft.get();
+    }
+
+    public boolean isLeftUpperLimitSwitchedPressed() {
+        return !m_upperLimitSwitchLeft.get();
     }
 
     /////////////////////////////////////
