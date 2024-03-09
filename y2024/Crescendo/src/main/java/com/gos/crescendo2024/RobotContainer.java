@@ -286,9 +286,15 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //Speaker Shooting
-        m_driverController.y().whileTrue(
+        /*m_driverController.rightBumper().whileTrue(
             CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+        */
+
+        //One-Button speaker shooting - turns butt to speaker tho
+        m_driverController.rightBumper().whileTrue(
+            SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem)
+        );
 
         //go to floor
         m_driverController.leftTrigger().whileTrue(
@@ -303,7 +309,7 @@ public class RobotContainer {
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //override angle to middle subwoofer shot
-        m_driverController.rightBumper().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE.getValue())
+        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE.getValue())
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
 
@@ -315,10 +321,20 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
         m_operatorController.rightBumper().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
-
         // shooter
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunSpeakerShotRPMCommand());
 
+        //hanger
+        if (Constants.HAS_HANGER) {
+            m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
+            m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
+
+            m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
+            m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
+
+            m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
+            m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
+        }
         PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
     }

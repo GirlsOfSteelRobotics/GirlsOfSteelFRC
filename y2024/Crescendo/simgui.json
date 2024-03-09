@@ -16,6 +16,16 @@
           "open": true
         }
       },
+      "SPARK MAX [4]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [5]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [6]": {
         "header": {
           "open": true
@@ -172,6 +182,13 @@
       "/Shuffleboard/Ellie/Arm to coast": "Command",
       "/Shuffleboard/Ellie/Chassis Set Pose Subwoofer Mid": "Command",
       "/Shuffleboard/Ellie/Clear Sticky Faults": "Command",
+      "/Shuffleboard/Ellie/Hanger Down": "Command",
+      "/Shuffleboard/Ellie/Hanger Up": "Command",
+      "/Shuffleboard/Ellie/Hanger to Coast": "Command",
+      "/Shuffleboard/Ellie/Left Hanger Down": "Command",
+      "/Shuffleboard/Ellie/Left Hanger Up": "Command",
+      "/Shuffleboard/Ellie/Right Hanger Down": "Command",
+      "/Shuffleboard/Ellie/Right Hanger Up": "Command",
       "/Shuffleboard/PP Paths/Curve Path": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
@@ -227,6 +244,8 @@
       "/Shuffleboard/test commands/Arm to coast": "Command",
       "/Shuffleboard/test commands/Arm to default speaker angle": "Command",
       "/Shuffleboard/test commands/Arm to ground intake angle": "Command",
+      "/Shuffleboard/test commands/Arm to middle speaker angle": "Command",
+      "/Shuffleboard/test commands/Arm to side speaker angle": "Command",
       "/Shuffleboard/test commands/Arm to speaker (from pose)": "Command",
       "/Shuffleboard/test commands/Arm to tunable speaker angle": "Command",
       "/Shuffleboard/test commands/Auto-Intake Piece": "Command",
@@ -248,11 +267,18 @@
       "/Shuffleboard/test commands/David Drive": "Command",
       "/Shuffleboard/test commands/Hanger Down": "Command",
       "/Shuffleboard/test commands/Hanger Up": "Command",
+      "/Shuffleboard/test commands/Hanger to Coast": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
+      "/Shuffleboard/test commands/Left Hanger Down": "Command",
+      "/Shuffleboard/test commands/Left Hanger Up": "Command",
+      "/Shuffleboard/test commands/Right Hanger Down": "Command",
+      "/Shuffleboard/test commands/Right Hanger Up": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
       "/Shuffleboard/test commands/Shooter Percent Output": "Command",
       "/Shuffleboard/test commands/Shooter RPM: 3500": "Command",
       "/Shuffleboard/test commands/Shooter RPM: 4000": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: Default Speaker Shot": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: Tunable": "Command",
       "/Shuffleboard/test commands/Shooter SysId Dynamic Backward": "Command",
       "/Shuffleboard/test commands/Shooter SysId Dynamic Forward": "Command",
       "/Shuffleboard/test commands/Shooter SysId Quasistatic Backward": "Command",
@@ -298,6 +324,16 @@
     },
     "windows": {
       "/Shuffleboard/test commands/Chassis drive to amp": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Hanger Down": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Hanger Up": {
         "window": {
           "visible": true
         }
@@ -414,10 +450,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       },
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": {
         "bottom": 1476,
@@ -425,10 +458,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },

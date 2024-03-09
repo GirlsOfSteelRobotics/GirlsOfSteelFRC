@@ -21,7 +21,7 @@ public final class Constants {
 
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
 
-    public static final boolean HAS_HANGER = IS_COMPETITION_ROBOT;
+    public static final boolean HAS_HANGER = true;
 
     // Joystick IDS
     public static final int DRIVER_JOYSTICK = 0;
@@ -51,6 +51,11 @@ public final class Constants {
     //Digital Inputs
     public static final int INTAKE_SENSOR = 1;
     public static final int SHOOTER_SENSOR = 0;
+    public static final int HANGER_UPPER_LIMIT_SWITCH_LEFT = 2;
+    public static final int HANGER_LOWER_LIMIT_SWITCH_LEFT = 3;
+    public static final int HANGER_UPPER_LIMIT_SWITCH_RIGHT = 4;
+
+    public static final int HANGER_LOWER_LIMIT_SWITCH_RIGHT = 5;
 
     //PWM
     public static final int LED_PORT = 0;
