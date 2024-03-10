@@ -9,9 +9,11 @@ import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.gos.swerve2023.Constants;
+import com.gos.swerve2023.GoSField;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -37,7 +39,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
-    private final Field2d m_field;
+    private final GoSField m_field;
 
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
@@ -57,8 +59,8 @@ public class ChassisSubsystem extends SubsystemBase {
             MAX_ROTATION_SPEED);
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
-        m_field = new Field2d();
-        SmartDashboard.putData("Field", m_field);
+        m_field = new GoSField();
+        SmartDashboard.putData("Field", m_field.getSendable());
 
 
         AutoBuilder.configureHolonomic(
@@ -76,6 +78,10 @@ public class ChassisSubsystem extends SubsystemBase {
             GetAllianceUtil::isRedAlliance,
             this
         );
+
+        PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
+        PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
+
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -97,7 +103,8 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
-        m_field.setRobotPose(m_swerveDrive.getEstimatedPosition());
+        m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
+        m_field.setOdometry(m_swerveDrive.getOdometryPosition());
     }
 
     @Override
