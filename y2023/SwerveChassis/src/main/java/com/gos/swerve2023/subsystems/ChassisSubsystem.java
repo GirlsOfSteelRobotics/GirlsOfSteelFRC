@@ -3,6 +3,7 @@ package com.gos.swerve2023.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
@@ -10,10 +11,13 @@ import com.gos.swerve2023.Constants;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
+    private static final GosDoubleProperty TEST_AZIMUTH_ANGLE = new GosDoubleProperty(false, "SwerveTest.AzimuthAngle", 0);
+    private static final GosDoubleProperty TEST_VELOCITY = new GosDoubleProperty(false, "SwerveTest.WheelVelocity", 0);
 
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
@@ -36,7 +40,8 @@ public class ChassisSubsystem extends SubsystemBase {
             Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            RevSwerveModuleConstants.DriveMotor.NEO, RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            RevSwerveModuleConstants.DriveMotor.NEO,
+            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
             RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
             WHEEL_BASE,
             TRACK_WIDTH,
@@ -61,5 +66,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
         m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
+    }
+
+    public Command createTestSingleModleCommand(int moduleId) {
+        return run(() -> m_swerveDrive.setModuleState(moduleId, TEST_AZIMUTH_ANGLE.getValue(), TEST_VELOCITY.getValue())).withName("Test " + m_swerveDrive.getModuleName(moduleId));
     }
 }

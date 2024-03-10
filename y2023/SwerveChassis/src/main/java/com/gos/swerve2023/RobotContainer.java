@@ -9,6 +9,8 @@ import com.gos.swerve2023.commands.ChassisTeleopDriveCommand;
 import com.gos.swerve2023.subsystems.ChassisSubsystem;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,10 +33,18 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
+        ShuffleboardTab tab = Shuffleboard.getTab("SwerveTest");
+        tab.add(m_chassis.createTestSingleModleCommand(0));
+        tab.add(m_chassis.createTestSingleModleCommand(1));
+        tab.add(m_chassis.createTestSingleModleCommand(2));
+        tab.add(m_chassis.createTestSingleModleCommand(3));
+
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
+
+        // PropertyManager.purgeExtraKeys();
     }
 
 
