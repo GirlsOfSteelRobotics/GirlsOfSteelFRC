@@ -43,6 +43,12 @@ public class RobotContainer {
         tab.add(m_chassis.createTestSingleModleCommand(2));
         tab.add(m_chassis.createTestSingleModleCommand(3));
 
+        ShuffleboardTab tab = Shuffleboard.getTab("SwerveTest");
+        tab.add(m_chassis.createTestSingleModleCommand(0));
+        tab.add(m_chassis.createTestSingleModleCommand(1));
+        tab.add(m_chassis.createTestSingleModleCommand(2));
+        tab.add(m_chassis.createTestSingleModleCommand(3));
+
         m_autoChooser = AutoBuilder.buildAutoChooser();
 
         if (RobotBase.isSimulation()) {
