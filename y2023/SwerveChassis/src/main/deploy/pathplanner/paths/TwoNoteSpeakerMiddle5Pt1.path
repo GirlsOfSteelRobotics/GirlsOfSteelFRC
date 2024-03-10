@@ -1,0 +1,100 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.354605173665323,
+        "y": 5.544193078907484
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.3546051736653233,
+        "y": 5.544193078907484
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.601932822913265,
+        "y": 4.814474591355198
+      },
+      "prevControl": {
+        "x": 1.706934341186978,
+        "y": 4.680739186039776
+      },
+      "nextControl": {
+        "x": 3.0769793885454253,
+        "y": 4.885458560932418
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.021585587030824,
+        "y": 5.009934029893123
+      },
+      "prevControl": {
+        "x": 3.6879402780427464,
+        "y": 5.143392153488354
+      },
+      "nextControl": {
+        "x": 4.741699307960022,
+        "y": 4.721888541521444
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.109093820083375,
+        "y": 4.3575412269307945
+      },
+      "prevControl": {
+        "x": 4.638825919255849,
+        "y": 4.649877169428525
+      },
+      "nextControl": {
+        "x": 6.214447528062275,
+        "y": 3.6704124276936883
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.797038952473896,
+        "y": 4.0840735315555845
+      },
+      "prevControl": {
+        "x": 7.835945570571493,
+        "y": 4.0840735315555845
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "TwoNoteSpeaker5Pt1End"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "TwoNoteSpeakerMiddle5",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

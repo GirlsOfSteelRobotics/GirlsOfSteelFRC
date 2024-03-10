@@ -5,7 +5,6 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
@@ -108,10 +107,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
         m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
-    }
-
-    public Command createTestSingleModleCommand(int moduleId) {
-        return run(() -> m_swerveDrive.setModuleState(moduleId, TEST_AZIMUTH_ANGLE.getValue(), TEST_VELOCITY.getValue())).withName("Test " + m_swerveDrive.getModuleName(moduleId));
     }
 
     public Pose2d getPose() {

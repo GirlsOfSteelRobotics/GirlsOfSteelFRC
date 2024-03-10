@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.291006242747955,
+        "y": 4.255590195640653
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.1856087138359213,
+        "y": 4.079927647453931
+      },
+      "isLocked": false,
+      "linkedName": "TwoNoteSpeakerMiddle2End"
+    },
+    {
+      "anchor": {
+        "x": 2.21575404634404,
+        "y": 3.7826002042874274
+      },
+      "prevControl": {
+        "x": 2.2273063011633822,
+        "y": 4.0022966890307865
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "TwoNoteSpeakerMiddle2Part2End"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -41.99000000000001,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "TwoNoteSpeakerMiddle2",
+  "previewStartingState": {
+    "rotation": -25.11483488614446,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
