@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6933452953924437,
-      "y": 6.686887667641241
+      "x": 0.6906225085258484,
+      "y": 6.696691036224365
     },
-    "rotation": 60.0
+    "rotation": 59.98868115019719
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourPieceSpeakerPt1"
+                  "pathName": "ThreeNoteLeft0and3.1"
                 }
               },
               {
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourPieceSpeakerPt2"
+                  "pathName": "ThreeNoteLeft0and3.2"
                 }
               },
               {
@@ -74,13 +74,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourPieceSpeakerPt3"
+                  "pathName": "ThreeNoteLeft0and3.3"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "IntakePiece"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ThreeNoteLeft0and3.4"
                 }
               }
             ]
@@ -96,5 +109,5 @@
     }
   },
   "folder": null,
-  "choreoAuto": false
+  "choreoAuto": true
 }
