@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7019699576222576,
-      "y": 4.3850900124160495
+      "x": 0.8113736510276794,
+      "y": 6.648544788360596
     },
-    "rotation": -59.999999999999986
+    "rotation": 60.0001403060998
   },
   "command": {
     "type": "sequential",
@@ -24,38 +24,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNotesSpeakerRight7.1"
+                  "pathName": "FourNoteSpeaker.1"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "IntakePiece"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "TwoNotesSpeakerRight7.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "MoveArmToSpeakerAngle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShooterDefaultRpm"
                 }
               }
             ]
@@ -74,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNotesSpeakerRight7and6.3"
+                  "pathName": "FourNoteSpeaker.2"
                 }
               },
               {
@@ -87,25 +62,25 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNotesSpeakerRight7.2"
+                  "pathName": "FourNoteSpeaker.3"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "MoveArmToSpeakerAngle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShooterDefaultRpm"
+                  "name": "IntakePiece"
                 }
               }
             ]
@@ -120,6 +95,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "FourNote",
   "choreoAuto": true
 }
