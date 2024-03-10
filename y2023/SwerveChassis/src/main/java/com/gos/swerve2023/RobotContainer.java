@@ -45,7 +45,7 @@ public class RobotContainer {
         tab.add(m_chassis.createTestSingleModleCommand(2));
         tab.add(m_chassis.createTestSingleModleCommand(3));
 
-        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new WaitCommand(3));
+        NamedCommands.registerCommand("AimAndShootIntoSpeaker", new WaitCommand(1));
 
         m_autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData(m_autoChooser);

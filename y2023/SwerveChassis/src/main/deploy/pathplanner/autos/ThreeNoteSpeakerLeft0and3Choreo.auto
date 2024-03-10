@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7019699576222576,
-      "y": 4.3850900124160495
+      "x": 0.6906225085258484,
+      "y": 6.696691036224365
     },
-    "rotation": -59.999999999999986
+    "rotation": 59.98868115019719
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,57 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNotesSpeakerRight7.1"
+                  "pathName": "ThreeNoteLeft0and3.1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ThreeNoteLeft0and3.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ThreeNoteLeft0and3.3"
                 }
               },
               {
@@ -43,19 +93,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNotesSpeakerRight7.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "MoveArmToSpeakerAngle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShooterDefaultRpm"
+                  "pathName": "ThreeNoteLeft0and3.4"
                 }
               }
             ]
