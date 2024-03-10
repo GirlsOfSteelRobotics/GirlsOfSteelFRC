@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3160154641111295,
+      "x": 1.3160154641111297,
       "y": 5.56
     },
-    "rotation": 0
+    "rotation": -2.53264105246913e-32
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteSpeakerMiddle1.1"
+                  "pathName": "TwoNoteMiddle1.1"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoNoteSpeakerMiddle1.2"
+            "pathName": "TwoNoteMiddle1.2"
           }
         },
         {
