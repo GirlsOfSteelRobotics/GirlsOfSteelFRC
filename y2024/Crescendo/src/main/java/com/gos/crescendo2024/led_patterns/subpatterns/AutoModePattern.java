@@ -23,9 +23,9 @@ public class AutoModePattern {
 
     private Map<Autos.StartPosition, LEDPattern> createStartPosMap(AddressableLEDBuffer buffer, int startIndex, int numLeds) {
         Map<Autos.StartPosition, LEDPattern> posMap = new HashMap<>();
-        posMap.put(Autos.StartPosition.STARTING_LOCATION_BACK, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kPurple));
+        posMap.put(Autos.StartPosition.STARTING_LOCATION_SOURCE_SIDE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kPurple));
         posMap.put(Autos.StartPosition.STARTING_LOCATION_MIDDLE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kCyan));
-        posMap.put(Autos.StartPosition.STARTING_LOCATION_TOP, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kLightPink));
+        posMap.put(Autos.StartPosition.STARTING_LOCATION_AMP_SIDE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kLightPink));
         posMap.put(Autos.StartPosition.CURRENT_LOCATION, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kDarkTurquoise));
         return posMap;
     }
@@ -34,7 +34,7 @@ public class AutoModePattern {
         Map<Autos.AutoModes, LEDPattern> autonMap = new HashMap<>();
         autonMap.put(Autos.AutoModes.LEAVE_WING, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kDenim));
         autonMap.put(Autos.AutoModes.PRELOAD_AND_LEAVE_WING, new LEDFlash(buffer, startIndex, startIndex +  numLeds, 1.0, Color.kGreen));
-        autonMap.put(Autos.AutoModes.FOUR_NOTE, new LEDFlash(buffer, startIndex, startIndex +   numLeds, 1.0, Color.kRed));
+        autonMap.put(Autos.AutoModes.FOUR_NOTE_012, new LEDFlash(buffer, startIndex, startIndex +   numLeds, 1.0, Color.kRed));
         autonMap.put(Autos.AutoModes.PRELOAD_AND_SHOOT, new LEDMovingPixel(buffer, startIndex, startIndex +  numLeds, Color.kWhite));
         autonMap.put(Autos.AutoModes.TWO_NOTE_MIDDLE_1, new LEDFlash(buffer, startIndex, startIndex + numLeds, 2.0, Color.kBlanchedAlmond));
         autonMap.put(Autos.AutoModes.TWO_NOTE_MIDDLE_2, new LEDFlash(buffer, startIndex, startIndex + numLeds, 2.0, Color.kPaleVioletRed));
