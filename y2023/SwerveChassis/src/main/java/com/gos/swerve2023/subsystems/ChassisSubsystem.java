@@ -3,11 +3,19 @@ package com.gos.swerve2023.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.gos.swerve2023.Constants;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,6 +59,39 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);
+
+
+        AutoBuilder.configureHolonomic(
+            this::getPose,
+            this::resetOdometry,
+            this::getChassisSpeed,
+            this::setChassisSpeed,
+            new HolonomicPathFollowerConfig(
+                new PIDConstants(5, 0, 0),
+                new PIDConstants(10, 0, 0),
+                MAX_TRANSLATION_SPEED,
+                WHEEL_BASE,
+                new ReplanningConfig(),
+                0.02),
+            GetAllianceUtil::isRedAlliance,
+            this
+        );
+    }
+
+    public void resetOdometry(Pose2d pose2d) {
+        m_swerveDrive.resetOdometry(pose2d);
+    }
+
+    public void setChassisSpeed(ChassisSpeeds speed) {
+        m_swerveDrive.setChassisSpeeds(speed);
+    }
+
+    public ChassisSpeeds getChassisSpeed() {
+        return m_swerveDrive.getChassisSpeed();
+    }
+
+    public void clearStickyFaults() {
+        m_swerveDrive.clearStickyFaults();
     }
 
     @Override
@@ -68,7 +109,22 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
     }
 
+    public Pose2d getPose() {
+        return m_swerveDrive.getEstimatedPosition();
+    }
+
+    private void resetGyro() {
+        Pose2d currentPose = getPose();
+        resetOdometry(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
+    }
+
     public Command createTestSingleModleCommand(int moduleId) {
         return run(() -> m_swerveDrive.setModuleState(moduleId, TEST_AZIMUTH_ANGLE.getValue(), TEST_VELOCITY.getValue())).withName("Test " + m_swerveDrive.getModuleName(moduleId));
+    }
+
+    public Command createResetGyroCommand() {
+        return run(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 }

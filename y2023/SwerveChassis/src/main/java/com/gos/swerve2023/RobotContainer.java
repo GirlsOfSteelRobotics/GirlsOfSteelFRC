@@ -7,11 +7,14 @@ package com.gos.swerve2023;
 
 import com.gos.swerve2023.commands.ChassisTeleopDriveCommand;
 import com.gos.swerve2023.subsystems.ChassisSubsystem;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -23,12 +26,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
     private final ChassisSubsystem m_chassis;
-    private final CommandXboxController m_driverJoystick;
+    private final CommandXboxController m_driverController;
+    private final SendableChooser<Command> m_autoChooser;
 
     public RobotContainer() {
         m_chassis = new ChassisSubsystem();
 
-        m_driverJoystick = new CommandXboxController(0);
+        m_driverController = new CommandXboxController(0);
 
         // Configure the trigger bindings
         configureBindings();
@@ -38,6 +42,8 @@ public class RobotContainer {
         tab.add(m_chassis.createTestSingleModleCommand(1));
         tab.add(m_chassis.createTestSingleModleCommand(2));
         tab.add(m_chassis.createTestSingleModleCommand(3));
+
+        m_autoChooser = AutoBuilder.buildAutoChooser();
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
@@ -52,7 +58,9 @@ public class RobotContainer {
      * Use this method to define your trigger->command mappings.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand(new ChassisTeleopDriveCommand(m_chassis, m_driverJoystick));
+        m_chassis.setDefaultCommand(new ChassisTeleopDriveCommand(m_chassis, m_driverController));
+        m_driverController.start().and(m_driverController.back())
+            .whileTrue(m_chassis.createResetGyroCommand());
     }
 
 
@@ -62,7 +70,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // TODO: Implement properly
-        return null;
+        return m_autoChooser.getSelected();
     }
 }
