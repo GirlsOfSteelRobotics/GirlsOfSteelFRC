@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8113736510276794,
-      "y": 6.648544788360596
+      "x": 1.3643299341201782,
+      "y": 5.521880149841309
     },
-    "rotation": 60.0001403060998
+    "rotation": 3.199343281805369e-28
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourNoteSpeaker.1"
+                  "pathName": "ThreeNoteSpeakerMiddle3.1"
                 }
               },
               {
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourNoteSpeaker.2"
+                  "pathName": "ThreeNoteSpeakerMiddle3.2"
                 }
               },
               {
@@ -62,25 +62,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "AimAndShootIntoSpeaker"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourNoteSpeaker.3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakePiece"
+                  "pathName": "ThreeNoteSpeakerMiddle3.3"
                 }
               }
             ]
@@ -95,6 +83,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "ThreeNote",
   "choreoAuto": true
 }

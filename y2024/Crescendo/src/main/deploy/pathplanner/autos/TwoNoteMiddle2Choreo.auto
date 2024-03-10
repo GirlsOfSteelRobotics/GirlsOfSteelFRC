@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7019699576222576,
-      "y": 4.3850900124160495
+      "x": 1.3211271852889754,
+      "y": 5.52870983292987
     },
-    "rotation": -59.999999999999986
+    "rotation": -7.860913631225403e-22
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAndShootIntoSideSpeaker"
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNotesSpeakerRight7.1"
+                  "pathName": "TwoNoteMiddle2.1"
                 }
               },
               {
@@ -37,28 +37,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "TwoNotesSpeakerRight7.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "MoveArmToSpeakerAngle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShooterDefaultRpm"
-                }
-              }
-            ]
+            "pathName": "TwoNoteMiddle2.2"
           }
         },
         {
@@ -70,6 +51,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoNote",
   "choreoAuto": true
 }

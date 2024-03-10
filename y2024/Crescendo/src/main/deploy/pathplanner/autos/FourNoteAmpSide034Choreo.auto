@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3643299341201782,
-      "y": 5.521880149841309
+      "x": 0.6906225085258484,
+      "y": 6.696691036224365
     },
-    "rotation": 3.199343281805369e-28
+    "rotation": 59.98868115019719
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteSpeakerMiddle3.1"
+                  "pathName": "FourNoteAmpSide034.1"
                 }
               },
               {
@@ -49,7 +49,32 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteSpeakerMiddle3.2"
+                  "pathName": "FourNoteAmpSide034.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FourNoteAmpSide034.3"
                 }
               },
               {
@@ -68,7 +93,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteSpeakerMiddle3.3"
+                  "pathName": "FourNoteAmpSide034.4"
                 }
               }
             ]
@@ -83,6 +108,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "FourNote",
   "choreoAuto": true
 }

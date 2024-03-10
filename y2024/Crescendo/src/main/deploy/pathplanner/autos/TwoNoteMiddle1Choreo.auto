@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7741405963897705,
-      "y": 4.4417219161987305
+      "x": 1.3160154641111297,
+      "y": 5.56
     },
-    "rotation": -59.98868115019719
+    "rotation": -2.53264105246913e-32
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAndShootIntoSideSpeaker"
+            "name": "AimAndShootIntoSpeaker"
           }
         },
         {
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteSpeakerRight6.1"
+                  "pathName": "TwoNoteMiddle1.1"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TwoNoteSpeakerRight6.2"
+            "pathName": "TwoNoteMiddle1.2"
           }
         },
         {
@@ -51,6 +51,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "TwoNote",
   "choreoAuto": true
 }
