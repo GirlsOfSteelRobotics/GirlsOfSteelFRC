@@ -10,6 +10,8 @@ import com.gos.swerve2023.subsystems.ChassisSubsystem;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -44,6 +46,8 @@ public class RobotContainer {
         tab.add(m_chassis.createTestSingleModleCommand(1));
         tab.add(m_chassis.createTestSingleModleCommand(2));
         tab.add(m_chassis.createTestSingleModleCommand(3));
+
+        tab.add("Chassis Set Pose Subwoofer Mid", m_chassis.createResetPoseCommand(new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new WaitCommand(1));
 

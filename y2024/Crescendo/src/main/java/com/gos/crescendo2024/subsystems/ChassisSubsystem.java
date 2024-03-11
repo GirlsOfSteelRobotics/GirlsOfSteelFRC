@@ -344,6 +344,7 @@ public class ChassisSubsystem extends SubsystemBase {
         path.preventFlipping = true;
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
+
     public Command createDriveToAmpCommand() {
         Pose2d blueAmpPosition = (new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90)));
         return defer(() -> {
@@ -351,7 +352,7 @@ public class ChassisSubsystem extends SubsystemBase {
             Pose2d currentPosition = getPose();
             double dx = ampPosition.getX() - currentPosition.getX();
             double dy = ampPosition.getY() - currentPosition.getY();
-            double angle = Math.atan2(dy,dx);
+            double angle = Math.atan2(dy, dx);
             Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
             return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
         });

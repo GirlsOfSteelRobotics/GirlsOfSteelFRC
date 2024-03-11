@@ -8,25 +8,38 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
+import com.gos.swerve2023.AllianceFlipper;
 import com.gos.swerve2023.Constants;
 import com.gos.swerve2023.GoSField;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
+
+import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty TEST_AZIMUTH_ANGLE = new GosDoubleProperty(false, "SwerveTest.AzimuthAngle", 0);
     private static final GosDoubleProperty TEST_VELOCITY = new GosDoubleProperty(false, "SwerveTest.WheelVelocity", 0);
+
+    private static final GosDoubleProperty ON_THE_FLY_MAX_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
@@ -132,5 +145,48 @@ public class ChassisSubsystem extends SubsystemBase {
         return run(this::resetGyro)
             .ignoringDisable(true)
             .withName("Reset Gyro");
+    }
+
+    public Command createResetPoseCommand(Pose2d pose) {
+        return runOnce(() -> resetOdometry(pose))
+            .ignoringDisable(true)
+            .withName("Reset Pose " + pose);
+    }
+
+
+    public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
+        Command followPathCommand = AutoBuilder.followPath(path);
+        if (resetPose) {
+            return Commands.runOnce(() -> m_swerveDrive.resetOdometry(path.getStartingDifferentialPose())).andThen(followPathCommand).withName("Reset position and follow path");
+        }
+        return followPathCommand.withName("Follow Path");
+    }
+
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        PathPlannerPath path = new PathPlannerPath(
+            bezierPoints,
+            new PathConstraints(
+                Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
+                Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
+                Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
+                Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
+            new GoalEndState(0.0, endAngle)
+        );
+        path.preventFlipping = true;
+        return createFollowPathCommand(path, false).withName("Follow Path to " + end);
+    }
+
+    public Command createDriveToAmpCommand() {
+        Pose2d blueAmpPosition = (new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90)));
+        return defer(() -> {
+            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(blueAmpPosition.getTranslation()), Rotation2d.fromDegrees(90));
+            Pose2d currentPosition = getPose();
+            double dx = ampPosition.getX() - currentPosition.getX();
+            double dy = ampPosition.getY() - currentPosition.getY();
+            double angle = Math.atan2(dy, dx);
+            Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
+            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
+        });
     }
 }
