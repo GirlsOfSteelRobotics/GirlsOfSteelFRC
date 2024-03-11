@@ -327,7 +327,11 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end) {
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(getPose(), end);
+        return createDriveToPointNoFlipCommand(end, end.getRotation(), getPose());
+    }
+
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             new PathConstraints(
@@ -335,10 +339,22 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
                 Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
-            new GoalEndState(0.0, end.getRotation())
+            new GoalEndState(0.0, endAngle)
         );
         path.preventFlipping = true;
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
+    }
+    public Command createDriveToAmpCommand() {
+        Pose2d blueAmpPosition = (new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90)));
+        return defer(() -> {
+            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(blueAmpPosition.getTranslation()), Rotation2d.fromDegrees(90));
+            Pose2d currentPosition = getPose();
+            double dx = ampPosition.getX() - currentPosition.getX();
+            double dy = ampPosition.getY() - currentPosition.getY();
+            double angle = Math.atan2(dy,dx);
+            Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
+            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
+        });
     }
 
     public Command createDriveToPointCommand(Pose2d endPoint) {

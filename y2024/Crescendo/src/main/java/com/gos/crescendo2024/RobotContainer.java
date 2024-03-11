@@ -196,7 +196,7 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis set Pose Subwoofer Mid + Hack Dist", m_chassisSubsystem.createResetPoseCommand(new Pose2d(1.34 + Units.feetToMeters(3), 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
 
         shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
-        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(14.7, 7.8, Rotation2d.fromDegrees(90))).withName("Drive To Amp"));
+        shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToAmpCommand().withName("Drive To Amp"));
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
