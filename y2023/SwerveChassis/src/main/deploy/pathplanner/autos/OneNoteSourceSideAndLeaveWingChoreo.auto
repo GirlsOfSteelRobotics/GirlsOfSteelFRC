@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6933452953924437,
-      "y": 4.403274541213847
+      "x": 0.7019699576222576,
+      "y": 4.3850900124160495
     },
-    "rotation": -60.0
+    "rotation": -60.0001403060998
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OneNoteSpeakerAndLeaveWing.1"
+            "pathName": "OneNoteSourceSideAndLeaveWing.1"
           }
         }
       ]

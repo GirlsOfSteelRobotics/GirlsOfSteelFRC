@@ -32,7 +32,7 @@ public final class Autos {
         FOUR_NOTE_034("FourNoteAmpSide034Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, 4),
         // Three Note
         THREE_NOTE_12("ThreeNoteMiddle12Choreo", StartPosition.STARTING_LOCATION_MIDDLE, 3),
-        THREE_NOTE_76("ThreeNotesSourceSide7and6Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, 3),
+        THREE_NOTE_76("ThreeNotesSourceSide76Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, 3),
         //two note autos - Amp Side
         //two note autos - middle
         TWO_NOTE_MIDDLE_1("TwoNoteMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE, 2),
@@ -43,7 +43,7 @@ public final class Autos {
         //just shoot preload
         PRELOAD_AND_SHOOT("OneNoteJustShoot", StartPosition.CURRENT_LOCATION, 1),
         // Preload and drive
-        PRELOAD_AND_LEAVE_WING("OneNoteSourceLeaveWingChoreo", StartPosition.CURRENT_LOCATION, 1),
+        PRELOAD_AND_LEAVE_WING("OneNoteSourceSideAndLeaveWingChoreo", StartPosition.CURRENT_LOCATION, 1),
         // No shooting
         LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, 0);
 
