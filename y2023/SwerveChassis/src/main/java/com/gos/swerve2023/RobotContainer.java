@@ -47,7 +47,10 @@ public class RobotContainer {
         tab.add(m_chassis.createTestSingleModleCommand(2));
         tab.add(m_chassis.createTestSingleModleCommand(3));
 
-        tab.add("Chassis Set Pose Subwoofer Mid", m_chassis.createResetPoseCommand(new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
+        Pose2d subwooferMid = new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0));
+        tab.add("Chassis Set Pose Subwoofer Mid Blue", m_chassis.createResetPoseCommand(subwooferMid).withName("Reset Pose Subwoofer Mid Blue"));
+        tab.add("Chassis Set Pose Subwoofer Mid Red", m_chassis.createResetPoseCommand(new Pose2d(AllianceFlipper.flip(subwooferMid.getTranslation()), Rotation2d.fromDegrees(180))).withName("Reset Pose Subwoofer Mid Red"));
+        tab.add("Drive To Amp", m_chassis.createDriveToAmpCommand());
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new WaitCommand(1));
 

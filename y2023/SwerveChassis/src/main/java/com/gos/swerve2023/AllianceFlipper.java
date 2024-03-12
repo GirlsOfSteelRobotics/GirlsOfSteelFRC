@@ -4,12 +4,13 @@ import com.gos.lib.GetAllianceUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 
 public class AllianceFlipper {
 
     public static Translation2d flip(Translation2d translation) {
         return new Translation2d(
-            54 - translation.getX(),
+            Units.feetToMeters(54) - translation.getX(),
             translation.getY()
         );
     }
