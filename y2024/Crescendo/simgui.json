@@ -418,12 +418,14 @@
         },
         "bottom": 1476,
         "futurePosition": {
+          "arrows": false,
           "color": [
             0.9051849246025085,
             0.2888888716697693,
             1.0,
             255.0
-          ]
+          ],
+          "style": "Hidden"
         },
         "height": 8.210550308227539,
         "left": 150,
