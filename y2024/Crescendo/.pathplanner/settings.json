@@ -6,9 +6,10 @@
     "TestPaths"
   ],
   "autoFolders": [
-    "TwoNote",
+    "FourNote",
+    "Test Paths",
     "ThreeNote",
-    "FourNote"
+    "TwoNote"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

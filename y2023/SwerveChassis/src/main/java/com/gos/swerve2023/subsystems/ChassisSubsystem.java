@@ -41,10 +41,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
     private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
-    private static final double WHEEL_BASE = 0.381;
-    private static final double TRACK_WIDTH = 0.381;
+    private static final double WHEEL_BASE = Units.inchesToMeters(28);
+    private static final double TRACK_WIDTH = Units.inchesToMeters(28);
 
-    public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
+    public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(14.3); // Theoretically 15.76
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(360);
 
 
