@@ -31,8 +31,8 @@ public final class Constants {
     // CAN ID's
     public static final int ARM_PIVOT_FOLLOW = 9;
     public static final int ARM_PIVOT = 10;
-    public static final int SHOOTER_MOTOR_LEADER = 11;
-    public static final int SHOOTER_MOTOR_FOLLOWER = 12;
+    public static final int SHOOTER_MOTOR_LEADER = 12;
+    public static final int SHOOTER_MOTOR_FOLLOWER = 11;
     public static final int INTAKE_MOTOR = 13;
     public static final int HANGER_RIGHT_MOTOR = 14;
     public static final int HANGER_LEFT_MOTOR = 15;

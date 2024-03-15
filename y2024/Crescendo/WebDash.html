@@ -78,6 +78,7 @@
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -147,7 +148,6 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -178,7 +178,6 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -209,7 +208,6 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -312,7 +310,6 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -343,7 +340,6 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -378,7 +374,6 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -516,11 +511,18 @@
         source-provider="NetworkTables"
         style="transform: translate(151px, 99px);"
         source-key="/Shuffleboard/test commands/Clear Sticky Faults"
-    ></frc-robot-command></dashboard-tab><dashboard-tab
+    ></frc-robot-command><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(318px, 225px);"
+        source-key="/SmartDashboard/Is Tim Bot"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(360px, 357px);"
+        source-key="/SmartDashboard/Is Competition Robot"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Hanger"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(166px, 412px);"

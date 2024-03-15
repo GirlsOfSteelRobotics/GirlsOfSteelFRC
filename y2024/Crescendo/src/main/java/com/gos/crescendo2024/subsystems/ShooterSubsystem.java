@@ -51,7 +51,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
+        m_pidController.setFeedbackDevice(m_shooterEncoder);
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
             .addP(1.5e-4)
             .addI(0.0)
             .addD(0.0)
@@ -61,7 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorLeader.setSmartCurrentLimit(60);
         m_shooterMotorLeader.enableVoltageCompensation(10);
-        m_shooterMotorLeader.setClosedLoopRampRate(.5);
+//        m_shooterMotorLeader.setClosedLoopRampRate(.5);
         m_shooterMotorLeader.burnFlash();
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
@@ -69,7 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
         m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
-        m_shooterMotorFollower.setClosedLoopRampRate(.5);
+//        m_shooterMotorFollower.setClosedLoopRampRate(.5);
         m_shooterMotorFollower.burnFlash();
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
