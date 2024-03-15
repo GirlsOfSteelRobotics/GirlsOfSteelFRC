@@ -74,41 +74,61 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_chassisSubsystem = new ChassisSubsystem();
-        m_shooterSubsystem = new ShooterSubsystem();
-        m_armPivotSubsystem = new ArmPivotSubsystem();
-        m_intakeSubsystem = new IntakeSubsystem();
+        if (!Constants.IS_TIM_BOT) {
+            m_shooterSubsystem = new ShooterSubsystem();
+            m_armPivotSubsystem = new ArmPivotSubsystem();
+            m_intakeSubsystem = new IntakeSubsystem();
+            m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
+            m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
+        }
+        else {
+            m_shooterSubsystem = null;
+            m_armPivotSubsystem = null;
+            m_intakeSubsystem = null;
+            m_shooterSysId = null;
+            m_armPivotSysId = null;
+        }
         if (Constants.HAS_HANGER) {
             m_hangerSubsystem = new HangerSubsystem();
         } else {
             m_hangerSubsystem = null;
         }
 
-        m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
-        m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
 
-        NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-        NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE::getValue));
-        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
-        NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
-        NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunSpeakerShotRPMCommand());
-        NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
-        NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
-        NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
+        if (!Constants.IS_TIM_BOT) {
+            NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+            NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE::getValue));
+            NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+            NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
+            NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunSpeakerShotRPMCommand());
+            NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
+            NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
+            NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
+        }
 
         m_autonomousFactory = new Autos();
-        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
 
-        // Configure the trigger bindings
-        configureBindings();
+        if (!Constants.IS_TIM_BOT) {
+            m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
+        } else {
+            m_ledSubsystem = null;
+        }
 
-        // These three should be off for competition
-        createTestCommands();
-        // createSysIdCommands();
-        // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+        if (!Constants.IS_TIM_BOT) {
+            // Configure the trigger bindings
+            configureBindings();
 
-        createEllieCommands();
+            // These three should be off for competition
+            createTestCommands();
+            // createSysIdCommands();
+            // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
-        SmartDashboard.putData("super structure", new SuperstructureSendable());
+            createEllieCommands();
+
+            SmartDashboard.putData("super structure", new SuperstructureSendable());
+        } else {
+            m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
+        }
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
@@ -118,6 +138,8 @@ public class RobotContainer {
 
         PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
 
+        SmartDashboard.putBoolean("Is Competition Robot", Constants.IS_COMPETITION_ROBOT);
+        SmartDashboard.putBoolean("Is Tim Bot", Constants.IS_TIM_BOT);
     }
 
     private void createEllieCommands() {

@@ -355,9 +355,6 @@
           "window": {
             "visible": true
           }
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Auto Chooser": {
@@ -488,6 +485,9 @@
       "open": true
     },
     "Server": {
+      "Subscribers": {
+        "open": true
+      },
       "open": true
     },
     "visible": true
