@@ -422,5 +422,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Hanger_Down_Speed",
+    "type": "double",
+    "value": -0.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger_Up_Speed",
+    "type": "double",
+    "value": 0.3,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

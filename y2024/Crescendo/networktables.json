@@ -410,7 +410,7 @@
   {
     "name": "/Preferences/Led: Always Run Disabled Pattern",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true
     }
