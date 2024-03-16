@@ -80,6 +80,7 @@ public class RobotContainer {
             m_intakeSubsystem = new IntakeSubsystem();
             m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
             m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
+            m_hangerSubsystem = new HangerSubsystem();
         }
         else {
             m_shooterSubsystem = null;
@@ -87,11 +88,6 @@ public class RobotContainer {
             m_intakeSubsystem = null;
             m_shooterSysId = null;
             m_armPivotSysId = null;
-        }
-        if (Constants.HAS_HANGER) {
-            m_hangerSubsystem = new HangerSubsystem();
-        } else {
-            m_hangerSubsystem = null;
         }
 
 
@@ -140,6 +136,9 @@ public class RobotContainer {
 
         SmartDashboard.putBoolean("Is Competition Robot", Constants.IS_COMPETITION_ROBOT);
         SmartDashboard.putBoolean("Is Tim Bot", Constants.IS_TIM_BOT);
+
+        PropertyManager.printDynamicProperties();
+        // PropertyManager.purgeExtraKeys();
     }
 
     private void createEllieCommands() {
@@ -150,9 +149,7 @@ public class RobotContainer {
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
 
-        if (Constants.HAS_HANGER) {
-            addHangerTestCommands(shuffleboardTab);
-        }
+        addHangerTestCommands(shuffleboardTab);
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -163,9 +160,7 @@ public class RobotContainer {
         addArmPivotTestCommands(shuffleboardTab);
         addIntakeTestCommands(shuffleboardTab);
         addShooterTestCommands(shuffleboardTab);
-        if (Constants.HAS_HANGER) {
-            addHangerTestCommands(shuffleboardTab);
-        }
+        addHangerTestCommands(shuffleboardTab);
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Teleop: Normal Swerve Drive", new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
@@ -347,18 +342,14 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunSpeakerShotRPMCommand());
 
         //hanger
-        if (Constants.HAS_HANGER) {
-            m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
-            m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
+        m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
+        m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
 
-            m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
-            m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
+        m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
+        m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
 
-            m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
-            m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
-        }
-        PropertyManager.printDynamicProperties();
-        // PropertyManager.purgeExtraKeys();
+        m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
+        m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
     }
 
 
@@ -380,9 +371,7 @@ public class RobotContainer {
         m_armPivotSubsystem.clearStickyFaults();
         m_intakeSubsystem.clearStickyFaults();
         m_shooterSubsystem.clearStickyFaults();
-        if (Constants.HAS_HANGER) {
-            m_hangerSubsystem.clearStickyFaults();
-        }
+        m_hangerSubsystem.clearStickyFaults();
     }
 
 
