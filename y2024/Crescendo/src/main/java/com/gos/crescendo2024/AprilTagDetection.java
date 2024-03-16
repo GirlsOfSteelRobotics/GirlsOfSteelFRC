@@ -23,29 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AprilTagDetection {
-    private static final Transform3d ROBOT_TO_CAMERA;
-
-    static {
-        if (Constants.IS_COMPETITION_ROBOT) {
-            // final double robotLength = Units.inchesToMeters(25);
-
-            ROBOT_TO_CAMERA = new Transform3d(
-                new Translation3d(
-                    -(RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
-                    0,
-                    .235),
-                new Rotation3d(0, Math.toRadians(-40), Math.toRadians(180))
-            );
-        } else {
-            ROBOT_TO_CAMERA = new Transform3d(
-                new Translation3d(
-                    -(RobotExtrinsics.ROBOT_WIDTH / 2 - 0.04), // 4cm from back
-                    -(RobotExtrinsics.ROBOT_LENGTH / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
-                    .235),
-                new Rotation3d(0, Math.toRadians(-34), Math.toRadians(178))
-            );
-        }
-    }
+    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS;
 
     private static final String CAMERA_NAME = "AprilTag1";
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);

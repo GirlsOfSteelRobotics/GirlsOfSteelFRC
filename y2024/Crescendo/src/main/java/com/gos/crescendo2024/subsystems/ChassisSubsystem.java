@@ -13,6 +13,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
+import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.commands.BaseTeleopSwerve;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
@@ -350,9 +351,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToAmpCommand() {
-        Pose2d blueAmpPosition = (new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90)));
         return defer(() -> {
-            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(blueAmpPosition.getTranslation()), Rotation2d.fromDegrees(90));
+            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation()), Rotation2d.fromDegrees(90));
             Pose2d currentPosition = getPose();
             double dx = ampPosition.getX() - currentPosition.getX();
             double dy = ampPosition.getY() - currentPosition.getY();

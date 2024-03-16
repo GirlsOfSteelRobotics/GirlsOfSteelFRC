@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 public final class Constants {
     // TODO(gpr) When we get the prototype up and running this should be decided by a jumper
     public static final boolean IS_COMPETITION_ROBOT = RobotBase.isReal();
-    public static final boolean IS_TIM_BOT = false;
+    public static final boolean IS_TIM_BOT = true;
 
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = IS_COMPETITION_ROBOT;
 

@@ -26,15 +26,7 @@ import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_T
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
 
 public class ObjectDetection {
-    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
-        new Translation3d(
-            RobotExtrinsics.ROBOT_LENGTH / 2  + 0.2, // 20cm in front of frame
-            Units.inchesToMeters(0),
-            .20), // 20cm off the ground
-        new Rotation3d(
-            Math.toRadians(0),
-            Math.toRadians(9),
-            Math.toRadians(0)));
+    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAM_OBJET_DETECTION;
 
     private final PhotonCamera m_photonCamera;
 
