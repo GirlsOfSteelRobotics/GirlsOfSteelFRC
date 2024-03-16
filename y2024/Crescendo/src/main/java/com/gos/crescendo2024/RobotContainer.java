@@ -214,6 +214,7 @@ public class RobotContainer {
 
         shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
         shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToAmpCommand().withName("Drive To Amp"));
+        shuffleboardTab.add("Chassis drive to note", m_chassisSubsystem.createDriveToNoteCommand());
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {

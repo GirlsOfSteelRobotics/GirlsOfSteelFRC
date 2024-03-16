@@ -379,5 +379,25 @@ public class ChassisSubsystem extends SubsystemBase {
         return runOnce(() -> m_isSlowTeleop = setBoolean);
     }
 
+    public Command createDriveToNoteCommand() {
+        return defer(() -> {
+            List <Pose2d> notePositions = m_objectDetectionSubsystem.objectLocations(getPose());
+            if (notePositions.isEmpty()) {
+                return Commands.none();
+            }
+            Pose2d singleNote = notePositions.get(0);
+            return createDriveToPointNoFlipCommand(singleNote);
+//            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(blueAmpPosition.getTranslation()), Rotation2d.fromDegrees(90));
+//            Pose2d currentPosition = getPose();
+//            double dx = ampPosition.getX() - currentPosition.getX();
+//            double dy = ampPosition.getY() - currentPosition.getY();
+//            double angle = Math.atan2(dy, dx);
+//            Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
+//            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
+
+        }).withName("drive to note");
+
+    }
+
 
 }

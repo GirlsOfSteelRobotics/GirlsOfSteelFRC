@@ -257,6 +257,7 @@
       "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": "Command",
       "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top": "Command",
       "/Shuffleboard/test commands/Chassis drive to amp": "Command",
+      "/Shuffleboard/test commands/Chassis drive to note": "Command",
       "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
       "/Shuffleboard/test commands/Chassis set Pose Subwoofer Mid + Hack Dist": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
@@ -324,6 +325,11 @@
     },
     "windows": {
       "/Shuffleboard/test commands/Chassis drive to amp": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Chassis drive to note": {
         "window": {
           "visible": true
         }
@@ -492,7 +498,8 @@
         "open": true
       },
       "open": true
-    }
+    },
+    "visible": true
   },
   "Plot": {
     "Plot <0>": {
