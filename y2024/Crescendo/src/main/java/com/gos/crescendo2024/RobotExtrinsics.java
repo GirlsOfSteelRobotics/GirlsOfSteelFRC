@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
+import java.lang.reflect.Field;
+
 public class RobotExtrinsics {
     // Robot Size
     public static final double ROBOT_WIDTH;
@@ -30,6 +32,9 @@ public class RobotExtrinsics {
     public static final Pose2d STARTING_POSE_MIDDLE_SUBWOOFER = new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0));
     public static final Pose2d STARTING_POSE_SOURCE_SUBWOOFER = new Pose2d(0.6933452953924437, 4.403274541213847, Rotation2d.fromDegrees(-60));
     public static final Pose2d SCORE_IN_AMP_POSITION = new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90));
+
+    // Important Aiming Poses
+    public static final Pose2d FULL_FIELD_FEEDING_AIMING_POINT = new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(0));
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {

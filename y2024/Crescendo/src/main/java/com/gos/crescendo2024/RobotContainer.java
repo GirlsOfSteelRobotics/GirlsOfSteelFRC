@@ -180,6 +180,7 @@ public class RobotContainer {
         // Combined Commands
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Full Field Feed", CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
     }
@@ -301,7 +302,7 @@ public class RobotContainer {
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());
         //face shooter to center speaker
         // m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
-        m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToAmpCommand());
+        m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_chassisSubsystem, m_armPivotSubsystem));
 
         // Intake-to-shoot
         m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
@@ -334,10 +335,11 @@ public class RobotContainer {
         m_driverController.b().whileTrue((CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE.getValue()))
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
-        //override angle to middle subwoofer shot
-        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE.getValue())
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+//        //override angle to middle subwoofer shot
+//        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE.getValue())
+//            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
+        m_driverController.y().whileTrue(CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         /////////////////////////////
         // Operator Controller

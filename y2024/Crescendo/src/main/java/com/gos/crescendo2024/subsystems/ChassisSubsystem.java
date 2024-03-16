@@ -161,6 +161,11 @@ public class ChassisSubsystem extends SubsystemBase {
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
+    public double getDistanceToAmp(){
+        Pose2d amp = new Pose2d (AllianceFlipper.maybeFlip((FieldConstants.AMP_CENTER)), new Rotation2d());
+        Translation2d roboManTranslation = getPose().getTranslation();
+        return roboManTranslation.getDistance(amp.getTranslation());
+    }
 
     public void resetOdometry(Pose2d pose2d) {
         m_swerveDrive.resetOdometry(pose2d);
