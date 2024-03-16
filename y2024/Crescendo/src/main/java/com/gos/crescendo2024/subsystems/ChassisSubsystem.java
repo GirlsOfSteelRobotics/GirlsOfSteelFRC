@@ -190,11 +190,15 @@ public class ChassisSubsystem extends SubsystemBase {
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         // TODO(gpr) We should get tags working in auto
-        if (USE_APRIL_TAGS.getValue() && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue() && !DriverStation.isAutonomousEnabled()) {
+        if (cameraResult.isPresent() && useAprilTagsForPoseEstimation()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
         }
+    }
+
+    private boolean useAprilTagsForPoseEstimation() {
+        return USE_APRIL_TAGS.getValue() && !DriverStation.isAutonomousEnabled();
     }
 
 

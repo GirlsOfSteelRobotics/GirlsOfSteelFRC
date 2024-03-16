@@ -27,24 +27,20 @@ public class AprilTagDetection {
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            final double robotWidth = Units.inchesToMeters(25);
             // final double robotLength = Units.inchesToMeters(25);
 
             ROBOT_TO_CAMERA = new Transform3d(
                 new Translation3d(
-                    -(robotWidth / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
+                    -(RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
                     0,
                     .235),
                 new Rotation3d(0, Math.toRadians(-40), Math.toRadians(180))
             );
         } else {
-            final double robotWidth = Units.inchesToMeters(28);
-            final double robotLength = Units.inchesToMeters(28);
-
             ROBOT_TO_CAMERA = new Transform3d(
                 new Translation3d(
-                    -(robotWidth / 2 - 0.04), // 4cm from back
-                    -(robotLength / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
+                    -(RobotExtrinsics.ROBOT_WIDTH / 2 - 0.04), // 4cm from back
+                    -(RobotExtrinsics.ROBOT_LENGTH / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
                     .235),
                 new Rotation3d(0, Math.toRadians(-34), Math.toRadians(178))
             );
@@ -53,7 +49,7 @@ public class AprilTagDetection {
 
     private static final String CAMERA_NAME = "AprilTag1";
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);
-    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.5, 0.5, 1);
+    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.5, 0.5, 500);
 
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
@@ -123,7 +119,7 @@ public class AprilTagDetection {
         }
         // Increase std devs based on (average) distance
         if (numTags == 1 && avgDist > 2.5) {
-            estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
+            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
         }
         else {
             estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 30));

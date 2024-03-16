@@ -275,6 +275,7 @@
       "/Shuffleboard/test commands/Right Hanger Down": "Command",
       "/Shuffleboard/test commands/Right Hanger Up": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
+      "/Shuffleboard/test commands/Shoot note to alliance with rpm": "Command",
       "/Shuffleboard/test commands/Shooter Percent Output": "Command",
       "/Shuffleboard/test commands/Shooter RPM: 3500": "Command",
       "/Shuffleboard/test commands/Shooter RPM: 4000": "Command",
@@ -330,6 +331,11 @@
         }
       },
       "/Shuffleboard/test commands/Chassis drive to note": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Shoot note to alliance with rpm": {
         "window": {
           "visible": true
         }
@@ -470,16 +476,13 @@
     "Retained Values": {
       "open": false
     },
-    "Transitory Values": {
-      "open": false
-    },
     "persistent": {
       "Preferences": {
         "open": true
       }
     },
     "transitory": {
-      "Arm Pivot Subsystem": {
+      "Shooter Subsystem": {
         "open": true
       },
       "SmartDashboard": {

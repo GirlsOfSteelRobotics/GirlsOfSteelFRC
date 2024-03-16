@@ -246,6 +246,7 @@ public class RobotContainer {
         shuffleboardTab.add("Shooter RPM: 3500", m_shooterSubsystem.createSetRPMCommand(3500));
         shuffleboardTab.add("Shooter RPM: 4000", m_shooterSubsystem.createSetRPMCommand(4000));
         shuffleboardTab.add("Shooter stop", m_shooterSubsystem.createStopShooterCommand());
+        shuffleboardTab.add("Shoot note to alliance with rpm", m_shooterSubsystem.createShootNoteToAllianceRPMCommand());
     }
 
     private void addHangerTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -275,11 +276,11 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-        if (RobotBase.isReal()) {
-            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        } else {
+//        if (RobotBase.isReal()) {
+//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+//        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-        }
+//        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////

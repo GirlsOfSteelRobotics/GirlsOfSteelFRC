@@ -31,6 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public static final GosDoubleProperty AMP_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterAmpShotRpm", 800);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeed", 0.5);
     private static final double ALLOWABLE_ERROR = 125;
+    private static final GosDoubleProperty SHOOT_NOTE_TO_ALLIANCE_RPM = new GosDoubleProperty(false, "Shoot note to alliance with rpm", 5000);
 
 
     private final SimableCANSparkMax m_shooterMotorLeader;
@@ -179,5 +180,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
+    }
+
+    public Command createShootNoteToAllianceRPMCommand() {
+        return this.runEnd(() -> this.setPidRpm(SHOOT_NOTE_TO_ALLIANCE_RPM.getValue()), this::stopShooter).withName("Shoot note to alliance with rpm");
+
     }
 }

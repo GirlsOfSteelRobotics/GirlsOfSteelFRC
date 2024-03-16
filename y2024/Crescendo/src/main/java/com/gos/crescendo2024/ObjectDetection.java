@@ -27,8 +27,14 @@ import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSL
 
 public class ObjectDetection {
     private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
-        new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(11), Units.inchesToMeters(15)),
-        new Rotation3d(Math.toRadians(0), Math.toRadians(30), Math.toRadians(0)));
+        new Translation3d(
+            RobotExtrinsics.ROBOT_LENGTH / 2  + 0.2, // 20cm in front of frame
+            Units.inchesToMeters(0),
+            .20), // 20cm off the ground
+        new Rotation3d(
+            Math.toRadians(0),
+            Math.toRadians(9),
+            Math.toRadians(0)));
 
     private final PhotonCamera m_photonCamera;
 
@@ -36,7 +42,7 @@ public class ObjectDetection {
     private final PhotonCameraSim m_cameraSim;
 
     public ObjectDetection() {
-        m_photonCamera = new PhotonCamera("ObjectDetection");
+        m_photonCamera = new PhotonCamera("USB_Camera");
 
         TargetModel targetModel = new TargetModel(Units.inchesToMeters(18));
 

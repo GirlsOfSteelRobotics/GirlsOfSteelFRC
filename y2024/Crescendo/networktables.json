@@ -438,5 +438,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Shoot note to alliance with rpm",
+    "type": "double",
+    "value": 2000.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
