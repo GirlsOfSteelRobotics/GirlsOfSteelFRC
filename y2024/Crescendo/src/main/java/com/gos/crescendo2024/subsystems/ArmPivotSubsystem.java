@@ -9,6 +9,8 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
+import com.gos.lib.rev.CanUtilizationUtil;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
@@ -89,29 +91,32 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
-        m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_pivotMotor.setSmartCurrentLimit(60);
+        SparkMaxUtil.setIdleMode(m_pivotMotor, CANSparkMax.IdleMode.kBrake);
+        SparkMaxUtil.setSmartCurrentLimit(m_pivotMotor, 60);
         m_pivotMotor.setInverted(false);
 
         m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, CANSparkLowLevel.MotorType.kBrushless);
         m_followMotor.restoreFactoryDefaults();
-        m_followMotor.follow(m_pivotMotor, true);
-        m_followMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followMotor.setSmartCurrentLimit(60);
+        SparkMaxUtil.follow(m_pivotMotor, m_followMotor, true);
+        SparkMaxUtil.setIdleMode(m_followMotor, CANSparkMax.IdleMode.kBrake);
+        SparkMaxUtil.setSmartCurrentLimit(m_followMotor, 60);
+
+        // Decrease can utilization
+        CanUtilizationUtil.disableExternalSensors(m_pivotMotor);
+        CanUtilizationUtil.disableExternalSensors(m_followMotor);
 
         // Request the absolute encoder position / velocity faster than the default period
-        m_pivotMotor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus5, 20);
-        m_pivotMotor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus6, 20);
+        CanUtilizationUtil.enableAbsoluteEncoder(m_pivotMotor, 20);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
-        m_pivotMotorEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
-        m_pivotMotorEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60);
+        SparkMaxUtil.setPositionConversionFactor(m_pivotMotorEncoder, 360.0 / GEAR_RATIO);
+        SparkMaxUtil.setVelocityConversionFactor(m_pivotMotorEncoder, 360.0 / GEAR_RATIO / 60);
 
         m_pivotAbsEncoder = m_pivotMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-        m_pivotAbsEncoder.setPositionConversionFactor(360.0);
-        m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
-        m_pivotAbsEncoder.setInverted(false);
-        m_pivotAbsEncoder.setZeroOffset(277.11 + 2);
+        SparkMaxUtil.setPositionConversionFactor(m_pivotAbsEncoder, 360.0);
+        SparkMaxUtil.setVelocityConversionFactor(m_pivotAbsEncoder, 360.0 / 60);
+        SparkMaxUtil.setInverted(m_pivotAbsEncoder, false);
+        SparkMaxUtil.setZeroOffset(m_pivotAbsEncoder, 277.11 + 2);
 
         m_speakerTable = new SpeakerLookupTable();
 
@@ -121,9 +126,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
         } else {
             m_sparkPidController.setFeedbackDevice(m_pivotMotorEncoder);
         }
-        m_sparkPidController.setPositionPIDWrappingEnabled(true);
-        m_sparkPidController.setPositionPIDWrappingMinInput(0);
-        m_sparkPidController.setPositionPIDWrappingMaxInput(360);
+        SparkMaxUtil.setPositionPIDWrappingEnabled(m_sparkPidController, true);
+        SparkMaxUtil.setPositionPIDWrappingMinInput(m_sparkPidController, 0);
+        SparkMaxUtil.setPositionPIDWrappingMaxInput(m_sparkPidController, 360);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_sparkPidController, 0)
             .addP(0.14)
             .addI(0)

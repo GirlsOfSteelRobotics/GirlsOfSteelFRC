@@ -4,6 +4,8 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.CanUtilizationUtil;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
@@ -26,10 +28,13 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         m_intakeMotor.restoreFactoryDefaults();
-        m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_intakeMotor.setSmartCurrentLimit(40);
+        SparkMaxUtil.setIdleMode(m_intakeMotor, CANSparkMax.IdleMode.kBrake);
+        SparkMaxUtil.setSmartCurrentLimit(m_intakeMotor, 40);
         m_intakeMotor.setInverted(false);
         m_intakeMotor.burnFlash();
+
+        // Decrease CAN usage
+        CanUtilizationUtil.disableExternalSensors(m_intakeMotor);
 
         m_intakeEncoder = m_intakeMotor.getEncoder();
         m_intakeAlert = new SparkMaxAlerts(m_intakeMotor, "Intake Motor");

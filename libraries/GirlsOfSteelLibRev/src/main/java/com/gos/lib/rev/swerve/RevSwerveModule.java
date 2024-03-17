@@ -3,6 +3,8 @@ package com.gos.lib.rev.swerve;
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.CanUtilizationUtil;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
@@ -84,9 +86,12 @@ public class RevSwerveModule {
         m_drivingSparkMax.restoreFactoryDefaults();
         m_turningSparkMax.restoreFactoryDefaults();
 
+        // Decrease CAN Utilization
+        CanUtilizationUtil.disableExternalSensors(m_drivingSparkMax);
+        CanUtilizationUtil.disableExternalSensors(m_turningSparkMax);
+
         // Request the absolute encoder position / velocity faster than the default period
-        m_turningSparkMax.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus5, 10);
-        m_turningSparkMax.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus6, 10);
+        CanUtilizationUtil.enableAbsoluteEncoder(m_turningSparkMax, 10);
 
         // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
@@ -94,34 +99,34 @@ public class RevSwerveModule {
         m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         m_drivingPIDController = m_drivingSparkMax.getPIDController();
         m_turningPIDController = m_turningSparkMax.getPIDController();
-        m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
-        m_turningPIDController.setFeedbackDevice(m_turningAbsoluteEncoder);
+        SparkMaxUtil.setFeedbackDevice(m_drivingPIDController, m_drivingEncoder);
+        SparkMaxUtil.setFeedbackDevice(m_turningPIDController, m_turningAbsoluteEncoder);
 
         // Apply position and velocity conversion factors for the driving encoder. The
         // native units for position and velocity are rotations and RPM, respectively,
         // but we want meters and meters per second to use with WPILib's swerve APIs.
-        m_drivingEncoder.setPositionConversionFactor(moduleConstants.m_drivingEncoderPositionFactor);
-        m_drivingEncoder.setVelocityConversionFactor(moduleConstants.m_drivingEncoderVelocityFactor);
+        SparkMaxUtil.setPositionConversionFactor(m_drivingEncoder, moduleConstants.m_drivingEncoderPositionFactor);
+        SparkMaxUtil.setVelocityConversionFactor(m_drivingEncoder, moduleConstants.m_drivingEncoderVelocityFactor);
 
         // Apply position and velocity conversion factors for the turning encoder. We
         // want these in radians and radians per second to use with WPILib's swerve
         // APIs.
-        m_turningRelativeEncoder.setPositionConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
-        m_turningRelativeEncoder.setVelocityConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
-        m_turningAbsoluteEncoder.setPositionConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
-        m_turningAbsoluteEncoder.setVelocityConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
+        SparkMaxUtil.setPositionConversionFactor(m_turningRelativeEncoder, RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
+        SparkMaxUtil.setVelocityConversionFactor(m_turningRelativeEncoder, RevSwerveModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
+        SparkMaxUtil.setPositionConversionFactor(m_turningAbsoluteEncoder, RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
+        SparkMaxUtil.setVelocityConversionFactor(m_turningAbsoluteEncoder, RevSwerveModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
 
         // Invert the turning encoder, since the output shaft rotates in the opposite direction of
         // the steering motor in the MAXSwerve Module.
-        m_turningAbsoluteEncoder.setInverted(RevSwerveModuleConstants.TURNING_ENCODER_INVERTED);
+        SparkMaxUtil.setInverted(m_turningAbsoluteEncoder, RevSwerveModuleConstants.TURNING_ENCODER_INVERTED);
 
         // Enable PID wrap around for the turning motor. This will allow the PID
         // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
         // to 10 degrees will go through 0 rather than the other direction which is a
         // longer route.
-        m_turningPIDController.setPositionPIDWrappingEnabled(true);
-        m_turningPIDController.setPositionPIDWrappingMinInput(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_PID_MIN_INPUT);
-        m_turningPIDController.setPositionPIDWrappingMaxInput(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_PID_MAX_INPUT);
+        SparkMaxUtil.setPositionPIDWrappingEnabled(m_turningPIDController, true);
+        SparkMaxUtil.setPositionPIDWrappingMinInput(m_turningPIDController, RevSwerveModuleConstants.TURNING_ENCODER_POSITION_PID_MIN_INPUT);
+        SparkMaxUtil.setPositionPIDWrappingMaxInput(m_turningPIDController, RevSwerveModuleConstants.TURNING_ENCODER_POSITION_PID_MAX_INPUT);
 
         // Set the PID gains for the driving motor. Note these are example gains, and you
         // may need to tune them for your own robot!
@@ -139,10 +144,10 @@ public class RevSwerveModule {
         m_wheelAlerts = new SparkMaxAlerts(m_drivingSparkMax, "SwerveModuleDrive: " + moduleName);
         m_azimuthAlerts = new SparkMaxAlerts(m_turningSparkMax, "SwerveModuleTurning: " + moduleName);
 
-        m_drivingSparkMax.setIdleMode(RevSwerveModuleConstants.DRIVING_MOTOR_IDLE_MODE);
-        m_turningSparkMax.setIdleMode(RevSwerveModuleConstants.TURNING_MOTOR_IDLE_MODE);
-        m_drivingSparkMax.setSmartCurrentLimit(RevSwerveModuleConstants.DRIVING_MOTOR_CURRENT_LIMIT);
-        m_turningSparkMax.setSmartCurrentLimit(RevSwerveModuleConstants.TURNING_MOTOR_CURRENT_LIMIT);
+        SparkMaxUtil.setIdleMode(m_drivingSparkMax, RevSwerveModuleConstants.DRIVING_MOTOR_IDLE_MODE);
+        SparkMaxUtil.setIdleMode(m_turningSparkMax, RevSwerveModuleConstants.TURNING_MOTOR_IDLE_MODE);
+        SparkMaxUtil.setSmartCurrentLimit(m_drivingSparkMax, RevSwerveModuleConstants.DRIVING_MOTOR_CURRENT_LIMIT);
+        SparkMaxUtil.setSmartCurrentLimit(m_turningSparkMax, RevSwerveModuleConstants.TURNING_MOTOR_CURRENT_LIMIT);
 
         if (RobotBase.isSimulation()) {
             SwerveModuleSim moduleSim = new SwerveModuleSim(

@@ -4,6 +4,8 @@ import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.CanUtilizationUtil;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkBase;
@@ -52,24 +54,24 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
-        m_pidController.setFeedbackDevice(m_shooterEncoder);
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
+        SparkMaxUtil.setFeedbackDevice(m_pidController, m_shooterEncoder);
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
             .addP(1.5e-4)
             .addI(0.0)
             .addD(0.0)
             .addFF(0.000185)
             .build();
 
-        m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_shooterMotorLeader.setSmartCurrentLimit(60);
-        m_shooterMotorLeader.enableVoltageCompensation(10);
+        SparkMaxUtil.setIdleMode(m_shooterMotorLeader, CANSparkMax.IdleMode.kCoast);
+        SparkMaxUtil.setSmartCurrentLimit(m_shooterMotorLeader, 60);
+        SparkMaxUtil.enableVoltageCompensation(m_shooterMotorLeader, 10);
         m_shooterMotorLeader.burnFlash();
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
-        m_shooterMotorFollower.restoreFactoryDefaults();
-        m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_shooterMotorFollower.setSmartCurrentLimit(60);
-        m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
+        //m_shooterMotorFollower.restoreFactoryDefaults();
+        SparkMaxUtil.setIdleMode(m_shooterMotorFollower, CANSparkMax.IdleMode.kCoast);
+        SparkMaxUtil.setSmartCurrentLimit(m_shooterMotorFollower, 60);
+        SparkMaxUtil.follow(m_shooterMotorLeader, m_shooterMotorFollower, true);
         m_shooterMotorFollower.burnFlash();
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
@@ -89,6 +91,9 @@ public class ShooterSubsystem extends SubsystemBase {
             this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotorLeader), RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
         }
 
+        // Decrease CAN utilization
+        CanUtilizationUtil.disableExternalSensors(m_shooterMotorLeader);
+        CanUtilizationUtil.disableExternalSensors(m_shooterMotorFollower);
     }
 
     @Override

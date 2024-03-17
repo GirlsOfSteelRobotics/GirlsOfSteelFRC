@@ -3,6 +3,8 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.CanUtilizationUtil;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
@@ -39,8 +41,8 @@ public class HangerSubsystem extends SubsystemBase {
         m_leftHangerMotor.restoreFactoryDefaults();
         m_leftHangerMotor.setInverted(false);
         m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
-        m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_leftHangerMotor.setSmartCurrentLimit(60);
+        SparkMaxUtil.setIdleMode(m_leftHangerMotor, CANSparkMax.IdleMode.kBrake);
+        SparkMaxUtil.setSmartCurrentLimit(m_leftHangerMotor, 60);
         m_leftHangerMotor.burnFlash();
         m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger a");
 
@@ -48,14 +50,18 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerMotor.restoreFactoryDefaults();
         m_rightHangerMotor.setInverted(false);
         m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
-        m_rightHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_rightHangerMotor.setSmartCurrentLimit(60);
+        SparkMaxUtil.setIdleMode(m_rightHangerMotor, CANSparkMax.IdleMode.kBrake);
+        SparkMaxUtil.setSmartCurrentLimit(m_rightHangerMotor, 60);
         m_rightHangerMotor.burnFlash();
         m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger b");
         m_upperLimitSwitchLeft = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH_LEFT);
         m_lowerLimitSwitchLeft = new DigitalInput(Constants.HANGER_LOWER_LIMIT_SWITCH_LEFT);
         m_upperLimitSwitchRight = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH_RIGHT);
         m_lowerLimitSwitchRight = new DigitalInput(Constants.HANGER_LOWER_LIMIT_SWITCH_RIGHT);
+
+        // Decrease can utilization
+        CanUtilizationUtil.disableExternalSensors(m_leftHangerMotor);
+        CanUtilizationUtil.disableExternalSensors(m_rightHangerMotor);
 
         m_networkTableEntries = new LoggingUtil("Hanger Subsystem");
         m_networkTableEntries.addDouble("Left Output: ", m_leftHangerMotor::getAppliedOutput);
