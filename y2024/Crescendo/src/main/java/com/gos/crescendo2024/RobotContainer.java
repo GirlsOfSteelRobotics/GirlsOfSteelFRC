@@ -29,6 +29,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -150,6 +151,8 @@ public class RobotContainer {
 
         PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
+
+        DriverStation.silenceJoystickConnectionWarning(true);
     }
 
     private void createEllieCommands() {

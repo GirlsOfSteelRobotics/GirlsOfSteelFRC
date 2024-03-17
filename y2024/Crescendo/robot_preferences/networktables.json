@@ -106,7 +106,7 @@
   {
     "name": "/Preferences/Chassis On the Fly Max Velocity",
     "type": "double",
-    "value": 48.0,
+    "value": 96.0,
     "properties": {
       "persistent": true
     }
@@ -114,7 +114,7 @@
   {
     "name": "/Preferences/Chassis On the Fly Max Acceleration",
     "type": "double",
-    "value": 48.0,
+    "value": 96.0,
     "properties": {
       "persistent": true
     }
@@ -122,7 +122,7 @@
   {
     "name": "/Preferences/Chassis On the Fly Max Angular Velocity",
     "type": "double",
-    "value": 180.0,
+    "value": 200.0,
     "properties": {
       "persistent": true
     }
@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/Chassis On the Fly Max Angular Acceleration",
     "type": "double",
-    "value": 180.0,
+    "value": 200.0,
     "properties": {
       "persistent": true
     }
@@ -154,7 +154,7 @@
   {
     "name": "/Preferences/intakeAngle",
     "type": "double",
-    "value": 358.0,
+    "value": 356.0,
     "properties": {
       "persistent": true
     }
@@ -162,7 +162,7 @@
   {
     "name": "/Preferences/Intake_In_Speed",
     "type": "double",
-    "value": 0.8,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -187,6 +187,62 @@
     "name": "/Preferences/Hanger_Up_Speed",
     "type": "double",
     "value": 0.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ArmPivotJoystickDamping",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kff",
+    "type": "double",
+    "value": 0.000185,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shoot note to alliance with rpm",
+    "type": "double",
+    "value": 3000.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/allianceFeederAngle",
+    "type": "double",
+    "value": 20.0,
     "properties": {
       "persistent": true
     }
