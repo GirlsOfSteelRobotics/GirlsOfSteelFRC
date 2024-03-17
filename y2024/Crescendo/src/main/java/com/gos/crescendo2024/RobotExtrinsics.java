@@ -7,8 +7,6 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
-import java.lang.reflect.Field;
-
 public class RobotExtrinsics {
     // Robot Size
     public static final double ROBOT_WIDTH;

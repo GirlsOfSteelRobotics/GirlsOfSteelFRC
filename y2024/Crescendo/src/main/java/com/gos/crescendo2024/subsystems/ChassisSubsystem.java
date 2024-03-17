@@ -14,7 +14,6 @@ import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.crescendo2024.RobotExtrinsics;
-import com.gos.crescendo2024.commands.BaseTeleopSwerve;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosBooleanProperty;
@@ -161,7 +160,8 @@ public class ChassisSubsystem extends SubsystemBase {
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
-    public double getDistanceToAmp(){
+
+    public double getDistanceToAmp() {
         Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION);
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(amp.getTranslation());
@@ -390,23 +390,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createDriveToNoteCommand() {
         return defer(() -> {
-            List <Pose2d> notePositions = m_objectDetectionSubsystem.objectLocations(getPose());
+            List<Pose2d> notePositions = m_objectDetectionSubsystem.objectLocations(getPose());
             if (notePositions.isEmpty()) {
                 return Commands.none();
             }
             Pose2d singleNote = notePositions.get(0);
             return createDriveToPointNoFlipCommand(singleNote);
-//            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(blueAmpPosition.getTranslation()), Rotation2d.fromDegrees(90));
-//            Pose2d currentPosition = getPose();
-//            double dx = ampPosition.getX() - currentPosition.getX();
-//            double dy = ampPosition.getY() - currentPosition.getY();
-//            double angle = Math.atan2(dy, dx);
-//            Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
-//            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
-
         }).withName("drive to note");
-
     }
-
-
 }

@@ -185,6 +185,5 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createShootNoteToAllianceRPMCommand() {
         return this.runEnd(() -> this.setPidRpm(SHOOT_NOTE_TO_ALLIANCE_RPM.getValue()), this::stopShooter).withName("Shoot note to alliance with rpm");
-
     }
 }
