@@ -56,14 +56,24 @@ public class SparkMaxUtil {
     /////////////////////////////
     // Motor Controller
     /////////////////////////////
+    private static REVLibError smartSetInverted(CANSparkBase controller, boolean inverted) {
+        controller.setInverted(inverted);
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        boolean success = controller.getInverted() == inverted;
+        return success ? REVLibError.kOk : REVLibError.kParamInvalid;
+    }
+
     public static REVLibError setIdleMode(CANSparkBase controller, CANSparkMax.IdleMode idleMode) {
         return autoRetry(() -> controller.setIdleMode(idleMode));
     }
 
     public static REVLibError setInverted(CANSparkBase controller, boolean inverted) {
-        // TODO this looks like it should return an error code but doesn't?
-        controller.setInverted(inverted);
-        return REVLibError.kOk;
+        return autoRetry(() -> smartSetInverted(controller, inverted));
     }
 
     public static REVLibError setSmartCurrentLimit(CANSparkBase controller, int limit) {
