@@ -11,7 +11,7 @@ public class SpeakerLookupTable {
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
 
     public SpeakerLookupTable() {
-        // tuned GPR
+        // tuned GPR - Use camera for distance
         m_table.put(SUBWOOFER_SIZE, 9.0);
         m_table.put(1.8, 25.0);
         m_table.put(2.45, 35.0);

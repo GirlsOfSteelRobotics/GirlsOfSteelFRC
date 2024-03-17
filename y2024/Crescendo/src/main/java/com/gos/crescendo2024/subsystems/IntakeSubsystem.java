@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
     private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Intake_Out_Speed", -1);
-    private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(false, "Intake_In_Speed", 0.8);
+    private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(false, "Intake_In_Speed", 1.0);
 
     private final SimableCANSparkMax m_intakeMotor;
     private final RelativeEncoder m_intakeEncoder;
@@ -86,5 +86,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public Command createIntakeUntilPieceCommand() {
         return createMoveIntakeInCommand().until(this::hasGamePiece).withName("Intake Till Piece");
+    }
+
+    public Command createIntakeToCoastCommand() {
+        return this.runEnd(
+                () -> m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+                () -> m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+            .ignoringDisable(true).withName("Intake to Coast");
     }
 }

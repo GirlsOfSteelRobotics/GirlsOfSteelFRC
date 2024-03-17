@@ -26,9 +26,9 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
-    private final PowerDistribution m_powerDistribution = new PowerDistribution();
-    // TODO(gpr) Add breaker whitelist to remove constant fault/sticky fault
+    private final PowerDistribution m_powerDistribution = new PowerDistribution(16, PowerDistribution.ModuleType.kRev);
     private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution, List.of(
+        0, 1, 2, 4, 5, 23
     ));
 
     private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);

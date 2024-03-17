@@ -3,7 +3,6 @@ package com.gos.crescendo2024.commands;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.lib.GetAllianceUtil;
-import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,9 +10,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public abstract class BaseTeleopSwerve extends Command {
-    // TODO(gpr) Triple check having this be false works for red and blue, then remove the property
-    public static final GosBooleanProperty RED_DRIVING_BROKEN = new GosBooleanProperty(false, "RED DRIVING BROKEN?", false);
-
     protected static final double JOYSTICK_DEADBAND = 0.025;
     protected static final GosDoubleProperty TRANSLATION_DAMPING = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "SwerveJoystickTranslationDamping", 1);
     protected static final GosDoubleProperty ROTATION_DAMPING = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "SwerveJoystickRotationDamping", 1);
@@ -36,7 +32,7 @@ public abstract class BaseTeleopSwerve extends Command {
         double rightX = -MathUtil.applyDeadband(m_joystick.getRightX(), JOYSTICK_DEADBAND);
         double rightY = -MathUtil.applyDeadband(m_joystick.getRightY(), JOYSTICK_DEADBAND);
 
-        if (GetAllianceUtil.isRedAlliance() && !RED_DRIVING_BROKEN.getValue()) {
+        if (GetAllianceUtil.isRedAlliance()) {
             leftY *= -1;
             leftX *= -1;
             rightX *= -1;

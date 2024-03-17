@@ -13,7 +13,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
-import com.gos.crescendo2024.commands.BaseTeleopSwerve;
+import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosBooleanProperty;
@@ -64,10 +64,10 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    private static final GosDoubleProperty ON_THE_FLY_MAX_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
-    private static final GosDoubleProperty ON_THE_FLY_MAX_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
-    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
-    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 96);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 96);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 200);
+    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 200);
 
     private static final GosDoubleProperty SLOW_MODE_TRANSLATION_DAMPENING = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
     private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
@@ -161,6 +161,12 @@ public class ChassisSubsystem extends SubsystemBase {
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
 
+    public double getDistanceToAmp() {
+        Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION);
+        Translation2d roboManTranslation = getPose().getTranslation();
+        return roboManTranslation.getDistance(amp.getTranslation());
+    }
+
     public void resetOdometry(Pose2d pose2d) {
         m_swerveDrive.resetOdometry(pose2d);
     }
@@ -190,11 +196,15 @@ public class ChassisSubsystem extends SubsystemBase {
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         // TODO(gpr) We should get tags working in auto
-        if (USE_APRIL_TAGS.getValue() && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue() && !DriverStation.isAutonomousEnabled()) {
+        if (cameraResult.isPresent() && useAprilTagsForPoseEstimation()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
         }
+    }
+
+    private boolean useAprilTagsForPoseEstimation() {
+        return USE_APRIL_TAGS.getValue() && !DriverStation.isAutonomousEnabled();
     }
 
 
@@ -346,9 +356,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToAmpCommand() {
-        Pose2d blueAmpPosition = (new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90)));
         return defer(() -> {
-            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(blueAmpPosition.getTranslation()), Rotation2d.fromDegrees(90));
+            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation()), Rotation2d.fromDegrees(90));
             Pose2d currentPosition = getPose();
             double dx = ampPosition.getX() - currentPosition.getX();
             double dy = ampPosition.getY() - currentPosition.getY();
@@ -379,5 +388,14 @@ public class ChassisSubsystem extends SubsystemBase {
         return runOnce(() -> m_isSlowTeleop = setBoolean);
     }
 
-
+    public Command createDriveToNoteCommand() {
+        return defer(() -> {
+            List<Pose2d> notePositions = m_objectDetectionSubsystem.objectLocations(getPose());
+            if (notePositions.isEmpty()) {
+                return Commands.none();
+            }
+            Pose2d singleNote = notePositions.get(0);
+            return createDriveToPointNoFlipCommand(singleNote);
+        }).withName("drive to note");
+    }
 }

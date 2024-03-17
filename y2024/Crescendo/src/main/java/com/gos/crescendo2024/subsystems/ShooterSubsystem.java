@@ -30,6 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public static final GosDoubleProperty SPEAKER_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeakerShotRpm", 4000);
     public static final GosDoubleProperty AMP_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterAmpShotRpm", 800);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeed", 0.5);
+    private static final GosDoubleProperty SHOOT_NOTE_TO_ALLIANCE_RPM = new GosDoubleProperty(false, "Shoot note to alliance with rpm", 3000);
     private static final double ALLOWABLE_ERROR = 125;
 
 
@@ -51,6 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
+        m_pidController.setFeedbackDevice(m_shooterEncoder);
         m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
             .addP(1.5e-4)
             .addI(0.0)
@@ -61,7 +63,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorLeader.setSmartCurrentLimit(60);
         m_shooterMotorLeader.enableVoltageCompensation(10);
-        m_shooterMotorLeader.setClosedLoopRampRate(.5);
         m_shooterMotorLeader.burnFlash();
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
@@ -69,7 +70,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
         m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
-        m_shooterMotorFollower.setClosedLoopRampRate(.5);
         m_shooterMotorFollower.burnFlash();
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
@@ -180,5 +180,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
+    }
+
+    public Command createShootNoteToAllianceRPMCommand() {
+        return this.runEnd(() -> this.setPidRpm(SHOOT_NOTE_TO_ALLIANCE_RPM.getValue()), this::stopShooter).withName("Shoot note to alliance with rpm");
     }
 }
