@@ -48,13 +48,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
-        //TODO commented out restorFactoryDefaults b/c of random bug in motor inversion that sometimes occurs when code reboots
-        //m_shooterMotorLeader.restoreFactoryDefaults();
+        m_shooterMotorLeader.restoreFactoryDefaults();
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
         m_pidController.setFeedbackDevice(m_shooterEncoder);
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pidController, 0)
             .addP(1.5e-4)
             .addI(0.0)
             .addD(0.0)
@@ -67,7 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.burnFlash();
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
-        //m_shooterMotorFollower.restoreFactoryDefaults();
+        m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
         m_shooterMotorFollower.follow(m_shooterMotorLeader, true);

@@ -10,8 +10,7 @@ import edu.wpi.first.math.util.Units;
 public class FieldConstants {
     public static final AprilTagFieldLayout TAG_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
-    public static final Translation2d
-        AMP_CENTER =
+    public static final Translation2d AMP_CENTER =
         new Translation2d(Units.inchesToMeters(72.455), Units.inchesToMeters(322.996));
 
     public static final double FIELD_LENGTH = Units.inchesToMeters(651.223);

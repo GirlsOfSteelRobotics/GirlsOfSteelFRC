@@ -90,12 +90,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public Command createIntakeToCoastCommand() {
         return this.runEnd(
-                () -> {
-                    m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-                },
-                () -> {
-                    m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-                })
+                () -> m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+                () -> m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
             .ignoringDisable(true).withName("Intake to Coast");
     }
 }
