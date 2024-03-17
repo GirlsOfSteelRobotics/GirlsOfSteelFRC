@@ -7,11 +7,10 @@ import java.util.Map;
 
 public class CanUtilizationUtil {
 
-    private static final int ROBOT_PERIOD = 20;
     private static final int MAX_PERIOD = (1 << 15) - 1;
 
     // Defaults from https://docs.revrobotics.com/sparkmax/operating-modes/control-interfaces
-    private static final Map<CANSparkLowLevel.PeriodicFrame, Integer> DEFAULT_RATES = Map.of(
+    public static final Map<CANSparkLowLevel.PeriodicFrame, Integer> DEFAULT_RATES = Map.of(
         // Applied Output, [sticky] faults, follower info
         CANSparkLowLevel.PeriodicFrame.kStatus0, 10,
         // Velocity, Temperature, Voltage, Current

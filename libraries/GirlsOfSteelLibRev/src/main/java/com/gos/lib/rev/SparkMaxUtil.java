@@ -12,6 +12,7 @@ import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("PMD.LinguisticNaming")
 public class SparkMaxUtil {
 
     private static final StringBuilder ALERT_BUILDER = new StringBuilder(100); // NOPMD(AvoidStringBufferField)
@@ -72,6 +73,10 @@ public class SparkMaxUtil {
         return autoRetry(() -> controller.setIdleMode(idleMode));
     }
 
+    public static REVLibError setInverted(AbsoluteEncoder encoder, boolean inverted) {
+        return autoRetry(() -> encoder.setInverted(inverted));
+    }
+
     public static REVLibError setInverted(CANSparkBase controller, boolean inverted) {
         return autoRetry(() -> smartSetInverted(controller, inverted));
     }
@@ -89,9 +94,13 @@ public class SparkMaxUtil {
     }
 
     /////////////////////////////
-    // Relative Encoder
+    // Encoders
     /////////////////////////////
     public static REVLibError setPositionConversionFactor(RelativeEncoder encoder, double conversionFactor) {
+        return autoRetry(() -> encoder.setPositionConversionFactor(conversionFactor));
+    }
+
+    public static REVLibError setPositionConversionFactor(AbsoluteEncoder encoder, double conversionFactor) {
         return autoRetry(() -> encoder.setPositionConversionFactor(conversionFactor));
     }
 
@@ -99,19 +108,8 @@ public class SparkMaxUtil {
         return autoRetry(() -> encoder.setVelocityConversionFactor(conversionFactor));
     }
 
-    /////////////////////////////
-    // Absolute Encoder
-    /////////////////////////////
-    public static REVLibError setPositionConversionFactor(AbsoluteEncoder encoder, double conversionFactor) {
-        return autoRetry(() -> encoder.setPositionConversionFactor(conversionFactor));
-    }
-
     public static REVLibError setVelocityConversionFactor(AbsoluteEncoder encoder, double conversionFactor) {
         return autoRetry(() -> encoder.setVelocityConversionFactor(conversionFactor));
-    }
-
-    public static REVLibError setInverted(AbsoluteEncoder encoder, boolean inverted) {
-        return autoRetry(() -> encoder.setInverted(inverted));
     }
 
     public static REVLibError setZeroOffset(AbsoluteEncoder encoder, double zeroOffset) {
