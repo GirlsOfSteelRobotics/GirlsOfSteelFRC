@@ -162,7 +162,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
     public double getDistanceToAmp(){
-        Pose2d amp = new Pose2d (AllianceFlipper.maybeFlip((FieldConstants.AMP_CENTER)), new Rotation2d());
+        Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION);
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(amp.getTranslation());
     }

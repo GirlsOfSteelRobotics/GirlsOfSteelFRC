@@ -46,6 +46,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "middleSpeakerScoreAngle", 9); //TODO changeeee
     public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
+    public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "allianceFeederAngle", 30);
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
 
@@ -336,6 +337,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createMoveArmToSideSpeakerAngleCommand() {
         return createMoveArmToAngleCommand(SIDE_SUBWOOFER_ANGLE::getValue).withName("arm to side speaker angle");
+    }
+
+    public Command createMoveArmFeederAngleCommand() {
+        return createMoveArmToAngleCommand(ARM_FEEDER_ANGLE::getValue).withName("move arm to feeder angle");
     }
 
     public Command createSyncRelativeEncoderCommand() {

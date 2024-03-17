@@ -49,6 +49,8 @@ import org.photonvision.PhotonCamera;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+    private static final boolean HAS_HANGER = false;
+
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armPivotSubsystem;
@@ -81,7 +83,11 @@ public class RobotContainer {
             m_intakeSubsystem = new IntakeSubsystem();
             m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
             m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
-            m_hangerSubsystem = new HangerSubsystem();
+            if (HAS_HANGER) {
+                m_hangerSubsystem = new HangerSubsystem();
+            } else {
+                m_hangerSubsystem = null;
+            }
         }
         else {
             m_shooterSubsystem = null;
@@ -153,7 +159,9 @@ public class RobotContainer {
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).withName("Reset Pose Subwoofer Mid"));
 
-        addHangerTestCommands(shuffleboardTab);
+        if (HAS_HANGER) {
+            addHangerTestCommands(shuffleboardTab);
+        }
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -164,7 +172,9 @@ public class RobotContainer {
         addArmPivotTestCommands(shuffleboardTab);
         addIntakeTestCommands(shuffleboardTab);
         addShooterTestCommands(shuffleboardTab);
-        addHangerTestCommands(shuffleboardTab);
+        if (HAS_HANGER) {
+            addHangerTestCommands(shuffleboardTab);
+        }
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
         shuffleboardTab.add("Teleop: Normal Swerve Drive", new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
@@ -214,6 +224,10 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis Set Pose Subwoofer Bottom", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_SOURCE_SUBWOOFER).withName("Reset Pose Subwoofer Bottom"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).withName("Reset Pose Subwoofer Mid"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Top", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_AMP_SUBWOOFER).withName("Reset Pose Subwoofer Top"));
+
+        Pose2d redSubwoofer = new Pose2d(AllianceFlipper.flip(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).getTranslation(), Rotation2d.fromDegrees(180));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid Red", m_chassisSubsystem.createResetPoseCommand(redSubwoofer).withName("Reset Pose Subwoofer Mid"));
+
 
         shuffleboardTab.add("Chassis set Pose Subwoofer Mid + Hack Dist", m_chassisSubsystem.createResetPoseCommand(
             RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER.plus(new Transform2d(1, 0, Rotation2d.fromDegrees(0)))
@@ -283,11 +297,11 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-//        if (RobotBase.isReal()) {
-//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-//        } else {
+        if (RobotBase.isReal()) {
+            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-//        }
+        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////
@@ -302,7 +316,7 @@ public class RobotContainer {
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());
         //face shooter to center speaker
         // m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
-        m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_chassisSubsystem, m_armPivotSubsystem));
+        m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem));
 
         // Intake-to-shoot
         m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
@@ -332,14 +346,18 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
         //override angle to side subwoofer shot
-        m_driverController.b().whileTrue((CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE.getValue()))
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+//        m_driverController.b().whileTrue((CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE.getValue()))
+//            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
 //        //override angle to middle subwoofer shot
 //        m_driverController.y().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE.getValue())
 //            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         m_driverController.y().whileTrue(CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()
+            .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
+            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
         /////////////////////////////
         // Operator Controller
@@ -353,14 +371,16 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_shooterSubsystem.createRunSpeakerShotRPMCommand());
 
         //hanger
-        m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
-        m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
+        if (HAS_HANGER) {
+            m_operatorController.povUp().whileTrue(m_hangerSubsystem.createHangerUp());
+            m_operatorController.povDown().whileTrue(m_hangerSubsystem.createHangerDown());
 
-        m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
-        m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
+            m_operatorController.povUpLeft().whileTrue(m_hangerSubsystem.createLeftHangerUp());
+            m_operatorController.povDownLeft().whileTrue(m_hangerSubsystem.createLeftHangerDown());
 
-        m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
-        m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
+            m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
+            m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
+        }
     }
 
 
@@ -382,7 +402,9 @@ public class RobotContainer {
         m_armPivotSubsystem.clearStickyFaults();
         m_intakeSubsystem.clearStickyFaults();
         m_shooterSubsystem.clearStickyFaults();
-        m_hangerSubsystem.clearStickyFaults();
+        if (HAS_HANGER) {
+            m_hangerSubsystem.clearStickyFaults();
+        }
     }
 
 

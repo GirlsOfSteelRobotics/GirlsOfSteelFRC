@@ -710,7 +710,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "FourNoteAmpSide034": {
             "waypoints": [
@@ -742,8 +742,8 @@
                     "controlIntervalCount": 11
                 },
                 {
-                    "x": 7.956634521484375,
-                    "y": 7.4622673988342285,
+                    "x": 7.998003005981445,
+                    "y": 7.457698345184326,
                     "heading": 0,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -769,8 +769,8 @@
                     "controlIntervalCount": 10
                 },
                 {
-                    "x": 7.976122856140137,
-                    "y": 5.855949878692627,
+                    "x": 7.998003005981445,
+                    "y": 5.859450340270996,
                     "heading": -0.20401809677578697,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -13216,7 +13216,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": true,
