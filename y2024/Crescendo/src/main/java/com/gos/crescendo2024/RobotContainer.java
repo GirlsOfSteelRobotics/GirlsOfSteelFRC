@@ -101,6 +101,7 @@ public class RobotContainer {
 
         if (!Constants.IS_TIM_BOT) {
             NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+            NamedCommands.registerCommand("AimAndShootIntoSpeakerWhileDrive", SpeakerAimAndShootCommand.createShootWhileDrive(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
             NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE::getValue));
             NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
             NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
@@ -241,6 +242,7 @@ public class RobotContainer {
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
         shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
         shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
+        shuffleboardTab.add("intake to coast", m_intakeSubsystem.createIntakeToCoastCommand());
     }
 
     private void addArmPivotTestCommands(ShuffleboardTab shuffleboardTab) {

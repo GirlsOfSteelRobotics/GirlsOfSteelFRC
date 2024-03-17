@@ -5,6 +5,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -86,5 +87,16 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public Command createIntakeUntilPieceCommand() {
         return createMoveIntakeInCommand().until(this::hasGamePiece).withName("Intake Till Piece");
+    }
+
+    public Command createIntakeToCoastCommand() {
+        return this.runEnd(
+                () -> {
+                    m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                },
+                () -> {
+                    m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+                })
+            .ignoringDisable(true).withName("Intake to Coast");
     }
 }
