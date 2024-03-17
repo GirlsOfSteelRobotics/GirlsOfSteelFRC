@@ -285,4 +285,14 @@ public class RevSwerveModule {
     public String getName() {
         return m_moduleName;
     }
+
+    public void setCoastMode() {
+        m_drivingSparkMax.setIdleMode(CANSparkBase.IdleMode.kCoast);
+        m_turningSparkMax.setIdleMode(CANSparkBase.IdleMode.kCoast);
+    }
+
+    public void setBrakeMode() {
+        m_drivingSparkMax.setIdleMode(CANSparkBase.IdleMode.kBrake);
+        m_turningSparkMax.setIdleMode(CANSparkBase.IdleMode.kBrake);
+    }
 }

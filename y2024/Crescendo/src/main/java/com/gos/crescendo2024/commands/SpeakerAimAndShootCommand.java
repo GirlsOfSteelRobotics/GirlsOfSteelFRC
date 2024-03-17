@@ -6,6 +6,7 @@ import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
@@ -27,6 +28,8 @@ public final class SpeakerAimAndShootCommand extends Command {
     private final Supplier<Pose2d> m_robotPoseProvider;
     private boolean m_runIntake;
 
+    private final Debouncer m_debouncer;
+
     private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem,
                                      ChassisSubsystem chassisSubsystem,
                                      IntakeSubsystem intakeSubsystem,
@@ -43,6 +46,7 @@ public final class SpeakerAimAndShootCommand extends Command {
         m_armAngleGoalSupplier = armAngleGoalSupplier;
         m_shooterRpmGoalSupplier = shooterRpmGoalSupplier;
         m_robotPoseProvider = poseSupplier;
+        m_debouncer = new Debouncer(.6);
 
         addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
     }
@@ -128,7 +132,7 @@ public final class SpeakerAimAndShootCommand extends Command {
         m_chassisSubsystem.turnButtToFacePoint(m_robotPoseProvider.get(), speaker, 0, 0);
         m_shooterSubsystem.setPidRpm(m_shooterRpmGoalSupplier.getAsDouble());
 
-        if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {
+        if (m_debouncer.calculate(m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal())) {
             m_runIntake = true;
             m_intakeTimer.start();
         }

@@ -306,6 +306,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_photonVisionSubsystem.getLatestResult().targets.size();
     }
 
+    public void syncOdometryAndPoseEstimator() {
+        m_swerveDrive.resetOdometry(m_swerveDrive.getEstimatedPosition());
+    }
+
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
@@ -337,10 +341,10 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end) {
-        return createDriveToPointNoFlipCommand(end, end.getRotation(), getPose());
+        return createDriveToPointNoFlipCommand(end, end.getRotation(), getPose(), false);
     }
 
-    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start, boolean rotateFast) {
         List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
@@ -349,7 +353,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
                 Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
-            new GoalEndState(0.0, endAngle)
+            new GoalEndState(0.0, endAngle, rotateFast)
         );
         path.preventFlipping = true;
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
@@ -363,7 +367,7 @@ public class ChassisSubsystem extends SubsystemBase {
             double dy = ampPosition.getY() - currentPosition.getY();
             double angle = Math.atan2(dy, dx);
             Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
-            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
+            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose, true);
         });
     }
 
@@ -378,10 +382,15 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createPushForwardModeCommand() {
-        SwerveModuleState state = new SwerveModuleState(0, new Rotation2d());
-        return run(() -> {
-            m_swerveDrive.setModuleStates(state);
-        }).withName("Chassis Push Forward");
+        return runEnd(() -> m_swerveDrive.setModulesToPushMode(0), m_swerveDrive::setModuleBrakeMode)
+            .ignoringDisable(true)
+            .withName("Chassis Push Forward");
+    }
+
+    public Command createPushSidewaysModeCommand() {
+        return runEnd(() -> m_swerveDrive.setModulesToPushMode(90), m_swerveDrive::setModuleBrakeMode)
+            .ignoringDisable(true)
+            .withName("Chassis Push Sideways");
     }
 
     public Command createSetSlowModeCommand(boolean setBoolean) {
@@ -395,7 +404,26 @@ public class ChassisSubsystem extends SubsystemBase {
                 return Commands.none();
             }
             Pose2d singleNote = notePositions.get(0);
-            return createDriveToPointNoFlipCommand(singleNote);
+
+            Pose2d currentPosition = getPose();
+            Translation2d deltaTranslation = singleNote.getTranslation().minus(currentPosition.getTranslation());
+            Rotation2d deltaAngle = deltaTranslation.getAngle();
+            Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), deltaAngle);
+            return createDriveToPointNoFlipCommand(singleNote, deltaAngle, startPose, true);
         }).withName("drive to note");
+    }
+
+    // This command will reset the pose and believe the april tag estimation, regardless of mode or filtering
+    public Command createBelieveAprilTagEstimatorCommand() {
+        return run(() -> {
+            Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+            if (cameraResult.isPresent()) {
+                m_swerveDrive.resetOdometry(cameraResult.get().estimatedPose.toPose2d());
+            }
+        }).withTimeout(.1).ignoringDisable(true).withName("Believe AprilTags");
+    }
+
+    public Command createSyncOdometryAndPoseEstimatorCommand() {
+        return run(this::syncOdometryAndPoseEstimator).ignoringDisable(true);
     }
 }

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7628915309906006,
-      "y": 4.489973545074463
+      "x": 0.7733993530273438,
+      "y": 4.462078094482422
     },
-    "rotation": -59.999999999999986
+    "rotation": -58.39249616989184
   },
   "command": {
     "type": "sequential",
@@ -64,6 +64,12 @@
         {
           "type": "named",
           "data": {
+            "name": "TrustVision"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AimAndShootIntoSpeaker"
           }
         },
@@ -109,6 +115,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "TrustVision"
           }
         },
         {

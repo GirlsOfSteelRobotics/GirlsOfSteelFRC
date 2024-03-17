@@ -51,7 +51,7 @@
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
         source-provider="NetworkTables"
-        style="transform: translate(723px, 0px);"
+        style="transform: translate(26.2px, 393.6px);"
         game="Crescendo"
         grid-size="1"
     >
@@ -61,24 +61,27 @@
         source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)"
     ></frc-robot-command><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(334px, 52px);"
+        style="transform: translate(259.6px, 18.4px);"
         source-key="/Arm Pivot Subsystem/Arm At Goal"
         label="Arm At Goal"
     ></frc-boolean-box><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(332px, 135px);"
+        style="transform: translate(260px, 93.4px);"
         source-key="/Shooter Subsystem/Shooter At Goal"
         label="Shooter At Goal"
     ></frc-boolean-box><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(333px, 215px);"
+        style="transform: translate(261px, 166.2px);"
         source-key="/Chassis/At Angle Setpoint"
         label="Chassis At Goal"
-    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    ></frc-boolean-box><frc-preferences-wrapper
+        source-key="/Preferences"
+        source-provider="NetworkTables"
+        style="transform: translate(529.388px, 11.575px); width: 573.762px; height: 561.975px;"
+    ></frc-preferences-wrapper></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -424,6 +427,7 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -487,6 +491,22 @@
         source-provider="NetworkTables"
         style="transform: translate(285px, 212px);"
         source-key="/Shuffleboard/test commands/Teleop: Normal Swerve Drive"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(294px, 288px);"
+        source-key="/Shuffleboard/test commands/Chassis drive to note"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(474px, 141px);"
+        source-key="/Shuffleboard/Ellie/Chassis: Believe April Tags"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(508px, 273px);"
+        source-key="/Shuffleboard/test commands/Chassis Push Forward"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(513px, 340px);"
+        source-key="/Shuffleboard/test commands/Chassis Push Sideways"
     ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Pit"
     slot="tab"

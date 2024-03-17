@@ -101,6 +101,7 @@ public class RobotContainer {
 
 
         if (!Constants.IS_TIM_BOT) {
+            NamedCommands.registerCommand("TrustVision", m_chassisSubsystem.createBelieveAprilTagEstimatorCommand());
             NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerWhileDrive", SpeakerAimAndShootCommand.createShootWhileDrive(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
             NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE::getValue));
@@ -162,6 +163,7 @@ public class RobotContainer {
         shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).withName("Reset Pose Subwoofer Mid"));
+        shuffleboardTab.add("Chassis: Believe April Tags", m_chassisSubsystem.createBelieveAprilTagEstimatorCommand());
 
         if (HAS_HANGER) {
             addHangerTestCommands(shuffleboardTab);
@@ -221,12 +223,13 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
-        shuffleboardTab.add("Chassis Push", m_chassisSubsystem.createPushForwardModeCommand());
+        shuffleboardTab.add("Chassis Push Forward", m_chassisSubsystem.createPushForwardModeCommand());
+        shuffleboardTab.add("Chassis Push Sideways", m_chassisSubsystem.createPushSidewaysModeCommand());
 
 
         shuffleboardTab.add("Chassis Set Pose Origin", m_chassisSubsystem.createResetPoseCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Bottom", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_SOURCE_SUBWOOFER).withName("Reset Pose Subwoofer Bottom"));
-        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).withName("Reset Pose Subwoofer Mid"));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid Blue", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).withName("Reset Pose Subwoofer Mid Blue"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Top", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_AMP_SUBWOOFER).withName("Reset Pose Subwoofer Top"));
 
         Pose2d redSubwoofer = new Pose2d(AllianceFlipper.flip(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).getTranslation(), Rotation2d.fromDegrees(180));
@@ -240,6 +243,8 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
         shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToAmpCommand().withName("Drive To Amp"));
         shuffleboardTab.add("Chassis drive to note", m_chassisSubsystem.createDriveToNoteCommand());
+
+        shuffleboardTab.add("Chassis Sync Odo and Est Pos", m_chassisSubsystem.createSyncOdometryAndPoseEstimatorCommand().withName("Sync Odo and Est Pos"));
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {

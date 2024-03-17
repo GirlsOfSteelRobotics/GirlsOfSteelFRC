@@ -6,16 +6,20 @@ import edu.wpi.first.math.util.Units;
 
 public class SpeakerLookupTable {
     private static final double SUBWOOFER_SIZE = Units.feetToMeters(3);
+    private static final double MAX_DIST = 3.87;
+
     private static final GosDoubleProperty HACK_VALUE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Arm: Lookup Table Adjustment", 0);
 
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
 
     public SpeakerLookupTable() {
         // tuned GPR - Use camera for distance
-        m_table.put(SUBWOOFER_SIZE, 9.0);
+        m_table.put(SUBWOOFER_SIZE, 13.0);
         m_table.put(1.8, 25.0);
         m_table.put(2.45, 35.0);
-        m_table.put(2.96, 37.0);
+        m_table.put(3.09, 40.0);
+        m_table.put(3.42, 40.0);
+        m_table.put(MAX_DIST, 41.0);
 
     }
 
