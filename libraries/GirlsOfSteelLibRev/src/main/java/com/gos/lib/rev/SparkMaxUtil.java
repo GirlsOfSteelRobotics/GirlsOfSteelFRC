@@ -60,6 +60,12 @@ public class SparkMaxUtil {
         return autoRetry(() -> controller.setIdleMode(idleMode));
     }
 
+    public static REVLibError setInverted(CANSparkBase controller, boolean inverted) {
+        // TODO this looks like it should return an error code but doesn't?
+        controller.setInverted(inverted);
+        return REVLibError.kOk;
+    }
+
     public static REVLibError setSmartCurrentLimit(CANSparkBase controller, int limit) {
         return autoRetry(() -> controller.setSmartCurrentLimit(limit));
     }

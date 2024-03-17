@@ -30,7 +30,7 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.restoreFactoryDefaults();
         SparkMaxUtil.setIdleMode(m_intakeMotor, CANSparkMax.IdleMode.kBrake);
         SparkMaxUtil.setSmartCurrentLimit(m_intakeMotor, 40);
-        m_intakeMotor.setInverted(false);
+        SparkMaxUtil.setInverted(m_intakeMotor, false);
         m_intakeMotor.burnFlash();
 
         // Decrease CAN usage
