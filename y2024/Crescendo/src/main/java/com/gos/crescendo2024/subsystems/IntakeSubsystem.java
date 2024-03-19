@@ -25,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public IntakeSubsystem() {
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
-        m_intakeMotor.restoreFactoryDefaults();
+        //m_intakeMotor.restoreFactoryDefaults();
         m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_intakeMotor.setSmartCurrentLimit(40);
         m_intakeMotor.setInverted(false);
