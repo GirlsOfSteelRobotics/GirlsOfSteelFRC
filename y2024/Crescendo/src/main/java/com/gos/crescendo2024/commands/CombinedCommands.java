@@ -4,6 +4,7 @@ import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.crescendo2024.subsystems.HangerSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
@@ -90,7 +91,12 @@ public class CombinedCommands {
                 .andThen(prepareAmpShot(arm, shooter))
                 .andThen(new VibrateControllerTimedCommand(joystick, 1))
         );
-
-
     }
+
+    public static Command prepHangingUp(CommandXboxController operatorController, ArmPivotSubsystem armPivot, HangerSubsystem hanger) {
+        return
+            armPivot.createMoveArmToPrepHangerAngleCommand()
+            .andThen(hanger.createAutoUpCommand());
+    }
+
 }

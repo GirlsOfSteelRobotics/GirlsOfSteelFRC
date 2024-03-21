@@ -30,6 +30,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -72,11 +73,15 @@ public class RobotContainer {
 
     private final Autos m_autonomousFactory;
 
+    private final PowerDistribution m_pdh;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer() {
+    public RobotContainer(PowerDistribution pdh) {
+        m_pdh = pdh;
+
         m_chassisSubsystem = new ChassisSubsystem();
         if (!Constants.IS_TIM_BOT) {
             m_shooterSubsystem = new ShooterSubsystem();
@@ -167,6 +172,8 @@ public class RobotContainer {
 
         if (HAS_HANGER) {
             addHangerTestCommands(shuffleboardTab);
+
+            shuffleboardTab.add("Prep Hanger Up", CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem));
         }
     }
 
@@ -267,6 +274,7 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to tunable speaker angle", m_armPivotSubsystem.createMoveArmToTunableSpeakerAngleCommand());
         shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
         shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
+        shuffleboardTab.add("Arm to prep hanger angle", m_armPivotSubsystem.createMoveArmToPrepHangerAngleCommand());
 
     }
 
@@ -347,7 +355,7 @@ public class RobotContainer {
 
         //One-Button speaker shooting - turns butt to speaker tho
         m_driverController.rightBumper().whileTrue(
-            SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem)
+            SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, 100)
         );
 
         //go to floor
@@ -385,8 +393,9 @@ public class RobotContainer {
 
         //hanger
         if (HAS_HANGER) {
-            m_operatorController.y().whileTrue(m_hangerSubsystem.createHangerUp());
-            m_operatorController.a().whileTrue(m_hangerSubsystem.createHangerDown());
+            m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToPrepHangerAngleCommand());
+            m_operatorController.y().whileTrue(CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem));
+            m_operatorController.a().whileTrue(m_hangerSubsystem.createAutoDownCommand());
 
             m_operatorController.x().and(m_operatorController.povUp()).whileTrue(m_hangerSubsystem.createLeftHangerUp());
             m_operatorController.x().and(m_operatorController.povDown()).whileTrue(m_hangerSubsystem.createLeftHangerDown());
@@ -411,6 +420,7 @@ public class RobotContainer {
     }
 
     private void resetStickyFaults() {
+        m_pdh.clearStickyFaults();
         m_chassisSubsystem.clearStickyFaults();
         m_armPivotSubsystem.clearStickyFaults();
         m_intakeSubsystem.clearStickyFaults();

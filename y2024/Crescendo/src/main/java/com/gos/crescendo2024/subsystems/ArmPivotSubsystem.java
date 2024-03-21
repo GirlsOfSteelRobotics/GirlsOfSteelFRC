@@ -47,6 +47,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 15);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
     public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "allianceFeederAngle", 20);
+    public static final GosDoubleProperty ARM_PREP_HANGER_ANGLE = new GosDoubleProperty(false, "prepHangerAngle", 90);
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
 
@@ -349,6 +350,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createMoveArmToTunableSpeakerAngleCommand() {
         return createMoveArmToAngleCommand(ARM_TUNABLE_SPEAKER_ANGLE::getValue).withName("arm to tunable speaker angle");
+    }
+
+    public Command createMoveArmToPrepHangerAngleCommand() {
+        return createMoveArmToAngleCommand(ARM_PREP_HANGER_ANGLE::getValue)
+            .until(this::isArmAtGoal).withName("arm to prep hanger angle");
     }
 
     public Command createPivotToCoastModeCommand() {

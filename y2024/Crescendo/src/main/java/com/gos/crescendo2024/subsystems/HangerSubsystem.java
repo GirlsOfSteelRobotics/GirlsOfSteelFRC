@@ -4,6 +4,7 @@ import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkBase;
@@ -20,7 +21,7 @@ public class HangerSubsystem extends SubsystemBase {
     private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(false, "Hanger_Down_Speed", -0.3);
     private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(false, "Hanger_Up_Speed", 0.3);
 
-    private static final GosDoubleProperty HANGER_UP_POSITION = new GosDoubleProperty(false, "Hanger Up Position", 10);
+    private static final GosDoubleProperty HANGER_UP_GOAL_POSITION = new GosDoubleProperty(false, "Hanger Up Goal Position", 10);
 
     private final SimableCANSparkMax m_leftHangerMotor;
     private final RelativeEncoder m_leftHangerEncoder;
@@ -46,7 +47,7 @@ public class HangerSubsystem extends SubsystemBase {
     public HangerSubsystem() {
         m_leftHangerMotor = new SimableCANSparkMax(Constants.HANGER_LEFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         //m_leftHangerMotor.restoreFactoryDefaults();
-        m_leftHangerMotor.setInverted(false);
+        m_leftHangerMotor.setInverted(true);
         m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
         m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_leftHangerMotor.setSmartCurrentLimit(60);
@@ -78,6 +79,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Left Pos: ", m_leftHangerEncoder::getPosition);
         m_networkTableEntries.addDouble("Right Pos", m_rightHangerEncoder::getPosition);
 
+        resetEncoders();
 
     }
 
@@ -90,6 +92,9 @@ public class HangerSubsystem extends SubsystemBase {
     public void moveHangerToPosition(double position) {
         m_leftPidController.setReference(position, CANSparkBase.ControlType.kPosition);
         m_rightPidController.setReference(position, CANSparkBase.ControlType.kPosition);
+
+
+        System.out.println("Trying to go to " + position + " " + m_leftHangerMotor.getAppliedOutput() + " " + m_rightHangerMotor.getAppliedOutput());
     }
 
 
@@ -98,6 +103,9 @@ public class HangerSubsystem extends SubsystemBase {
         m_leftHangerAlert.checkAlerts();
         m_rightHangerAlert.checkAlerts();
         m_networkTableEntries.updateLogs();
+
+        m_leftPidProperties.updateIfChanged();
+        m_rightPidProperties.updateIfChanged();
     }
 
     public void clearStickyFaults() {
@@ -160,6 +168,11 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerMotor.set(0);
     }
 
+    public void resetEncoders() {
+        SparkMaxUtil.autoRetry(() -> m_leftHangerEncoder.setPosition(0));
+        SparkMaxUtil.autoRetry(() -> m_rightHangerEncoder.setPosition(0));
+    }
+
     public boolean isRightUpperLimitSwitchedPressed() {
         return !m_upperLimitSwitchRight.get();
     }
@@ -217,10 +230,18 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public Command createAutoUpCommand() {
-        return runEnd(() -> moveHangerToPosition(HANGER_UP_POSITION.getValue()), this::stopHanger);
+        return runEnd(() -> moveHangerToPosition(HANGER_UP_GOAL_POSITION.getValue()), this::stopHanger)
+            .withName("AutoHangerUp");
     }
 
     public Command createAutoDownCommand() {
-        return runEnd(() -> moveHangerToPosition(0), this::stopHanger);
+        return runEnd(() -> moveHangerToPosition(0), this::stopHanger)
+            .withName("AutoHangerDown");
+    }
+
+    public Command createResetEncoders() {
+        return run(this::resetEncoders)
+            .ignoringDisable(true)
+            .withName("Reset Encoders");
     }
 }
