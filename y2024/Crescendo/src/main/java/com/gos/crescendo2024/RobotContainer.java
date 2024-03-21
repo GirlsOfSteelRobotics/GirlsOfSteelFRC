@@ -50,7 +50,7 @@ import org.photonvision.PhotonCamera;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class RobotContainer {
-    private static final boolean HAS_HANGER = false;
+    private static final boolean HAS_HANGER = true;
 
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
@@ -291,6 +291,9 @@ public class RobotContainer {
         shuffleboardTab.add("Right Hanger Down", m_hangerSubsystem.createRightHangerDown());
 
         shuffleboardTab.add("Hanger to Coast", m_hangerSubsystem.createSetHangerToCoast().withName("Hanger to Coast"));
+
+        shuffleboardTab.add("Auto Hanger Up", m_hangerSubsystem.createAutoUpCommand());
+        shuffleboardTab.add("Auto Hanger Down", m_hangerSubsystem.createAutoDownCommand());
     }
 
 
