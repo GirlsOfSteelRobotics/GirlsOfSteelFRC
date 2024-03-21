@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
-        //m_shooterMotorLeader.restoreFactoryDefaults();
+        m_shooterMotorLeader.restoreFactoryDefaults();
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getPIDController();
@@ -66,7 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.burnFlash();
 
         m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
-        //m_shooterMotorFollower.restoreFactoryDefaults();
+        m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
         m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
