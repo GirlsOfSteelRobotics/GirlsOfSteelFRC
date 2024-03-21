@@ -396,7 +396,7 @@ public class RobotContainer {
         if (HAS_HANGER) {
             m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToPrepHangerAngleCommand());
             m_operatorController.y().whileTrue(CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem));
-            m_operatorController.a().whileTrue(m_hangerSubsystem.createAutoDownCommand());
+            m_operatorController.a().whileTrue(m_hangerSubsystem.createHangerDown());
 
             m_operatorController.x().and(m_operatorController.povUp()).whileTrue(m_hangerSubsystem.createLeftHangerUp());
             m_operatorController.x().and(m_operatorController.povDown()).whileTrue(m_hangerSubsystem.createLeftHangerDown());
