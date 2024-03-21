@@ -674,7 +674,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "FourNoteAmpSide034": {
             "waypoints": [
@@ -2085,7 +2085,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "NoNoteLeaveWing": {
             "waypoints": [
@@ -11146,7 +11146,7 @@
             "eventMarkers": [],
             "isTrajectoryStale": true
         },
-        "BITCHAUTO": {
+        "DisruptionAuto": {
             "waypoints": [
                 {
                     "x": 0.7631399035453796,
@@ -12670,7 +12670,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": true
+            "isTrajectoryStale": false
         },
         "FourNoteMiddle012": {
             "waypoints": [

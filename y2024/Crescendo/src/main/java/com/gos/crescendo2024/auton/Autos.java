@@ -5,7 +5,6 @@
 
 package com.gos.crescendo2024.auton;
 
-import com.gos.crescendo2024.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -49,8 +48,9 @@ public final class Autos {
         // Preload and drive
         ONE_NOTE_AND_LEAVE_WING("OneNoteSourceSideAndLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
         // No shooting
-        NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of());
-
+        NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
+        //Disruption auto
+        BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of());
 
 
         public final String m_modeName;
@@ -70,7 +70,7 @@ public final class Autos {
 
     private final Map<AutoModes, Command> m_modes;
 
-    private static final GosDoubleProperty AUTON_TIMEOUT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "autoTimeoutSeconds", 0);
+    private static final GosDoubleProperty AUTON_TIMEOUT = new GosDoubleProperty(false, "autoTimeoutSeconds", 0);
 
 
     public Autos() {
