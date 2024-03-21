@@ -13,22 +13,22 @@ public class SpeakerLookupTable {
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
 
     public SpeakerLookupTable() {
-        // tuned GPR - Use camera for distance
-//        m_table.put(SUBWOOFER_SIZE, 13.0);
-//        m_table.put(1.8, 25.0);
-//        m_table.put(2.45, 35.0);
-//        m_table.put(3.09, 40.0);
-//        m_table.put(3.42, 40.0);
-//        m_table.put(MAX_DIST, 41.0);
-
-
-        //table for old intake for buckeye 3/21
+        // tuned GPR - Use camera for distance - no hack value
         m_table.put(SUBWOOFER_SIZE, 13.0);
-        m_table.put(1.82, 24.0);
-        m_table.put(2.6, 30.0);
-        m_table.put(3.12, 40.0);
-//        m_table.put(3.42, 40.0);
+        m_table.put(1.8, 25.0);
+        m_table.put(2.45, 35.0);
+        m_table.put(3.09, 40.0);
+        m_table.put(3.42, 40.0);
         m_table.put(MAX_DIST, 41.0);
+
+
+//        //table for new intake before buckeye 3/21
+//        m_table.put(SUBWOOFER_SIZE, 13.0);
+//        m_table.put(1.82, 24.0);
+//        m_table.put(2.6, 30.0);
+//        m_table.put(3.12, 40.0);
+////        m_table.put(3.42, 40.0);
+//        m_table.put(MAX_DIST, 41.0);
 
     }
 

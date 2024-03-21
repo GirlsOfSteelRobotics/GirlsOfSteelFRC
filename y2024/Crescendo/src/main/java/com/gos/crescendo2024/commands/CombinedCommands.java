@@ -13,6 +13,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.BooleanSupplier;
@@ -84,6 +85,18 @@ public class CombinedCommands {
         ).withName("Full Field Feed Piece");
     }
 
+    public static Command autoSpeakerAimAndShootCatchMistake(ArmPivotSubsystem arm, ChassisSubsystem chassis, IntakeSubsystem intake, ShooterSubsystem shooter) {
+        return
+            SpeakerAimAndShootCommand.createShootWhileStationary(arm, chassis, intake, shooter)
+                .andThen(new ConditionalCommand(
+                    intake.createMoveIntakeOutCommand().withTimeout(.2)
+                        .andThen(SpeakerAimAndShootCommand.createShootWhileStationary(arm, chassis, intake, shooter)),
+                    Commands.none(),
+                    intake::hasGamePiece
+                ));
+
+    }
+
     public static Command autoScoreInAmp(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         return Commands.parallel(
             chassis.createDriveToAmpCommand(),
@@ -94,8 +107,7 @@ public class CombinedCommands {
     }
 
     public static Command prepHangingUp(CommandXboxController operatorController, ArmPivotSubsystem armPivot, HangerSubsystem hanger) {
-        return
-            armPivot.createMoveArmToPrepHangerAngleCommand()
+        return armPivot.createMoveArmToPrepHangerAngleCommand()
             .andThen(hanger.createAutoUpCommand());
     }
 

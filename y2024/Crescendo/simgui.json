@@ -190,6 +190,7 @@
       "/Shuffleboard/Ellie/Hanger to Coast": "Command",
       "/Shuffleboard/Ellie/Left Hanger Down": "Command",
       "/Shuffleboard/Ellie/Left Hanger Up": "Command",
+      "/Shuffleboard/Ellie/Prep Hanger Up": "Command",
       "/Shuffleboard/Ellie/Right Hanger Down": "Command",
       "/Shuffleboard/Ellie/Right Hanger Up": "Command",
       "/Shuffleboard/PP Paths/Curve Path": "Command",
@@ -478,7 +479,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },

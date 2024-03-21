@@ -168,7 +168,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerMotor.set(0);
     }
 
-    public void resetEncoders() {
+    private void resetEncoders() {
         SparkMaxUtil.autoRetry(() -> m_leftHangerEncoder.setPosition(0));
         SparkMaxUtil.autoRetry(() -> m_rightHangerEncoder.setPosition(0));
     }

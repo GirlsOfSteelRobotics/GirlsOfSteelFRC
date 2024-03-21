@@ -51,7 +51,7 @@ public final class SpeakerAimAndShootCommand extends Command {
         m_armAngleGoalSupplier = armAngleGoalSupplier;
         m_shooterRpmGoalSupplier = shooterRpmGoalSupplier;
         m_robotPoseProvider = poseSupplier;
-        m_debouncer = new Debouncer(.3);
+        m_debouncer = new Debouncer(.2);
 
         m_intakeTime = runIntakeTime;
 
