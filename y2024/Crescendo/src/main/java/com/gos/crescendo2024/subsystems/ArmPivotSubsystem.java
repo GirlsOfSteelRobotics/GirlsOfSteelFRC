@@ -63,7 +63,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            GEAR_RATIO = (58.0 / 15.0) * 25;
+            GEAR_RATIO = (58.0 / 15.0) * 45; //5::5 to 9::5
         } else {
             GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
         }

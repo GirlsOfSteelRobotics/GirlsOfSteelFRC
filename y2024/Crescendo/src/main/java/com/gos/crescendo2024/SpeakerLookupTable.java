@@ -22,6 +22,7 @@ public class SpeakerLookupTable {
 //        m_table.put(MAX_DIST, 41.0);
 
 
+        //table for old intake for buckeye 3/21
         m_table.put(SUBWOOFER_SIZE, 13.0);
         m_table.put(1.82, 24.0);
         m_table.put(2.6, 30.0);
