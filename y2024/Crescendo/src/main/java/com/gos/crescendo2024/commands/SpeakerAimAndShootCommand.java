@@ -159,6 +159,7 @@ public final class SpeakerAimAndShootCommand extends Command {
 
         if (m_runIntake) {
             m_intakeSubsystem.intakeIn();
+            m_chassisSubsystem.takeAprilTagScreenshot();
         }
     }
 

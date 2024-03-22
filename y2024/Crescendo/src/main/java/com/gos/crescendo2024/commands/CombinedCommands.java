@@ -99,6 +99,7 @@ public class CombinedCommands {
 
     public static Command autoScoreInAmp(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         return Commands.parallel(
+            chassis.createTakeAprilTagScreenshotCommand(),
             chassis.createDriveToAmpCommand(),
             Commands.waitUntil(() -> chassis.getDistanceToAmp() < Units.feetToMeters(4))
                 .andThen(prepareAmpShot(arm, shooter))

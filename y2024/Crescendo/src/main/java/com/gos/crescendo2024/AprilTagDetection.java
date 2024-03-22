@@ -23,8 +23,10 @@ public class AprilTagDetection {
     private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS;
 
     private static final String CAMERA_NAME = "AprilTag1";
-    private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);
-    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.5, 0.5, 1);
+//    private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);
+//    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.5, 0.5, 1);
+    private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 8);
+    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 1);
 
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
@@ -105,4 +107,8 @@ public class AprilTagDetection {
         return estStdDevs;
     }
 
+    public void takeScreenshot() {
+        m_photonCamera.takeInputSnapshot();
+        m_photonCamera.takeOutputSnapshot();
+    }
 }

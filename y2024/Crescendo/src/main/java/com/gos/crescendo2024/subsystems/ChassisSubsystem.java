@@ -40,6 +40,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
@@ -308,6 +309,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.resetOdometry(m_swerveDrive.getEstimatedPosition());
     }
 
+    public void takeAprilTagScreenshot() {
+        m_photonVisionSubsystem.takeScreenshot();
+    }
+
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
@@ -423,5 +428,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createSyncOdometryAndPoseEstimatorCommand() {
         return run(this::syncOdometryAndPoseEstimator).ignoringDisable(true);
+    }
+
+    public Command createTakeAprilTagScreenshotCommand() {
+        // This is an instant command instead of run/runEnd because we don't want the "requirement" logic on the chassis to happen
+        return new InstantCommand(this::takeAprilTagScreenshot);
     }
 }
