@@ -68,7 +68,7 @@ public class CombinedCommands {
         BooleanSupplier readyToLaunchSupplier = () -> {
             double blueMinX = 10.2;
             double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
-            boolean mechReady = chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
+            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
             boolean distanceReady;
             if (GetAllianceUtil.isBlueAlliance()) {
                 distanceReady = chassis.getPose().getX() < blueMinX;
@@ -77,19 +77,18 @@ public class CombinedCommands {
             }
 
             SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
-            SmartDashboard.putBoolean("Feed: Distance ready", distanceReady);
             SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
-            return mechReady && distanceReady;
+            return mechReady;
         };
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
-            new TurnToPointSwerveDrive(chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, chassis::getPose),
+            // new TurnToPointSwerveDrive(chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, chassis::getPose),
             arm.createMoveArmFeederAngleCommand(),
-            shooter.createShootNoteToAllianceRPMCommand(),
+            shooter.createShootNoteToAllianceRPMCommand()
 
             // Then, once they are all deemed ready, run the intake and vibrate the controller
-            Commands.waitUntil(readyToLaunchSupplier).andThen(
-                intake.createMoveIntakeInCommand().alongWith(new VibrateControllerTimedCommand(joystick, 1)))
+//            Commands.waitUntil(readyToLaunchSupplier).andThen(
+//                intake.createMoveIntakeInCommand().alongWith(new VibrateControllerTimedCommand(joystick, 1)))
         ).withName("Full Field Feed Piece");
     }
 
