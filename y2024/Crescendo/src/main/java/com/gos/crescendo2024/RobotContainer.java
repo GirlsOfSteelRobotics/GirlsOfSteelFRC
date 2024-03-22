@@ -173,7 +173,7 @@ public class RobotContainer {
         if (HAS_HANGER) {
             addHangerTestCommands(shuffleboardTab);
 
-            shuffleboardTab.add("Prep Hanger Up", CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem));
+            shuffleboardTab.add("Prep Hanger Up", CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem, m_chassisSubsystem));
         }
     }
 
@@ -395,7 +395,7 @@ public class RobotContainer {
         //hanger
         if (HAS_HANGER) {
             m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToPrepHangerAngleCommand());
-            m_operatorController.y().whileTrue(CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem));
+            m_operatorController.y().whileTrue(CombinedCommands.prepHangingUp(m_driverController, m_armPivotSubsystem, m_hangerSubsystem, m_chassisSubsystem));
             m_operatorController.a().whileTrue(m_hangerSubsystem.createHangerDown());
 
             m_operatorController.x().and(m_operatorController.povUp()).whileTrue(m_hangerSubsystem.createLeftHangerUp());

@@ -106,9 +106,11 @@ public class CombinedCommands {
         );
     }
 
-    public static Command prepHangingUp(CommandXboxController operatorController, ArmPivotSubsystem armPivot, HangerSubsystem hanger) {
+    public static Command prepHangingUp(CommandXboxController driverController, ArmPivotSubsystem armPivot, HangerSubsystem hanger, ChassisSubsystem chassis) {
         return armPivot.createMoveArmToPrepHangerAngleCommand()
-            .andThen(hanger.createAutoUpCommand());
+            .andThen(hanger.createAutoUpCommand())
+            .andThen(()->chassis.setDefaultCommand(new TeleopSwerveDrive(chassis, driverController)));
+
     }
 
 }

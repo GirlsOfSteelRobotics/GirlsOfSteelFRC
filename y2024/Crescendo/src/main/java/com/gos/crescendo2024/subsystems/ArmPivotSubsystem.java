@@ -43,8 +43,8 @@ import java.util.function.Supplier;
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 356);
     public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 9);
-    public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "middleSpeakerScoreAngle", 11); //TODO changeeee -> now 13? - 3/22 make 11?
-    public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 14);
+    public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(false, "middleSpeakerScoreAngle", 11); //TODO changeeee -> now 13? - 3/22 make 11?
+    public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(false, "sideSpeakerScoreAngle", 14);
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
     public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "allianceFeederAngle", 20);
     public static final GosDoubleProperty ARM_PREP_HANGER_ANGLE = new GosDoubleProperty(false, "prepHangerAngle", 90);
