@@ -21,7 +21,7 @@ public class HangerSubsystem extends SubsystemBase {
     private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(false, "Hanger_Down_Speed", -0.3);
     private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(false, "Hanger_Up_Speed", 0.3);
 
-    private static final GosDoubleProperty HANGER_UP_GOAL_POSITION = new GosDoubleProperty(false, "Hanger Up Goal Position", 10);
+    private static final GosDoubleProperty HANGER_UP_GOAL_POSITION = new GosDoubleProperty(false, "Hanger Up Goal Position", 83);
 
     private final SimableCANSparkMax m_leftHangerMotor;
     private final RelativeEncoder m_leftHangerEncoder;
@@ -85,7 +85,7 @@ public class HangerSubsystem extends SubsystemBase {
 
     private PidProperty createPidProperties(SparkPIDController pidController) {
         return new RevPidPropertyBuilder("HangerPid", false, pidController, 0)
-            .addP(0)
+            .addP(0.1)
             .build();
     }
 
