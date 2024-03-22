@@ -26,7 +26,7 @@ public class AprilTagDetection {
 //    private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(4, 4, 8);
 //    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.5, 0.5, 1);
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 8);
-    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 1);
+    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 500);
 
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
