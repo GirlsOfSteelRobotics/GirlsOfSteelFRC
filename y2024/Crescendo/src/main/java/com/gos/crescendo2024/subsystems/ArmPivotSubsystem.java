@@ -315,7 +315,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
-    private Command createMoveArmToAngleCommand(DoubleSupplier angleSupplier) {
+    public Command createMoveArmToAngleCommand(DoubleSupplier angleSupplier) {
         return createResetPidControllerCommand().andThen(
             runEnd(() -> moveArmToAngle(angleSupplier.getAsDouble()), this::stopArmMotor));
     }

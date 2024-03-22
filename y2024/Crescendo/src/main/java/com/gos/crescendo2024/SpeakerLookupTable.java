@@ -14,7 +14,7 @@ public class SpeakerLookupTable {
 
     public SpeakerLookupTable() {
         // tuned GPR - Use camera for distance - no hack value
-        m_table.put(SUBWOOFER_SIZE, 13.0);
+//        m_table.put(SUBWOOFER_SIZE, 13.0);
         m_table.put(1.8, 25.0);
         m_table.put(2.45, 35.0);
         m_table.put(2.99, 37.0);

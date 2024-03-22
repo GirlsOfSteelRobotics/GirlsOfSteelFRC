@@ -8,6 +8,7 @@ import com.gos.crescendo2024.subsystems.HangerSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class CombinedCommands {
@@ -35,6 +37,12 @@ public class CombinedCommands {
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
         return armPivot.createMoveArmToAngleCommand(angle)
+            .alongWith(shooter.createRunSpeakerShotRPMCommand());
+    }
+
+    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, GosDoubleProperty angle) {
+        DoubleSupplier supplier = angle::getValue;
+        return armPivot.createMoveArmToAngleCommand(supplier)
             .alongWith(shooter.createRunSpeakerShotRPMCommand());
     }
 
