@@ -304,6 +304,8 @@ public class RobotContainer {
 
         shuffleboardTab.add("Auto Hanger Up", m_hangerSubsystem.createAutoUpCommand());
         shuffleboardTab.add("Auto Hanger Down", m_hangerSubsystem.createAutoDownCommand());
+
+        shuffleboardTab.add("Hanger reset encoders", m_hangerSubsystem.createResetEncoders());
     }
 
 
