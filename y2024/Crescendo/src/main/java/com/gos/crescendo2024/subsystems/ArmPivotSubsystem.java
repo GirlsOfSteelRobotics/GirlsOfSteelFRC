@@ -59,7 +59,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO;
     private static final boolean USE_ABSOLUTE_ENCODER = false;
 
-    private static final double ALLOWABLE_ERROR = .5;
+    private static final double ALLOWABLE_ERROR = .2;
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
