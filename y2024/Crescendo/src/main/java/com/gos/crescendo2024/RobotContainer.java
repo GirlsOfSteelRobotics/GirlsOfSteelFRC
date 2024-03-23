@@ -160,7 +160,6 @@ public class RobotContainer {
         // PropertyManager.purgeExtraKeys();
 
         DriverStation.silenceJoystickConnectionWarning(true);
-        DataLogManager.start();
     }
 
     private void createEllieCommands() {

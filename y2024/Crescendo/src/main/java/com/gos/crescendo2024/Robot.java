@@ -6,6 +6,8 @@
 package com.gos.crescendo2024;
 
 import com.gos.lib.alerts.PowerDistributionAlerts;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -61,6 +63,10 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_powerDistributionAlert.checkAlerts();
+
+        if (DriverStation.isFMSAttached()) {
+            DataLogManager.start();
+        }
     }
 
 
