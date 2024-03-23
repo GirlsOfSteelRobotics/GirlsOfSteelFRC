@@ -66,29 +66,35 @@ public class CombinedCommands {
 
     public static Command feedPieceAcrossField(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
         BooleanSupplier readyToLaunchSupplier = () -> {
-            double blueMinX = 10.2;
-            double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
-            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
-            boolean distanceReady;
-            if (GetAllianceUtil.isBlueAlliance()) {
-                distanceReady = chassis.getPose().getX() < blueMinX;
-            } else {
-                distanceReady = chassis.getPose().getX() > redMaxX;
-            }
-
-            SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
-            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
-            return mechReady;
+//            double blueMinX = 10.2;
+//            double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
+//            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
+//            boolean distanceReady;
+//            if (GetAllianceUtil.isBlueAlliance()) {
+//                distanceReady = chassis.getPose().getX() < blueMinX;
+//            } else {
+//                distanceReady = chassis.getPose().getX() > redMaxX;
+//            }
+//
+//            SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
+//            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
+            return arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
         };
+
+
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
             // new TurnToPointSwerveDrive(chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, chassis::getPose),
             arm.createMoveArmFeederAngleCommand(),
-            shooter.createShootNoteToAllianceRPMCommand()
+            shooter.createShootNoteToAllianceRPMCommand(),
 
+            //face alliance and have anna translate across
+            chassis.createTurnToAngleCommand(0), //might need to be 180 to face alliance
             // Then, once they are all deemed ready, run the intake and vibrate the controller
 //            Commands.waitUntil(readyToLaunchSupplier).andThen(
 //                intake.createMoveIntakeInCommand().alongWith(new VibrateControllerTimedCommand(joystick, 1)))
+            Commands.waitUntil(readyToLaunchSupplier).andThen(
+                new VibrateControllerTimedCommand(joystick, 1))
         ).withName("Full Field Feed Piece");
     }
 
