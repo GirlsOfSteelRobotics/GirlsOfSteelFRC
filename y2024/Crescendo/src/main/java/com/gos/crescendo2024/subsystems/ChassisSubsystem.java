@@ -48,6 +48,7 @@ import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;

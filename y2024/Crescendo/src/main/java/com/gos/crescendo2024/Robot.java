@@ -9,6 +9,7 @@ import com.gos.lib.alerts.PowerDistributionAlerts;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -63,10 +64,6 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_powerDistributionAlert.checkAlerts();
-
-        if (DriverStation.isFMSAttached()) {
-            DataLogManager.start();
-        }
     }
 
 
@@ -81,6 +78,10 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
         m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
+
+        if (DriverStation.isFMSAttached()) {
+            DataLogManager.start();
+        }
     }
 
 
@@ -89,6 +90,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        if (RobotBase.isReal()) {
+            DataLogManager.start();
+        }
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -108,6 +112,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        if (RobotBase.isReal()) {
+            DataLogManager.start();
+        }
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

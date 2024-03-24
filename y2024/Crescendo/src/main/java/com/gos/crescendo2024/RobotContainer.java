@@ -29,7 +29,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -351,16 +350,16 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //Speaker Shooting
-//        m_driverController.rightBumper().whileTrue(
-//            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
-//                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+        //        m_driverController.rightBumper().whileTrue(
+        //            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
+        //                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
 
         //One-Button speaker shooting - turns butt to speaker tho
-      /*  m_driverController.rightBumper().whileTrue(
+        /*  m_driverController.rightBumper().whileTrue(
             SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, 100)
         );
-*/
+        */
         //go to floor
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
@@ -385,9 +384,9 @@ public class RobotContainer {
         m_driverController.rightBumper().whileTrue(CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //drive to note
-//        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()
-//            .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
-//            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
+        //        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()
+        //            .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
+        //            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
         /////////////////////////////
         // Operator Controller

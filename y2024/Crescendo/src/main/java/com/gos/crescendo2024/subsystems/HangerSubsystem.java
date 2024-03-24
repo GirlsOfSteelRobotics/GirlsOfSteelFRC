@@ -92,9 +92,6 @@ public class HangerSubsystem extends SubsystemBase {
     public void moveHangerToPosition(double position) {
         m_leftPidController.setReference(position, CANSparkBase.ControlType.kPosition);
         m_rightPidController.setReference(position, CANSparkBase.ControlType.kPosition);
-
-
-        System.out.println("Trying to go to " + position + " " + m_leftHangerMotor.getAppliedOutput() + " " + m_rightHangerMotor.getAppliedOutput());
     }
 
 

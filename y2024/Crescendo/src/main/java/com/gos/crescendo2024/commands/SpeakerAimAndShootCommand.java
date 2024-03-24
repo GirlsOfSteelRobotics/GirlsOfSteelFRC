@@ -110,7 +110,6 @@ public final class SpeakerAimAndShootCommand extends Command {
             DEFAULT_INTAKE_TIME);
     }
 
-
     public static SpeakerAimAndShootCommand createShootWhileStationary(ArmPivotSubsystem armPivotSubsystem,
                                                                        ChassisSubsystem chassisSubsystem,
                                                                        IntakeSubsystem intakeSubsystem,
@@ -152,14 +151,14 @@ public final class SpeakerAimAndShootCommand extends Command {
         m_chassisSubsystem.turnButtToFacePoint(m_robotPoseProvider.get(), speaker, 0, 0);
         m_shooterSubsystem.setPidRpm(m_shooterRpmGoalSupplier.getAsDouble());
 
-        if (m_debouncer.calculate(m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal())) {
+        boolean isReadyToShoot = m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal();
+        if (m_debouncer.calculate(isReadyToShoot)) {
             m_runIntake = true;
             m_intakeTimer.start();
         }
 
         if (m_runIntake) {
             m_intakeSubsystem.intakeIn();
-            m_chassisSubsystem.takeAprilTagScreenshot();
         }
     }
 

@@ -1,20 +1,15 @@
 package com.gos.crescendo2024.commands;
 
-import com.gos.crescendo2024.FieldConstants;
-import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.HangerSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
-import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.BooleanSupplier;
@@ -47,21 +42,6 @@ public class CombinedCommands {
             .alongWith(shooter.createRunSpeakerShotRPMCommand());
     }
 
-//    //TODO auto shoot (no aim) for playoffs - NEED TO TEST
-//    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, IntakeSubsystem intake, GosDoubleProperty angle) {
-//        DoubleSupplier supplier = angle::getValue;
-//        return armPivot.createMoveArmToAngleCommand(supplier)
-//            .alongWith(shooter.createRunSpeakerShotRPMCommand())
-//            .alongWith(
-//                new ConditionalCommand(
-//                    intake.createMoveIntakeInCommand(),
-//                    Commands.none(),
-//                    () -> { return armPivot.isArmAtGoal() && shooter.isShooterAtGoal();} //ready to shoot boolean supplier
-//                )
-//            );
-//
-//    }
-
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
             .alongWith(shooter.createRunAmpShotRPMCommand())
@@ -80,20 +60,21 @@ public class CombinedCommands {
         return new VibrateControllerWhileTrueCommand(controller, isReadySupplier);
     }
 
+    // TODO(buckeye) Create an automated and non-automated version
     public static Command feedPieceAcrossField(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
         BooleanSupplier readyToLaunchSupplier = () -> {
-//            double blueMinX = 10.2;
-//            double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
-//            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
-//            boolean distanceReady;
-//            if (GetAllianceUtil.isBlueAlliance()) {
-//                distanceReady = chassis.getPose().getX() < blueMinX;
-//            } else {
-//                distanceReady = chassis.getPose().getX() > redMaxX;
-//            }
-//
-//            SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
-//            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
+            //            double blueMinX = 10.2;
+            //            double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
+            //            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
+            //            boolean distanceReady;
+            //            if (GetAllianceUtil.isBlueAlliance()) {
+            //                distanceReady = chassis.getPose().getX() < blueMinX;
+            //            } else {
+            //                distanceReady = chassis.getPose().getX() > redMaxX;
+            //            }
+            //
+            //            SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
+            //            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
             return arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
         };
 
@@ -107,23 +88,11 @@ public class CombinedCommands {
             //face alliance and have anna translate across
             //chassis.createTurnToAngleCommand(0), //might need to be 180 to face alliance
             // Then, once they are all deemed ready, run the intake and vibrate the controller
-//            Commands.waitUntil(readyToLaunchSupplier).andThen(
-//                intake.createMoveIntakeInCommand().alongWith(new VibrateControllerTimedCommand(joystick, 1)))
+            //            Commands.waitUntil(readyToLaunchSupplier).andThen(
+            //                intake.createMoveIntakeInCommand().alongWith(new VibrateControllerTimedCommand(joystick, 1)))
             Commands.waitUntil(readyToLaunchSupplier).andThen(
                 new VibrateControllerTimedCommand(joystick, 1))
         ).withName("Full Field Feed Piece");
-    }
-
-    public static Command autoSpeakerAimAndShootCatchMistake(ArmPivotSubsystem arm, ChassisSubsystem chassis, IntakeSubsystem intake, ShooterSubsystem shooter) {
-        return
-            SpeakerAimAndShootCommand.createShootWhileStationary(arm, chassis, intake, shooter)
-                .andThen(new ConditionalCommand(
-                    intake.createMoveIntakeOutCommand().withTimeout(.2)
-                        .andThen(SpeakerAimAndShootCommand.createShootWhileStationary(arm, chassis, intake, shooter)),
-                    Commands.none(),
-                    intake::hasGamePiece
-                ));
-
     }
 
     public static Command autoScoreInAmp(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
@@ -138,10 +107,9 @@ public class CombinedCommands {
 
     public static Command prepHangingUp(CommandXboxController driverController, ArmPivotSubsystem armPivot, HangerSubsystem hanger, ChassisSubsystem chassis) {
         return armPivot.createMoveArmToPrepHangerAngleCommand()
-            .andThen(()->chassis.setDefaultCommand(new TeleopSwerveDrive(chassis, driverController)))
+            .andThen(() -> chassis.setDefaultCommand(new TeleopSwerveDrive(chassis, driverController)))
             .andThen(hanger.createAutoUpCommand());
 
 
     }
-
 }
