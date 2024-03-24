@@ -41,26 +41,26 @@ public class CombinedCommands {
     }
 
     //what we ran during quals
-//    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, GosDoubleProperty angle) {
-//        DoubleSupplier supplier = angle::getValue;
-//        return armPivot.createMoveArmToAngleCommand(supplier)
-//            .alongWith(shooter.createRunSpeakerShotRPMCommand());
-//    }
-
-    //TODO auto shoot (no aim) for playoffs - NEED TO TEST
-    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, IntakeSubsystem intake, GosDoubleProperty angle) {
+    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, GosDoubleProperty angle) {
         DoubleSupplier supplier = angle::getValue;
         return armPivot.createMoveArmToAngleCommand(supplier)
-            .alongWith(shooter.createRunSpeakerShotRPMCommand())
-            .alongWith(
-                new ConditionalCommand(
-                    intake.createMoveIntakeInCommand(),
-                    Commands.none(),
-                    () -> { return armPivot.isArmAtGoal() && shooter.isShooterAtGoal();} //ready to shoot boolean supplier
-                )
-            );
-
+            .alongWith(shooter.createRunSpeakerShotRPMCommand());
     }
+
+//    //TODO auto shoot (no aim) for playoffs - NEED TO TEST
+//    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, IntakeSubsystem intake, GosDoubleProperty angle) {
+//        DoubleSupplier supplier = angle::getValue;
+//        return armPivot.createMoveArmToAngleCommand(supplier)
+//            .alongWith(shooter.createRunSpeakerShotRPMCommand())
+//            .alongWith(
+//                new ConditionalCommand(
+//                    intake.createMoveIntakeInCommand(),
+//                    Commands.none(),
+//                    () -> { return armPivot.isArmAtGoal() && shooter.isShooterAtGoal();} //ready to shoot boolean supplier
+//                )
+//            );
+//
+//    }
 
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
