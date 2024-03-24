@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3643299341201782,
-      "y": 5.521880149841309
+      "x": 1.3125526905059814,
+      "y": 5.549719333648682
     },
-    "rotation": 1.0612279046282387e-31
+    "rotation": 1.2074627247189273e-31
   },
   "command": {
     "type": "sequential",
@@ -37,6 +37,31 @@
           }
         },
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ThreeNoteMiddle12.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "MoveArmToSpeakerAngle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterDefaultRpm"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
@@ -49,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteMiddle12.2"
+                  "pathName": "ThreeNoteMiddle12.3"
                 }
               },
               {
@@ -68,7 +93,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteMiddle12.3"
+                  "pathName": "ThreeNoteMiddle12.4"
                 }
               }
             ]

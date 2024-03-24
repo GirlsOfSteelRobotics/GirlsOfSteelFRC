@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class DisabledPatterns {
-    private static final GosBooleanProperty ALWAYS_SHOW_LIGHTS = new GosBooleanProperty(false, "Led: Always Run Disabled Pattern", false);
+    private static final GosBooleanProperty ALWAYS_SHOW_LIGHTS = new GosBooleanProperty(false, "Led: Always Run Disabled Pattern", true);
 
     private final Autos m_autoModeFactory;
     private final AlertPatterns m_alert;

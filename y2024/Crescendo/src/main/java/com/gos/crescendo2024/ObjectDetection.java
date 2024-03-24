@@ -40,9 +40,11 @@ public class ObjectDetection {
 
         if (RobotBase.isSimulation()) {
             m_cameraSim = new PhotonCameraSim(m_photonCamera);
-            m_cameraSim.enableRawStream(true);
-            m_cameraSim.enableProcessedStream(true);
-            m_cameraSim.enableDrawWireframe(true);
+
+            boolean enableFancySim = false;
+            m_cameraSim.enableRawStream(enableFancySim);
+            m_cameraSim.enableProcessedStream(enableFancySim);
+            m_cameraSim.enableDrawWireframe(enableFancySim);
 
 
             m_visionSim = new VisionSystemSim("ObjectDetection");

@@ -446,5 +446,45 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/allianceFeederAngle",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger Up Position",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/HangerPid.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/prepHangerAngle",
+    "type": "double",
+    "value": 90.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger Up Goal Position",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

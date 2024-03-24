@@ -15,13 +15,13 @@ public class RobotExtrinsics {
     // Camera Extrinsics
     public static final Transform3d ROBOT_TO_CAM_OBJET_DETECTION = new Transform3d(
         new Translation3d(
-            RobotExtrinsics.ROBOT_LENGTH / 2  + 0.2, // 20cm in front of frame
-            Units.inchesToMeters(0),
+            0,
+            0,
             .20), // 20cm off the ground
         new Rotation3d(
             Math.toRadians(0),
-            Math.toRadians(9),
-            Math.toRadians(0)));
+            Math.toRadians(11),
+            Math.toRadians(3)));
 
     public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS;
 
