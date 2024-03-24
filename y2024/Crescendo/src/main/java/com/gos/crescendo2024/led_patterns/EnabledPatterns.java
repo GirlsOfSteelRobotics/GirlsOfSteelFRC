@@ -1,6 +1,7 @@
 package com.gos.crescendo2024.led_patterns;
 
 import com.gos.crescendo2024.led_patterns.subpatterns.HasPiecePattern;
+import com.gos.crescendo2024.led_patterns.subpatterns.InShooterPattern;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
@@ -24,6 +25,7 @@ public class EnabledPatterns {
     //    private final AprilTagPattern m_aprilTagsSeen;
     private final LEDBoolean m_hasPieceConstant;
     private final HasPiecePattern m_hasPiecePattern;
+    private final InShooterPattern m_inShooterPattern;
 
     public EnabledPatterns(AddressableLEDBuffer buffer, int numberOfLeds, IntakeSubsystem intake, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         m_intake = intake;
@@ -32,6 +34,7 @@ public class EnabledPatterns {
         m_arm = arm;
 
         // TODO(gpr) Refactor patterns to show april tags and always-present "has piece"
+        m_inShooterPattern = new InShooterPattern(buffer, numberOfLeds);
         m_hasPiecePattern = new HasPiecePattern(buffer, numberOfLeds);
         m_armGood = new LEDBoolean(buffer, 0, 10, Color.kGreen, Color.kRed);
         m_chassisGood = new LEDBoolean(buffer, 10, 20, Color.kGreen, Color.kRed);
@@ -50,5 +53,7 @@ public class EnabledPatterns {
         m_hasPieceConstant.setStateAndWrite(m_intake.hasGamePiece());
         m_hasPiecePattern.update(m_intake.hasGamePiece());
         m_hasPiecePattern.writeLeds();
+        m_inShooterPattern.update(m_shooter.isPieceInShooter());
+        m_inShooterPattern.writeLeds();
     }
 }
