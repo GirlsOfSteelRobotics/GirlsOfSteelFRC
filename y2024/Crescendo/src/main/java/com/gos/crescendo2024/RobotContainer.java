@@ -30,6 +30,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -69,6 +70,8 @@ public class RobotContainer {
 
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_JOYSTICK);
+
+    private final CommandXboxController m_driverStationLedController = new CommandXboxController(2);
 
     private final Autos m_autonomousFactory;
 
@@ -386,6 +389,18 @@ public class RobotContainer {
             m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
             m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
         }
+
+        m_driverStationLedController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+
+        new Trigger(m_intakeSubsystem::hasGamePiece).whileTrue(Commands.run(() -> {
+            m_driverStationLedController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, .1);
+            System.out.println("Has game peice?...");
+        }));
+
+        new Trigger(m_intakeSubsystem::hasGamePiece).whileFalse(Commands.run(() -> {
+            m_driverStationLedController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+            System.out.println("Has game NO peice?...");
+        }));
     }
 
 

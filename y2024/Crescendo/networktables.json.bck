@@ -442,7 +442,7 @@
   {
     "name": "/Preferences/Shoot note to alliance with rpm",
     "type": "double",
-    "value": 5000.0,
+    "value": 2000.0,
     "properties": {
       "persistent": true
     }
