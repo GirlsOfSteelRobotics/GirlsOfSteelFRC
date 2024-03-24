@@ -2,7 +2,6 @@
     tab-name="Drivers"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-sendable-chooser
         source-provider="NetworkTables"
         selected="leave wing"
@@ -79,10 +78,11 @@
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(240px, 120px); width: 631.2px; height: 400px;"
+        style="transform: translate(206.4px, 314.413px); width: 631.2px; height: 400px;"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
@@ -235,7 +235,7 @@
     ></frc-robot-command><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(836.012px, 127.201px);"
+        style="transform: translate(192.012px, 0.001003px);"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
@@ -413,6 +413,13 @@
         true-color="#ffa200"
         false-color="#b4a7a7"
         label="Has Piece"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(181.8px, 250.4px);"
+        source-key="/Shooter Subsystem/Is Piece in Shooter"
+        true-color="#ff8800"
+        false-color="#f0e0e0"
+        label="Piece In Shooter"
     ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Chassis"
     slot="tab"
@@ -476,7 +483,11 @@
         game="Crescendo"
         grid-size="1"
     >
-    </frc-field-wrapper></dashboard-tab><dashboard-tab
+    </frc-field-wrapper><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(285px, 212px);"
+        source-key="/Shuffleboard/test commands/Teleop: Normal Swerve Drive"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Pit"
     slot="tab"
     source-provider="NetworkTables"
@@ -496,4 +507,52 @@
         source-provider="NetworkTables"
         style="transform: translate(1088px, 220px);"
         source-key="/Shuffleboard/test commands/Chassis Push"
-    ></frc-robot-command></dashboard-tab>
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(151px, 99px);"
+        source-key="/Shuffleboard/test commands/Clear Sticky Faults"
+    ></frc-robot-command><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(318px, 225px);"
+        source-key="/SmartDashboard/Is Tim Bot"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(360px, 357px);"
+        source-key="/SmartDashboard/Is Competition Robot"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    tab-name="Hanger"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(166px, 412px);"
+        source-key="/Shuffleboard/test commands/Left Hanger Up"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(338px, 436px);"
+        source-key="/Shuffleboard/test commands/Right Hanger Up"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(493px, 432px);"
+        source-key="/Shuffleboard/test commands/Hanger Up"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(210px, 544px);"
+        source-key="/Shuffleboard/test commands/Left Hanger Down"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(358px, 553px);"
+        source-key="/Shuffleboard/test commands/Right Hanger Down"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(560px, 576px);"
+        source-key="/Shuffleboard/test commands/Hanger Down"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Hanger to Coast"
+        style="transform: translate(572px, 278px);"
+    ></frc-robot-command><frc-preferences-wrapper
+        source-key="/Preferences"
+        source-provider="NetworkTables"
+        style="transform: translate(120px, 75px); width: 429.2px; height: 332.4px;"
+    ></frc-preferences-wrapper></dashboard-tab>

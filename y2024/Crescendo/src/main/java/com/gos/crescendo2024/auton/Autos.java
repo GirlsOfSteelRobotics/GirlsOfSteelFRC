@@ -16,49 +16,55 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 public final class Autos {
     public enum StartPosition {
-        STARTING_LOCATION_TOP,
+        STARTING_LOCATION_AMP_SIDE,
         STARTING_LOCATION_MIDDLE,
-        STARTING_LOCATION_BACK,
+        STARTING_LOCATION_SOURCE_SIDE,
         CURRENT_LOCATION
     }
 
     public enum AutoModes {
         //four note auto
-        FOUR_NOTE("FourNoteSpeaker", StartPosition.STARTING_LOCATION_TOP),
-        //two note autos - left
-        //        TWO_NOTE_LEFT_0("TwoNoteSpeakerLeft0"),
-        //        TWO_NOTE_LEFT_3("TwoNoteSpeakerLeft3"),
-        //        TWO_NOTE_LEFT_4("TwoNoteSpeakerLeft4"),
+        FOUR_NOTE_012("FourNoteAmpSide012Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 1, 2)),
+        FOUR_NOTE_034("FourNoteAmpSide034Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 3, 4)),
+        FOUR_NOTE_045("FourNoteAmpSide045Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 4, 5)),
+        FOUR_NOTE_MIDDLE_012("FourNoteMiddle012Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
+        // Three Note
+        THREE_NOTE_12("ThreeNoteMiddle12Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 2)),
+        THREE_NOTE_76("ThreeNotesSourceSide76Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7, 6)),
+        THREE_NOTE_65("ThreeNotesSourceSide65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6, 5)),
+        //two note autos - Amp Side
         //two note autos - middle
-        TWO_NOTE_MIDDLE_1("TwoNoteSpeakerMiddle1", StartPosition.STARTING_LOCATION_MIDDLE),
-        TWO_NOTE_MIDDLE_2("TwoNoteSpeakerMiddle2", StartPosition.STARTING_LOCATION_MIDDLE),
-        //        TWO_NOTE_MIDDLE_5("TwoNoteSpeakerMiddle5"),
-        //        TWO_NOTE_MIDDLE_6("TwoNoteSpeakerMiddle6"),
-        //two note autos - right
-        TWO_NOTE_RIGHT_6("TwoNoteSpeakerRight6", StartPosition.STARTING_LOCATION_BACK),
-        TWO_NOTE_RIGHT_7("TwoNotesSpeakerRight7", StartPosition.STARTING_LOCATION_BACK),
-        //leave wing
-        LEAVE_WING("LeaveWing", StartPosition.CURRENT_LOCATION),
-        PRELOAD_AND_LEAVE_WING("OneNoteSpeakerAndLeaveWing", StartPosition.CURRENT_LOCATION),
+        TWO_NOTE_MIDDLE_1("TwoNoteMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1)),
+        TWO_NOTE_MIDDLE_2("TwoNoteMiddle2Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(2)),
+        //two note autos - Source Side
+        TWO_NOTE_RIGHT_6("TwoNoteSourceSide6Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
+        TWO_NOTE_RIGHT_7("TwoNoteSourceSide7Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7)),
         //just shoot preload
-        PRELOAD_AND_SHOOT("JustShoot", StartPosition.CURRENT_LOCATION);
+        ONE_NOTE_JUST_SHOOT("OneNoteJustShoot", StartPosition.CURRENT_LOCATION, List.of()),
+        // Preload and drive
+        ONE_NOTE_AND_LEAVE_WING("OneNoteSourceSideAndLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
+        // No shooting
+        NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of());
 
 
 
         public final String m_modeName;
         public final StartPosition m_location;
+        public final List<Integer> m_notes;
 
-        AutoModes(String modeName, StartPosition location) {
+        AutoModes(String modeName, StartPosition location, List<Integer> notes) {
             m_modeName = modeName;
             m_location = location;
+            m_notes = notes;
         }
     }
 
-    private static final AutoModes DEFAULT_MODE = AutoModes.PRELOAD_AND_SHOOT;
+    private static final AutoModes DEFAULT_MODE = AutoModes.ONE_NOTE_JUST_SHOOT;
 
     private final SendableChooser<AutoModes> m_autonChooser;
 

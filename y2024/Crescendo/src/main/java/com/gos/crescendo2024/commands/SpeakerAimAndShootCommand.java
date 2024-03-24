@@ -8,10 +8,8 @@ import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -29,22 +27,18 @@ public final class SpeakerAimAndShootCommand extends Command {
     private final Supplier<Pose2d> m_robotPoseProvider;
     private boolean m_runIntake;
 
-    private final CommandXboxController m_controller;
-
     private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem,
                                      ChassisSubsystem chassisSubsystem,
                                      IntakeSubsystem intakeSubsystem,
                                      ShooterSubsystem shooterSubsystem,
                                      Supplier<Pose2d> poseSupplier,
                                      DoubleSupplier shooterRpmGoalSupplier,
-                                     DoubleSupplier armAngleGoalSupplier,
-                                      CommandXboxController controller) {
+                                     DoubleSupplier armAngleGoalSupplier) {
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
         this.m_shooterSubsystem = shooterSubsystem;
         this.m_intakeTimer = new Timer();
-        this.m_controller = controller;
 
         m_armAngleGoalSupplier = armAngleGoalSupplier;
         m_shooterRpmGoalSupplier = shooterRpmGoalSupplier;
@@ -58,8 +52,8 @@ public final class SpeakerAimAndShootCommand extends Command {
         ChassisSubsystem chassisSubsystem,
         IntakeSubsystem intakeSubsystem,
         ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier armAngleGoalSupplier = ArmPivotSubsystem.ARM_DEFAULT_SPEAKER_ANGLE::getValue;
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier armAngleGoalSupplier = ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.SPEAKER_SHOT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
@@ -67,8 +61,7 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             robotPoseProvider,
             shooterRpmGoalSupplier,
-            armAngleGoalSupplier,
-            null);
+            armAngleGoalSupplier);
     }
 
     public static SpeakerAimAndShootCommand createWithFixedArmAngle(ArmPivotSubsystem armPivotSubsystem,
@@ -76,7 +69,7 @@ public final class SpeakerAimAndShootCommand extends Command {
                                                                     IntakeSubsystem intakeSubsystem,
                                                                     ShooterSubsystem shooterSubsystem,
                                                                     DoubleSupplier armAngleGoalSupplier) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.SPEAKER_SHOT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> robotPoseProvider = chassisSubsystem::getPose;
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
             chassisSubsystem,
@@ -84,15 +77,14 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             robotPoseProvider,
             shooterRpmGoalSupplier,
-            armAngleGoalSupplier,
-            null);
+            armAngleGoalSupplier);
     }
 
     public static SpeakerAimAndShootCommand createShootWhileDrive(ArmPivotSubsystem armPivotSubsystem,
                                                                   ChassisSubsystem chassisSubsystem,
                                                                   IntakeSubsystem intakeSubsystem,
                                                                   ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.SPEAKER_SHOT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
@@ -101,15 +93,14 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             pose,
             shooterRpmGoalSupplier,
-            pivotAngle,
-            null);
+            pivotAngle);
     }
 
     public static SpeakerAimAndShootCommand createShootWhileStationary(ArmPivotSubsystem armPivotSubsystem,
                                                                   ChassisSubsystem chassisSubsystem,
                                                                   IntakeSubsystem intakeSubsystem,
                                                                   ShooterSubsystem shooterSubsystem) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
+        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.SPEAKER_SHOT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getPose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
         return new SpeakerAimAndShootCommand(armPivotSubsystem,
@@ -118,27 +109,7 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             pose,
             shooterRpmGoalSupplier,
-            pivotAngle,
-            null);
-    }
-
-    public static SpeakerAimAndShootCommand driverControllerPractice(ArmPivotSubsystem armPivotSubsystem,
-                                                                     ChassisSubsystem chassisSubsystem,
-                                                                     IntakeSubsystem intakeSubsystem,
-                                                                     ShooterSubsystem shooterSubsystem,
-                                                                     CommandXboxController controller) {
-        DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.DEFAULT_SHOOTER_RPM::getValue;
-        Supplier<Pose2d> pose = chassisSubsystem::getFuturePose;
-        DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
-        return new SpeakerAimAndShootCommand(armPivotSubsystem,
-            chassisSubsystem,
-            intakeSubsystem,
-            shooterSubsystem,
-            pose,
-            shooterRpmGoalSupplier,
-            pivotAngle,
-            controller);
-
+            pivotAngle);
     }
 
     @Override
@@ -151,10 +122,7 @@ public final class SpeakerAimAndShootCommand extends Command {
 
     @Override
     public void execute() {
-        System.out.println("Before: " + FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
         Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
-
-        System.out.println("After: " + speaker);
 
         m_armPivotSubsystem.moveArmToAngle(m_armAngleGoalSupplier.getAsDouble());
         m_chassisSubsystem.turnButtToFacePoint(m_robotPoseProvider.get(), speaker, 0, 0);
@@ -163,9 +131,6 @@ public final class SpeakerAimAndShootCommand extends Command {
         if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {
             m_runIntake = true;
             m_intakeTimer.start();
-            if (m_controller != null) {
-                m_controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.50);
-            }
         }
 
         if (m_runIntake) {

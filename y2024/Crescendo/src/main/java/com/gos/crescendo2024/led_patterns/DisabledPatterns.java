@@ -8,9 +8,12 @@ import com.gos.crescendo2024.led_patterns.subpatterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.subpatterns.DavidDrivePattern;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.lib.properties.GosBooleanProperty;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class DisabledPatterns {
+    private static final GosBooleanProperty ALWAYS_SHOW_LIGHTS = new GosBooleanProperty(false, "Led: Always Run Disabled Pattern", false);
 
     private final Autos m_autoModeFactory;
     private final AlertPatterns m_alert;
@@ -41,12 +44,15 @@ public class DisabledPatterns {
     }
 
     public void writeAutoPattern() {
-        Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
-        m_autoModePattern.writeAutoModePattern(autoMode);
-        m_alert.writeLEDs();
-        m_davidDriveOn.writeLED();
-        m_armEncodersPattern.writeLeds();
-        m_autoDelayPattern.writeLeds();
+        // Only write the lights when we are connected the FMS, or if we have the override set for home testing
+        if (DriverStation.isFMSAttached() || ALWAYS_SHOW_LIGHTS.getValue()) {
+            Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
+            m_autoModePattern.writeAutoModePattern(autoMode);
+            m_alert.writeLEDs();
+            m_davidDriveOn.writeLED();
+            m_armEncodersPattern.writeLeds();
+            m_autoDelayPattern.writeLeds();
+        }
     }
 
 }

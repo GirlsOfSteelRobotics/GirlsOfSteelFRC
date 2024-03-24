@@ -5,9 +5,15 @@
 
 package com.gos.crescendo2024;
 
+import com.gos.lib.alerts.PowerDistributionAlerts;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.littletonrobotics.frc2023.util.Alert;
+
+import java.util.List;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -20,6 +26,13 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+    private final PowerDistribution m_powerDistribution = new PowerDistribution(16, PowerDistribution.ModuleType.kRev);
+    private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution, List.of(
+        0, 1, 2, 4, 5, 23
+    ));
+
+    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
+    private static final double LOW_BATTERY_VOLTAGE = 11.9;
 
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -47,6 +60,7 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        m_powerDistributionAlert.checkAlerts();
     }
 
 
@@ -60,6 +74,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
     }
 
 

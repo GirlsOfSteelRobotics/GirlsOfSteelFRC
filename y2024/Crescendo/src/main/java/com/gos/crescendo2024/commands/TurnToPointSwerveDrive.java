@@ -26,7 +26,8 @@ public class TurnToPointSwerveDrive extends BaseTeleopSwerve {
 
         if (!m_faceButt) {
             m_subsystem.turnToFacePoint(
-                point, yLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
+                point,
+                yLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED,
                 xLeft * TRANSLATION_DAMPING.getValue() * ChassisSubsystem.MAX_TRANSLATION_SPEED
             );
         } else {
