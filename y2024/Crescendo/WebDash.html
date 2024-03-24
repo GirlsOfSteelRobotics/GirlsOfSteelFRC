@@ -4,7 +4,7 @@
     source-provider="NetworkTables"
 ><frc-sendable-chooser
         source-provider="NetworkTables"
-        selected="leave wing"
+        selected="ThreeNotesSourceSide76Choreo"
         style="transform: translate(37px, 143px);"
         source-key="/SmartDashboard/Auto Chooser"
         options="[]"
@@ -30,7 +30,7 @@
     ></frc-robot-command><super-structure
         source-key="/SmartDashboard/super structure"
         source-provider="NetworkTables"
-        style="width: 460px; height: 315px; transform: translate(734px, 255px);"
+        style="width: 460px; height: 315px; transform: translate(1010px, 296.6px);"
     >
     </super-structure><frc-robot-command
         source-provider="NetworkTables"
@@ -51,7 +51,7 @@
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
         source-provider="NetworkTables"
-        style="transform: translate(723px, 0px);"
+        style="transform: translate(26.2px, 393.6px);"
         game="Crescendo"
         grid-size="1"
     >
@@ -61,24 +61,27 @@
         source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)"
     ></frc-robot-command><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(334px, 52px);"
+        style="transform: translate(259.6px, 18.4px);"
         source-key="/Arm Pivot Subsystem/Arm At Goal"
         label="Arm At Goal"
     ></frc-boolean-box><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(332px, 135px);"
+        style="transform: translate(260px, 93.4px);"
         source-key="/Shooter Subsystem/Shooter At Goal"
         label="Shooter At Goal"
     ></frc-boolean-box><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(333px, 215px);"
+        style="transform: translate(261px, 166.2px);"
         source-key="/Chassis/At Angle Setpoint"
         label="Chassis At Goal"
-    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    ></frc-boolean-box><frc-preferences-wrapper
+        source-key="/Preferences"
+        source-provider="NetworkTables"
+        style="transform: translate(529.388px, 11.575px); width: 573.762px; height: 561.975px;"
+    ></frc-preferences-wrapper></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -148,6 +151,7 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -178,6 +182,7 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -208,6 +213,7 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -310,6 +316,7 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -340,6 +347,7 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -374,6 +382,7 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -487,6 +496,22 @@
         source-provider="NetworkTables"
         style="transform: translate(285px, 212px);"
         source-key="/Shuffleboard/test commands/Teleop: Normal Swerve Drive"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(294px, 288px);"
+        source-key="/Shuffleboard/test commands/Chassis drive to note"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(474px, 141px);"
+        source-key="/Shuffleboard/Ellie/Chassis: Believe April Tags"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(508px, 273px);"
+        source-key="/Shuffleboard/test commands/Chassis Push Forward"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(513px, 340px);"
+        source-key="/Shuffleboard/test commands/Chassis Push Sideways"
     ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Pit"
     slot="tab"
@@ -523,6 +548,7 @@
     tab-name="Hanger"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(166px, 412px);"
@@ -555,4 +581,66 @@
         source-key="/Preferences"
         source-provider="NetworkTables"
         style="transform: translate(120px, 75px); width: 429.2px; height: 332.4px;"
-    ></frc-preferences-wrapper></dashboard-tab>
+    ></frc-preferences-wrapper><vaadin-number-field
+        label="Label"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(645px, 117px);"
+        source-key="/Hanger Subsystem/Left Pos: "
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-2606"
+            aria-labelledby="label-vaadin-number-field-2752"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-2752"
+            for="vaadin-number-field-2606"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-1766"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Label"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(786px, 221px);"
+        source-key="/Hanger Subsystem/Right Pos"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-2607"
+            aria-labelledby="label-vaadin-number-field-2753"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-2753"
+            for="vaadin-number-field-2607"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-1767"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab>

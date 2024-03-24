@@ -36,12 +36,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
@@ -49,6 +48,7 @@ import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
@@ -204,7 +204,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private boolean useAprilTagsForPoseEstimation() {
-        return USE_APRIL_TAGS.getValue() && !DriverStation.isAutonomousEnabled();
+        return USE_APRIL_TAGS.getValue();
     }
 
 
@@ -306,6 +306,14 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_photonVisionSubsystem.getLatestResult().targets.size();
     }
 
+    public void syncOdometryAndPoseEstimator() {
+        m_swerveDrive.resetOdometry(m_swerveDrive.getEstimatedPosition());
+    }
+
+    public void takeAprilTagScreenshot() {
+        m_photonVisionSubsystem.takeScreenshot();
+    }
+
     /////////////////////////////////////
     // Checklists
     /////////////////////////////////////
@@ -337,10 +345,10 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end) {
-        return createDriveToPointNoFlipCommand(end, end.getRotation(), getPose());
+        return createDriveToPointNoFlipCommand(end, end.getRotation(), getPose(), false);
     }
 
-    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start, boolean rotateFast) {
         List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
@@ -349,7 +357,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
                 Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
-            new GoalEndState(0.0, endAngle)
+            new GoalEndState(0.0, endAngle, rotateFast)
         );
         path.preventFlipping = true;
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
@@ -363,7 +371,7 @@ public class ChassisSubsystem extends SubsystemBase {
             double dy = ampPosition.getY() - currentPosition.getY();
             double angle = Math.atan2(dy, dx);
             Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
-            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose);
+            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose, true);
         });
     }
 
@@ -378,10 +386,15 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createPushForwardModeCommand() {
-        SwerveModuleState state = new SwerveModuleState(0, new Rotation2d());
-        return run(() -> {
-            m_swerveDrive.setModuleStates(state);
-        }).withName("Chassis Push Forward");
+        return runEnd(() -> m_swerveDrive.setModulesToPushMode(0), m_swerveDrive::setModuleBrakeMode)
+            .ignoringDisable(true)
+            .withName("Chassis Push Forward");
+    }
+
+    public Command createPushSidewaysModeCommand() {
+        return runEnd(() -> m_swerveDrive.setModulesToPushMode(90), m_swerveDrive::setModuleBrakeMode)
+            .ignoringDisable(true)
+            .withName("Chassis Push Sideways");
     }
 
     public Command createSetSlowModeCommand(boolean setBoolean) {
@@ -395,7 +408,31 @@ public class ChassisSubsystem extends SubsystemBase {
                 return Commands.none();
             }
             Pose2d singleNote = notePositions.get(0);
-            return createDriveToPointNoFlipCommand(singleNote);
+
+            Pose2d currentPosition = getPose();
+            Translation2d deltaTranslation = singleNote.getTranslation().minus(currentPosition.getTranslation());
+            Rotation2d deltaAngle = deltaTranslation.getAngle();
+            Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), deltaAngle);
+            return createDriveToPointNoFlipCommand(singleNote, deltaAngle, startPose, true);
         }).withName("drive to note");
+    }
+
+    // This command will reset the pose and believe the april tag estimation, regardless of mode or filtering
+    public Command createBelieveAprilTagEstimatorCommand() {
+        return run(() -> {
+            Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+            if (cameraResult.isPresent()) {
+                m_swerveDrive.resetOdometry(cameraResult.get().estimatedPose.toPose2d());
+            }
+        }).withTimeout(.1).ignoringDisable(true).withName("Believe AprilTags");
+    }
+
+    public Command createSyncOdometryAndPoseEstimatorCommand() {
+        return run(this::syncOdometryAndPoseEstimator).ignoringDisable(true);
+    }
+
+    public Command createTakeAprilTagScreenshotCommand() {
+        // This is an instant command instead of run/runEnd because we don't want the "requirement" logic on the chassis to happen
+        return new InstantCommand(this::takeAprilTagScreenshot);
     }
 }

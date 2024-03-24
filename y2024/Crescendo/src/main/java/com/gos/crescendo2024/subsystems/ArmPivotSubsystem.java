@@ -42,11 +42,12 @@ import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 356);
-    public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 9);
-    public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "middleSpeakerScoreAngle", 9); //TODO changeeee
-    public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 15);
+    public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 37);
+    public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "middleSpeakerScoreAngle", 11);
+    public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 14); //chnanged middle and side to 11 and 14 from 13 and 16 because of practice field issues
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
     public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "allianceFeederAngle", 20);
+    public static final GosDoubleProperty ARM_PREP_HANGER_ANGLE = new GosDoubleProperty(false, "prepHangerAngle", 95);
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
 
@@ -58,11 +59,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO;
     private static final boolean USE_ABSOLUTE_ENCODER = false;
 
-    private static final double ALLOWABLE_ERROR = 1.7;
+    private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            GEAR_RATIO = (58.0 / 15.0) * 25;
+            GEAR_RATIO = (58.0 / 15.0) * 45; //5::5 to 9::5
         } else {
             GEAR_RATIO = (58.0 / 12.0) * (3.0) * (5.0);
         }
@@ -88,13 +89,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
-        m_pivotMotor.restoreFactoryDefaults();
+        //m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotMotor.setSmartCurrentLimit(60);
         m_pivotMotor.setInverted(false);
 
         m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, CANSparkLowLevel.MotorType.kBrushless);
-        m_followMotor.restoreFactoryDefaults();
+        //m_followMotor.restoreFactoryDefaults();
         m_followMotor.follow(m_pivotMotor, true);
         m_followMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_followMotor.setSmartCurrentLimit(60);
@@ -131,9 +132,9 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .build();
         m_profilePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         m_profilePID.enableContinuousInput(0, 360);
-        m_profilePidProperties = new WpiProfiledPidPropertyBuilder("Arm Profile PID", Constants.DEFAULT_CONSTANT_PROPERTIES, m_profilePID)
-            .addMaxVelocity(120)
-            .addMaxAcceleration(120)
+        m_profilePidProperties = new WpiProfiledPidPropertyBuilder("Arm Profile PID", false, m_profilePID)
+            .addMaxVelocity(200)
+            .addMaxAcceleration(300)
             .build();
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", Constants.DEFAULT_CONSTANT_PROPERTIES)
             .addKs(0)
@@ -314,7 +315,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
-    private Command createMoveArmToAngleCommand(DoubleSupplier angleSupplier) {
+    public Command createMoveArmToAngleCommand(DoubleSupplier angleSupplier) {
         return createResetPidControllerCommand().andThen(
             runEnd(() -> moveArmToAngle(angleSupplier.getAsDouble()), this::stopArmMotor));
     }
@@ -349,6 +350,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public Command createMoveArmToTunableSpeakerAngleCommand() {
         return createMoveArmToAngleCommand(ARM_TUNABLE_SPEAKER_ANGLE::getValue).withName("arm to tunable speaker angle");
+    }
+
+    public Command createMoveArmToPrepHangerAngleCommand() {
+        return createMoveArmToAngleCommand(ARM_PREP_HANGER_ANGLE::getValue)
+            .until(this::isArmAtGoal).withName("arm to prep hanger angle");
     }
 
     public Command createPivotToCoastModeCommand() {
