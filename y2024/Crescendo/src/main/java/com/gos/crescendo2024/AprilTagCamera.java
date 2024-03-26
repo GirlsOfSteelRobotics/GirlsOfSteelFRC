@@ -1,5 +1,6 @@
 package com.gos.crescendo2024;
 
+import com.gos.lib.field.AprilTagCameraObject;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -16,10 +17,11 @@ import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AprilTagDetection {
+public class AprilTagCamera {
     private final Transform3d m_robotToCamera;
     private final String m_cameraName;
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 8); // (4, 4, 8)
@@ -27,16 +29,19 @@ public class AprilTagDetection {
 
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
-    private final VisionSystemSim m_visionSim;
     private final PhotonCameraSim m_cameraSim;
 
-    private final GoSField.CameraObject m_field;
+    private final AprilTagCameraObject m_field;
 
-    public AprilTagDetection(GoSField field, String name, Transform3d transform3d) {
+    // Cached values
+    private Optional<EstimatedRobotPose> m_maybeResult;
+    private PhotonPipelineResult m_lastPipelineResult;
+
+    public AprilTagCamera(GoSField field, String name, Transform3d transform3d) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
-        m_field = new GoSField.CameraObject(field, m_cameraName, m_robotToCamera);
+        m_field = new AprilTagCameraObject(field, m_cameraName, m_robotToCamera);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera);
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
@@ -48,34 +53,42 @@ public class AprilTagDetection {
             m_cameraSim.enableRawStream(enableFancySim);
             m_cameraSim.enableProcessedStream(enableFancySim);
             m_cameraSim.enableDrawWireframe(enableFancySim);
-
-            m_visionSim = new VisionSystemSim(m_cameraName);
-            m_visionSim.addCamera(m_cameraSim, m_robotToCamera);
-            m_visionSim.addAprilTags(FieldConstants.TAG_LAYOUT);
         } else {
             m_cameraSim = null;
-            m_visionSim = null;
         }
+
+        m_maybeResult = Optional.empty();
     }
 
-    public Optional<EstimatedRobotPose> getEstimateGlobalPose(Pose2d prevEstimatedRobotPose) {
+    public void update(Pose2d prevEstimatedRobotPose) {
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        Optional<EstimatedRobotPose> result = m_photonPoseEstimator.update();
-        m_field.setCameraResult(result);
-        return result;
+        m_maybeResult = m_photonPoseEstimator.update();
+
+        if (m_maybeResult.isEmpty()) {
+            m_field.clearCameraResult();
+        } else {
+            List<Pose3d> aprilTags = new ArrayList<>();
+            EstimatedRobotPose estimatedRobotPose = m_maybeResult.get();
+            for (PhotonTrackedTarget targetUsed : m_maybeResult.get().targetsUsed) {
+                Pose3d bestTransformPosition =
+                    estimatedRobotPose.estimatedPose
+                        .transformBy(m_robotToCamera.inverse())
+                        .transformBy(targetUsed.getBestCameraToTarget());
+                aprilTags.add(bestTransformPosition);
+            }
+            m_field.setCameraResult(m_maybeResult.get().estimatedPose, aprilTags);
+        }
+
+        m_lastPipelineResult = m_photonCamera.getLatestResult();
     }
 
-    public PhotonPipelineResult getLatestResult() {
-        return m_photonCamera.getLatestResult();
-    }
-
-    public void updateAprilTagSimulation(Pose2d chassisLocation) {
-        m_visionSim.update(chassisLocation);
+    public Optional<EstimatedRobotPose> getEstimateGlobalPose() {
+        return m_maybeResult;
     }
 
     public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
         Matrix<N3, N1> estStdDevs = SINGLE_TAG_STDDEV;
-        List<PhotonTrackedTarget> targets = getLatestResult().getTargets();
+        List<PhotonTrackedTarget> targets = m_lastPipelineResult.getTargets();
         int numTags = 0;
         double sumDist = 0;
         for (PhotonTrackedTarget tgt : targets) {
@@ -109,5 +122,17 @@ public class AprilTagDetection {
     public void takeScreenshot() {
         m_photonCamera.takeInputSnapshot();
         m_photonCamera.takeOutputSnapshot();
+    }
+
+    public PhotonPipelineResult getLatestResult() {
+        return m_lastPipelineResult;
+    }
+
+    public PhotonCameraSim getSimulator() {
+        return m_cameraSim;
+    }
+
+    public Transform3d getRobotToCamera() {
+        return m_robotToCamera;
     }
 }

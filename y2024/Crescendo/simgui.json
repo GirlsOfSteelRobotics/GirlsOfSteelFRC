@@ -334,7 +334,9 @@
       "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Field3d": "Field2d",
       "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-Back Right Camera/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-Center Back Camera/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-Front Left Camera/Sim Field": "Field2d",
@@ -412,7 +414,7 @@
           "width": 0.8999999761581421
         },
         "Center Back Camera detected tags": {
-          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-orange.png"
+          "image": "../../libraries/shared_images/tag-orange.png"
         },
         "Center Back Camera estimated pose": {
           "color": [
@@ -423,7 +425,7 @@
           ]
         },
         "Left Camera detected tags": {
-          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-pink.png"
+          "image": "../../libraries/shared_images/tag-pink.png"
         },
         "Left Camera estimated pose": {
           "color": [
@@ -460,7 +462,7 @@
           ]
         },
         "Right Camera detected tags": {
-          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-green.png"
+          "image": "../../libraries/shared_images/tag-green.png"
         },
         "Right Camera estimated pose": {
           "color": [
@@ -527,7 +529,7 @@
       },
       "/SmartDashboard/VisionSystemSim-Right Camera/Sim Field": {
         "apriltag": {
-          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-blue.png"
+          "image": "../../libraries/shared_images/tag-blue.png"
         },
         "bottom": 1476,
         "height": 8.210550308227539,
@@ -556,11 +558,6 @@
     "Retained Values": {
       "open": false
     },
-    "persistent": {
-      "Preferences": {
-        "open": true
-      }
-    },
     "transitory": {
       "Arm Pivot Subsystem": {
         "open": true
@@ -575,6 +572,33 @@
         "open": true
       },
       "SmartDashboard": {
+        "Field": {
+          "double[]##v_/SmartDashboard/Field/Center Back Camera estimated pose": {
+            "open": true
+          },
+          "double[]##v_/SmartDashboard/Field/Robot": {
+            "open": true
+          }
+        },
+        "Field3d": {
+          "Pose3d[]##v_/SmartDashboard/Field3d/Center Back Camera estimated pose": {
+            "Pose3d##v_[0]": {
+              "Rotation3d##v_rotation": {
+                "Quaternion##v_q": {
+                  "open": true
+                },
+                "open": true
+              },
+              "Translation3d##v_translation": {
+                "open": true
+              },
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
+        "open": true,
         "super structure": {
           "open": true
         }
