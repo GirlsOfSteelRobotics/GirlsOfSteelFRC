@@ -203,7 +203,7 @@ public class RobotContainer {
         // Combined Commands
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Full Field Feed", CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Full Field Feed", CombinedCommands.feedPieceAcrossFieldWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
     }
@@ -325,10 +325,9 @@ public class RobotContainer {
         } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
         }
-        m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////
-        // Driver Controller
+        // Driver Controller with Vision
         /////////////////////////////
         //Slow / reg chassis speed
         m_driverController.povUp().whileTrue(m_chassisSubsystem.createSetSlowModeCommand(false));
@@ -337,9 +336,9 @@ public class RobotContainer {
         // Chassis
         m_driverController.start().and(m_driverController.back())
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());
-        //face shooter to center speaker
-        // m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
-        //m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem));
+
+        //Auto-score in amp
+        m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem));
 
         // Intake-to-shoot
         m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
@@ -356,10 +355,10 @@ public class RobotContainer {
 
 
         //One-Button speaker shooting - turns butt to speaker tho
-        /*  m_driverController.rightBumper().whileTrue(
+        m_driverController.rightBumper().whileTrue(
             SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, 100)
         );
-        */
+
         //go to floor
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
@@ -368,29 +367,38 @@ public class RobotContainer {
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
 
-        //override angle to side subwoofer shot
-        //        m_driverController.b().whileTrue((CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE.getValue()))
-        //            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+        //stockpiling shot w/ vision and/or odometry
+        m_driverController.y().whileTrue(CombinedCommands.feedPieceAcrossFieldWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+        //drive to note
+        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()
+            .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
+            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
+
+
+        /////////////////////////////
+        // Driver Controllers - Blind
+        /////////////////////////////
+        /*
+        //stockpiling shot without vision and/or odometry
+        m_driverController.rightBumper().whileTrue(CombinedCommands.feedPieceAcrossFieldNoVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //override angle to middle subwoofer shot
         m_driverController.b().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE)
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+
         //override angle to side subwoofer shot
-        //add instead prepareAmpShot ?????
         m_driverController.x().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
-
-
-        m_driverController.rightBumper().whileTrue(CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
-
-        //drive to note
-        //        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()
-        //            .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
-        //            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
+        */
 
         /////////////////////////////
         // Operator Controller
         /////////////////////////////
+
+        //Arm pivot joystick default
+        m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
+
         // Intake
         m_operatorController.leftBumper().whileTrue(m_intakeSubsystem.createIntakeUntilPieceCommand());
         m_operatorController.leftTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());

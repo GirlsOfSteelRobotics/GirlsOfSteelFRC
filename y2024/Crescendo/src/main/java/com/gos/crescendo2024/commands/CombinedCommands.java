@@ -1,13 +1,17 @@
 package com.gos.crescendo2024.commands;
 
+import com.gos.crescendo2024.FieldConstants;
+import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.HangerSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -61,20 +65,20 @@ public class CombinedCommands {
     }
 
     // TODO(buckeye) Create an automated and non-automated version
-    public static Command feedPieceAcrossField(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
+    public static Command feedPieceAcrossFieldWithVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
         BooleanSupplier readyToLaunchSupplier = () -> {
-            //            double blueMinX = 10.2;
-            //            double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
-            //            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
-            //            boolean distanceReady;
-            //            if (GetAllianceUtil.isBlueAlliance()) {
-            //                distanceReady = chassis.getPose().getX() < blueMinX;
-            //            } else {
-            //                distanceReady = chassis.getPose().getX() > redMaxX;
-            //            }
-            //
-            //            SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
-            //            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
+                        double blueMinX = 10.2;
+                        double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
+                        boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
+                        boolean distanceReady;
+                        if (GetAllianceUtil.isBlueAlliance()) {
+                            distanceReady = chassis.getPose().getX() < blueMinX;
+                        } else {
+                            distanceReady = chassis.getPose().getX() > redMaxX;
+                        }
+
+                        SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
+                        SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
             return arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
         };
 
@@ -86,10 +90,25 @@ public class CombinedCommands {
             shooter.createShootNoteToAllianceRPMCommand(),
 
             //face alliance and have anna translate across
-            //chassis.createTurnToAngleCommand(0), //might need to be 180 to face alliance
+            chassis.createTurnToAngleCommand(0), //might need to be 180 to face alliance
             // Then, once they are all deemed ready, run the intake and vibrate the controller
-            //            Commands.waitUntil(readyToLaunchSupplier).andThen(
-            //                intake.createMoveIntakeInCommand().alongWith(new VibrateControllerTimedCommand(joystick, 1)))
+            Commands.waitUntil(readyToLaunchSupplier)
+                .andThen(intake.createMoveIntakeInCommand()
+                    .alongWith(new VibrateControllerTimedCommand(joystick, 1))),
+            Commands.waitUntil(readyToLaunchSupplier).andThen(
+                new VibrateControllerTimedCommand(joystick, 1))
+        ).withName("Full Field Feed Piece");
+    }
+
+    public static Command feedPieceAcrossFieldNoVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
+        BooleanSupplier readyToLaunchSupplier = () -> {
+            return arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
+        };
+
+        return Commands.parallel(
+            // Drive, Prep Arm And Shooter
+            arm.createMoveArmFeederAngleCommand(),
+            shooter.createShootNoteToAllianceRPMCommand(),
             Commands.waitUntil(readyToLaunchSupplier).andThen(
                 new VibrateControllerTimedCommand(joystick, 1))
         ).withName("Full Field Feed Piece");
