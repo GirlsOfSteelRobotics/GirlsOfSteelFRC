@@ -9,19 +9,8 @@ import edu.wpi.first.math.util.Units;
 
 public class RobotExtrinsics {
     // Robot Size
-    public static final double ROBOT_WIDTH;
-    public static final double ROBOT_LENGTH;
-
-    static {
-        if (Constants.IS_COMPETITION_ROBOT) {
-            ROBOT_WIDTH = Units.inchesToMeters(25);
-            ROBOT_LENGTH = Units.inchesToMeters(25);
-        } else {
-            ROBOT_WIDTH = Units.inchesToMeters(28);
-            ROBOT_LENGTH = Units.inchesToMeters(28);
-        }
-
-    }
+    public static final double ROBOT_WIDTH = Units.inchesToMeters(25);
+    public static final double ROBOT_LENGTH = Units.inchesToMeters(25);
 
     // Camera Extrinsics
     public static final Transform3d ROBOT_TO_CAM_OBJET_DETECTION = new Transform3d(
@@ -48,7 +37,13 @@ public class RobotExtrinsics {
             .235),
         new Rotation3d(0, Math.toRadians(0), Math.toRadians(90))
     );
-    public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_CB;
+    public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_CB = new Transform3d(
+        new Translation3d(
+            -(RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
+            0,
+            .235),
+        new Rotation3d(0, Math.toRadians(-40), Math.toRadians(180))
+    );
 
 
     // Important Robot Poses
@@ -60,23 +55,4 @@ public class RobotExtrinsics {
     // Important Aiming Poses
     public static final Pose2d FULL_FIELD_FEEDING_AIMING_POINT = new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(0));
 
-    static {
-        if (Constants.IS_COMPETITION_ROBOT) {
-            ROBOT_TO_CAMERA_APRIL_TAGS_CB = new Transform3d(
-                new Translation3d(
-                    -(RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
-                    0,
-                    .235),
-                new Rotation3d(0, Math.toRadians(-40), Math.toRadians(180))
-            );
-        } else {
-            ROBOT_TO_CAMERA_APRIL_TAGS_CB = new Transform3d(
-                new Translation3d(
-                    -(RobotExtrinsics.ROBOT_WIDTH / 2 - 0.04), // 4cm from back
-                    -(RobotExtrinsics.ROBOT_LENGTH / 2 - .42), // 27cm from right side - changed to .42 out of guess and check (2/19)
-                    .235),
-                new Rotation3d(0, Math.toRadians(-34), Math.toRadians(178))
-            );
-        }
-    }
 }

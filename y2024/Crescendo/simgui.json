@@ -410,11 +410,13 @@
             255.0
           ],
           "image": "../../libraries/shared_images/tag-blue.png",
-          "length": 0.8999999761581421,
-          "width": 0.8999999761581421
+          "length": 1.0,
+          "width": 1.0
         },
         "Center Back Camera detected tags": {
-          "image": "../../libraries/shared_images/tag-orange.png"
+          "image": "../../libraries/shared_images/tag-orange.png",
+          "length": 0.8999999761581421,
+          "width": 0.8999999761581421
         },
         "Center Back Camera estimated pose": {
           "color": [
@@ -425,7 +427,9 @@
           ]
         },
         "Left Camera detected tags": {
-          "image": "../../libraries/shared_images/tag-pink.png"
+          "image": "../../libraries/shared_images/tag-pink.png",
+          "length": 0.800000011920929,
+          "width": 0.800000011920929
         },
         "Left Camera estimated pose": {
           "color": [

@@ -72,7 +72,7 @@ public class AprilTagCamera {
             for (PhotonTrackedTarget targetUsed : m_maybeResult.get().targetsUsed) {
                 Pose3d bestTransformPosition =
                     estimatedRobotPose.estimatedPose
-                        .transformBy(m_robotToCamera.inverse())
+                        .transformBy(m_robotToCamera)
                         .transformBy(targetUsed.getBestCameraToTarget());
                 aprilTags.add(bestTransformPosition);
             }
