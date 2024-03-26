@@ -187,6 +187,7 @@
       "/Shuffleboard/Ellie/Clear Sticky Faults": "Command",
       "/Shuffleboard/Ellie/Hanger Down": "Command",
       "/Shuffleboard/Ellie/Hanger Up": "Command",
+      "/Shuffleboard/Ellie/Hanger reset encoders": "Command",
       "/Shuffleboard/Ellie/Hanger to Coast": "Command",
       "/Shuffleboard/Ellie/Left Hanger Down": "Command",
       "/Shuffleboard/Ellie/Left Hanger Up": "Command",
@@ -281,6 +282,7 @@
       "/Shuffleboard/test commands/Full Field Feed": "Command",
       "/Shuffleboard/test commands/Hanger Down": "Command",
       "/Shuffleboard/test commands/Hanger Up": "Command",
+      "/Shuffleboard/test commands/Hanger reset encoders": "Command",
       "/Shuffleboard/test commands/Hanger to Coast": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Left Hanger Down": "Command",
@@ -333,7 +335,13 @@
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-Back Right Camera/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-Center Back Camera/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-Front Left Camera/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-Front Right Camera/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-Left Camera/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-Right Camera/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
@@ -403,6 +411,28 @@
           "length": 0.8999999761581421,
           "width": 0.8999999761581421
         },
+        "Center Back Camera detected tags": {
+          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-orange.png"
+        },
+        "Center Back Camera estimated pose": {
+          "color": [
+            0.9629629850387573,
+            0.6193872690200806,
+            0.05349797010421753,
+            255.0
+          ]
+        },
+        "Left Camera detected tags": {
+          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-pink.png"
+        },
+        "Left Camera estimated pose": {
+          "color": [
+            0.9851852059364319,
+            0.01824416033923626,
+            0.9636977910995483,
+            255.0
+          ]
+        },
         "Notes": {
           "arrows": false,
           "color": [
@@ -426,6 +456,17 @@
             0.0,
             255.0,
             179.99998474121094,
+            255.0
+          ]
+        },
+        "Right Camera detected tags": {
+          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-green.png"
+        },
+        "Right Camera estimated pose": {
+          "color": [
+            0.11990850418806076,
+            0.9777777791023254,
+            0.03621397167444229,
             255.0
           ]
         },
@@ -463,6 +504,31 @@
         }
       },
       "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VisionSystemSim-Center Back Camera/Sim Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VisionSystemSim-Right Camera/Sim Field": {
+        "apriltag": {
+          "image": "C:\\Users\\Sienn\\Documents\\GoS Programming\\libraries\\shared_images\\tag-blue.png"
+        },
         "bottom": 1476,
         "height": 8.210550308227539,
         "left": 150,

@@ -45,6 +45,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,7 +82,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
-    private final AprilTagDetection m_photonVisionSubsystem;
+    private final AprilTagDetection m_photonVisionRSubsystem;
+    private final AprilTagDetection m_photonVisionLSubsystem;
+    private final AprilTagDetection m_photonVisionCBSubsystem;
 
     private final ObjectDetection m_objectDetectionSubsystem;
 
@@ -125,7 +128,9 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
-        m_photonVisionSubsystem = new AprilTagDetection(m_field);
+        m_photonVisionRSubsystem = new AprilTagDetection(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R);
+        m_photonVisionLSubsystem = new AprilTagDetection(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L);
+        m_photonVisionCBSubsystem = new AprilTagDetection(m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB);
         m_objectDetectionSubsystem = new ObjectDetection();
 
         AutoBuilder.configureHolonomic(
@@ -194,13 +199,24 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDProperties.updateIfChanged();
         m_field.setFuturePose(getFuturePose(0.3));
 
-        Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+        Optional<EstimatedRobotPose> cameraResultR = m_photonVisionRSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+        Optional<EstimatedRobotPose> cameraResultL = m_photonVisionLSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+        Optional<EstimatedRobotPose> cameraResultCB = m_photonVisionCBSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+
         // TODO(gpr) We should get tags working in auto
-        if (cameraResult.isPresent() && useAprilTagsForPoseEstimation()) {
-            EstimatedRobotPose camPose = cameraResult.get();
-            Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-            m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
+        ArrayList<Optional<EstimatedRobotPose>> cameras = new ArrayList<>();
+        cameras.add(cameraResultR);
+        cameras.add(cameraResultL);
+        cameras.add(cameraResultCB);
+
+        for (Optional<EstimatedRobotPose> camera : cameras) {
+            if (camera.isPresent() && useAprilTagsForPoseEstimation()) {
+                EstimatedRobotPose camPose = camera.get();
+                Pose2d camEstPose = camPose.estimatedPose.toPose2d();
+                m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionRSubsystem.getEstimationStdDevs(camEstPose));
+            }
         }
+
     }
 
     private boolean useAprilTagsForPoseEstimation() {
@@ -211,7 +227,9 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_swerveDrive.updateSimulator();
-        m_photonVisionSubsystem.updateAprilTagSimulation(getPose());
+        m_photonVisionRSubsystem.updateAprilTagSimulation(getPose());
+        m_photonVisionLSubsystem.updateAprilTagSimulation(getPose());
+        m_photonVisionCBSubsystem.updateAprilTagSimulation(getPose());
         m_objectDetectionSubsystem.updateObjectDetectionSimulation(getPose());
     }
 
@@ -303,7 +321,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public int numAprilTagsSeen() {
-        return m_photonVisionSubsystem.getLatestResult().targets.size();
+        return m_photonVisionRSubsystem.getLatestResult().targets.size()
+            + m_photonVisionLSubsystem.getLatestResult().targets.size()
+            + m_photonVisionCBSubsystem.getLatestResult().targets.size();
     }
 
     public void syncOdometryAndPoseEstimator() {
@@ -311,7 +331,12 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void takeAprilTagScreenshot() {
-        m_photonVisionSubsystem.takeScreenshot();
+
+        m_photonVisionRSubsystem.takeScreenshot();
+        m_photonVisionLSubsystem.takeScreenshot();
+        m_photonVisionCBSubsystem.takeScreenshot();
+
+
     }
 
     /////////////////////////////////////
@@ -420,10 +445,21 @@ public class ChassisSubsystem extends SubsystemBase {
     // This command will reset the pose and believe the april tag estimation, regardless of mode or filtering
     public Command createBelieveAprilTagEstimatorCommand() {
         return run(() -> {
-            Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-            if (cameraResult.isPresent()) {
-                m_swerveDrive.resetOdometry(cameraResult.get().estimatedPose.toPose2d());
+
+            Optional<EstimatedRobotPose> cameraResultR = m_photonVisionRSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+            Optional<EstimatedRobotPose> cameraResultL = m_photonVisionRSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+            Optional<EstimatedRobotPose> cameraResultCB = m_photonVisionRSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+
+            if (cameraResultCB.isPresent()) {
+                m_swerveDrive.resetOdometry(cameraResultCB.get().estimatedPose.toPose2d());
             }
+            else if (cameraResultR.isPresent()) {
+                m_swerveDrive.resetOdometry(cameraResultR.get().estimatedPose.toPose2d());
+            }
+            else if (cameraResultL.isPresent()) {
+                m_swerveDrive.resetOdometry(cameraResultL.get().estimatedPose.toPose2d());
+            }
+
         }).withTimeout(.1).ignoringDisable(true).withName("Believe AprilTags");
     }
 
