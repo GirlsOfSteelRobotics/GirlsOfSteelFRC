@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** Game field object on a Field3d. */
+@SuppressWarnings({"PMD.CommentDefaultAccessModifier", "PMD.AvoidSynchronizedAtMethodLevel"})
 public class FieldObject3d implements AutoCloseable {
 
   private final List<Pose3d> m_poses = new ArrayList<>();

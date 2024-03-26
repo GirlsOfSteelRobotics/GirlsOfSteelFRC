@@ -13,7 +13,7 @@ public class RobotExtrinsics {
     public static final double ROBOT_LENGTH = Units.inchesToMeters(25);
 
     // Camera Extrinsics
-    public static final Transform3d ROBOT_TO_CAM_OBJET_DETECTION = new Transform3d(
+    public static final Transform3d ROBOT_TO_CAM_OBJECT_DETECTION = new Transform3d(
         new Translation3d(
             0,
             0,

@@ -20,7 +20,7 @@ public class Field3d implements NTSendable, AutoCloseable {
 
         synchronized (this) {
             m_table = builder.getTable();
-            for (FieldObject3d obj : m_objects) {
+            for (FieldObject3d obj : m_objects) { // NOPMD(CloseResource)
                 synchronized (obj) {
                     obj.m_entry = m_table.getStructArrayTopic(obj.m_name, Pose3d.struct).getEntry(new Pose3d[]{});
                     obj.updateEntry(true);
@@ -31,7 +31,7 @@ public class Field3d implements NTSendable, AutoCloseable {
 
     @Override
     public void close() {
-        for (FieldObject3d obj : m_objects) {
+        for (FieldObject3d obj : m_objects) { // NOPMD(CloseResource)
             obj.close();
         }
     }
@@ -43,6 +43,7 @@ public class Field3d implements NTSendable, AutoCloseable {
      * @param name The field object's name.
      * @return Field object
      */
+    @SuppressWarnings("PMD.AvoidSynchronizedAtMethodLevel")
     public synchronized FieldObject3d getObject(String name) {
         for (FieldObject3d obj : m_objects) {
             if (obj.m_name.equals(name)) {

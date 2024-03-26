@@ -69,7 +69,7 @@ public class AprilTagCameraManager {
     }
 
     public Pose3d getFirstEstimatedPose() {
-        for(AprilTagCamera camera : m_aprilTagCameras) {
+        for (AprilTagCamera camera : m_aprilTagCameras) {
             Optional<EstimatedRobotPose> maybeResult = camera.getEstimateGlobalPose();
             if (maybeResult.isPresent()) {
                 return maybeResult.get().estimatedPose;

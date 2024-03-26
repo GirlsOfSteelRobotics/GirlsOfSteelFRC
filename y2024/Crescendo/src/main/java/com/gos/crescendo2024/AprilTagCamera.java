@@ -13,7 +13,6 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.simulation.PhotonCameraSim;
-import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -41,7 +40,7 @@ public class AprilTagCamera {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
-        m_field = new AprilTagCameraObject(field, m_cameraName, m_robotToCamera);
+        m_field = new AprilTagCameraObject(field, m_cameraName);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera);
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);

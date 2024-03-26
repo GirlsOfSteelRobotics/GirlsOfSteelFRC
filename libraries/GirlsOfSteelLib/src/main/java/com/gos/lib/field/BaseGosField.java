@@ -4,7 +4,6 @@ import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.Field3d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
@@ -39,7 +38,7 @@ public class BaseGosField {
             tagPoses.add(tag.pose);
         }
 
-        FieldObject3d aprilTag3dObject = m_field3d.getObject("AprilTags");
+        FieldObject3d aprilTag3dObject = m_field3d.getObject("AprilTags"); // NOPMD(CloseResource)
         aprilTag3dObject.setPoses(tagPoses);
 
         FieldObject2d aprilTag2dObjects = m_field2d.getObject("AprilTags"); // NOPMD(CloseResource)

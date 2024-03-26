@@ -52,7 +52,6 @@ import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
 import java.util.List;
-import java.util.Optional;
 
 @SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends SubsystemBase {
@@ -88,7 +87,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
 
-    private final AprilTagCameraManager m_aprilTagCameras2;
+    private final AprilTagCameraManager m_aprilTagCameras;
     private final ObjectDetection m_noteDetectionCamera;
 
     private final LoggingUtil m_logging;
@@ -134,10 +133,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         // Cameras
-        AprilTagCamera aprilTagRCamera = new AprilTagCamera(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R);
-        AprilTagCamera aprilTagLCamera = new AprilTagCamera(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L);
-        AprilTagCamera aprilTagCBCamera = new AprilTagCamera(m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB);
-        m_aprilTagCameras2 = new AprilTagCameraManager(List.of(aprilTagCBCamera, aprilTagLCamera, aprilTagRCamera));
+        m_aprilTagCameras = new AprilTagCameraManager(List.of(
+            new AprilTagCamera(m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB),
+            new AprilTagCamera(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R),
+            new AprilTagCamera(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L)
+        ));
         m_noteDetectionCamera = new ObjectDetection();
 
         AutoBuilder.configureHolonomic(
@@ -206,7 +206,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDProperties.updateIfChanged();
         m_field.setFuturePose(getFuturePose(0.3));
 
-        List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras2.update(m_swerveDrive.getEstimatedPosition());
+        List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(m_swerveDrive.getEstimatedPosition());
 
         if (useAprilTagsForPoseEstimation()) {
             for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
@@ -226,7 +226,7 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_swerveDrive.updateSimulator();
-        m_aprilTagCameras2.updateSimulator(getPose());
+        m_aprilTagCameras.updateSimulator(getPose());
         m_noteDetectionCamera.updateObjectDetectionSimulation(getPose());
     }
 
@@ -318,7 +318,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public int numAprilTagsSeen() {
-        return m_aprilTagCameras2.numAprilTagsSeen();
+        return m_aprilTagCameras.numAprilTagsSeen();
     }
 
     public void syncOdometryAndPoseEstimator() {
@@ -326,7 +326,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void takeAprilTagScreenshot() {
-        m_aprilTagCameras2.takeScreenshot();
+        m_aprilTagCameras.takeScreenshot();
     }
 
     /////////////////////////////////////
@@ -435,7 +435,7 @@ public class ChassisSubsystem extends SubsystemBase {
     // This command will reset the pose and believe the april tag estimation, regardless of mode or filtering
     public Command createBelieveAprilTagEstimatorCommand() {
         return run(() -> {
-            Pose3d firstEstimatedPose = m_aprilTagCameras2.getFirstEstimatedPose();
+            Pose3d firstEstimatedPose = m_aprilTagCameras.getFirstEstimatedPose();
             if (firstEstimatedPose != null) {
                 m_swerveDrive.resetOdometry(firstEstimatedPose.toPose2d());
             }
