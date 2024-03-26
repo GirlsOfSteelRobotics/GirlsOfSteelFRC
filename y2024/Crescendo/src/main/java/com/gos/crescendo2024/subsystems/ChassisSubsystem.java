@@ -63,7 +63,11 @@ public class ChassisSubsystem extends SubsystemBase {
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            MAX_TRANSLATION_SPEED = 5.5; // Theoretically 5.74
+            // 14p-22s config
+            // MAX_TRANSLATION_SPEED = 5.5; // Theoretically 5.74.
+
+            // 16p-19s config
+            MAX_TRANSLATION_SPEED = 6.85; // Theoretically 7.60
         } else {
             MAX_TRANSLATION_SPEED = 3.9624; // 13fps, Theoretically 4.8
         }
@@ -115,8 +119,8 @@ public class ChassisSubsystem extends SubsystemBase {
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
             motorType,
-            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
-            RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
+            RevSwerveModuleConstants.DriveMotorPinionTeeth.T16,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T19,
             WHEEL_BASE,
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
