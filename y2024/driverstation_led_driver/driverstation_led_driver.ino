@@ -5,24 +5,23 @@
 #include <avr/power.h>
 #endif
 #define PIN 6
-#define NUMPIXELS 16
+#define NUMPIXELS 32
 #define DELAYVAL 50
 
 Adafruit_NeoPixel strip(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   XInput.begin();
-
   strip.begin();
 }
 
 void loop() {
   strip.clear();
 
-  uint32_t data = XInput.getRumbleLeft();
-    populateLights(data);
-    strip.show();
-    delay(DELAYVAL);
+  uint32_t data = XInput.getRumble();
+  populateLights(data);
+  strip.show();
+  delay(DELAYVAL);
 }
 
 void populateLights(uint32_t data) {

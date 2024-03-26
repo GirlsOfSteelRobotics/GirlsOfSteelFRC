@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -71,7 +72,7 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_JOYSTICK);
 
-    private final CommandXboxController m_driverStationLedController = new CommandXboxController(2);
+    private final DriverStationLedDriver m_driverStationLedController = new DriverStationLedDriver(2);
 
     private final Autos m_autonomousFactory;
 
@@ -118,7 +119,7 @@ public class RobotContainer {
         m_autonomousFactory = new Autos();
 
         if (!Constants.IS_TIM_BOT) {
-            m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
+            m_ledSubsystem = new LedManagerSubsystem(m_driverStationLedController, m_intakeSubsystem, m_autonomousFactory, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
         } else {
             m_ledSubsystem = null;
         }
@@ -152,10 +153,42 @@ public class RobotContainer {
         SmartDashboard.putBoolean("Is Competition Robot", Constants.IS_COMPETITION_ROBOT);
         SmartDashboard.putBoolean("Is Tim Bot", Constants.IS_TIM_BOT);
 
+        createTestLedsCommands();
+
         PropertyManager.printDynamicProperties();
         // PropertyManager.purgeExtraKeys();
 
         DriverStation.silenceJoystickConnectionWarning(true);
+    }
+
+    private void createTestLedsCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Leds");
+        for (int i = 0; i < 32; ++i) {
+            final int bit = i;
+            tab.add("Raw Bit " + i,
+                Commands.startEnd(() -> {
+                        m_driverStationLedController.setBit(bit, true);
+                        m_driverStationLedController.write();
+                    }, () -> {
+                        m_driverStationLedController.setBit(bit, false);
+                        m_driverStationLedController.write();
+                    })
+                .withName("Set Raw Bit " + bit));
+        }
+
+        for (int i = 0; i < 16; ++i) {
+            final int bit = i;
+            DriverStationLedDriver.BitField field = DriverStationLedDriver.BitField.valueOf("ARDUINO_BIT_" + bit);
+            tab.add("Arduino Bit " + i,
+                Commands.startEnd(() -> {
+                        m_driverStationLedController.setBit(field, true);
+                        m_driverStationLedController.write();
+                    }, () -> {
+                        m_driverStationLedController.setBit(field, false);
+                        m_driverStationLedController.write();
+                    })
+                    .withName("Set Arduino Bit " + bit));
+        }
     }
 
     private void createEllieCommands() {
@@ -389,18 +422,6 @@ public class RobotContainer {
             m_operatorController.povUpRight().whileTrue(m_hangerSubsystem.createRightHangerUp());
             m_operatorController.povDownRight().whileTrue(m_hangerSubsystem.createRightHangerDown());
         }
-
-        m_driverStationLedController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
-
-        new Trigger(m_intakeSubsystem::hasGamePiece).whileTrue(Commands.run(() -> {
-            m_driverStationLedController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, .1);
-            System.out.println("Has game peice?...");
-        }));
-
-        new Trigger(m_intakeSubsystem::hasGamePiece).whileFalse(Commands.run(() -> {
-            m_driverStationLedController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
-            System.out.println("Has game NO peice?...");
-        }));
     }
 
 
