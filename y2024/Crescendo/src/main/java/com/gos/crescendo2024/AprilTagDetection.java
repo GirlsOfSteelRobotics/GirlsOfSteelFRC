@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class AprilTagDetection {
-    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS;
-
-    private static final String CAMERA_NAME = "AprilTag1";
+    private final Transform3d m_robotToCamera;
+    private final String m_cameraName;
     private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 8); // (4, 4, 8)
     private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 500); // (0.5, 0.5, 1)
 
@@ -33,23 +32,25 @@ public class AprilTagDetection {
 
     private final GoSField.CameraObject m_field;
 
-    public AprilTagDetection(GoSField field) {
-        m_photonCamera = new PhotonCamera(CAMERA_NAME);
-        m_field = new GoSField.CameraObject(field, CAMERA_NAME, ROBOT_TO_CAMERA);
+    public AprilTagDetection(GoSField field, String name, Transform3d transform3d) {
+        m_cameraName = name;
+        m_robotToCamera = transform3d;
+        m_photonCamera = new PhotonCamera(m_cameraName);
+        m_field = new GoSField.CameraObject(field, m_cameraName, m_robotToCamera);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, ROBOT_TO_CAMERA);
+        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera);
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
             m_cameraSim = new PhotonCameraSim(m_photonCamera);
 
-            boolean enableFancySim = false;
+            boolean enableFancySim = true;
             m_cameraSim.enableRawStream(enableFancySim);
             m_cameraSim.enableProcessedStream(enableFancySim);
             m_cameraSim.enableDrawWireframe(enableFancySim);
 
-            m_visionSim = new VisionSystemSim(CAMERA_NAME);
-            m_visionSim.addCamera(m_cameraSim, ROBOT_TO_CAMERA);
+            m_visionSim = new VisionSystemSim(m_cameraName);
+            m_visionSim.addCamera(m_cameraSim, m_robotToCamera);
             m_visionSim.addAprilTags(FieldConstants.TAG_LAYOUT);
         } else {
             m_cameraSim = null;
