@@ -26,6 +26,6 @@ public class MirroredLEDPercentScale implements LEDPattern {
     @Override
     public void writeLeds() {
         m_normalStrip.writeLeds();
-        m_normalStrip.writeLeds();
+        m_invertedStrip.writeLeds();
     }
 }

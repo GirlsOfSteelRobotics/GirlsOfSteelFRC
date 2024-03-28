@@ -1,6 +1,7 @@
 package com.gos.crescendo2024;
 
 import com.gos.lib.field.AprilTagCameraObject;
+import com.gos.lib.logging.LoggingUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,10 +22,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class AprilTagCamera {
+    public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
+    public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 1); // (0.5, 0.5, 1)
+
+
     private final Transform3d m_robotToCamera;
     private final String m_cameraName;
-    private static final Matrix<N3, N1> SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 8); // (4, 4, 8)
-    private static final Matrix<N3, N1> MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 500); // (0.5, 0.5, 1)
+    private final Matrix<N3, N1> m_singleTagStddev;
+    private final Matrix<N3, N1> m_multiTagStddev;
+
 
     private final PhotonCamera m_photonCamera;
     private final PhotonPoseEstimator m_photonPoseEstimator;
@@ -35,11 +41,22 @@ public class AprilTagCamera {
     // Cached values
     private Optional<EstimatedRobotPose> m_maybeResult;
     private PhotonPipelineResult m_lastPipelineResult;
+    private int m_numTargetsSeen;
+    private double m_avgDistanceToTag;
+
+    private final LoggingUtil m_logger;
 
     public AprilTagCamera(GoSField field, String name, Transform3d transform3d) {
+        this(field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+    }
+
+
+    public AprilTagCamera(GoSField field, String name, Transform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
+        m_singleTagStddev = singleTagStddev;
+        m_multiTagStddev = multiTagStddev;
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera);
@@ -57,6 +74,10 @@ public class AprilTagCamera {
         }
 
         m_maybeResult = Optional.empty();
+
+        m_logger = new LoggingUtil("GosCameras/" + m_cameraName);
+        m_logger.addDouble("Targets Seen", () -> m_numTargetsSeen);
+        m_logger.addDouble("Average Distance To Target", () -> m_avgDistanceToTag);
     }
 
     public void update(Pose2d prevEstimatedRobotPose) {
@@ -79,6 +100,8 @@ public class AprilTagCamera {
         }
 
         m_lastPipelineResult = m_photonCamera.getLatestResult();
+
+        m_logger.updateLogs();
     }
 
     public Optional<EstimatedRobotPose> getEstimateGlobalPose() {
@@ -86,33 +109,33 @@ public class AprilTagCamera {
     }
 
     public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
-        Matrix<N3, N1> estStdDevs = SINGLE_TAG_STDDEV;
+        Matrix<N3, N1> estStdDevs = m_singleTagStddev;
         List<PhotonTrackedTarget> targets = m_lastPipelineResult.getTargets();
-        int numTags = 0;
+        m_numTargetsSeen = 0;
         double sumDist = 0;
         for (PhotonTrackedTarget tgt : targets) {
             Optional<Pose3d> tagPose = m_photonPoseEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
             if (tagPose.isEmpty()) {
                 continue;
             }
-            numTags++;
+            m_numTargetsSeen++;
             sumDist +=
                 tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
         }
-        if (numTags == 0) {
+        if (m_numTargetsSeen == 0) {
             return estStdDevs;
         }
-        double avgDist = sumDist / numTags;
+        m_avgDistanceToTag = sumDist / m_numTargetsSeen;
         // Decrease std devs if multiple targets are visible
-        if (numTags > 1) {
-            estStdDevs = MULTI_TAG_STDDEV;
+        if (m_numTargetsSeen > 1) {
+            estStdDevs = m_multiTagStddev;
         }
         // Increase std devs based on (average) distance
-        if (numTags == 1 && avgDist > 2.5) {
+        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 4) {
             estStdDevs = VecBuilder.fill(1000, 1000, 1000);
         }
         else {
-            estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 30));
+            estStdDevs = estStdDevs.times(1 + (m_avgDistanceToTag * m_avgDistanceToTag / 30));
         }
 
         return estStdDevs;

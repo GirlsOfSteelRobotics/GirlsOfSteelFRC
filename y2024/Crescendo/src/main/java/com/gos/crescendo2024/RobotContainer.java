@@ -338,7 +338,7 @@ public class RobotContainer {
         m_driverController.start().and(m_driverController.back())
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());
         //face shooter to center speaker
-        // m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
+        m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
         //m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem));
 
         // Intake-to-shoot
@@ -350,9 +350,9 @@ public class RobotContainer {
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
         //Speaker Shooting
-        //        m_driverController.rightBumper().whileTrue(
-        //            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
-        //                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+        m_driverController.rightBumper().whileTrue(
+            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
+                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
 
         //One-Button speaker shooting - turns butt to speaker tho
@@ -377,11 +377,11 @@ public class RobotContainer {
             .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
         //override angle to side subwoofer shot
         //add instead prepareAmpShot ?????
-        m_driverController.x().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+        //        m_driverController.x().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
+        //            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
 
-        m_driverController.rightBumper().whileTrue(CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        //        m_driverController.rightBumper().whileTrue(CombinedCommands.feedPieceAcrossField(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
         //drive to note
         //        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()

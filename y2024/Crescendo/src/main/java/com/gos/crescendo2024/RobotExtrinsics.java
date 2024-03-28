@@ -25,24 +25,33 @@ public class RobotExtrinsics {
 
     public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_R = new Transform3d(
         new Translation3d(
-            0,
-            0,
+            RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(12.25), // 11.75 inches from back
+            -(RobotExtrinsics.ROBOT_LENGTH / 2 - Units.inchesToMeters(2.25)), // 2.25 inches from side
             .235),
-        new Rotation3d(0, Math.toRadians(0), Math.toRadians(-90))
+        new Rotation3d(
+            Math.toRadians(180),
+            Math.toRadians(-25),
+            Math.toRadians(-130))
     );
     public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_L = new Transform3d(
         new Translation3d(
-            0,
-            0,
+            RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(11.75), // 11.75 inches from front
+            RobotExtrinsics.ROBOT_LENGTH / 2 - Units.inchesToMeters(2), // 2 inches from side
             .235),
-        new Rotation3d(0, Math.toRadians(0), Math.toRadians(90))
+        new Rotation3d(
+            Math.toRadians(180),
+            Math.toRadians(-19.2),
+            Math.toRadians(94))
     );
     public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_CB = new Transform3d(
         new Translation3d(
             -(RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
-            0,
+            0, // Directly Center
             .235),
-        new Rotation3d(0, Math.toRadians(-40), Math.toRadians(180))
+        new Rotation3d(
+            Math.toRadians(180),
+            Math.toRadians(-40),
+            Math.toRadians(180))
     );
 
 
