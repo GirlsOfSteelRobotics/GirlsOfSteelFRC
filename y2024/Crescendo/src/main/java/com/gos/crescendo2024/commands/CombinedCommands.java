@@ -1,7 +1,6 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
-import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.HangerSubsystem;
@@ -67,19 +66,19 @@ public class CombinedCommands {
     // TODO(buckeye) Create an automated and non-automated version
     public static Command feedPieceAcrossFieldWithVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
         BooleanSupplier readyToLaunchSupplier = () -> {
-                        double blueMinX = 10.2;
-                        double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
-                        boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal();
-                        boolean distanceReady;
-                        if (GetAllianceUtil.isBlueAlliance()) {
-                            distanceReady = chassis.getPose().getX() < blueMinX;
-                        } else {
-                            distanceReady = chassis.getPose().getX() > redMaxX;
-                        }
+            double blueMinX = 10.2;
+            double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
+            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
+            boolean distanceReady;
+            if (GetAllianceUtil.isBlueAlliance()) {
+                distanceReady = chassis.getPose().getX() < blueMinX;
+            } else {
+                distanceReady = chassis.getPose().getX() > redMaxX;
+            }
 
-                        SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
-                        SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
-            return arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
+            SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
+            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
+            return mechReady && distanceReady;
         };
 
 

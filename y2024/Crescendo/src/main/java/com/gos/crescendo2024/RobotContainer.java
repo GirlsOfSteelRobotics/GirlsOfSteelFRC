@@ -21,6 +21,7 @@ import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.crescendo2024.subsystems.sysid.ArmPivotSysId;
 import com.gos.crescendo2024.subsystems.sysid.ShooterSysId;
+import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
@@ -51,6 +52,8 @@ import org.photonvision.PhotonCamera;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class RobotContainer {
+    private static final GosBooleanProperty USE_VISION = new GosBooleanProperty(false, "Use Vision for driving", true);
+
     private static final boolean HAS_HANGER = true;
 
     // Subsystems
@@ -306,6 +309,9 @@ public class RobotContainer {
         shuffleboardTab.add("Hanger reset encoders", m_hangerSubsystem.createResetEncoders());
     }
 
+    private boolean visionEnabled() {
+        return USE_VISION.getValue();
+    }
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -326,9 +332,6 @@ public class RobotContainer {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
         }
 
-        /////////////////////////////
-        // Driver Controller with Vision
-        /////////////////////////////
         //Slow / reg chassis speed
         m_driverController.povUp().whileTrue(m_chassisSubsystem.createSetSlowModeCommand(false));
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createSetSlowModeCommand(true));
@@ -336,9 +339,6 @@ public class RobotContainer {
         // Chassis
         m_driverController.start().and(m_driverController.back())
             .whileTrue(m_chassisSubsystem.createResetGyroCommand());
-
-        //Auto-score in amp
-        m_driverController.x().whileTrue(CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem));
 
         // Intake-to-shoot
         m_driverController.rightTrigger().whileTrue(m_intakeSubsystem.createMoveIntakeInCommand());
@@ -348,49 +348,40 @@ public class RobotContainer {
             CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem)
                 .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
 
-        //Speaker Shooting
-        //        m_driverController.rightBumper().whileTrue(
-        //            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose)
-        //                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
-
-
-        //One-Button speaker shooting - turns butt to speaker tho
-        m_driverController.rightBumper().whileTrue(
-            SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, 100)
-        );
-
         //go to floor
         m_driverController.leftTrigger().whileTrue(
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
                 .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
-        //spit out
-        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+        /////////////////////////////
+        // Maybe use camera stuff(:D)
+        /////////////////////////////
 
-        //stockpiling shot w/ vision and/or odometry
-        m_driverController.y().whileTrue(CombinedCommands.feedPieceAcrossFieldWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        //drive to amp/side subwoofer
+        Command xButtonWithCamera = CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
+        Command xButtonNoCamera = CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
+            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController));
 
-        //drive to note
-        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToNoteCommand()
+        Command yButtonWithCamera =  m_chassisSubsystem.createDriveToNoteCommand()
             .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
-            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
+            .andThen(new VibrateControllerTimedCommand(m_driverController, 2));
+        Command yButtonNoCamera = Commands.none();
+
+        //shoot into speaker
+        Command bButtonWithCamera = SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, 100);
+        Command bButtonNoCamera = CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE)
+            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController));
+        //feed into
+        Command rbButtonWithCamera = CombinedCommands.feedPieceAcrossFieldWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem);
+        Command rbButtonNoCamera = CombinedCommands.feedPieceAcrossFieldNoVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem);
 
 
-        /////////////////////////////
-        // Driver Controllers - Blind
-        /////////////////////////////
-        /*
-        //stockpiling shot without vision and/or odometry
-        m_driverController.rightBumper().whileTrue(CombinedCommands.feedPieceAcrossFieldNoVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
-        //override angle to middle subwoofer shot
-        m_driverController.b().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE)
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
-
-        //override angle to side subwoofer shot
-        m_driverController.x().whileTrue(CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
-        */
+        //Auto-score in amp
+        m_driverController.x().whileTrue(Commands.either(xButtonWithCamera, xButtonNoCamera, this::visionEnabled));
+        m_driverController.y().whileTrue(Commands.either(yButtonWithCamera, yButtonNoCamera, this::visionEnabled));
+        m_driverController.b().whileTrue(Commands.either(bButtonWithCamera, bButtonNoCamera, this::visionEnabled));
+        m_driverController.rightBumper().whileTrue(Commands.either(rbButtonWithCamera, rbButtonNoCamera, this::visionEnabled));
 
         /////////////////////////////
         // Operator Controller
