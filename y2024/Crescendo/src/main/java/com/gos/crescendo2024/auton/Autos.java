@@ -38,6 +38,7 @@ public final class Autos {
         THREE_NOTE_65("ThreeNotesSourceSide65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6, 5)),
         //two note autos - Amp Side
         //two note autos - middle
+        THREE_NOTE_MIDDLE_52("ThreeNoteMiddle52Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5,2)),
         TWO_NOTE_MIDDLE_1("TwoNoteMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1)),
         TWO_NOTE_MIDDLE_2("TwoNoteMiddle2Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(2)),
         //two note autos - Source Side
@@ -50,6 +51,8 @@ public final class Autos {
         // No shooting
         NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
         //Disruption auto
+        ASSHOLEAUTO("AThreeNoteSource65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of()),
+
         BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of());
 
 
