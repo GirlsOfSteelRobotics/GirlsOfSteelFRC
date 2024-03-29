@@ -119,8 +119,8 @@ public class ChassisSubsystem extends SubsystemBase {
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
             motorType,
-            RevSwerveModuleConstants.DriveMotorPinionTeeth.T16,
-            RevSwerveModuleConstants.DriveMotorSpurTeeth.T19,
+            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T20,
             WHEEL_BASE,
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
