@@ -1,0 +1,36 @@
+{
+    "camera": "Global Shutter Camera (32e4:0144)",
+    "platform": "Windows NT 10.0; Win64; x64",
+    "camera_matrix": [
+        [
+            1050.8274387035551,
+            0,
+            626.0142327606579
+        ],
+        [
+            0,
+            1053.1018849622271,
+            392.80653482043624
+        ],
+        [
+            0,
+            0,
+            1
+        ]
+    ],
+    "distortion_coefficients": [
+        0.06423818630649013,
+        -0.1985005406711318,
+        0.0003381653272853468,
+        0.004136542548497307,
+        0.14016777127616042
+    ],
+    "distortion_model": "rectilinear",
+    "avg_reprojection_error": 0.6656613349382643,
+    "img_size": [
+        1280,
+        720
+    ],
+    "keyframes": 10,
+    "calibration_time": "Tue, 26 Mar 2024 23:30:55 GMT"
+}

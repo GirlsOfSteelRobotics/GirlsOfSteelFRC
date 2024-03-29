@@ -137,10 +137,12 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         // Cameras
+        Matrix<N3, N1> sideSingleTagStddev = AprilTagCamera.DEFAULT_SINGLE_TAG_STDDEV.times(2);
+        Matrix<N3, N1> sideMultiTagStddev = AprilTagCamera.DEFAULT_MULTI_TAG_STDDEV.times(2);
         m_aprilTagCameras = new AprilTagCameraManager(List.of(
             new AprilTagCamera(m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB),
-            new AprilTagCamera(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R),
-            new AprilTagCamera(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L)
+            new AprilTagCamera(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R, sideSingleTagStddev, sideMultiTagStddev),
+            new AprilTagCamera(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L, sideSingleTagStddev, sideMultiTagStddev)
         ));
         m_noteDetectionCamera = new ObjectDetection();
 
