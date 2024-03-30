@@ -174,12 +174,12 @@ public class RobotContainer {
             final int bit = i;
             tab.add("Raw Bit " + i,
                 Commands.startEnd(() -> {
-                        m_driverStationLedController.setBit(bit, true);
-                        m_driverStationLedController.write();
-                    }, () -> {
-                        m_driverStationLedController.setBit(bit, false);
-                        m_driverStationLedController.write();
-                    })
+                    m_driverStationLedController.setBit(bit, true);
+                    m_driverStationLedController.write();
+                }, () -> {
+                    m_driverStationLedController.setBit(bit, false);
+                    m_driverStationLedController.write();
+                })
                 .withName("Set Raw Bit " + bit));
         }
 
@@ -188,13 +188,13 @@ public class RobotContainer {
             DriverStationLedDriver.BitField field = DriverStationLedDriver.BitField.valueOf("ARDUINO_BIT_" + bit);
             tab.add("Arduino Bit " + i,
                 Commands.startEnd(() -> {
-                        m_driverStationLedController.setBit(field, true);
-                        m_driverStationLedController.write();
-                    }, () -> {
-                        m_driverStationLedController.setBit(field, false);
-                        m_driverStationLedController.write();
-                    })
-                    .withName("Set Arduino Bit " + bit));
+                    m_driverStationLedController.setBit(field, true);
+                    m_driverStationLedController.write();
+                }, () -> {
+                    m_driverStationLedController.setBit(field, false);
+                    m_driverStationLedController.write();
+                })
+                .withName("Set Arduino Bit " + bit));
         }
     }
 
