@@ -5,23 +5,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriverStationLedDriver {
     public enum BitField {
-        ARDUINO_BIT_0((1 << 8)),
-        ARDUINO_BIT_1((1 << 9)),
-        ARDUINO_BIT_2((1 << 10)),
-        ARDUINO_BIT_3((1 << 11)),
-        ARDUINO_BIT_4((1 << 12)),
-        ARDUINO_BIT_5((1 << 13)),
-        ARDUINO_BIT_6((1 << 14)),
-        ARDUINO_BIT_7((1 << 15)),
+        ARDUINO_BIT_0((1 << 24)),
+        ARDUINO_BIT_1((1 << 25)),
+        ARDUINO_BIT_2((1 << 26)),
+        ARDUINO_BIT_3((1 << 27)),
+        ARDUINO_BIT_4((1 << 28)),
+        ARDUINO_BIT_5((1 << 29)),
+        ARDUINO_BIT_6((1 << 30)),
+        ARDUINO_BIT_7((1 << 31)),
 
-        ARDUINO_BIT_8((1 << 24)),
-        ARDUINO_BIT_9((1 << 25)),
-        ARDUINO_BIT_10((1 << 26)),
-        ARDUINO_BIT_11((1 << 27)),
-        ARDUINO_BIT_12((1 << 28)),
-        ARDUINO_BIT_13((1 << 29)),
-        ARDUINO_BIT_14((1 << 30)),
-        ARDUINO_BIT_15((1 << 31));
+        ARDUINO_BIT_8((1 << 8)),
+        ARDUINO_BIT_9((1 << 9)),
+        ARDUINO_BIT_10((1 << 10)),
+        ARDUINO_BIT_11((1 << 11)),
+        ARDUINO_BIT_12((1 << 12)),
+        ARDUINO_BIT_13((1 << 13)),
+        ARDUINO_BIT_14((1 << 14)),
+        ARDUINO_BIT_15((1 << 15));
 
         public final int m_bit;
 

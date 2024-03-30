@@ -24,6 +24,7 @@ void loop() {
   FastLED.clear();
 
   uint32_t data = XInput.getRumble();
+  // bitTest(data);
   writeRobotPatterns(data);
 
   // Finally, show them
@@ -55,11 +56,16 @@ void writeRobotPatterns(uint32_t data) {
 
 
 void bitTest(uint32_t data) {
-  for (int i = 0; i < NUM_LEDS; ++i) {
+  int numLedBits = min(32, NUM_LEDS);
+  for (int i = 0; i < numLedBits; ++i) {
     uint32_t mask = 1 << i;
     if (checkBit(data, mask)) {
       leds[i] = CRGB::Red;
     }
+  }
+  
+  for (int i = numLedBits; i < NUM_LEDS; ++i) {
+    leds[i] = CRGB::Green;
   }
 }
 
