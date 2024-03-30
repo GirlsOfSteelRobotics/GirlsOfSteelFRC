@@ -6,6 +6,7 @@ import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
@@ -16,6 +17,8 @@ import java.util.function.Supplier;
 
 
 public final class SpeakerAimAndShootCommand extends Command {
+    private static final double DEFAULT_INTAKE_TIME = 1;
+
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
@@ -27,13 +30,18 @@ public final class SpeakerAimAndShootCommand extends Command {
     private final Supplier<Pose2d> m_robotPoseProvider;
     private boolean m_runIntake;
 
+    private final double m_intakeTime;
+
+    private final Debouncer m_debouncer;
+
     private SpeakerAimAndShootCommand(ArmPivotSubsystem armPivotSubsystem,
                                      ChassisSubsystem chassisSubsystem,
                                      IntakeSubsystem intakeSubsystem,
                                      ShooterSubsystem shooterSubsystem,
                                      Supplier<Pose2d> poseSupplier,
                                      DoubleSupplier shooterRpmGoalSupplier,
-                                     DoubleSupplier armAngleGoalSupplier) {
+                                     DoubleSupplier armAngleGoalSupplier,
+                                      double runIntakeTime) {
         this.m_armPivotSubsystem = armPivotSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
@@ -43,6 +51,9 @@ public final class SpeakerAimAndShootCommand extends Command {
         m_armAngleGoalSupplier = armAngleGoalSupplier;
         m_shooterRpmGoalSupplier = shooterRpmGoalSupplier;
         m_robotPoseProvider = poseSupplier;
+        m_debouncer = new Debouncer(.2);
+
+        m_intakeTime = runIntakeTime;
 
         addRequirements(this.m_armPivotSubsystem, this.m_chassisSubsystem, this.m_intakeSubsystem, this.m_shooterSubsystem);
     }
@@ -61,7 +72,8 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             robotPoseProvider,
             shooterRpmGoalSupplier,
-            armAngleGoalSupplier);
+            armAngleGoalSupplier,
+            DEFAULT_INTAKE_TIME);
     }
 
     public static SpeakerAimAndShootCommand createWithFixedArmAngle(ArmPivotSubsystem armPivotSubsystem,
@@ -77,7 +89,8 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             robotPoseProvider,
             shooterRpmGoalSupplier,
-            armAngleGoalSupplier);
+            armAngleGoalSupplier,
+            DEFAULT_INTAKE_TIME);
     }
 
     public static SpeakerAimAndShootCommand createShootWhileDrive(ArmPivotSubsystem armPivotSubsystem,
@@ -93,13 +106,22 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             pose,
             shooterRpmGoalSupplier,
-            pivotAngle);
+            pivotAngle,
+            DEFAULT_INTAKE_TIME);
+    }
+
+    public static SpeakerAimAndShootCommand createShootWhileStationary(ArmPivotSubsystem armPivotSubsystem,
+                                                                       ChassisSubsystem chassisSubsystem,
+                                                                       IntakeSubsystem intakeSubsystem,
+                                                                       ShooterSubsystem shooterSubsystem) {
+        return createShootWhileStationary(armPivotSubsystem, chassisSubsystem, intakeSubsystem, shooterSubsystem, DEFAULT_INTAKE_TIME);
     }
 
     public static SpeakerAimAndShootCommand createShootWhileStationary(ArmPivotSubsystem armPivotSubsystem,
                                                                   ChassisSubsystem chassisSubsystem,
                                                                   IntakeSubsystem intakeSubsystem,
-                                                                  ShooterSubsystem shooterSubsystem) {
+                                                                  ShooterSubsystem shooterSubsystem,
+                                                                double intakeTime) {
         DoubleSupplier shooterRpmGoalSupplier = ShooterSubsystem.SPEAKER_SHOT_SHOOTER_RPM::getValue;
         Supplier<Pose2d> pose = chassisSubsystem::getPose;
         DoubleSupplier pivotAngle = () -> armPivotSubsystem.getPivotAngleUsingSpeakerLookupTable(pose);
@@ -109,7 +131,8 @@ public final class SpeakerAimAndShootCommand extends Command {
             shooterSubsystem,
             pose,
             shooterRpmGoalSupplier,
-            pivotAngle);
+            pivotAngle,
+            intakeTime);
     }
 
     @Override
@@ -128,7 +151,8 @@ public final class SpeakerAimAndShootCommand extends Command {
         m_chassisSubsystem.turnButtToFacePoint(m_robotPoseProvider.get(), speaker, 0, 0);
         m_shooterSubsystem.setPidRpm(m_shooterRpmGoalSupplier.getAsDouble());
 
-        if (m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal()) {
+        boolean isReadyToShoot = m_armPivotSubsystem.isArmAtGoal() && m_chassisSubsystem.isAngleAtGoal() && m_shooterSubsystem.isShooterAtGoal();
+        if (m_debouncer.calculate(isReadyToShoot)) {
             m_runIntake = true;
             m_intakeTimer.start();
         }
@@ -140,7 +164,7 @@ public final class SpeakerAimAndShootCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return m_intakeTimer.hasElapsed(1);
+        return m_intakeTimer.hasElapsed(m_intakeTime);
     }
 
     @Override

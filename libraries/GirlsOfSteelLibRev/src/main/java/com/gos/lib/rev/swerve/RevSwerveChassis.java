@@ -271,4 +271,25 @@ public class RevSwerveChassis {
     public String getModuleName(int moduleId) {
         return m_modules[moduleId].getName();
     }
+
+    public void setModuleBrakeMode() {
+        for (RevSwerveModule module: m_modules) {
+            module.setBrakeMode();
+        }
+    }
+
+    private void setModuleCoastMode() {
+        for (RevSwerveModule module: m_modules) {
+            module.setCoastMode();
+        }
+    }
+
+    public void setModulesToPushMode(double wheelAngleDeg) {
+        setModuleCoastMode();
+
+        SwerveModuleState state = new SwerveModuleState(0, Rotation2d.fromDegrees(wheelAngleDeg));
+        for (RevSwerveModule module: m_modules) {
+            module.setDesiredState(state);
+        }
+    }
 }

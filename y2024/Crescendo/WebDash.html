@@ -4,7 +4,7 @@
     source-provider="NetworkTables"
 ><frc-sendable-chooser
         source-provider="NetworkTables"
-        selected="leave wing"
+        selected="ThreeNotesSourceSide76Choreo"
         style="transform: translate(37px, 143px);"
         source-key="/SmartDashboard/Auto Chooser"
         options="[]"
@@ -30,7 +30,7 @@
     ></frc-robot-command><super-structure
         source-key="/SmartDashboard/super structure"
         source-provider="NetworkTables"
-        style="width: 460px; height: 315px; transform: translate(734px, 255px);"
+        style="width: 460px; height: 315px; transform: translate(1010px, 296.6px);"
     >
     </super-structure><frc-robot-command
         source-provider="NetworkTables"
@@ -51,7 +51,7 @@
     ></frc-robot-command><frc-field-wrapper
         source-key="/SmartDashboard/Field"
         source-provider="NetworkTables"
-        style="transform: translate(723px, 0px);"
+        style="transform: translate(26.2px, 393.6px);"
         game="Crescendo"
         grid-size="1"
     >
@@ -61,20 +61,24 @@
         source-key="/Shuffleboard/test commands/Teleop: Aim at speaker (predicted pose)"
     ></frc-robot-command><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(334px, 52px);"
+        style="transform: translate(259.6px, 18.4px);"
         source-key="/Arm Pivot Subsystem/Arm At Goal"
         label="Arm At Goal"
     ></frc-boolean-box><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(332px, 135px);"
+        style="transform: translate(260px, 93.4px);"
         source-key="/Shooter Subsystem/Shooter At Goal"
         label="Shooter At Goal"
     ></frc-boolean-box><frc-boolean-box
         source-provider="NetworkTables"
-        style="transform: translate(333px, 215px);"
+        style="transform: translate(261px, 166.2px);"
         source-key="/Chassis/At Angle Setpoint"
         label="Chassis At Goal"
-    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    ></frc-boolean-box><frc-preferences-wrapper
+        source-key="/Preferences"
+        source-provider="NetworkTables"
+        style="transform: translate(529.388px, 11.575px); width: 573.762px; height: 561.975px;"
+    ></frc-preferences-wrapper></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -151,7 +155,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-728"
+            id="vaadin-number-field-2"
             aria-labelledby="label-vaadin-number-field-632"
             aria-describedby=""
             min="NaN"
@@ -160,7 +164,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-632"
-            for="vaadin-number-field-728"
+            for="vaadin-number-field-2"
         >Rel Arm Angle</label>
         <div
             slot="error-message"
@@ -181,7 +185,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-729"
+            id="vaadin-number-field-3"
             aria-labelledby="label-vaadin-number-field-633"
             aria-describedby=""
             min="NaN"
@@ -190,7 +194,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-633"
-            for="vaadin-number-field-729"
+            for="vaadin-number-field-3"
         >Percent Output</label>
         <div
             slot="error-message"
@@ -211,7 +215,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-730"
+            id="vaadin-number-field-4"
             aria-labelledby="label-vaadin-number-field-689"
             aria-describedby=""
             min="NaN"
@@ -220,7 +224,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-689"
-            for="vaadin-number-field-730"
+            for="vaadin-number-field-4"
         >Abs Arm ANgle</label>
         <div
             slot="error-message"
@@ -313,7 +317,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-731"
+            id="vaadin-number-field-5"
             aria-labelledby="label-vaadin-number-field-556"
             aria-describedby=""
             min="NaN"
@@ -322,7 +326,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-556"
-            for="vaadin-number-field-731"
+            for="vaadin-number-field-5"
         >Shooter RPM</label>
         <div
             slot="error-message"
@@ -343,7 +347,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-732"
+            id="vaadin-number-field-6"
             aria-labelledby="label-vaadin-number-field-580"
             aria-describedby=""
             min="NaN"
@@ -352,7 +356,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-580"
-            for="vaadin-number-field-732"
+            for="vaadin-number-field-6"
         >Percent Output</label>
         <div
             slot="error-message"
@@ -377,7 +381,7 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-733"
+            id="vaadin-number-field-7"
             aria-labelledby="label-vaadin-number-field-224"
             aria-describedby=""
             min="NaN"
@@ -386,7 +390,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-224"
-            for="vaadin-number-field-733"
+            for="vaadin-number-field-7"
         >Shooter Goal</label>
         <div
             slot="error-message"
@@ -486,6 +490,22 @@
         source-provider="NetworkTables"
         style="transform: translate(285px, 212px);"
         source-key="/Shuffleboard/test commands/Teleop: Normal Swerve Drive"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(294px, 288px);"
+        source-key="/Shuffleboard/test commands/Chassis drive to note"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(474px, 141px);"
+        source-key="/Shuffleboard/Ellie/Chassis: Believe April Tags"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(508px, 273px);"
+        source-key="/Shuffleboard/test commands/Chassis Push Forward"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(513px, 340px);"
+        source-key="/Shuffleboard/test commands/Chassis Push Sideways"
     ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Pit"
     slot="tab"
@@ -554,185 +574,79 @@
         source-key="/Preferences"
         source-provider="NetworkTables"
         style="transform: translate(120px, 75px); width: 429.2px; height: 332.4px;"
-    ></frc-preferences-wrapper></dashboard-tab><dashboard-tab
-    tab-name="Led Test"
-    slot="tab"
-    source-provider="NetworkTables"
-    selected=""
-><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(45px, 37px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 0"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(45px, 101px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 1"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(48px, 169px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 2"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(51px, 237px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 3"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(47px, 315px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 4"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(44px, 384px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 5"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(46px, 450px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 6"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(46px, 523px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 7"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(207px, 43px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 8"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(204px, 118px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 9"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(202px, 181px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 10"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(202px, 234px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 11"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(193px, 315px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 12"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(198px, 378px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 13"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(203px, 445px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 14"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(200px, 524px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 15"
-    ></frc-robot-command>
-    <frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(386px, 41px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 16"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(385px, 113px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 17"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(387px, 175px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 18"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(374px, 230px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 19"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(373px, 307px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 20"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(363px, 375px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 21"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(362px, 442px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 22"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(355px, 522px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 23"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(544px, 44px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 24"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(536px, 107px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 25"
-    ></frc-robot-command>
-    <frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(531px, 170px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 26"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(539px, 244px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 27"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(543px, 305px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 28"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(549px, 373px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 29"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(551px, 449px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 30"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(551px, 521px);"
-        source-key="/Shuffleboard/Leds/Raw Bit 31"
-    ></frc-robot-command>
-
-
-
-
-
-    <vaadin-number-field
-        label="Full"
+    ></frc-preferences-wrapper><vaadin-number-field
+        label="Label"
         value="0"
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(803px, 22px);"
-        source-key="/SmartDashboard/LED Data"
+        style="transform: translate(645px, 117px);"
+        source-key="/Hanger Subsystem/Left Pos: "
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-734"
-            aria-labelledby="label-vaadin-number-field-265"
+            id="vaadin-number-field-8"
+            aria-labelledby="label-vaadin-number-field-2752"
             aria-describedby=""
             min="NaN"
             max="NaN"
             step="any"
         ><label
             slot="label"
-            id="label-vaadin-number-field-265"
-            for="vaadin-number-field-734"
+            id="label-vaadin-number-field-2752"
+            for="vaadin-number-field-8"
         >Label</label>
         <div
             slot="error-message"
-            id="error-message-vaadin-number-field-164"
+            id="error-message-vaadin-number-field-1766"
             hidden=""
         ></div>
     </vaadin-number-field><vaadin-number-field
-        label="Left"
+        label="Label"
         value="0"
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(812px, 145px);"
-        source-key="/SmartDashboard/LED Left"
+        style="transform: translate(786px, 221px);"
+        source-key="/Hanger Subsystem/Right Pos"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-9"
+            aria-labelledby="label-vaadin-number-field-2753"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-2753"
+            for="vaadin-number-field-9"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-1767"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab><dashboard-tab
+    tab-name="Camera"
+    slot="tab"
+    source-provider="NetworkTables"
+    selected=""
+><vaadin-number-field
+        label="Left Seen"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(54px, 54px);"
+        source-key="/GosCameras/Left Camera/Targets Seen"
         placeholder=""
         min="NaN"
         max="NaN"
@@ -740,30 +654,30 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-1615"
-            aria-labelledby="label-vaadin-number-field-1643"
+            id="vaadin-number-field-87"
+            aria-labelledby="label-vaadin-number-field-87"
             aria-describedby=""
             min="undefined"
             max="undefined"
             step="any"
         ><label
             slot="label"
-            id="label-vaadin-number-field-1643"
-            for="vaadin-number-field-1615"
-        >Left</label>
+            id="label-vaadin-number-field-87"
+            for="vaadin-number-field-87"
+        >Left Seen</label>
         <div
             slot="error-message"
-            id="error-message-vaadin-number-field-948"
+            id="error-message-vaadin-number-field-65"
             hidden=""
         ></div>
     </vaadin-number-field><vaadin-number-field
-        label="Right"
+        label="Left Avg Distance"
         value="0"
         has-value=""
         has-label=""
         source-provider="NetworkTables"
-        style="transform: translate(818px, 267px);"
-        source-key="/SmartDashboard/LED Right"
+        style="transform: translate(58px, 166px);"
+        source-key="/GosCameras/Left Camera/Average Distance To Target"
         placeholder=""
         min="NaN"
         max="NaN"
@@ -771,87 +685,144 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-1616"
-            aria-labelledby="label-vaadin-number-field-1644"
+            id="vaadin-number-field-99"
+            aria-labelledby="label-vaadin-number-field-99"
             aria-describedby=""
             min="undefined"
             max="undefined"
             step="any"
         ><label
             slot="label"
-            id="label-vaadin-number-field-1644"
-            for="vaadin-number-field-1616"
-        >Right</label>
+            id="label-vaadin-number-field-99"
+            for="vaadin-number-field-99"
+        >Left Avg Distance</label>
         <div
             slot="error-message"
-            id="error-message-vaadin-number-field-949"
+            id="error-message-vaadin-number-field-73"
             hidden=""
         ></div>
-    </vaadin-number-field>
-    <frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(45px, 37px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 0"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(45px, 101px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 1"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(48px, 169px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 2"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(51px, 237px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 3"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(47px, 315px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 4"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(44px, 384px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 5"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(46px, 450px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 6"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(46px, 523px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 7"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(207px, 43px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 8"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(204px, 118px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 9"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(202px, 181px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 10"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(202px, 234px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 11"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(193px, 315px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 12"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(198px, 378px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 13"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(203px, 445px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 14"
-    ></frc-robot-command><frc-robot-command
-            source-provider="NetworkTables"
-            style="transform: translate(200px, 524px);"
-            source-key="/Shuffleboard/Leds/Arduino Bit 15"
-    ></frc-robot-command>
-
-</dashboard-tab>
+    </vaadin-number-field><vaadin-number-field
+        label="Back Seen"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(306px, 73px);"
+        source-key="/GosCameras/Center Back Camera/Targets Seen"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-111"
+            aria-labelledby="label-vaadin-number-field-111"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-111"
+            for="vaadin-number-field-111"
+        >Back Seen</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-81"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Back Avg Distance"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(315px, 195px);"
+        source-key="/GosCameras/Center Back Camera/Average Distance To Target"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-123"
+            aria-labelledby="label-vaadin-number-field-123"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-123"
+            for="vaadin-number-field-123"
+        >Back Avg Distance</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-89"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Right Seen"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(554px, 93px);"
+        source-key="/GosCameras/Right Camera/Targets Seen"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-135"
+            aria-labelledby="label-vaadin-number-field-135"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-135"
+            for="vaadin-number-field-135"
+        >Right Seen</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-97"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Right Avg Distance"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(570px, 203px);"
+        source-key="/GosCameras/Right Camera/Average Distance To Target"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-147"
+            aria-labelledby="label-vaadin-number-field-147"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-147"
+            for="vaadin-number-field-147"
+        >Right Avg Distance</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-105"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab>

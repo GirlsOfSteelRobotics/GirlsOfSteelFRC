@@ -26,7 +26,7 @@ import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_T
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
 
 public class ObjectDetection {
-    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAM_OBJET_DETECTION;
+    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAM_OBJECT_DETECTION;
 
     private final PhotonCamera m_photonCamera;
 
@@ -40,9 +40,11 @@ public class ObjectDetection {
 
         if (RobotBase.isSimulation()) {
             m_cameraSim = new PhotonCameraSim(m_photonCamera);
-            m_cameraSim.enableRawStream(true);
-            m_cameraSim.enableProcessedStream(true);
-            m_cameraSim.enableDrawWireframe(true);
+
+            boolean enableFancySim = false;
+            m_cameraSim.enableRawStream(enableFancySim);
+            m_cameraSim.enableProcessedStream(enableFancySim);
+            m_cameraSim.enableDrawWireframe(enableFancySim);
 
 
             m_visionSim = new VisionSystemSim("ObjectDetection");

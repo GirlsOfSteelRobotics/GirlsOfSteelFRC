@@ -81,8 +81,8 @@ public class RevSwerveModule {
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
-        m_drivingSparkMax.restoreFactoryDefaults();
-        m_turningSparkMax.restoreFactoryDefaults();
+        // m_drivingSparkMax.restoreFactoryDefaults();
+        // m_turningSparkMax.restoreFactoryDefaults();
 
         // Request the absolute encoder position / velocity faster than the default period
         m_turningSparkMax.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus5, 10);
@@ -284,5 +284,15 @@ public class RevSwerveModule {
 
     public String getName() {
         return m_moduleName;
+    }
+
+    public void setCoastMode() {
+        m_drivingSparkMax.setIdleMode(CANSparkBase.IdleMode.kCoast);
+        m_turningSparkMax.setIdleMode(CANSparkBase.IdleMode.kCoast);
+    }
+
+    public void setBrakeMode() {
+        m_drivingSparkMax.setIdleMode(CANSparkBase.IdleMode.kBrake);
+        m_turningSparkMax.setIdleMode(CANSparkBase.IdleMode.kBrake);
     }
 }
