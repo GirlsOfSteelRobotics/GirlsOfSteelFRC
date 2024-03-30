@@ -22,9 +22,28 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "AssholeAuto65.1"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AssholeAuto65.1"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AssholeAuto65.2"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AssholeAuto65.3"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -49,7 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AssholeAuto65.2"
+                  "pathName": "AssholeAuto65.4"
                 }
               },
               {

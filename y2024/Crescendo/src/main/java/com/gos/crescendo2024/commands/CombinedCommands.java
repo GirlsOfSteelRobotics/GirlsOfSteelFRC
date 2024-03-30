@@ -10,6 +10,7 @@ import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -26,6 +27,12 @@ public class CombinedCommands {
             .alongWith(intake.createMoveIntakeInCommand())
             .until(intake::hasGamePiece)
             .withName("Intake Piece");
+    }
+
+    public static Sendable prepareTunableShot(ArmPivotSubsystem arm, ShooterSubsystem shooter) {
+        return arm.createMoveArmToTunableSpeakerAngleCommand()
+            .alongWith(shooter.createRunTunableRpmCommand())
+            .withName("Prepare Tunable Shot");
     }
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, Supplier<Pose2d> pos) {
