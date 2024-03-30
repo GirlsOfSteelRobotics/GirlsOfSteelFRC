@@ -5,6 +5,7 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 
 public class DriverStationPatterns {
+    private static final DriverStationLedDriver.BitField IS_CONNECTED_BIT = DriverStationLedDriver.BitField.ARDUINO_BIT_0;
     private static final DriverStationLedDriver.BitField HAS_NOTE_BIT = DriverStationLedDriver.BitField.ARDUINO_BIT_3;
     private static final DriverStationLedDriver.BitField SEES_APRIL_TAGS_BIT = DriverStationLedDriver.BitField.ARDUINO_BIT_4;
 
@@ -19,6 +20,8 @@ public class DriverStationPatterns {
     }
 
     public void writeLeds() {
+        m_ledDriver.setBit(IS_CONNECTED_BIT, true);
+
         m_ledDriver.setBit(HAS_NOTE_BIT, m_intake.hasGamePiece());
         m_ledDriver.setBit(SEES_APRIL_TAGS_BIT, m_chassis.numAprilTagsSeen() > 0);
         m_ledDriver.write();
