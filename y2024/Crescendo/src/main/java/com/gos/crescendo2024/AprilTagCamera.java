@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class AprilTagCamera {
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
-    public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 1); // (0.5, 0.5, 1)
+    public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
 
     private final Transform3d m_robotToCamera;
@@ -43,6 +43,7 @@ public class AprilTagCamera {
     private PhotonPipelineResult m_lastPipelineResult;
     private int m_numTargetsSeen;
     private double m_avgDistanceToTag;
+    private double m_avgAmbiguity;
 
     private final LoggingUtil m_logger;
 
@@ -78,6 +79,7 @@ public class AprilTagCamera {
         m_logger = new LoggingUtil("GosCameras/" + m_cameraName);
         m_logger.addDouble("Targets Seen", () -> m_numTargetsSeen);
         m_logger.addDouble("Average Distance To Target", () -> m_avgDistanceToTag);
+        m_logger.addDouble("Average Ambiguity", () -> m_avgAmbiguity);
     }
 
     public void update(Pose2d prevEstimatedRobotPose) {
@@ -113,6 +115,7 @@ public class AprilTagCamera {
         List<PhotonTrackedTarget> targets = m_lastPipelineResult.getTargets();
         m_numTargetsSeen = 0;
         double sumDist = 0;
+        double sumAbiguity = 0;
         for (PhotonTrackedTarget tgt : targets) {
             Optional<Pose3d> tagPose = m_photonPoseEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
             if (tagPose.isEmpty()) {
@@ -121,17 +124,22 @@ public class AprilTagCamera {
             m_numTargetsSeen++;
             sumDist +=
                 tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
+            sumAbiguity += tgt.getPoseAmbiguity();
         }
         if (m_numTargetsSeen == 0) {
             return estStdDevs;
         }
         m_avgDistanceToTag = sumDist / m_numTargetsSeen;
+        m_avgAmbiguity = sumAbiguity / m_numTargetsSeen;
         // Decrease std devs if multiple targets are visible
         if (m_numTargetsSeen > 1) {
             estStdDevs = m_multiTagStddev;
         }
         // Increase std devs based on (average) distance
-        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 4) {
+        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 3.2) {
+            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
+        }
+        else if (m_numTargetsSeen == 2 && m_avgDistanceToTag > 4) {
             estStdDevs = VecBuilder.fill(1000, 1000, 1000);
         }
         else {

@@ -12,13 +12,22 @@ public class SpeakerLookupTable {
 
     public SpeakerLookupTable() {
         // tuned GPR - Use camera for distance - no hack value
-        m_table.put(1.8, 25.0);
-        m_table.put(2.45, 35.0);
-        m_table.put(2.99, 37.0);
-        m_table.put(3.42, 40.0);
-        m_table.put(3.87, 41.0);
-        m_table.put(5.62, 35.5);    // 3/28 shooter testing
+//        m_table.put(1.8, 25.0);
+//        m_table.put(2.45, 35.0);
+//        m_table.put(2.99, 37.0);
+//        m_table.put(3.42, 40.0);
+//        m_table.put(3.87, 41.0);
+//        m_table.put(5.62, 35.5);    // 3/28 statichooter testing
 
+        m_table.put(1.2, 16.0);
+        m_table.put(1.93, 20.0);
+        m_table.put(2.37, 26.0);
+        m_table.put(2.75, 29.0);
+        m_table.put(3.25, 33.0);
+        m_table.put(3.75, 35.0);
+        m_table.put(4.22, 39.0);
+        m_table.put(4.61, 40.00);
+        m_table.put(5.53, 41.0);
     }
 
     public double getAngleTable(double distance) {
