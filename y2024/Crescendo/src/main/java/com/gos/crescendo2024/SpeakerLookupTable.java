@@ -21,11 +21,13 @@ public class SpeakerLookupTable {
 
         m_table.put(1.2, 16.0);
         m_table.put(1.93, 20.0);
-        m_table.put(2.75, 28.0);
-        m_table.put(3.75,32.0);
-        m_table.put(4.22,34.0);
-        m_table.put(4.61, 36.00);
-        m_table.put(5.53, 40.5);
+        m_table.put(2.37, 26.0);
+        m_table.put(2.75, 29.0);
+        m_table.put(3.25, 33.0);
+        m_table.put(3.75, 35.0);
+        m_table.put(4.22, 39.0);
+        m_table.put(4.61, 40.00);
+        m_table.put(5.53, 41.0);
     }
 
     public double getAngleTable(double distance) {

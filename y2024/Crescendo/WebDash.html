@@ -23,7 +23,6 @@
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
@@ -83,7 +82,38 @@
         source-provider="NetworkTables"
         style="transform: translate(214px, 306px);"
         source-key="/Shuffleboard/test commands/Prepate Tunable Shot"
-    ></frc-robot-command></dashboard-tab><dashboard-tab
+    ></frc-robot-command><vaadin-number-field
+        label="Distance To Speaker"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(372px, 315px);"
+        source-key="/Chassis/Distance to Speaker"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-412"
+            aria-labelledby="label-vaadin-number-field-438"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-438"
+            for="vaadin-number-field-412"
+        >Distance To Speaker</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-292"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -277,6 +307,7 @@
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(2px, 18px); width: 207px; height: 50px;"

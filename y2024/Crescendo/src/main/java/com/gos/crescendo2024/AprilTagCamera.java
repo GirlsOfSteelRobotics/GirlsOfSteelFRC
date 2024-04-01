@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class AprilTagCamera {
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
-    public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 1); // (0.5, 0.5, 1)
+    public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
 
     private final Transform3d m_robotToCamera;
