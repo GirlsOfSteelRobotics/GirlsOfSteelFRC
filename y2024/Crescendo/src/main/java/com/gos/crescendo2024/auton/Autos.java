@@ -27,29 +27,33 @@ public final class Autos {
     }
 
     public enum AutoModes {
-        //four note auto
+        //Four Notes - Amp
         FOUR_NOTE_012("FourNoteAmpSide012Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 1, 2)),
         FOUR_NOTE_034("FourNoteAmpSide034Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 3, 4)),
         FOUR_NOTE_045("FourNoteAmpSide045Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 4, 5)),
         FOUR_NOTE_MIDDLE_012("FourNoteMiddle012Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
-        // Three Note
+        // Three Notes - Middle
         THREE_NOTE_12("ThreeNoteMiddle12Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 2)),
+        THREE_NOTE_MIDDLE_52("ThreeNoteMiddle52Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2)),
+        //Three Notes - Source
         THREE_NOTE_76("ThreeNotesSourceSide76Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7, 6)),
         THREE_NOTE_65("ThreeNotesSourceSide65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6, 5)),
-        //two note autos - Amp Side
-        //two note autos - middle
+        //Asshohole Auto (Three Note - Source)
+        ASSHOLEAUTO("AThreeNoteSource65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of()),
+        //Two Notes - Amp
+        //Two Notes - Middle
         TWO_NOTE_MIDDLE_1("TwoNoteMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1)),
         TWO_NOTE_MIDDLE_2("TwoNoteMiddle2Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(2)),
-        //two note autos - Source Side
+        //Two Notes - Source
         TWO_NOTE_RIGHT_6("TwoNoteSourceSide6Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
         TWO_NOTE_RIGHT_7("TwoNoteSourceSide7Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7)),
-        //just shoot preload
+        //Just shoot preload
         ONE_NOTE_JUST_SHOOT("OneNoteJustShoot", StartPosition.CURRENT_LOCATION, List.of()),
-        // Preload and drive
+        //Preload and drive
         ONE_NOTE_AND_LEAVE_WING("OneNoteSourceSideAndLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
-        // No shooting
+        //No shooting
         NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
-        //Disruption auto
+        //Bitch Auto
         BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of());
 
 

@@ -2,65 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3125526905059814,
-      "y": 5.549719333648682
+      "x": 1.3257739543914795,
+      "y": 5.555155277252197
     },
-    "rotation": -3.329652593284055e-33
+    "rotation": -5.292961805045398e-23
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "named",
-          "data": {
-            "name": "AimAndShootIntoSideSpeaker"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ThreeNoteMiddle12.1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakePiece"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ThreeNoteMiddle12.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "MoveArmToSpeakerAngle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShooterDefaultRpm"
-                }
-              }
-            ]
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -74,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteMiddle12.3"
+                  "pathName": "ThreeNoteMiddle52.1"
                 }
               },
               {
@@ -87,13 +37,25 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ThreeNoteMiddle12.4"
+                  "pathName": "ThreeNoteMiddle52.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePiece"
                 }
               }
             ]

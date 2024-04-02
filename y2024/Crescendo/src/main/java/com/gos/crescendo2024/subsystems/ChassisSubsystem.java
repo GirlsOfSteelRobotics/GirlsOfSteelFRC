@@ -82,6 +82,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
 
     private static final GosBooleanProperty USE_APRIL_TAGS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis: Use AprilTags", true);
+    private static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 0);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -119,8 +120,8 @@ public class ChassisSubsystem extends SubsystemBase {
             Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
             motorType,
-            RevSwerveModuleConstants.DriveMotorPinionTeeth.T16,
-            RevSwerveModuleConstants.DriveMotorSpurTeeth.T19,
+            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T20,
             WHEEL_BASE,
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
@@ -295,6 +296,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double yDiff = endPos.getY() - currentPos.getY();
         double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
         updateAngle += 180;
+        updateAngle += SHOOTER_ARC_CORRECTION.getValue();
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
     }
 

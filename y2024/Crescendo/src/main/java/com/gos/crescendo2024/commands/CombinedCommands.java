@@ -1,6 +1,7 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
+import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.HangerSubsystem;
@@ -10,6 +11,7 @@ import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -26,6 +28,12 @@ public class CombinedCommands {
             .alongWith(intake.createMoveIntakeInCommand())
             .until(intake::hasGamePiece)
             .withName("Intake Piece");
+    }
+
+    public static Sendable prepareTunableShot(ArmPivotSubsystem arm, ShooterSubsystem shooter) {
+        return arm.createMoveArmToTunableSpeakerAngleCommand()
+            .alongWith(shooter.createRunTunableRpmCommand())
+            .withName("Prepare Tunable Shot");
     }
 
     public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, Supplier<Pose2d> pos) {
@@ -63,7 +71,6 @@ public class CombinedCommands {
         return new VibrateControllerWhileTrueCommand(controller, isReadySupplier);
     }
 
-    // TODO(buckeye) Create an automated and non-automated version
     public static Command feedPieceAcrossFieldWithVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
         BooleanSupplier readyToLaunchSupplier = () -> {
             double blueMinX = 10.2;
@@ -84,18 +91,14 @@ public class CombinedCommands {
 
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
-            // new TurnToPointSwerveDrive(chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, chassis::getPose),
+            new TurnToPointSwerveDrive(chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, chassis::getPose),
             arm.createMoveArmFeederAngleCommand(),
             shooter.createShootNoteToAllianceRPMCommand(),
 
-            //face alliance and have anna translate across
-            chassis.createTurnToAngleCommand(0), //might need to be 180 to face alliance
             // Then, once they are all deemed ready, run the intake and vibrate the controller
             Commands.waitUntil(readyToLaunchSupplier)
                 .andThen(intake.createMoveIntakeInCommand()
-                    .alongWith(new VibrateControllerTimedCommand(joystick, 1))),
-            Commands.waitUntil(readyToLaunchSupplier).andThen(
-                new VibrateControllerTimedCommand(joystick, 1))
+                    .alongWith(new VibrateControllerTimedCommand(joystick, 1)))
         ).withName("Full Field Feed Piece");
     }
 
