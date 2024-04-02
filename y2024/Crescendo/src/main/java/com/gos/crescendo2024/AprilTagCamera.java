@@ -115,7 +115,7 @@ public class AprilTagCamera {
         List<PhotonTrackedTarget> targets = m_lastPipelineResult.getTargets();
         m_numTargetsSeen = 0;
         double sumDist = 0;
-        double sumAbiguity = 0;
+        double sumAmbiguity = 0;
         for (PhotonTrackedTarget tgt : targets) {
             Optional<Pose3d> tagPose = m_photonPoseEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
             if (tagPose.isEmpty()) {
@@ -124,13 +124,13 @@ public class AprilTagCamera {
             m_numTargetsSeen++;
             sumDist +=
                 tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
-            sumAbiguity += tgt.getPoseAmbiguity();
+            sumAmbiguity += tgt.getPoseAmbiguity();
         }
         if (m_numTargetsSeen == 0) {
             return estStdDevs;
         }
         m_avgDistanceToTag = sumDist / m_numTargetsSeen;
-        m_avgAmbiguity = sumAbiguity / m_numTargetsSeen;
+        m_avgAmbiguity = sumAmbiguity / m_numTargetsSeen;
         // Decrease std devs if multiple targets are visible
         if (m_numTargetsSeen > 1) {
             estStdDevs = m_multiTagStddev;
