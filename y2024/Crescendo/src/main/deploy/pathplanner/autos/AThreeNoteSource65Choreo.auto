@@ -36,12 +36,6 @@
                       "data": {
                         "pathName": "AssholeAuto65.2"
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "AssholeAuto65.3"
-                      }
                     }
                   ]
                 }
@@ -68,7 +62,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AssholeAuto65.4"
+                  "pathName": "AssholeAuto65.3"
                 }
               },
               {
