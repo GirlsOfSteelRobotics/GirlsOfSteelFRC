@@ -4,9 +4,10 @@
 #define NUM_LEDS 58
 #define LED_PIN 6
 
-#define IS_CONNECTED_BITMASK 1 << 0
-#define HAS_NOTE_BITMASK 1 << 3
+#define IS_CONNECTED_BITMASK   1 << 0
+#define HAS_NOTE_BITMASK       1 << 3
 #define SEES_APRILTAGS_BITMASK 1 << 4
+#define IN_SHOOTING_RANGE      1 << 5
 
 CRGB leds[NUM_LEDS];
 
@@ -34,7 +35,17 @@ void loop() {
 void writeRobotPatterns(uint32_t data) {
   bool has_note = checkBit(data, HAS_NOTE_BITMASK);
   bool sees_apriltags = checkBit(data, SEES_APRILTAGS_BITMASK);
+  bool in_shooting_range = checkBit(data, IN_SHOOTING_RANGE);
   bool is_connected = checkBit(data, IS_CONNECTED_BITMASK);
+
+  int note_lights_start = 0;
+  int note_lights_end = NUM_LEDS / 2;
+
+  int in_shooting_range_start = note_lights_end;
+  int in_shooting_range_end = in_shooting_range_start + NUM_LEDS / 2 - 1;
+
+  int sees_april_tag_start = in_shooting_range_end;
+  int sees_april_tag_end = sees_april_tag_start + 1;
 
   if (!is_connected) {
     rainbowWave(50, 10);
@@ -42,13 +53,19 @@ void writeRobotPatterns(uint32_t data) {
   }
 
   if (has_note) {
-    for (int i = 0; i < NUM_LEDS / 2; ++i) {
+    for (int i = note_lights_start; i < note_lights_end; ++i) {
       leds[i] = CRGB::Orange;
+    }
+  }
+  
+  if (in_shooting_range) {
+    for (int i = in_shooting_range_start; i < in_shooting_range_end; ++i) {
+      leds[i] = CRGB::Green;
     }
   }
 
   if (sees_apriltags) {
-    for (int i = NUM_LEDS / 2; i < NUM_LEDS; ++i) {
+    for (int i = sees_april_tag_start; i < sees_april_tag_end; ++i) {
       leds[i] = CRGB::SkyBlue;
     }
   }

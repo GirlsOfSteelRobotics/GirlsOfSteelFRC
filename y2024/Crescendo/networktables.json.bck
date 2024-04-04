@@ -470,5 +470,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/prepHangerAngle",
+    "type": "double",
+    "value": 90.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger Up Goal Position",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

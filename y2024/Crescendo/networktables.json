@@ -486,5 +486,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Use Vision for driving",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis: Shooter Curve Offset",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
