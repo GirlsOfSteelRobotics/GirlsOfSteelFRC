@@ -15,6 +15,7 @@ import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.crescendo2024.RobotExtrinsics;
+import com.gos.crescendo2024.ValidShootingPolygon;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosBooleanProperty;
@@ -88,6 +89,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final Pigeon2 m_gyro;
 
     private final GoSField m_field;
+    private final ValidShootingPolygon m_shootingPolygon;
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
@@ -166,12 +168,19 @@ public class ChassisSubsystem extends SubsystemBase {
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
 
+        m_shootingPolygon = new ValidShootingPolygon(m_field);
+
         m_logging = new LoggingUtil("Chassis");
         m_logging.addDouble("GyroAngle", m_gyro::getAngle);
         m_logging.addDouble("PoseAngle", () -> getPose().getRotation().getDegrees());
         m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
         m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
         m_logging.addDouble("Distance to Speaker", this::getDistanceToSpeaker);
+        m_logging.addBoolean("In Shooting Polygon", this::inShootingPolygon);
+    }
+
+    public boolean inShootingPolygon() {
+        return m_shootingPolygon.containsPoint(getPose().getTranslation());
     }
 
     public double getDistanceToSpeaker() {

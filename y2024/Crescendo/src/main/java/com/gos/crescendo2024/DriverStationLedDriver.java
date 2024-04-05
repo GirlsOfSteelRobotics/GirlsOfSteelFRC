@@ -66,7 +66,12 @@ public class DriverStationLedDriver {
         short outputs = 0;
         short leftRumble = (short) (m_data & 0xFFFF);
         short rightRumble = (short) ((m_data >> 16) & 0xFFFF);
-        DriverStationJNI.setJoystickOutputs(m_port, outputs, leftRumble, rightRumble);
+
+        if (Robot.isReal()) {
+            DriverStationJNI.setJoystickOutputs(m_port, outputs, leftRumble, rightRumble);
+        } else  {
+            DriverStationJNI.setJoystickOutputs(m_port, outputs, rightRumble, leftRumble);
+        }
 
 
         SmartDashboard.putNumber("LED Data", m_data);
