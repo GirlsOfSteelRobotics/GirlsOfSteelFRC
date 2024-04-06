@@ -189,6 +189,18 @@ public class HangerSubsystem extends SubsystemBase {
         return !m_upperLimitSwitchLeft.get();
     }
 
+    public boolean isDefenseWallUp() {
+        return m_rightHangerEncoder.getPosition() > 0;
+    }
+
+    public void runWallDownCheck() {
+        if (isDefenseWallUp()) {
+           // m_rightHangerEncoder.setPosition(0);
+            runRightHangerDown(WALL_HANGER_DOWN_SPEED.getValue());
+        }
+
+    }
+
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
@@ -246,14 +258,16 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     //Defense-wall deployment on hanger
-    public Command createDefenseWallUp() {
+    public Command createDefenseWallUpCommand() {
         return runEnd(() -> runRightHangerUp(WALL_HANGER_UP_SPEED.getValue()), this::stopHanger).withName("Defense Wall - Right Hanger Up");
     }
 
-    public Command createDefenseWallDown() {
+    public Command createDefenseWallDownCommand() {
         return runEnd(() -> runRightHangerDown(WALL_HANGER_DOWN_SPEED.getValue()), this::stopHanger).withName("Defense Wall - Right Hanger Down");
     }
 
-
+    public Command createRunWallDownCheckCommand() {
+        return runEnd(this::runWallDownCheck, this::stopHanger).withName("Defense Wall - Run Right Hanger Down Check");
+    }
 
 }

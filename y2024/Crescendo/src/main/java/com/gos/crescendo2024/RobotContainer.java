@@ -343,6 +343,11 @@ public class RobotContainer {
 
         shuffleboardTab.add("Hanger reset encoders", m_hangerSubsystem.createResetEncoders());
     }
+    private void addDefenseWallCommands(ShuffleboardTab shuffleboardTab) {
+        shuffleboardTab.add("Defense Wall - Right Hanger Up", m_hangerSubsystem.createDefenseWallUpCommand());
+        shuffleboardTab.add("Defense Wall - Right Hanger Down", m_hangerSubsystem.createDefenseWallDownCommand());
+        shuffleboardTab.add("Defense Wall - Run Right Hanger Down Check", m_hangerSubsystem.createRunWallDownCheckCommand());
+    }
 
     private boolean visionEnabled() {
         return USE_VISION.getValue();
