@@ -54,6 +54,7 @@ import org.photonvision.PhotonCamera;
 public class RobotContainer {
     private static final GosBooleanProperty USE_VISION = new GosBooleanProperty(false, "Use Vision for driving", true);
 
+
     private static final boolean HAS_HANGER = true;
 
     // Subsystems

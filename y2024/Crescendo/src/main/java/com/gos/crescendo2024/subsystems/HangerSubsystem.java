@@ -198,8 +198,8 @@ public class HangerSubsystem extends SubsystemBase {
            // m_rightHangerEncoder.setPosition(0);
             runRightHangerDown(WALL_HANGER_DOWN_SPEED.getValue());
         }
-
     }
+
 
     /////////////////////////////////////
     // Command Factories
