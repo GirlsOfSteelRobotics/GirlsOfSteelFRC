@@ -9,6 +9,7 @@ import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.Sendable;
@@ -88,6 +89,8 @@ public class CombinedCommands {
             return mechReady && distanceReady;
         };
 
+        final Debouncer m_debouncer = new Debouncer(0.2);
+
 
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
@@ -96,7 +99,7 @@ public class CombinedCommands {
             shooter.createShootNoteToAllianceRPMCommand(),
 
             // Then, once they are all deemed ready, run the intake and vibrate the controller
-            Commands.waitUntil(readyToLaunchSupplier)
+            Commands.waitUntil(() -> m_debouncer.calculate(readyToLaunchSupplier.getAsBoolean()))
                 .andThen(intake.createMoveIntakeInCommand()
                     .alongWith(new VibrateControllerTimedCommand(joystick, 1)))
         ).withName("Full Field Feed Piece");
