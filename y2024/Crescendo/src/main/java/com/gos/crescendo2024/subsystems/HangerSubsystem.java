@@ -21,6 +21,9 @@ public class HangerSubsystem extends SubsystemBase {
     private static final GosDoubleProperty HANGER_DOWN_SPEED = new GosDoubleProperty(false, "Hanger_Down_Speed", -0.3);
     private static final GosDoubleProperty HANGER_UP_SPEED = new GosDoubleProperty(false, "Hanger_Up_Speed", 0.3);
 
+    private static final GosDoubleProperty WALL_HANGER_DOWN_SPEED = new GosDoubleProperty(false, "Wall_Hanger_Down_Speed", -1);
+    private static final GosDoubleProperty WALL_HANGER_UP_SPEED = new GosDoubleProperty(false, "Wall_Hanger_Up_Speed", 1);
+
     private static final GosDoubleProperty HANGER_UP_GOAL_POSITION = new GosDoubleProperty(false, "Hanger Up Goal Position", 118);
 
     private final SimableCANSparkMax m_leftHangerMotor;
@@ -54,7 +57,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_leftPidController = m_leftHangerMotor.getPIDController();
         m_leftPidProperties = createPidProperties(m_leftPidController);
         m_leftHangerMotor.burnFlash();
-        m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger a");
+        m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger l");
 
         m_rightHangerMotor = new SimableCANSparkMax(Constants.HANGER_RIGHT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
         //m_rightHangerMotor.restoreFactoryDefaults();
@@ -65,7 +68,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightPidController = m_rightHangerMotor.getPIDController();
         m_rightPidProperties = createPidProperties(m_rightPidController);
         m_rightHangerMotor.burnFlash();
-        m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger b");
+        m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger r");
 
 
         m_upperLimitSwitchLeft = new DigitalInput(Constants.HANGER_UPPER_LIMIT_SWITCH_LEFT);
@@ -119,44 +122,44 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public void runHangerUp() {
-        runLeftHangerUp();
-        runRightHangerUp();
+        runLeftHangerUp(HANGER_UP_SPEED.getValue());
+        runRightHangerUp(HANGER_UP_SPEED.getValue());
     }
 
-    public void runLeftHangerUp() {
+    public void runLeftHangerUp(double hangerUpSpeed) {
         if (isLeftUpperLimitSwitchedPressed()) {
             m_leftHangerMotor.set(0);
         } else {
-            setLeftMotor(HANGER_UP_SPEED.getValue());
+            setLeftMotor(hangerUpSpeed);
         }
     }
 
-    public void runRightHangerUp() {
+    public void runRightHangerUp(double hangerUpSpeed) {
         if (isRightUpperLimitSwitchedPressed()) {
             m_rightHangerMotor.set(0);
         } else {
-            setRightMotor(HANGER_UP_SPEED.getValue());
+            setRightMotor(hangerUpSpeed);
         }
     }
 
     public void runHangerDown() {
-        runLeftHangerDown();
-        runRightHangerDown();
+        runLeftHangerDown(HANGER_DOWN_SPEED.getValue());
+        runRightHangerDown(HANGER_DOWN_SPEED.getValue());
     }
 
-    public void runLeftHangerDown() {
+    public void runLeftHangerDown(double hangerDownSpeed) {
         if (isLeftLowerLimitSwitchedPressed()) {
             m_leftHangerMotor.set(0);
         } else {
-            setLeftMotor(HANGER_DOWN_SPEED.getValue());
+            setLeftMotor(hangerDownSpeed);
         }
     }
 
-    public void runRightHangerDown() {
+    public void runRightHangerDown(double hangerDownSpeed) {
         if (isRightLowerLimitSwitchedPressed()) {
             m_rightHangerMotor.set(0);
         } else {
-            setRightMotor(HANGER_DOWN_SPEED.getValue());
+            setRightMotor(hangerDownSpeed);
         }
     }
 
@@ -198,19 +201,19 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public Command createLeftHangerUp() {
-        return runEnd(this::runLeftHangerUp, this::stopHanger).withName("Left Hanger Up");
+        return runEnd(() -> runLeftHangerUp(HANGER_UP_SPEED.getValue()), this::stopHanger).withName("Left Hanger Up");
     }
 
     public Command createLeftHangerDown() {
-        return runEnd(this::runLeftHangerDown, this::stopHanger).withName("Left Hanger Down");
+        return runEnd(() -> runLeftHangerDown(HANGER_DOWN_SPEED.getValue()), this::stopHanger).withName("Left Hanger Down");
     }
 
     public Command createRightHangerUp() {
-        return runEnd(this::runRightHangerUp, this::stopHanger).withName("Right Hanger Up");
+        return runEnd(() -> runRightHangerUp(HANGER_UP_SPEED.getValue()), this::stopHanger).withName("Right Hanger Up");
     }
 
     public Command createRightHangerDown() {
-        return runEnd(this::runRightHangerDown, this::stopHanger).withName("Right Hanger Down");
+        return runEnd(() -> runRightHangerDown(HANGER_DOWN_SPEED.getValue()), this::stopHanger).withName("Right Hanger Down");
     }
 
     public Command createSetHangerToCoast() {
@@ -241,4 +244,16 @@ public class HangerSubsystem extends SubsystemBase {
             .ignoringDisable(true)
             .withName("Reset Encoders");
     }
+
+    //Defense-wall deployment on hanger
+    public Command createDefenseWallUp() {
+        return runEnd(() -> runRightHangerUp(WALL_HANGER_UP_SPEED.getValue()), this::stopHanger).withName("Defense Wall - Right Hanger Up");
+    }
+
+    public Command createDefenseWallDown() {
+        return runEnd(() -> runRightHangerDown(WALL_HANGER_DOWN_SPEED.getValue()), this::stopHanger).withName("Defense Wall - Right Hanger Down");
+    }
+
+
+
 }
