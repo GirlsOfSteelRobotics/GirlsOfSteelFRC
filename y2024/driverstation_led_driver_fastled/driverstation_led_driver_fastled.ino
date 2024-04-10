@@ -39,10 +39,10 @@ void writeRobotPatterns(uint32_t data) {
   bool is_connected = checkBit(data, IS_CONNECTED_BITMASK);
 
   int note_lights_start = 0;
-  int note_lights_end = NUM_LEDS / 2;
+  int note_lights_end = NUM_LEDS - 1;
 
-  int in_shooting_range_start = note_lights_end;
-  int in_shooting_range_end = in_shooting_range_start + NUM_LEDS / 2 - 1;
+  int in_shooting_range_start = 0;
+  int in_shooting_range_end = NUM_LEDS - 1;
 
   int sees_april_tag_start = in_shooting_range_end;
   int sees_april_tag_end = sees_april_tag_start + 1;
