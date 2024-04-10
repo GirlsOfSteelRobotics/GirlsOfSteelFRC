@@ -35,7 +35,7 @@ public class LedManagerSubsystem extends SubsystemBase {
 
         // Patterns
         m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intakeSubsystem, chassis, arm, shooter);
-        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory, chassis);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, autoModeFactory, chassis, arm);
         m_driverStationPatterns = new DriverStationPatterns(driverStationLedDriver, intakeSubsystem, chassis);
     }
 
