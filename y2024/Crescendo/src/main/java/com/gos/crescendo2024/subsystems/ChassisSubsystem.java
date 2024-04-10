@@ -180,7 +180,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean inShootingPolygon() {
-        return m_shootingPolygon.containsPoint(getPose().getTranslation());
+        return m_shootingPolygon.containsPoint(getFuturePose().getTranslation());
     }
 
     public double getDistanceToSpeaker() {
