@@ -34,7 +34,7 @@ public final class SpeakerAimAndShootCommand extends Command {
     private final Supplier<Pose2d> m_robotPoseProvider;
     private boolean m_runIntake;
 
-    private NetworkTableEntry m_didEmergencyTimerElapse;
+    private final NetworkTableEntry m_didEmergencyTimerElapse;
 
     private final double m_intakeTime;
 
