@@ -35,6 +35,9 @@ public class SpeakerLookupTable {
         m_table.put(2.67, 33.0);
         m_table.put(3.34, 36.0);
         m_table.put(3.87, 39.0);
+        m_table.put(4.6, 42.0);
+        m_table.put(5.11, 41.7);
+
 
 
     }
