@@ -15,10 +15,15 @@ public class ValidShootingPolygon {
 
     public ValidShootingPolygon(GoSField field) {
         m_polygon = new Translation2d[] {
-            new Translation2d(0, 7.5),
-            new Translation2d(3.5, 7.5),
-            new Translation2d(3.5, 4),
-            new Translation2d(0, 4),
+            new Translation2d(1.2, 3.1),
+            new Translation2d(2.2, 2.18),
+            new Translation2d(2.2, 3.93),
+            new Translation2d(2.65, 4.7),
+            new Translation2d(3.66, 4.89),
+            new Translation2d(4.6, 5.37),
+            new Translation2d(4.8, 6.8),
+            new Translation2d(4, 7.39),
+            new Translation2d(0.9, 7.4),
         };
         m_isBlue = true;
         m_field = field;
