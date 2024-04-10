@@ -49,8 +49,8 @@ public final class Constants {
 
 
     //Digital Inputs
-    public static final int INTAKE_SENSOR = 1;
-    public static final int SHOOTER_SENSOR = 0;
+    public static final int INTAKE_SENSOR = 0;
+    public static final int SHOOTER_SENSOR = 1;
     public static final int HANGER_UPPER_LIMIT_SWITCH_LEFT = 2;
     public static final int HANGER_LOWER_LIMIT_SWITCH_LEFT = 3;
     public static final int HANGER_UPPER_LIMIT_SWITCH_RIGHT = 4;

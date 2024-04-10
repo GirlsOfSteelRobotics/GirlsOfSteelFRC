@@ -2,8 +2,10 @@ package com.gos.crescendo2024.subsystems;
 
 
 import com.gos.crescendo2024.Constants;
+import com.gos.crescendo2024.DriverStationLedDriver;
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.led_patterns.DisabledPatterns;
+import com.gos.crescendo2024.led_patterns.DriverStationPatterns;
 import com.gos.crescendo2024.led_patterns.EnabledPatterns;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -20,9 +22,10 @@ public class LedManagerSubsystem extends SubsystemBase {
 
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
+    private final DriverStationPatterns m_driverStationPatterns;
 
 
-    public LedManagerSubsystem(IntakeSubsystem intakeSubsystem, Autos autoModeFactory, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
+    public LedManagerSubsystem(DriverStationLedDriver driverStationLedDriver, IntakeSubsystem intakeSubsystem, Autos autoModeFactory, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         // Setup LED's
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
@@ -33,6 +36,7 @@ public class LedManagerSubsystem extends SubsystemBase {
         // Patterns
         m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intakeSubsystem, chassis, arm, shooter);
         m_disabledPatterns = new DisabledPatterns(m_buffer, autoModeFactory, chassis, arm);
+        m_driverStationPatterns = new DriverStationPatterns(driverStationLedDriver, intakeSubsystem, chassis);
     }
 
 
@@ -45,6 +49,8 @@ public class LedManagerSubsystem extends SubsystemBase {
         } else {
             m_disabledPatterns.writeAutoPattern();
         }
+
+        m_driverStationPatterns.writeLeds();
 
         m_led.setData(m_buffer);
     }

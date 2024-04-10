@@ -187,12 +187,93 @@
       "/Shuffleboard/Ellie/Clear Sticky Faults": "Command",
       "/Shuffleboard/Ellie/Hanger Down": "Command",
       "/Shuffleboard/Ellie/Hanger Up": "Command",
+      "/Shuffleboard/Ellie/Hanger reset encoders": "Command",
       "/Shuffleboard/Ellie/Hanger to Coast": "Command",
       "/Shuffleboard/Ellie/Left Hanger Down": "Command",
       "/Shuffleboard/Ellie/Left Hanger Up": "Command",
       "/Shuffleboard/Ellie/Prep Hanger Up": "Command",
       "/Shuffleboard/Ellie/Right Hanger Down": "Command",
       "/Shuffleboard/Ellie/Right Hanger Up": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 0": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 1": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 10": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 11": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 12": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 13": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 14": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 15": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 2": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 3": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 4": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 5": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 6": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 7": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 8": "Command",
+      "/Shuffleboard/Leds/Arduino Bit 9": "Command",
+      "/Shuffleboard/Leds/Bit 0": "Command",
+      "/Shuffleboard/Leds/Bit 1": "Command",
+      "/Shuffleboard/Leds/Bit 10": "Command",
+      "/Shuffleboard/Leds/Bit 11": "Command",
+      "/Shuffleboard/Leds/Bit 12": "Command",
+      "/Shuffleboard/Leds/Bit 13": "Command",
+      "/Shuffleboard/Leds/Bit 14": "Command",
+      "/Shuffleboard/Leds/Bit 15": "Command",
+      "/Shuffleboard/Leds/Bit 16": "Command",
+      "/Shuffleboard/Leds/Bit 17": "Command",
+      "/Shuffleboard/Leds/Bit 18": "Command",
+      "/Shuffleboard/Leds/Bit 19": "Command",
+      "/Shuffleboard/Leds/Bit 2": "Command",
+      "/Shuffleboard/Leds/Bit 20": "Command",
+      "/Shuffleboard/Leds/Bit 21": "Command",
+      "/Shuffleboard/Leds/Bit 22": "Command",
+      "/Shuffleboard/Leds/Bit 23": "Command",
+      "/Shuffleboard/Leds/Bit 24": "Command",
+      "/Shuffleboard/Leds/Bit 25": "Command",
+      "/Shuffleboard/Leds/Bit 26": "Command",
+      "/Shuffleboard/Leds/Bit 27": "Command",
+      "/Shuffleboard/Leds/Bit 28": "Command",
+      "/Shuffleboard/Leds/Bit 29": "Command",
+      "/Shuffleboard/Leds/Bit 3": "Command",
+      "/Shuffleboard/Leds/Bit 30": "Command",
+      "/Shuffleboard/Leds/Bit 31": "Command",
+      "/Shuffleboard/Leds/Bit 4": "Command",
+      "/Shuffleboard/Leds/Bit 5": "Command",
+      "/Shuffleboard/Leds/Bit 6": "Command",
+      "/Shuffleboard/Leds/Bit 7": "Command",
+      "/Shuffleboard/Leds/Bit 8": "Command",
+      "/Shuffleboard/Leds/Bit 9": "Command",
+      "/Shuffleboard/Leds/Raw Bit 0": "Command",
+      "/Shuffleboard/Leds/Raw Bit 1": "Command",
+      "/Shuffleboard/Leds/Raw Bit 10": "Command",
+      "/Shuffleboard/Leds/Raw Bit 11": "Command",
+      "/Shuffleboard/Leds/Raw Bit 12": "Command",
+      "/Shuffleboard/Leds/Raw Bit 13": "Command",
+      "/Shuffleboard/Leds/Raw Bit 14": "Command",
+      "/Shuffleboard/Leds/Raw Bit 15": "Command",
+      "/Shuffleboard/Leds/Raw Bit 16": "Command",
+      "/Shuffleboard/Leds/Raw Bit 17": "Command",
+      "/Shuffleboard/Leds/Raw Bit 18": "Command",
+      "/Shuffleboard/Leds/Raw Bit 19": "Command",
+      "/Shuffleboard/Leds/Raw Bit 2": "Command",
+      "/Shuffleboard/Leds/Raw Bit 20": "Command",
+      "/Shuffleboard/Leds/Raw Bit 21": "Command",
+      "/Shuffleboard/Leds/Raw Bit 22": "Command",
+      "/Shuffleboard/Leds/Raw Bit 23": "Command",
+      "/Shuffleboard/Leds/Raw Bit 24": "Command",
+      "/Shuffleboard/Leds/Raw Bit 25": "Command",
+      "/Shuffleboard/Leds/Raw Bit 26": "Command",
+      "/Shuffleboard/Leds/Raw Bit 27": "Command",
+      "/Shuffleboard/Leds/Raw Bit 28": "Command",
+      "/Shuffleboard/Leds/Raw Bit 29": "Command",
+      "/Shuffleboard/Leds/Raw Bit 3": "Command",
+      "/Shuffleboard/Leds/Raw Bit 30": "Command",
+      "/Shuffleboard/Leds/Raw Bit 31": "Command",
+      "/Shuffleboard/Leds/Raw Bit 4": "Command",
+      "/Shuffleboard/Leds/Raw Bit 5": "Command",
+      "/Shuffleboard/Leds/Raw Bit 6": "Command",
+      "/Shuffleboard/Leds/Raw Bit 7": "Command",
+      "/Shuffleboard/Leds/Raw Bit 8": "Command",
+      "/Shuffleboard/Leds/Raw Bit 9": "Command",
       "/Shuffleboard/PP Paths/Curve Path": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
@@ -281,10 +362,12 @@
       "/Shuffleboard/test commands/Full Field Feed": "Command",
       "/Shuffleboard/test commands/Hanger Down": "Command",
       "/Shuffleboard/test commands/Hanger Up": "Command",
+      "/Shuffleboard/test commands/Hanger reset encoders": "Command",
       "/Shuffleboard/test commands/Hanger to Coast": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Left Hanger Down": "Command",
       "/Shuffleboard/test commands/Left Hanger Up": "Command",
+      "/Shuffleboard/test commands/Prepare Tunable Shot": "Command",
       "/Shuffleboard/test commands/Right Hanger Down": "Command",
       "/Shuffleboard/test commands/Right Hanger Up": "Command",
       "/Shuffleboard/test commands/Shoot Piece": "Command",
@@ -333,12 +416,23 @@
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid Red": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Chassis drive to amp": {
         "window": {
           "visible": true
@@ -456,6 +550,10 @@
         "height": 8.210550308227539,
         "left": 150,
         "right": 2961,
+        "shootingPolygon": {
+          "arrows": false,
+          "style": "Line"
+        },
         "top": 79,
         "width": 16.541748046875,
         "window": {
@@ -496,13 +594,7 @@
       }
     },
     "transitory": {
-      "Arm Pivot Subsystem": {
-        "open": true
-      },
       "Chassis": {
-        "open": true
-      },
-      "Intake Subsystem": {
         "open": true
       },
       "Shooter Subsystem": {
@@ -522,7 +614,8 @@
     "Server": {
       "Subscribers": {
         "open": true
-      }
+      },
+      "open": true
     },
     "visible": true
   },

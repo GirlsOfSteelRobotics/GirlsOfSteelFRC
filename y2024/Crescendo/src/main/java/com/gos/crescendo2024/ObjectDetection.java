@@ -26,7 +26,7 @@ import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_T
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
 
 public class ObjectDetection {
-    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAM_OBJET_DETECTION;
+    private static final Transform3d ROBOT_TO_CAMERA = RobotExtrinsics.ROBOT_TO_CAM_OBJECT_DETECTION;
 
     private final PhotonCamera m_photonCamera;
 

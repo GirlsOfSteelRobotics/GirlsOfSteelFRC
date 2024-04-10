@@ -78,7 +78,42 @@
         source-key="/Preferences"
         source-provider="NetworkTables"
         style="transform: translate(529.388px, 11.575px); width: 573.762px; height: 561.975px;"
-    ></frc-preferences-wrapper></dashboard-tab><dashboard-tab
+    ></frc-preferences-wrapper><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(214px, 306px);"
+        source-key="/Shuffleboard/test commands/Prepate Tunable Shot"
+    ></frc-robot-command><vaadin-number-field
+        label="Distance To Speaker"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(372px, 315px);"
+        source-key="/Chassis/Distance to Speaker"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-412"
+            aria-labelledby="label-vaadin-number-field-438"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-438"
+            for="vaadin-number-field-412"
+        >Distance To Speaker</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-292"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -272,6 +307,7 @@
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(2px, 18px); width: 207px; height: 50px;"
@@ -548,7 +584,6 @@
     tab-name="Hanger"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(166px, 412px);"
@@ -589,23 +624,23 @@
         source-provider="NetworkTables"
         style="transform: translate(645px, 117px);"
         source-key="/Hanger Subsystem/Left Pos: "
-        placeholder=""
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-2606"
+            id="vaadin-number-field-8"
             aria-labelledby="label-vaadin-number-field-2752"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-2752"
-            for="vaadin-number-field-2606"
+            for="vaadin-number-field-8"
         >Label</label>
         <div
             slot="error-message"
@@ -620,6 +655,221 @@
         source-provider="NetworkTables"
         style="transform: translate(786px, 221px);"
         source-key="/Hanger Subsystem/Right Pos"
+        min="NaN"
+        max="NaN"
+        placeholder=""
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-9"
+            aria-labelledby="label-vaadin-number-field-2753"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-2753"
+            for="vaadin-number-field-9"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-1767"
+            hidden=""
+        ></div>
+    </vaadin-number-field></dashboard-tab><dashboard-tab
+    tab-name="Camera"
+    slot="tab"
+    source-provider="NetworkTables"
+><vaadin-number-field
+        label="Left Seen"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(54px, 54px);"
+        source-key="/GosCameras/Left Camera/Targets Seen"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-10"
+            aria-labelledby="label-vaadin-number-field-87"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-87"
+            for="vaadin-number-field-10"
+        >Left Seen</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-65"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Left Avg Distance"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(58px, 166px);"
+        source-key="/GosCameras/Left Camera/Average Distance To Target"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-11"
+            aria-labelledby="label-vaadin-number-field-99"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-99"
+            for="vaadin-number-field-11"
+        >Left Avg Distance</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-73"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Back Seen"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(306px, 73px);"
+        source-key="/GosCameras/Center Back Camera/Targets Seen"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-12"
+            aria-labelledby="label-vaadin-number-field-111"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-111"
+            for="vaadin-number-field-12"
+        >Back Seen</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-81"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Back Avg Distance"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(315px, 195px);"
+        source-key="/GosCameras/Center Back Camera/Average Distance To Target"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-13"
+            aria-labelledby="label-vaadin-number-field-123"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-123"
+            for="vaadin-number-field-13"
+        >Back Avg Distance</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-89"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Right Seen"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(554px, 93px);"
+        source-key="/GosCameras/Right Camera/Targets Seen"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-14"
+            aria-labelledby="label-vaadin-number-field-135"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-135"
+            for="vaadin-number-field-14"
+        >Right Seen</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-97"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Right Avg Distance"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(570px, 203px);"
+        source-key="/GosCameras/Right Camera/Average Distance To Target"
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-15"
+            aria-labelledby="label-vaadin-number-field-147"
+            aria-describedby=""
+            min="NaN"
+            max="NaN"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-147"
+            for="vaadin-number-field-15"
+        >Right Avg Distance</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-105"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Label"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(73px, 287px);"
+        source-key="/GosCameras/Left Camera/Average Ambiguity"
         placeholder=""
         min="NaN"
         max="NaN"
@@ -627,20 +877,81 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-2607"
-            aria-labelledby="label-vaadin-number-field-2753"
+            id="vaadin-number-field-290"
+            aria-labelledby="label-vaadin-number-field-299"
             aria-describedby=""
             min="undefined"
             max="undefined"
             step="any"
         ><label
             slot="label"
-            id="label-vaadin-number-field-2753"
-            for="vaadin-number-field-2607"
+            id="label-vaadin-number-field-299"
+            for="vaadin-number-field-290"
         >Label</label>
         <div
             slot="error-message"
-            id="error-message-vaadin-number-field-1767"
+            id="error-message-vaadin-number-field-194"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Label"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(317px, 310px);"
+        source-key="/GosCameras/Center Back Camera/Average Ambiguity"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-302"
+            aria-labelledby="label-vaadin-number-field-311"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-311"
+            for="vaadin-number-field-302"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-202"
+            hidden=""
+        ></div>
+    </vaadin-number-field><vaadin-number-field
+        label="Label"
+        value="0"
+        has-value=""
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(575px, 333px);"
+        placeholder=""
+        min="NaN"
+        max="NaN"
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-314"
+            aria-labelledby="label-vaadin-number-field-323"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-323"
+            for="vaadin-number-field-314"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-210"
             hidden=""
         ></div>
     </vaadin-number-field></dashboard-tab>
