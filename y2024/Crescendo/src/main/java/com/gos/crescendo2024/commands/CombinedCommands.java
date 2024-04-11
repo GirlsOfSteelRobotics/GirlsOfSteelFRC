@@ -103,12 +103,11 @@ public class CombinedCommands {
     }
 
     public static Command feedPieceAcrossFieldNoVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
-        BooleanSupplier readyToLaunchSupplier = () -> {
-            return arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
-        };
+        BooleanSupplier readyToLaunchSupplier = () -> arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
 
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
+            new DavidDriveSwerve(chassis, joystick),
             arm.createMoveArmFeederAngleCommand(),
             shooter.createShootNoteToAllianceRPMCommand(),
             Commands.waitUntil(readyToLaunchSupplier).andThen(

@@ -80,6 +80,12 @@ public class IntakeSubsystem extends SubsystemBase {
         return this.runEnd(this::intakeIn, this::intakeStop).withName("Intake In");
     }
 
+    public Command createMoveIntakeInWithTimeoutCommand() {
+        return createMoveIntakeInCommand().withTimeout(1)
+            .andThen(createMoveIntakeOutCommand()).withTimeout(0.1)
+            .withName("Intake In With Timeout");
+    }
+
     public Command createMoveIntakeOutCommand() {
         return this.runEnd(this::intakeOut, this::intakeStop).withName("Intake Out");
     }

@@ -83,7 +83,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
 
     private static final GosBooleanProperty USE_APRIL_TAGS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis: Use AprilTags", true);
-    private static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 0);
+    public static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 0);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -176,6 +176,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging.addDouble("Angle Setpoint", m_turnAnglePIDVelocity::getSetpoint);
         m_logging.addBoolean("At Angle Setpoint", this::isAngleAtGoal);
         m_logging.addDouble("Distance to Speaker", this::getDistanceToSpeaker);
+        m_logging.addDouble("Distance to Feeder", () -> getDistanceToFeeder(getPose()));
         m_logging.addBoolean("In Shooting Polygon", this::inShootingPolygon);
     }
 
@@ -191,6 +192,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getDistanceToAmp() {
         Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION);
+        Translation2d roboManTranslation = getPose().getTranslation();
+        return roboManTranslation.getDistance(amp.getTranslation());
+    }
+
+    public double getDistanceToFeeder(Pose2d pose) {
+        Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics. FULL_FIELD_FEEDING_AIMING_POINT);
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(amp.getTranslation());
     }
@@ -301,11 +308,15 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void turnButtToFacePoint(Pose2d currentPos, Pose2d endPos, double xVel, double yVel) {
+        turnButtToFacePoint(currentPos, endPos, xVel, yVel, SHOOTER_ARC_CORRECTION.getValue());
+    }
+
+    public void turnButtToFacePoint(Pose2d currentPos, Pose2d endPos, double xVel, double yVel, double curveOffset) {
         double xDiff = endPos.getX() - currentPos.getX();
         double yDiff = endPos.getY() - currentPos.getY();
         double updateAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
         updateAngle += 180;
-        updateAngle += SHOOTER_ARC_CORRECTION.getValue();
+        updateAngle += curveOffset;
         turnToAngleWithVelocity(xVel, yVel, updateAngle);
     }
 
