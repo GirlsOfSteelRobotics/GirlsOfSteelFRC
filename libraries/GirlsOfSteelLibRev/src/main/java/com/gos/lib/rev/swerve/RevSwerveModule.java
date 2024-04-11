@@ -63,7 +63,7 @@ public class RevSwerveModule {
      * Encoder.
      */
     @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
-    public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset) {
+    public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset, boolean lockPidConstants) {
         m_moduleName = moduleName;
 
         switch (moduleConstants.m_driveMotorType) {
@@ -125,13 +125,13 @@ public class RevSwerveModule {
 
         // Set the PID gains for the driving motor. Note these are example gains, and you
         // may need to tune them for your own robot!
-        m_drivingPIDProperty = new RevPidPropertyBuilder("Swerve Driving PID", false, m_drivingPIDController, 0)
+        m_drivingPIDProperty = new RevPidPropertyBuilder("Swerve Driving PID", lockPidConstants, m_drivingPIDController, 0)
             .addP(0.04)
             .addD(0)
             .addFF(1 / moduleConstants.m_driveWheelFreeSpeedRps)
             .build();
 
-        m_turningPIDProperty = new RevPidPropertyBuilder("Swerve Turning PID", false, m_turningPIDController, 0)
+        m_turningPIDProperty = new RevPidPropertyBuilder("Swerve Turning PID", lockPidConstants, m_turningPIDController, 0)
             .addP(1)
             .addD(0)
             .build();

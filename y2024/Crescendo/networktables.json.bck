@@ -486,5 +486,77 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Use Vision for driving",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis: Shooter Curve Offset",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis Slow Mode TranslationJoystickDampening",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis Slow Mode RotationJoystickDampening",
+    "type": "double",
+    "value": 0.7,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Shoot note to alliance with rpm",
+    "type": "double",
+    "value": 3000.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: allianceFeederAngle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Use Debug Velocity",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Debug x-velocity",
+    "type": "double",
+    "value": -2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Debug y-velocity",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

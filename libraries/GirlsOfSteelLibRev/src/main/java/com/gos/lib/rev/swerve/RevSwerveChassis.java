@@ -60,25 +60,29 @@ public class RevSwerveChassis {
             moduleConstants,
             chassisConstants.m_frontLeftDrivingCanId,
             chassisConstants.m_frontLeftTurningCanId,
-            RevSwerveChassisConstants.FRONT_LEFT_CHASSIS_ANGULAR_OFFSET);
+            RevSwerveChassisConstants.FRONT_LEFT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_lockPidConstants);
         m_frontRight = new RevSwerveModule(
             "FR",
             moduleConstants,
             chassisConstants.m_frontRightDrivingCanId,
             chassisConstants.m_frontRightTurningCanId,
-            RevSwerveChassisConstants.FRONT_RIGHT_CHASSIS_ANGULAR_OFFSET);
+            RevSwerveChassisConstants.FRONT_RIGHT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_lockPidConstants);
         m_backLeft = new RevSwerveModule(
             "BL",
             moduleConstants,
             chassisConstants.m_rearLeftDrivingCanId,
             chassisConstants.m_rearLeftTurningCanId,
-            RevSwerveChassisConstants.BACK_LEFT_CHASSIS_ANGULAR_OFFSET);
+            RevSwerveChassisConstants.BACK_LEFT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_lockPidConstants);
         m_backRight = new RevSwerveModule(
             "BR",
             moduleConstants,
             chassisConstants.m_rearRightDrivingCanId,
             chassisConstants.m_rearRightTurningCanId,
-            RevSwerveChassisConstants.BACK_RIGHT_CHASSIS_ANGULAR_OFFSET);
+            RevSwerveChassisConstants.BACK_RIGHT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_lockPidConstants);
         m_modules = new RevSwerveModule[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
 
         m_kinematics = new SwerveDriveKinematics(

@@ -77,8 +77,8 @@ public class FeedPiecesWithVision extends Command {
     public void execute() {
         Pose2d aimingPoint = AllianceFlipper.maybeFlip(RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT);
 
-         double leftY = -MathUtil.applyDeadband(m_driverController.getLeftY(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
-         double leftX = -MathUtil.applyDeadband(m_driverController.getLeftX(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
+        double leftY = -MathUtil.applyDeadband(m_driverController.getLeftY(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
+        double leftX = -MathUtil.applyDeadband(m_driverController.getLeftX(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
 
         double chassisXVel;
         double chassisYVel;

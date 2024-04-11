@@ -45,6 +45,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
+import javax.naming.Name;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -122,6 +124,7 @@ public class RobotContainer {
             NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
+            NamedCommands.registerCommand("PrepSpeakerShot", CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose));
         }
 
         m_autonomousFactory = new Autos();
