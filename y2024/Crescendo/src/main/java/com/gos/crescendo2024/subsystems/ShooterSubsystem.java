@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -26,16 +27,16 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public static final GosDoubleProperty TUNABLE_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterTunableRpm", 5000);
+    public static final GosDoubleProperty TUNABLE_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterTunableRpm", 5500);
     public static final GosDoubleProperty SPEAKER_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeakerShotRpm", 5000);
     public static final GosDoubleProperty AMP_SHOT_SHOOTER_RPM = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterAmpShotRpm", 800);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterSpeed", 0.5);
-    public static final GosDoubleProperty SHOOT_NOTE_TO_ALLIANCE_RPM = new GosDoubleProperty(false, "Shoot note to alliance with rpm", 3000);
+    public static final GosDoubleProperty SHOOT_NOTE_TO_ALLIANCE_RPM = new GosDoubleProperty(false, "Feeding: Shoot note to alliance with rpm", 3000);
     private static final double ALLOWABLE_ERROR = 125;
 
 
-    private final SimableCANSparkMax m_shooterMotorLeader;
-    private final SimableCANSparkMax m_shooterMotorFollower;
+    private final SimableCANSparkFlex m_shooterMotorLeader;
+    private final SimableCANSparkFlex m_shooterMotorFollower;
     private final SparkMaxAlerts m_shooterMotorErrorAlerts;
     private final SparkMaxAlerts m_shooterFollowerErrorAlerts;
     private final RelativeEncoder m_shooterEncoder;
@@ -47,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DigitalInput m_photoelectricSensor;
 
     public ShooterSubsystem() {
-        m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorLeader = new SimableCANSparkFlex(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorLeader.restoreFactoryDefaults();
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
@@ -65,7 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorLeader.enableVoltageCompensation(10);
         m_shooterMotorLeader.burnFlash();
 
-        m_shooterMotorFollower = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorFollower = new SimableCANSparkFlex(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
         m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);

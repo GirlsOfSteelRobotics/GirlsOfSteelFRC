@@ -1,5 +1,6 @@
 package com.gos.crescendo2024.led_patterns;
 
+import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.led_patterns.subpatterns.AlertPatterns;
 import com.gos.crescendo2024.led_patterns.subpatterns.AutoModePattern;
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class DisabledPatterns {
-    private static final GosBooleanProperty ALWAYS_SHOW_LIGHTS = new GosBooleanProperty(false, "Led: Always Run Disabled Pattern", true);
+    private static final GosBooleanProperty ALWAYS_SHOW_LIGHTS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Led: Always Run Disabled Pattern", true);
 
     private final Autos m_autoModeFactory;
     private final AlertPatterns m_alert;

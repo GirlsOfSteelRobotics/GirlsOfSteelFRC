@@ -1,104 +1,8 @@
 [
   {
-    "name": "/Preferences/Swerve Driving PID.mm.kp",
-    "type": "double",
-    "value": 0.04,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Swerve Driving PID.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Swerve Driving PID.mm.kff",
-    "type": "double",
-    "value": 0.1741712492980422,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Swerve Turning PID.mm.kp",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Swerve Turning PID.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/defaultSpeakerScoreAngle",
-    "type": "double",
-    "value": 9.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/arm spike top angle",
-    "type": "double",
-    "value": 40.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/arm spike middle angle",
-    "type": "double",
-    "value": 32.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/arm spike bottom angle",
-    "type": "double",
-    "value": 32.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Hack Lookup Table",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ArmPivotJoystickTranslationDamping",
-    "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/TranslationJoystickDampening",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/RotationJoystickDampening",
-    "type": "double",
-    "value": 0.7,
+    "name": "/Preferences/Use Vision for driving",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -136,31 +40,47 @@
     }
   },
   {
-    "name": "/Preferences/RED DRIVING BROKEN?",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/tunableSpeakerAngle",
+    "name": "/Preferences/TranslationJoystickDampening",
     "type": "double",
-    "value": 37.0,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/intakeAngle",
+    "name": "/Preferences/RotationJoystickDampening",
     "type": "double",
-    "value": 356.0,
+    "value": 0.7,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Intake_In_Speed",
+    "name": "/Preferences/Swerve Driving PID.mm.kp",
+    "type": "double",
+    "value": 0.04,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Driving PID.mm.kff",
+    "type": "double",
+    "value": 0.15833749936185654,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Swerve Turning PID.mm.kp",
     "type": "double",
     "value": 1.0,
     "properties": {
@@ -168,39 +88,7 @@
     }
   },
   {
-    "name": "/Preferences/Led: Always Run Disabled Pattern",
-    "type": "boolean",
-    "value": true,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Hanger_Down_Speed",
-    "type": "double",
-    "value": -0.3,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Hanger_Up_Speed",
-    "type": "double",
-    "value": 0.3,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ArmPivotJoystickDamping",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kp",
+    "name": "/Preferences/Swerve Turning PID.mm.kd",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -208,25 +96,9 @@
     }
   },
   {
-    "name": "/Preferences/Shooter.mm.ki",
+    "name": "/Preferences/ShooterTunableRpm",
     "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kff",
-    "type": "double",
-    "value": 0.000185,
+    "value": 5500.0,
     "properties": {
       "persistent": true
     }
@@ -240,9 +112,49 @@
     }
   },
   {
+    "name": "/Preferences/intakeAngle",
+    "type": "double",
+    "value": 356.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/allianceFeederAngle",
     "type": "double",
-    "value": 20.0,
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/prepHangerAngle",
+    "type": "double",
+    "value": 95.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike top angle",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike middle angle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike bottom angle",
+    "type": "double",
+    "value": 32.0,
     "properties": {
       "persistent": true
     }
@@ -264,9 +176,33 @@
     }
   },
   {
-    "name": "/Preferences/Hanger Up Position",
+    "name": "/Preferences/Intake_In_Speed",
     "type": "double",
-    "value": 15.0,
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger_Down_Speed",
+    "type": "double",
+    "value": -0.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger_Up_Speed",
+    "type": "double",
+    "value": 0.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Hanger Up Goal Position",
+    "type": "double",
+    "value": 118.0,
     "properties": {
       "persistent": true
     }
@@ -280,22 +216,6 @@
     }
   },
   {
-    "name": "/Preferences/prepHangerAngle",
-    "type": "double",
-    "value": 95.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Hanger Up Goal Position",
-    "type": "double",
-    "value": 83.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/autoTimeoutSeconds",
     "type": "double",
     "value": 0.0,
@@ -304,17 +224,105 @@
     }
   },
   {
-    "name": "/Preferences/middleSpeakerScoreAngle",
-    "type": "double",
-    "value": 30.0,
+    "name": "/Preferences/Led: Always Run Disabled Pattern",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/sideSpeakerScoreAngle",
+    "name": "/Preferences/ArmPivotJoystickDamping",
     "type": "double",
-    "value": 14.0,
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis: Shooter Curve Offset",
+    "type": "double",
+    "value": 6.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tunableSpeakerAngle",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm: Lookup Table Adjustment",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/input y-velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/input x-velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Use Debug Velocity",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Debug x-velocity",
+    "type": "double",
+    "value": -2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeding: Debug y-velocity",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.kp",
+    "type": "double",
+    "value": 0.18,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.kd",
+    "type": "double",
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
