@@ -56,7 +56,9 @@ public final class Autos {
         //No shooting
         NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
         //Bitch Auto
-        BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of());
+        BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of()),
+        // Dumb
+        ANNA_SPECIAL("TwoNoteMiddleAnnaSpecial", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5));
 
 
         public final String m_modeName;
