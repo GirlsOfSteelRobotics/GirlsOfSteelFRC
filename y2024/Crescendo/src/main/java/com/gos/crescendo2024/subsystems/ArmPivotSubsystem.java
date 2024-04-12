@@ -48,6 +48,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
     public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "Feeding: allianceFeederAngle", 32);
     public static final GosDoubleProperty ARM_PREP_HANGER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "prepHangerAngle", 95);
+    public static final GosDoubleProperty ARM_MAX_ANGLE_FOR_CHAIN = new GosDoubleProperty(false, "Arm: MaxAngleForChain", 20);
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
 
@@ -302,6 +303,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public boolean areArmEncodersGood() {
         return Math.abs(getRelativeEncoderAngle() - getAbsoluteEncoderAngle()) <= ALLOWABLE_ERROR;
+    }
+
+    public boolean canGoUnderChain() {
+        return getAngle() < ARM_MAX_ANGLE_FOR_CHAIN.getValue();
     }
 
     /////////////////////////////////////

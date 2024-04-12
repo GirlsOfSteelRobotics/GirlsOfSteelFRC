@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class EnabledPatterns {
-    private static final boolean APRIL_TAG_TESTING = true;
+    private static final boolean APRIL_TAG_TESTING = false;
 
     // Subsystems
     private final IntakeSubsystem m_intake;
