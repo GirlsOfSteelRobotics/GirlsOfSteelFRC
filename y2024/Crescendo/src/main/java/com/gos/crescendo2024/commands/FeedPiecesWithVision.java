@@ -82,6 +82,12 @@ public class FeedPiecesWithVision extends Command {
         double leftY = -MathUtil.applyDeadband(m_driverController.getLeftY(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
         double leftX = -MathUtil.applyDeadband(m_driverController.getLeftX(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
 
+        if (GetAllianceUtil.isRedAlliance()) {
+            leftY *= -1;
+            leftX *= -1;
+        }
+
+
         double chassisXVel;
         double chassisYVel;
         if (USE_DEBUG_VELOCITY.getValue()) {

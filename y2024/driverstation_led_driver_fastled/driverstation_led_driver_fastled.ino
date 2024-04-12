@@ -1,13 +1,14 @@
 #include <FastLED.h>
 #include <XInput.h>
 
-#define NUM_LEDS 58
+#define NUM_LEDS 50
 #define LED_PIN 6
 
 #define IS_CONNECTED_BITMASK   1 << 0
 #define HAS_NOTE_BITMASK       1 << 3
 #define SEES_APRILTAGS_BITMASK 1 << 4
 #define IN_SHOOTING_RANGE      1 << 5
+#define CANT_GO_UNDER_CHAIN    1 << 6
 
 CRGB leds[NUM_LEDS];
 
@@ -37,6 +38,7 @@ void writeRobotPatterns(uint32_t data) {
   bool sees_apriltags = checkBit(data, SEES_APRILTAGS_BITMASK);
   bool in_shooting_range = checkBit(data, IN_SHOOTING_RANGE);
   bool is_connected = checkBit(data, IS_CONNECTED_BITMASK);
+  bool cant_go_under_chain = checkBit(data, CANT_GO_UNDER_CHAIN);
 
   int note_lights_start = 0;
   int note_lights_end = NUM_LEDS - 1;
@@ -46,6 +48,9 @@ void writeRobotPatterns(uint32_t data) {
 
   int sees_april_tag_start = in_shooting_range_end;
   int sees_april_tag_end = sees_april_tag_start + 1;
+
+  int cant_go_under_chain_start = NUM_LEDS / 2 - 5;
+  int cant_go_under_chain_end = NUM_LEDS / 2 + 5;
 
   if (!is_connected) {
     rainbowWave(50, 10);
@@ -67,6 +72,12 @@ void writeRobotPatterns(uint32_t data) {
   if (sees_apriltags) {
     for (int i = sees_april_tag_start; i < sees_april_tag_end; ++i) {
       leds[i] = CRGB::SkyBlue;
+    }
+  }
+
+  if (cant_go_under_chain) {
+    for (int i = cant_go_under_chain_start; i < cant_go_under_chain_end; ++i) {
+      leds[i] = CRGB::Red;
     }
   }
 }
