@@ -63,6 +63,6 @@ public class RobotExtrinsics {
     public static final Pose2d SCORE_IN_AMP_POSITION = new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90));
 
     // Important Aiming Poses
-    public static final Pose2d FULL_FIELD_FEEDING_AIMING_POINT = new Pose2d(FieldConstants.AMP_CENTER.minus(new Translation2d(0, 1)), Rotation2d.fromDegrees(0));
+    public static final Pose2d FULL_FIELD_FEEDING_AIMING_POINT = new Pose2d(FieldConstants.AMP_CENTER.minus(new Translation2d(0, 1.7)), Rotation2d.fromDegrees(0));
 
 }

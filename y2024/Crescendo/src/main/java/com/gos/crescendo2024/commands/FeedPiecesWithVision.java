@@ -23,6 +23,8 @@ public class FeedPiecesWithVision extends Command {
     private static final GosDoubleProperty TUNING_X_VELOCITY = new GosDoubleProperty(false, "Feeding: Debug x-velocity", -2);
     private static final GosDoubleProperty TUNING_Y_VELOCITY = new GosDoubleProperty(false, "Feeding: Debug y-velocity", .5);
 
+    private static final double MAX_VELOCITY = .8; // meters per second
+
     private static final double BLUE_MIN_X_METERS = 10.2;
     private static final double RED_MAX_X_METERS = FieldConstants.FIELD_LENGTH - BLUE_MIN_X_METERS;
 
@@ -119,9 +121,16 @@ public class FeedPiecesWithVision extends Command {
             distanceReady = m_chassisSubsystem.getPose().getX() > RED_MAX_X_METERS;
         }
 
-        boolean readyToShoot = mechReady && distanceReady;
-        if (readyToShoot) {
+        ChassisSpeeds chassisSpeed = m_chassisSubsystem.getChassisSpeed();
+        double robotVelocity = Math.sqrt(chassisSpeed.vxMetersPerSecond * chassisSpeed.vxMetersPerSecond + chassisSpeed.vyMetersPerSecond * chassisSpeed.vyMetersPerSecond);
+        boolean isSlowEnough = robotVelocity < MAX_VELOCITY;
+
+        if (mechReady) {
             m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+        }
+
+        boolean readyToShoot = mechReady && distanceReady && isSlowEnough;
+        if (readyToShoot) {
             m_runIntake = true;
         }
 
