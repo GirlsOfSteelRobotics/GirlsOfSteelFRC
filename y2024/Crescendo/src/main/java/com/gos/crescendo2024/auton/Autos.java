@@ -33,6 +33,7 @@ public final class Autos {
         FOUR_NOTE_034("FourNoteAmpSide034Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 3, 4)),
         FOUR_NOTE_045("FourNoteAmpSide045Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 4, 5)),
         FOUR_NOTE_MIDDLE_012("FourNoteMiddle012Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
+        FOUR_NOTE_MIDDLE_521("FourNoteMiddle521Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2, 1)),
         // Three Notes - Middle
         THREE_NOTE_12("ThreeNoteMiddle12Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 2)),
         THREE_NOTE_MIDDLE_52("ThreeNoteMiddle52Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2)),

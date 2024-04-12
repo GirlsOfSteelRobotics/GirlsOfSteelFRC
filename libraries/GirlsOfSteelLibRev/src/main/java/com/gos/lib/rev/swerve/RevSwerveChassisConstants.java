@@ -29,6 +29,8 @@ public class RevSwerveChassisConstants {
     public final double m_maxSpeedMetersPerSecond;
     public final double m_maxAngularSpeed;
 
+    public final boolean m_lockPidConstants;
+
     /**
      * Constants for configuring a REV Swerve Chassis
      *
@@ -47,6 +49,7 @@ public class RevSwerveChassisConstants {
      * @param trackWidth              Distance between centers of right and left wheels on robot, in meters
      * @param maxSpeedMetersPerSecond The maximum translation speed of the drivetrain, in m / s
      * @param maxAngularSpeed         The maximum turning speed of the drivetrain, in rad / s
+     * @param lockPidConstants        True if the GosDoubleProperties for the PID constants should not be tunable
      */
     @SuppressWarnings("PMD.ExcessiveParameterList")
     public RevSwerveChassisConstants(
@@ -69,7 +72,7 @@ public class RevSwerveChassisConstants {
         double trackWidth,
 
         double maxSpeedMetersPerSecond,
-        double maxAngularSpeed) {
+        double maxAngularSpeed, boolean lockPidConstants) {
         m_frontLeftDrivingCanId = frontLeftDrivingCanId;
         m_rearLeftDrivingCanId = rearLeftDrivingCanId;
         m_frontRightDrivingCanId = frontRightDrivingCanId;
@@ -89,5 +92,7 @@ public class RevSwerveChassisConstants {
 
         m_maxSpeedMetersPerSecond = maxSpeedMetersPerSecond;
         m_maxAngularSpeed = maxAngularSpeed;
+
+        m_lockPidConstants = lockPidConstants;
     }
 }

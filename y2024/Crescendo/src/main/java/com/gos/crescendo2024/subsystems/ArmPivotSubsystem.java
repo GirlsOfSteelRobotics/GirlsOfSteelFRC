@@ -41,19 +41,19 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(false, "intakeAngle", 356);
-    public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 41);
+    private static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeAngle", 356);
+    public static final GosDoubleProperty ARM_TUNABLE_SPEAKER_ANGLE = new GosDoubleProperty(false, "tunableSpeakerAngle", 0);
     public static final GosDoubleProperty MIDDLE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "middleSpeakerScoreAngle", 11);
     public static final GosDoubleProperty SIDE_SUBWOOFER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "sideSpeakerScoreAngle", 14); //chnanged middle and side to 11 and 14 from 13 and 16 because of practice field issues
     private static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ampScoreAngle", 90);
-    public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "allianceFeederAngle", 20);
-    public static final GosDoubleProperty ARM_PREP_HANGER_ANGLE = new GosDoubleProperty(false, "prepHangerAngle", 95);
+    public static final GosDoubleProperty ARM_FEEDER_ANGLE = new GosDoubleProperty(false, "Feeding: allianceFeederAngle", 32);
+    public static final GosDoubleProperty ARM_PREP_HANGER_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "prepHangerAngle", 95);
 
     private static final double ARM_MAX_ANGLE = 102; //from hanger testing day 3/5/24
 
-    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(false, "arm spike top angle", 40);
-    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(false, "arm spike middle angle", 32);
-    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(false, "arm spike bottom angle", 32);
+    public static final GosDoubleProperty SPIKE_TOP_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike top angle", 40);
+    public static final GosDoubleProperty SPIKE_MIDDLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike middle angle", 32);
+    public static final GosDoubleProperty SPIKE_BOTTOM_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "arm spike bottom angle", 32);
 
 
     private static final double GEAR_RATIO;
@@ -126,7 +126,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_sparkPidController.setPositionPIDWrappingMinInput(0);
         m_sparkPidController.setPositionPIDWrappingMaxInput(360);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_sparkPidController, 0)
-            .addP(0.14)
+            .addP(0.18)
             .addI(0)
             .addD(0)
             .build();

@@ -68,7 +68,7 @@ public class ChassisSubsystem extends SubsystemBase {
             WHEEL_BASE,
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED,
-            MAX_ROTATION_SPEED);
+            MAX_ROTATION_SPEED, true);
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         m_field = new GoSField();

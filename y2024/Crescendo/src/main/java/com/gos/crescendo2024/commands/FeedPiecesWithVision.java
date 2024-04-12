@@ -8,7 +8,9 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.GosDoubleProperty;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -17,8 +19,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class FeedPiecesWithVision extends Command {
-    private static final GosDoubleProperty TUNING_X_VELOCITY = new GosDoubleProperty(false, "input x-velocity", -1);
-    private static final GosDoubleProperty TUNING_Y_VELOCITY = new GosDoubleProperty(false, "input y-velocity", -1);
+    private static final GosBooleanProperty USE_DEBUG_VELOCITY = new GosBooleanProperty(false, "Feeding: Use Debug Velocity", false);
+    private static final GosDoubleProperty TUNING_X_VELOCITY = new GosDoubleProperty(false, "Feeding: Debug x-velocity", -2);
+    private static final GosDoubleProperty TUNING_Y_VELOCITY = new GosDoubleProperty(false, "Feeding: Debug y-velocity", .5);
+
+    private static final double MAX_VELOCITY = .8; // meters per second
 
     private static final double BLUE_MIN_X_METERS = 10.2;
     private static final double RED_MAX_X_METERS = FieldConstants.FIELD_LENGTH - BLUE_MIN_X_METERS;
@@ -48,27 +53,21 @@ public class FeedPiecesWithVision extends Command {
         this.m_intakeSubsystem = intakeSubsystem;
         this.m_shooterSubsystem = shooterSubsystem;
 
-        m_distanceToAngleTable.put(7.1, 12.0);
-        m_distanceToRPMTable.put(7.1, 3800.0);
-        m_rpmToCurveOffsetTable.put(3800.0, 30.0);
+        m_distanceToAngleTable.put(10.5, 31.0);
+        m_distanceToRPMTable.put(10.5, 5200.0);
+        m_rpmToCurveOffsetTable.put(5200.0, 17.0);
 
         m_distanceToAngleTable.put(9.2, 12.0);
         m_distanceToRPMTable.put(9.2, 4200.0);
         m_rpmToCurveOffsetTable.put(4200.0, 20.0);
 
-        m_distanceToAngleTable.put(10.5, 31.0);
-        m_distanceToRPMTable.put(10.5, 5200.0);
-        m_rpmToCurveOffsetTable.put(5200.0, 17.0);
+        m_distanceToAngleTable.put(7.1, 12.0);
+        m_distanceToRPMTable.put(7.1, 3800.0);
+        m_rpmToCurveOffsetTable.put(3800.0, 30.0);
 
         m_distanceToAngleTable.put(6.36, 32.0);
         m_distanceToRPMTable.put(6.36, 3504.0);
         m_rpmToCurveOffsetTable.put(3504.0, 22.0);
-
-        m_distanceToAngleTable.put(6.33, 32.0);
-        m_distanceToRPMTable.put(6.33, 3000.0);
-        m_rpmToCurveOffsetTable.put(3000.0, 27.0);
-
-
     }
 
     @Override
@@ -80,13 +79,20 @@ public class FeedPiecesWithVision extends Command {
     public void execute() {
         Pose2d aimingPoint = AllianceFlipper.maybeFlip(RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT);
 
-        // double leftY = -MathUtil.applyDeadband(m_driverController.getLeftY(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
-        // double leftX = -MathUtil.applyDeadband(m_driverController.getLeftX(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
+        double leftY = -MathUtil.applyDeadband(m_driverController.getLeftY(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
+        double leftX = -MathUtil.applyDeadband(m_driverController.getLeftX(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
 
-        double chassisXVel = TUNING_X_VELOCITY.getValue(); //leftY * ChassisSubsystem.MAX_TRANSLATION_SPEED;
-        double chassisYVel = TUNING_Y_VELOCITY.getValue(); //leftX * ChassisSubsystem.MAX_TRANSLATION_SPEED;
+        double chassisXVel;
+        double chassisYVel;
+        if (USE_DEBUG_VELOCITY.getValue()) {
+            chassisXVel = TUNING_X_VELOCITY.getValue();
+            chassisYVel = TUNING_Y_VELOCITY.getValue();
+        } else {
+            chassisXVel = leftY * ChassisSubsystem.MAX_TRANSLATION_SPEED;
+            chassisYVel = leftX * ChassisSubsystem.MAX_TRANSLATION_SPEED;
+        }
 
-        Pose2d pose = m_chassisSubsystem.getFuturePose();
+        Pose2d pose = m_chassisSubsystem.getFuturePose(.2);
 
         double distanceToFeed = m_chassisSubsystem.getDistanceToFeeder(pose);
         double rpm = m_distanceToRPMTable.get(distanceToFeed);
@@ -115,9 +121,16 @@ public class FeedPiecesWithVision extends Command {
             distanceReady = m_chassisSubsystem.getPose().getX() > RED_MAX_X_METERS;
         }
 
-        boolean readyToShoot = mechReady && distanceReady;
-        if (readyToShoot) {
+        ChassisSpeeds chassisSpeed = m_chassisSubsystem.getChassisSpeed();
+        double robotVelocity = Math.sqrt(chassisSpeed.vxMetersPerSecond * chassisSpeed.vxMetersPerSecond + chassisSpeed.vyMetersPerSecond * chassisSpeed.vyMetersPerSecond);
+        boolean isSlowEnough = robotVelocity < MAX_VELOCITY;
+
+        if (mechReady) {
             m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+        }
+
+        boolean readyToShoot = mechReady && distanceReady && isSlowEnough;
+        if (readyToShoot) {
             m_runIntake = true;
         }
 

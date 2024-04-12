@@ -79,11 +79,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 200);
     private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 200);
 
-    private static final GosDoubleProperty SLOW_MODE_TRANSLATION_DAMPENING = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
-    private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
+    private static final GosDoubleProperty SLOW_MODE_TRANSLATION_DAMPENING = new GosDoubleProperty(false, "Chassis Slow Mode TranslationJoystickDampening", .5);
+    private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "Chassis Slow Mode RotationJoystickDampening", .7);
 
     private static final GosBooleanProperty USE_APRIL_TAGS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis: Use AprilTags", true);
-    public static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 0);
+    public static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 6);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
@@ -126,7 +126,8 @@ public class ChassisSubsystem extends SubsystemBase {
             RevSwerveModuleConstants.DriveMotorSpurTeeth.T20,
             WHEEL_BASE,
             TRACK_WIDTH,
-            MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED);
+            MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED,
+            Constants.DEFAULT_CONSTANT_PROPERTIES);
 
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);
@@ -324,7 +325,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return getFuturePose(.3);
     }
 
-    private Pose2d getFuturePose(double seconds) {
+    public Pose2d getFuturePose(double seconds) {
         ChassisSpeeds currentRobotVelocity = m_swerveDrive.getChassisSpeed();
         ChassisSpeeds currentFieldVelocity = ChassisSpeeds.fromRobotRelativeSpeeds(currentRobotVelocity, getPose().getRotation());
         Pose2d currentPos = m_swerveDrive.getEstimatedPosition();
