@@ -12,6 +12,25 @@
     "data": {
       "commands": [
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AssholeAuto65.1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepSpeakerShot"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
@@ -28,13 +47,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "AssholeAuto65.1"
+                        "pathName": "AssholeAuto65.2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "AssholeAuto65.2"
+                        "pathName": "AssholeAuto65.3"
                       }
                     }
                   ]

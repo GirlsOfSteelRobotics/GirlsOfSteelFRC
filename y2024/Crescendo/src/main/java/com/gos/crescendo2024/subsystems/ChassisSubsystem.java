@@ -83,7 +83,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "Chassis Slow Mode RotationJoystickDampening", .7);
 
     private static final GosBooleanProperty USE_APRIL_TAGS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis: Use AprilTags", true);
-    public static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 6);
+    public static final GosDoubleProperty SHOOTER_ARC_CORRECTION = new GosDoubleProperty(false, "Chassis: Shooter Curve Offset", 9);
 
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;

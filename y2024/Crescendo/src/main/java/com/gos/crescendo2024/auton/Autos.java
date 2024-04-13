@@ -34,6 +34,7 @@ public final class Autos {
         FOUR_NOTE_045("FourNoteAmpSide045Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 4, 5)),
         FOUR_NOTE_MIDDLE_012("FourNoteMiddle012Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
         FOUR_NOTE_MIDDLE_521("FourNoteMiddle521Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2, 1)),
+        FOUR_NOTE_MIDDLE_152("FourNoteMiddle152Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 5, 2)),
         // Three Notes - Middle
         THREE_NOTE_12("ThreeNoteMiddle12Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 2)),
         THREE_NOTE_MIDDLE_52("ThreeNoteMiddle52Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2)),
@@ -41,7 +42,8 @@ public final class Autos {
         THREE_NOTE_76("ThreeNotesSourceSide76Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7, 6)),
         THREE_NOTE_65("ThreeNotesSourceSide65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6, 5)),
         //Asshohole Auto (Three Note - Source)
-        ASSHOLEAUTO("AThreeNoteSource65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of()),
+        ASSHOLEAUTO6("AThreeNoteSource65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
+        ASSHOLEAUTO5("AThreeNoteSource5Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(5)),
         //Two Notes - Amp
         //Two Notes - Middle
         TWO_NOTE_MIDDLE_1("TwoNoteMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1)),
@@ -59,6 +61,7 @@ public final class Autos {
         BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of()),
         // Dumb
         ANNA_SPECIAL("TwoNoteMiddleAnnaSpecial", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5));
+
 
 
         public final String m_modeName;
