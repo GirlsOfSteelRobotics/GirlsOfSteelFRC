@@ -2,6 +2,7 @@ package com.gos.crescendo2024;
 
 import com.gos.lib.field.AprilTagCameraObject;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.TunableTransform3d;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -26,7 +27,7 @@ public class AprilTagCamera {
     public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
 
-    private final Transform3d m_robotToCamera;
+    private final TunableTransform3d m_robotToCamera;
     private final String m_cameraName;
     private final Matrix<N3, N1> m_singleTagStddev;
     private final Matrix<N3, N1> m_multiTagStddev;
@@ -47,12 +48,12 @@ public class AprilTagCamera {
 
     private final LoggingUtil m_logger;
 
-    public AprilTagCamera(GoSField field, String name, Transform3d transform3d) {
+    public AprilTagCamera(GoSField field, String name, TunableTransform3d transform3d) {
         this(field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
     }
 
 
-    public AprilTagCamera(GoSField field, String name, Transform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(GoSField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
@@ -60,7 +61,7 @@ public class AprilTagCamera {
         m_multiTagStddev = multiTagStddev;
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera);
+        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
@@ -83,6 +84,9 @@ public class AprilTagCamera {
     }
 
     public void update(Pose2d prevEstimatedRobotPose) {
+        Transform3d robotToCamera = m_robotToCamera.getTransform();
+
+        m_photonPoseEstimator.setRobotToCameraTransform(robotToCamera);
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
         m_maybeResult = m_photonPoseEstimator.update();
 
@@ -94,7 +98,7 @@ public class AprilTagCamera {
             for (PhotonTrackedTarget targetUsed : m_maybeResult.get().targetsUsed) {
                 Pose3d bestTransformPosition =
                     estimatedRobotPose.estimatedPose
-                        .transformBy(m_robotToCamera)
+                        .transformBy(robotToCamera)
                         .transformBy(targetUsed.getBestCameraToTarget());
                 aprilTags.add(bestTransformPosition);
             }
@@ -163,6 +167,6 @@ public class AprilTagCamera {
     }
 
     public Transform3d getRobotToCamera() {
-        return m_robotToCamera;
+        return m_robotToCamera.getTransform();
     }
 }
