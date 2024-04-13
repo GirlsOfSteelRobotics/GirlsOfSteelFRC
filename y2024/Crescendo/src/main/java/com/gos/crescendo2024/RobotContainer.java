@@ -165,7 +165,7 @@ public class RobotContainer {
         createTestLedsCommands();
 
         PropertyManager.printDynamicProperties();
-        // PropertyManager.purgeExtraKeys();
+         PropertyManager.purgeExtraKeys();
 
         DriverStation.silenceJoystickConnectionWarning(true);
     }

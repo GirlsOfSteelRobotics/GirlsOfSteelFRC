@@ -1,5 +1,6 @@
 package com.gos.crescendo2024;
 
+import com.gos.lib.properties.TunableTransform3d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -24,27 +25,27 @@ public class RobotExtrinsics {
             Math.toRadians(11),
             Math.toRadians(3)));
 
-    public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_R = new Transform3d(
+    public static final TunableTransform3d ROBOT_TO_CAMERA_APRIL_TAGS_R = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/R", new Transform3d(
         new Translation3d(
-            RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(12.25), // 11.75 inches from back
-            -(RobotExtrinsics.ROBOT_LENGTH / 2 - Units.inchesToMeters(1.75)), // 1.75 inches from side
+            Units.inchesToMeters(5.25),
+            Units.inchesToMeters(-14.75),
             .235),
         new Rotation3d(
             Math.toRadians(180),
-            Math.toRadians(-25),
-            Math.toRadians(-108))
-    );
-    public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_L = new Transform3d(
+            Math.toRadians(-19.0),
+            Math.toRadians(-112))
+    ));
+    public static final TunableTransform3d ROBOT_TO_CAMERA_APRIL_TAGS_L =new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/L",  new Transform3d(
         new Translation3d(
-            RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(11.75), // 11.75 inches from front
-            RobotExtrinsics.ROBOT_LENGTH / 2 - Units.inchesToMeters(1.5), // 2 inches from side
+            Units.inchesToMeters(5.75),
+            Units.inchesToMeters(9),
             .235),
         new Rotation3d(
             Math.toRadians(180),
             Math.toRadians(-19.2),
             Math.toRadians(100))
-    );
-    public static final Transform3d ROBOT_TO_CAMERA_APRIL_TAGS_CB = new Transform3d(
+    ));
+    public static final TunableTransform3d ROBOT_TO_CAMERA_APRIL_TAGS_CB = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/CB", new Transform3d(
         new Translation3d(
             -(RobotExtrinsics.ROBOT_WIDTH / 2 - Units.inchesToMeters(2.5)), // 2.5 inches from back
             0, // Directly Center
@@ -53,7 +54,7 @@ public class RobotExtrinsics {
             Math.toRadians(180),
             Math.toRadians(-40),
             Math.toRadians(180))
-    );
+    ));
 
 
     // Important Robot Poses
