@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7603025436401367,
-      "y": 4.4962310791015625
+      "x": 0.7171826362609863,
+      "y": 4.46327018737793
     },
-    "rotation": -59.98868115019719
+    "rotation": -58.39248219575053
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TwoNoteSourceSide6.1"
+                  "pathName": "AssholeAuto5.1"
                 }
               },
               {
@@ -41,9 +41,16 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "TwoNoteSourceSide6.2"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AssholeAuto5.2"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -56,12 +63,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "TwoNoteSourceSide6.3"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "AimAndShootIntoSpeaker"
@@ -70,6 +71,6 @@
       ]
     }
   },
-  "folder": "TwoNote",
+  "folder": null,
   "choreoAuto": true
 }

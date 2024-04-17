@@ -165,7 +165,7 @@ public class RobotContainer {
         createTestLedsCommands();
 
         PropertyManager.printDynamicProperties();
-         PropertyManager.purgeExtraKeys();
+        // PropertyManager.purgeExtraKeys();
 
         DriverStation.silenceJoystickConnectionWarning(true);
     }
@@ -245,7 +245,7 @@ public class RobotContainer {
         shuffleboardTab.add("Full Field Feed", CombinedCommands.feedPieceAcrossFieldWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Prepare Tunable Shot", CombinedCommands.prepareTunableShot(m_armPivotSubsystem, m_shooterSubsystem));
 
-        shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true));
+        shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -390,7 +390,9 @@ public class RobotContainer {
             CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
                 .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
-        m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
+        m_driverController.a().whileTrue(
+            m_intakeSubsystem.createMoveIntakeOutCommand()
+                .alongWith(m_shooterSubsystem.createSetRPMCommand(-400)));
 
         /////////////////////////////
         // Maybe use camera stuff(:D)
