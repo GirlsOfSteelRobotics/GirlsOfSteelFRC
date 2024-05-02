@@ -36,10 +36,12 @@ gos_java_robot(
         "@bzlmodrio-photonlib//libraries/java/photontargeting-java",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/led",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/led/mirrored",
+        "//libraries/GirlsOfSteelLibPhotonVision/src/main/java/com/gos/lib/photonvision",
         "//libraries/GirlsOfSteelLib/src/main/java/edu/wpi/first/wpilibj/smartdashboard",
         "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/field",
+        "//libraries/GirlsOfSteelLibPathing/src/main/java/com/gos/lib/pathing",
     ],
 )

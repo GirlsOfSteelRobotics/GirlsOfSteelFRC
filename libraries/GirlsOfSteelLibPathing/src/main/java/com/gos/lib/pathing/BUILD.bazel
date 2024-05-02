@@ -1,12 +1,12 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 gos_java_library(
-    name = "led",
+    name = "pathing",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/alerts",
-        "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
+        "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
     ],
 )

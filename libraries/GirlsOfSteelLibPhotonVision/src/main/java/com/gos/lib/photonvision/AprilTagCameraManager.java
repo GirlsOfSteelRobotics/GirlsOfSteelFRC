@@ -1,5 +1,6 @@
-package com.gos.crescendo2024;
+package com.gos.lib.photonvision;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,7 +20,7 @@ public class AprilTagCameraManager {
 
     private final VisionSystemSim m_visionSim;
 
-    public AprilTagCameraManager(List<AprilTagCamera> cameras) {
+    public AprilTagCameraManager(List<AprilTagCamera> cameras, AprilTagFieldLayout fieldTags) {
         m_aprilTagCameras = cameras;
 
         if (RobotBase.isSimulation()) {
@@ -27,7 +28,7 @@ public class AprilTagCameraManager {
             for (AprilTagCamera camera : cameras) {
                 m_visionSim.addCamera(camera.getSimulator(), camera.getRobotToCamera());
             }
-            m_visionSim.addAprilTags(FieldConstants.TAG_LAYOUT);
+            m_visionSim.addAprilTags(fieldTags);
         } else {
             m_visionSim = null;
         }
@@ -42,8 +43,7 @@ public class AprilTagCameraManager {
 
             if (maybeResult.isPresent()) {
                 EstimatedRobotPose camPose = maybeResult.get();
-                Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-                validEstimates.add(new Pair<>(camPose, camera.getEstimationStdDevs(camEstPose)));
+                validEstimates.add(new Pair<>(camPose, camera.getEstimationStdDevs()));
             }
         }
 

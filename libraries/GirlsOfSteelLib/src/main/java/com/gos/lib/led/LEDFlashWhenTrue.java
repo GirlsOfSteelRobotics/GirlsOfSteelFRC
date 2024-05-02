@@ -1,18 +1,19 @@
-package com.gos.crescendo2024.led_patterns.subpatterns;
+package com.gos.lib.led;
 
-import com.gos.lib.led.LEDFlash;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
-public class HasPiecePattern {
+public class LEDFlashWhenTrue {
     private final LEDFlash m_hasPiecePattern;
+    private final int m_cyclesToFlash;
     private int m_numCycles;
     private boolean m_hasPiece;
 
-    public HasPiecePattern(AddressableLEDBuffer buffer, int numberOfLEDs) {
+    public LEDFlashWhenTrue(AddressableLEDBuffer buffer, int minIndex, int maxIndex, double secondsOneDirection, int cyclesToFlash, Color color) {
 
-        m_hasPiecePattern = new LEDFlash(buffer, 0, numberOfLEDs, 0.25, Color.kTomato);
+        m_hasPiecePattern = new LEDFlash(buffer, minIndex, maxIndex, secondsOneDirection, color);
         m_numCycles = 0;
+        m_cyclesToFlash = cyclesToFlash;
     }
 
     public void update(boolean hasPiece) {
@@ -26,7 +27,7 @@ public class HasPiecePattern {
     }
 
     public void writeLeds() {
-        if (m_hasPiece && m_numCycles <= 100) {
+        if (m_hasPiece && m_numCycles <= m_cyclesToFlash) {
             m_hasPiecePattern.writeLeds();
         }
     }

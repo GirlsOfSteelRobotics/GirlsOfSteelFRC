@@ -1,8 +1,10 @@
-package com.gos.crescendo2024;
+package com.gos.lib.photonvision;
 
 import com.gos.lib.field.AprilTagCameraObject;
+import com.gos.lib.field.BaseGosField;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.TunableTransform3d;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -39,29 +41,70 @@ public class AprilTagCamera {
 
     private final AprilTagCameraObject m_field;
 
+    private final StandardDeviationCalculator m_standardDeviationCalculator;
+
     // Cached values
     private Optional<EstimatedRobotPose> m_maybeResult;
     private PhotonPipelineResult m_lastPipelineResult;
+    private Matrix<N3, N1> m_lastStdDev;
     private int m_numTargetsSeen;
     private double m_avgDistanceToTag;
     private double m_avgAmbiguity;
 
     private final LoggingUtil m_logger;
 
-    public AprilTagCamera(GoSField field, String name, TunableTransform3d transform3d) {
-        this(field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+    public interface StandardDeviationCalculator {
+        Matrix<N3, N1> calculateStandardDeviation(Matrix<N3, N1> multiTagBase, Matrix<N3, N1> singleTagBase, int numTargetsSeen, double avgDistanceToTags);
+    }
+
+    private static class DefaultStandardDeviationCalculator implements StandardDeviationCalculator {
+        @Override
+        public Matrix<N3, N1> calculateStandardDeviation(Matrix<N3, N1> multiTagBase, Matrix<N3, N1> singleTagBase, int numTargetsSeen, double avgDistanceToTags) {
+            Matrix<N3, N1> estStdDevs = singleTagBase;
+
+            // Decrease std devs if multiple targets are visible
+            if (numTargetsSeen > 1) {
+                estStdDevs = multiTagBase;
+            }
+            // Increase std devs based on (average) distance
+            if (numTargetsSeen == 1 && avgDistanceToTags > 3.2) {
+                estStdDevs = VecBuilder.fill(1000, 1000, 1000);
+            } else if (numTargetsSeen == 2 && avgDistanceToTags > 4) {
+                estStdDevs = VecBuilder.fill(1000, 1000, 1000);
+            } else {
+                estStdDevs = estStdDevs.times(1 + (avgDistanceToTags * avgDistanceToTags / 30));
+            }
+
+            return estStdDevs;
+        }
+    }
+
+    public AprilTagCamera(BaseGosField field, AprilTagFieldLayout fieldTags, String name, TunableTransform3d transform3d) {
+        this(field, fieldTags, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV, new DefaultStandardDeviationCalculator());
     }
 
 
-    public AprilTagCamera(GoSField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(BaseGosField field, AprilTagFieldLayout fieldTags, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+        this(field, fieldTags, name, transform3d, singleTagStddev, multiTagStddev, new DefaultStandardDeviationCalculator());
+    }
+
+    public AprilTagCamera(
+        BaseGosField field,
+        AprilTagFieldLayout fieldTags,
+        String name,
+        TunableTransform3d transform3d,
+        Matrix<N3, N1> singleTagStddev,
+        Matrix<N3, N1> multiTagStddev,
+        StandardDeviationCalculator stdCalculator) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
+        m_standardDeviationCalculator = stdCalculator;
         m_photonCamera = new PhotonCamera(m_cameraName);
         m_singleTagStddev = singleTagStddev;
         m_multiTagStddev = multiTagStddev;
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
+        m_photonPoseEstimator = new PhotonPoseEstimator(fieldTags, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
@@ -106,6 +149,8 @@ public class AprilTagCamera {
         }
 
         m_lastPipelineResult = m_photonCamera.getLatestResult();
+        calculateStats();
+        m_lastStdDev = m_standardDeviationCalculator.calculateStandardDeviation(m_multiTagStddev, m_singleTagStddev, m_numTargetsSeen, m_avgDistanceToTag);
 
         m_logger.updateLogs();
     }
@@ -114,8 +159,20 @@ public class AprilTagCamera {
         return m_maybeResult;
     }
 
-    public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
-        Matrix<N3, N1> estStdDevs = m_singleTagStddev;
+    public Matrix<N3, N1> getEstimationStdDevs() {
+        return m_lastStdDev;
+    }
+
+    private void calculateStats() {
+        if (m_maybeResult.isEmpty()) {
+            m_numTargetsSeen = 0;
+            m_avgAmbiguity = 0;
+            m_avgDistanceToTag = 0;
+            return;
+        }
+
+        Pose2d estimatedPose = m_maybeResult.get().estimatedPose.toPose2d();
+
         List<PhotonTrackedTarget> targets = m_lastPipelineResult.getTargets();
         m_numTargetsSeen = 0;
         double sumDist = 0;
@@ -130,27 +187,8 @@ public class AprilTagCamera {
                 tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
             sumAmbiguity += tgt.getPoseAmbiguity();
         }
-        if (m_numTargetsSeen == 0) {
-            return estStdDevs;
-        }
         m_avgDistanceToTag = sumDist / m_numTargetsSeen;
         m_avgAmbiguity = sumAmbiguity / m_numTargetsSeen;
-        // Decrease std devs if multiple targets are visible
-        if (m_numTargetsSeen > 1) {
-            estStdDevs = m_multiTagStddev;
-        }
-        // Increase std devs based on (average) distance
-        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 3.2) {
-            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
-        }
-        else if (m_numTargetsSeen == 2 && m_avgDistanceToTag > 4) {
-            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
-        }
-        else {
-            estStdDevs = estStdDevs.times(1 + (m_avgDistanceToTag * m_avgDistanceToTag / 30));
-        }
-
-        return estStdDevs;
     }
 
     public void takeScreenshot() {
