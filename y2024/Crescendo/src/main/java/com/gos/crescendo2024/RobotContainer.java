@@ -292,6 +292,11 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis drive to note", m_chassisSubsystem.createDriveToNoteCommand());
 
         shuffleboardTab.add("Chassis Sync Odo and Est Pos", m_chassisSubsystem.createSyncOdometryAndPoseEstimatorCommand().withName("Sync Odo and Est Pos"));
+
+        shuffleboardTab.add("Chassis test module 0", m_chassisSubsystem.commandSetModuleState(0));
+        shuffleboardTab.add("Chassis test module 1", m_chassisSubsystem.commandSetModuleState(1));
+        shuffleboardTab.add("Chassis test module 2", m_chassisSubsystem.commandSetModuleState(2));
+        shuffleboardTab.add("Chassis test module 3", m_chassisSubsystem.commandSetModuleState(3));
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
