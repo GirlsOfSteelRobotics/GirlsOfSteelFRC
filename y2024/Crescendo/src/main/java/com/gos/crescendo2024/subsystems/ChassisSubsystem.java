@@ -479,4 +479,8 @@ public class ChassisSubsystem extends SubsystemBase {
         // This is an instant command instead of run/runEnd because we don't want the "requirement" logic on the chassis to happen
         return new InstantCommand(this::takeAprilTagScreenshot);
     }
+
+    public Command commandSetModuleState(int moduleId) {
+        return this.run(() -> m_swerveDrive.setModuleState(moduleId, 90, 0.5*MAX_TRANSLATION_SPEED)).withName("Module " + moduleId);
+    }
 }
