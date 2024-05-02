@@ -1,7 +1,7 @@
 package com.gos.crescendo2024.led_patterns;
 
 import com.gos.crescendo2024.led_patterns.subpatterns.AprilTagPattern;
-import com.gos.lib.led.LEDFlashWhenTrue;
+import com.gos.lib.led.LEDFlashOnRisingEdge;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
@@ -26,7 +26,7 @@ public class EnabledPatterns {
     private final LEDBoolean m_noteSeen;
     private final AprilTagPattern m_aprilTagsSeen;
     private final LEDBoolean m_hasPieceConstant;
-    private final LEDFlashWhenTrue m_hasPiecePattern;
+    private final LEDFlashOnRisingEdge m_hasPiecePattern;
 
     public EnabledPatterns(AddressableLEDBuffer buffer, int numberOfLeds, IntakeSubsystem intake, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
         m_intake = intake;
@@ -35,7 +35,7 @@ public class EnabledPatterns {
         m_arm = arm;
 
         // TODO(gpr) Refactor patterns to show april tags and always-present "has piece"
-        m_hasPiecePattern = new LEDFlashWhenTrue(buffer, 0, numberOfLeds, 0.25, 100, Color.kTomato);
+        m_hasPiecePattern = new LEDFlashOnRisingEdge(buffer, 0, numberOfLeds, 0.25, 100, Color.kTomato);
         m_armGood = new LEDBoolean(buffer, 0, 10, Color.kGreen, Color.kRed);
         m_chassisGood = new LEDBoolean(buffer, 10, 20, Color.kGreen, Color.kRed);
         m_shooterGood = new LEDBoolean(buffer, 20, 30, Color.kGreen, Color.kRed);
