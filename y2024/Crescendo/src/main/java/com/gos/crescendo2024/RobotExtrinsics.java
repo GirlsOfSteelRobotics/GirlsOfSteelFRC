@@ -35,7 +35,7 @@ public class RobotExtrinsics {
             Math.toRadians(-19.0),
             Math.toRadians(-112))
     ));
-    public static final TunableTransform3d ROBOT_TO_CAMERA_APRIL_TAGS_L =new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/L",  new Transform3d(
+    public static final TunableTransform3d ROBOT_TO_CAMERA_APRIL_TAGS_L = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/L",  new Transform3d(
         new Translation3d(
             Units.inchesToMeters(5.75),
             Units.inchesToMeters(9),

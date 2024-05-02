@@ -481,6 +481,6 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command commandSetModuleState(int moduleId) {
-        return this.run(() -> m_swerveDrive.setModuleState(moduleId, 90, 0.5*MAX_TRANSLATION_SPEED)).withName("Module " + moduleId);
+        return this.run(() -> m_swerveDrive.setModuleState(moduleId, 90, 0.5 * MAX_TRANSLATION_SPEED)).withName("Module " + moduleId);
     }
 }
