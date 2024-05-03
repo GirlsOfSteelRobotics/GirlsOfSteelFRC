@@ -140,7 +140,7 @@ public class RobotContainer {
             // These three should be off for competition
             createTestCommands();
             // createSysIdCommands();
-            // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+            // PathPlannerUtils.createTrajectoriesShuffleboardTab((PathPlannerPath path) -> m_chassisSubsystem.createFollowPathCommand(path, true));
 
             createEllieCommands();
 
