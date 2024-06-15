@@ -558,5 +558,157 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/R.x(in)",
+    "type": "double",
+    "value": 5.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/R.y(in)",
+    "type": "double",
+    "value": -14.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/R.z(in)",
+    "type": "double",
+    "value": 9.251968503937007,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/R.yaw(deg)",
+    "type": "double",
+    "value": -112.00000000000001,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/R.pitch(deg)",
+    "type": "double",
+    "value": -18.999999999999996,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/R.roll(deg)",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/L.x(in)",
+    "type": "double",
+    "value": 5.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/L.y(in)",
+    "type": "double",
+    "value": 9.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/L.z(in)",
+    "type": "double",
+    "value": 9.251968503937007,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/L.yaw(deg)",
+    "type": "double",
+    "value": 100.00000000000001,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/L.pitch(deg)",
+    "type": "double",
+    "value": -19.200000000000003,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/L.roll(deg)",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/CB.x(in)",
+    "type": "double",
+    "value": -10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/CB.y(in)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/CB.z(in)",
+    "type": "double",
+    "value": 9.251968503937007,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/CB.yaw(deg)",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/CB.pitch(deg)",
+    "type": "double",
+    "value": -40.00000000000001,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/CB.roll(deg)",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm: MaxAngleForChain",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

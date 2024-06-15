@@ -40,10 +40,16 @@ import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static edu.wpi.first.wpilibj2.command.Commands.defer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -123,6 +129,7 @@ public class RobotContainer {
             NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
             NamedCommands.registerCommand("PrepSpeakerShot", CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose));
+            NamedCommands.registerCommand("Arm down", m_armPivotSubsystem.createMoveArmToAngleCommand(0).until(m_armPivotSubsystem::isArmAtGoal));
         }
 
         m_autonomousFactory = new Autos();
@@ -292,6 +299,35 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis drive to note", m_chassisSubsystem.createDriveToNoteCommand());
 
         shuffleboardTab.add("Chassis Sync Odo and Est Pos", m_chassisSubsystem.createSyncOdometryAndPoseEstimatorCommand().withName("Sync Odo and Est Pos"));
+
+        shuffleboardTab.add("Auto: Go To AutonomousStart", createGoToAutoStartingPosition());
+    }
+
+    private Command createGoToAutoStartingPosition() {
+        return defer(() -> {
+            return m_chassisSubsystem.createDriveToPointSmarterCommand(getAutonomousStartingPose());
+        }, Set.of(m_chassisSubsystem));
+    }
+
+    private Pose2d getAutonomousStartingPose() {
+        Autos.StartPosition startingLocation = m_autonomousFactory.autoModeLightSignal().m_location;
+
+        switch(startingLocation) {
+            case STARTING_LOCATION_AMP_SIDE -> {
+                return RobotExtrinsics.STARTING_POSE_AMP_SUBWOOFER;
+            }
+            case STARTING_LOCATION_MIDDLE -> {
+                return RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER;
+            }
+            case STARTING_LOCATION_SOURCE_SIDE -> {
+                return RobotExtrinsics.STARTING_POSE_SOURCE_SUBWOOFER;
+            }
+            case CURRENT_LOCATION -> {
+                return m_chassisSubsystem.getPose();
+            }
+        }
+
+        throw new IllegalArgumentException("wtf");
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {

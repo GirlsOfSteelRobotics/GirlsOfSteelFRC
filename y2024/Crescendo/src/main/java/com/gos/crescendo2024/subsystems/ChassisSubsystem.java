@@ -407,16 +407,20 @@ public class ChassisSubsystem extends SubsystemBase {
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
 
-    public Command createDriveToAmpCommand() {
+    public Command createDriveToPointSmarterCommand(Pose2d goalPosition) {
         return defer(() -> {
-            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation()), Rotation2d.fromDegrees(90));
+            Pose2d maybeFlippedGoal = new Pose2d(AllianceFlipper.maybeFlip(goalPosition.getTranslation()), goalPosition.getRotation());
             Pose2d currentPosition = getPose();
-            double dx = ampPosition.getX() - currentPosition.getX();
-            double dy = ampPosition.getY() - currentPosition.getY();
+            double dx = maybeFlippedGoal.getX() - currentPosition.getX();
+            double dy = maybeFlippedGoal.getY() - currentPosition.getY();
             double angle = Math.atan2(dy, dx);
             Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
-            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose, true);
+            return createDriveToPointNoFlipCommand(maybeFlippedGoal, Rotation2d.fromDegrees(-90), startPose, true);
         });
+    }
+
+    public Command createDriveToAmpCommand() {
+        return createDriveToPointSmarterCommand(new Pose2d(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation(), Rotation2d.fromDegrees(90)));
     }
 
     public Command createDriveToPointCommand(Pose2d endPoint) {

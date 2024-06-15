@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6906225085258484,
-      "y": 6.696691036224365
+      "x": 0.7726442813873291,
+      "y": 6.601993083953857
     },
     "rotation": 59.98868115019719
   },
@@ -12,19 +12,38 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "AimAndShootIntoSideSpeaker"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourNoteAmpSide034.1"
+                  "pathName": "ThreeNoteAmpSide03.1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepSpeakerShot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ThreeNoteAmpSide03.2"
                 }
               },
               {
@@ -43,34 +62,9 @@
           }
         },
         {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "FourNoteAmpSide034.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakePiece"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FourNoteAmpSide034.3"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "AimAndShootIntoSpeaker"
+            "name": "Arm down"
           }
         },
         {
@@ -80,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FourNoteAmpSide034.4"
+                  "pathName": "ThreeNoteAmpSide03.3"
                 }
               },
               {
@@ -95,7 +89,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "FourNoteAmpSide034.5"
+            "pathName": "ThreeNoteAmpSide03.4"
           }
         },
         {
