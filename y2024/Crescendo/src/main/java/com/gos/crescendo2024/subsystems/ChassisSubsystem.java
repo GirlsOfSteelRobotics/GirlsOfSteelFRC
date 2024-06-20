@@ -407,20 +407,31 @@ public class ChassisSubsystem extends SubsystemBase {
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
 
-    public Command createDriveToPointSmarterCommand(Pose2d goalPosition) {
+    public Command createDriveToAmpCommand() {
         return defer(() -> {
-            Pose2d maybeFlippedGoal = new Pose2d(AllianceFlipper.maybeFlip(goalPosition.getTranslation()), goalPosition.getRotation());
+            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation()), Rotation2d.fromDegrees(90));
             Pose2d currentPosition = getPose();
-            double dx = maybeFlippedGoal.getX() - currentPosition.getX();
-            double dy = maybeFlippedGoal.getY() - currentPosition.getY();
+            double dx = ampPosition.getX() - currentPosition.getX();
+            double dy = ampPosition.getY() - currentPosition.getY();
             double angle = Math.atan2(dy, dx);
             Pose2d startPose = new Pose2d(currentPosition.getX(), currentPosition.getY(), Rotation2d.fromRadians(angle));
-            return createDriveToPointNoFlipCommand(maybeFlippedGoal, Rotation2d.fromDegrees(-90), startPose, true);
+            return createDriveToPointNoFlipCommand(ampPosition, Rotation2d.fromDegrees(-90), startPose, true);
         });
     }
 
-    public Command createDriveToAmpCommand() {
-        return createDriveToPointSmarterCommand(new Pose2d(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation(), Rotation2d.fromDegrees(90)));
+    public Command createPathfindToPoseCommand(Pose2d pose) {
+        return AutoBuilder.pathfindToPose(
+            pose,
+
+            new PathConstraints(
+                Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
+                Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
+                Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
+                Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
+            0.0, // Goal end velocity in meters/sec
+            0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+        );
+
     }
 
     public Command createDriveToPointCommand(Pose2d endPoint) {

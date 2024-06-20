@@ -23,6 +23,7 @@
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
@@ -90,30 +91,33 @@
         source-provider="NetworkTables"
         style="transform: translate(372px, 315px);"
         source-key="/Chassis/Distance to Speaker"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-412"
+            id="vaadin-number-field-2"
             aria-labelledby="label-vaadin-number-field-438"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-438"
-            for="vaadin-number-field-412"
+            for="vaadin-number-field-2"
         >Distance To Speaker</label>
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-292"
             hidden=""
         ></div>
-    </vaadin-number-field></dashboard-tab><dashboard-tab
+    </vaadin-number-field><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Auto: Go To AutonomousStart"
+        style="transform: translate(357.6px, 16px);"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -186,12 +190,11 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-2"
+            id="vaadin-number-field-3"
             aria-labelledby="label-vaadin-number-field-632"
             aria-describedby=""
             min="NaN"
@@ -200,7 +203,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-632"
-            for="vaadin-number-field-2"
+            for="vaadin-number-field-3"
         >Rel Arm Angle</label>
         <div
             slot="error-message"
@@ -217,12 +220,11 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-3"
+            id="vaadin-number-field-4"
             aria-labelledby="label-vaadin-number-field-633"
             aria-describedby=""
             min="NaN"
@@ -231,7 +233,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-633"
-            for="vaadin-number-field-3"
+            for="vaadin-number-field-4"
         >Percent Output</label>
         <div
             slot="error-message"
@@ -248,12 +250,11 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-4"
+            id="vaadin-number-field-5"
             aria-labelledby="label-vaadin-number-field-689"
             aria-describedby=""
             min="NaN"
@@ -262,7 +263,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-689"
-            for="vaadin-number-field-4"
+            for="vaadin-number-field-5"
         >Abs Arm ANgle</label>
         <div
             slot="error-message"
@@ -307,7 +308,6 @@
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(2px, 18px); width: 207px; height: 50px;"
@@ -352,12 +352,11 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-5"
+            id="vaadin-number-field-6"
             aria-labelledby="label-vaadin-number-field-556"
             aria-describedby=""
             min="NaN"
@@ -366,7 +365,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-556"
-            for="vaadin-number-field-5"
+            for="vaadin-number-field-6"
         >Shooter RPM</label>
         <div
             slot="error-message"
@@ -383,12 +382,11 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-6"
+            id="vaadin-number-field-7"
             aria-labelledby="label-vaadin-number-field-580"
             aria-describedby=""
             min="NaN"
@@ -397,7 +395,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-580"
-            for="vaadin-number-field-6"
+            for="vaadin-number-field-7"
         >Percent Output</label>
         <div
             slot="error-message"
@@ -418,12 +416,11 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-7"
+            id="vaadin-number-field-8"
             aria-labelledby="label-vaadin-number-field-224"
             aria-describedby=""
             min="NaN"
@@ -432,7 +429,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-224"
-            for="vaadin-number-field-7"
+            for="vaadin-number-field-8"
         >Shooter Goal</label>
         <div
             slot="error-message"
@@ -626,12 +623,11 @@
         source-key="/Hanger Subsystem/Left Pos: "
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-8"
+            id="vaadin-number-field-9"
             aria-labelledby="label-vaadin-number-field-2752"
             aria-describedby=""
             min="NaN"
@@ -640,7 +636,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-2752"
-            for="vaadin-number-field-8"
+            for="vaadin-number-field-9"
         >Label</label>
         <div
             slot="error-message"
@@ -657,12 +653,11 @@
         source-key="/Hanger Subsystem/Right Pos"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-9"
+            id="vaadin-number-field-10"
             aria-labelledby="label-vaadin-number-field-2753"
             aria-describedby=""
             min="NaN"
@@ -671,7 +666,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-2753"
-            for="vaadin-number-field-9"
+            for="vaadin-number-field-10"
         >Label</label>
         <div
             slot="error-message"
@@ -692,11 +687,12 @@
         source-key="/GosCameras/Left Camera/Targets Seen"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-10"
+            id="vaadin-number-field-11"
             aria-labelledby="label-vaadin-number-field-87"
             aria-describedby=""
             min="NaN"
@@ -705,7 +701,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-87"
-            for="vaadin-number-field-10"
+            for="vaadin-number-field-11"
         >Left Seen</label>
         <div
             slot="error-message"
@@ -722,11 +718,12 @@
         source-key="/GosCameras/Left Camera/Average Distance To Target"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-11"
+            id="vaadin-number-field-12"
             aria-labelledby="label-vaadin-number-field-99"
             aria-describedby=""
             min="NaN"
@@ -735,7 +732,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-99"
-            for="vaadin-number-field-11"
+            for="vaadin-number-field-12"
         >Left Avg Distance</label>
         <div
             slot="error-message"
@@ -752,11 +749,12 @@
         source-key="/GosCameras/Center Back Camera/Targets Seen"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-12"
+            id="vaadin-number-field-13"
             aria-labelledby="label-vaadin-number-field-111"
             aria-describedby=""
             min="NaN"
@@ -765,7 +763,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-111"
-            for="vaadin-number-field-12"
+            for="vaadin-number-field-13"
         >Back Seen</label>
         <div
             slot="error-message"
@@ -782,11 +780,12 @@
         source-key="/GosCameras/Center Back Camera/Average Distance To Target"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-13"
+            id="vaadin-number-field-14"
             aria-labelledby="label-vaadin-number-field-123"
             aria-describedby=""
             min="NaN"
@@ -795,7 +794,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-123"
-            for="vaadin-number-field-13"
+            for="vaadin-number-field-14"
         >Back Avg Distance</label>
         <div
             slot="error-message"
@@ -812,11 +811,12 @@
         source-key="/GosCameras/Right Camera/Targets Seen"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-14"
+            id="vaadin-number-field-15"
             aria-labelledby="label-vaadin-number-field-135"
             aria-describedby=""
             min="NaN"
@@ -825,7 +825,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-135"
-            for="vaadin-number-field-14"
+            for="vaadin-number-field-15"
         >Right Seen</label>
         <div
             slot="error-message"
@@ -842,11 +842,12 @@
         source-key="/GosCameras/Right Camera/Average Distance To Target"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-15"
+            id="vaadin-number-field-16"
             aria-labelledby="label-vaadin-number-field-147"
             aria-describedby=""
             min="NaN"
@@ -855,7 +856,7 @@
         ><label
             slot="label"
             id="label-vaadin-number-field-147"
-            for="vaadin-number-field-15"
+            for="vaadin-number-field-16"
         >Right Avg Distance</label>
         <div
             slot="error-message"
@@ -870,23 +871,22 @@
         source-provider="NetworkTables"
         style="transform: translate(73px, 287px);"
         source-key="/GosCameras/Left Camera/Average Ambiguity"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-290"
+            id="vaadin-number-field-17"
             aria-labelledby="label-vaadin-number-field-299"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-299"
-            for="vaadin-number-field-290"
+            for="vaadin-number-field-17"
         >Label</label>
         <div
             slot="error-message"
@@ -901,23 +901,22 @@
         source-provider="NetworkTables"
         style="transform: translate(317px, 310px);"
         source-key="/GosCameras/Center Back Camera/Average Ambiguity"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-302"
+            id="vaadin-number-field-18"
             aria-labelledby="label-vaadin-number-field-311"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-311"
-            for="vaadin-number-field-302"
+            for="vaadin-number-field-18"
         >Label</label>
         <div
             slot="error-message"
@@ -931,23 +930,22 @@
         has-label=""
         source-provider="NetworkTables"
         style="transform: translate(575px, 333px);"
-        placeholder=""
         min="NaN"
         max="NaN"
     ><input
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-314"
+            id="vaadin-number-field-19"
             aria-labelledby="label-vaadin-number-field-323"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
         ><label
             slot="label"
             id="label-vaadin-number-field-323"
-            for="vaadin-number-field-314"
+            for="vaadin-number-field-19"
         >Label</label>
         <div
             slot="error-message"

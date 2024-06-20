@@ -304,9 +304,7 @@ public class RobotContainer {
     }
 
     private Command createGoToAutoStartingPosition() {
-        return defer(() -> {
-            return m_chassisSubsystem.createDriveToPointSmarterCommand(getAutonomousStartingPose());
-        }, Set.of(m_chassisSubsystem));
+        return defer(() -> m_chassisSubsystem.createPathfindToPoseCommand(getAutonomousStartingPose()), Set.of(m_chassisSubsystem)).withName("move robot to auto position");
     }
 
     private Pose2d getAutonomousStartingPose() {
