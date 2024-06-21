@@ -16,9 +16,9 @@ public class FourNoteMiddle152Choreo extends GosAutoMode {
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public FourNoteMiddle152Choreo() {
         super(
-            "Three Note Amp Side - 03",
+            "Four Note Middle Side - 152",
             StartPosition.STARTING_LOCATION_AMP_SIDE,
-            List.of(0, 3),
+            List.of(1, 5, 2),
 
             Commands.sequence(
                 NamedCommands.getCommand("AimAndShootIntoSpeaker"),

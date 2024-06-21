@@ -17,8 +17,8 @@ public class FourNoteMiddle521Choreo extends GosAutoMode {
     public FourNoteMiddle521Choreo() {
         super(
             "Three Note Amp Side - 03",
-            StartPosition.STARTING_LOCATION_AMP_SIDE,
-            List.of(0, 3),
+            StartPosition.STARTING_LOCATION_MIDDLE,
+            List.of(5, 2, 1),
 
             Commands.sequence(
                 NamedCommands.getCommand("AimAndShootIntoSpeaker"),

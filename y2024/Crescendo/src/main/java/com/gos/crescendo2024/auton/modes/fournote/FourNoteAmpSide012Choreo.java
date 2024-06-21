@@ -15,9 +15,9 @@ public class FourNoteAmpSide012Choreo extends GosAutoMode {
 
     public FourNoteAmpSide012Choreo() {
         super(
-            "Three Note Amp Side - 03",
+            "Four Note Amp Side - 012",
             StartPosition.STARTING_LOCATION_AMP_SIDE,
-            List.of(0, 3),
+            List.of(0, 1, 2),
 
             Commands.sequence(
                 NamedCommands.getCommand("AimAndShootIntoSideSpeaker"),

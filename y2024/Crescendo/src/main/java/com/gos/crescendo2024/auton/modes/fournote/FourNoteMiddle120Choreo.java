@@ -15,9 +15,9 @@ public class FourNoteMiddle120Choreo extends GosAutoMode {
 
     public FourNoteMiddle120Choreo() {
         super(
-            "Three Note Amp Side - 03",
-            StartPosition.STARTING_LOCATION_AMP_SIDE,
-            List.of(0, 3),
+            "Four Note Middle - 120",
+            StartPosition.STARTING_LOCATION_MIDDLE,
+            List.of(1, 2, 0),
 
             Commands.sequence(
                 NamedCommands.getCommand("AimAndShootIntoSideSpeaker"),
