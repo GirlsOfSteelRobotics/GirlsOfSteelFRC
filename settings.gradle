@@ -11,8 +11,6 @@ include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibPhoenix5'
 include 'libraries:GirlsOfSteelLibPhoenix6'
-include 'libraries:GirlsOfSteelLibPhotonVision'
-include 'libraries:GirlsOfSteelLibPathing'
 //include 'libraries:SwerveShuffleboard'
 
 //include 'old_robots:y2011:GOS2011:Drive'
@@ -54,6 +52,8 @@ include 'libraries:GirlsOfSteelLibPathing'
 //include 'old_robots:y2022:RapidReactDashboard'
 //include 'old_robots:y2022:SCRAWestCoastDrive'
 
+
+include 'y2023:Preseason'
 include 'y2023:ChargedUp'
 include 'y2023:ChargedUpDashboard'
 include 'y2023:SwerveChassis'
