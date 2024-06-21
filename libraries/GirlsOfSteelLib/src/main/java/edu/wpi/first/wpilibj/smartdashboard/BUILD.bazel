@@ -1,0 +1,11 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "smartdashboard",
+    srcs = glob(["*.java"]),
+    deps = [
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+    ],
+    visibility = ["//visibility:public"],
+)

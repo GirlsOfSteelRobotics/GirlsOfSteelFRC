@@ -1,0 +1,5 @@
+
+alias(
+    name = "ChargedUp",
+    actual = "//y2023/ChargedUp/src/main/java/com/gos/chargedup",
+)

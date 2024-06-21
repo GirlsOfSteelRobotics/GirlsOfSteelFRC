@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "field",
+    srcs = glob(["*.java"]),
+    deps = [
+        "@bzlmodrio-allwpilib//libraries/java/apriltag",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "//libraries/GirlsOfSteelLib/src/main/java/edu/wpi/first/wpilibj/smartdashboard",
+    ],
+    visibility = ["//visibility:public"],
+)
