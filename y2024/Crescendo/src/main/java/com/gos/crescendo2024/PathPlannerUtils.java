@@ -5,6 +5,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import java.io.File;
 import java.util.Set;
@@ -32,5 +33,9 @@ public final class PathPlannerUtils {
         for (String pathName : pathNames) {
             tab.add(chassis.createFollowPathCommand(PathPlannerPath.fromPathFile(pathName), true).withName(pathName));
         }
+    }
+
+    public static Command followChoreoPath(String trajectoryName) {
+        return null;
     }
 }
