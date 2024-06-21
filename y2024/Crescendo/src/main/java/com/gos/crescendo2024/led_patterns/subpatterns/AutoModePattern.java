@@ -44,6 +44,9 @@ public class AutoModePattern {
     }
 
     public void writeAutoModePattern(Autos.AutoModes autoMode) {
+        if (autoMode == null) {
+            return;
+        }
         m_startPositionPattern.setKey(autoMode.m_location);
         if (m_startPositionPattern.hasKey(autoMode.m_location)) {
             m_startPositionPattern.writeLeds();

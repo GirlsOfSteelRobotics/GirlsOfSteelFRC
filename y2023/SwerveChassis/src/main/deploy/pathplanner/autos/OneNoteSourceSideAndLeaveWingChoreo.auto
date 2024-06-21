@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7019699576222576,
+      "y": 4.3850900124160495
+    },
+    "rotation": -60.0001403060998
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAndShootIntoSideSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OneNoteSourceSideAndLeaveWing.1"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

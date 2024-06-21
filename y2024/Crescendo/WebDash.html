@@ -23,6 +23,7 @@
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
@@ -112,7 +113,11 @@
             id="error-message-vaadin-number-field-292"
             hidden=""
         ></div>
-    </vaadin-number-field></dashboard-tab><dashboard-tab
+    </vaadin-number-field><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Auto: Go To AutonomousStart"
+        style="transform: translate(357.6px, 16px);"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -461,7 +466,6 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(7px, 134px); width: 213px; height: 50px;"
@@ -541,22 +545,6 @@
         source-provider="NetworkTables"
         style="transform: translate(513px, 340px);"
         source-key="/Shuffleboard/test commands/Chassis Push Sideways"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(833.2px, 89.6px); width: 196px; height: 50px;"
-        source-key="/Shuffleboard/test commands/Chassis test module 0"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(846px, 154px);"
-        source-key="/Shuffleboard/test commands/Chassis test module 1"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(886px, 239px);"
-        source-key="/Shuffleboard/test commands/Chassis test module 2"
-    ></frc-robot-command><frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(835.6px, 24.8px);"
-        source-key="/Shuffleboard/test commands/Chassis test module 3"
     ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Pit"
     slot="tab"

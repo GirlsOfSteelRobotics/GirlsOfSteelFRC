@@ -35,6 +35,7 @@ public class RobotExtrinsics {
             Math.toRadians(-19.0),
             Math.toRadians(-112))
     ));
+
     public static final TunableTransform3d ROBOT_TO_CAMERA_APRIL_TAGS_L = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/L",  new Transform3d(
         new Translation3d(
             Units.inchesToMeters(5.75),
@@ -61,6 +62,7 @@ public class RobotExtrinsics {
     public static final Pose2d STARTING_POSE_AMP_SUBWOOFER = new Pose2d(0.6933452953924437, 6.686887667641241, Rotation2d.fromDegrees(60));
     public static final Pose2d STARTING_POSE_MIDDLE_SUBWOOFER = new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0));
     public static final Pose2d STARTING_POSE_SOURCE_SUBWOOFER = new Pose2d(0.6933452953924437, 4.403274541213847, Rotation2d.fromDegrees(-60));
+    public static final Pose2d STARTING_POSE_SOURCE_CORNER = new Pose2d(0.333532, 1.336328, Rotation2d.fromDegrees(0));
     public static final Pose2d SCORE_IN_AMP_POSITION = new Pose2d(1.84, 7.8, Rotation2d.fromDegrees(90));
 
     // Important Aiming Poses

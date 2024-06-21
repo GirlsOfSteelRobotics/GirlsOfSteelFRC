@@ -45,6 +45,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
+import java.util.Set;
+
+import static edu.wpi.first.wpilibj2.command.Commands.defer;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -123,6 +127,7 @@ public class RobotContainer {
             NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
             NamedCommands.registerCommand("PrepSpeakerShot", CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose));
+            NamedCommands.registerCommand("Arm down", m_armPivotSubsystem.createMoveArmToAngleCommand(0).until(m_armPivotSubsystem::isArmAtGoal));
         }
 
         m_autonomousFactory = new Autos();
@@ -140,7 +145,7 @@ public class RobotContainer {
             // These three should be off for competition
             createTestCommands();
             // createSysIdCommands();
-            // PathPlannerUtils.createTrajectoriesShuffleboardTab((PathPlannerPath path) -> m_chassisSubsystem.createFollowPathCommand(path, true));
+            // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
             createEllieCommands();
 
@@ -293,10 +298,36 @@ public class RobotContainer {
 
         shuffleboardTab.add("Chassis Sync Odo and Est Pos", m_chassisSubsystem.createSyncOdometryAndPoseEstimatorCommand().withName("Sync Odo and Est Pos"));
 
-        shuffleboardTab.add("Chassis test module 0", m_chassisSubsystem.commandSetModuleState(0));
-        shuffleboardTab.add("Chassis test module 1", m_chassisSubsystem.commandSetModuleState(1));
-        shuffleboardTab.add("Chassis test module 2", m_chassisSubsystem.commandSetModuleState(2));
-        shuffleboardTab.add("Chassis test module 3", m_chassisSubsystem.commandSetModuleState(3));
+        shuffleboardTab.add("Auto: Go To AutonomousStart", createGoToAutoStartingPosition().withName("move robot to auto position"));
+    }
+
+    private Command createGoToAutoStartingPosition() {
+        return defer(() -> m_chassisSubsystem.createPathfindToPoseCommand(getAutonomousStartingPose()), Set.of(m_chassisSubsystem))
+            .andThen(m_armPivotSubsystem.createMoveArmToAngleCommand(78));
+
+    }
+
+    private Pose2d getAutonomousStartingPose() {
+        Autos.StartPosition startingLocation = m_autonomousFactory.autoModeLightSignal().m_location;
+
+        switch (startingLocation) {
+        case STARTING_LOCATION_AMP_SIDE -> {
+            return RobotExtrinsics.STARTING_POSE_AMP_SUBWOOFER;
+        }
+        case STARTING_LOCATION_MIDDLE -> {
+            return RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER;
+        }
+        case STARTING_LOCATION_SOURCE_SIDE -> {
+            return RobotExtrinsics.STARTING_POSE_SOURCE_SUBWOOFER;
+        }
+        case STARTING_LOCATION_SOURCE_CORNER -> {
+            return RobotExtrinsics.STARTING_POSE_SOURCE_CORNER;
+        }
+        case CURRENT_LOCATION -> {
+            return m_chassisSubsystem.getPose();
+        }
+        default -> throw new IllegalArgumentException("this should never happen");
+        }
     }
 
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {

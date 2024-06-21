@@ -8,6 +8,8 @@ package com.gos.crescendo2024.subsystems;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.crescendo2024.AllianceFlipper;
+import com.gos.crescendo2024.AprilTagCamera;
+import com.gos.crescendo2024.AprilTagCameraManager;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
@@ -16,8 +18,6 @@ import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.ValidShootingPolygon;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
-import com.gos.lib.photonvision.AprilTagCamera;
-import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -144,10 +144,10 @@ public class ChassisSubsystem extends SubsystemBase {
         Matrix<N3, N1> sideSingleTagStddev = AprilTagCamera.DEFAULT_SINGLE_TAG_STDDEV.times(2);
         Matrix<N3, N1> sideMultiTagStddev = AprilTagCamera.DEFAULT_MULTI_TAG_STDDEV.times(2);
         m_aprilTagCameras = new AprilTagCameraManager(List.of(
-            new AprilTagCamera(m_field, FieldConstants.TAG_LAYOUT, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB),
-            new AprilTagCamera(m_field, FieldConstants.TAG_LAYOUT, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R, sideSingleTagStddev, sideMultiTagStddev),
-            new AprilTagCamera(m_field, FieldConstants.TAG_LAYOUT, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L, sideSingleTagStddev, sideMultiTagStddev)
-        ), FieldConstants.TAG_LAYOUT);
+            new AprilTagCamera(m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB),
+            new AprilTagCamera(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R, sideSingleTagStddev, sideMultiTagStddev),
+            new AprilTagCamera(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L, sideSingleTagStddev, sideMultiTagStddev)
+        ));
         m_noteDetectionCamera = new ObjectDetection();
 
         AutoBuilder.configureHolonomic(
@@ -419,6 +419,21 @@ public class ChassisSubsystem extends SubsystemBase {
         });
     }
 
+    public Command createPathfindToPoseCommand(Pose2d pose) {
+        return AutoBuilder.pathfindToPose(
+            pose,
+
+            new PathConstraints(
+                Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
+                Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
+                Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
+                Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
+            0.0, // Goal end velocity in meters/sec
+            0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+        );
+
+    }
+
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
     }
@@ -478,9 +493,5 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createTakeAprilTagScreenshotCommand() {
         // This is an instant command instead of run/runEnd because we don't want the "requirement" logic on the chassis to happen
         return new InstantCommand(this::takeAprilTagScreenshot);
-    }
-
-    public Command commandSetModuleState(int moduleId) {
-        return this.run(() -> m_swerveDrive.setModuleState(moduleId, 90, 0.5 * MAX_TRANSLATION_SPEED)).withName("Module " + moduleId);
     }
 }

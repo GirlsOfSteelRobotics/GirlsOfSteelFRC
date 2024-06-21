@@ -23,14 +23,15 @@ public final class Autos {
         STARTING_LOCATION_AMP_SIDE,
         STARTING_LOCATION_MIDDLE,
         STARTING_LOCATION_SOURCE_SIDE,
-        CURRENT_LOCATION
+        CURRENT_LOCATION,
+        STARTING_LOCATION_SOURCE_CORNER,
     }
 
     public enum AutoModes {
         //Four Notes - Amp
         FOUR_NOTE_012("FourNoteAmpSide012Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 1, 2)),
-        FOUR_NOTE_120("FourNoteMiddle120Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 1, 2)),
-        FOUR_NOTE_034("FourNoteAmpSide034Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 3, 4)),
+        FOUR_NOTE_120("FourNoteMiddle120Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
+        FOUR_NOTE_034("ThreeNoteAmpSide03Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 3)),
         FOUR_NOTE_045("FourNoteAmpSide045Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 4, 5)),
         FOUR_NOTE_MIDDLE_012("FourNoteMiddle012Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
         FOUR_NOTE_MIDDLE_521("FourNoteMiddle521Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2, 1)),
@@ -41,7 +42,7 @@ public final class Autos {
         //Three Notes - Source
         THREE_NOTE_76("ThreeNotesSourceSide76Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7, 6)),
         THREE_NOTE_65("ThreeNotesSourceSide65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6, 5)),
-        //Asshohole Auto (Three Note - Source)
+        //Asshole Auto (Three Note - Source)
         ASSHOLEAUTO6("AThreeNoteSource65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
         ASSHOLEAUTO5("AThreeNoteSource5Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(5)),
         //Two Notes - Amp
@@ -51,6 +52,7 @@ public final class Autos {
         //Two Notes - Source
         TWO_NOTE_RIGHT_6("TwoNoteSourceSide6Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
         TWO_NOTE_RIGHT_7("TwoNoteSourceSide7Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7)),
+        OZONE_TWO_NOTE_SOURCE_7("OzoneTwoNoteSource7", StartPosition.STARTING_LOCATION_SOURCE_CORNER, List.of(7)),
         //Just shoot preload
         ONE_NOTE_JUST_SHOOT("OneNoteJustShoot", StartPosition.CURRENT_LOCATION, List.of()),
         //Preload and drive
