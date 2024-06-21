@@ -6,6 +6,7 @@
 package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.auton.Autos;
+import com.gos.crescendo2024.auton.GosAutoMode;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.CombinedCommands;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
@@ -308,7 +309,7 @@ public class RobotContainer {
     }
 
     private Pose2d getAutonomousStartingPose() {
-        Autos.StartPosition startingLocation = m_autonomousFactory.autoModeLightSignal().m_location;
+        GosAutoMode.StartPosition startingLocation = m_autonomousFactory.getSelectedCommand().getStartingLocation();
 
         switch (startingLocation) {
         case STARTING_LOCATION_AMP_SIDE -> {
@@ -499,9 +500,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         System.out.println("Arm synced: " + m_armPivotSubsystem.areArmEncodersGood());
-        System.out.println("Selected Auto" + m_autonomousFactory.autoModeLightSignal());
 
-        return m_autonomousFactory.getSelectedAutonomous();
+        return m_autonomousFactory.getSelectedCommand();
     }
 
     private void resetStickyFaults() {

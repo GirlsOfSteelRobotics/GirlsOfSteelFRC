@@ -1,21 +1,25 @@
 
 package com.gos.crescendo2024.auton.modes.fournote;
 
-import com.pathplanner.lib.auto.AutoBuilder;
+import com.gos.crescendo2024.auton.GosAutoMode;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.path.PathPlannerPath;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import java.util.List;
 
 import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
 
-public class FourNoteMiddle521Choreo extends SequentialCommandGroup {
+public class FourNoteMiddle521Choreo extends GosAutoMode {
 
     private static final String PATH_BASE = "FourNoteMiddle521";
-    
+
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public FourNoteMiddle521Choreo() {
-        super( 
+        super(
+            "Three Note Amp Side - 03",
+            StartPosition.STARTING_LOCATION_AMP_SIDE,
+            List.of(0, 3),
+
             Commands.sequence(
                 NamedCommands.getCommand("AimAndShootIntoSpeaker"),
                 Commands.deadline(
@@ -39,7 +43,7 @@ public class FourNoteMiddle521Choreo extends SequentialCommandGroup {
                 ),
                 NamedCommands.getCommand("AimAndShootIntoSpeaker")
             )
-    );
+        );
     }
 }
 

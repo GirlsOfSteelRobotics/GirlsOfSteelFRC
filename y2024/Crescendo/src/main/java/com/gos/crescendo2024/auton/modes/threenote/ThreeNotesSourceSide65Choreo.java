@@ -1,21 +1,24 @@
 
 package com.gos.crescendo2024.auton.modes.threenote;
 
-import com.pathplanner.lib.auto.AutoBuilder;
+import com.gos.crescendo2024.auton.GosAutoMode;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.path.PathPlannerPath;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import java.util.List;
 
 import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
 
-public class ThreeNotesSourceSide65Choreo extends SequentialCommandGroup {
+public class ThreeNotesSourceSide65Choreo extends GosAutoMode {
 
     private static final String PATH_BASE = "ThreeNoteSourceSide65";
-    
+
     public ThreeNotesSourceSide65Choreo() {
-        super( 
+        super(
+            "Three Note Amp Side - 03",
+            GosAutoMode.StartPosition.STARTING_LOCATION_AMP_SIDE,
+            List.of(0, 3),
+
             Commands.sequence(
                 NamedCommands.getCommand("AimAndShootIntoSideSpeaker"),
                 Commands.deadline(
@@ -39,7 +42,7 @@ public class ThreeNotesSourceSide65Choreo extends SequentialCommandGroup {
                 ),
                 NamedCommands.getCommand("AimAndShootIntoSpeaker")
             )
-    );
+        );
     }
 }
 

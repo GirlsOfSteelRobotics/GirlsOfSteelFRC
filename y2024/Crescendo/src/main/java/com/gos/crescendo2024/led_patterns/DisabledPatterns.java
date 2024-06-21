@@ -36,8 +36,7 @@ public class DisabledPatterns {
     public void writeAutoPattern() {
         // Only write the lights when we are connected the FMS, or if we have the override set for home testing
         if (DriverStation.isFMSAttached() || ALWAYS_SHOW_LIGHTS.getValue()) {
-            Autos.AutoModes autoMode = m_autoModeFactory.autoModeLightSignal();
-            m_autoModePattern.writeAutoModePattern(autoMode);
+            m_autoModePattern.writeAutoModePattern(m_autoModeFactory.getSelectedCommand());
             m_alert.writeLEDs();
             m_davidDriveOn.writeLED();
         }
