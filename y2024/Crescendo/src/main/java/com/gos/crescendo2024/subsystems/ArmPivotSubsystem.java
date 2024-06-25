@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.subsystems;
 
-import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.SpeakerLookupTable;
@@ -222,7 +221,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public double getPivotAngleUsingSpeakerLookupTable(Supplier<Pose2d> roboMan) {
-        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING.getPose();
         Translation2d roboManTranslation = roboMan.get().getTranslation();
         double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
         return m_speakerTable.getAngleTable(distanceToSpeaker);

@@ -1,8 +1,9 @@
 
-package com.gos.crescendo2024.auton.modes;
+package com.gos.crescendo2024.auton.modes.source;
 
 import com.gos.crescendo2024.auton.GosAutoMode;
 import com.gos.crescendo2024.commands.CombinedCommands;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import java.util.List;
@@ -10,17 +11,18 @@ import java.util.List;
 import static com.gos.crescendo2024.ChoreoUtils.getPathStartingPose;
 import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
 
-public class NoNoteLeaveWingChoreo extends GosAutoMode {
+public class OneNoteSourceSideAndLeaveWingChoreo extends GosAutoMode {
 
-    private static final String PATH_BASE = "NoNoteLeaveWing";
+    private static final String PATH_BASE = "OneNoteSourceSideAndLeaveWing";
 
-    public NoNoteLeaveWingChoreo(CombinedCommands combinedCommands) {
+    public OneNoteSourceSideAndLeaveWingChoreo(CombinedCommands combinedCommands) {
         super(
-            StartPosition.CURRENT_LOCATION,
+            StartPosition.STARTING_LOCATION_SOURCE_SIDE,
             List.of(),
 
             Commands.sequence(
                 combinedCommands.resetPose(getPathStartingPose(PATH_BASE)),
+                NamedCommands.getCommand("AimAndShootIntoSideSpeaker"),
                 followChoreoPath(PATH_BASE + ".1")
             )
         );

@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.commands;
 
-import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
@@ -77,7 +76,7 @@ public class FeedPiecesWithVision extends Command {
 
     @Override
     public void execute() {
-        Pose2d aimingPoint = AllianceFlipper.maybeFlip(RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT);
+        Pose2d aimingPoint = RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT.getPose();
 
         double leftY = -MathUtil.applyDeadband(m_driverController.getLeftY(), BaseTeleopSwerve.JOYSTICK_DEADBAND);
         double leftX = -MathUtil.applyDeadband(m_driverController.getLeftX(), BaseTeleopSwerve.JOYSTICK_DEADBAND);

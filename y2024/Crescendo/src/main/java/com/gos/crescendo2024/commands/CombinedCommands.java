@@ -1,6 +1,7 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
+import com.gos.crescendo2024.MaybeFlippedPose2d;
 import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
@@ -9,6 +10,7 @@ import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.Sendable;
@@ -21,114 +23,143 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
+
 public class CombinedCommands {
 
-    public static Command intakePieceCommand(ArmPivotSubsystem armPivot, IntakeSubsystem intake) {
-        return armPivot.createMoveArmToGroundIntakeAngleCommand()
-            .alongWith(intake.createMoveIntakeInCommand())
-            .until(intake::hasGamePiece)
+    private final ChassisSubsystem m_chassis;
+    private final ArmPivotSubsystem m_arm;
+    private final ShooterSubsystem m_shooter;
+    private final IntakeSubsystem m_intake;
+    private final HangerSubsystem m_hanger;
+
+    public CombinedCommands(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armPivotSubsystem, ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, HangerSubsystem hanger) {
+        m_chassis = chassisSubsystem;
+        m_arm = armPivotSubsystem;
+        m_shooter = shooterSubsystem;
+        m_intake = intakeSubsystem;
+        m_hanger = hanger;
+    }
+
+    public Command intakePieceCommand() {
+        return m_arm.createMoveArmToGroundIntakeAngleCommand()
+            .alongWith(m_intake.createMoveIntakeInCommand())
+            .until(m_intake::hasGamePiece)
             .withName("Intake Piece");
     }
 
-    public static Sendable prepareTunableShot(ArmPivotSubsystem arm, ShooterSubsystem shooter) {
-        return arm.createMoveArmToTunableSpeakerAngleCommand()
-            .alongWith(shooter.createRunTunableRpmCommand())
+    public Sendable prepareTunableShot() {
+        return m_arm.createMoveArmToTunableSpeakerAngleCommand()
+            .alongWith(m_shooter.createRunTunableRpmCommand())
             .withName("Prepare Tunable Shot");
     }
 
-    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, Supplier<Pose2d> pos) {
-        return armPivot.createPivotUsingSpeakerTableCommand(pos)
-            .alongWith(shooter.createRunSpeakerShotRPMCommand());
+    public Command prepareSpeakerShot(Supplier<Pose2d> pos) {
+        return m_arm.createPivotUsingSpeakerTableCommand(pos)
+            .alongWith(m_shooter.createRunSpeakerShotRPMCommand());
     }
 
-    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
-        return armPivot.createMoveArmToAngleCommand(angle)
-            .alongWith(shooter.createRunSpeakerShotRPMCommand());
+    public Command prepareSpeakerShot(double angle) {
+        return m_arm.createMoveArmToAngleCommand(angle)
+            .alongWith(m_shooter.createRunSpeakerShotRPMCommand());
     }
 
     //what we ran during quals
-    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, GosDoubleProperty angle) {
+    public Command prepareSpeakerShot(GosDoubleProperty angle) {
         DoubleSupplier supplier = angle::getValue;
-        return armPivot.createMoveArmToAngleCommand(supplier)
-            .alongWith(shooter.createRunSpeakerShotRPMCommand());
+        return m_arm.createMoveArmToAngleCommand(supplier)
+            .alongWith(m_shooter.createRunSpeakerShotRPMCommand());
     }
 
-    public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
-        return armPivot.createMoveArmToAmpAngleCommand()
-            .alongWith(shooter.createRunAmpShotRPMCommand())
+    public Command prepareAmpShot() {
+        return m_arm.createMoveArmToAmpAngleCommand()
+            .alongWith(m_shooter.createRunAmpShotRPMCommand())
             .withName("Prepare Amp Shot");
     }
 
-    public static Command ampShooterCommand(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, IntakeSubsystem intake) {
-        return prepareAmpShot(armPivot, shooter)
-            .alongWith(intake.createMoveIntakeInCommand())
+    public Command ampShooterCommand() {
+        return prepareAmpShot()
+            .alongWith(m_intake.createMoveIntakeInCommand())
             .withName("Auto shoot into amp");
     }
 
     @SuppressWarnings("PMD.LinguisticNaming")
-    public static Command vibrateIfReadyToShoot(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
-        BooleanSupplier isReadySupplier = () -> chassis.isAngleAtGoal() && arm.isArmAtGoal() && shooter.isShooterAtGoal();
+    public Command vibrateIfReadyToShoot(CommandXboxController controller) {
+        BooleanSupplier isReadySupplier = () -> m_chassis.isAngleAtGoal() && m_arm.isArmAtGoal() && m_shooter.isShooterAtGoal();
         return new VibrateControllerWhileTrueCommand(controller, isReadySupplier);
     }
 
-    public static Command feedPieceAcrossFieldWithVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
+    public Command feedPieceAcrossFieldWithVision(CommandXboxController joystick) {
         BooleanSupplier readyToLaunchSupplier = () -> {
             double blueMinX = 10.2;
             double redMaxX = FieldConstants.FIELD_LENGTH - blueMinX;
-            boolean mechReady = arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
+            boolean mechReady = m_arm.isArmAtGoal() && m_shooter.isShooterAtGoal() && m_chassis.isAngleAtGoal();
             boolean distanceReady;
             if (GetAllianceUtil.isBlueAlliance()) {
-                distanceReady = chassis.getPose().getX() < blueMinX;
+                distanceReady = m_chassis.getPose().getX() < blueMinX;
             } else {
-                distanceReady = chassis.getPose().getX() > redMaxX;
+                distanceReady = m_chassis.getPose().getX() > redMaxX;
             }
 
             SmartDashboard.putBoolean("Feed: Mech Ready", mechReady);
-            SmartDashboard.putNumber("Feed: X: ", chassis.getPose().getX());
+            SmartDashboard.putNumber("Feed: X: ", m_chassis.getPose().getX());
             return mechReady && distanceReady;
         };
 
 
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
-            new TurnToPointSwerveDrive(chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, chassis::getPose),
-            arm.createMoveArmFeederAngleCommand(),
-            shooter.createShootNoteToAllianceRPMCommand(),
+            new TurnToPointSwerveDrive(m_chassis, joystick, RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT, true, m_chassis::getPose),
+            m_arm.createMoveArmFeederAngleCommand(),
+            m_shooter.createShootNoteToAllianceRPMCommand(),
 
             // Then, once they are all deemed ready, run the intake and vibrate the controller
             Commands.waitUntil(readyToLaunchSupplier)
-                .andThen(intake.createMoveIntakeInCommand()
+                .andThen(m_intake.createMoveIntakeInCommand()
                     .alongWith(new VibrateControllerTimedCommand(joystick, 1)))
         ).withName("Full Field Feed Piece");
     }
 
-    public static Command feedPieceAcrossFieldNoVision(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, IntakeSubsystem intake) {
-        BooleanSupplier readyToLaunchSupplier = () -> arm.isArmAtGoal() && shooter.isShooterAtGoal() && chassis.isAngleAtGoal();
+    public Command feedPieceAcrossFieldNoVision(CommandXboxController joystick) {
+        BooleanSupplier readyToLaunchSupplier = () -> m_arm.isArmAtGoal() && m_shooter.isShooterAtGoal() && m_chassis.isAngleAtGoal();
 
         return Commands.parallel(
             // Drive, Prep Arm And Shooter
-            new DavidDriveSwerve(chassis, joystick),
-            arm.createMoveArmFeederAngleCommand(),
-            shooter.createShootNoteToAllianceRPMCommand(),
+            new DavidDriveSwerve(m_chassis, joystick),
+            m_arm.createMoveArmFeederAngleCommand(),
+            m_shooter.createShootNoteToAllianceRPMCommand(),
             Commands.waitUntil(readyToLaunchSupplier).andThen(
                 new VibrateControllerTimedCommand(joystick, 1))
         ).withName("Full Field Feed Piece");
     }
 
-    public static Command autoScoreInAmp(CommandXboxController joystick, ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter) {
+    public Command autoScoreInAmp(CommandXboxController joystick) {
         return Commands.parallel(
-            chassis.createTakeAprilTagScreenshotCommand(),
-            chassis.createDriveToAmpCommand(),
-            Commands.waitUntil(() -> chassis.getDistanceToAmp() < Units.feetToMeters(4))
-                .andThen(prepareAmpShot(arm, shooter))
+            m_chassis.createTakeAprilTagScreenshotCommand(),
+            m_chassis.createDriveToAmpCommand(),
+            Commands.waitUntil(() -> m_chassis.getDistanceToAmp() < Units.feetToMeters(4))
+                .andThen(prepareAmpShot())
                 .andThen(new VibrateControllerTimedCommand(joystick, 1))
         );
     }
 
-    public static Command prepHangingUp(CommandXboxController driverController, ArmPivotSubsystem armPivot, HangerSubsystem hanger, ChassisSubsystem chassis) {
-        return armPivot.createMoveArmToPrepHangerAngleCommand()
-            .andThen(hanger.createAutoUpCommand());
+    public Command prepHangingUp(CommandXboxController driverController) {
+        return m_arm.createMoveArmToPrepHangerAngleCommand()
+            .andThen(m_hanger.createAutoUpCommand());
+    }
 
+    public Command followPathWhileIntaking(String trajectoryName) {
+        return Commands.deadline(
+                followChoreoPath(trajectoryName),
+                NamedCommands.getCommand("IntakePiece")
+            );
+    }
 
+    public Command resetPose(MaybeFlippedPose2d pose) {
+        return m_chassis.createResetPoseCommand(pose);
+    }
+
+    public Command autoAimAndShoot() {
+        return SpeakerAimAndShootCommand.createShootWhileStationary(m_arm, m_chassis, m_intake, m_shooter);
     }
 }

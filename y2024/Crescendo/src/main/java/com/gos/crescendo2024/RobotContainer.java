@@ -29,7 +29,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -69,6 +68,9 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
     private final HangerSubsystem m_hangerSubsystem;
+
+    private final CombinedCommands m_combinedCommands;
+
     // SysId
     private final ArmPivotSysId m_armPivotSysId;
     private final ShooterSysId m_shooterSysId;
@@ -115,23 +117,25 @@ public class RobotContainer {
             m_hangerSubsystem = null;
         }
 
+        m_combinedCommands = new CombinedCommands(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_hangerSubsystem);
+
 
         if (!Constants.IS_TIM_BOT) {
             NamedCommands.registerCommand("TrustVision", m_chassisSubsystem.createBelieveAprilTagEstimatorCommand());
             NamedCommands.registerCommand("AimAndShootIntoSpeaker", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerWhileDrive", SpeakerAimAndShootCommand.createShootWhileDrive(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
             NamedCommands.registerCommand("AimAndShootIntoSideSpeaker", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE::getValue));
-            NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+            NamedCommands.registerCommand("IntakePiece", m_combinedCommands.intakePieceCommand());
             NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
             NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunSpeakerShotRPMCommand());
             NamedCommands.registerCommand("AimAndShootIntoSpeakerTopSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_TOP_ANGLE::getValue));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerMiddleSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_MIDDLE_ANGLE::getValue));
             NamedCommands.registerCommand("AimAndShootIntoSpeakerBottomSpike", SpeakerAimAndShootCommand.createWithFixedArmAngle(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SPIKE_BOTTOM_ANGLE::getValue));
-            NamedCommands.registerCommand("PrepSpeakerShot", CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose));
+            NamedCommands.registerCommand("PrepSpeakerShot", m_combinedCommands.prepareSpeakerShot(m_chassisSubsystem::getPose));
             NamedCommands.registerCommand("Arm down", m_armPivotSubsystem.createMoveArmToAngleCommand(0).until(m_armPivotSubsystem::isArmAtGoal));
         }
 
-        m_autonomousFactory = new Autos();
+        m_autonomousFactory = new Autos(m_combinedCommands);
 
         if (!Constants.IS_TIM_BOT) {
             m_ledSubsystem = new LedManagerSubsystem(m_driverStationLedController, m_intakeSubsystem, m_autonomousFactory, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
@@ -218,7 +222,7 @@ public class RobotContainer {
         if (HAS_HANGER) {
             addHangerTestCommands(shuffleboardTab);
 
-            shuffleboardTab.add("Prep Hanger Up", CombinedCommands.prepHangingUp(m_operatorController, m_armPivotSubsystem, m_hangerSubsystem, m_chassisSubsystem));
+            shuffleboardTab.add("Prep Hanger Up", m_combinedCommands.prepHangingUp(m_operatorController));
         }
     }
 
@@ -246,10 +250,10 @@ public class RobotContainer {
         shuffleboardTab.add("SpeakerAimAndShoot Shoot While Stationary", SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem).withName("AimAndShoot with lookup"));
 
         // Combined Commands
-        shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Full Field Feed", CombinedCommands.feedPieceAcrossFieldWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Prepare Tunable Shot", CombinedCommands.prepareTunableShot(m_armPivotSubsystem, m_shooterSubsystem));
+        shuffleboardTab.add("Auto-Intake Piece", m_combinedCommands.intakePieceCommand());
+        shuffleboardTab.add("Auto-Shoot in Amp", m_combinedCommands.ampShooterCommand());
+        shuffleboardTab.add("Full Field Feed", m_combinedCommands.feedPieceAcrossFieldWithVision(m_driverController));
+        shuffleboardTab.add("Prepare Tunable Shot", m_combinedCommands.prepareTunableShot());
 
         shuffleboardTab.add("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
     }
@@ -285,15 +289,6 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis Set Pose Subwoofer Mid Blue", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).withName("Reset Pose Subwoofer Mid Blue"));
         shuffleboardTab.add("Chassis Set Pose Subwoofer Top", m_chassisSubsystem.createResetPoseCommand(RobotExtrinsics.STARTING_POSE_AMP_SUBWOOFER).withName("Reset Pose Subwoofer Top"));
 
-        Pose2d redSubwoofer = new Pose2d(AllianceFlipper.flip(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER).getTranslation(), Rotation2d.fromDegrees(180));
-        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid Red", m_chassisSubsystem.createResetPoseCommand(redSubwoofer).withName("Reset Pose Subwoofer Mid"));
-
-
-        shuffleboardTab.add("Chassis set Pose Subwoofer Mid + Hack Dist", m_chassisSubsystem.createResetPoseCommand(
-            RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER.plus(new Transform2d(1, 0, Rotation2d.fromDegrees(0)))
-        ).withName("Reset Pose Subwoofer Mid"));
-
-        shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
         shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToAmpCommand().withName("Drive To Amp"));
         shuffleboardTab.add("Chassis drive to note", m_chassisSubsystem.createDriveToNoteCommand());
 
@@ -308,7 +303,7 @@ public class RobotContainer {
 
     }
 
-    private Pose2d getAutonomousStartingPose() {
+    private MaybeFlippedPose2d getAutonomousStartingPose() {
         GosAutoMode.StartPosition startingLocation = m_autonomousFactory.getSelectedCommand().getStartingLocation();
 
         switch (startingLocation) {
@@ -325,7 +320,7 @@ public class RobotContainer {
             return RobotExtrinsics.STARTING_POSE_SOURCE_CORNER;
         }
         case CURRENT_LOCATION -> {
-            return m_chassisSubsystem.getPose();
+            return new MaybeFlippedPose2d(m_chassisSubsystem.getPose());
         }
         default -> throw new IllegalArgumentException("this should never happen");
         }
@@ -419,12 +414,12 @@ public class RobotContainer {
 
         // Amp Scoring
         m_driverController.leftBumper().whileTrue(
-            CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem)
-                .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController)));
+            m_combinedCommands.prepareAmpShot()
+                .alongWith(m_combinedCommands.vibrateIfReadyToShoot(m_driverController)));
 
         //go to floor
         m_driverController.leftTrigger().whileTrue(
-            CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem)
+            m_combinedCommands.intakePieceCommand()
                 .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
 
         m_driverController.a().whileTrue(
@@ -436,23 +431,23 @@ public class RobotContainer {
         /////////////////////////////
 
         //drive to amp/side subwoofer
-        Command xButtonWithCamera = CombinedCommands.autoScoreInAmp(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem);
-        Command xButtonNoCamera = CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController));
+        Command xButtonWithCamera = m_combinedCommands.autoScoreInAmp(m_driverController);
+        Command xButtonNoCamera = m_combinedCommands.prepareSpeakerShot(ArmPivotSubsystem.SIDE_SUBWOOFER_ANGLE)
+            .alongWith(m_combinedCommands.vibrateIfReadyToShoot(m_driverController));
 
         Command yButtonWithCamera =  m_chassisSubsystem.createDriveToNoteCommand()
-            .alongWith(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem))
+            .alongWith(m_combinedCommands.intakePieceCommand())
             .andThen(new VibrateControllerTimedCommand(m_driverController, 2));
         Command yButtonNoCamera = Commands.none();
 
         //shoot into speaker
         Command bButtonWithCamera = SpeakerAimAndShootCommand.createShootWhileStationary(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem, 100);
         // Command bButtonWithCamera = CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem::getPose);
-        Command bButtonNoCamera = CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem, ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE)
-            .alongWith(CombinedCommands.vibrateIfReadyToShoot(m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_driverController));
+        Command bButtonNoCamera = m_combinedCommands.prepareSpeakerShot(ArmPivotSubsystem.MIDDLE_SUBWOOFER_ANGLE)
+            .alongWith(m_combinedCommands.vibrateIfReadyToShoot(m_driverController));
         //feed into
         Command rbButtonWithCamera = new FeedPiecesWithVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem);
-        Command rbButtonNoCamera = CombinedCommands.feedPieceAcrossFieldNoVision(m_driverController, m_chassisSubsystem, m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem);
+        Command rbButtonNoCamera = m_combinedCommands.feedPieceAcrossFieldNoVision(m_driverController);
 
 
 
@@ -480,7 +475,7 @@ public class RobotContainer {
         //hanger
         if (HAS_HANGER) {
             m_operatorController.povUp().whileTrue(m_armPivotSubsystem.createMoveArmToPrepHangerAngleCommand());
-            m_operatorController.y().whileTrue(CombinedCommands.prepHangingUp(m_driverController, m_armPivotSubsystem, m_hangerSubsystem, m_chassisSubsystem));
+            m_operatorController.y().whileTrue(m_combinedCommands.prepHangingUp(m_driverController));
             m_operatorController.a().whileTrue(m_hangerSubsystem.createHangerDown());
 
             m_operatorController.x().and(m_operatorController.povUp()).whileTrue(m_hangerSubsystem.createLeftHangerUp());

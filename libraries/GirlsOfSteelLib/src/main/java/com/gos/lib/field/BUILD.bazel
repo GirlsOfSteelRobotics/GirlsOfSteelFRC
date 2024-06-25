@@ -1,11 +1,12 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 gos_java_library(
-    name = "properties",
+    name = "field",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
+        "//libraries/GirlsOfSteelLib/src/main/java/edu/wpi/first/wpilibj/smartdashboard",
+        "@bzlmodrio-allwpilib//libraries/java/apriltag",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],

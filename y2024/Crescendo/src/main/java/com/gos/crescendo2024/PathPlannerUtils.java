@@ -1,6 +1,7 @@
 package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -36,6 +37,6 @@ public final class PathPlannerUtils {
     }
 
     public static Command followChoreoPath(String trajectoryName) {
-        return null;
+        return AutoBuilder.followPath(PathPlannerPath.fromChoreoTrajectory(trajectoryName));
     }
 }

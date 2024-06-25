@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.commands;
 
-import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
@@ -159,7 +158,7 @@ public final class SpeakerAimAndShootCommand extends Command {
 
     @Override
     public void execute() {
-        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING.getPose();
 
         m_armPivotSubsystem.moveArmToAngle(m_armAngleGoalSupplier.getAsDouble());
         m_chassisSubsystem.turnButtToFacePoint(m_robotPoseProvider.get(), speaker, 0, 0);

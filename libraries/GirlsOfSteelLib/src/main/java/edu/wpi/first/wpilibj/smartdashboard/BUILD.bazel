@@ -1,10 +1,11 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 gos_java_library(
-    name = "mechanical_advantage",
+    name = "smartdashboard",
     srcs = glob(["*.java"]),
-    visibility = ["//y2023/ChargedUp:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
 )

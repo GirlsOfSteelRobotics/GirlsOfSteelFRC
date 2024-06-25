@@ -1,0 +1,15 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_binary")
+load("//build_scripts/bazel/shuffleboard:shuffleboard_widget.bzl", "shuffleboard_widget")
+
+shuffleboard_widget(
+    name = "CrescendoDashboard",
+    generation_config_file = ":dashboard.yml",
+    package = "com.gos.crescendo.shuffleboard",
+)
+
+gos_java_binary(
+    name = "SuperStructureMain",
+    main_class = "com.gos.crescendo.shuffleboard.super_structure.SuperStructureStandaloneMain",
+    tags = ["no-roborio"],
+    runtime_deps = [":CrescendoDashboard"],
+)

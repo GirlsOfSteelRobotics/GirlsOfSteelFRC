@@ -52,7 +52,7 @@ public class AutoModePattern {
             m_startPositionPattern.writeLeds();
         }
 
-        for (int notePosition : autoMode.getNotesToAquire()) {
+        for (int notePosition : autoMode.getNotesToAcquire()) {
             if (m_notesBeingAcquiredPattern.containsKey(notePosition)) {
                 m_notesBeingAcquiredPattern.get(notePosition).writeLeds();
             }

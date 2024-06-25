@@ -16,9 +16,9 @@ jobs:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
-        with: { python-version: '3.10.8' }
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10' }
       - name: Build allowing failure # TODO(PJ) Mac seems flakey on github. Turning it off for now
         run: bazel test //... -k --config=remote --config=ci || true
       - name: Build
@@ -30,12 +30,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.15.x
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.15.x
+          cache: false
         id: go
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Install Buildifier
         run: |
@@ -52,7 +53,7 @@ jobs:
         run: git diff HEAD > bazel-lint-fixes.patch
         if: ${{ failure() }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform }}-bazel-lint-fixes
           path: bazel-lint-fixes.patch
@@ -63,12 +64,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.15.x
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.15.x
+          cache: false
         id: go
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Install Unused Deps
         run: |
@@ -89,7 +91,7 @@ jobs:
       - name: Show unused deps
         run: cat buildozer-cmds.sh
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: Upload Unused Deps Script
           path: buildozer-cmds.sh
@@ -103,7 +105,7 @@ jobs:
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: Upload Unused Deps Patch
           path: bazel-unused-deps-fixes.patch

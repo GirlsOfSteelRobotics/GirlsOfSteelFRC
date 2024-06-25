@@ -21,30 +21,23 @@ public class GosAutoMode extends SequentialCommandGroup {
         STARTING_LOCATION_SOURCE_CORNER,
     }
 
-    private final String m_displayName;
     private final StartPosition m_startingPosition;
     private final List<Integer> m_notesToAcquire;
 
-    public GosAutoMode(String displayName, StartPosition startingPosition, List<Integer> notesToAcquire, Command... commands) {
+    public GosAutoMode(StartPosition startingPosition, List<Integer> notesToAcquire, Command... commands) {
         super(
             new DeferredCommand(() -> new WaitCommand(AUTON_TIMEOUT.getValue()), new HashSet<>())
                 .andThen(commands));
 
-        m_displayName = displayName;
         m_startingPosition = startingPosition;
         m_notesToAcquire = notesToAcquire;
     }
-
-    public String getDisplayName() {
-        return m_displayName;
-    }
-
 
     public StartPosition getStartingLocation() {
         return m_startingPosition;
     }
 
-    public List<Integer> getNotesToAquire() {
+    public List<Integer> getNotesToAcquire() {
         return m_notesToAcquire;
     }
 }
