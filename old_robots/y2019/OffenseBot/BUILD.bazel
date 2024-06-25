@@ -1,4 +1,0 @@
-alias(
-    name = "OffenseBot",
-    actual = "//old_robots/y2019/OffenseBot/src/main/java/com/gos/offense2019",
-)

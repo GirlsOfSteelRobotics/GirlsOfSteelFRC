@@ -1,4 +1,0 @@
-alias(
-    name = "OutreachBot",
-    actual = "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021",
-)
