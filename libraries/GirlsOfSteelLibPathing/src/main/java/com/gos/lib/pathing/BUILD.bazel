@@ -5,8 +5,8 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
-        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
     ],
 )
