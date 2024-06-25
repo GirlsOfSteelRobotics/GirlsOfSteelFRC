@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import java.util.List;
 
 import static com.gos.crescendo2024.ChoreoUtils.getPathStartingPose;
-import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
+import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 public class AThreeNoteSource65Choreo extends GosAutoMode {
 

@@ -16,6 +16,7 @@ gos_java_robot(
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
         "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
+        "//libraries/GirlsOfSteelLibPathing/src/main/java/com/gos/lib/pathing",
         "//libraries/GirlsOfSteelLibPhoenix6/src/main/java/com/gos/lib/phoenix6/alerts:ctre",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/alerts",

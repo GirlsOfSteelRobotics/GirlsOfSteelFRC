@@ -23,7 +23,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
+import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 public class CombinedCommands {
 

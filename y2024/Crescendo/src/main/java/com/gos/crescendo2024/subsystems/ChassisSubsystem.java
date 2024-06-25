@@ -7,8 +7,8 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.gos.crescendo2024.AprilTagCamera;
-import com.gos.crescendo2024.AprilTagCameraManager;
+import com.gos.lib.photonvision.AprilTagCamera;
+import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
@@ -143,10 +143,10 @@ public class ChassisSubsystem extends SubsystemBase {
         // Cameras
         Matrix<N3, N1> sideSingleTagStddev = AprilTagCamera.DEFAULT_SINGLE_TAG_STDDEV.times(2);
         Matrix<N3, N1> sideMultiTagStddev = AprilTagCamera.DEFAULT_MULTI_TAG_STDDEV.times(2);
-        m_aprilTagCameras = new AprilTagCameraManager(List.of(
-            new AprilTagCamera(m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB),
-            new AprilTagCamera(m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R, sideSingleTagStddev, sideMultiTagStddev),
-            new AprilTagCamera(m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L, sideSingleTagStddev, sideMultiTagStddev)
+        m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
+            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Center Back Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_CB),
+            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Right Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_R, sideSingleTagStddev, sideMultiTagStddev),
+            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Left Camera", RobotExtrinsics.ROBOT_TO_CAMERA_APRIL_TAGS_L, sideSingleTagStddev, sideMultiTagStddev)
         ));
         m_noteDetectionCamera = new ObjectDetection();
 
