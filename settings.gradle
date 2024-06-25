@@ -13,49 +13,14 @@ include 'libraries:GirlsOfSteelLibPhoenix5'
 include 'libraries:GirlsOfSteelLibPhoenix6'
 //include 'libraries:SwerveShuffleboard'
 
-//include 'old_robots:y2011:GOS2011:Drive'
-//include 'old_robots:y2011:GOS2011:MyRobot_otherschool'
-//include 'old_robots:y2011:GOS2011:robolatest'
+//include 'evergreen_robots:ChassisProject'
+//include 'evergreen_robots:SCRAWestCoastDrive'
+//include 'evergreen_robots:SwerveChassis'
 
-//include 'old_robots:y2012:Watson2012'
-//
-//include 'old_robots:y2013:Eve2013'
-//
-//include 'old_robots:y2014:GOS2014'
-//
-//include 'old_robots:y2015:GoS2015'
-//
-//include 'old_robots:y2016:Neohuman_Assassination_Golem'
-//include 'old_robots:y2016:OutreachBot'
-//include 'old_robots:y2016:TeamFBI_EOPP'
-//include 'old_robots:y2016:TeamSquirtle'
-//
-//include 'old_robots:y2017:Secondary_Human_Training_Golem'
-//include 'old_robots:y2017:Team1'
-//include 'old_robots:y2017:Team_2'
-//
-//include 'old_robots:y2018:2018PowerUp'
-//
-//include 'old_robots:y2019:2019DeepSpace'
-//include 'old_robots:y2019:OffenseBot'
-//
-//include 'old_robots:y2020:2020InfiniteRecharge'
-//include 'old_robots:y2020:2020InfiniteRechargeDashboard'
-//include 'old_robots:y2020:Testboard'
-//
-//include 'old_robots:y2021:OutreachBot'
-//include 'old_robots:y2021:OutreachBotDashboard'
-
-//include 'old_robots:y2022:ChassisProject'
-//include 'old_robots:y2022:MEPI'
-//include 'old_robots:y2022:RapidReact'
-//include 'old_robots:y2022:RapidReactDashboard'
-//include 'old_robots:y2022:SCRAWestCoastDrive'
-
+include 'old_robots:y2022:MEPI'
 
 include 'y2023:ChargedUp'
 include 'y2023:ChargedUpDashboard'
-include 'y2023:SwerveChassis'
 
 include 'y2024:Crescendo'
 include 'y2024:CrescendoDashboard'
