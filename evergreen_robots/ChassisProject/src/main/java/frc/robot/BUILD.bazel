@@ -13,10 +13,10 @@ gos_java_robot(
         exclude = ["Constants.java"],
     ),
     main_class = "frc.robot.Main",
-    visibility = ["//old_robots/y2022/ChassisProject:__subpackages__"],
+    visibility = ["//evergreen_robots/ChassisProject:__subpackages__"],
     deps = [
-        "//old_robots/y2022/ChassisProject/src/main/java/frc/robot/commands",
-        "//old_robots/y2022/ChassisProject/src/main/java/frc/robot/subsystems",
+        "//evergreen_robots/ChassisProject/src/main/java/frc/robot/commands",
+        "//evergreen_robots/ChassisProject/src/main/java/frc/robot/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/hal",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",

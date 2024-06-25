@@ -22,7 +22,7 @@ gos_java_robot(
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/checklists",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/properties/pid",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve",
-        "//y2023/ChargedUp/src/main/java/org/littletonrobotics/frc2023:mechanical_advantage",
+        "//old_robots/y2023/ChargedUp/src/main/java/org/littletonrobotics/frc2023:mechanical_advantage",
         "@bzlmodrio-allwpilib//libraries/java/apriltag",
         "@bzlmodrio-allwpilib//libraries/java/hal",
         "@bzlmodrio-allwpilib//libraries/java/ntcore",

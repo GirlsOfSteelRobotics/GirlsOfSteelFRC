@@ -3,9 +3,9 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 gos_java_library(
     name = "commands",
     srcs = glob(["*.java"]),
-    visibility = ["//old_robots/y2022/ChassisProject:__subpackages__"],
+    visibility = ["//evergreen_robots/ChassisProject:__subpackages__"],
     deps = [
-        "//old_robots/y2022/ChassisProject/src/main/java/frc/robot/subsystems",
+        "//evergreen_robots/ChassisProject/src/main/java/frc/robot/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
     ],

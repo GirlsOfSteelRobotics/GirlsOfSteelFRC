@@ -16,11 +16,7 @@ include 'libraries:GirlsOfSteelLibPhoenix6'
 //include 'evergreen_robots:ChassisProject'
 //include 'evergreen_robots:SCRAWestCoastDrive'
 //include 'evergreen_robots:SwerveChassis'
-
-include 'old_robots:y2022:MEPI'
-
-include 'y2023:ChargedUp'
-include 'y2023:ChargedUpDashboard'
+//include 'old_robots:y2022:MEPI'
 
 include 'y2024:Crescendo'
 include 'y2024:CrescendoDashboard'

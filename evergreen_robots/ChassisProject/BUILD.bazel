@@ -1,4 +1,4 @@
 alias(
     name = "ChassisProject",
-    actual = "//old_robots/y2022/ChassisProject/src/main/java/frc/robot",
+    actual = "//evergreen_robots/ChassisProject/src/main/java/frc/robot",
 )
