@@ -53,7 +53,6 @@ include 'libraries:GirlsOfSteelLibPhoenix6'
 //include 'old_robots:y2022:SCRAWestCoastDrive'
 
 
-include 'y2023:Preseason'
 include 'y2023:ChargedUp'
 include 'y2023:ChargedUpDashboard'
 include 'y2023:SwerveChassis'

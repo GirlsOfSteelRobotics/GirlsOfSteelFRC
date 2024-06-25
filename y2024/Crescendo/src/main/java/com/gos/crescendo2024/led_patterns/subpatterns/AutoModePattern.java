@@ -1,6 +1,6 @@
 package com.gos.crescendo2024.led_patterns.subpatterns;
 
-import com.gos.crescendo2024.auton.Autos;
+import com.gos.crescendo2024.auton.GosAutoMode;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.LEDPatternLookup;
 import com.gos.lib.led.LEDSolidColor;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AutoModePattern {
-    private final LEDPatternLookup<Autos.StartPosition> m_startPositionPattern;
+    private final LEDPatternLookup<GosAutoMode.StartPosition> m_startPositionPattern;
     private final Map<Integer, LEDPattern> m_notesBeingAcquiredPattern;
 
     public AutoModePattern(AddressableLEDBuffer buffer, int startIndex, int numLeds) {
@@ -19,12 +19,12 @@ public class AutoModePattern {
         m_startPositionPattern = new LEDPatternLookup<>(buffer, createStartPosMap(buffer, startIndex + numLeds / 2, numLeds / 2));
     }
 
-    private Map<Autos.StartPosition, LEDPattern> createStartPosMap(AddressableLEDBuffer buffer, int startIndex, int numLeds) {
-        Map<Autos.StartPosition, LEDPattern> posMap = new HashMap<>();
-        posMap.put(Autos.StartPosition.STARTING_LOCATION_SOURCE_SIDE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kPurple));
-        posMap.put(Autos.StartPosition.STARTING_LOCATION_MIDDLE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kCyan));
-        posMap.put(Autos.StartPosition.STARTING_LOCATION_AMP_SIDE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kLightPink));
-        posMap.put(Autos.StartPosition.CURRENT_LOCATION, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kDarkTurquoise));
+    private Map<GosAutoMode.StartPosition, LEDPattern> createStartPosMap(AddressableLEDBuffer buffer, int startIndex, int numLeds) {
+        Map<GosAutoMode.StartPosition, LEDPattern> posMap = new HashMap<>();
+        posMap.put(GosAutoMode.StartPosition.STARTING_LOCATION_SOURCE_SIDE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kPurple));
+        posMap.put(GosAutoMode.StartPosition.STARTING_LOCATION_MIDDLE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kCyan));
+        posMap.put(GosAutoMode.StartPosition.STARTING_LOCATION_AMP_SIDE, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kLightPink));
+        posMap.put(GosAutoMode.StartPosition.CURRENT_LOCATION, new LEDSolidColor(buffer, startIndex, startIndex + numLeds, Color.kDarkTurquoise));
         return posMap;
     }
 
@@ -43,16 +43,16 @@ public class AutoModePattern {
         return autonMap;
     }
 
-    public void writeAutoModePattern(Autos.AutoModes autoMode) {
+    public void writeAutoModePattern(GosAutoMode autoMode) {
         if (autoMode == null) {
             return;
         }
-        m_startPositionPattern.setKey(autoMode.m_location);
-        if (m_startPositionPattern.hasKey(autoMode.m_location)) {
+        m_startPositionPattern.setKey(autoMode.getStartingLocation());
+        if (m_startPositionPattern.hasKey(autoMode.getStartingLocation())) {
             m_startPositionPattern.writeLeds();
         }
 
-        for (int notePosition : autoMode.m_notes) {
+        for (int notePosition : autoMode.getNotesToAcquire()) {
             if (m_notesBeingAcquiredPattern.containsKey(notePosition)) {
                 m_notesBeingAcquiredPattern.get(notePosition).writeLeds();
             }

@@ -7,12 +7,12 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.AprilTagCamera;
 import com.gos.crescendo2024.AprilTagCameraManager;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
+import com.gos.crescendo2024.MaybeFlippedPose2d;
 import com.gos.crescendo2024.ObjectDetection;
 import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.ValidShootingPolygon;
@@ -186,19 +186,19 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToSpeaker() {
-        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
+        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING.getPose();
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
 
     public double getDistanceToAmp() {
-        Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION);
+        Pose2d amp = RobotExtrinsics.SCORE_IN_AMP_POSITION.getPose();
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(amp.getTranslation());
     }
 
     public double getDistanceToFeeder(Pose2d pose) {
-        Pose2d amp = AllianceFlipper.maybeFlip(RobotExtrinsics. FULL_FIELD_FEEDING_AIMING_POINT);
+        Pose2d amp = RobotExtrinsics.FULL_FIELD_FEEDING_AIMING_POINT.getPose();
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(amp.getTranslation());
     }
@@ -409,7 +409,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createDriveToAmpCommand() {
         return defer(() -> {
-            Pose2d ampPosition = new Pose2d(AllianceFlipper.maybeFlip(RobotExtrinsics.SCORE_IN_AMP_POSITION.getTranslation()), Rotation2d.fromDegrees(90));
+            Pose2d ampPosition = new Pose2d(RobotExtrinsics.SCORE_IN_AMP_POSITION.getPose().getTranslation(), Rotation2d.fromDegrees(90));
             Pose2d currentPosition = getPose();
             double dx = ampPosition.getX() - currentPosition.getX();
             double dy = ampPosition.getY() - currentPosition.getY();
@@ -419,9 +419,9 @@ public class ChassisSubsystem extends SubsystemBase {
         });
     }
 
-    public Command createPathfindToPoseCommand(Pose2d pose) {
-        return AutoBuilder.pathfindToPose(
-            pose,
+    public Command createPathfindToPoseCommand(MaybeFlippedPose2d pose) {
+        return defer(() -> AutoBuilder.pathfindToPose(
+            pose.getPose(),
 
             new PathConstraints(
                 Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
@@ -430,12 +430,16 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
             0.0, // Goal end velocity in meters/sec
             0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
-        );
+        ));
 
     }
 
     public Command createDriveToPointCommand(Pose2d endPoint) {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
+    }
+
+    public Command createResetPoseCommand(MaybeFlippedPose2d pose) {
+        return defer(() -> createResetPoseCommand(pose.getPose()));
     }
 
     public Command createResetPoseCommand(Pose2d pose) {

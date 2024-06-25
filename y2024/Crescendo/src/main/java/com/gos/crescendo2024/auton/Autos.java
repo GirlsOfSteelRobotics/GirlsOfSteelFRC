@@ -5,109 +5,117 @@
 
 package com.gos.crescendo2024.auton;
 
-import com.gos.lib.properties.GosDoubleProperty;
-import com.pathplanner.lib.auto.AutoBuilder;
+import com.gos.crescendo2024.auton.modes.asshole.AThreeNoteSource5Choreo;
+import com.gos.crescendo2024.auton.modes.asshole.AThreeNoteSource65Choreo;
+import com.gos.crescendo2024.auton.modes.asshole.DisruptionAuto;
+import com.gos.crescendo2024.auton.modes.NoNoteLeaveWingChoreo;
+import com.gos.crescendo2024.auton.modes.OneNoteJustShoot;
+import com.gos.crescendo2024.auton.modes.source.OneNoteSourceSideAndLeaveWingChoreo;
+import com.gos.crescendo2024.auton.modes.ozone.OzoneTwoNoteSource7;
+import com.gos.crescendo2024.auton.modes.amp.FourNoteAmpSide012Choreo;
+import com.gos.crescendo2024.auton.modes.amp.FourNoteAmpSide045Choreo;
+import com.gos.crescendo2024.auton.modes.middle.FourNoteMiddle012Choreo;
+import com.gos.crescendo2024.auton.modes.middle.FourNoteMiddle120Choreo;
+import com.gos.crescendo2024.auton.modes.middle.FourNoteMiddle152Choreo;
+import com.gos.crescendo2024.auton.modes.middle.FourNoteMiddle521Choreo;
+import com.gos.crescendo2024.auton.modes.amp.ThreeNoteAmpSide03Choreo;
+import com.gos.crescendo2024.auton.modes.middle.ThreeNoteMiddle12Choreo;
+import com.gos.crescendo2024.auton.modes.middle.ThreeNoteMiddle52Choreo;
+import com.gos.crescendo2024.auton.modes.source.ThreeNotesSourceSide65Choreo;
+import com.gos.crescendo2024.auton.modes.source.ThreeNotesSourceSide76Choreo;
+import com.gos.crescendo2024.auton.modes.middle.TwoNoteMiddle1Choreo;
+import com.gos.crescendo2024.auton.modes.middle.TwoNoteMiddle2Choreo;
+import com.gos.crescendo2024.auton.modes.middle.TwoNoteMiddleAnnaSpecial;
+import com.gos.crescendo2024.auton.modes.source.TwoNoteSourceSide6Choreo;
+import com.gos.crescendo2024.auton.modes.source.TwoNoteSourceSide7Choreo;
+import com.gos.crescendo2024.commands.CombinedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.DeferredCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 
 public final class Autos {
-    public enum StartPosition {
-        STARTING_LOCATION_AMP_SIDE,
-        STARTING_LOCATION_MIDDLE,
-        STARTING_LOCATION_SOURCE_SIDE,
-        CURRENT_LOCATION,
-        STARTING_LOCATION_SOURCE_CORNER,
-    }
-
-    public enum AutoModes {
-        //Four Notes - Amp
-        FOUR_NOTE_012("FourNoteAmpSide012Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 1, 2)),
-        FOUR_NOTE_120("FourNoteMiddle120Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
-        FOUR_NOTE_034("ThreeNoteAmpSide03Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 3)),
-        FOUR_NOTE_045("FourNoteAmpSide045Choreo", StartPosition.STARTING_LOCATION_AMP_SIDE, List.of(0, 4, 5)),
-        FOUR_NOTE_MIDDLE_012("FourNoteMiddle012Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(0, 1, 2)),
-        FOUR_NOTE_MIDDLE_521("FourNoteMiddle521Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2, 1)),
-        FOUR_NOTE_MIDDLE_152("FourNoteMiddle152Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 5, 2)),
-        // Three Notes - Middle
-        THREE_NOTE_12("ThreeNoteMiddle12Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1, 2)),
-        THREE_NOTE_MIDDLE_52("ThreeNoteMiddle52Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5, 2)),
-        //Three Notes - Source
-        THREE_NOTE_76("ThreeNotesSourceSide76Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7, 6)),
-        THREE_NOTE_65("ThreeNotesSourceSide65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6, 5)),
-        //Asshole Auto (Three Note - Source)
-        ASSHOLEAUTO6("AThreeNoteSource65Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
-        ASSHOLEAUTO5("AThreeNoteSource5Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(5)),
-        //Two Notes - Amp
-        //Two Notes - Middle
-        TWO_NOTE_MIDDLE_1("TwoNoteMiddle1Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(1)),
-        TWO_NOTE_MIDDLE_2("TwoNoteMiddle2Choreo", StartPosition.STARTING_LOCATION_MIDDLE, List.of(2)),
-        //Two Notes - Source
-        TWO_NOTE_RIGHT_6("TwoNoteSourceSide6Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(6)),
-        TWO_NOTE_RIGHT_7("TwoNoteSourceSide7Choreo", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of(7)),
-        OZONE_TWO_NOTE_SOURCE_7("OzoneTwoNoteSource7", StartPosition.STARTING_LOCATION_SOURCE_CORNER, List.of(7)),
-        //Just shoot preload
-        ONE_NOTE_JUST_SHOOT("OneNoteJustShoot", StartPosition.CURRENT_LOCATION, List.of()),
-        //Preload and drive
-        ONE_NOTE_AND_LEAVE_WING("OneNoteSourceSideAndLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
-        //No shooting
-        NO_NOTE_LEAVE_WING("NoNoteLeaveWingChoreo", StartPosition.CURRENT_LOCATION, List.of()),
-        //Bitch Auto
-        BITCHAUTO("DisruptionAuto", StartPosition.STARTING_LOCATION_SOURCE_SIDE, List.of()),
-        // Dumb
-        ANNA_SPECIAL("TwoNoteMiddleAnnaSpecial", StartPosition.STARTING_LOCATION_MIDDLE, List.of(5));
+    private final SendableChooser<GosAutoMode> m_autonChooser;
 
 
-
-        public final String m_modeName;
-        public final StartPosition m_location;
-        public final List<Integer> m_notes;
-
-        AutoModes(String modeName, StartPosition location, List<Integer> notes) {
-            m_modeName = modeName;
-            m_location = location;
-            m_notes = notes;
-        }
-    }
-
-    private static final AutoModes DEFAULT_MODE = AutoModes.ONE_NOTE_JUST_SHOOT;
-
-    private final SendableChooser<AutoModes> m_autonChooser;
-
-    private final Map<AutoModes, Command> m_modes;
-
-    private static final GosDoubleProperty AUTON_TIMEOUT = new GosDoubleProperty(false, "autoTimeoutSeconds", 0);
-
-
-    public Autos() {
+    public Autos(CombinedCommands combinedCommands) {
         m_autonChooser = new SendableChooser<>();
-        m_modes = new HashMap<>();
 
-        for (AutoModes mode : AutoModes.values()) {
-            if (mode == DEFAULT_MODE) {
-                m_autonChooser.setDefaultOption(mode.m_modeName, mode);
-            } else {
-                m_autonChooser.addOption(mode.m_modeName, mode);
-            }
-            m_modes.put(mode, new DeferredCommand(() -> new WaitCommand(AUTON_TIMEOUT.getValue()), new HashSet<>()).andThen(AutoBuilder.buildAuto(mode.m_modeName)));
-        }
+        //-------------------------
+        // Four Notes
+        //-------------------------
+
+        // Amp Side
+        addAutoMode(new FourNoteAmpSide012Choreo(combinedCommands));
+        addAutoMode(new FourNoteAmpSide045Choreo(combinedCommands));
+
+        // Middle
+        addAutoMode(new FourNoteMiddle012Choreo(combinedCommands));
+        addDefaultAutoMode(new FourNoteMiddle120Choreo(combinedCommands));
+        addAutoMode(new FourNoteMiddle152Choreo(combinedCommands));
+        addAutoMode(new FourNoteMiddle521Choreo(combinedCommands));
+
+        //-------------------------
+        // Three Notes
+        //-------------------------
+
+        // Amp Side
+        addAutoMode(new ThreeNoteAmpSide03Choreo(combinedCommands));
+
+        // Middle
+        addAutoMode(new ThreeNoteMiddle12Choreo(combinedCommands));
+        addAutoMode(new ThreeNoteMiddle52Choreo(combinedCommands));
+
+        // Source
+        addAutoMode(new ThreeNotesSourceSide65Choreo(combinedCommands));
+        addAutoMode(new ThreeNotesSourceSide76Choreo(combinedCommands));
+
+        //-------------------------
+        // Two Note
+        //-------------------------
+
+        // Middle
+        addAutoMode(new TwoNoteMiddle1Choreo(combinedCommands));
+        addAutoMode(new TwoNoteMiddle2Choreo(combinedCommands));
+        addAutoMode(new TwoNoteMiddleAnnaSpecial(combinedCommands));
+
+        // Source
+        addAutoMode(new TwoNoteSourceSide6Choreo(combinedCommands));
+        addAutoMode(new TwoNoteSourceSide7Choreo(combinedCommands));
+
+        // Ozone
+        addAutoMode(new OzoneTwoNoteSource7(combinedCommands));
+
+
+        //-------------------------
+        // One Note
+        //-------------------------
+        addAutoMode(new OneNoteJustShoot(combinedCommands));
+        addAutoMode(new OneNoteSourceSideAndLeaveWingChoreo(combinedCommands));
+
+        //-------------------------
+        // Asshole
+        //-------------------------
+        addAutoMode(new AThreeNoteSource5Choreo(combinedCommands));
+        addAutoMode(new AThreeNoteSource65Choreo(combinedCommands));
+        addAutoMode(new DisruptionAuto(combinedCommands));
+
+        //-------------------------
+        // Just Drive
+        //-------------------------
+        addAutoMode(new NoNoteLeaveWingChoreo(combinedCommands));
+
 
         SmartDashboard.putData("Auto Chooser", m_autonChooser);
     }
 
-    public Command getSelectedAutonomous() {
-        AutoModes mode = m_autonChooser.getSelected();
-        return m_modes.get(mode);
+    private void addDefaultAutoMode(GosAutoMode mode) {
+        m_autonChooser.setDefaultOption(mode.getName(), mode);
     }
 
-    public AutoModes autoModeLightSignal() {
+    private void addAutoMode(GosAutoMode mode) {
+        m_autonChooser.addOption(mode.getName(), mode);
+    }
+
+    public GosAutoMode getSelectedCommand() {
         return m_autonChooser.getSelected();
     }
 }

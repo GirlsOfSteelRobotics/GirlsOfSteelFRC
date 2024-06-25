@@ -1,5 +1,5 @@
 
-package com.gos.crescendo2024.auton.modes;
+package com.gos.crescendo2024.auton.modes.asshole;
 
 import com.gos.crescendo2024.auton.GosAutoMode;
 import com.gos.crescendo2024.commands.CombinedCommands;
@@ -10,11 +10,11 @@ import java.util.List;
 import static com.gos.crescendo2024.ChoreoUtils.getPathStartingPose;
 import static com.gos.crescendo2024.PathPlannerUtils.followChoreoPath;
 
-public class NoNoteLeaveWingChoreo extends GosAutoMode {
+public class DisruptionAuto extends GosAutoMode {
 
-    private static final String PATH_BASE = "NoNoteLeaveWing";
+    private static final String PATH_BASE = "DisruptionAuto";
 
-    public NoNoteLeaveWingChoreo(CombinedCommands combinedCommands) {
+    public DisruptionAuto(CombinedCommands combinedCommands) {
         super(
             StartPosition.CURRENT_LOCATION,
             List.of(),
