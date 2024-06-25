@@ -2,7 +2,7 @@ package com.gos.crescendo2024.led_patterns;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.auton.Autos;
-import com.gos.crescendo2024.led_patterns.subpatterns.AlertPatterns;
+import com.gos.lib.led.LEDAlertPatterns;
 import com.gos.crescendo2024.led_patterns.subpatterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.subpatterns.DavidDrivePattern;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
@@ -14,7 +14,7 @@ public class DisabledPatterns {
     private static final GosBooleanProperty ALWAYS_SHOW_LIGHTS = new GosBooleanProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Led: Always Run Disabled Pattern", true);
 
     private final Autos m_autoModeFactory;
-    private final AlertPatterns m_alert;
+    private final LEDAlertPatterns m_alert;
     private final DavidDrivePattern m_davidDriveOn;
     private final AutoModePattern m_autoModePattern;
 
@@ -30,7 +30,7 @@ public class DisabledPatterns {
 
         m_davidDriveOn = new DavidDrivePattern(buffer, 0, davidDriveCount, chassis);
         m_autoModePattern = new AutoModePattern(buffer, autoStart, autoCount);
-        m_alert = new AlertPatterns(buffer, alertStart, alertCount);
+        m_alert = new LEDAlertPatterns(buffer, alertStart, alertCount);
     }
 
     public void writeAutoPattern() {
