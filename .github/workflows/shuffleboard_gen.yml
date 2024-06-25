@@ -21,9 +21,6 @@ jobs:
       - name: Re-gen 2020
         run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2020/2020InfiniteRecharge/dashboard.yml
 
-      - name: Re-gen 2021
-        run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2021/OutreachBot/dashboard.yml
-
       - name: Re-gen 2022
         run: python -m libraries.DashboardGenerator.generate_dashboard --config_file=old_robots/y2022/RapidReact/dashboard.yml
 
