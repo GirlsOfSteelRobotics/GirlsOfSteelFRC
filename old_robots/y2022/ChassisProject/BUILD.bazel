@@ -1,4 +1,0 @@
-alias(
-    name = "ChassisProject",
-    actual = "//old_robots/y2022/ChassisProject/src/main/java/frc/robot",
-)

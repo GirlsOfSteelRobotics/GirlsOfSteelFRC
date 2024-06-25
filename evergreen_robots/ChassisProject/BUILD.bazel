@@ -1,0 +1,4 @@
+alias(
+    name = "ChassisProject",
+    actual = "//evergreen_robots/ChassisProject/src/main/java/frc/robot",
+)

@@ -1,4 +1,0 @@
-alias(
-    name = "TeamFBI_EOPP",
-    actual = "//old_robots/y2016/TeamFBI_EOPP/src/main/java/com/gos/preseason2016/team_fbi/robot",
-)

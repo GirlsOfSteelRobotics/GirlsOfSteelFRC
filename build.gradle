@@ -7,7 +7,7 @@ plugins {
 
 subprojects {
     // TODO(pj) surely there is a better way
-    var ignored_subprojects = ["codelabs", "libraries", "old_robots"]
+    var ignored_subprojects = ["codelabs", "libraries", "old_robots", "evergreen_robots"]
     for(int year = 2011; year < 3000; ++year) {
         ignored_subprojects.add("y" + year)
     }
