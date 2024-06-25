@@ -1,16 +1,15 @@
-package com.gos.crescendo2024.led_patterns.subpatterns;
+package com.gos.lib.led;
 
-import com.gos.lib.led.LEDFlash;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import org.littletonrobotics.frc2023.util.Alert;
 
-public class AlertPatterns {
+public class LEDAlertPatterns {
     private final LEDFlash m_alertErrorPattern;
     private final LEDFlash m_alertWarningPattern;
     private final LEDFlash m_noAlertsPattern;
 
-    public AlertPatterns(AddressableLEDBuffer buffer, int startIndex, int numLEDs) {
+    public LEDAlertPatterns(AddressableLEDBuffer buffer, int startIndex, int numLEDs) {
         m_alertErrorPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kRed);
         m_alertWarningPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kYellow);
         m_noAlertsPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kGreen);

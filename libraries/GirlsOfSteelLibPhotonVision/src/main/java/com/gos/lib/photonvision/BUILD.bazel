@@ -1,0 +1,17 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "photonvision",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/field",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/logging",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "@bzlmodrio-allwpilib//libraries/java/apriltag",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-photonlib//libraries/java/photonlib-java",
+        "@bzlmodrio-photonlib//libraries/java/photontargeting-java",
+    ],
+)

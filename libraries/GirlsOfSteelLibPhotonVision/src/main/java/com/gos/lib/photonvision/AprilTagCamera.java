@@ -1,8 +1,10 @@
-package com.gos.crescendo2024;
+package com.gos.lib.photonvision;
 
 import com.gos.lib.field.AprilTagCameraObject;
+import com.gos.lib.field.BaseGosField;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.TunableTransform3d;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -48,12 +50,12 @@ public class AprilTagCamera {
 
     private final LoggingUtil m_logger;
 
-    public AprilTagCamera(GoSField field, String name, TunableTransform3d transform3d) {
-        this(field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
     }
 
 
-    public AprilTagCamera(GoSField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
@@ -61,7 +63,7 @@ public class AprilTagCamera {
         m_multiTagStddev = multiTagStddev;
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(FieldConstants.TAG_LAYOUT, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
+        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
