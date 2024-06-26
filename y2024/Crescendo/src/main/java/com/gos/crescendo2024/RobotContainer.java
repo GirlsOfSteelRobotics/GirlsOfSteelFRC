@@ -29,6 +29,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -295,12 +296,16 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis Sync Odo and Est Pos", m_chassisSubsystem.createSyncOdometryAndPoseEstimatorCommand().withName("Sync Odo and Est Pos"));
 
         shuffleboardTab.add("Auto: Go To AutonomousStart", createGoToAutoStartingPosition().withName("move robot to auto position"));
-    }
+
+        shuffleboardTab.add("Set Chassis Speed X 1",  m_chassisSubsystem.createSetChassisSpeedCommand(new ChassisSpeeds(1, 0, 0)).withName("Set Chassis Speed 1"));
+        shuffleboardTab.add("Set Chassis Speed X 2",  m_chassisSubsystem.createSetChassisSpeedCommand(new ChassisSpeeds(2, 0, 0)).withName("Set Chassis Speed 2"));
+        shuffleboardTab.add("Set Chassis Speed X 3",  m_chassisSubsystem.createSetChassisSpeedCommand(new ChassisSpeeds(3, 0, 0)).withName("Set Chassis Speed 3"));
+
+        ;    }
 
     private Command createGoToAutoStartingPosition() {
         return defer(() -> m_chassisSubsystem.createPathfindToPoseCommand(getAutonomousStartingPose()), Set.of(m_chassisSubsystem))
             .andThen(m_armPivotSubsystem.createMoveArmToAngleCommand(78));
-
     }
 
     private MaybeFlippedPose2d getAutonomousStartingPose() {
