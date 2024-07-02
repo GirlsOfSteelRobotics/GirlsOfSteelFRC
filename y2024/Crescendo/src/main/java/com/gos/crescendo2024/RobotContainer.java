@@ -300,8 +300,7 @@ public class RobotContainer {
         shuffleboardTab.add("Set Chassis Speed X 1",  m_chassisSubsystem.createSetChassisSpeedCommand(new ChassisSpeeds(1, 0, 0)).withName("Set Chassis Speed 1"));
         shuffleboardTab.add("Set Chassis Speed X 2",  m_chassisSubsystem.createSetChassisSpeedCommand(new ChassisSpeeds(2, 0, 0)).withName("Set Chassis Speed 2"));
         shuffleboardTab.add("Set Chassis Speed X 3",  m_chassisSubsystem.createSetChassisSpeedCommand(new ChassisSpeeds(3, 0, 0)).withName("Set Chassis Speed 3"));
-
-        ;    }
+    }
 
     private Command createGoToAutoStartingPosition() {
         return defer(() -> m_chassisSubsystem.createPathfindToPoseCommand(getAutonomousStartingPose()), Set.of(m_chassisSubsystem))
