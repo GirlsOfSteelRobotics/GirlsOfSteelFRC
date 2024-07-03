@@ -303,8 +303,10 @@ public class RobotContainer {
     }
 
     private Command createGoToAutoStartingPosition() {
-        return defer(() -> m_chassisSubsystem.createPathfindToPoseCommand(getAutonomousStartingPose()), Set.of(m_chassisSubsystem))
-            .andThen(m_armPivotSubsystem.createMoveArmToAngleCommand(78));
+        return Commands.sequence(
+            m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand().until(() -> m_armPivotSubsystem.getAngle() < 5),
+            defer(() -> m_chassisSubsystem.createPathfindToPoseCommand(getAutonomousStartingPose()), Set.of(m_chassisSubsystem)),
+            m_armPivotSubsystem.createMoveArmToAngleCommand(78));
     }
 
     private MaybeFlippedPose2d getAutonomousStartingPose() {

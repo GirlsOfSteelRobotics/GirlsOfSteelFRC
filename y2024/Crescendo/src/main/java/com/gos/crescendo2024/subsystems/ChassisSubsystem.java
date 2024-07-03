@@ -124,7 +124,7 @@ public class ChassisSubsystem extends SubsystemBase {
             WHEEL_BASE,
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED,
-            Constants.DEFAULT_CONSTANT_PROPERTIES);
+            false);
 
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);
