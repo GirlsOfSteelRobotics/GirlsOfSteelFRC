@@ -1,5 +1,5 @@
 
-package com.gos.crescendo2024.auton.modes.source;
+package com.gos.crescendo2024.auton.modes.asshole;
 
 import com.gos.crescendo2024.auton.GosAutoMode;
 import com.gos.crescendo2024.commands.CombinedCommands;
@@ -11,14 +11,14 @@ import java.util.List;
 import static com.gos.crescendo2024.ChoreoUtils.getPathStartingPose;
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
-public class TwoNoteSourceSide6Choreo extends GosAutoMode {
+public class Asshole7TwoNote6 extends GosAutoMode {
 
-    private static final String PATH_BASE = "TwoNoteSourceSide6";
+    private static final String PATH_BASE = "Asshole7Auto6";
 
-    public TwoNoteSourceSide6Choreo(CombinedCommands combinedCommands) {
+    public Asshole7TwoNote6(CombinedCommands combinedCommands) {
         super(
             StartPosition.STARTING_LOCATION_SOURCE_SIDE,
-            List.of(6),
+            List.of(6, 5),
 
             Commands.sequence(
                 combinedCommands.resetPose(getPathStartingPose(PATH_BASE)),
@@ -31,8 +31,13 @@ public class TwoNoteSourceSide6Choreo extends GosAutoMode {
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire first piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
-                followChoreoPath(PATH_BASE + ".3"),
+                Commands.deadline(
+                    Commands.sequence(
+                        followChoreoPath(PATH_BASE + ".2"),
+                        followChoreoPath(PATH_BASE + ".3")
+                    ),
+                    NamedCommands.getCommand("IntakePiece")
+                ),
                 combinedCommands.autoAimAndShoot()
             )
         );

@@ -64,11 +64,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            // 14p-22s config
-            // MAX_TRANSLATION_SPEED = 5.5; // Theoretically 5.74.
-
-            // 16p-19s config
-            MAX_TRANSLATION_SPEED = 6.85; // Theoretically 7.60
+            // 14p-21s config
+            MAX_TRANSLATION_SPEED = 5.4; // Theoretically 6
         } else {
             MAX_TRANSLATION_SPEED = 3.9624; // 13fps, Theoretically 4.8
         }
@@ -123,11 +120,11 @@ public class ChassisSubsystem extends SubsystemBase {
             Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
             motorType,
             RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
-            RevSwerveModuleConstants.DriveMotorSpurTeeth.T20,
+            RevSwerveModuleConstants.DriveMotorSpurTeeth.T21,
             WHEEL_BASE,
             TRACK_WIDTH,
             MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED,
-            Constants.DEFAULT_CONSTANT_PROPERTIES);
+            false);
 
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);
@@ -179,6 +176,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging.addDouble("Distance to Speaker", this::getDistanceToSpeaker);
         m_logging.addDouble("Distance to Feeder", () -> getDistanceToFeeder(getPose()));
         m_logging.addBoolean("In Shooting Polygon", this::inShootingPolygon);
+        m_logging.addDouble("Chassis X Speed", () -> getChassisSpeed().vxMetersPerSecond);
     }
 
     public boolean inShootingPolygon() {
@@ -497,5 +495,9 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createTakeAprilTagScreenshotCommand() {
         // This is an instant command instead of run/runEnd because we don't want the "requirement" logic on the chassis to happen
         return new InstantCommand(this::takeAprilTagScreenshot);
+    }
+
+    public Command createSetChassisSpeedCommand(ChassisSpeeds chassisSpeeds) {
+        return run(() -> setChassisSpeed(chassisSpeeds));
     }
 }

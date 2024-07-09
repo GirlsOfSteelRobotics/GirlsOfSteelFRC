@@ -1,5 +1,5 @@
 
-package com.gos.crescendo2024.auton.modes.ozone;
+package com.gos.crescendo2024.auton.modes.source;
 
 import com.gos.crescendo2024.auton.GosAutoMode;
 import com.gos.crescendo2024.commands.CombinedCommands;
