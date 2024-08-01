@@ -162,4 +162,11 @@ public class CombinedCommands {
     public Command autoAimAndShoot() {
         return SpeakerAimAndShootCommand.createShootWhileStationary(m_arm, m_chassis, m_intake, m_shooter);
     }
+
+    public Command popcornIntake() {
+        return m_arm.createMoveArmToGroundIntakeAngleCommand()
+            .alongWith(m_intake.createMoveIntakeInCommand())
+            .alongWith(m_shooter.createSetRPMCommand(1000))
+            .withName("Popcorn Intake");
+    }
 }

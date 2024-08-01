@@ -31,7 +31,20 @@ public class ThreeNoteAmpSide03Choreo extends GosAutoMode {
 
                 // Acquire piece "0" and shoot it
                 combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
-                combinedCommands.autoAimAndShoot()
+                combinedCommands.autoAimAndShoot(),
+
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".3"),
+
+                Commands.deadline(
+                    followChoreoPath(PATH_BASE + ".4"),
+                    NamedCommands.getCommand("PrepSpeakerShot")
+                ),
+                combinedCommands.autoAimAndShoot(),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".5")
+
+
+
+
             )
         );
     }

@@ -427,6 +427,7 @@ public class RobotContainer {
         m_driverController.leftTrigger().whileTrue(
             m_combinedCommands.intakePieceCommand()
                 .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
+        //m_driverController.leftTrigger().whileTrue(m_combinedCommands.popcornIntake());
 
         m_driverController.a().whileTrue(
             m_intakeSubsystem.createMoveIntakeOutCommand()

@@ -5,6 +5,7 @@
 
 package com.gos.crescendo2024.auton;
 
+import com.gos.crescendo2024.auton.modes.amp.ThreeNoteAmpSide03Choreo;
 import com.gos.crescendo2024.auton.modes.asshole.Asshole7TwoNote6;
 import com.gos.crescendo2024.auton.modes.asshole.DisruptionAuto;
 import com.gos.crescendo2024.auton.modes.OneNoteJustShoot;
@@ -41,7 +42,7 @@ public final class Autos {
         //-------------------------
 
         // Amp Side
-
+        addAutoMode(new ThreeNoteAmpSide03Choreo(combinedCommands));
         // Middle
         addAutoMode(new ThreeNoteMiddle52Choreo(combinedCommands));
 
