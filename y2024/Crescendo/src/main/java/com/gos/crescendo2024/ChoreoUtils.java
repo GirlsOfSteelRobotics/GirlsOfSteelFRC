@@ -1,10 +1,12 @@
 package com.gos.crescendo2024;
 
-import com.choreo.lib.Choreo;
+import choreo.Choreo;
+import choreo.trajectory.Trajectory;
 
 public class ChoreoUtils {
 
     public static MaybeFlippedPose2d getPathStartingPose(String pathName) {
-        return new MaybeFlippedPose2d(Choreo.getTrajectory(pathName).getInitialPose());
+        Trajectory<?> trajectory = Choreo.loadTrajectory(pathName).orElseThrow();
+        return new MaybeFlippedPose2d(trajectory.getInitialPose(false));
     }
 }

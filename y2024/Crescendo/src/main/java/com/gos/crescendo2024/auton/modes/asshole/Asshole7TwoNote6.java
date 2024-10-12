@@ -25,7 +25,7 @@ public class Asshole7TwoNote6 extends GosAutoMode {
 
                 // Drive away from subwoofer and shoot preload
                 Commands.deadline(
-                    followChoreoPath(PATH_BASE + ".1"),
+                    followChoreoPath(PATH_BASE + ".0"),
                     NamedCommands.getCommand("PrepSpeakerShot")
                 ),
                 combinedCommands.autoAimAndShoot(),
@@ -33,8 +33,8 @@ public class Asshole7TwoNote6 extends GosAutoMode {
                 // Acquire first piece and shoot
                 Commands.deadline(
                     Commands.sequence(
-                        followChoreoPath(PATH_BASE + ".2"),
-                        followChoreoPath(PATH_BASE + ".3")
+                        followChoreoPath(PATH_BASE + ".1"),
+                        followChoreoPath(PATH_BASE + ".2")
                     ),
                     NamedCommands.getCommand("IntakePiece")
                 ),
