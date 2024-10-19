@@ -26,13 +26,14 @@ import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.controller.PIDController;
@@ -49,9 +50,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.json.simple.parser.ParseException;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
+import java.io.IOException;
 import java.util.List;
 
 @SuppressWarnings("PMD.GodClass")
@@ -147,18 +150,22 @@ public class ChassisSubsystem extends SubsystemBase {
         ));
         m_noteDetectionCamera = new ObjectDetection();
 
-        AutoBuilder.configureHolonomic(
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        AutoBuilder.configure(
             this::getPose,
             this::resetOdometry,
             this::getChassisSpeed,
             this::setChassisSpeed,
-            new HolonomicPathFollowerConfig(
+            new PPHolonomicDriveController(
                 new PIDConstants(5, 0, 0),
-                new PIDConstants(10, 0, 0),
-                MAX_TRANSLATION_SPEED,
-                WHEEL_BASE,
-                new ReplanningConfig(),
-                0.02),
+                new PIDConstants(10, 0, 0)),
+            config,
             GetAllianceUtil::isRedAlliance,
             this
         );
@@ -391,7 +398,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start, boolean rotateFast) {
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             new PathConstraints(
@@ -399,7 +406,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
                 Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
-            new GoalEndState(0.0, endAngle, rotateFast)
+            null,
+            new GoalEndState(0.0, endAngle)
         );
         path.preventFlipping = true;
         return createFollowPathCommand(path, false).withName("Follow Path to " + end);
@@ -426,8 +434,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
                 Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
-            0.0, // Goal end velocity in meters/sec
-            0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+            0.0 // Goal end velocity in meters/sec
         ));
 
     }

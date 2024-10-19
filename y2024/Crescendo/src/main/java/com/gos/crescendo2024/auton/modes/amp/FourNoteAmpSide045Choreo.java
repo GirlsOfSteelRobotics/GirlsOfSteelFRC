@@ -27,17 +27,17 @@ public class FourNoteAmpSide045Choreo extends GosAutoMode {
                 NamedCommands.getCommand("AimAndShootIntoSideSpeaker"),
 
                 // Acquire first piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".0"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire second piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire third piece and shoot
-                followChoreoPath(PATH_BASE + ".3"),
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".4"),
-                followChoreoPath(PATH_BASE + ".5"),
+                followChoreoPath(PATH_BASE + ".2"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".3"),
+                followChoreoPath(PATH_BASE + ".4"),
                 combinedCommands.autoAimAndShoot()
             )
         );

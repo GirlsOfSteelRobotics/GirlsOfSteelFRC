@@ -23,13 +23,13 @@ public class OzoneTwoNoteSource7 extends GosAutoMode {
                 combinedCommands.resetPose(getPathStartingPose(PATH_BASE)),
 
                 // Acquire first piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
-                followChoreoPath(PATH_BASE + ".2"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".0"),
+                followChoreoPath(PATH_BASE + ".1"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire second piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".3"),
-                followChoreoPath(PATH_BASE + ".4"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
+                followChoreoPath(PATH_BASE + ".3"),
                 combinedCommands.autoAimAndShoot()
             )
         );

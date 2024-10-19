@@ -26,17 +26,17 @@ public class FourNoteMiddle152Choreo extends GosAutoMode {
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire first piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".0"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire second piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
-                followChoreoPath(PATH_BASE + ".3"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
+                followChoreoPath(PATH_BASE + ".2"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire third piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".4"),
-                followChoreoPath(PATH_BASE + ".5"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".3"),
+                followChoreoPath(PATH_BASE + ".4"),
                 combinedCommands.autoAimAndShoot()
             )
         );

@@ -24,8 +24,8 @@ def download_latest_vendordeps(ignore_cache):
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
     vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
     vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/photonlib-json/1.0/photonlib-json-1.0.json"
-    vendor_dep_urls["PathplannerLib.json"] = "https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json"
-    vendor_dep_urls["ChoreoLib.json"] = "https://SleipnirGroup.github.io/ChoreoLib/dep/ChoreoLib.json"
+    vendor_dep_urls["PathplannerLib.json"] = "https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib-beta.json"
+    vendor_dep_urls["ChoreoLib.json"] = "https://SleipnirGroup.github.io/ChoreoLib/dep/ChoreoLib2025Beta.json"
     vendor_dep_urls["WPILibNewCommands.json"] = f"https://raw.githubusercontent.com/wpilibsuite/allwpilib/{PINNED_VSCODE_WPILIB_COMMITISH}/wpilibNewCommands/WPILibNewCommands.json"
     # fmt: on
 

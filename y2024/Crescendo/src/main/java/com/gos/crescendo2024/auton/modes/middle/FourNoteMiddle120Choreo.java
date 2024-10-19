@@ -26,15 +26,15 @@ public class FourNoteMiddle120Choreo extends GosAutoMode {
                 NamedCommands.getCommand("AimAndShootIntoSideSpeaker"),
 
                 // Acquire first piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".0"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire second piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".1"),
                 combinedCommands.autoAimAndShoot(),
 
                 // Acquire third piece and shoot
-                combinedCommands.followPathWhileIntaking(PATH_BASE + ".3"),
+                combinedCommands.followPathWhileIntaking(PATH_BASE + ".2"),
                 combinedCommands.autoAimAndShoot()
             )
         );

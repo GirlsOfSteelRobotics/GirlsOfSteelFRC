@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -32,13 +34,21 @@ public final class PathPlannerUtils {
                 .map(name -> name.substring(0, name.lastIndexOf(".")))
                 .collect(Collectors.toSet());
         for (String pathName : pathNames) {
-            Command followPathCommand = pathFactory.apply(PathPlannerPath.fromPathFile(pathName))
-                .withName(pathName);
-            tab.add(followPathCommand);
+            try {
+                Command followPathCommand = pathFactory.apply(PathPlannerPath.fromPathFile(pathName))
+                    .withName(pathName);
+                tab.add(followPathCommand);
+            } catch (IOException | ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public static Command followChoreoPath(String trajectoryName) {
-        return AutoBuilder.followPath(PathPlannerPath.fromChoreoTrajectory(trajectoryName));
+        try {
+            return AutoBuilder.followPath(PathPlannerPath.fromChoreoTrajectory(trajectoryName));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

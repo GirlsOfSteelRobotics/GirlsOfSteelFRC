@@ -21,7 +21,7 @@ public class DisruptionAuto extends GosAutoMode {
 
             Commands.sequence(
                 combinedCommands.resetPose(getPathStartingPose(PATH_BASE)),
-                followChoreoPath(PATH_BASE + ".1")
+                followChoreoPath(PATH_BASE + ".0")
             )
         );
     }
