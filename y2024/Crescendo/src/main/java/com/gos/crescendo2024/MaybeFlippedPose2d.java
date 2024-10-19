@@ -19,8 +19,12 @@ public class MaybeFlippedPose2d {
     }
 
     public MaybeFlippedPose2d(Pose2d bluePose) {
+        this(bluePose, AllianceFlipper.flip(bluePose));
+    }
+
+    public MaybeFlippedPose2d(Pose2d bluePose, Pose2d redPose) {
         m_bluePose = bluePose;
-        m_redPose = AllianceFlipper.flip(bluePose);
+        m_redPose = redPose;
     }
 
     public Pose2d getPose() {
