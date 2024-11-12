@@ -3,11 +3,10 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.SparkRelativeEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -54,7 +53,7 @@ public class Shooter extends SubsystemBase {
     public Shooter(ShuffleboardTab driveDisplayTab, Limelight limelight) {
         m_master = new SimableCANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new SimableCANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
-        m_encoder  = m_master.getEncoder(SparkRelativeEncoder.Type.kQuadrature, 8192);
+        m_encoder  = m_master.getEncoder();
         m_pidController = m_master.getPIDController();
 
         m_master.restoreFactoryDefaults();
@@ -88,8 +87,8 @@ public class Shooter extends SubsystemBase {
             .getEntry();
 
         if (RobotBase.isSimulation()) {
-
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getVex775Pro(2), 1.66, .008);
+            DCMotor gearbox = DCMotor.getVex775Pro(2);
+            FlywheelSim flywheelSim = new FlywheelSim(gearbox, 1.66, .008);
             m_simulator = new FlywheelSimWrapper(flywheelSim,
                     new RevMotorControllerSimWrapper(m_master),
                     RevEncoderSimWrapper.create(m_master));
@@ -99,7 +98,7 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(final double rpm) {
         m_goalRPM = rpm;
-        m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
+        m_pidController.setReference(rpm, ControlType.kVelocity);
         //double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
         //m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
         m_limelight.turnLimelightOn();
@@ -133,7 +132,7 @@ public class Shooter extends SubsystemBase {
     public void stop() {
         m_master.set(0);
         m_limelight.turnLimelightOff();
-        //m_pidController.setReference(0, CANSparkMax.ControlType.kVelocity);
+        //m_pidController.setReference(0, ControlType.kVelocity);
     }
 
     @Override

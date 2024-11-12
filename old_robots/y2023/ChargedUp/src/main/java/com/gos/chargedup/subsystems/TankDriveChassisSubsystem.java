@@ -8,19 +8,24 @@ import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.ReplanningConfig;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.RelativeEncoder;
+import com.pathplanner.lib.path.Waypoint;
+import com.revrobotics.CANSparkBase.ControlType;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -34,14 +39,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import org.json.simple.parser.ParseException;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -105,10 +113,10 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public TankDriveChassisSubsystem() {
 
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
         m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft.restoreFactoryDefaults();
@@ -120,10 +128,10 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         m_leaderRight.setSmartCurrentLimit(60);
         m_followerRight.setSmartCurrentLimit(60);
 
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderLeft.setIdleMode(IdleMode.kCoast);
+        m_followerLeft.setIdleMode(IdleMode.kCoast);
+        m_leaderRight.setIdleMode(IdleMode.kCoast);
+        m_followerRight.setIdleMode(IdleMode.kCoast);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
             m_leaderLeft.setInverted(true);
@@ -175,12 +183,21 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
 
-        AutoBuilder.configureRamsete(
+
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        AutoBuilder.configure(
             this::getPose, // Robot pose supplier
             this::resetOdometry,
             this::getChassisSpeed,
             this::setChassisSpeed,
-            new ReplanningConfig(),
+            new PPLTVController(0.02),
+            config,
             GetAllianceUtil::isRedAlliance,
             this
         );
@@ -257,8 +274,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
-        m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
+        m_leftPIDcontroller.setReference(leftVelocity, ControlType.kVelocity, 0);
+        m_rightPIDcontroller.setReference(rightVelocity, ControlType.kVelocity, 0);
     }
 
     @Override
@@ -370,10 +387,11 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     @Override
     public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             new PathConstraints(m_onTheFlyMaxVelocity.getValue(), m_onTheFlyMaxAcceleration.getValue(), 0, 0),
+            null,
             new GoalEndState(0.0, Rotation2d.fromDegrees(0)) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
         );
 
@@ -381,18 +399,18 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     public void drivetrainToBrakeMode() {
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leaderLeft.setIdleMode(IdleMode.kBrake);
+        m_followerLeft.setIdleMode(IdleMode.kBrake);
+        m_leaderRight.setIdleMode(IdleMode.kBrake);
+        m_followerRight.setIdleMode(IdleMode.kBrake);
 
     }
 
     public void drivetrainToCoastMode() {
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderLeft.setIdleMode(IdleMode.kCoast);
+        m_followerLeft.setIdleMode(IdleMode.kCoast);
+        m_leaderRight.setIdleMode(IdleMode.kCoast);
+        m_followerRight.setIdleMode(IdleMode.kCoast);
 
     }
 

@@ -7,12 +7,16 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.CANSparkBase;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+
+
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
+
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,22 +49,22 @@ public class HangerSubsystem extends SubsystemBase {
     //TODO add limit switches
 
     public HangerSubsystem() {
-        m_leftHangerMotor = new SimableCANSparkMax(Constants.HANGER_LEFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
-        //m_leftHangerMotor.restoreFactoryDefaults();
+        m_leftHangerMotor = new SimableCANSparkMax(Constants.HANGER_LEFT_MOTOR, MotorType.kBrushless);
+        m_leftHangerMotor.restoreFactoryDefaults();
         m_leftHangerMotor.setInverted(true);
         m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
-        m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leftHangerMotor.setIdleMode(IdleMode.kBrake);
         m_leftHangerMotor.setSmartCurrentLimit(60);
         m_leftPidController = m_leftHangerMotor.getPIDController();
         m_leftPidProperties = createPidProperties(m_leftPidController);
         m_leftHangerMotor.burnFlash();
         m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger a");
 
-        m_rightHangerMotor = new SimableCANSparkMax(Constants.HANGER_RIGHT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
-        //m_rightHangerMotor.restoreFactoryDefaults();
+        m_rightHangerMotor = new SimableCANSparkMax(Constants.HANGER_RIGHT_MOTOR, MotorType.kBrushless);
+        m_rightHangerMotor.restoreFactoryDefaults();
         m_rightHangerMotor.setInverted(false);
         m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
-        m_rightHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_rightHangerMotor.setIdleMode(IdleMode.kBrake);
         m_rightHangerMotor.setSmartCurrentLimit(60);
         m_rightPidController = m_rightHangerMotor.getPIDController();
         m_rightPidProperties = createPidProperties(m_rightPidController);
@@ -90,8 +94,8 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public void moveHangerToPosition(double position) {
-        m_leftPidController.setReference(position, CANSparkBase.ControlType.kPosition);
-        m_rightPidController.setReference(position, CANSparkBase.ControlType.kPosition);
+        m_leftPidController.setReference(position, ControlType.kPosition);
+        m_rightPidController.setReference(position, ControlType.kPosition);
     }
 
 
@@ -186,6 +190,11 @@ public class HangerSubsystem extends SubsystemBase {
         return !m_upperLimitSwitchLeft.get();
     }
 
+    public void setIdleMode(IdleMode mode) {
+        m_leftHangerMotor.setIdleMode(mode);
+        m_rightHangerMotor.setIdleMode(mode);
+    }
+
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
@@ -215,14 +224,8 @@ public class HangerSubsystem extends SubsystemBase {
 
     public Command createSetHangerToCoast() {
         return this.runEnd(
-                () -> {
-                    m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-                    m_rightHangerMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-                },
-                () -> {
-                    m_leftHangerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-                    m_leftHangerMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
-                })
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Hangers to Coast");
     }
 

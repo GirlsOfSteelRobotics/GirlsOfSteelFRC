@@ -9,10 +9,13 @@ import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -36,12 +39,12 @@ public class ClawSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
     public ClawSubsystem() {
-        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, MotorType.kBrushless);
         m_clawMotor.restoreFactoryDefaults();
 
         m_clawMotor.setInverted(true);
         m_clawEncoder = m_clawMotor.getEncoder();
-        m_clawMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_clawMotor.setIdleMode(IdleMode.kBrake);
         m_clawMotor.setSmartCurrentLimit(10);
         m_clawMotor.burnFlash();
         m_clawMotorErrorAlerts = new SparkMaxAlerts(m_clawMotor, "claw motor");

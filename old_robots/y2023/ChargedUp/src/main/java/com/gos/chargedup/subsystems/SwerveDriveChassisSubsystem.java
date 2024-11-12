@@ -7,18 +7,20 @@ import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import org.json.simple.parser.ParseException;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
+
+import java.io.IOException;
 
 public class SwerveDriveChassisSubsystem extends BaseChassis {
 
@@ -44,18 +46,22 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
             MAX_ROTATION_SPEED, true);
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
-        AutoBuilder.configureHolonomic(
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        AutoBuilder.configure(
             this::getPose,
             this::resetOdometry,
             this::getChassisSpeed,
             this::setChassisSpeed,
-            new HolonomicPathFollowerConfig(
+            new PPHolonomicDriveController(
                 new PIDConstants(5, 0, 0),
-                new PIDConstants(5, 0, 0),
-                MAX_TRANSLATION_SPEED,
-                WHEEL_BASE,
-                new ReplanningConfig(),
-                0.02),
+                new PIDConstants(10, 0, 0)),
+            config,
             GetAllianceUtil::isRedAlliance,
             this
         );
@@ -127,9 +133,10 @@ public class SwerveDriveChassisSubsystem extends BaseChassis {
     @Override
     public Command createFollowPathCommand(PathPlannerPath path, boolean resetPose) {
         Command followPathCommand = AutoBuilder.followPath(path);
-        if (resetPose) {
-            Pose2d pose = path.getPreviewStartingHolonomicPose();
-            return Commands.runOnce(() -> resetOdometry(pose)).andThen(followPathCommand);
+        if (resetPose) { // NOPMD
+            // TODO this probably isn't good
+            //            Pose2d pose = path.getPreviewStartingHolonomicPose();
+            //            return Commands.runOnce(() -> resetOdometry(pose)).andThen(followPathCommand);
         }
         return followPathCommand;
     }

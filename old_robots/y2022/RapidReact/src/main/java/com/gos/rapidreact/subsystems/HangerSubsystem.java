@@ -2,10 +2,13 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.rapidreact.Constants;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -39,15 +42,15 @@ public class HangerSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightHangerHeightEntry;
 
     public HangerSubsystem() {
-        m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, MotorType.kBrushless);
         m_leftHanger.restoreFactoryDefaults();
-        m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, MotorType.kBrushless);
         m_rightHanger.restoreFactoryDefaults();
         m_leftEncoder = m_leftHanger.getEncoder();
         m_rightEncoder = m_rightHanger.getEncoder();
 
-        m_leftHanger.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_rightHanger.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leftHanger.setIdleMode(IdleMode.kBrake);
+        m_rightHanger.setIdleMode(IdleMode.kBrake);
 
         m_leftEncoder.setPositionConversionFactor(GEAR);
         m_rightEncoder.setPositionConversionFactor(GEAR);
@@ -60,7 +63,8 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerHeightEntry = loggingTable.getEntry("RightHeight");
 
         if (RobotBase.isSimulation()) {
-            ElevatorSim leftElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true, 0);
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            ElevatorSim leftElevatorSim = new ElevatorSim(gearbox, GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true, 0);
             m_leftSimulator = new ElevatorSimWrapper(leftElevatorSim,
                 new RevMotorControllerSimWrapper(m_leftHanger),
                 RevEncoderSimWrapper.create(m_leftHanger));

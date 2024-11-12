@@ -2,9 +2,12 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.rapidreact.Constants;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -30,14 +33,14 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_upperIndexSensorEntry;
 
     public VerticalConveyorSubsystem() {
-        m_conveyor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_conveyor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_SPARK, MotorType.kBrushless);
         m_conveyor.restoreFactoryDefaults();
-        m_conveyor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_conveyor.setIdleMode(IdleMode.kBrake);
         m_conveyor.setInverted(true);
 
-        m_feeder = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_FEEDER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_feeder = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_FEEDER_SPARK, MotorType.kBrushless);
         m_feeder.restoreFactoryDefaults();
-        m_feeder.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_feeder.setIdleMode(IdleMode.kCoast);
 
         m_indexSensorUpper = new DigitalInput(Constants.INDEX_SENSOR_UPPER_VERTICAL_CONVEYOR);
         m_indexSensorLower = new DigitalInput(Constants.INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR);

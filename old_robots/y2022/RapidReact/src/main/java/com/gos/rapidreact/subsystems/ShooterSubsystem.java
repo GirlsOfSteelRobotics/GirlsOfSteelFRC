@@ -6,11 +6,15 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.utils.ShooterLookupTable;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -63,13 +67,13 @@ public class ShooterSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_shooterAtSpeedEntry;
 
     public ShooterSubsystem() {
-        m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, MotorType.kBrushless);
         m_leader.restoreFactoryDefaults();
-        m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leader.setIdleMode(IdleMode.kCoast);
 
-        m_roller = new SimableCANSparkMax(Constants.SHOOTER_ROLLER, CANSparkLowLevel.MotorType.kBrushless);
+        m_roller = new SimableCANSparkMax(Constants.SHOOTER_ROLLER, MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
-        m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_roller.setIdleMode(IdleMode.kCoast);
         m_roller.setInverted(true);
 
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
@@ -102,12 +106,14 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterAtSpeedEntry = loggingTable.getEntry("At Speed");
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            DCMotor shooterGearbox = DCMotor.getNeo550(2);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(shooterGearbox, 1, 0.01);
             m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
 
-            FlywheelSim backspinFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            DCMotor backspinGearbox = DCMotor.getNeo550(2);
+            FlywheelSim backspinFlywheelSim = new FlywheelSim(backspinGearbox, 1, 0.01);
             m_backspinSimulator = new FlywheelSimWrapper(backspinFlywheelSim,
                 new RevMotorControllerSimWrapper(m_roller),
                 RevEncoderSimWrapper.create(m_roller));
@@ -136,8 +142,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterGoalRpm = rpm;
         m_backspinGoalRpm = rpm * ROLLER_SHOOTER_RPM_PROPORTION;
 
-        m_shooterPidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
-        m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, CANSparkMax.ControlType.kVelocity);
+        m_shooterPidController.setReference(rpm, ControlType.kVelocity);
+        m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, ControlType.kVelocity);
 
     }
 

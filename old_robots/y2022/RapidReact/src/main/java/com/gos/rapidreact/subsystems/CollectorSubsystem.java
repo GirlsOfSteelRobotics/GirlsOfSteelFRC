@@ -4,11 +4,16 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -55,8 +60,8 @@ public class CollectorSubsystem extends SubsystemBase {
     private final RelativeEncoder m_pivotNeoEncoderLeft;
     private final RelativeEncoder m_pivotNeoEncoderRight;
 
-    private final RelativeEncoder m_pivotExternalEncoderLeft;
-    private final RelativeEncoder m_pivotExternalEncoderRight;
+    private final AbsoluteEncoder m_pivotExternalEncoderLeft;
+    private final AbsoluteEncoder m_pivotExternalEncoderRight;
 
     private final PidProperty m_pivotPIDLeft;
     private final SparkPIDController m_pidControllerLeft;
@@ -85,18 +90,18 @@ public class CollectorSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightGravityOffsetVoltage;
 
     public CollectorSubsystem() {
-        m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkLowLevel.MotorType.kBrushless);
+        m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
-        m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_roller.setIdleMode(IdleMode.kCoast);
 
-        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkLowLevel.MotorType.kBrushless);
+        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, MotorType.kBrushless);
         m_pivotLeft.restoreFactoryDefaults();
-        m_pivotLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_pivotLeft.setIdleMode(IdleMode.kBrake);
         m_pivotLeft.setInverted(true);
 
-        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkLowLevel.MotorType.kBrushless);
+        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, MotorType.kBrushless);
         m_pivotRight.restoreFactoryDefaults();
-        m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_pivotRight.setIdleMode(IdleMode.kBrake);
 
         m_pivotNeoEncoderLeft = m_pivotLeft.getEncoder();
         m_pivotNeoEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
@@ -106,13 +111,13 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotNeoEncoderRight.setPositionConversionFactor(360.0 / GEARING);
         m_pivotNeoEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
 
-        m_pivotExternalEncoderLeft = m_pivotLeft.getEncoder();
-        m_pivotNeoEncoderLeft.setPositionConversionFactor(1);
-        m_pivotNeoEncoderLeft.setVelocityConversionFactor(1);
+        m_pivotExternalEncoderLeft = m_pivotLeft.getAbsoluteEncoder();
+        m_pivotExternalEncoderLeft.setPositionConversionFactor(360.0);
+        m_pivotExternalEncoderLeft.setVelocityConversionFactor(360.0 / 60.0);
 
-        m_pivotExternalEncoderRight = m_pivotRight.getEncoder();
-        m_pivotNeoEncoderRight.setPositionConversionFactor(1);
-        m_pivotNeoEncoderRight.setVelocityConversionFactor(1);
+        m_pivotExternalEncoderRight = m_pivotRight.getAbsoluteEncoder();
+        m_pivotExternalEncoderRight.setVelocityConversionFactor(360.0);
+        m_pivotExternalEncoderRight.setVelocityConversionFactor(360.0 / 60.0);
 
         m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
@@ -145,7 +150,8 @@ public class CollectorSubsystem extends SubsystemBase {
         m_rightIntakeAngleExternalEncoderEntry = loggingTable.getEntry("Right Intake External (raw)");
 
         if (RobotBase.isSimulation()) {
-            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
+            DCMotor gearbox = DCMotor.getNeo550(1);
+            SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY, 0);
             m_leftSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeft),
                 RevEncoderSimWrapper.create(m_pivotLeft), true);
@@ -259,8 +265,8 @@ public class CollectorSubsystem extends SubsystemBase {
             double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
             double arbFeedforwardLeft = gravityOffsetLeft + staticFrictionLeft;
             double arbFeedforwardRight = gravityOffsetRight + staticFrictionRight;
-            m_pidControllerLeft.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
-            m_pidControllerRight.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
+            m_pidControllerLeft.setReference(pivotAngleDegreesGoal, ControlType.kSmartMotion, 0, arbFeedforwardLeft);
+            m_pidControllerRight.setReference(pivotAngleDegreesGoal, ControlType.kSmartMotion, 0, arbFeedforwardRight);
 
             m_leftGravityOffsetVoltage.setNumber(gravityOffsetLeft);
             m_rightGravityOffsetVoltage.setNumber(gravityOffsetRight);

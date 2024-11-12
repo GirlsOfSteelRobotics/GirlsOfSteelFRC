@@ -12,24 +12,26 @@ import com.gos.swerve2023.AllianceFlipper;
 import com.gos.swerve2023.Constants;
 import com.gos.swerve2023.GoSField;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.json.simple.parser.ParseException;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
@@ -74,19 +76,22 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field = new GoSField();
         SmartDashboard.putData("Field", m_field.getSendable());
 
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
 
-        AutoBuilder.configureHolonomic(
+        AutoBuilder.configure(
             this::getPose,
             this::resetOdometry,
             this::getChassisSpeed,
             this::setChassisSpeed,
-            new HolonomicPathFollowerConfig(
+            new PPHolonomicDriveController(
                 new PIDConstants(5, 0, 0),
-                new PIDConstants(10, 0, 0),
-                MAX_TRANSLATION_SPEED,
-                WHEEL_BASE,
-                new ReplanningConfig(),
-                0.02),
+                new PIDConstants(10, 0, 0)),
+            config,
             GetAllianceUtil::isRedAlliance,
             this
         );
@@ -163,7 +168,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             new PathConstraints(
@@ -171,6 +176,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
                 Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
                 Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
+            null,
             new GoalEndState(0.0, endAngle)
         );
         path.preventFlipping = true;

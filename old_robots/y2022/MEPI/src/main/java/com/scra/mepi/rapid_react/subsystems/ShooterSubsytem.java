@@ -7,16 +7,20 @@ package com.scra.mepi.rapid_react.subsystems;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+
+
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+
+import com.scra.mepi.rapid_react.Constants;
+import com.scra.mepi.rapid_react.ShooterLookupTable;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import com.scra.mepi.rapid_react.Constants;
-import com.scra.mepi.rapid_react.ShooterLookupTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -65,12 +69,13 @@ public class ShooterSubsytem extends SubsystemBase {
             .addD(0)
             .addFF(0.00045)
             .build();
-        m_shooterMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_shooterMotor.setIdleMode(IdleMode.kCoast);
         m_shooterMotor.setInverted(true);
         m_shooterMotor.burnFlash();
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(gearbox, 1, 0.01);
             m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
                 new RevMotorControllerSimWrapper(m_shooterMotor),
                 RevEncoderSimWrapper.create(m_shooterMotor));
@@ -96,7 +101,7 @@ public class ShooterSubsytem extends SubsystemBase {
     }
 
     public void setPidRpm(double rpm) {
-        m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
+        m_pidController.setReference(rpm, ControlType.kVelocity);
     }
 
     public boolean checkAtSpeed(double goal) {

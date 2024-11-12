@@ -10,11 +10,15 @@ import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.sim.LimelightSim;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+
+
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -110,20 +114,20 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public ChassisSubsystem() {
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
         m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft.restoreFactoryDefaults();
         m_leaderRight.restoreFactoryDefaults();
         m_followerRight.restoreFactoryDefaults();
 
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderLeft.setIdleMode(IdleMode.kCoast);
+        m_followerLeft.setIdleMode(IdleMode.kCoast);
+        m_leaderRight.setIdleMode(IdleMode.kCoast);
+        m_followerRight.setIdleMode(IdleMode.kCoast);
 
         m_leaderLeft.setInverted(false);
         m_leaderRight.setInverted(true);
@@ -272,8 +276,8 @@ public class ChassisSubsystem extends SubsystemBase {
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
         double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAcceleration);
         double accelerationRight = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(rightAcceleration);
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
+        m_leftPidController.setReference(leftVelocity, ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
+        m_rightPidController.setReference(rightVelocity, ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
         m_drive.feed();
     }
 
@@ -282,8 +286,8 @@ public class ChassisSubsystem extends SubsystemBase {
         double rightError = rightDistance - getRightEncoderDistance();
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftError);
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightError);
-        m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionLeft);
-        m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionRight);
+        m_leftPidController.setReference(leftDistance, ControlType.kSmartMotion, 0, staticFrictionLeft);
+        m_rightPidController.setReference(rightDistance, ControlType.kSmartMotion, 0, staticFrictionRight);
         m_drive.feed();
     }
 

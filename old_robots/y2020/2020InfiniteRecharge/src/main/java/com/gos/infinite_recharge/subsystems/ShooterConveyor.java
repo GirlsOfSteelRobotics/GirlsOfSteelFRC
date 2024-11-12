@@ -2,9 +2,10 @@ package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -20,26 +21,26 @@ public class ShooterConveyor extends SubsystemBase {
 
     private double m_goalPosition;
 
-    private final CANSparkMax m_master;
+    private final SimableCANSparkMax m_master;
     private final RelativeEncoder m_encoder;
     private final SparkPIDController m_pidController;
-    private final CANSparkMax m_follower;
+    private final SimableCANSparkMax m_follower;
 
     private final DigitalInput m_breakSensorHandoff;
     private final DigitalInput m_breakSensorSecondary;
     private final DigitalInput m_breakSensorTop;
-    //private final CANSparkMax m_follower;
+    //private final SimableCANSparkMax m_follower;
 
     private final NetworkTable m_customNetworkTable;
 
     public ShooterConveyor() {
-        m_master = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_A, MotorType.kBrushless);
+        m_master = new SimableCANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_A, MotorType.kBrushless);
         m_master.restoreFactoryDefaults();
 
         m_encoder = m_master.getEncoder();
         m_pidController = m_master.getPIDController();
 
-        m_follower = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_B, MotorType.kBrushless);
+        m_follower = new SimableCANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_B, MotorType.kBrushless);
         m_follower.restoreFactoryDefaults();
 
         m_follower.follow(m_master, true);
@@ -74,7 +75,7 @@ public class ShooterConveyor extends SubsystemBase {
 
     public void advanceBall() {
         m_goalPosition = m_encoder.getPosition() + UNIT_HEIGHT;
-        m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, CANSparkMax.ControlType.kPosition);
+        m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, ControlType.kPosition);
     }
 
     public boolean isAdvanced() {

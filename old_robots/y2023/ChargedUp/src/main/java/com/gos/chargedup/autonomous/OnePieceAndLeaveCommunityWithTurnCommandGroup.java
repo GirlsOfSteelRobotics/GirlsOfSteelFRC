@@ -21,13 +21,21 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 
 public class OnePieceAndLeaveCommunityWithTurnCommandGroup extends SequentialCommandGroup {
     public OnePieceAndLeaveCommunityWithTurnCommandGroup(ChassisSubsystemInterface chassis, ArmPivotSubsystem armPivot,
                                                          ArmExtensionSubsystem armExtension, ClawSubsystem claw, String path,
                                                          AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
-        PathPlannerPath onePieceAndLeave = PathPlannerPath.fromPathFile(path);
+        PathPlannerPath onePieceAndLeave;
+        try {
+            onePieceAndLeave = PathPlannerPath.fromPathFile(path);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
         Command driveAutoOnePieceAndLeave = chassis.createFollowPathCommand(onePieceAndLeave, true);
 
         Pose2d initialPose = onePieceAndLeave.getStartingDifferentialPose();

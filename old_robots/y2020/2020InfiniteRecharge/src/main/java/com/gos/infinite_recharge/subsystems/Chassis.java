@@ -7,10 +7,10 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
@@ -330,15 +330,15 @@ public class Chassis extends SubsystemBase {
     }
 
     public void driveDistance(double leftPosition, double rightPosition) {
-        m_leftPidController.setReference(leftPosition, CANSparkMax.ControlType.kSmartMotion);
-        m_rightPidController.setReference(rightPosition, CANSparkMax.ControlType.kSmartMotion);
+        m_leftPidController.setReference(leftPosition, ControlType.kSmartMotion);
+        m_rightPidController.setReference(rightPosition, ControlType.kSmartMotion);
         m_drive.feed();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
+        m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
+        m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
         m_drive.feed();
 
         //System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
