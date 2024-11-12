@@ -5,15 +5,14 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController.ArbFFUnits;
-
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -49,7 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private ISimWrapper m_elevatorSim;
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
         m_pidController = m_liftMotor.getPIDController();
 
@@ -81,7 +80,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean goToPosition(double position) {
         m_desiredHeight = position;
-        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
+        m_pidController.setReference(position, ControlType.kSmartMotion, 0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 

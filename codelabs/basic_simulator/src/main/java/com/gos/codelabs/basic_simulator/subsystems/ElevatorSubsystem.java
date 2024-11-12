@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
 import com.gos.codelabs.basic_simulator.Constants;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -49,7 +49,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
 
         m_lowerLimitSwitch = new DigitalInput(Constants.DIO_LIFT_LOWER_LIMIT);

@@ -1,11 +1,16 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.SimableCANSparkMax;
 import com.gos.codelabs.basic_simulator.Constants;
+import com.revrobotics.RelativeEncoder;
+
+
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
+
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -13,8 +18,6 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -80,12 +83,16 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkLowLevel.MotorType.kBrushless);
-        m_leftDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkLowLevel.MotorType.kBrushless);
+        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, MotorType.kBrushless);
+        m_leftDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_B, MotorType.kBrushless);
+        m_leftDriveA.restoreFactoryDefaults();
+        m_leftDriveB.restoreFactoryDefaults();
         m_leftDriveB.follow(m_leftDriveA);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkLowLevel.MotorType.kBrushless);
-        m_rightDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkLowLevel.MotorType.kBrushless);
+        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, MotorType.kBrushless);
+        m_rightDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, MotorType.kBrushless);
+        m_rightDriveA.restoreFactoryDefaults();
+        m_rightDriveB.restoreFactoryDefaults();
         m_rightDriveB.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 
@@ -112,6 +119,11 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
             m_differentialDrive.setSafetyEnabled(false);
         }
+
+        m_leftDriveA.burnFlash();
+        m_leftDriveB.burnFlash();
+        m_rightDriveA.burnFlash();
+        m_rightDriveA.burnFlash();
     }
 
     @Override
