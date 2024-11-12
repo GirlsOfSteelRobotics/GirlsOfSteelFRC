@@ -2,10 +2,10 @@ package com.gos.crescendo2024.led_patterns;
 
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.auton.Autos;
-import com.gos.lib.led.LEDAlertPatterns;
 import com.gos.crescendo2024.led_patterns.subpatterns.AutoModePattern;
 import com.gos.crescendo2024.led_patterns.subpatterns.DavidDrivePattern;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.lib.led.LEDAlertPatterns;
 import com.gos.lib.properties.GosBooleanProperty;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;

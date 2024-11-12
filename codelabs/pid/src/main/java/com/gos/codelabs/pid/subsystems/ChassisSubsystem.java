@@ -3,14 +3,11 @@ package com.gos.codelabs.pid.subsystems;
 import com.gos.codelabs.pid.Constants;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.RelativeEncoder;
-
-
 import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkPIDController.ArbFFUnits;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

@@ -1,7 +1,7 @@
 package com.gos.lib.led.mirrored;
 
-import com.gos.lib.led.LEDPatternLookup;
 import com.gos.lib.led.LEDPattern;
+import com.gos.lib.led.LEDPatternLookup;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 import java.util.Map;

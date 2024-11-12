@@ -1,7 +1,7 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
 public class RunShooterRPM extends Command {

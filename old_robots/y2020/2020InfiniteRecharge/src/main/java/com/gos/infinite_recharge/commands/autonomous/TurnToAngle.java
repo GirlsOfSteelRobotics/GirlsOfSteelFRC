@@ -2,10 +2,10 @@ package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.subsystems.Chassis;
+import com.gos.lib.DeadbandHelper;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.lib.DeadbandHelper;
 
 public class TurnToAngle extends Command {
 

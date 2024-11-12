@@ -1,8 +1,8 @@
 package com.gos.infinite_recharge.commands;
 
+import com.gos.infinite_recharge.subsystems.Chassis;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.infinite_recharge.subsystems.Chassis;
 
 public class DriveByJoystick extends Command {
 

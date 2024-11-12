@@ -15,6 +15,7 @@ import com.gos.infinite_recharge.commands.SwitchToCamClimb;
 import com.gos.infinite_recharge.commands.SwitchToCamIntake;
 import com.gos.infinite_recharge.commands.VelocityControlDrivingTuning;
 import com.gos.infinite_recharge.commands.WinchWind;
+import com.gos.infinite_recharge.commands.autonomous.SingleShoot;
 import com.gos.infinite_recharge.subsystems.Camera;
 import com.gos.infinite_recharge.subsystems.Chassis;
 import com.gos.infinite_recharge.subsystems.ControlPanel;
@@ -28,7 +29,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import com.gos.infinite_recharge.commands.autonomous.SingleShoot;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**

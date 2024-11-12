@@ -5,14 +5,14 @@
 
 package com.gos.crescendo2024.auton;
 
+import com.gos.crescendo2024.auton.modes.OneNoteJustShoot;
+import com.gos.crescendo2024.auton.modes.amp.FourNoteAmpSide045Choreo;
 import com.gos.crescendo2024.auton.modes.asshole.Asshole7TwoNote6;
 import com.gos.crescendo2024.auton.modes.asshole.DisruptionAuto;
-import com.gos.crescendo2024.auton.modes.OneNoteJustShoot;
-import com.gos.crescendo2024.auton.modes.source.OzoneTwoNoteSource7;
-import com.gos.crescendo2024.auton.modes.amp.FourNoteAmpSide045Choreo;
 import com.gos.crescendo2024.auton.modes.middle.FourNoteMiddle120Choreo;
 import com.gos.crescendo2024.auton.modes.middle.FourNoteMiddle152Choreo;
 import com.gos.crescendo2024.auton.modes.middle.ThreeNoteMiddle52Choreo;
+import com.gos.crescendo2024.auton.modes.source.OzoneTwoNoteSource7;
 import com.gos.crescendo2024.auton.modes.source.ThreeNotesSourceSide76Choreo;
 import com.gos.crescendo2024.commands.CombinedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

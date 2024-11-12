@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.commands;
 
-import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.BaseTestFixture;
+import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

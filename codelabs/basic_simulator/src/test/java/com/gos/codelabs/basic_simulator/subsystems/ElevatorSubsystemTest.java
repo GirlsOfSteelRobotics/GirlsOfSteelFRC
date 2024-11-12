@@ -4,9 +4,9 @@ import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import edu.wpi.first.math.util.Units;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ElevatorSubsystemTest extends BaseTestFixture {
 
