@@ -4,12 +4,9 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.revrobotics.RelativeEncoder;
-
-
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;

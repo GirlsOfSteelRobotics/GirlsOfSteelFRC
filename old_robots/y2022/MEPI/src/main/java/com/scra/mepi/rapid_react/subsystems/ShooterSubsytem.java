@@ -7,15 +7,12 @@ package com.scra.mepi.rapid_react.subsystems;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
-
-
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
-
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkPIDController;
 import com.scra.mepi.rapid_react.Constants;
 import com.scra.mepi.rapid_react.ShooterLookupTable;
 import edu.wpi.first.math.system.plant.DCMotor;

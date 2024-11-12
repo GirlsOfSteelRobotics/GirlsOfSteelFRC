@@ -46,7 +46,7 @@ public class HangerSubsystem extends SubsystemBase {
 
     public HangerSubsystem() {
         m_leftHangerMotor = new SimableCANSparkMax(Constants.HANGER_LEFT_MOTOR, MotorType.kBrushless);
-        m_leftHangerMotor.restoreFactoryDefaults();
+        //m_leftHangerMotor.restoreFactoryDefaults();
         m_leftHangerMotor.setInverted(true);
         m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
         m_leftHangerMotor.setIdleMode(IdleMode.kBrake);
@@ -57,7 +57,7 @@ public class HangerSubsystem extends SubsystemBase {
         m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger a");
 
         m_rightHangerMotor = new SimableCANSparkMax(Constants.HANGER_RIGHT_MOTOR, MotorType.kBrushless);
-        m_rightHangerMotor.restoreFactoryDefaults();
+        //m_rightHangerMotor.restoreFactoryDefaults();
         m_rightHangerMotor.setInverted(false);
         m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
         m_rightHangerMotor.setIdleMode(IdleMode.kBrake);

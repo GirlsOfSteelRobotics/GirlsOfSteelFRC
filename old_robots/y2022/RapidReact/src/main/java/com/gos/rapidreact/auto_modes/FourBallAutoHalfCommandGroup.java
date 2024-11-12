@@ -12,8 +12,8 @@ import com.gos.rapidreact.trajectory.FourBallTrajectories;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_LOW;
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIGH;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_LOW;
 
 public class FourBallAutoHalfCommandGroup extends SequentialCommandGroup {
     private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM_LOW;

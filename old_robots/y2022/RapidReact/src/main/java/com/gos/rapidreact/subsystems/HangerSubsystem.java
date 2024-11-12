@@ -2,13 +2,10 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.rapidreact.Constants;
-import com.revrobotics.RelativeEncoder;
-
-
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
-
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;

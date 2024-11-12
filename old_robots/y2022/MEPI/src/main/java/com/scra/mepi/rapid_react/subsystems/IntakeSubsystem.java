@@ -5,10 +5,8 @@
 package com.scra.mepi.rapid_react.subsystems;
 
 
-
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;

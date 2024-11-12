@@ -4,15 +4,12 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-
-import edu.wpi.first.wpilibj.DigitalInput;
-
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.scra.mepi.rapid_react.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TowerSubsystem extends SubsystemBase {
