@@ -7,12 +7,13 @@ import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -68,16 +69,16 @@ public class RevSwerveModule {
 
         switch (moduleConstants.m_driveMotorType) {
         case NEO:
-            m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+            m_drivingSparkMax = new SimableCANSparkMax(drivingCANId, MotorType.kBrushless);
             break;
         case VORTEX:
-            m_drivingSparkMax = new SimableCANSparkFlex(drivingCANId, CANSparkLowLevel.MotorType.kBrushless);
+            m_drivingSparkMax = new SimableCANSparkFlex(drivingCANId, MotorType.kBrushless);
             break;
         default:
             throw new IllegalArgumentException();
         }
 
-        m_turningSparkMax = new SimableCANSparkMax(azimuthId, CANSparkLowLevel.MotorType.kBrushless);
+        m_turningSparkMax = new SimableCANSparkMax(azimuthId, MotorType.kBrushless);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
@@ -91,7 +92,7 @@ public class RevSwerveModule {
         // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
         m_turningRelativeEncoder = m_turningSparkMax.getEncoder();
-        m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder();
         m_drivingPIDController = m_drivingSparkMax.getPIDController();
         m_turningPIDController = m_turningSparkMax.getPIDController();
         m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
@@ -145,9 +146,11 @@ public class RevSwerveModule {
         m_turningSparkMax.setSmartCurrentLimit(RevSwerveModuleConstants.TURNING_MOTOR_CURRENT_LIMIT);
 
         if (RobotBase.isSimulation()) {
+            DCMotor turningMotor = DCMotor.getNEO(1);
+            DCMotor drivingMotor = DCMotor.getNEO(1);
             SwerveModuleSim moduleSim = new SwerveModuleSim(
-                DCMotor.getNEO(1),
-                DCMotor.getNEO(1),
+                turningMotor,
+                drivingMotor,
                 RevSwerveModuleConstants.WHEEL_DIAMETER_METERS / 2,
                 RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR,
                 moduleConstants.m_drivingMotorReduction,
@@ -260,10 +263,10 @@ public class RevSwerveModule {
             new Rotation2d(getTurningEncoderAngle()));
 
         // Command driving and turning SPARKS MAX towards their respective setpoints.
-        m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
+        m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, ControlType.kVelocity);
 
         m_desiredState = optimizedDesiredState;
-        m_turningPIDController.setReference(m_desiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
+        m_turningPIDController.setReference(m_desiredState.angle.getRadians(), ControlType.kPosition);
 
     }
 
@@ -287,12 +290,12 @@ public class RevSwerveModule {
     }
 
     public void setCoastMode() {
-        m_drivingSparkMax.setIdleMode(CANSparkBase.IdleMode.kCoast);
-        m_turningSparkMax.setIdleMode(CANSparkBase.IdleMode.kCoast);
+        m_drivingSparkMax.setIdleMode(IdleMode.kCoast);
+        m_turningSparkMax.setIdleMode(IdleMode.kCoast);
     }
 
     public void setBrakeMode() {
-        m_drivingSparkMax.setIdleMode(CANSparkBase.IdleMode.kBrake);
-        m_turningSparkMax.setIdleMode(CANSparkBase.IdleMode.kBrake);
+        m_drivingSparkMax.setIdleMode(IdleMode.kBrake);
+        m_turningSparkMax.setIdleMode(IdleMode.kBrake);
     }
 }

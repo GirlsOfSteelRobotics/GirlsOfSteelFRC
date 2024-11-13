@@ -1,7 +1,7 @@
 package com.gos.infinite_recharge.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.infinite_recharge.subsystems.ControlPanel;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class SpinControlPanel extends Command {
     private final ControlPanel m_controlPanel;

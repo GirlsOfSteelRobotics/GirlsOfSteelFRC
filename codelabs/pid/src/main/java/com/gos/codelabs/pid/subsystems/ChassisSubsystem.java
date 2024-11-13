@@ -3,20 +3,21 @@ package com.gos.codelabs.pid.subsystems;
 import com.gos.codelabs.pid.Constants;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.SimableCANSparkMax;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -56,12 +57,17 @@ public class ChassisSubsystem extends SubsystemBase {
     @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkLowLevel.MotorType.kBrushless);
-        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkLowLevel.MotorType.kBrushless);
+        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, MotorType.kBrushless);
+        SimableCANSparkMax leftDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_B, MotorType.kBrushless);
+
+        m_leftDriveA.restoreFactoryDefaults();
+        leftDriveB.restoreFactoryDefaults();
         leftDriveB.follow(m_leftDriveA);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkLowLevel.MotorType.kBrushless);
-        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkLowLevel.MotorType.kBrushless);
+        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, MotorType.kBrushless);
+        SimableCANSparkMax rightDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, MotorType.kBrushless);
+        m_rightDriveA.restoreFactoryDefaults();
+        rightDriveB.restoreFactoryDefaults();
         rightDriveB.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 
@@ -94,6 +100,11 @@ public class ChassisSubsystem extends SubsystemBase {
                     new ADXRS450GyroWrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
+
+        m_leftDriveA.burnFlash();
+        leftDriveB.burnFlash();
+        m_rightDriveA.burnFlash();
+        rightDriveB.burnFlash();
     }
 
     private PidProperty setupVelocityPidConstants(SparkPIDController pidController) {
@@ -194,8 +205,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistancePositionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, CANSparkMax.ControlType.kPosition, PID_SLOT_POSITION);
-        m_rightPid.setReference(rightDistance, CANSparkMax.ControlType.kPosition, PID_SLOT_POSITION);
+        m_leftPid.setReference(leftDistance, ControlType.kPosition, PID_SLOT_POSITION);
+        m_rightPid.setReference(rightDistance, ControlType.kPosition, PID_SLOT_POSITION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Position Goal", leftDistance);
@@ -203,8 +214,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistanceSmartMotionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
-        m_rightPid.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
+        m_leftPid.setReference(leftDistance, ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
+        m_rightPid.setReference(rightDistance, ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left SM Goal", leftDistance);
@@ -225,10 +236,10 @@ public class ChassisSubsystem extends SubsystemBase {
         double arbLeft = staticFrictionLeft + accelerationLeft;
         double arbRight = staticFrictionRight + accelerationRight;
 
-        SparkPIDController.ArbFFUnits arbUnit = SparkPIDController.ArbFFUnits.kVoltage;
+        ArbFFUnits arbUnit = ArbFFUnits.kVoltage;
 
-        m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
-        m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
+        m_leftPid.setReference(leftVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
+        m_rightPid.setReference(rightVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Velocity Goal", leftVelocity);

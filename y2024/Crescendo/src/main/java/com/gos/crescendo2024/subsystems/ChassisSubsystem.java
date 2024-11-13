@@ -7,8 +7,6 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.gos.lib.photonvision.AprilTagCamera;
-import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
@@ -18,6 +16,8 @@ import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.ValidShootingPolygon;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.photonvision.AprilTagCamera;
+import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;

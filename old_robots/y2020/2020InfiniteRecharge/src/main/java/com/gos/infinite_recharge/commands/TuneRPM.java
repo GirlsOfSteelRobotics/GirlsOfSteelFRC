@@ -1,9 +1,9 @@
 package com.gos.infinite_recharge.commands;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.infinite_recharge.subsystems.Shooter;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.infinite_recharge.subsystems.Shooter;
 
 
 public class TuneRPM extends Command {

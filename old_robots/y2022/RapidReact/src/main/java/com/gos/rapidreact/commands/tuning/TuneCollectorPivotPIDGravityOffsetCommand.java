@@ -1,7 +1,7 @@
 package com.gos.rapidreact.commands.tuning;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * figure out extra voltage to overcome the force of gravity to get collector pivot to move

@@ -25,9 +25,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -229,7 +229,7 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
 
     @Override
     public Command createDeferredDriveToPointCommand(Pose2d point, boolean reverse) {
-        return new ProxyCommand(() -> createDriveToPointCommand(point, reverse));
+        return defer(() -> createDriveToPointCommand(point, reverse));
     }
 
     @Override

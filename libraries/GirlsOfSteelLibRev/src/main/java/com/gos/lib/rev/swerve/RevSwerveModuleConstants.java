@@ -1,6 +1,6 @@
 package com.gos.lib.rev.swerve;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.util.Units;
 
 @SuppressWarnings("PMD.DataClass")
@@ -21,8 +21,8 @@ public final class RevSwerveModuleConstants {
     public static final double TURNING_ENCODER_POSITION_PID_MIN_INPUT = 0; // radians
     public static final double TURNING_ENCODER_POSITION_PID_MAX_INPUT = TURNING_ENCODER_POSITION_FACTOR; // radians
 
-    public static final CANSparkMax.IdleMode DRIVING_MOTOR_IDLE_MODE = CANSparkMax.IdleMode.kBrake;
-    public static final CANSparkMax.IdleMode TURNING_MOTOR_IDLE_MODE = CANSparkMax.IdleMode.kBrake;
+    public static final IdleMode DRIVING_MOTOR_IDLE_MODE = IdleMode.kBrake;
+    public static final IdleMode TURNING_MOTOR_IDLE_MODE = IdleMode.kBrake;
 
     public static final int DRIVING_MOTOR_CURRENT_LIMIT = 50; // amps
     public static final int TURNING_MOTOR_CURRENT_LIMIT = 20; // amps

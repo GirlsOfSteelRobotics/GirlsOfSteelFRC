@@ -4,9 +4,9 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkMax;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
-    private final CANSparkMax m_leftClimber = new CANSparkMax(Constants.CLIMBER_LEFT, MotorType.kBrushless);
-    private final CANSparkMax m_rightClimber =
-        new CANSparkMax(Constants.CLIMBER_RIGHT, MotorType.kBrushless);
+    private final SimableCANSparkMax m_leftClimber = new SimableCANSparkMax(Constants.CLIMBER_LEFT, MotorType.kBrushless);
+    private final SimableCANSparkMax m_rightClimber =
+        new SimableCANSparkMax(Constants.CLIMBER_RIGHT, MotorType.kBrushless);
     private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_LIMIT_SWITCH);
     private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_LIMIT_SWITCH);
     private final RelativeEncoder m_leftEncoder = m_leftClimber.getEncoder();
@@ -33,12 +33,13 @@ public class ClimberSubsystem extends SubsystemBase {
         m_rightClimber.restoreFactoryDefaults();
         m_leftClimber.setInverted(true);
         m_rightClimber.setInverted(false);
-        m_leftClimber.burnFlash();
-        m_rightClimber.burnFlash();
 
         m_rightClimber.follow(m_leftClimber, true);
         m_leftClimber.setSmartCurrentLimit(50);
         m_rightClimber.setSmartCurrentLimit(50);
+
+        m_leftClimber.burnFlash();
+        m_rightClimber.burnFlash();
     }
 
     public void runClimberPID(double goal) {

@@ -1,9 +1,9 @@
 package com.gos.rapidreact.commands;
 
+import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 
 public class TeleopCurvatureDriveCommand extends Command {

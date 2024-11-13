@@ -4,30 +4,32 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
+import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TowerSubsystem extends SubsystemBase {
-    private final CANSparkMax m_towerMotor;
-    private final CANSparkMax m_towerKicker;
+    private final SimableCANSparkMax m_towerMotor;
+    private final SimableCANSparkMax m_towerKicker;
     private final DigitalInput m_beamBreak = new DigitalInput(9);
 
     /**
      * Creates a new Tower.
      */
     public TowerSubsystem() {
-        m_towerMotor = new CANSparkMax(Constants.TOWER_SPARK, MotorType.kBrushless);
-        m_towerKicker = new CANSparkMax(Constants.TOWER_KICKER_SPARK, MotorType.kBrushless);
-        m_towerMotor.setSmartCurrentLimit(30);
-        m_towerKicker.setSmartCurrentLimit(30);
-        m_towerMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_towerKicker.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_towerMotor = new SimableCANSparkMax(Constants.TOWER_SPARK, MotorType.kBrushless);
+        m_towerKicker = new SimableCANSparkMax(Constants.TOWER_KICKER_SPARK, MotorType.kBrushless);
         m_towerMotor.restoreFactoryDefaults();
         m_towerKicker.restoreFactoryDefaults();
+        m_towerMotor.setSmartCurrentLimit(30);
+        m_towerKicker.setSmartCurrentLimit(30);
+        m_towerMotor.setIdleMode(IdleMode.kBrake);
+        m_towerKicker.setIdleMode(IdleMode.kCoast);
+
         m_towerKicker.burnFlash();
         m_towerMotor.burnFlash();
     }

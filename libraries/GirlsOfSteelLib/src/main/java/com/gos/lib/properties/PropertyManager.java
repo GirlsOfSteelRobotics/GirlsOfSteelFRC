@@ -1,14 +1,14 @@
 package com.gos.lib.properties;
 
+import edu.wpi.first.wpilibj.Preferences;
+import org.littletonrobotics.frc2023.util.Alert;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-
-import edu.wpi.first.wpilibj.Preferences;
-import org.littletonrobotics.frc2023.util.Alert;
 
 /**
  * This class contains basic configurable properties. There is an interface

@@ -6,9 +6,9 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.CANSparkBase;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SparkPIDController;
@@ -47,7 +47,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DigitalInput m_photoelectricSensor;
 
     public ShooterSubsystem() {
-        m_shooterMotorLeader = new SimableCANSparkFlex(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorLeader = new SimableCANSparkFlex(Constants.SHOOTER_MOTOR_LEADER, MotorType.kBrushless);
         m_shooterMotorLeader.restoreFactoryDefaults();
         m_shooterMotorLeader.setInverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
@@ -60,14 +60,14 @@ public class ShooterSubsystem extends SubsystemBase {
             .addFF(0.000185)
             .build();
 
-        m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_shooterMotorLeader.setIdleMode(IdleMode.kCoast);
         m_shooterMotorLeader.setSmartCurrentLimit(60);
         m_shooterMotorLeader.enableVoltageCompensation(10);
         m_shooterMotorLeader.burnFlash();
 
-        m_shooterMotorFollower = new SimableCANSparkFlex(Constants.SHOOTER_MOTOR_FOLLOWER, CANSparkLowLevel.MotorType.kBrushless);
+        m_shooterMotorFollower = new SimableCANSparkFlex(Constants.SHOOTER_MOTOR_FOLLOWER, MotorType.kBrushless);
         m_shooterMotorFollower.restoreFactoryDefaults();
-        m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_shooterMotorFollower.setIdleMode(IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
         m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
         m_shooterMotorFollower.burnFlash();
@@ -85,8 +85,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("Is Piece in Shooter", this::isPieceInShooter);
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
-            this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotorLeader), RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(gearbox, 1.0, 0.01);
+            this.m_shooterSimulator = new FlywheelSimWrapper(
+                shooterFlywheelSim,
+                new RevMotorControllerSimWrapper(this.m_shooterMotorLeader),
+                RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
         }
 
     }
@@ -114,7 +118,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setPidRpm(double rpm) {
-        this.m_pidController.setReference(rpm, CANSparkBase.ControlType.kVelocity);
+        this.m_pidController.setReference(rpm, ControlType.kVelocity);
         m_shooterGoalRPM = rpm;
     }
 

@@ -1,16 +1,16 @@
 package com.gos.rapidreact.subsystems;
 
-import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.auto_modes.AutoModeFactory;
 import com.gos.lib.led.LEDAngleToTargetOverAndUnder;
 import com.gos.lib.led.LEDFlash;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.LEDRainbow;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
+import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
 import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
-import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
+import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.auto_modes.AutoModeFactory;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;

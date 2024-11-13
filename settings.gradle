@@ -9,7 +9,6 @@ rootProject.name = 'GirlsOfSteelRobotics'
 
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
-include 'libraries:GirlsOfSteelLibPhoenix5'
 include 'libraries:GirlsOfSteelLibPhoenix6'
 include 'libraries:GirlsOfSteelLibPhotonVision'
 include 'libraries:GirlsOfSteelLibPathing'

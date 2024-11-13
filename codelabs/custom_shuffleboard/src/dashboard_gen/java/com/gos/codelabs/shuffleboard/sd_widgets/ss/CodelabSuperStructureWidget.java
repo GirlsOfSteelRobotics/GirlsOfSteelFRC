@@ -6,7 +6,6 @@ import edu.wpi.first.shuffleboard.api.widget.SimpleAnnotatedWidget;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
-
 import java.util.Map;
 
 

@@ -1,12 +1,12 @@
 package com.gos.crescendo2024.led_patterns;
 
 import com.gos.crescendo2024.led_patterns.subpatterns.AprilTagPattern;
-import com.gos.lib.led.LEDFlashOnRisingEdge;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.led.LEDBoolean;
+import com.gos.lib.led.LEDFlashOnRisingEdge;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 

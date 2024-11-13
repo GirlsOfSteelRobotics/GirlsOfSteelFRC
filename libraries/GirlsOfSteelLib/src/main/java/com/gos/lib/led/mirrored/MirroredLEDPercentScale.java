@@ -1,7 +1,7 @@
 package com.gos.lib.led.mirrored;
 
-import com.gos.lib.led.LEDPercentScale;
 import com.gos.lib.led.LEDPattern;
+import com.gos.lib.led.LEDPercentScale;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 

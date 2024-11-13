@@ -1,9 +1,9 @@
 package com.gos.codelabs.shuffleboard.sd_widgets;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureWidget;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureDataType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureDataType;
+import com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureWidget;
 import edu.wpi.first.shuffleboard.api.data.DataType;
 import edu.wpi.first.shuffleboard.api.plugin.Description;
 import edu.wpi.first.shuffleboard.api.plugin.Plugin;

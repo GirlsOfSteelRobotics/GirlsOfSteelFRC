@@ -4,15 +4,16 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.revrobotics.CANSparkMax;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final CANSparkMax m_motor = new CANSparkMax(6, MotorType.kBrushless);
+    private final SimableCANSparkMax m_motor = new SimableCANSparkMax(6, MotorType.kBrushless);
     private final DoubleSolenoid m_solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 6);
 
     /**

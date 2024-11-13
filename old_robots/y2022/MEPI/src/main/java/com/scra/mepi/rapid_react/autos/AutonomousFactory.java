@@ -1,9 +1,9 @@
 package com.scra.mepi.rapid_react.autos;
 
+import com.scra.mepi.rapid_react.subsystems.ShooterSubsytem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.scra.mepi.rapid_react.subsystems.ShooterSubsytem;
 
 import java.util.HashMap;
 import java.util.Map;

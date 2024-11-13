@@ -7,7 +7,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
 public class FieldConstants {
-    public static final AprilTagFieldLayout TAG_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+    public static final AprilTagFieldLayout TAG_LAYOUT =  AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
 
     public static final Translation2d AMP_CENTER =
         new Translation2d(Units.inchesToMeters(72.455), Units.inchesToMeters(322.996));

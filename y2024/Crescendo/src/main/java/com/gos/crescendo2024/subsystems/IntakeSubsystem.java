@@ -5,8 +5,8 @@ import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -24,9 +24,9 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_intakeAlert;
 
     public IntakeSubsystem() {
-        m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, MotorType.kBrushless);
         m_intakeMotor.restoreFactoryDefaults();
-        m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_intakeMotor.setIdleMode(IdleMode.kBrake);
         m_intakeMotor.setSmartCurrentLimit(40);
         m_intakeMotor.setInverted(true);
         m_intakeMotor.burnFlash();
@@ -73,6 +73,10 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.clearFaults();
     }
 
+    private void setIdleMode(IdleMode idleMode) {
+        m_intakeMotor.setIdleMode(idleMode);
+    }
+
     /////////////////////////////////////
     // Command Factories
     /////////////////////////////////////
@@ -96,8 +100,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public Command createIntakeToCoastCommand() {
         return this.runEnd(
-                () -> m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
-                () -> m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Intake to Coast");
     }
 }

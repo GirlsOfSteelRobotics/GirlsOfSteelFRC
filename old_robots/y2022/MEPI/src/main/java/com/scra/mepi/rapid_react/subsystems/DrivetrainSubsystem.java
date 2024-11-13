@@ -29,10 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.json.simple.parser.ParseException;
 import org.snobotv2.module_wrappers.navx.NavxWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+
+import java.io.IOException;
 
 // Drive train
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"})
@@ -69,9 +72,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
      * Creates a new DrivetrainSubsystem.
      */
     public DrivetrainSubsystem() {
-        m_leftProperties = setupVelocityPidValues(m_leftController);
-        m_rightProperties = setupVelocityPidValues(m_rightController);
-
         m_leftLeader.restoreFactoryDefaults();
         m_leftFollower.restoreFactoryDefaults();
         m_rightLeader.restoreFactoryDefaults();
@@ -86,6 +86,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         m_leftFollower.follow(m_leftLeader);
         m_rightFollower.follow(m_rightLeader);
+
+        m_leftProperties = setupVelocityPidValues(m_leftController);
+        m_rightProperties = setupVelocityPidValues(m_rightController);
 
         m_leftEncoder.setPositionConversionFactor(Constants.DRIVE_CONVERSION_FACTOR);
         m_rightEncoder.setPositionConversionFactor(Constants.DRIVE_CONVERSION_FACTOR);
@@ -157,7 +160,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public Command createPathFollowingCommand(String pathName) {
-        return AutoBuilder.followPath(PathPlannerPath.fromPathFile(pathName));
+        try {
+            return AutoBuilder.followPath(PathPlannerPath.fromPathFile(pathName));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

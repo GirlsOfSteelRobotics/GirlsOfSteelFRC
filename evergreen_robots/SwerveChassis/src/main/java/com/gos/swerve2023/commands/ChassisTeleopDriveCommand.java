@@ -1,9 +1,9 @@
 package com.gos.swerve2023.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.swerve2023.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.swerve2023.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 

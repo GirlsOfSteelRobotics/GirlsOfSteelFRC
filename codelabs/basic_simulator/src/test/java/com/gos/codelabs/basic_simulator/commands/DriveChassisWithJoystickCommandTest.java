@@ -1,10 +1,10 @@
 package com.gos.codelabs.basic_simulator.commands;
 
+import com.gos.codelabs.basic_simulator.BaseTestFixture;
+import com.gos.codelabs.basic_simulator.RobotContainer;
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
-import com.gos.codelabs.basic_simulator.BaseTestFixture;
-import com.gos.codelabs.basic_simulator.RobotContainer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

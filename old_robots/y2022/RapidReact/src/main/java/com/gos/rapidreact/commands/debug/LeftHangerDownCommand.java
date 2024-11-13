@@ -1,7 +1,7 @@
 package com.gos.rapidreact.commands.debug;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
 public class LeftHangerDownCommand extends Command {
