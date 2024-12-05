@@ -10,18 +10,23 @@ import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.sim.LimelightSim;
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -40,6 +45,8 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
 
 
 @SuppressWarnings("PMD.TooManyFields")
@@ -56,14 +63,14 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final HeavyDoubleProperty m_openLoopRampRateProperty;
 
-    private final SimableCANSparkMax m_leaderLeft;
-    private final SimableCANSparkMax m_followerLeft;
+    private final SparkMax m_leaderLeft;
+    private final SparkMax m_followerLeft;
 
-    private final SimableCANSparkMax m_leaderRight;
-    private final SimableCANSparkMax m_followerRight;
+    private final SparkMax m_leaderRight;
+    private final SparkMax m_followerRight;
 
-    private final SparkPIDController m_leftPidController;
-    private final SparkPIDController m_rightPidController;
+    private final SparkClosedLoopController m_leftPidController;
+    private final SparkClosedLoopController m_rightPidController;
 
     private final PidProperty m_leftProperties;
     private final PidProperty m_rightProperties;
@@ -111,34 +118,34 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public ChassisSubsystem() {
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderLeft = new SparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new SparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderRight = new SparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerRight = new SparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
-        m_leaderLeft.restoreFactoryDefaults();
-        m_followerLeft.restoreFactoryDefaults();
-        m_leaderRight.restoreFactoryDefaults();
-        m_followerRight.restoreFactoryDefaults();
+        SparkMaxConfig leaderLeftConfig = new SparkMaxConfig();
+        SparkMaxConfig followerLeftConfig = new SparkMaxConfig();
+        SparkMaxConfig leaderRightConfig = new SparkMaxConfig();
+        SparkMaxConfig followerRightConfig = new SparkMaxConfig();
 
-        m_leaderLeft.setIdleMode(IdleMode.kCoast);
-        m_followerLeft.setIdleMode(IdleMode.kCoast);
-        m_leaderRight.setIdleMode(IdleMode.kCoast);
-        m_followerRight.setIdleMode(IdleMode.kCoast);
+        leaderLeftConfig.idleMode(IdleMode.kCoast);
+        followerLeftConfig.idleMode(IdleMode.kCoast);
+        leaderRightConfig.idleMode(IdleMode.kCoast);
+        followerRightConfig.idleMode(IdleMode.kCoast);
 
         m_leaderLeft.setInverted(false);
         m_leaderRight.setInverted(true);
 
-        m_followerLeft.follow(m_leaderLeft, false);
-        m_followerRight.follow(m_leaderRight, false);
+        followerLeftConfig.follow(m_leaderLeft, false);
+        followerRightConfig.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
-        m_leftPidController = m_leaderLeft.getPIDController();
-        m_rightPidController = m_leaderRight.getPIDController();
+        m_leftPidController = m_leaderLeft.getClosedLoopController();
+        m_rightPidController = m_leaderRight.getClosedLoopController();
 
         m_toCargoPID = new PIDController(0, 0, 0);
         m_toCargoPIDProperties = new WpiPidPropertyBuilder("Chassis to cargo", false, m_toCargoPID)
@@ -163,11 +170,11 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
         //p 0.32, d 0.21
 
-        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
-        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        leaderLeftConfig.encoder.positionConversionFactor(ENCODER_CONSTANT);
+        leaderRightConfig.encoder.positionConversionFactor(ENCODER_CONSTANT);
 
-        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
-        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        leaderLeftConfig.encoder.velocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        leaderRightConfig.encoder.velocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
 
@@ -177,14 +184,16 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field = new Field2d();
 
         m_openLoopRampRateProperty = new HeavyDoubleProperty((double val) -> {
-            m_leaderLeft.setOpenLoopRampRate(val);
-            m_leaderRight.setOpenLoopRampRate(val);
+            SparkMaxConfig config = new SparkMaxConfig();
+            config.openLoopRampRate(val);
+            m_leaderLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+            m_leaderRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         }, DRIVER_OL_RAMP_RATE);
 
 
         // Smart Motion stuff
-        m_leftProperties = setupPidValues(m_leftPidController);
-        m_rightProperties = setupPidValues(m_rightPidController);
+        m_leftProperties = setupPidValues(m_leaderLeft, leaderLeftConfig);
+        m_rightProperties = setupPidValues(m_leaderRight, leaderRightConfig);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -194,8 +203,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 null);
             m_simulator = new DifferentialDrivetrainSimWrapper(
                 drivetrainSim,
-                new RevMotorControllerSimWrapper(m_leaderLeft),
-                new RevMotorControllerSimWrapper(m_leaderRight),
+                new RevMotorControllerSimWrapper(m_leaderLeft, DCMotor.getCIM(2)),
+                new RevMotorControllerSimWrapper(m_leaderRight, DCMotor.getCIM(2)),
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new Pigeon2Wrapper(m_gyro));
@@ -206,10 +215,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
         SmartDashboard.putData(m_field);
 
-        m_leaderLeft.burnFlash();
-        m_followerLeft.burnFlash();
-        m_leaderRight.burnFlash();
-        m_followerRight.burnFlash();
+        m_leaderLeft.configure(leaderLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerLeft.configure(followerLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_leaderRight.configure(leaderRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerRight.configure(followerRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         NetworkTable chassisTable = NetworkTableInstance.getDefault().getTable("Chassis");
 
@@ -226,8 +235,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyroAngleRateEntry = odometryTable.getEntry("Angle (dps)");
     }
 
-    private PidProperty setupPidValues(SparkPIDController pidController) {
-        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+    private PidProperty setupPidValues(SparkMax motor, SparkMaxConfig config) {
+        return new RevPidPropertyBuilder("Chassis", false, motor, config, ClosedLoopSlot.kSlot0)
             .addP(0.00003) //0.0012776
             .addI(0)
             .addD(0)
@@ -244,7 +253,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setRobotPose(getPose());
         m_coordinateGuiPublisher.publish(getPose());
         m_gyroAngleEntry.setNumber(getYawAngle());
-        m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
+        m_gyroAngleRateEntry.setNumber(m_gyro.getAngularVelocityZWorld().getValue().in(DegreesPerSecond));
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -283,8 +292,8 @@ public class ChassisSubsystem extends SubsystemBase {
         double rightError = rightDistance - getRightEncoderDistance();
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftError);
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightError);
-        m_leftPidController.setReference(leftDistance, ControlType.kSmartMotion, 0, staticFrictionLeft);
-        m_rightPidController.setReference(rightDistance, ControlType.kSmartMotion, 0, staticFrictionRight);
+        m_leftPidController.setReference(leftDistance, ControlType.kMAXMotionPositionControl, 0, staticFrictionLeft);
+        m_rightPidController.setReference(rightDistance, ControlType.kMAXMotionPositionControl, 0, staticFrictionRight);
         m_drive.feed();
     }
 
@@ -305,7 +314,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getYawAngle() {
-        return m_gyro.getYaw().getValue();
+        return m_gyro.getYaw().getValue().in(Degree);
     }
 
     public double getOdometryAngle() {

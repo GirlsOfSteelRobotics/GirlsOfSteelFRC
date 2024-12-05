@@ -7,12 +7,16 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.SparkMaxUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,16 +27,16 @@ public class HangerSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty HANGER_UP_GOAL_POSITION = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Hanger Up Goal Position", 118);
 
-    private final SimableCANSparkMax m_leftHangerMotor;
+    private final SparkMax m_leftHangerMotor;
     private final RelativeEncoder m_leftHangerEncoder;
     private final SparkMaxAlerts m_leftHangerAlert;
-    private final SparkPIDController m_leftPidController;
+    private final SparkClosedLoopController m_leftPidController;
     private final PidProperty m_leftPidProperties;
 
-    private final SimableCANSparkMax m_rightHangerMotor;
+    private final SparkMax m_rightHangerMotor;
     private final RelativeEncoder m_rightHangerEncoder;
     private final SparkMaxAlerts m_rightHangerAlert;
-    private final SparkPIDController m_rightPidController;
+    private final SparkClosedLoopController m_rightPidController;
     private final PidProperty m_rightPidProperties;
 
     private final LoggingUtil m_networkTableEntries;
@@ -45,26 +49,26 @@ public class HangerSubsystem extends SubsystemBase {
     //TODO add limit switches
 
     public HangerSubsystem() {
-        m_leftHangerMotor = new SimableCANSparkMax(Constants.HANGER_LEFT_MOTOR, MotorType.kBrushless);
-        //m_leftHangerMotor.restoreFactoryDefaults();
+        m_leftHangerMotor = new SparkMax(Constants.HANGER_LEFT_MOTOR, MotorType.kBrushless);
+        SparkMaxConfig leftHangerMotorConfig = new SparkMaxConfig();
         m_leftHangerMotor.setInverted(true);
         m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
-        m_leftHangerMotor.setIdleMode(IdleMode.kBrake);
-        m_leftHangerMotor.setSmartCurrentLimit(60);
-        m_leftPidController = m_leftHangerMotor.getPIDController();
-        m_leftPidProperties = createPidProperties(m_leftPidController);
-        m_leftHangerMotor.burnFlash();
+        leftHangerMotorConfig.idleMode(IdleMode.kBrake);
+        leftHangerMotorConfig.smartCurrentLimit(60);
+        m_leftPidController = m_leftHangerMotor.getClosedLoopController();
+        m_leftPidProperties = createPidProperties(m_leftHangerMotor, leftHangerMotorConfig);
+        m_leftHangerMotor.configure(leftHangerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_leftHangerAlert = new SparkMaxAlerts(m_leftHangerMotor, "hanger a");
 
-        m_rightHangerMotor = new SimableCANSparkMax(Constants.HANGER_RIGHT_MOTOR, MotorType.kBrushless);
-        //m_rightHangerMotor.restoreFactoryDefaults();
+        m_rightHangerMotor = new SparkMax(Constants.HANGER_RIGHT_MOTOR, MotorType.kBrushless);
+        SparkMaxConfig rightHangerMotorConfig = new SparkMaxConfig();
         m_rightHangerMotor.setInverted(false);
         m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
-        m_rightHangerMotor.setIdleMode(IdleMode.kBrake);
-        m_rightHangerMotor.setSmartCurrentLimit(60);
-        m_rightPidController = m_rightHangerMotor.getPIDController();
-        m_rightPidProperties = createPidProperties(m_rightPidController);
-        m_rightHangerMotor.burnFlash();
+        rightHangerMotorConfig.idleMode(IdleMode.kBrake);
+        rightHangerMotorConfig.smartCurrentLimit(60);
+        m_rightPidController = m_rightHangerMotor.getClosedLoopController();
+        m_rightPidProperties = createPidProperties(m_rightHangerMotor, rightHangerMotorConfig);
+        m_rightHangerMotor.configure(rightHangerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_rightHangerAlert = new SparkMaxAlerts(m_rightHangerMotor, "hanger b");
 
 
@@ -83,8 +87,8 @@ public class HangerSubsystem extends SubsystemBase {
 
     }
 
-    private PidProperty createPidProperties(SparkPIDController pidController) {
-        return new RevPidPropertyBuilder("HangerPid", false, pidController, 0)
+    private PidProperty createPidProperties(SparkMax motor, SparkMaxConfig config) {
+        return new RevPidPropertyBuilder("HangerPid", false, motor, config, ClosedLoopSlot.kSlot0)
             .addP(0.1)
             .build();
     }
@@ -187,8 +191,10 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public void setIdleMode(IdleMode mode) {
-        m_leftHangerMotor.setIdleMode(mode);
-        m_rightHangerMotor.setIdleMode(mode);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(mode);
+        m_leftHangerMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_rightHangerMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     /////////////////////////////////////

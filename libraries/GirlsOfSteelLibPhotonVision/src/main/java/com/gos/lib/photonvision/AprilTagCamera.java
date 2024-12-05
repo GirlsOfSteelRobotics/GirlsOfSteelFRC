@@ -43,7 +43,7 @@ public class AprilTagCamera {
 
     // Cached values
     private Optional<EstimatedRobotPose> m_maybeResult;
-    private PhotonPipelineResult m_lastPipelineResult;
+    private Optional<PhotonPipelineResult> m_lastPipelineResult;
     private int m_numTargetsSeen;
     private double m_avgDistanceToTag;
     private double m_avgAmbiguity;
@@ -63,7 +63,7 @@ public class AprilTagCamera {
         m_multiTagStddev = multiTagStddev;
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
+        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_robotToCamera.getTransform());
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
@@ -90,7 +90,16 @@ public class AprilTagCamera {
 
         m_photonPoseEstimator.setRobotToCameraTransform(robotToCamera);
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        m_maybeResult = m_photonPoseEstimator.update();
+        m_maybeResult = Optional.empty();
+        m_lastPipelineResult = Optional.empty();
+
+        for (PhotonPipelineResult result : m_photonCamera.getAllUnreadResults()) {
+            update(robotToCamera, result);
+        }
+    }
+
+    private void update(Transform3d robotToCamera, PhotonPipelineResult result) {
+        m_maybeResult = m_photonPoseEstimator.update(result);
 
         if (m_maybeResult.isEmpty()) {
             m_field.clearCameraResult();
@@ -107,7 +116,7 @@ public class AprilTagCamera {
             m_field.setCameraResult(m_maybeResult.get().estimatedPose, aprilTags);
         }
 
-        m_lastPipelineResult = m_photonCamera.getLatestResult();
+        m_lastPipelineResult = Optional.of(result);
 
         m_logger.updateLogs();
     }
@@ -116,9 +125,13 @@ public class AprilTagCamera {
         return m_maybeResult;
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
         Matrix<N3, N1> estStdDevs = m_singleTagStddev;
-        List<PhotonTrackedTarget> targets = m_lastPipelineResult.getTargets();
+        if (m_lastPipelineResult.isEmpty()) {
+            return estStdDevs;
+        }
+        List<PhotonTrackedTarget> targets = m_lastPipelineResult.get().getTargets();
         m_numTargetsSeen = 0;
         double sumDist = 0;
         double sumAmbiguity = 0;
@@ -160,7 +173,7 @@ public class AprilTagCamera {
         m_photonCamera.takeOutputSnapshot();
     }
 
-    public PhotonPipelineResult getLatestResult() {
+    public Optional<PhotonPipelineResult> getLatestResult() {
         return m_lastPipelineResult;
     }
 

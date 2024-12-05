@@ -32,6 +32,9 @@ import org.littletonrobotics.frc2023.FieldConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+
 public abstract class BaseChassis extends SubsystemBase implements ChassisSubsystemInterface {
     protected static final double PITCH_LOWER_LIMIT = -3.0;
     protected static final double PITCH_UPPER_LIMIT = 3.0;
@@ -106,9 +109,9 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         if (Constants.IS_ROBOT_BLOSSOM) {
-            m_networkTableEntries.addDouble("Gyro Rate", () -> -m_gyro.getRate());
+            m_networkTableEntries.addDouble("Gyro Rate", () -> -m_gyro.getAngularVelocityZWorld().getValue().in(DegreesPerSecond));
         } else {
-            m_networkTableEntries.addDouble("Gyro Rate", () -> m_gyro.getRate());
+            m_networkTableEntries.addDouble("Gyro Rate", () -> m_gyro.getAngularVelocityZWorld().getValue().in(DegreesPerSecond));
         }
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Chassis Subsystem");
@@ -159,12 +162,12 @@ public abstract class BaseChassis extends SubsystemBase implements ChassisSubsys
     @Override
     public double getPitch() {
         // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCHOPATHS I PROMISE
-        return m_gyro.getRoll().getValue();
+        return m_gyro.getRoll().getValue().in(Degrees);
     }
 
     @Override
     public double getYaw() {
-        return m_gyro.getYaw().getValue();
+        return m_gyro.getYaw().getValue().in(Degrees);
     }
 
     @Override

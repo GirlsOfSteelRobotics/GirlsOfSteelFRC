@@ -7,15 +7,22 @@ package com.scra.mepi.rapid_react.subsystems;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.scra.mepi.rapid_react.Constants;
 import com.scra.mepi.rapid_react.ShooterLookupTable;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,13 +41,13 @@ public class ShooterSubsytem extends SubsystemBase {
     /**
      * Creates a new Shooter.
      */
-    private final SimableCANSparkMax m_shooterMotor;
+    private final SparkMax m_shooterMotor;
 
-    private final SimableCANSparkMax m_hoodMotor;
+    private final SparkMax m_hoodMotor;
 
     private final ShooterLookupTable m_shooterLookupTable;
     private final RelativeEncoder m_encoder;
-    private final SparkPIDController m_pidController;
+    private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
     private final GosDoubleProperty m_tunableAllowableError = new GosDoubleProperty(false, "Shooter(AllowableError))", 50);
 
@@ -49,36 +56,38 @@ public class ShooterSubsytem extends SubsystemBase {
     private ISimWrapper m_hoodSimulator;
 
     public ShooterSubsytem() {
-        m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
-        m_shooterMotor.restoreFactoryDefaults();
+        m_shooterMotor = new SparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
+        SparkMaxConfig shooterMotorConfig = new SparkMaxConfig();
 
-        m_hoodMotor = new SimableCANSparkMax(Constants.SHOOTER_HOOD_SPARK, MotorType.kBrushless);
-        m_hoodMotor.restoreFactoryDefaults();
+        m_hoodMotor = new SparkMax(Constants.SHOOTER_HOOD_SPARK, MotorType.kBrushless);
+        SparkMaxConfig hoodMotorConfig = new SparkMaxConfig();
 
-        m_shooterMotor.setSmartCurrentLimit(50);
-        m_hoodMotor.setSmartCurrentLimit(30);
+        shooterMotorConfig.smartCurrentLimit(50);
+        hoodMotorConfig.smartCurrentLimit(30);
         m_shooterLookupTable = new ShooterLookupTable();
         m_encoder = m_shooterMotor.getEncoder();
-        m_pidController = m_shooterMotor.getPIDController();
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
+        m_pidController = m_shooterMotor.getClosedLoopController();
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_shooterMotor, shooterMotorConfig, ClosedLoopSlot.kSlot0)
             .addP(0)
             .addI(0)
             .addD(0)
             .addFF(0.00045)
             .build();
-        m_shooterMotor.setIdleMode(IdleMode.kCoast);
+        shooterMotorConfig.idleMode(IdleMode.kCoast);
         m_shooterMotor.setInverted(true);
-        m_shooterMotor.burnFlash();
+        m_shooterMotor.configure(shooterMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(2);
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(gearbox, 1, 0.01);
+            LinearSystem<N1, N1, N1> plant =
+                LinearSystemId.createFlywheelSystem(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
             m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
-                new RevMotorControllerSimWrapper(m_shooterMotor),
+                new RevMotorControllerSimWrapper(m_shooterMotor, gearbox),
                 RevEncoderSimWrapper.create(m_shooterMotor));
 
             m_hoodSimulator = new InstantaneousMotorSim(
-                new RevMotorControllerSimWrapper(m_hoodMotor),
+                new RevMotorControllerSimWrapper(m_hoodMotor, gearbox),
                 RevEncoderSimWrapper.create(m_hoodMotor),
                 1
             );
