@@ -1,6 +1,7 @@
 package com.gos.lib.rev.swerve;
 
 import com.gos.lib.swerve.SwerveDrivePublisher;
+import com.revrobotics.spark.config.SparkBaseConfigAccessor;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,7 +22,7 @@ import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class RevSwerveChassis {
+public class RevSwerveChassis implements AutoCloseable {
     private final double m_maxSpeedMetersPerSecond;
     private final double m_maxAngularSpeed;
 
@@ -112,6 +113,13 @@ public class RevSwerveChassis {
                 m_backLeft.getSimWrapper(),
                 m_backRight.getSimWrapper());
             m_simulator = new SwerveSimWrapper(chassisConstants.m_wheelBase, chassisConstants.m_trackWidth, 64.0, 1.0, moduleSims, gyroSimulator);
+        }
+    }
+
+    @Override
+    public void close() {
+        for (RevSwerveModule module : m_modules) {
+            module.close();
         }
     }
 
@@ -293,5 +301,14 @@ public class RevSwerveChassis {
         for (RevSwerveModule module: m_modules) {
             module.setDesiredState(state);
         }
+    }
+
+
+    public SparkBaseConfigAccessor getTurningMotorConfig(int moduleId) {
+        return m_modules[moduleId].getTurningMotorConfig();
+    }
+
+    public SparkBaseConfigAccessor getDrivingMotorConfig(int moduleId) {
+        return m_modules[moduleId].getDrivingMotorConfig();
     }
 }

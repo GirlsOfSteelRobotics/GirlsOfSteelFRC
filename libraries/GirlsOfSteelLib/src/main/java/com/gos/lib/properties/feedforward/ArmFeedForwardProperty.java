@@ -69,6 +69,21 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
         return m_feedForward.calculate(currentAngle, currentVelocity);
     }
 
+    /**
+     * Calculates the feedforward from the gains and setpoints assuming discrete control.
+     *
+     * @param currentAngle The current angle. This angle should be measured from the horizontal (i.e.
+     *     if the provided angle is 0, the arm should be parallel to the floor). If your encoder does
+     *     not follow this convention, an offset should be added.
+     * @param currentVelocity The current velocity setpoint.
+     * @param nextVelocity The next velocity setpoint.
+     * @return The computed feedforward in volts.
+     */
+    public Voltage calculate(
+        Angle currentAngle, AngularVelocity currentVelocity, AngularVelocity nextVelocity) {
+        return m_feedForward.calculate(currentAngle, currentVelocity, nextVelocity);
+    }
+
     public double getKs() {
         return m_feedForward.getKs();
     }
