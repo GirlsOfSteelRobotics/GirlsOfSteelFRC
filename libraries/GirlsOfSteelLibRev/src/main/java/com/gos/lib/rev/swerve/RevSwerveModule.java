@@ -18,6 +18,8 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkBaseConfigAccessor;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -33,7 +35,7 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 
 
-public class RevSwerveModule {
+public class RevSwerveModule implements AutoCloseable {
     private final String m_moduleName;
 
     private final SparkBase m_drivingSparkMax;
@@ -72,12 +74,15 @@ public class RevSwerveModule {
     public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset, boolean lockPidConstants) {
         m_moduleName = moduleName;
 
+        SparkBaseConfig drivingMotorConfig;
         switch (moduleConstants.m_driveMotorType) {
         case NEO:
             m_drivingSparkMax = new SparkMax(drivingCANId, MotorType.kBrushless);
+            drivingMotorConfig = new SparkMaxConfig();
             break;
         case VORTEX:
             m_drivingSparkMax = new SparkFlex(drivingCANId, MotorType.kBrushless);
+            drivingMotorConfig = new SparkFlexConfig();
             break;
         default:
             throw new IllegalArgumentException();
@@ -87,7 +92,6 @@ public class RevSwerveModule {
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
-        SparkMaxConfig drivingMotorConfig = new SparkMaxConfig();
         SparkMaxConfig turningMotorConfig = new SparkMaxConfig();
 
         // Request the absolute encoder position / velocity faster than the default period
@@ -190,14 +194,20 @@ public class RevSwerveModule {
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("SwerveDrive/" + moduleName);
         m_logger = new LoggingUtil(loggingTable);
-        m_logger.addDouble("Goal Angle", () -> m_desiredState.angle.getDegrees());
-        m_logger.addDouble("Current Angle", () -> m_currentState.angle.getDegrees());
+        m_logger.addDouble("Goal Angle", m_desiredState.angle::getDegrees);
+        m_logger.addDouble("Current Angle",  m_currentState.angle::getDegrees);
         m_logger.addDouble("Goal Velocity", () -> m_desiredState.speedMetersPerSecond);
         m_logger.addDouble("Current Velocity", () -> m_currentState.speedMetersPerSecond);
         m_logger.addDouble("Drive Percent Output", m_drivingSparkMax::getAppliedOutput);
 
         m_logger.addDouble("Abs Encoder", m_turningAbsoluteEncoder::getPosition);
         m_logger.addDouble("Rel Encoder", m_turningRelativeEncoder::getPosition);
+    }
+
+    @Override
+    public void close() {
+        m_drivingSparkMax.close();
+        m_turningSparkMax.close();
     }
 
     public SwerveModuleSimWrapper getSimWrapper() {
@@ -301,5 +311,20 @@ public class RevSwerveModule {
         SparkBaseConfig config = new SparkMaxConfig().idleMode(IdleMode.kBrake);
         m_drivingSparkMax.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         m_turningSparkMax.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+    public SparkBaseConfigAccessor getTurningMotorConfig() {
+        return m_turningSparkMax.configAccessor;
+    }
+
+    public SparkBaseConfigAccessor getDrivingMotorConfig() {
+        if (m_drivingSparkMax instanceof SparkMax) {
+            return ((SparkMax) m_drivingSparkMax).configAccessor;
+        }
+        else if (m_drivingSparkMax instanceof SparkFlex) {
+            return ((SparkFlex) m_drivingSparkMax).configAccessor;
+        } else {
+            return null;
+        }
     }
 }

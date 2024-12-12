@@ -86,6 +86,12 @@
     <!-- <rule ref="category/java/documentation.xml"> -->
     <!-- </rule> -->
 
+    <rule ref="category/java/errorprone.xml/CloseResource">
+        <properties>
+            <property name="allowedResourceTypes" value="com.gos.lib.rev.swerve.RevSwerveModule" />
+        </properties>
+    </rule>
+
     <rule ref="category/java/errorprone.xml">
         <!-- <exclude name="AssignmentToNonFinalStatic" /> -->
         <exclude name="AssignmentInOperand" />

@@ -3,12 +3,15 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2025.1.1-beta-2"
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
+    nativeRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.desktop)
+    nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
+
     implementation project(":libraries:GirlsOfSteelLib")
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
@@ -16,9 +19,15 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
+wpi.java.configureTestTasks(test)
+
 test {
     useJUnitPlatform()
 }
 
 ext.groupId = "com.gos.lib.rev"
 apply from: "${rootDir}/build_scripts/gradle/publish_java.gradle"
+
+test {
+    finalizedBy jacocoTestReport
+}

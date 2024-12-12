@@ -38,6 +38,16 @@ public class SimpleMotorFeedForwardPropertyTest extends BasePropertiesTest {
         assertEquals(7, property.getKa());
         assertEquals(3 + 1, Preferences.getKeys().size());
 
+    }
+
+    @Test
+    @SuppressWarnings("removal")
+    public void testDeprecatedCalculate() {
+        SimpleMotorFeedForwardProperty property = new SimpleMotorFeedForwardProperty(PROPERTY_NAME, true)
+            .addKff(9)
+            .addKs(8)
+            .addKa(7);
+
         // Check calculations
         assertEquals(8 + 9 * 2 + 7 * 1.5, property.calculate(2, 1.5));
         assertEquals(-8 + 9 * -3 + 7 * 2, property.calculate(-3, 2));
