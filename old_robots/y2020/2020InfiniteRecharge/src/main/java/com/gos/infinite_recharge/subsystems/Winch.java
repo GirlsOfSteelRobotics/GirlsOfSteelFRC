@@ -26,7 +26,7 @@ public class Winch extends SubsystemBase {
         m_motorA = new SparkMax(Constants.WINCH_A_SPARK, isBrushed ? MotorType.kBrushed : MotorType.kBrushless);
         SparkMaxConfig motorAConfig = new SparkMaxConfig();
         motorAConfig.idleMode(IdleMode.kBrake);
-        m_motorA.setInverted(false);
+        motorAConfig.inverted(false);
         if (isBrushed) {
             m_encoder = m_motorA.getEncoder();
         } else {
@@ -36,7 +36,7 @@ public class Winch extends SubsystemBase {
         m_motorB = new SparkMax(Constants.WINCH_B_SPARK, isBrushed ? MotorType.kBrushed : MotorType.kBrushless);
         SparkMaxConfig motorBConfig = new SparkMaxConfig();
         motorBConfig.idleMode(IdleMode.kBrake);
-        m_motorB.setInverted(false);
+        motorBConfig.inverted(false);
 
         m_motorA.configure(motorAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_motorB.configure(motorBConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

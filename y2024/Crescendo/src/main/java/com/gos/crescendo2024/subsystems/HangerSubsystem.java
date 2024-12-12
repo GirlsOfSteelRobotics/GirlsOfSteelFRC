@@ -51,10 +51,10 @@ public class HangerSubsystem extends SubsystemBase {
     public HangerSubsystem() {
         m_leftHangerMotor = new SparkMax(Constants.HANGER_LEFT_MOTOR, MotorType.kBrushless);
         SparkMaxConfig leftHangerMotorConfig = new SparkMaxConfig();
-        m_leftHangerMotor.setInverted(true);
-        m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
+        leftHangerMotorConfig.inverted(true);
         leftHangerMotorConfig.idleMode(IdleMode.kBrake);
         leftHangerMotorConfig.smartCurrentLimit(60);
+        m_leftHangerEncoder = m_leftHangerMotor.getEncoder();
         m_leftPidController = m_leftHangerMotor.getClosedLoopController();
         m_leftPidProperties = createPidProperties(m_leftHangerMotor, leftHangerMotorConfig);
         m_leftHangerMotor.configure(leftHangerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -62,10 +62,10 @@ public class HangerSubsystem extends SubsystemBase {
 
         m_rightHangerMotor = new SparkMax(Constants.HANGER_RIGHT_MOTOR, MotorType.kBrushless);
         SparkMaxConfig rightHangerMotorConfig = new SparkMaxConfig();
-        m_rightHangerMotor.setInverted(false);
-        m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
+        rightHangerMotorConfig.inverted(false);
         rightHangerMotorConfig.idleMode(IdleMode.kBrake);
         rightHangerMotorConfig.smartCurrentLimit(60);
+        m_rightHangerEncoder = m_rightHangerMotor.getEncoder();
         m_rightPidController = m_rightHangerMotor.getClosedLoopController();
         m_rightPidProperties = createPidProperties(m_rightHangerMotor, rightHangerMotorConfig);
         m_rightHangerMotor.configure(rightHangerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

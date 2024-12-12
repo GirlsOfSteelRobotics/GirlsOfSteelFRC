@@ -34,8 +34,8 @@ public class ClimberSubsystem extends SubsystemBase {
     public ClimberSubsystem() {
         SparkMaxConfig leftClimberConfig = new SparkMaxConfig();
         SparkMaxConfig rightClimberConfig = new SparkMaxConfig();
-        m_leftClimber.setInverted(true);
-        m_rightClimber.setInverted(false);
+        leftClimberConfig.inverted(true);
+        rightClimberConfig.inverted(false);
 
         rightClimberConfig.follow(m_leftClimber, true);
         leftClimberConfig.smartCurrentLimit(50);

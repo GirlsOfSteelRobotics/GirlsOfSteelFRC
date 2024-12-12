@@ -417,6 +417,7 @@
       "/Shuffleboard/test commands/testShooter50": "Command",
       "/Shuffleboard/test commands/testShooter50?": "Command",
       "/Shuffleboard/test commands/turn to face point": "Command",
+      "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
@@ -594,6 +595,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "Retained Values": {
       "open": false
     },
@@ -603,16 +607,84 @@
       }
     },
     "transitory": {
-      "Chassis": {
-        "open": true
+      "GosCameras": {
+        "Center Back Camera": {
+          "open": true
+        },
+        "Left Camera": {
+          "open": true
+        },
+        "Right Camera": {
+          "open": true
+        }
       },
-      "Shooter Subsystem": {
-        "open": true
+      "Shuffleboard": {
+        "open": true,
+        "test commands": {
+          "open": true
+        }
       },
       "SmartDashboard": {
+        "Field3d": {
+          "Pose3d[]##v_/SmartDashboard/Field3d/AprilTags": {
+            "Pose3d##v_[2]": {
+              "open": true
+            }
+          },
+          "Pose3d[]##v_/SmartDashboard/Field3d/Center Back Camera detected tags": {
+            "Pose3d##v_[0]": {
+              "open": true
+            },
+            "Pose3d##v_[1]": {
+              "open": true
+            },
+            "open": true
+          },
+          "Pose3d[]##v_/SmartDashboard/Field3d/Center Back Camera estimated pose": {
+            "Pose3d##v_[0]": {
+              "Translation3d##v_translation": {
+                "open": true
+              },
+              "open": true
+            },
+            "open": true
+          },
+          "Pose3d[]##v_/SmartDashboard/Field3d/Left Camera detected tags": {
+            "Pose3d##v_[0]": {
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
+        "open": true,
         "super structure": {
           "open": true
         }
+      },
+      "SwerveDrive": {
+        "open": true
+      },
+      "photonvision": {
+        "Center Back Camera": {
+          "Transform3d##v_/photonvision/Center Back Camera/targetPose": {
+            "Rotation3d##v_rotation": {
+              "Quaternion##v_q": {
+                "open": true
+              },
+              "open": true
+            },
+            "Translation3d##v_translation": {
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
+        "USB_Camera": {
+          "open": true
+        },
+        "open": true
       }
     }
   },
@@ -623,8 +695,7 @@
     "Server": {
       "Subscribers": {
         "open": true
-      },
-      "open": true
+      }
     },
     "visible": true
   },

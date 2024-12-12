@@ -116,8 +116,8 @@ public class Chassis extends SubsystemBase {
         masterRightConfig.idleMode(idleMode);
         followerRightConfig.idleMode(idleMode);
 
-        m_masterLeft.setInverted(false);
-        m_masterRight.setInverted(true);
+        masterLeftConfig.inverted(false);
+        masterRightConfig.inverted(true);
 
         followerLeftConfig.follow(m_masterLeft, false);
         followerRightConfig.follow(m_masterRight, false);

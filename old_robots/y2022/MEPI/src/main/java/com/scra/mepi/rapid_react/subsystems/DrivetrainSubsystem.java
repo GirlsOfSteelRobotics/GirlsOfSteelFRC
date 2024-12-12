@@ -87,7 +87,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         rightLeaderConfig.smartCurrentLimit(50);
         rightFollowerConfig.smartCurrentLimit(50);
 
-        m_leftLeader.setInverted(true);
+        leftLeaderConfig.inverted(true);
 
         leftFollowerConfig.follow(m_leftLeader);
         rightFollowerConfig.follow(m_rightLeader);

@@ -36,7 +36,7 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         m_conveyor = new SparkMax(Constants.VERTICAL_CONVEYOR_SPARK, MotorType.kBrushless);
         SparkMaxConfig conveyorConfig = new SparkMaxConfig();
         conveyorConfig.idleMode(IdleMode.kBrake);
-        m_conveyor.setInverted(true);
+        conveyorConfig.inverted(true);
 
         m_feeder = new SparkMax(Constants.VERTICAL_CONVEYOR_FEEDER_SPARK, MotorType.kBrushless);
         SparkMaxConfig feederConfig = new SparkMaxConfig();

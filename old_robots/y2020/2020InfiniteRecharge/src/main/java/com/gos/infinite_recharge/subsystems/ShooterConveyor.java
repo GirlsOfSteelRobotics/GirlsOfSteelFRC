@@ -49,7 +49,7 @@ public class ShooterConveyor extends SubsystemBase {
         followerConfig.follow(m_master, true);
 
         masterConfig.smartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        m_master.setInverted(false);
+        masterConfig.inverted(false);
 
         m_breakSensorHandoff = new DigitalInput(Constants.DIGITAL_INPUT_SENSOR_HANDOFF);
         m_breakSensorSecondary = new DigitalInput(Constants.DIGITAL_INPUT_SENSOR_SECONDARY);
