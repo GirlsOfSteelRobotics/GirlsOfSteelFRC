@@ -1,4 +1,9 @@
-package com.gos.lib.rev.swerve;
+package com.gos.lib.rev.swerve.config;
+
+import com.gos.lib.rev.RevMotorControllerModel;
+import com.gos.lib.rev.RevMotorModel;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.DrivingClosedLoopParameters;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.TurningClosedLoopParameters;
 
 @SuppressWarnings("PMD.DataClass")
 public class RevSwerveChassisConstants {
@@ -22,14 +27,19 @@ public class RevSwerveChassisConstants {
     public final double m_wheelBase;
     public final double m_trackWidth;
 
-    public final RevSwerveModuleConstants.DriveMotor m_driveMotor;
-    public final RevSwerveModuleConstants.DriveMotorPinionTeeth m_moduleDrivePinionTeeth;
-    public final RevSwerveModuleConstants.DriveMotorSpurTeeth m_moduleDriveSpurTeeth;
+    public final RevMotorModel m_driveMotorModel;
+    public final RevMotorControllerModel m_driveMotorControllerModel;
+    public final DriveMotorPinionTeeth m_moduleDrivePinionTeeth;
+    public final DriveMotorSpurTeeth m_moduleDriveSpurTeeth;
 
     public final double m_maxSpeedMetersPerSecond;
     public final double m_maxAngularSpeed;
 
+    public final DrivingClosedLoopParameters m_drivingClosedLoopParameters;
+    public final TurningClosedLoopParameters m_turningClosedLoopParameters;
     public final boolean m_lockPidConstants;
+
+    private final RevSwerveModuleConstants m_moduleConstants;
 
     /**
      * Constants for configuring a REV Swerve Chassis
@@ -42,7 +52,6 @@ public class RevSwerveChassisConstants {
      * @param frontRightTurningCanId  The CAN id for the front right azimuth motor
      * @param rearRightDrivingCanId   The CAN id for the front right driving motor
      * @param rearRightTurningCanId   The CAN id for the front right azimuth motor
-     * @param driveMotor              The type of motor for driving
      * @param driveMotorPinionTeeth   The number of teeth in the driving motor pinion
      * @param driveMotorSpurTeeth     The number of teeth in the driving motor spur
      * @param wheelBase               Distance between front and back wheels on robot, in meters
@@ -65,14 +74,22 @@ public class RevSwerveChassisConstants {
         int rearRightDrivingCanId,
         int rearRightTurningCanId,
 
-        RevSwerveModuleConstants.DriveMotor driveMotor, RevSwerveModuleConstants.DriveMotorPinionTeeth driveMotorPinionTeeth,
-        RevSwerveModuleConstants.DriveMotorSpurTeeth driveMotorSpurTeeth,
+        RevMotorModel driveMotorModel,
+        RevMotorControllerModel driveMotorControllerModel,
+        DriveMotorPinionTeeth driveMotorPinionTeeth,
+        DriveMotorSpurTeeth driveMotorSpurTeeth,
 
         double wheelBase,
         double trackWidth,
 
         double maxSpeedMetersPerSecond,
-        double maxAngularSpeed, boolean lockPidConstants) {
+        double maxAngularSpeed,
+
+        DrivingClosedLoopParameters drivingClosedLoopParameters,
+        TurningClosedLoopParameters turningClosedLoopParameters,
+        boolean lockPidConstants,
+
+        RevSwerveModuleConstants moduleConstants) {
         m_frontLeftDrivingCanId = frontLeftDrivingCanId;
         m_rearLeftDrivingCanId = rearLeftDrivingCanId;
         m_frontRightDrivingCanId = frontRightDrivingCanId;
@@ -86,13 +103,22 @@ public class RevSwerveChassisConstants {
         m_wheelBase = wheelBase;
         m_trackWidth = trackWidth;
 
-        m_driveMotor = driveMotor;
+        m_driveMotorModel = driveMotorModel;
+        m_driveMotorControllerModel = driveMotorControllerModel;
         m_moduleDrivePinionTeeth = driveMotorPinionTeeth;
         m_moduleDriveSpurTeeth = driveMotorSpurTeeth;
 
         m_maxSpeedMetersPerSecond = maxSpeedMetersPerSecond;
         m_maxAngularSpeed = maxAngularSpeed;
 
+        m_drivingClosedLoopParameters = drivingClosedLoopParameters;
+        m_turningClosedLoopParameters = turningClosedLoopParameters;
         m_lockPidConstants = lockPidConstants;
+
+        m_moduleConstants = moduleConstants;
+    }
+
+    public RevSwerveModuleConstants getModuleConstants() {
+        return m_moduleConstants;
     }
 }

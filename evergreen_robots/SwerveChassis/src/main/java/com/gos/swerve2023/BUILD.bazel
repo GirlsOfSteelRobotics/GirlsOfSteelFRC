@@ -9,6 +9,8 @@ gos_java_robot(
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve/config",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
         "@bzlmodrio-allwpilib//libraries/java/hal",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",

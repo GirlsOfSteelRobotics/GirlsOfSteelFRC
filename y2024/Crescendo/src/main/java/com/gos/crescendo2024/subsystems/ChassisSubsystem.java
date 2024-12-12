@@ -22,9 +22,12 @@ import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
+import com.gos.lib.rev.RevMotorControllerModel;
+import com.gos.lib.rev.RevMotorModel;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
-import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
-import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstantsBuilder;
+import com.gos.lib.rev.swerve.config.SwerveGearingKit;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -111,25 +114,29 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
 
-        RevSwerveModuleConstants.DriveMotor motorType;
+        RevMotorModel driveMotorModel;
+        RevMotorControllerModel driveMotorControllerModel;
         if (Constants.IS_COMPETITION_ROBOT) {
-            motorType = RevSwerveModuleConstants.DriveMotor.VORTEX;
+            driveMotorModel = RevMotorModel.VORTEX;
+            driveMotorControllerModel = RevMotorControllerModel.SPARK_FLEX;
         } else {
-            motorType = RevSwerveModuleConstants.DriveMotor.NEO;
+            driveMotorModel = RevMotorModel.NEO;
+            driveMotorControllerModel = RevMotorControllerModel.SPARK_MAX;
         }
 
-        RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
-            Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
-            Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
-            Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
-            Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            motorType,
-            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
-            RevSwerveModuleConstants.DriveMotorSpurTeeth.T21,
-            WHEEL_BASE,
-            TRACK_WIDTH,
-            MAX_TRANSLATION_SPEED, MAX_ROTATION_SPEED,
-            false);
+        RevSwerveChassisConstantsBuilder chassisBuilder = new RevSwerveChassisConstantsBuilder()
+            .withFrontLeftConfig(Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH)
+            .withFrontRightConfig(Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH)
+            .withRearLeftConfig(Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH)
+            .withRearRightConfig(Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH)
+            .withDrivingMotorType(driveMotorModel, driveMotorControllerModel)
+            .withTrackwidth(TRACK_WIDTH)
+            .withWheelBase(WHEEL_BASE)
+            .withMaxTranslationSpeed(MAX_TRANSLATION_SPEED)
+            .withMaxRotationSpeed(MAX_ROTATION_SPEED)
+            .withGearing(SwerveGearingKit.EXTRA_HIGH_1);
+
+        RevSwerveChassisConstants swerveConstants = chassisBuilder.build(false);
 
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);

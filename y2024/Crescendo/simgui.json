@@ -307,10 +307,12 @@
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerRight7Pt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerRight7Pt2": "Command",
+      "/Shuffleboard/SysId/Arm SysId": "Command",
       "/Shuffleboard/SysId/Arm SysId Dynamic Backward": "Command",
       "/Shuffleboard/SysId/Arm SysId Dynamic Forward": "Command",
       "/Shuffleboard/SysId/Arm SysId Quasistatic Backward": "Command",
       "/Shuffleboard/SysId/Arm SysId Quasistatic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId": "Command",
       "/Shuffleboard/SysId/Shooter SysId Dynamic Backward": "Command",
       "/Shuffleboard/SysId/Shooter SysId Dynamic Forward": "Command",
       "/Shuffleboard/SysId/Shooter SysId Quasistatic Backward": "Command",
@@ -428,6 +430,11 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/SysId/Arm SysId": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Auto: Go To AutonomousStart": {
         "window": {
           "visible": true

@@ -1,7 +1,12 @@
 package com.gos.lib.rev.swerve;
 
-import com.gos.lib.rev.swerve.RevSwerveModuleConstants.DriveMotor;
-import com.gos.lib.rev.swerve.RevSwerveModuleConstants.SwerveGearingKit;
+import com.gos.lib.rev.RevMotorControllerModel;
+import com.gos.lib.rev.RevMotorModel;
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstantsBuilder;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.DrivingClosedLoopParameters;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.TurningClosedLoopParameters;
+import com.gos.lib.rev.swerve.config.SwerveGearingKit;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkBaseConfigAccessor;
@@ -21,24 +26,25 @@ public class RevSwerveChassisTest extends BasePropertiesTest {
 
     private static final double TINY_EPSILON = 1e-5;
 
+    private RevSwerveChassisConstantsBuilder createCommonConstants(int canIdOffset) {
+        // TODO canIdOffset is because of a bug in revlib
+        return new RevSwerveChassisConstantsBuilder()
+            .withFrontLeftConfig(1 + canIdOffset, 2 + canIdOffset)
+            .withFrontRightConfig(3 + canIdOffset, 4 + canIdOffset)
+            .withRearLeftConfig(5 + canIdOffset, 6 + canIdOffset)
+            .withRearRightConfig(7 + canIdOffset, 8 + canIdOffset)
+            .withTrackwidth(0.381)
+            .withWheelBase(0.381)
+            .withMaxTranslationSpeed(4.5)
+            .withMaxRotationSpeed(Units.degreesToRadians(720));
+    }
+
     @Test
     public void testBasicNeoSparkMaxSwerve() {
-
-        SwerveGearingKit kit = SwerveGearingKit.HIGH;
-        DriveMotor motorType = DriveMotor.NEO;
-
-        RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
-            1, 2,
-            3, 4,
-            5, 6,
-            7, 8,
-            motorType,
-            kit.m_pinionTeeth,
-            kit.m_spurTeeth,
-            0.381,
-            0.381,
-            4.5, Units.degreesToRadians(720),
-            false);
+        RevSwerveChassisConstantsBuilder chassisBuilder = createCommonConstants(0)
+            .withDrivingMotorType(RevMotorModel.NEO, RevMotorControllerModel.SPARK_MAX)
+            .withGearing(SwerveGearingKit.HIGH);
+        RevSwerveChassisConstants swerveConstants = chassisBuilder.build(false);
 
         try (ADXRS450_Gyro gyro = new ADXRS450_Gyro();
              RevSwerveChassis swerveDrive = new RevSwerveChassis(swerveConstants, gyro::getRotation2d, new ADXRS450GyroWrapper(gyro))) {
@@ -91,22 +97,10 @@ public class RevSwerveChassisTest extends BasePropertiesTest {
 
     @Test
     public void testBasicVortexSparkFlexSwerve() {
-
-        SwerveGearingKit kit = SwerveGearingKit.EXTRA_HIGH_1;
-        DriveMotor motorType = DriveMotor.VORTEX;
-
-        RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
-            9, 10,
-            11, 12,
-            13, 14,
-            15, 16,
-            motorType,
-            kit.m_pinionTeeth,
-            kit.m_spurTeeth,
-            0.381,
-            0.381,
-            4.5, Units.degreesToRadians(720),
-            false);
+        RevSwerveChassisConstantsBuilder chassisBuilder = createCommonConstants(8)
+            .withDrivingMotorType(RevMotorModel.VORTEX, RevMotorControllerModel.SPARK_MAX)
+            .withGearing(SwerveGearingKit.EXTRA_HIGH_1);
+        RevSwerveChassisConstants swerveConstants = chassisBuilder.build(false);
 
         try (ADXRS450_Gyro gyro = new ADXRS450_Gyro();
              RevSwerveChassis swerveDrive = new RevSwerveChassis(swerveConstants, gyro::getRotation2d, new ADXRS450GyroWrapper(gyro))) {
@@ -153,6 +147,32 @@ public class RevSwerveChassisTest extends BasePropertiesTest {
                 assertEquals(2 * Math.PI, turnConfigAccessor.absoluteEncoder.getPositionConversionFactor(), TINY_EPSILON);
                 assertEquals(2 * Math.PI / 60, turnConfigAccessor.absoluteEncoder.getVelocityConversionFactor(), TINY_EPSILON);
                 assertTrue(turnConfigAccessor.absoluteEncoder.getInverted());
+            }
+        }
+    }
+
+
+    @Test
+    public void testCustomPidParams() {
+        RevSwerveChassisConstantsBuilder chassisBuilder = createCommonConstants(8)
+            .withDrivingMotorType(RevMotorModel.VORTEX, RevMotorControllerModel.SPARK_MAX)
+            .withGearing(SwerveGearingKit.EXTRA_HIGH_1)
+            .withDriveClosedLoopParams(new DrivingClosedLoopParameters(5, 6, 7))
+            .withTurningClosedLoopParams(new TurningClosedLoopParameters(8, 9));
+        RevSwerveChassisConstants swerveConstants = chassisBuilder.build(false);
+
+        try (ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+             RevSwerveChassis swerveDrive = new RevSwerveChassis(swerveConstants, gyro::getRotation2d, new ADXRS450GyroWrapper(gyro))) {
+
+            for (int moduleId = 0; moduleId < 4; ++moduleId) {
+                SparkBaseConfigAccessor driveConfigAccessor = swerveDrive.getDrivingMotorConfig(moduleId);
+                assertEquals(5, driveConfigAccessor.closedLoop.getP(), TINY_EPSILON);
+                assertEquals(6, driveConfigAccessor.closedLoop.getD(), TINY_EPSILON);
+                assertEquals(7, driveConfigAccessor.closedLoop.getFF(), TINY_EPSILON);
+
+                SparkBaseConfigAccessor turnConfigAccessor = swerveDrive.getTurningMotorConfig(moduleId);
+                assertEquals(8, turnConfigAccessor.closedLoop.getP(), TINY_EPSILON);
+                assertEquals(9, turnConfigAccessor.closedLoop.getD(), TINY_EPSILON);
             }
         }
     }

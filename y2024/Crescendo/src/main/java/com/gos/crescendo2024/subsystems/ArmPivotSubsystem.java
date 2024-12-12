@@ -213,6 +213,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
             Voltage feedForwardVolts = m_wpiFeedForward.calculate(
                 Degrees.of(currentAngle),
+                DegreesPerSecond.of(getEncoderVel()),
                 DegreesPerSecond.of(setpoint.velocity));
 
             m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, 0, feedForwardVolts.in(Volts));
