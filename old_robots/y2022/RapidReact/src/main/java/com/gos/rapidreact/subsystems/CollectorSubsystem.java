@@ -98,7 +98,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotLeft = new SparkMax(Constants.COLLECTOR_PIVOT_LEFT, MotorType.kBrushless);
         SparkMaxConfig pivotLeftConfig = new SparkMaxConfig();
         pivotLeftConfig.idleMode(IdleMode.kBrake);
-        m_pivotLeft.setInverted(true);
+        pivotLeftConfig.inverted(true);
 
         m_pivotRight = new SparkMax(Constants.COLLECTOR_PIVOT_RIGHT, MotorType.kBrushless);
         SparkMaxConfig pivotRightConfig = new SparkMaxConfig();

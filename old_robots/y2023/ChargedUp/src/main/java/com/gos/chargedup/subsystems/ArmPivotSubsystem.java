@@ -145,7 +145,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor = new SparkMax(Constants.PIVOT_MOTOR, MotorType.kBrushless);
         SparkMaxConfig pivotMotorConfig = new SparkMaxConfig();
         pivotMotorConfig.idleMode(IdleMode.kBrake);
-        m_pivotMotor.setInverted(true);
+        pivotMotorConfig.inverted(true);
         pivotMotorConfig.smartCurrentLimit(60);
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
 

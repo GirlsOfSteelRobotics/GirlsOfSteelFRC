@@ -94,7 +94,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         SparkMaxConfig rightDriveAConfig = new SparkMaxConfig();
         SparkMaxConfig rightDriveBConfig = new SparkMaxConfig();
         rightDriveBConfig.follow(m_rightDriveA);
-        m_rightDriveA.setInverted(true);
+        rightDriveAConfig.inverted(true);
 
         m_leftEncoder = m_leftDriveA.getEncoder();
         m_rightEncoder = m_rightDriveA.getEncoder();

@@ -133,8 +133,8 @@ public class ChassisSubsystem extends SubsystemBase {
         leaderRightConfig.idleMode(IdleMode.kCoast);
         followerRightConfig.idleMode(IdleMode.kCoast);
 
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
+        leaderLeftConfig.inverted(false);
+        leaderRightConfig.inverted(true);
 
         followerLeftConfig.follow(m_leaderLeft, false);
         followerRightConfig.follow(m_leaderRight, false);

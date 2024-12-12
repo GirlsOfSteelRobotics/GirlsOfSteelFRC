@@ -34,7 +34,6 @@ gos_java_robot(
         "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
         "@bzlmodrio-phoenix6//libraries/java/wpiapi-java",
         "@bzlmodrio-photonlib//libraries/java/photonlib-java",
-        "@bzlmodrio-photonlib//libraries/java/photontargeting-java",
         "@bzlmodrio-revlib//libraries/java/revlib-java",
         "@maven//:org_snobotv2_snobot_sim_java_base",
         "@maven//:org_snobotv2_snobot_sim_java_phoenix6",

@@ -103,7 +103,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         SparkMaxConfig pivotMotorConfig = new SparkMaxConfig();
         pivotMotorConfig.idleMode(IdleMode.kBrake);
         pivotMotorConfig.smartCurrentLimit(60);
-        m_pivotMotor.setInverted(false);
+        pivotMotorConfig.inverted(false);
 
         m_followMotor = new SparkMax(Constants.ARM_PIVOT_FOLLOW, MotorType.kBrushless);
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
@@ -123,7 +123,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         pivotMotorConfig.absoluteEncoder.positionConversionFactor(360.0);
         pivotMotorConfig.absoluteEncoder.velocityConversionFactor(360.0 / 60);
         pivotMotorConfig.absoluteEncoder.inverted(false);
-        pivotMotorConfig.absoluteEncoder.zeroOffset(277.11 + 2);
+        pivotMotorConfig.absoluteEncoder.zeroOffset((277.11 + 2) / 360);
 
         m_speakerTable = new SpeakerLookupTable();
 

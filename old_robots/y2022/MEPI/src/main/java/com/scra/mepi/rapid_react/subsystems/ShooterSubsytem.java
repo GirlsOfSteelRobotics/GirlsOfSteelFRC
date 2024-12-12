@@ -74,7 +74,7 @@ public class ShooterSubsytem extends SubsystemBase {
             .addFF(0.00045)
             .build();
         shooterMotorConfig.idleMode(IdleMode.kCoast);
-        m_shooterMotor.setInverted(true);
+        shooterMotorConfig.inverted(true);
         m_shooterMotor.configure(shooterMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         if (RobotBase.isSimulation()) {

@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase {
         masterConfig.encoder.inverted(true);
 
         masterConfig.smartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        m_master.setInverted(false);
+        masterConfig.inverted(false);
         followerConfig.follow(m_master, true);
 
         masterConfig.closedLoop.p(SHOOTER_KP);

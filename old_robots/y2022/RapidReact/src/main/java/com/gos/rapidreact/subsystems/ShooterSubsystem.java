@@ -78,7 +78,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_roller = new SparkMax(Constants.SHOOTER_ROLLER, MotorType.kBrushless);
         SparkMaxConfig rollerConfig = new SparkMaxConfig();
         rollerConfig.idleMode(IdleMode.kCoast);
-        m_roller.setInverted(true);
+        rollerConfig.inverted(true);
 
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
         m_shooterEncoder = m_leader.getEncoder();

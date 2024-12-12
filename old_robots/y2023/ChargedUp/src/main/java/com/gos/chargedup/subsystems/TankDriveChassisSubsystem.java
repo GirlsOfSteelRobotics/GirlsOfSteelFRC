@@ -142,12 +142,12 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         followerRightConfig.idleMode(IdleMode.kCoast);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
-            m_leaderLeft.setInverted(true);
-            m_leaderRight.setInverted(false);
+            leaderLeftConfig.inverted(true);
+            leaderRightConfig.inverted(false);
         }
         else {
-            m_leaderLeft.setInverted(false);
-            m_leaderRight.setInverted(true);
+            leaderLeftConfig.inverted(false);
+            leaderRightConfig.inverted(true);
         }
 
         followerLeftConfig.follow(m_leaderLeft, false);

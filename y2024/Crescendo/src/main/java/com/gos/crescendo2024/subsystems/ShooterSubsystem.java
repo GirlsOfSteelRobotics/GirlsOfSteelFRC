@@ -57,7 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SparkFlex(Constants.SHOOTER_MOTOR_LEADER, MotorType.kBrushless);
         SparkMaxConfig shooterMotorLeaderConfig = new SparkMaxConfig();
-        m_shooterMotorLeader.setInverted(true);
+        shooterMotorLeaderConfig.inverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getClosedLoopController();
         shooterMotorLeaderConfig.closedLoop.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kPrimaryEncoder);

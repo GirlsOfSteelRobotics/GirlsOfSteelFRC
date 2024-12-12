@@ -24,7 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public IntakeSubsystem() {
         SparkMaxConfig motorConfig = new SparkMaxConfig();
-        m_motor.setInverted(true);
+        motorConfig.inverted(true);
         motorConfig.smartCurrentLimit(50);
         retract();
 

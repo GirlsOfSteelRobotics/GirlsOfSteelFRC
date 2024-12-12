@@ -45,7 +45,7 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotor = new SparkMax(Constants.CLAW_MOTOR, MotorType.kBrushless);
         SparkMaxConfig clawMotorConfig = new SparkMaxConfig();
 
-        m_clawMotor.setInverted(true);
+        clawMotorConfig.inverted(true);
         m_clawEncoder = m_clawMotor.getEncoder();
         clawMotorConfig.idleMode(IdleMode.kBrake);
         clawMotorConfig.smartCurrentLimit(10);
