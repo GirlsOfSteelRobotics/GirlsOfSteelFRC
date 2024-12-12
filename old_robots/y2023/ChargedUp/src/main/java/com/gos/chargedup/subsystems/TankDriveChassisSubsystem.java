@@ -14,14 +14,18 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
-import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.ControlType;
 
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -30,7 +34,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -50,6 +56,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -76,10 +84,10 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
 
     //Chassis and motors
-    private final SimableCANSparkMax m_leaderLeft;
-    private final SimableCANSparkMax m_followerLeft;
-    private final SimableCANSparkMax m_leaderRight;
-    private final SimableCANSparkMax m_followerRight;
+    private final SparkMax m_leaderLeft;
+    private final SparkMax m_followerLeft;
+    private final SparkMax m_leaderRight;
+    private final SparkMax m_followerRight;
 
     private final DifferentialDrive m_drive;
 
@@ -93,8 +101,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
-    private final SparkPIDController m_leftPIDcontroller;
-    private final SparkPIDController m_rightPIDcontroller;
+    private final SparkClosedLoopController m_leftPIDcontroller;
+    private final SparkClosedLoopController m_rightPIDcontroller;
 
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
@@ -113,25 +121,25 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public TankDriveChassisSubsystem() {
 
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderLeft = new SparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new SparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderRight = new SparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerRight = new SparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
-        m_leaderLeft.restoreFactoryDefaults();
-        m_followerLeft.restoreFactoryDefaults();
-        m_leaderRight.restoreFactoryDefaults();
-        m_followerRight.restoreFactoryDefaults();
+        SparkMaxConfig leaderLeftConfig = new SparkMaxConfig();
+        SparkMaxConfig followerLeftConfig = new SparkMaxConfig();
+        SparkMaxConfig leaderRightConfig = new SparkMaxConfig();
+        SparkMaxConfig followerRightConfig = new SparkMaxConfig();
 
-        m_leaderLeft.setSmartCurrentLimit(60);
-        m_followerLeft.setSmartCurrentLimit(60);
-        m_leaderRight.setSmartCurrentLimit(60);
-        m_followerRight.setSmartCurrentLimit(60);
+        leaderLeftConfig.smartCurrentLimit(60);
+        followerLeftConfig.smartCurrentLimit(60);
+        leaderRightConfig.smartCurrentLimit(60);
+        followerRightConfig.smartCurrentLimit(60);
 
-        m_leaderLeft.setIdleMode(IdleMode.kCoast);
-        m_followerLeft.setIdleMode(IdleMode.kCoast);
-        m_leaderRight.setIdleMode(IdleMode.kCoast);
-        m_followerRight.setIdleMode(IdleMode.kCoast);
+        leaderLeftConfig.idleMode(IdleMode.kCoast);
+        followerLeftConfig.idleMode(IdleMode.kCoast);
+        leaderRightConfig.idleMode(IdleMode.kCoast);
+        followerRightConfig.idleMode(IdleMode.kCoast);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
             m_leaderLeft.setInverted(true);
@@ -142,33 +150,33 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
             m_leaderRight.setInverted(true);
         }
 
-        m_followerLeft.follow(m_leaderLeft, false);
-        m_followerRight.follow(m_leaderRight, false);
+        followerLeftConfig.follow(m_leaderLeft, false);
+        followerRightConfig.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
-        m_leftPIDcontroller = m_leaderLeft.getPIDController();
-        m_rightPIDcontroller = m_leaderRight.getPIDController();
+        m_leftPIDcontroller = m_leaderLeft.getClosedLoopController();
+        m_rightPIDcontroller = m_leaderRight.getClosedLoopController();
 
-        m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
-        m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
+        m_leftPIDProperties = setupPidValues(m_leaderLeft, leaderLeftConfig);
+        m_rightPIDProperties = setupPidValues(m_leaderRight, leaderRightConfig);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
-        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
-        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        leaderLeftConfig.encoder.positionConversionFactor(ENCODER_CONSTANT);
+        leaderRightConfig.encoder.positionConversionFactor(ENCODER_CONSTANT);
 
-        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
-        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        leaderLeftConfig.encoder.velocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        leaderRightConfig.encoder.velocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
-        m_leaderLeft.burnFlash();
-        m_followerLeft.burnFlash();
-        m_leaderRight.burnFlash();
-        m_followerRight.burnFlash();
+        m_leaderLeft.configure(leaderLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerLeft.configure(followerLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_leaderRight.configure(leaderRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerRight.configure(followerRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
@@ -210,8 +218,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
                 null);
             m_simulator = new DifferentialDrivetrainSimWrapper(
                 drivetrainSim,
-                new RevMotorControllerSimWrapper(m_leaderLeft),
-                new RevMotorControllerSimWrapper(m_leaderRight),
+                new RevMotorControllerSimWrapper(m_leaderLeft, DCMotor.getNEO(2)),
+                new RevMotorControllerSimWrapper(m_leaderRight, DCMotor.getNEO(2)),
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new Pigeon2Wrapper(m_gyro));
@@ -219,9 +227,9 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         }
     }
 
-    private PidProperty setupPidValues(SparkPIDController pidController) {
+    private PidProperty setupPidValues(SparkMax motor, SparkMaxConfig config) {
         if (Constants.IS_ROBOT_BLOSSOM) {
-            return new RevPidPropertyBuilder("Chassis", true, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", true, motor, config, ClosedLoopSlot.kSlot0)
                 .addP(0.6)
                 .addI(0)
                 .addD(0)
@@ -231,7 +239,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
                 .build();
         }
         else {
-            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", false, motor, config, ClosedLoopSlot.kSlot0)
                 .addP(0)
                 .addI(0)
                 .addD(0)
@@ -295,7 +303,9 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     public void turnToAngle(double angleGoal) {
         SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
-        steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
+        AngularVelocity currentVelocity = m_gyro.getAngularVelocityZWorld().getValue();
+        AngularVelocity goalVelocity = DegreesPerSecond.of(m_turnAnglePID.getSetpoint().velocity);
+        steerVoltage += m_turnAnglePIDFFProperty.calculate(currentVelocity, goalVelocity).in(Volts);
 
         m_gyroAngleGoalVelocityEntry.setNumber(m_turnAnglePID.getSetpoint().velocity);
 
@@ -399,18 +409,22 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     public void drivetrainToBrakeMode() {
-        m_leaderLeft.setIdleMode(IdleMode.kBrake);
-        m_followerLeft.setIdleMode(IdleMode.kBrake);
-        m_leaderRight.setIdleMode(IdleMode.kBrake);
-        m_followerRight.setIdleMode(IdleMode.kBrake);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(IdleMode.kBrake);
+        m_leaderLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_leaderRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     }
 
     public void drivetrainToCoastMode() {
-        m_leaderLeft.setIdleMode(IdleMode.kCoast);
-        m_followerLeft.setIdleMode(IdleMode.kCoast);
-        m_leaderRight.setIdleMode(IdleMode.kCoast);
-        m_followerRight.setIdleMode(IdleMode.kCoast);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(IdleMode.kCoast);
+        m_leaderLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_leaderRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     }
 

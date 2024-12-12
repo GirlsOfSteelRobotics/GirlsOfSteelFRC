@@ -2,10 +2,13 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.rapidreact.Constants;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -25,8 +28,8 @@ public class HangerSubsystem extends SubsystemBase {
     public static final double HANGER_DOWN_SPEED = -HANGER_UP_SPEED;
     private static final double GEAR = 80;
 
-    private final SimableCANSparkMax m_leftHanger;
-    private final SimableCANSparkMax m_rightHanger;
+    private final SparkMax m_leftHanger;
+    private final SparkMax m_rightHanger;
 
     private final RelativeEncoder m_leftEncoder;
     private final RelativeEncoder m_rightEncoder;
@@ -39,21 +42,21 @@ public class HangerSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightHangerHeightEntry;
 
     public HangerSubsystem() {
-        m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, MotorType.kBrushless);
-        m_leftHanger.restoreFactoryDefaults();
-        m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, MotorType.kBrushless);
-        m_rightHanger.restoreFactoryDefaults();
+        m_leftHanger = new SparkMax(Constants.HANGER_LEFT_SPARK, MotorType.kBrushless);
+        SparkMaxConfig leftHangerConfig = new SparkMaxConfig();
+        m_rightHanger = new SparkMax(Constants.HANGER_RIGHT_SPARK, MotorType.kBrushless);
+        SparkMaxConfig rightHangerConfig = new SparkMaxConfig();
         m_leftEncoder = m_leftHanger.getEncoder();
         m_rightEncoder = m_rightHanger.getEncoder();
 
-        m_leftHanger.setIdleMode(IdleMode.kBrake);
-        m_rightHanger.setIdleMode(IdleMode.kBrake);
+        leftHangerConfig.idleMode(IdleMode.kBrake);
+        rightHangerConfig.idleMode(IdleMode.kBrake);
 
-        m_leftEncoder.setPositionConversionFactor(GEAR);
-        m_rightEncoder.setPositionConversionFactor(GEAR);
+        leftHangerConfig.encoder.positionConversionFactor(GEAR);
+        rightHangerConfig.encoder.positionConversionFactor(GEAR);
 
-        m_leftHanger.burnFlash();
-        m_rightHanger.burnFlash();
+        m_leftHanger.configure(leftHangerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_rightHanger.configure(rightHangerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Hanger");
         m_leftHangerHeightEntry = loggingTable.getEntry("LeftHeight");
@@ -63,11 +66,11 @@ public class HangerSubsystem extends SubsystemBase {
             DCMotor gearbox = DCMotor.getNeo550(2);
             ElevatorSim leftElevatorSim = new ElevatorSim(gearbox, GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true, 0);
             m_leftSimulator = new ElevatorSimWrapper(leftElevatorSim,
-                new RevMotorControllerSimWrapper(m_leftHanger),
+                new RevMotorControllerSimWrapper(m_leftHanger, gearbox),
                 RevEncoderSimWrapper.create(m_leftHanger));
             ElevatorSim rightElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true, 0);
             m_rightSimulator = new ElevatorSimWrapper(rightElevatorSim,
-                new RevMotorControllerSimWrapper(m_rightHanger),
+                new RevMotorControllerSimWrapper(m_rightHanger, gearbox),
                 RevEncoderSimWrapper.create(m_rightHanger));
         }
     }

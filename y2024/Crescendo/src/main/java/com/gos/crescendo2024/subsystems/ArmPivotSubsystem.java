@@ -11,13 +11,18 @@ import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -25,6 +30,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -38,6 +44,10 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
+
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 @SuppressWarnings("PMD.GodClass")
 public class ArmPivotSubsystem extends SubsystemBase {
@@ -70,15 +80,15 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
     }
 
-    private final SimableCANSparkMax m_pivotMotor;
-    private final SimableCANSparkMax m_followMotor;
+    private final SparkMax m_pivotMotor;
+    private final SparkMax m_followMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
     private final AbsoluteEncoder m_pivotAbsEncoder;
     private final LoggingUtil m_networkTableEntriesPivot;
     private final SparkMaxAlerts m_armPivotMotorErrorAlerts;
     private final SparkMaxAlerts m_armPivotFollowerErrorAlerts;
 
-    private final SparkPIDController m_sparkPidController;
+    private final SparkClosedLoopController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
     private final ProfiledPIDController m_profilePID;
     private final PidProperty m_profilePidProperties;
@@ -89,44 +99,44 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final SpeakerLookupTable m_speakerTable;
 
     public ArmPivotSubsystem() {
-        m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, MotorType.kBrushless);
-        //m_pivotMotor.restoreFactoryDefaults();
-        m_pivotMotor.setIdleMode(IdleMode.kBrake);
-        m_pivotMotor.setSmartCurrentLimit(60);
+        m_pivotMotor = new SparkMax(Constants.ARM_PIVOT, MotorType.kBrushless);
+        SparkMaxConfig pivotMotorConfig = new SparkMaxConfig();
+        pivotMotorConfig.idleMode(IdleMode.kBrake);
+        pivotMotorConfig.smartCurrentLimit(60);
         m_pivotMotor.setInverted(false);
 
-        m_followMotor = new SimableCANSparkMax(Constants.ARM_PIVOT_FOLLOW, MotorType.kBrushless);
-        //m_followMotor.restoreFactoryDefaults();
-        m_followMotor.follow(m_pivotMotor, true);
-        m_followMotor.setIdleMode(IdleMode.kBrake);
-        m_followMotor.setSmartCurrentLimit(60);
+        m_followMotor = new SparkMax(Constants.ARM_PIVOT_FOLLOW, MotorType.kBrushless);
+        SparkMaxConfig followMotorConfig = new SparkMaxConfig();
+        followMotorConfig.follow(m_pivotMotor, true);
+        followMotorConfig.idleMode(IdleMode.kBrake);
+        followMotorConfig.smartCurrentLimit(60);
 
         // Request the absolute encoder position / velocity faster than the default period
-        m_pivotMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20);
-        m_pivotMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 20);
+        pivotMotorConfig.signals.absoluteEncoderPositionPeriodMs(20);
+        pivotMotorConfig.signals.absoluteEncoderVelocityPeriodMs(20);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
-        m_pivotMotorEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
-        m_pivotMotorEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60);
+        pivotMotorConfig.encoder.positionConversionFactor(360.0 / GEAR_RATIO);
+        pivotMotorConfig.encoder.velocityConversionFactor(360.0 / GEAR_RATIO / 60);
 
         m_pivotAbsEncoder = m_pivotMotor.getAbsoluteEncoder();
-        m_pivotAbsEncoder.setPositionConversionFactor(360.0);
-        m_pivotAbsEncoder.setVelocityConversionFactor(360.0 / 60);
-        m_pivotAbsEncoder.setInverted(false);
-        m_pivotAbsEncoder.setZeroOffset(277.11 + 2);
+        pivotMotorConfig.absoluteEncoder.positionConversionFactor(360.0);
+        pivotMotorConfig.absoluteEncoder.velocityConversionFactor(360.0 / 60);
+        pivotMotorConfig.absoluteEncoder.inverted(false);
+        pivotMotorConfig.absoluteEncoder.zeroOffset(277.11 + 2);
 
         m_speakerTable = new SpeakerLookupTable();
 
-        m_sparkPidController = m_pivotMotor.getPIDController();
+        m_sparkPidController = m_pivotMotor.getClosedLoopController();
         if (USE_ABSOLUTE_ENCODER) {
-            m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
+            pivotMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
         } else {
-            m_sparkPidController.setFeedbackDevice(m_pivotMotorEncoder);
+            pivotMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
         }
-        m_sparkPidController.setPositionPIDWrappingEnabled(true);
-        m_sparkPidController.setPositionPIDWrappingMinInput(0);
-        m_sparkPidController.setPositionPIDWrappingMaxInput(360);
-        m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_sparkPidController, 0)
+        pivotMotorConfig.closedLoop.positionWrappingEnabled(true);
+        pivotMotorConfig.closedLoop.positionWrappingMinInput(0);
+        pivotMotorConfig.closedLoop.positionWrappingMaxInput(360);
+        m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotMotorConfig, ClosedLoopSlot.kSlot0)
             .addP(0.18)
             .addI(0)
             .addD(0)
@@ -157,14 +167,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_armPivotMotorErrorAlerts = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor");
         m_armPivotFollowerErrorAlerts = new SparkMaxAlerts(m_followMotor, "arm follower");
 
-        m_pivotMotor.burnFlash();
-        m_followMotor.burnFlash();
+        m_pivotMotor.configure(pivotMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(1);
             SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, 252, 1,
                 0.381, Units.degreesToRadians(-2), Units.degreesToRadians(90), true, 0);
-            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
+            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
 
@@ -200,13 +210,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
         if (currentAngle < ARM_MAX_ANGLE || MathUtil.inputModulus(goalAngle, -180, 180) < MathUtil.inputModulus(currentAngle, -180, 180)) {
             m_profilePID.calculate(currentAngle, goalAngle);
             TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
-            double feedForwardVolts = m_wpiFeedForward.calculate(
-                Units.degreesToRadians(currentAngle),
-                Units.degreesToRadians(setpoint.velocity));
 
+            Voltage feedForwardVolts = m_wpiFeedForward.calculate(
+                Degrees.of(currentAngle),
+                DegreesPerSecond.of(setpoint.velocity));
 
-            m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, 0, feedForwardVolts);
-            SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+            m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, 0, feedForwardVolts.in(Volts));
+            SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts.in(Volts));
         }
         else {
             stopArmMotor();
@@ -311,8 +321,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public void setIdleMode(IdleMode idleMode) {
-        m_pivotMotor.setIdleMode(idleMode);
-        m_followMotor.setIdleMode(idleMode);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     /////////////////////////////////////

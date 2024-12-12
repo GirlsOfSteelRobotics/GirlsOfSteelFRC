@@ -1,41 +1,41 @@
 package com.gos.crescendo2024.subsystems.sysid;
 
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
-import edu.wpi.first.units.Angle;
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Units;
-import edu.wpi.first.units.Velocity;
-import edu.wpi.first.units.Voltage;
+import edu.wpi.first.units.measure.MutAngle;
+import edu.wpi.first.units.measure.MutAngularVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-import static edu.wpi.first.units.MutableMeasure.mutable;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
 
 public class ArmPivotSysId {
     private final SysIdRoutine m_routine;
     private final ArmPivotSubsystem m_armPivot;
 
-    private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
-    private final MutableMeasure<Angle> m_angle = mutable(Degrees.of(0));
-    private final MutableMeasure<Velocity<Angle>> m_velocity = mutable(DegreesPerSecond.of(0));
+
+    private final MutVoltage m_appliedVoltage = Volts.mutable(0);
+    private final MutAngle m_angle = Degrees.mutable(0);
+    private final MutAngularVelocity m_velocity = DegreesPerSecond.mutable(0);
 
     public ArmPivotSysId(ArmPivotSubsystem armPivot) {
         m_armPivot = armPivot;
         m_routine = new SysIdRoutine(
             new SysIdRoutine.Config(
-                Units.Volts.of(.25).per(Units.Seconds.of(1.0)),
-                Units.Volts.of(2.5),
-                Units.Seconds.of(10.0)),
+                Volts.of(0.25).per(Second),
+                Volts.of(2.5),
+                Seconds.of(10)),
             new SysIdRoutine.Mechanism(this::setVoltage, this::logMotors, armPivot)
         );
     }
 
-    private void setVoltage(Measure<Voltage> volts) {
+    private void setVoltage(Voltage volts) {
         m_armPivot.setVoltage(volts.in(Volts));
     }
 
