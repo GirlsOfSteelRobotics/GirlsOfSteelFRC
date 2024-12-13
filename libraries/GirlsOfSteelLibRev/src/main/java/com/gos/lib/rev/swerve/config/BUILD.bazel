@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "config",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-revlib//libraries/java/revlib-java",
+        "@maven//:org_snobotv2_snobot_sim_java_revlib",
+    ],
+)

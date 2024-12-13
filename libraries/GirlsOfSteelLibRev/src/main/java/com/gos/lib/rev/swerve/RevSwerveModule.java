@@ -5,11 +5,13 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.DrivingClosedLoopParameters;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.TurningClosedLoopParameters;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -19,7 +21,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfigAccessor;
-import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -28,12 +29,14 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.swerve.SwerveModuleSim;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 
+import static edu.wpi.first.units.Units.Volts;
 
 public class RevSwerveModule implements AutoCloseable {
     private final String m_moduleName;
@@ -71,32 +74,21 @@ public class RevSwerveModule implements AutoCloseable {
      * Encoder.
      */
     @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
-    public RevSwerveModule(String moduleName, RevSwerveModuleConstants moduleConstants, int drivingCANId, int azimuthId, double chassisAngularOffset, boolean lockPidConstants) {
+    public RevSwerveModule(String moduleName,
+                           RevSwerveModuleConstants moduleConstants,
+                           int drivingCANId,
+                           int azimuthId,
+                           double chassisAngularOffset,
+                           DrivingClosedLoopParameters drivingClosedLoopParameters,
+                           TurningClosedLoopParameters turningClosedLoopParameters,
+                           boolean lockPidConstants) {
         m_moduleName = moduleName;
 
-        SparkBaseConfig drivingMotorConfig;
-        switch (moduleConstants.m_driveMotorType) {
-        case NEO:
-            m_drivingSparkMax = new SparkMax(drivingCANId, MotorType.kBrushless);
-            drivingMotorConfig = new SparkMaxConfig();
-            break;
-        case VORTEX:
-            m_drivingSparkMax = new SparkFlex(drivingCANId, MotorType.kBrushless);
-            drivingMotorConfig = new SparkFlexConfig();
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-
+        m_drivingSparkMax = moduleConstants.m_motorControllerModel.createMotor(drivingCANId, MotorType.kBrushless);
         m_turningSparkMax = new SparkMax(azimuthId, MotorType.kBrushless);
 
-        // Factory reset, so we get the SPARKS MAX to a known state before configuring
-        // them. This is useful in case a SPARK MAX is swapped out.
-        SparkMaxConfig turningMotorConfig = new SparkMaxConfig();
-
-        // Request the absolute encoder position / velocity faster than the default period
-        turningMotorConfig.signals.absoluteEncoderPositionPeriodMs(10);
-        turningMotorConfig.signals.absoluteEncoderVelocityPeriodMs(10);
+        SparkBaseConfig drivingMotorConfig = moduleConstants.m_motorControllerModel.createConfig().apply(moduleConstants.m_drivingConfig);
+        SparkBaseConfig turningMotorConfig = moduleConstants.m_motorControllerModel.createConfig().apply(moduleConstants.m_turningConfig);
 
         // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
         m_drivingEncoder = m_drivingSparkMax.getEncoder();
@@ -104,55 +96,22 @@ public class RevSwerveModule implements AutoCloseable {
         m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder();
         m_drivingPIDController = m_drivingSparkMax.getClosedLoopController();
         m_turningPIDController = m_turningSparkMax.getClosedLoopController();
-        drivingMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
-        turningMotorConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-
-        // Apply position and velocity conversion factors for the driving encoder. The
-        // native units for position and velocity are rotations and RPM, respectively,
-        // but we want meters and meters per second to use with WPILib's swerve APIs.
-        drivingMotorConfig.encoder.positionConversionFactor(moduleConstants.m_drivingEncoderPositionFactor);
-        drivingMotorConfig.encoder.velocityConversionFactor(moduleConstants.m_drivingEncoderVelocityFactor);
-
-        // Apply position and velocity conversion factors for the turning encoder. We
-        // want these in radians and radians per second to use with WPILib's swerve
-        // APIs.
-        turningMotorConfig.encoder.positionConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
-        turningMotorConfig.encoder.velocityConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
-        turningMotorConfig.absoluteEncoder.positionConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
-        turningMotorConfig.absoluteEncoder.velocityConversionFactor(RevSwerveModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
-
-        // Invert the turning encoder, since the output shaft rotates in the opposite direction of
-        // the steering motor in the MAXSwerve Module.
-        turningMotorConfig.absoluteEncoder.inverted(RevSwerveModuleConstants.TURNING_ENCODER_INVERTED);
-
-        // Enable PID wrap around for the turning motor. This will allow the PID
-        // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
-        // to 10 degrees will go through 0 rather than the other direction which is a
-        // longer route.
-        turningMotorConfig.closedLoop.positionWrappingEnabled(true);
-        turningMotorConfig.closedLoop.positionWrappingMinInput(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_PID_MIN_INPUT);
-        turningMotorConfig.closedLoop.positionWrappingMaxInput(RevSwerveModuleConstants.TURNING_ENCODER_POSITION_PID_MAX_INPUT);
 
         // Set the PID gains for the driving motor. Note these are example gains, and you
         // may need to tune them for your own robot!
         m_drivingPIDProperty = new RevPidPropertyBuilder("Swerve Driving PID", lockPidConstants, m_drivingSparkMax, drivingMotorConfig, ClosedLoopSlot.kSlot0)
-            .addP(0.04)
-            .addD(0)
-            .addFF(1 / moduleConstants.m_driveWheelFreeSpeedRps)
+            .addP(drivingClosedLoopParameters.m_kp)
+            .addD(drivingClosedLoopParameters.m_kd)
+            .addFF(drivingClosedLoopParameters.m_kff)
             .build();
 
         m_turningPIDProperty = new RevPidPropertyBuilder("Swerve Turning PID", lockPidConstants, m_turningSparkMax, turningMotorConfig, ClosedLoopSlot.kSlot0)
-            .addP(1)
-            .addD(0)
+            .addP(turningClosedLoopParameters.m_kp)
+            .addD(turningClosedLoopParameters.m_kd)
             .build();
 
         m_wheelAlerts = new SparkMaxAlerts(m_drivingSparkMax, "SwerveModuleDrive: " + moduleName);
         m_azimuthAlerts = new SparkMaxAlerts(m_turningSparkMax, "SwerveModuleTurning: " + moduleName);
-
-        drivingMotorConfig.idleMode(RevSwerveModuleConstants.DRIVING_MOTOR_IDLE_MODE);
-        turningMotorConfig.idleMode(RevSwerveModuleConstants.TURNING_MOTOR_IDLE_MODE);
-        drivingMotorConfig.smartCurrentLimit(RevSwerveModuleConstants.DRIVING_MOTOR_CURRENT_LIMIT);
-        turningMotorConfig.smartCurrentLimit(RevSwerveModuleConstants.TURNING_MOTOR_CURRENT_LIMIT);
 
         if (RobotBase.isSimulation()) {
             DCMotor turningMotor = DCMotor.getNEO(1);
@@ -326,5 +285,15 @@ public class RevSwerveModule implements AutoCloseable {
         } else {
             return null;
         }
+    }
+
+    public void characterizeDriveMotor(Voltage volts) {
+        m_drivingSparkMax.setVoltage(volts.in(Volts));
+        m_turningPIDController.setReference(0, ControlType.kPosition);
+    }
+
+    public void characterizeSteerMotor(Voltage volts) {
+        m_turningSparkMax.setVoltage(volts.in(Volts));
+        m_drivingSparkMax.setVoltage(0);
     }
 }

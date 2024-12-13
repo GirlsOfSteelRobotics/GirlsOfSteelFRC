@@ -1,0 +1,33 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_junit5_test")
+
+gos_java_library(
+    name = "BasePropertiesTest",
+    srcs = ["BasePropertiesTest.java"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bzlmodrio-allwpilib//libraries/java/ntcore",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_jupiter_junit_jupiter_params",
+    ],
+)
+
+gos_junit5_test(
+    name = "test",
+    srcs = glob(
+        ["**/*.java"],
+        exclude = ["BasePropertiesTest.java"],
+    ),
+    deps = [
+        ":BasePropertiesTest",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve/config",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-allwpilib//libraries/java/wpiunits",
+        "@bzlmodrio-revlib//libraries/java/revlib-java",
+        "@maven//:org_snobotv2_snobot_sim_java_base",
+    ],
+)

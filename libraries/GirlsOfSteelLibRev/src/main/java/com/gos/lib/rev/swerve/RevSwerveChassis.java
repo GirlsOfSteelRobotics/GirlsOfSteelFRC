@@ -1,5 +1,7 @@
 package com.gos.lib.rev.swerve;
 
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.revrobotics.spark.config.SparkBaseConfigAccessor;
 import edu.wpi.first.math.Matrix;
@@ -14,6 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.RobotBase;
 import org.snobotv2.module_wrappers.BaseGyroWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
@@ -51,10 +54,7 @@ public class RevSwerveChassis implements AutoCloseable {
 
     /** Creates a new DriveSubsystem. */
     public RevSwerveChassis(RevSwerveChassisConstants chassisConstants, Supplier<Rotation2d> gyroAngleSupplier, BaseGyroWrapper gyroSimulator) {
-        RevSwerveModuleConstants moduleConstants = new RevSwerveModuleConstants(
-            chassisConstants.m_driveMotor,
-            chassisConstants.m_moduleDrivePinionTeeth,
-            chassisConstants.m_moduleDriveSpurTeeth);
+        RevSwerveModuleConstants moduleConstants = chassisConstants.getModuleConstants();
 
         m_frontLeft = new RevSwerveModule(
             "FL",
@@ -62,6 +62,8 @@ public class RevSwerveChassis implements AutoCloseable {
             chassisConstants.m_frontLeftDrivingCanId,
             chassisConstants.m_frontLeftTurningCanId,
             RevSwerveChassisConstants.FRONT_LEFT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_drivingClosedLoopParameters,
+            chassisConstants.m_turningClosedLoopParameters,
             chassisConstants.m_lockPidConstants);
         m_frontRight = new RevSwerveModule(
             "FR",
@@ -69,6 +71,8 @@ public class RevSwerveChassis implements AutoCloseable {
             chassisConstants.m_frontRightDrivingCanId,
             chassisConstants.m_frontRightTurningCanId,
             RevSwerveChassisConstants.FRONT_RIGHT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_drivingClosedLoopParameters,
+            chassisConstants.m_turningClosedLoopParameters,
             chassisConstants.m_lockPidConstants);
         m_backLeft = new RevSwerveModule(
             "BL",
@@ -76,6 +80,8 @@ public class RevSwerveChassis implements AutoCloseable {
             chassisConstants.m_rearLeftDrivingCanId,
             chassisConstants.m_rearLeftTurningCanId,
             RevSwerveChassisConstants.BACK_LEFT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_drivingClosedLoopParameters,
+            chassisConstants.m_turningClosedLoopParameters,
             chassisConstants.m_lockPidConstants);
         m_backRight = new RevSwerveModule(
             "BR",
@@ -83,6 +89,8 @@ public class RevSwerveChassis implements AutoCloseable {
             chassisConstants.m_rearRightDrivingCanId,
             chassisConstants.m_rearRightTurningCanId,
             RevSwerveChassisConstants.BACK_RIGHT_CHASSIS_ANGULAR_OFFSET,
+            chassisConstants.m_drivingClosedLoopParameters,
+            chassisConstants.m_turningClosedLoopParameters,
             chassisConstants.m_lockPidConstants);
         m_modules = new RevSwerveModule[]{m_frontLeft, m_frontRight, m_backLeft, m_backRight};
 
@@ -310,5 +318,17 @@ public class RevSwerveChassis implements AutoCloseable {
 
     public SparkBaseConfigAccessor getDrivingMotorConfig(int moduleId) {
         return m_modules[moduleId].getDrivingMotorConfig();
+    }
+
+    public void characterizeDriveMotors(Voltage volts) {
+        for (RevSwerveModule module: m_modules) {
+            module.characterizeDriveMotor(volts);
+        }
+    }
+
+    public void characterizeSteerMotors(Voltage volts) {
+        for (RevSwerveModule module: m_modules) {
+            module.characterizeSteerMotor(volts);
+        }
     }
 }

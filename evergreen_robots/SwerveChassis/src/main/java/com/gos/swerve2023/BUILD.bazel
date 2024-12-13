@@ -8,7 +8,9 @@ gos_java_robot(
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
         "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev/swerve/config",
         "@bzlmodrio-allwpilib//libraries/java/hal",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",

@@ -1,3 +1,4 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("//build_scripts/bazel/deps:download_external_archives.bzl", "download_external_archives")
 
 download_external_archives()
@@ -37,3 +38,16 @@ setup_styleguide()
 load("@rules_wpi_styleguide//dependencies:load_pins.bzl", "load_styleguide_pins")
 
 load_styleguide_pins()
+
+http_archive(
+    name = "rules_bzlmodrio_jdk",
+    integrity = "sha256-CuS7x85kbqJ7k3gC8Bae5BWgCd/SHRogBXd8jJ/d7+k=",
+    strip_prefix = "rules_bzlmodrio_jdk-002eda2bf3dcb98c68aa6ab7b6d8c30112b7892e",
+    urls = [
+        "https://github.com/bzlmodRio/rules_bzlmodrio_jdk/archive/002eda2bf3dcb98c68aa6ab7b6d8c30112b7892e.zip",
+    ],
+)
+
+load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
+
+setup_legacy_setup_jdk_dependencies()

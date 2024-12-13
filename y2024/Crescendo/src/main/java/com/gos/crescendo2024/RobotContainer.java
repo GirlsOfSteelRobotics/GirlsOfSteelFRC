@@ -43,7 +43,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
 import java.util.Set;
@@ -150,7 +149,7 @@ public class RobotContainer {
 
             // These three should be off for competition
             createTestCommands();
-            // createSysIdCommands();
+            createSysIdCommands();
             // PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
             createEllieCommands();
@@ -263,16 +262,8 @@ public class RobotContainer {
     private void createSysIdCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("SysId");
 
-
-        shuffleboardTab.add("Arm SysId Dynamic Forward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Arm Dyn F"));
-        shuffleboardTab.add("Arm SysId Dynamic Backward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Arm Dyn B"));
-        shuffleboardTab.add("Arm SysId Quasistatic Forward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Arm Quas F"));
-        shuffleboardTab.add("Arm SysId Quasistatic Backward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Arm Quas B"));
-
-        shuffleboardTab.add("Shooter SysId Dynamic Forward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Shooter Dyn F"));
-        shuffleboardTab.add("Shooter SysId Dynamic Backward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Shooter Dyn B"));
-        shuffleboardTab.add("Shooter SysId Quasistatic Forward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Shooter Quas F"));
-        shuffleboardTab.add("Shooter SysId Quasistatic Backward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Shooter Quas B"));
+        shuffleboardTab.add("Arm SysId", m_armPivotSysId.createSysidRoutineCommand());
+        shuffleboardTab.add("Shooter SysId", m_shooterSysId.createSysidRoutineCommand());
     }
 
     private void addChassisTestCommands(ShuffleboardTab shuffleboardTab) {

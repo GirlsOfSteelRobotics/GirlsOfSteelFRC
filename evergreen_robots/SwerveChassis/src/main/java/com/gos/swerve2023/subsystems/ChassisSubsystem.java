@@ -5,9 +5,12 @@ import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.RevMotorControllerModel;
+import com.gos.lib.rev.RevMotorModel;
 import com.gos.lib.rev.swerve.RevSwerveChassis;
-import com.gos.lib.rev.swerve.RevSwerveChassisConstants;
-import com.gos.lib.rev.swerve.RevSwerveModuleConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstants;
+import com.gos.lib.rev.swerve.config.RevSwerveChassisConstantsBuilder;
+import com.gos.lib.rev.swerve.config.SwerveGearingKit;
 import com.gos.swerve2023.AllianceFlipper;
 import com.gos.swerve2023.Constants;
 import com.gos.swerve2023.GoSField;
@@ -59,18 +62,20 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
 
-        RevSwerveChassisConstants swerveConstants = new RevSwerveChassisConstants(
-            Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH,
-            Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH,
-            Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH,
-            Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH,
-            RevSwerveModuleConstants.DriveMotor.NEO,
-            RevSwerveModuleConstants.DriveMotorPinionTeeth.T14,
-            RevSwerveModuleConstants.DriveMotorSpurTeeth.T22,
-            WHEEL_BASE,
-            TRACK_WIDTH,
-            MAX_TRANSLATION_SPEED,
-            MAX_ROTATION_SPEED, true);
+        RevSwerveChassisConstantsBuilder chassisBuilder = new RevSwerveChassisConstantsBuilder()
+            .withFrontLeftConfig(Constants.FRONT_LEFT_WHEEL, Constants.FRONT_LEFT_AZIMUTH)
+            .withFrontRightConfig(Constants.FRONT_RIGHT_WHEEL, Constants.FRONT_RIGHT_AZIMUTH)
+            .withRearLeftConfig(Constants.BACK_LEFT_WHEEL, Constants.BACK_LEFT_AZIMUTH)
+            .withRearRightConfig(Constants.BACK_RIGHT_WHEEL, Constants.BACK_RIGHT_AZIMUTH)
+            .withDrivingMotorType(RevMotorModel.VORTEX, RevMotorControllerModel.SPARK_FLEX)
+            .withTrackwidth(TRACK_WIDTH)
+            .withWheelBase(WHEEL_BASE)
+            .withMaxTranslationSpeed(MAX_TRANSLATION_SPEED)
+            .withMaxRotationSpeed(MAX_ROTATION_SPEED)
+            .withGearing(SwerveGearingKit.HIGH);
+
+        RevSwerveChassisConstants swerveConstants = chassisBuilder.build(true);
+
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
 
         m_field = new GoSField();

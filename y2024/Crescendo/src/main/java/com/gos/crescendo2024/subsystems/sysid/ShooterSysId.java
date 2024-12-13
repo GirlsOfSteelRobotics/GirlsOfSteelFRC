@@ -7,6 +7,7 @@ import edu.wpi.first.units.measure.MutVoltage;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import static edu.wpi.first.units.Units.Rotations;
@@ -57,5 +58,18 @@ public class ShooterSysId {
 
     public Command sysIdDynamic(SysIdRoutine.Direction direction) {
         return m_routine.dynamic(direction);
+    }
+
+    public Command createSysidRoutineCommand() {
+        return Commands.sequence(
+            Commands.waitSeconds(2),
+            sysIdDynamic(SysIdRoutine.Direction.kForward).withTimeout(7),
+            Commands.waitSeconds(2),
+            sysIdDynamic(SysIdRoutine.Direction.kReverse).withTimeout(7),
+            Commands.waitSeconds(2),
+            sysIdQuasistatic(SysIdRoutine.Direction.kForward).withTimeout(7),
+            Commands.waitSeconds(2),
+            sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withTimeout(7)
+        ).withName("Shooter SysID Routine");
     }
 }
