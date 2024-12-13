@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_junit5_test")
+
+gos_junit5_test(
+    name = "test",
+    srcs = glob(["**/*.java"]),
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
+        "//libraries/GirlsOfSteelLib/src/test/java/com/gos/lib/properties:BasePropertiesTest",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-allwpilib//libraries/java/wpiunits",
+    ],
+)

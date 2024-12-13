@@ -1,6 +1,5 @@
 package com.gos.crescendo2024.commands;
 
-import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;

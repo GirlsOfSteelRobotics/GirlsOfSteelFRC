@@ -219,7 +219,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return roboManTranslation.getDistance(amp.getTranslation());
     }
 
-    public void resetOdometry(Pose2d pose2d) {
+    public final void resetOdometry(Pose2d pose2d) {
         m_swerveDrive.resetOdometry(pose2d);
     }
 
