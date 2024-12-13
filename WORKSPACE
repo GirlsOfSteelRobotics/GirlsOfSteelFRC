@@ -11,7 +11,7 @@ load("//build_scripts/bazel/deps:activate_dependencies.bzl", "activate_dependenc
 
 activate_dependencies()
 
-load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
+load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 
 python_register_toolchains(
     name = "python_3_10",

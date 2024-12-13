@@ -18,7 +18,7 @@ def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
         print("PMD Disabled for " + name)  # buildifier: disable=print
 
 def get_default_javac_opts():
-    return ["-Werror", "-Xlint:all"]
+    return ["-Werror", "-Xlint:all", "-Xlint:-this-escape"]
 
 def gos_java_library(name, srcs, disable_pmd = False, disable_checkstyle = False, javacopts = [], **kwargs):
     java_library(

@@ -77,7 +77,8 @@ public class TuneKickerPID extends GosCommandBase {
                 System.out.println("At the end of one setpoint");
             }
 
-            for (int d = 0; d < m_lengthP; d += INCREMENT_P) {
+            for (double dd = 0; dd < m_lengthP; dd += INCREMENT_P) {
+                int d = (int) dd;
                 //for(int d = 0; d < lengthI; d += incrementI)
                 //Do it once then break TODO
                 if (m_meanDevSetPoint[d] == 0) {
