@@ -193,6 +193,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_logging.addDouble("Distance to Feeder", () -> getDistanceToFeeder(getPose()));
         m_logging.addBoolean("In Shooting Polygon", this::inShootingPolygon);
         m_logging.addDouble("Chassis X Speed", () -> getChassisSpeed().vxMetersPerSecond);
+
+        resetOdometry(RobotExtrinsics.STARTING_POSE_MIDDLE_SUBWOOFER.getRedPose());
     }
 
     public boolean inShootingPolygon() {

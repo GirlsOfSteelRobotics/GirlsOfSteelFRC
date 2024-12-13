@@ -33,4 +33,13 @@ public class MaybeFlippedPose2d {
         }
         return m_redPose;
     }
+
+
+    public Pose2d getRedPose() {
+        return m_redPose;
+    }
+
+    public Pose2d getBluePose() {
+        return m_bluePose;
+    }
 }
