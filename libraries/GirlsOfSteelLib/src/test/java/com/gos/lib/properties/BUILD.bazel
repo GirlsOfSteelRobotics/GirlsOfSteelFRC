@@ -8,8 +8,6 @@ gos_java_library(
         "@bzlmodrio-allwpilib//libraries/java/ntcore",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@maven//:org_junit_jupiter_junit_jupiter_api",
-        "@maven//:org_junit_jupiter_junit_jupiter_engine",
-        "@maven//:org_junit_jupiter_junit_jupiter_params",
     ],
 )
 
@@ -24,6 +22,5 @@ gos_junit5_test(
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
-        "@bzlmodrio-allwpilib//libraries/java/wpiunits",
     ],
 )

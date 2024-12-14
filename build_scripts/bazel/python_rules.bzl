@@ -76,7 +76,4 @@ if __name__ == "__main__":
         name = test_file_base,
         srcs = [test_file_name],
         deps = [lib],
-        env = {
-            "PATH": "C:/Users/PJ/Documents/GitHub/gos_monorepo/bazel-gos_monorepo/external/gos_pip_deps/pypi__pyqt5_qt5/PyQt5/Qt5/bin",
-        },
     )

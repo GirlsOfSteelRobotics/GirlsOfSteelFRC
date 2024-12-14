@@ -73,7 +73,8 @@ public class TuneChassisPID extends GosCommandBase {
                 System.out.println("At the end of one setpoint");
             }
 
-            for (int d = 0; d < LENGTH_P; d += INCREMENT_P) {
+            for (double dd = 0; dd < LENGTH_P; dd += INCREMENT_P) {
+                int d = (int) dd;
                 //for(int d = 0; d < lengthI; d += incrementI)
                 //Do it once then break TODO
                 if (m_meanDevSetPoint[d] == 0) {

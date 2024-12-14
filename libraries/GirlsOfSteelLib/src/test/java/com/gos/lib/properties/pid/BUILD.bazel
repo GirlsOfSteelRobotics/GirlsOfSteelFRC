@@ -8,6 +8,5 @@ gos_junit5_test(
         "//libraries/GirlsOfSteelLib/src/test/java/com/gos/lib/properties:BasePropertiesTest",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
-        "@bzlmodrio-allwpilib//libraries/java/wpiunits",
     ],
 )

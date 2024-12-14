@@ -18,7 +18,7 @@ public class StartGyro extends GosCommandBase {
 
     @Override
     public void execute() {
-        m_angle -= m_chassis.getGyroAngle();
+        m_angle -= (int) m_chassis.getGyroAngle();
         m_chassis.setFieldAdjustment(m_angle);
     }
 
