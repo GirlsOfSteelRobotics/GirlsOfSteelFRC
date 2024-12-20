@@ -48,6 +48,18 @@ public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
     }
 
     /**
+     * Calculates the feedforward from the gains and velocity setpoint assuming continuous control
+     * (acceleration is assumed to be zero).
+     *
+     * @param velocity The velocity setpoint.
+     * @return The computed feedforward.
+     */
+    public double calculate(double velocity) {
+        return m_feedForward.calculate(velocity);
+    }
+
+
+    /**
      * Calculates the feedforward from the gains and setpoints assuming discrete control.
      *
      * <p>Note this method is inaccurate when the velocity crosses 0.

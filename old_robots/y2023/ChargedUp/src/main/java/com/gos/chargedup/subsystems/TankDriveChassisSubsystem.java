@@ -36,7 +36,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -55,9 +54,6 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
-import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 
 
 @SuppressWarnings("PMD.GodClass")
