@@ -1,6 +1,7 @@
 """
 Runs a regex replace on any of the class names that got changed in the past year updates of wpilib / vendor deps
 """
+
 import json
 from libraries.scripts.updater.utils import (
     PINNED_VSCODE_WPILIB_COMMITISH,
@@ -36,7 +37,9 @@ def run_standard_replacement(auto_commit):
 
     # Undo some of the auto-changes
     replacements.append(("GosCommand", "GosCommandBase"))
-    replacements.append(("import edu.wpi.first.units.measure.measure", "import edu.wpi.first.units.measure"))
+    replacements.append(
+        ("import edu.wpi.first.units.measure.measure", "import edu.wpi.first.units.measure")
+    )
 
     # Run these on all the files
     __run_replacement(replacements)

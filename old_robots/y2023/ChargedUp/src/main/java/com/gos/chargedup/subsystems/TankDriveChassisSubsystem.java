@@ -303,9 +303,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     public void turnToAngle(double angleGoal) {
         SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
-        AngularVelocity currentVelocity = m_gyro.getAngularVelocityZWorld().getValue();
-        AngularVelocity goalVelocity = DegreesPerSecond.of(m_turnAnglePID.getSetpoint().velocity);
-        steerVoltage += m_turnAnglePIDFFProperty.calculate(currentVelocity, goalVelocity).in(Volts);
+        steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
 
         m_gyroAngleGoalVelocityEntry.setNumber(m_turnAnglePID.getSetpoint().velocity);
 
