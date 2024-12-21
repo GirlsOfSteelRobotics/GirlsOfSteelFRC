@@ -29,8 +29,8 @@ public class SwerveChassisJoystickCommand extends Command {
         double yVelocity = -m_joystick.getLeftX() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
         double xVelocity = -m_joystick.getLeftY() * SwerveDriveChassisSubsystem.MAX_TRANSLATION_SPEED;
         double omega = -m_joystick.getRightX() * SwerveDriveChassisSubsystem.MAX_ROTATION_SPEED;
-        ChassisSpeeds speeds = new ChassisSpeeds(xVelocity, yVelocity, omega);
-        speeds.toRobotRelativeSpeeds(m_swerveDriveChassisSubsystem.getPose().getRotation());
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            xVelocity, yVelocity, omega, m_swerveDriveChassisSubsystem.getPose().getRotation());
 
         // Now use this in our kinematics
         m_swerveDriveChassisSubsystem.setChassisSpeed(speeds);
