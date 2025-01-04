@@ -23,7 +23,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -357,7 +357,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts.in(Volts));
 
         if (isMotionProfileFinished()) {
-            m_sparkPidController.setReference(pivotAngleGoal, ControlType.kPosition, 0, feedForwardVolts.in(Volts));
+            m_sparkPidController.setReference(pivotAngleGoal, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts.in(Volts));
         } else {
             m_pivotMotor.setVoltage(feedForwardVolts);
         }

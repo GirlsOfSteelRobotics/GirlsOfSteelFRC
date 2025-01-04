@@ -13,7 +13,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -88,7 +88,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean goToPosition(double position) {
         m_desiredHeight = position;
-        m_pidController.setReference(position, ControlType.kMAXMotionPositionControl, 0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
+        m_pidController.setReference(position, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 

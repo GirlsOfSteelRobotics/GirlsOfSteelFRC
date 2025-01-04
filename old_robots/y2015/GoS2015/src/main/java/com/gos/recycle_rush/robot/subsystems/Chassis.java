@@ -3,7 +3,8 @@ package com.gos.recycle_rush.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -91,7 +92,7 @@ public class Chassis extends SubsystemBase {
 
         m_getGyro = true;
 
-        m_gyro = new AHRS(Port.kMXP);
+        m_gyro = new AHRS(NavXComType.kMXP_SPI);
 
         m_gyro.zeroYaw();
 
