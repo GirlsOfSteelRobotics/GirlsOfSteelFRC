@@ -4,6 +4,7 @@ import com.gos.codelabs.pid.Constants;
 import com.gos.codelabs.pid.Constants.DrivetrainConstants;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -210,8 +211,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistancePositionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, ControlType.kPosition, PID_SLOT_POSITION.value);
-        m_rightPid.setReference(rightDistance, ControlType.kPosition, PID_SLOT_POSITION.value);
+        m_leftPid.setReference(leftDistance, ControlType.kPosition, PID_SLOT_POSITION);
+        m_rightPid.setReference(rightDistance, ControlType.kPosition, PID_SLOT_POSITION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Position Goal", leftDistance);
@@ -219,8 +220,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistanceSmartMotionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION.value);
-        m_rightPid.setReference(rightDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION.value);
+        m_leftPid.setReference(leftDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION);
+        m_rightPid.setReference(rightDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left SM Goal", leftDistance);
@@ -243,8 +244,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
         ArbFFUnits arbUnit = ArbFFUnits.kVoltage;
 
-        m_leftPid.setReference(leftVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY.value, arbLeft, arbUnit);
-        m_rightPid.setReference(rightVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY.value, arbRight, arbUnit);
+        m_leftPid.setReference(leftVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
+        m_rightPid.setReference(rightVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Velocity Goal", leftVelocity);

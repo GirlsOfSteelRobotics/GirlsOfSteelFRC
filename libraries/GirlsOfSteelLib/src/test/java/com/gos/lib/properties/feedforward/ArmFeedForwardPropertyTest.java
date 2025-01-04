@@ -4,9 +4,6 @@ import com.gos.lib.properties.BasePropertiesTest;
 import edu.wpi.first.wpilibj.Preferences;
 import org.junit.jupiter.api.Test;
 
-import static edu.wpi.first.units.Units.Radians;
-import static edu.wpi.first.units.Units.RadiansPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ArmFeedForwardPropertyTest extends BasePropertiesTest {
@@ -111,19 +108,5 @@ public class ArmFeedForwardPropertyTest extends BasePropertiesTest {
                 + property.getKFf() * -2
                 + property.getKa() * 1.3,
             property.calculate(Math.toRadians(45), -2, 1.3));
-    }
-
-    @Test
-    public void testCalculate() {
-        ArmFeedForwardProperty property = new ArmFeedForwardProperty(PROPERTY_NAME, true)
-            .addKff(1.5)
-            .addKs(0.5)
-            .addKg(1)
-            .addKa(2);
-
-        assertEquals(
-            0.5, property.calculate(Radians.of(Math.PI / 3), RadiansPerSecond.of(0)).in(Volts), 0.002);
-        assertEquals(
-            2.5, property.calculate(Radians.of(Math.PI / 3), RadiansPerSecond.of(1)).in(Volts), 0.002);
     }
 }

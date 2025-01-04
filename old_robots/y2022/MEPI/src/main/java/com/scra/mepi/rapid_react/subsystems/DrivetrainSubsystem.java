@@ -20,6 +20,8 @@ import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.scra.mepi.rapid_react.Constants;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -28,7 +30,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -61,7 +62,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // odometry
     private final RelativeEncoder m_leftEncoder = m_leftLeader.getEncoder();
     private final RelativeEncoder m_rightEncoder = m_rightLeader.getEncoder();
-    private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+    private final AHRS m_gyro = new AHRS(NavXComType.kMXP_SPI);
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
     private final Field2d m_field = new Field2d();
 

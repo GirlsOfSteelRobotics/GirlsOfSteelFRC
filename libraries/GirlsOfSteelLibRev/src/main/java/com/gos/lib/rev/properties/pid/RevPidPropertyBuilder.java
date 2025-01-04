@@ -2,6 +2,7 @@ package com.gos.lib.rev.properties.pid;
 
 import com.gos.lib.properties.pid.IPidPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -16,9 +17,9 @@ public final class RevPidPropertyBuilder extends PidProperty.Builder implements 
     private final SparkBase m_motor;
     private final SparkBaseConfig m_parentConfig;
     private final ClosedLoopConfig m_closedLoopConfig;
-    private final ClosedLoopConfig.ClosedLoopSlot m_slot;
+    private final ClosedLoopSlot m_slot;
 
-    public RevPidPropertyBuilder(String baseName, boolean isConstant, SparkBase motor, SparkBaseConfig parentConfig, ClosedLoopConfig.ClosedLoopSlot slot) {
+    public RevPidPropertyBuilder(String baseName, boolean isConstant, SparkBase motor, SparkBaseConfig parentConfig, ClosedLoopSlot slot) {
         super(baseName, isConstant);
         m_motor = motor;
         m_parentConfig = parentConfig;
