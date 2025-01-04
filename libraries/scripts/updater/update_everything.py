@@ -12,6 +12,7 @@ from libraries.scripts.updater.replace_old_names import (
 )
 from libraries.scripts.updater.update_bazelrio import update_bazelrio
 from libraries.scripts.gradle.run_spotless import run_smart_spotless
+import subprocess
 
 
 def update_everything():
@@ -20,6 +21,8 @@ def update_everything():
 
     ignore_download_cache = True
     run_replacements_in_batch = True
+
+    subprocess.check_call(["git", "am", "-3", "libraries/scripts/updater/0001-Hand-fixes.patch"])
 
     update_vendor_deps(ignore_cache=ignore_download_cache)
     replace_gradlerio_files(run_custom_updates=True)
