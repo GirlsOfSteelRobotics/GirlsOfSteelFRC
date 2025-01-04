@@ -19,7 +19,7 @@ gos_java_library(
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
-        "@bzlmodrio-navx//libraries/java/navx",
+        "@bzlmodrio-studica//libraries/java/studica-java",
         "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
         "@bzlmodrio-revlib//libraries/java/revlib-java",
         "@maven//:org_snobotv2_snobot_sim_java_base",

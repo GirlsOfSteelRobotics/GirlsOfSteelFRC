@@ -15,6 +15,13 @@ def download_external_archives():
         strip_prefix = "rules_jvm_external-5.3",
         url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/5.3/rules_jvm_external-5.3.tar.gz",
     )
+    
+    http_archive(
+        name = "bzlmodrio-studica",
+        sha256 = "530fb5c88def87fe86db491c8e61fe73fb5435330f831d39723b379817777ad6",
+        strip_prefix = "bzlmodRio-studica-b190c1fcfaf6e2fd242e934c5109a1073ff84082",
+        urls = ["https://github.com/bzlmodrio/bzlmodRio-studica/archive/b190c1fcfaf6e2fd242e934c5109a1073ff84082.tar.gz"],
+    )
 
     # Download bzlmodrio <3
     BZLMODRIO_COMMITISH = "882241d7676b1f8238af66f31306a1d7cb3e1762"
