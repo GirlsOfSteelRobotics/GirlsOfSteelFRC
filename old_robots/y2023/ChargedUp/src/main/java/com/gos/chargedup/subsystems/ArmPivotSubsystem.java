@@ -349,7 +349,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts);
 
         if (isMotionProfileFinished()) {
-            m_sparkPidController.setReference(pivotAngleGoal, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts.in(Volts));
+            m_sparkPidController.setReference(pivotAngleGoal, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
         } else {
             m_pivotMotor.setVoltage(feedForwardVolts);
         }
