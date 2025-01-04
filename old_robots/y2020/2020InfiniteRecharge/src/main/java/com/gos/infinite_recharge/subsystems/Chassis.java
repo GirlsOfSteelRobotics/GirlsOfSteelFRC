@@ -5,14 +5,15 @@ import com.gos.infinite_recharge.Constants.DriveConstants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
-import com.kauailabs.navx.frc.AHRS;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -108,7 +109,7 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
-        m_gyro = new AHRS();
+        m_gyro = new AHRS(NavXComType.kMXP_SPI);
 
         IdleMode idleMode = IdleMode.kCoast;
         masterLeftConfig.idleMode(idleMode);

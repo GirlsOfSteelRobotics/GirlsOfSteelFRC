@@ -12,17 +12,17 @@ import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -30,7 +30,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -44,10 +43,6 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
-
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 
 @SuppressWarnings("PMD.GodClass")
 public class ArmPivotSubsystem extends SubsystemBase {
@@ -211,13 +206,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
             m_profilePID.calculate(currentAngle, goalAngle);
             TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
 
-            Voltage feedForwardVolts = m_wpiFeedForward.calculate(
-                Degrees.of(currentAngle),
-                DegreesPerSecond.of(getEncoderVel()),
-                DegreesPerSecond.of(setpoint.velocity));
+            double feedForwardVolts = m_wpiFeedForward.calculateWithVelocities(
+                currentAngle,
+                getEncoderVel(),
+                setpoint.velocity);
 
-            m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, 0, feedForwardVolts.in(Volts));
-            SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts.in(Volts));
+            m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
+            SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
         }
         else {
             stopArmMotor();

@@ -1,12 +1,9 @@
 package com.gos.lib.properties.feedforward;
 
 import com.gos.lib.properties.BasePropertiesTest;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.Preferences;
 import org.junit.jupiter.api.Test;
 
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ElevatorFeedForwardPropertyTest extends BasePropertiesTest {
@@ -76,46 +73,5 @@ public class ElevatorFeedForwardPropertyTest extends BasePropertiesTest {
 
         assertEquals(property.getKs() + property.getKg() + property.getKFf() * 2 + 1.3 * property.getKa(), property.calculate(2, 1.3));
         assertEquals(-property.getKs() + property.getKg() + property.getKFf() * -2 + 1.3 * property.getKa(), property.calculate(-2, 1.3));
-    }
-
-
-    @Test
-    public void testCalculateWithCurrentVelocityNoKa() {
-        ElevatorFeedForwardProperty property = new ElevatorFeedForwardProperty(PROPERTY_NAME, true)
-            .addKff(1)
-            .addKs(2)
-            .addKg(4);
-
-        assertEquals(
-            Units.Volt.of(property.getKs() + property.getKg() + property.getKFf() * 2),
-            property.calculate(MetersPerSecond.of(2)));
-        assertEquals(Units.Volt.of(-property.getKs() + property.getKg() + property.getKFf() * -2),
-            property.calculate(MetersPerSecond.of(-2)));
-
-        assertEquals(
-            Units.Volt.of(property.getKs() + property.getKg() + property.getKFf() * 1.3),
-            property.calculate(
-                MetersPerSecond.of(2),
-                MetersPerSecond.of(1.3)));
-        assertEquals(
-            Units.Volt.of(property.getKs() + property.getKg() + property.getKFf() * 1.3),
-            property.calculate(
-                MetersPerSecond.of(-2),
-                MetersPerSecond.of(1.3)));
-    }
-
-    @Test
-    public void testCalculate() {
-        ElevatorFeedForwardProperty property = new ElevatorFeedForwardProperty(PROPERTY_NAME, true)
-            .addKff(1.5)
-            .addKs(0.5)
-            .addKg(1)
-            .addKa(2);
-
-
-        assertEquals(
-            105.2518749929687,
-            property.calculate(MetersPerSecond.of(2.0), MetersPerSecond.of(3.0)).in(Volts),
-            0.002);
     }
 }

@@ -18,10 +18,10 @@ def setup_dependencies():
 
     download_dependencies(
         allwpilib_version = WPILIB_VERSION,
-        apriltaglib_version = None,
-        imgui_version = None,
-        libssh_version = None,
-        navx_version = NAVX_FRC_VERSION,
+        # apriltaglib_version = None,
+        # imgui_version = None,
+        # libssh_version = None,
+        studica_version = NAVX_FRC_VERSION,
         phoenix_version = PHOENIX_VERSION,
         phoenix6_version = PHOENIX6_VERSION,
         revlib_version = REVLIB_VERSION,
