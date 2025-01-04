@@ -22,7 +22,7 @@ def update_everything():
     ignore_download_cache = True
     run_replacements_in_batch = True
 
-    subprocess.check_call(["git", "am", "-3", "libraries/scripts/updater/0001-Hand-fixes.patch"])
+    # subprocess.check_call(["git", "am", "-3", "libraries/scripts/updater/0001-Hand-fixes.patch"])
 
     update_vendor_deps(ignore_cache=ignore_download_cache)
     replace_gradlerio_files(run_custom_updates=True)
