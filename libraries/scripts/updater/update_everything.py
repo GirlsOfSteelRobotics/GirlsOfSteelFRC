@@ -32,7 +32,7 @@ def update_everything():
         run_smart_spotless(commands=["spotlessGroovyGradleApply"])
     else:
         run_all_replacements()
-    update_bazelrio(ignore_cache=ignore_download_cache)
+    # update_bazelrio(ignore_cache=ignore_download_cache)
     run_smart_spotless(
         commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
     )
