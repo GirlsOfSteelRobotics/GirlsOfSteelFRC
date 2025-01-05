@@ -15,7 +15,7 @@ def download_external_archives():
         strip_prefix = "rules_jvm_external-5.3",
         url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/5.3/rules_jvm_external-5.3.tar.gz",
     )
-    
+
     http_archive(
         name = "bzlmodrio-studica",
         sha256 = "530fb5c88def87fe86db491c8e61fe73fb5435330f831d39723b379817777ad6",

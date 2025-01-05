@@ -53,34 +53,6 @@ def run_our_additional_replacements(auto_commit):
 
     # Put our smarter-than-wpilib replacements here
     # fmt: off
-    replacements.append(("import com.kauailabs.navx.frc.AHRS;",
-        """import com.studica.frc.AHRS;
-import com.studica.frc.AHRS.NavXComType;"""
-    ))
-    replacements.append((
-        r"new AHRS\(Port.kMXP\)",
-        r"new AHRS(NavXComType.kMXP_SPI)",\
-    ))
-    replacements.append((
-        r"new AHRS\(\)",
-        r"new AHRS(NavXComType.kMXP_SPI)",\
-    ))
-    replacements.append((
-        "import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;",
-        "import com.revrobotics.spark.ClosedLoopSlot;",
-    ))
-    replacements.append((
-        "ControlType.kVelocity, 0",
-        "ControlType.kVelocity, ClosedLoopSlot.kSlot0",
-    ))
-    replacements.append((
-        "ControlType.kPosition, 0",
-        "ControlType.kPosition, ClosedLoopSlot.kSlot0",
-    ))
-    replacements.append((
-        "ControlType.kMAXMotionPositionControl, 0",
-        "ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0",
-    ))
     # fmt: on
 
     # Run these on all the files
