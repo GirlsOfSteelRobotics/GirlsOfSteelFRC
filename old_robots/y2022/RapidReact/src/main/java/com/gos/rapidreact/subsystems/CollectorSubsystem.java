@@ -6,7 +6,7 @@ import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -266,8 +266,8 @@ public class CollectorSubsystem extends SubsystemBase {
             double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
             double arbFeedforwardLeft = gravityOffsetLeft + staticFrictionLeft;
             double arbFeedforwardRight = gravityOffsetRight + staticFrictionRight;
-            m_pidControllerLeft.setReference(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, 0, arbFeedforwardLeft);
-            m_pidControllerRight.setReference(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, 0, arbFeedforwardRight);
+            m_pidControllerLeft.setReference(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, arbFeedforwardLeft);
+            m_pidControllerRight.setReference(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, arbFeedforwardRight);
 
             m_leftGravityOffsetVoltage.setNumber(gravityOffsetLeft);
             m_rightGravityOffsetVoltage.setNumber(gravityOffsetRight);

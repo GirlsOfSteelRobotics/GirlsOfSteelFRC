@@ -23,9 +23,16 @@ def download_external_archives():
         urls = ["https://github.com/bzlmodrio/bzlmodRio-studica/archive/b190c1fcfaf6e2fd242e934c5109a1073ff84082.tar.gz"],
     )
 
+    http_archive(
+        name = "bzlmodrio-studica",
+        sha256 = "530fb5c88def87fe86db491c8e61fe73fb5435330f831d39723b379817777ad6",
+        strip_prefix = "bzlmodRio-studica-b190c1fcfaf6e2fd242e934c5109a1073ff84082",
+        urls = ["https://github.com/bzlmodrio/bzlmodRio-studica/archive/b190c1fcfaf6e2fd242e934c5109a1073ff84082.tar.gz"],
+    )
+
     # Download bzlmodrio <3
-    BZLMODRIO_COMMITISH = "882241d7676b1f8238af66f31306a1d7cb3e1762"
-    BZLMODRIO_SHA256 = "6a5fd41270e54290558063dfa5c10ff5df5d1869b05bcaf30bdd837cc19f67de"
+    BZLMODRIO_COMMITISH = "9c184dcd0475c21667db16c60cc3e8ad460d9bd5"
+    BZLMODRIO_SHA256 = "2bc897eaa8b11b9c7179cb189a11a66d7ef13cf92591bb8c8a6fb93ea6782bc5"
     http_archive(
         name = "bzlmodrio",
         url = "https://github.com/bzlmodRio/bzlmodRio/archive/{}.tar.gz".format(BZLMODRIO_COMMITISH),

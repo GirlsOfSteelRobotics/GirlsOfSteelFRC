@@ -23,7 +23,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -35,9 +35,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -49,10 +46,6 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
-
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 
 
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
@@ -340,6 +333,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return m_wpiPidController.getSetpoint().equals(m_wpiPidController.getGoal());
     }
 
+    @SuppressWarnings("removal")
     public void pivotArmToAngle2(double pivotAngleGoal) {
         m_armAngleGoal = pivotAngleGoal;
 
@@ -349,15 +343,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_profileVelocityGoalEntry.setNumber(profileSetpointDegrees.velocity);
         m_profilePositionGoalEntry.setNumber(profileSetpointDegrees.position);
 
-        Angle currentAngle = Degrees.of(getFeedbackAngleDeg());
-        AngularVelocity currentVelocity = DegreesPerSecond.of(getFeedbackVelocityDegPerSec());
-        Voltage feedForwardVolts = m_wpiFeedForward.calculate(
-            currentAngle,
-            currentVelocity);
-        m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts.in(Volts));
+        double feedForwardVolts = m_wpiFeedForward.calculate(
+                Units.degreesToRadians(profileSetpointDegrees.position),
+                Units.degreesToRadians(profileSetpointDegrees.velocity));
+        m_pidArbitraryFeedForwardEntry.setNumber(feedForwardVolts);
 
         if (isMotionProfileFinished()) {
-            m_sparkPidController.setReference(pivotAngleGoal, ControlType.kPosition, 0, feedForwardVolts.in(Volts));
+            m_sparkPidController.setReference(pivotAngleGoal, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
         } else {
             m_pivotMotor.setVoltage(feedForwardVolts);
         }

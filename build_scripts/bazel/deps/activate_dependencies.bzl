@@ -4,6 +4,7 @@
 load("@bzlmodrio//private/non_bzlmod:setup_dependencies.bzl", "get_java_dependencies", "setup_dependencies")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_python//python:pip.bzl", "pip_parse")
+load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 load("//build_scripts/bazel/deps:versions.bzl", "SNOBOTSIM_VERSION")
 
 def activate_dependencies():
@@ -11,15 +12,16 @@ def activate_dependencies():
     Final step of dependencies initialization. Does the various installation steps (pip_install, maven_intstall, etc)
     """
 
-    # To regenerate lock file:
-    #
-    # .\venv\Scripts\activate
-    # pip uninstall -r requirements.txt
-    # pip install -r requirements.txt
-    # pip freeze >> build_scripts/bazel/deps/requirements_lock.txt
+    python_register_toolchains(
+        name = "python_3_10",
+        ignore_root_user_error = True,
+        python_version = "3.10",
+    )
+
     pip_parse(
         name = "gos_pip_deps",
         requirements_lock = "//build_scripts/bazel/deps:requirements_lock.txt",
+        requirements_windows = "//build_scripts/bazel/deps:requirements_windows.txt",
     )
 
     setup_dependencies()
