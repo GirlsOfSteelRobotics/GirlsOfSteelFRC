@@ -1,8 +1,8 @@
 jinja2
 pyyaml
 opencv-python~=4.5.5.64
-PyQt5
-numpy
+pyqt5
+numpy==1.21.6
 superqt
 colorama
 pandas
