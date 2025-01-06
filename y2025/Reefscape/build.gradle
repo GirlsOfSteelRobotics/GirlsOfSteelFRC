@@ -1,15 +1,11 @@
-
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2025.1.1"
-    id "idea"
 }
 
-def javaVersion = JavaVersion.VERSION_17
-
 java {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 def ROBOT_MAIN_CLASS = "com.gos.reefscape.Main"
@@ -51,9 +47,10 @@ def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 wpi.java.debugJni = false
 
 // Set this to true to enable desktop support.
-//noinspection GroovyUnusedAssignment
 def includeDesktopSupport = false
 
+// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+// Also defines JUnit 5.
 dependencies {
     annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()
@@ -64,7 +61,7 @@ dependencies {
 
     roborioRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.roborio)
     roborioRelease wpi.java.vendor.jniRelease(wpi.platforms.roborio)
-    
+
     nativeDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.desktop)
     nativeDebug wpi.java.vendor.jniDebug(wpi.platforms.desktop)
     simulationDebug wpi.sim.enableDebug()
@@ -73,11 +70,9 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    testImplementation platform("org.junit:junit-bom:5.11.4")
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "org.junit.jupiter:junit-jupiter-params"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 
     implementation project(":libraries:GirlsOfSteelLib")
     implementation project(":libraries:GirlsOfSteelLibRev")
@@ -86,7 +81,7 @@ dependencies {
     implementation project(":libraries:GirlsOfSteelLibPhotonVision")
 }
 
-test{
+test {
     useJUnitPlatform()
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
 }
@@ -110,7 +105,8 @@ deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
+// Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
-    // Configure string concat to always inline compile
     options.compilerArgs.add '-XDstringConcat=inline'
 }
+
