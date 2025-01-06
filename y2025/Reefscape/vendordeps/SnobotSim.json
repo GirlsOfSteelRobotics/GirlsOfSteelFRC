@@ -1,0 +1,43 @@
+{
+  "fileName": "SnobotSim.json",
+  "name": "SnobotSim",
+  "version": "2025.01.04-16",
+  "uuid": "e89e3e60-cab9-11ef-b656-1f3789fc3291",
+  "frcYear": "2025",
+  "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+  "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+  "javaDependencies": [
+    {
+      "groupId": "org.snobotv2",
+      "artifactId": "snobot_sim_java_base",
+      "version": "2025.01.04-16"
+    },
+    {
+      "groupId": "org.snobotv2",
+      "artifactId": "snobot_sim_java_navx",
+      "version": "2025.01.04-16"
+    },
+    {
+      "groupId": "org.snobotv2",
+      "artifactId": "snobot_sim_java_phoenix5",
+      "version": "2025.01.04-16"
+    },
+    {
+      "groupId": "org.snobotv2",
+      "artifactId": "snobot_sim_java_phoenix6",
+      "version": "2025.01.04-16"
+    },
+    {
+      "groupId": "org.snobotv2",
+      "artifactId": "snobot_sim_java_revlib",
+      "version": "2025.01.04-16"
+    },
+    {
+      "groupId": "org.snobotv2",
+      "artifactId": "snobot_swerve_sim",
+      "version": "2025.01.04-16"
+    }
+  ],
+  "jniDependencies": [],
+  "cppDependencies": []
+}
