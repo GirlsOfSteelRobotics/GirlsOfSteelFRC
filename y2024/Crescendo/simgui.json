@@ -421,6 +421,7 @@
       "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/ChoreoAlert": "Alerts",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
