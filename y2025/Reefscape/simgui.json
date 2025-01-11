@@ -1,0 +1,39 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "CANcoder (v6)[9]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [7]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [7] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [8]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [8] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
