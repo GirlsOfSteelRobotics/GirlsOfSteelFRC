@@ -1,0 +1,52 @@
+<dashboard-tab
+    tab-name="TeleOperated"
+    slot="tab"
+    source-provider="NetworkTables"
+></dashboard-tab><dashboard-tab
+    slot="tab"
+    tab-name="Autonomous"
+    source-provider="NetworkTables"
+></dashboard-tab><dashboard-tab
+    tab-name="Chassis"
+    slot="tab"
+    source-provider="NetworkTables"
+    selected=""
+><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(5.79999px, 8.39999px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis source-provider="NetworkTables"></frc-line-chart-axis>
+        <frc-line-chart-axis
+            side="right"
+            source-provider="NetworkTables"
+        ></frc-line-chart-axis>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/SmartDashboard/FLGoal Velocity"
+        ></frc-line-chart-data>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            style="transform: translate(140px, 268px);"
+            source-key="/SmartDashboard/FLCurrent Velocity"
+        ></frc-line-chart-data></frc-line-chart><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(138px, 488px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis source-provider="NetworkTables"></frc-line-chart-axis>
+        <frc-line-chart-axis
+            side="right"
+            source-provider="NetworkTables"
+        ></frc-line-chart-axis>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/SmartDashboard/FLGoal Position"
+        ></frc-line-chart-data>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            style="transform: translate(105px, 241px);"
+            source-key="/SmartDashboard/FLCurrent Position"
+        ></frc-line-chart-data></frc-line-chart></dashboard-tab>
