@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -125,8 +124,8 @@ public class RevSwerveModule {
         SmartDashboard.putNumber(m_name + "Goal Velocity", state.speedMetersPerSecond);
         SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
 
-        SmartDashboard.putNumber(m_name + "Goal Position", state.angle.getDegrees());;
-        SmartDashboard.putNumber(m_name + "Current Position",m_steerEncoder.getPosition());
+        SmartDashboard.putNumber(m_name + "Goal Position", state.angle.getDegrees());
+        SmartDashboard.putNumber(m_name + "Current Position", m_steerEncoder.getPosition());
     }
 
     public double getAbsoluteEncoderPosition() {
@@ -155,8 +154,5 @@ public class RevSwerveModule {
     public void periodic() {
         m_steerPidProperties.updateIfChanged();
         m_drivePidProperties.updateIfChanged();
-        System.out.println(m_driveEncoder.getVelocity());
-
-//        System.out.println(m_steerEncoder.getPosition());
     }
 }
