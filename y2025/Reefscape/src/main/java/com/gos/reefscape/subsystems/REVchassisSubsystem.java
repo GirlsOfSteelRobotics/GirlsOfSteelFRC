@@ -92,7 +92,7 @@ public class REVchassisSubsystem extends SubsystemBase {
 
     public void setModuleStates(SwerveModuleState... desiredStates) {
         for (int i = 0; i < 4; i++) {
-            m_modules[i].  drive(desiredStates[i].speedMetersPerSecond, desiredStates[i].angle.getDegrees());
+            m_modules[i].drive(desiredStates[i]);
 
         }
     }

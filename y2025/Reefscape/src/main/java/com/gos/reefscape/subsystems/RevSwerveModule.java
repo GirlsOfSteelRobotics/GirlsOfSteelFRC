@@ -10,6 +10,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -115,15 +117,16 @@ public class RevSwerveModule {
         }
     }
 
-    public void drive(double velocity, double angle) {
-        m_drivePID.setReference(velocity, ControlType.kVelocity);
-        m_steerPID.setReference(Math.toRadians(angle), ControlType.kPosition);
+    public void drive(SwerveModuleState state) {
+        state.optimize(Rotation2d.fromDegrees(getSteerAngle()));
+        m_drivePID.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
+        m_steerPID.setReference(state.angle.getDegrees(), ControlType.kPosition);
 
-        SmartDashboard.putNumber(m_name + "Goal Velocity", velocity);
+        SmartDashboard.putNumber(m_name + "Goal Velocity", state.speedMetersPerSecond);
         SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
 
-        SmartDashboard.putNumber(m_name + "Goal Position",Math.toRadians((angle)));;
-        SmartDashboard.putNumber(m_name + "Current Position",Math.toRadians(m_steerEncoder.getPosition()));
+        SmartDashboard.putNumber(m_name + "Goal Position", state.angle.getDegrees());;
+        SmartDashboard.putNumber(m_name + "Current Position",m_steerEncoder.getPosition());
     }
 
     public double getAbsoluteEncoderPosition() {

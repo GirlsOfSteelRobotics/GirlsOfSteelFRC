@@ -41,5 +41,12 @@
             side="right"
             source-provider="NetworkTables"
         ></frc-line-chart-axis>
-        <frc-line-chart-data source-provider="NetworkTables"></frc-line-chart-data>
-    </frc-line-chart></dashboard-tab>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/SmartDashboard/FLGoal Position"
+        ></frc-line-chart-data>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            style="transform: translate(105px, 241px);"
+            source-key="/SmartDashboard/FLCurrent Position"
+        ></frc-line-chart-data></frc-line-chart></dashboard-tab>
