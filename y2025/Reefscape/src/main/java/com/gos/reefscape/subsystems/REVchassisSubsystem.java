@@ -25,7 +25,7 @@ import java.util.List;
 public class REVchassisSubsystem extends SubsystemBase {
     public static final double WHEEL_BASE = Units.inchesToMeters(25);
     public static final double TRACK_WIDTH = Units.inchesToMeters(25);
-    public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(20.1);
+    public static final double MAX_TRANSLATION_SPEED = 4; // Units.feetToMeters(20.1);
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(540);
     private final RevSwerveModule m_backLeft;
     private final RevSwerveModule m_backRight;
@@ -46,10 +46,10 @@ public class REVchassisSubsystem extends SubsystemBase {
     private SwerveSimWrapper m_simulator;
 
     public REVchassisSubsystem() {
-        m_backLeft = new RevSwerveModule(Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID);
-        m_backRight = new RevSwerveModule(Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID);
-        m_frontLeft = new RevSwerveModule(Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID);
-        m_frontRight = new RevSwerveModule(Constants. FRONT_RIGHT_CANCODER_ID, Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, Constants. FRONT_RIGHT_STEER_MOTOR_ID);
+        m_backLeft = new RevSwerveModule("BL", Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID);
+        m_backRight = new RevSwerveModule("BR", Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID);
+        m_frontLeft = new RevSwerveModule("FL", Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID);
+        m_frontRight = new RevSwerveModule("FR", Constants. FRONT_RIGHT_CANCODER_ID, Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, Constants. FRONT_RIGHT_STEER_MOTOR_ID);
 
         m_gyro = new Pigeon2(Constants.PIGEON_ID);
 

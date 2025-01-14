@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.swerve.SwerveModuleSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
@@ -25,6 +26,7 @@ public class RevSwerveModule {
     private static final double GEAR_REDUCTION_DRIVE = 5.36;
     private static final double GEAR_REDUCTION_STEER = 18.75;
 
+    private final String m_name;
 
     private final CANcoder m_absoluteEncoder;
     private final RelativeEncoder m_driveEncoder;
@@ -41,7 +43,9 @@ public class RevSwerveModule {
 
 
 
-    public RevSwerveModule(int absoluteEncoderID, int motorDriveID, int motorSteerID) {
+    public RevSwerveModule(String name, int absoluteEncoderID, int motorDriveID, int motorSteerID) {
+        m_name = name;
+
         m_absoluteEncoder = new CANcoder(absoluteEncoderID);
         m_motorDrive = new SparkFlex(motorDriveID, MotorType.kBrushless);
         m_motorSteer = new SparkFlex(motorSteerID, MotorType.kBrushless);
@@ -113,7 +117,13 @@ public class RevSwerveModule {
 
     public void drive(double velocity, double angle) {
         m_drivePID.setReference(velocity, ControlType.kVelocity);
-//        m_steerPID.setReference(angle, ControlType.kPosition);
+        m_steerPID.setReference(Math.toRadians(angle), ControlType.kPosition);
+
+        SmartDashboard.putNumber(m_name + "Goal Velocity", velocity);
+        SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
+
+        SmartDashboard.putNumber(m_name + "Goal Position",Math.toRadians((angle)));;
+        SmartDashboard.putNumber(m_name + "Current Position",Math.toRadians(m_steerEncoder.getPosition()));
     }
 
     public double getAbsoluteEncoderPosition() {
@@ -143,6 +153,7 @@ public class RevSwerveModule {
         m_steerPidProperties.updateIfChanged();
         m_drivePidProperties.updateIfChanged();
         System.out.println(m_driveEncoder.getVelocity());
+
 //        System.out.println(m_steerEncoder.getPosition());
     }
 }
