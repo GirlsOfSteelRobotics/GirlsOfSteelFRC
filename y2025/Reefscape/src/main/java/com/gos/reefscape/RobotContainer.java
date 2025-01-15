@@ -5,8 +5,9 @@
 
 package com.gos.reefscape;
 
-import com.gos.reefscape.Constants.OperatorConstants;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
+import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
+import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.REVchassisSubsystem;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -26,12 +27,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final REVchassisSubsystem m_chassis = new REVchassisSubsystem();
+    private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
-        new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
-
+        new CommandXboxController(Constants.DRIVER_CONTROLLER_PORT);
+    private final CommandXboxController m_operatorController = new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -59,6 +61,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassis.setDefaultCommand(new SwerveWithJoystickCommand(m_chassis, m_driverController));
+        m_elevator.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevator, m_operatorController));
     }
 
 

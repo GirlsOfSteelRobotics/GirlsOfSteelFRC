@@ -1,7 +1,17 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "CANcoder (v6)[9]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [14]": {
         "header": {
           "open": true
         }
