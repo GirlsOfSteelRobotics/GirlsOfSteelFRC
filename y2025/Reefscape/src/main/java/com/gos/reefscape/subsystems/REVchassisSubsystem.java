@@ -2,7 +2,12 @@ package com.gos.reefscape.subsystems;
 
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.reefscape.Constants;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -81,7 +86,43 @@ public class REVchassisSubsystem extends SubsystemBase {
         }
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
+
+        RobotConfig config;
+        try{
+            config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            // Handle exception as needed
+            e.printStackTrace();
+        }
+
+        // Configure AutoBuilder last
+        AutoBuilder.configure(
+            this::getPose, // Robot pose supplier
+            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            ),
+            config, // The robot configuration
+            GetAllianceUtil::isBlueAlliance,
+            this // Reference to this subsystem to set requirements
+        );
     }
+
+    private ChassisSpeeds getChassisSpeeds(){
+        //TODO: THIS :)
+    }
+
+    private void resetPose(Pose2d pose2d) {
+        m_odometry.resetPose(pose2d);
+    }
+
+    private Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+
 
     public void setChassisSpeed(ChassisSpeeds chassisSpeed) {
         System.out.println(chassisSpeed);
