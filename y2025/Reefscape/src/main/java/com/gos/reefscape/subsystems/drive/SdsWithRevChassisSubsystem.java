@@ -1,8 +1,13 @@
-package com.gos.reefscape.subsystems;
+package com.gos.reefscape.subsystems.drive;
 
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.lib.GetAllianceUtil;
 import com.gos.reefscape.Constants;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,7 +27,7 @@ import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 
 import java.util.List;
 
-public class REVchassisSubsystem extends SubsystemBase {
+public class SdsWithRevChassisSubsystem extends SubsystemBase {
     public static final double WHEEL_BASE = Units.inchesToMeters(25);
     public static final double TRACK_WIDTH = Units.inchesToMeters(25);
     public static final double MAX_TRANSLATION_SPEED = 4; // Units.feetToMeters(20.1);
@@ -45,7 +50,7 @@ public class REVchassisSubsystem extends SubsystemBase {
     // Simulation
     private SwerveSimWrapper m_simulator;
 
-    public REVchassisSubsystem() {
+    public SdsWithRevChassisSubsystem() {
         m_backLeft = new RevSwerveModule("BL", Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID);
         m_backRight = new RevSwerveModule("BR", Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID);
         m_frontLeft = new RevSwerveModule("FL", Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID);
@@ -81,7 +86,50 @@ public class REVchassisSubsystem extends SubsystemBase {
         }
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
+
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+            // Configure AutoBuilder last
+            AutoBuilder.configure(
+                this::getPose, // Robot pose supplier
+                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                (speeds, feedforwards) -> setChassisSpeed(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+                new PPHolonomicDriveController(
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                ),
+                config, // The robot configuration
+                GetAllianceUtil::isBlueAlliance,
+                this // Reference to this subsystem to set requirements
+            );
+        } catch (Exception e) { // NOPMD
+            // Handle exception as needed
+            e.printStackTrace(); // NOPMD
+        }
     }
+
+    public SwerveModuleState[] getModuleStates() {
+        SwerveModuleState[] modulePositions = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i += 1) {
+            modulePositions[i] = m_modules[i].getState();
+        }
+        return modulePositions;
+    }
+
+    private ChassisSpeeds getChassisSpeeds() {
+        return m_kinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    public void resetPose(Pose2d pose2d) {
+        m_odometry.resetPose(pose2d);
+    }
+
+    private Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+
 
     public void setChassisSpeed(ChassisSpeeds chassisSpeed) {
         System.out.println(chassisSpeed);

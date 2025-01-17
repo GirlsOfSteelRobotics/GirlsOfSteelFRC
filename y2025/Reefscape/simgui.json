@@ -26,7 +26,22 @@
           "open": true
         }
       },
+      "SPARK Flex [8]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [8] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[3]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[7]/Fwd Limit": {
         "header": {
           "open": true
         }
@@ -36,10 +51,35 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Debug Paths/AbbyPaneer": "Command",
+      "/Shuffleboard/Debug Paths/PjNoodles": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_1mpss_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_1mpss_13fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_1mpss_1fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_1mpss_5fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_4mpss_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_4mpss_13fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_4mpss_1fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_4mpss_5fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_9mpss_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_9mpss_13fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_9mpss_1fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_9mpss_5fps": "Command",
       "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/Debug Paths/AbbyPaneer": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Debug Paths/PjNoodles": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 1476,
         "height": 8.210550308227539,
@@ -54,9 +94,6 @@
     }
   },
   "NetworkTables": {
-    "Retained Values": {
-      "open": false
-    },
     "persistent": {
       "Preferences": {
         "open": true

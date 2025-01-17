@@ -1,4 +1,4 @@
-package com.gos.reefscape.subsystems;
+package com.gos.reefscape.subsystems.drive;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.gos.lib.properties.pid.PidProperty;
@@ -154,5 +154,9 @@ public class RevSwerveModule {
     public void periodic() {
         m_steerPidProperties.updateIfChanged();
         m_drivePidProperties.updateIfChanged();
+    }
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(getVelocity(), Rotation2d.fromDegrees(getSteerAngle()));
     }
 }

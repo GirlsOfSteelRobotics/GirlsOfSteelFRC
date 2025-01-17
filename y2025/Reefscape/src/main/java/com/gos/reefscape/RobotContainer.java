@@ -8,14 +8,19 @@ package com.gos.reefscape;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
-import com.gos.reefscape.subsystems.REVchassisSubsystem;
+import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
+import com.gos.reefscape.subsystems.drive.TunerConstants;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 
 /**
@@ -26,7 +31,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final REVchassisSubsystem m_chassis = new REVchassisSubsystem();
+    // private final SdsWithRevChassisSubsystem m_chassis = new SdsWithRevChassisSubsystem();
+    private final SdsWithKrakenSwerveDrivetrain m_chassis = TunerConstants.createDrivetrain();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
 
@@ -47,6 +53,7 @@ public class RobotContainer {
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
+        addDebugPathsToShuffleBoard();
     }
 
 
@@ -73,5 +80,32 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         return Commands.none();
+    }
+
+    private void addDebugPathsToShuffleBoard() {
+        ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_1fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_5fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_10fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_13fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_1fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_5fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_10fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_13fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_1fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_5fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_10fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_13fps"));
+        debugPathsTab.add(createDebugPathCommand("AbbyPaneer"));
+        debugPathsTab.add(createDebugPathCommand("PjNoodles"));
+
+
+    }
+
+    private Command createDebugPathCommand(String name) {
+        return Commands.sequence(
+            Commands.runOnce(() -> m_chassis.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),
+            followChoreoPath(name)
+        ).withName(name);
     }
 }
