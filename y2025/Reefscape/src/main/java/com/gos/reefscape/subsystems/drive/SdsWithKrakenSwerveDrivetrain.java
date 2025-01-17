@@ -1,4 +1,4 @@
-package com.gos.reefscape.subsystems;
+package com.gos.reefscape.subsystems.drive;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -10,7 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
-import com.gos.reefscape.subsystems.TunerConstants.TunerSwerveDrivetrain;
+import com.gos.reefscape.subsystems.drive.TunerConstants.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
  */
-public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     public static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
@@ -63,7 +63,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
      * @param modules             Constants for each specific module
      */
-    public CommandSwerveDrivetrain(
+    public SdsWithKrakenSwerveDrivetrain(
         SwerveDrivetrainConstants drivetrainConstants,
         SwerveModuleConstants<?, ?, ?>... modules
     ) {

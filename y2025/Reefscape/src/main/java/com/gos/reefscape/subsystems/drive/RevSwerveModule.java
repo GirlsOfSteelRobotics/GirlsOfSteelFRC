@@ -1,4 +1,4 @@
-package com.gos.reefscape.subsystems;
+package com.gos.reefscape.subsystems.drive;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.gos.lib.properties.pid.PidProperty;
