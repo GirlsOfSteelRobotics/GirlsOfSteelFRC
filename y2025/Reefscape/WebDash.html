@@ -10,7 +10,6 @@
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
@@ -49,4 +48,35 @@
             source-provider="NetworkTables"
             style="transform: translate(105px, 241px);"
             source-key="/SmartDashboard/FLCurrent Position"
-        ></frc-line-chart-data></frc-line-chart></dashboard-tab>
+        ></frc-line-chart-data></frc-line-chart></dashboard-tab><dashboard-tab
+    tab-name="Elevator"
+    slot="tab"
+    source-provider="NetworkTables"
+    selected=""
+><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(356px, 136px);"
+        source-key="/SmartDashboard/Bot Limit Switch"
+        label="Bot"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(506px, 151px);"
+        source-key="/SmartDashboard/Top Limit Switch"
+        true-color="#85ff85"
+        label="Top"
+    ></frc-boolean-box><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(401px, 394px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis source-provider="NetworkTables"></frc-line-chart-axis>
+        <frc-line-chart-axis
+            side="right"
+            source-provider="NetworkTables"
+        ></frc-line-chart-axis>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/SmartDashboard/Elevator Height"
+        ></frc-line-chart-data>
+    </frc-line-chart></dashboard-tab>
