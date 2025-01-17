@@ -155,4 +155,8 @@ public class RevSwerveModule {
         m_steerPidProperties.updateIfChanged();
         m_drivePidProperties.updateIfChanged();
     }
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(getVelocity(), Rotation2d.fromDegrees(getSteerAngle()));
+    }
 }

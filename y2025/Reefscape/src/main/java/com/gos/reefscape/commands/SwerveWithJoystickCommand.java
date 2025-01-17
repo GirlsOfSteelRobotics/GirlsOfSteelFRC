@@ -1,15 +1,16 @@
 package com.gos.reefscape.commands;
 
+import com.gos.reefscape.subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.reefscape.subsystems.REVchassisSubsystem;
+import com.gos.reefscape.subsystems.SdsWithRevChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class SwerveWithJoystickCommand extends Command {
-    private final REVchassisSubsystem m_chassis;
+    private final CommandSwerveDrivetrain m_chassis;
     private final CommandXboxController m_joystick;
 
-    public SwerveWithJoystickCommand(REVchassisSubsystem chassisSubsystem, CommandXboxController joystick) {
+    public SwerveWithJoystickCommand(CommandSwerveDrivetrain chassisSubsystem, CommandXboxController joystick) {
         this.m_chassis = chassisSubsystem;
         m_joystick = joystick;
         // each subsystem used by the command must be passed into the
