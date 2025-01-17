@@ -2,7 +2,6 @@ package com.gos.reefscape.commands;
 
 import com.gos.reefscape.subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.reefscape.subsystems.SdsWithRevChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 

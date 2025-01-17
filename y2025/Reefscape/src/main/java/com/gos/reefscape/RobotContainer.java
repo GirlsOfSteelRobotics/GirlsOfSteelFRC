@@ -8,7 +8,6 @@ package com.gos.reefscape;
 import com.gos.reefscape.Constants.OperatorConstants;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.subsystems.CommandSwerveDrivetrain;
-import com.gos.reefscape.subsystems.SdsWithRevChassisSubsystem;
 import com.gos.reefscape.subsystems.TunerConstants;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -31,7 +30,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-//    private final SdsWithRevChassisSubsystem m_chassis = new SdsWithRevChassisSubsystem();
+    // private final SdsWithRevChassisSubsystem m_chassis = new SdsWithRevChassisSubsystem();
     private final CommandSwerveDrivetrain m_chassis = TunerConstants.createDrivetrain();
 
 
@@ -80,7 +79,7 @@ public class RobotContainer {
         return Commands.none();
     }
 
-    public void addDebugPathsToShuffleBoard() {
+    private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_1fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_5fps"));

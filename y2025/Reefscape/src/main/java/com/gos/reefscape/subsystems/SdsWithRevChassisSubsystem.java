@@ -88,7 +88,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
         SmartDashboard.putData(m_field);
 
         RobotConfig config;
-        try{
+        try {
             config = RobotConfig.fromGUISettings();
             // Configure AutoBuilder last
             AutoBuilder.configure(
@@ -96,7 +96,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
                 this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
                 this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 (speeds, feedforwards) -> setChassisSpeed(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-                new PPHolonomicDriveController( // PPHolonomicController is the built-in path following controller for holonomic drive trains
+                new PPHolonomicDriveController(
                     new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
                     new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
                 ),
@@ -104,13 +104,12 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
                 GetAllianceUtil::isBlueAlliance,
                 this // Reference to this subsystem to set requirements
             );
-        } catch (Exception e) {
+        } catch (Exception e) { // NOPMD
             // Handle exception as needed
-            e.printStackTrace();
+            e.printStackTrace(); // NOPMD
         }
-
-
     }
+
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] modulePositions = new SwerveModuleState[4];
         for (int i = 0; i < 4; i += 1) {
@@ -119,7 +118,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
         return modulePositions;
     }
 
-    private ChassisSpeeds getChassisSpeeds(){
+    private ChassisSpeeds getChassisSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
 
