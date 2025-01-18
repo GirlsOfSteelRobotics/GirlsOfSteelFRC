@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
  */
-public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem, GOSSwerveDrive {
     public static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
@@ -153,14 +153,15 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
 
-    public void swerveDrive(double xVelocity, double yVelocity, double turn) {
+    @Override
+    public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
-            m_driveRequest.withVelocityX(xVelocity) // Drive forward with negative Y (forward)
-                .withVelocityY(yVelocity) // Drive left with negative X (left)
-                .withRotationalRate(turn) // Drive counterclockwise with negative X (left)
+            m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED) // Drive counterclockwise with negative X (left)
 
         );
-        System.out.println(xVelocity + " " + yVelocity + " " + turn);
+
 
     }
 }

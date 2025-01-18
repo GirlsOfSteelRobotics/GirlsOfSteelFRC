@@ -7,6 +7,8 @@ import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -69,6 +71,9 @@ public class RevSwerveModule {
 
         steerConfig.encoder.positionConversionFactor(1 / GEAR_REDUCTION_STEER);
         steerConfig.encoder.velocityConversionFactor(1 / GEAR_REDUCTION_STEER / 60);
+
+        m_motorDrive.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_motorSteer.configure(steerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_drivePidProperties = new RevPidPropertyBuilder("SwerveDrivePid", false, m_motorDrive, driveConfig, ClosedLoopSlot.kSlot0)
             .addP(0)
