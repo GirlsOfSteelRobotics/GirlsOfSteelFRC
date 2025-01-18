@@ -1,15 +1,15 @@
 package com.gos.reefscape.commands;
 
-import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
+import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class SwerveWithJoystickCommand extends Command {
-    private final SdsWithKrakenSwerveDrivetrain m_chassis;
+    private final GOSSwerveDrive m_chassis;
     private final CommandXboxController m_joystick;
 
-    public SwerveWithJoystickCommand(SdsWithKrakenSwerveDrivetrain chassisSubsystem, CommandXboxController joystick) {
+    public SwerveWithJoystickCommand(GOSSwerveDrive chassisSubsystem, CommandXboxController joystick) {
         this.m_chassis = chassisSubsystem;
         m_joystick = joystick;
         // each subsystem used by the command must be passed into the
@@ -24,10 +24,10 @@ public class SwerveWithJoystickCommand extends Command {
 
     @Override
     public void execute() {
-        double xVelocity = -m_joystick.getLeftY() * m_chassis.MAX_TRANSLATION_SPEED;
-        double yVelocity = m_joystick.getLeftX() * m_chassis.MAX_TRANSLATION_SPEED;
-        double turn = m_joystick.getRightX() * m_chassis.MAX_ROTATION_SPEED;
-        m_chassis.swerveDrive(xVelocity, yVelocity, turn);
+        m_chassis.driveWithJoystick(
+            -m_joystick.getLeftY(),
+            m_joystick.getLeftX(),
+            m_joystick.getRightX());
 
     }
 
@@ -38,6 +38,6 @@ public class SwerveWithJoystickCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_chassis.swerveDrive(0, 0, 0);
+        m_chassis.driveWithJoystick(0, 0, 0);
     }
 }

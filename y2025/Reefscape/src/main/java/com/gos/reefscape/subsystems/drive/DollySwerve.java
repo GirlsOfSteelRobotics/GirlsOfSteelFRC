@@ -25,7 +25,7 @@ import com.gos.reefscape.Constants;
 
 import java.io.IOException;
 
-public class DollySwerve implements Subsystem {
+public class DollySwerve implements Subsystem, GOSSwerveDrive{
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 
@@ -73,7 +73,7 @@ public class DollySwerve implements Subsystem {
 
             AutoBuilder.configure(
                 this::getPose,
-                this::setPose,
+                this::resetPose,
                 this::getChassisSpeed,
                 this::setChassisSpeed,
                 new PPHolonomicDriveController(
@@ -92,7 +92,8 @@ public class DollySwerve implements Subsystem {
         return m_swerveDrive.getEstimatedPosition();
     }
 
-    public final void setPose(Pose2d pose2d) {
+    @Override
+    public final void resetPose(Pose2d pose2d) {
         m_swerveDrive.resetOdometry(pose2d);
     }
 
@@ -109,8 +110,12 @@ public class DollySwerve implements Subsystem {
         m_swerveDrive.periodic();
     }
 
-    public void swerveDrive(double xVelocity, double yVelocity, double turn) {
-        ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xVelocity, yVelocity, turn);
+    @Override
+    public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
+        ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
+            xJoystick * MAX_TRANSLATION_SPEED,
+            yJoystick * MAX_TRANSLATION_SPEED,
+            rotationalJoystick * MAX_ROTATION_SPEED);
         setChassisSpeed(chassisSpeeds);
     }
 }
