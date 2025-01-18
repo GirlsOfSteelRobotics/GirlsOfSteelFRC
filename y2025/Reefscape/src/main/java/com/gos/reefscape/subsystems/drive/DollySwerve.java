@@ -25,7 +25,7 @@ import com.gos.reefscape.Constants;
 
 import java.io.IOException;
 
-public class DollySwerve implements Subsystem, GOSSwerveDrive{
+public class DollySwerve implements Subsystem, GOSSwerveDrive {
     private static final double WHEEL_BASE = 0.381;
     private static final double TRACK_WIDTH = 0.381;
 

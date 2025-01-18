@@ -27,7 +27,7 @@ import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 
 import java.util.List;
 
-public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwerveDrive{
+public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwerveDrive {
     public static final double WHEEL_BASE = Units.inchesToMeters(25);
     public static final double TRACK_WIDTH = Units.inchesToMeters(25);
     public static final double MAX_TRANSLATION_SPEED = 4; // Units.feetToMeters(20.1);
@@ -152,7 +152,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
             xJoystick * MAX_TRANSLATION_SPEED,
             yJoystick * MAX_TRANSLATION_SPEED,
-        rotationalJoystick * MAX_ROTATION_SPEED);
+            rotationalJoystick * MAX_ROTATION_SPEED);
         setChassisSpeed(chassisSpeeds);
     }
 
