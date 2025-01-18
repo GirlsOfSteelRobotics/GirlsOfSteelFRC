@@ -4,6 +4,7 @@ package com.gos.reefscape.subsystems.drive;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.reefscape.Constants;
+import com.gos.reefscape.GosField;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -18,7 +19,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
@@ -44,7 +44,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
     private final RevSwerveModule[] m_modules;
 
     private final SwerveDriveKinematics m_kinematics;
-    private final Field2d m_field;
+    private final GosField m_field;
 
 
     // Simulation
@@ -84,8 +84,9 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
                 m_backRight.getSimWrapper());
             m_simulator = new SwerveSimWrapper(WHEEL_BASE, TRACK_WIDTH, 64.0, 1.0, moduleSims, new Pigeon2Wrapper(m_gyro));
         }
-        m_field = new Field2d();
-        SmartDashboard.putData(m_field);
+        m_field = new GosField();
+        SmartDashboard.putData("Field", m_field.getField2d());
+        SmartDashboard.putData("Field3d", m_field.getField3d());
 
         RobotConfig config;
         try {
@@ -159,7 +160,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase {
                 m_frontLeft.getPosition(), m_frontRight.getPosition(),
                 m_backLeft.getPosition(), m_backRight.getPosition()
             });
-        m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_field.setOdometry(m_odometry.getPoseMeters());
 
         m_backLeft.periodic();
         m_backRight.periodic();

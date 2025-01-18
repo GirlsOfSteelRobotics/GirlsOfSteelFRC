@@ -10,6 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.reefscape.GosField;
 import com.gos.reefscape.subsystems.drive.TunerConstants.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -21,7 +22,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -42,7 +42,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
     private Notifier m_simNotifier;
 
     private double m_lastSimTime;
-    private final Field2d m_field;
+    private final GosField m_field;
 
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
@@ -72,8 +72,9 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
             startSimThread();
         }
         configureAutoBuilder();
-        m_field = new Field2d();
-        SmartDashboard.putData(m_field);
+        m_field = new GosField();
+        SmartDashboard.putData("Field", m_field.getField2d());
+        SmartDashboard.putData("Field3d", m_field.getField3d());
     }
 
     private void configureAutoBuilder() {
@@ -134,7 +135,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-        m_field.setRobotPose(getState().Pose);
+        m_field.setOdometry(getState().Pose);
     }
 
     private void startSimThread() {
