@@ -3,6 +3,7 @@ package com.gos.reefscape.subsystems.drive;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -37,6 +38,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
     private final RevSwerveModule m_frontLeft;
     private final RevSwerveModule m_frontRight;
     private final SwerveDriveOdometry m_odometry;
+    public final SwerveDrivePublisher m_swerveDrivePublisher;
 
 
     private final Pigeon2 m_gyro;
@@ -51,10 +53,10 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
     private SwerveSimWrapper m_simulator;
 
     public SdsWithRevChassisSubsystem() {
-        m_backLeft = new RevSwerveModule("BL", Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID);
-        m_backRight = new RevSwerveModule("BR", Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID);
-        m_frontLeft = new RevSwerveModule("FL", Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID);
-        m_frontRight = new RevSwerveModule("FR", Constants. FRONT_RIGHT_CANCODER_ID, Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, Constants. FRONT_RIGHT_STEER_MOTOR_ID);
+        m_backLeft = new RevSwerveModule("BL", Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID, 0.119141 );
+        m_backRight = new RevSwerveModule("BR", Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID, -0.141113 );
+        m_frontLeft = new RevSwerveModule("FL", Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID, -0.118652 );
+        m_frontRight = new RevSwerveModule("FR", Constants. FRONT_RIGHT_CANCODER_ID, Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, Constants. FRONT_RIGHT_STEER_MOTOR_ID, -0.472412);
 
         m_gyro = new Pigeon2(Constants.PIGEON_ID);
 
@@ -88,6 +90,8 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
 
+
+        m_swerveDrivePublisher = new SwerveDrivePublisher();
         RobotConfig config;
         try {
             config = RobotConfig.fromGUISettings();
@@ -119,6 +123,15 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         return modulePositions;
     }
 
+    public SwerveModuleState[] getDesiredStates() {
+        SwerveModuleState[] desiredState = new SwerveModuleState[4];
+        for(int i = 0; i < 4; i++) {
+            desiredState[i] = m_modules[i].getDesiredState();
+        }
+        return desiredState;
+    }
+
+
     private ChassisSpeeds getChassisSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
@@ -134,7 +147,6 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
 
 
     public void setChassisSpeed(ChassisSpeeds chassisSpeed) {
-        System.out.println(chassisSpeed);
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(chassisSpeed);
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, MAX_TRANSLATION_SPEED);
         setModuleStates(moduleStates);
@@ -171,6 +183,9 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         m_backRight.periodic();
         m_frontRight.periodic();
         m_frontLeft.periodic();
+        m_swerveDrivePublisher.setMeasuredStates(getModuleStates());
+        m_swerveDrivePublisher.setRobotRotation(getPose().getRotation());
+        m_swerveDrivePublisher.setDesiredStates(getDesiredStates());
     }
 
     @Override

@@ -1,5 +1,10 @@
 package com.gos.reefscape.subsystems.drive;
 
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Rotations;
+
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
@@ -18,6 +23,11 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.units.AngleUnit;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.swerve.SwerveModuleSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,6 +49,8 @@ public class RevSwerveModule {
     private final SparkClosedLoopController m_drivePID;
     private final SparkClosedLoopController m_steerPID;
 
+    private SwerveModuleState m_desiredState = new SwerveModuleState();
+
     private SwerveModuleSimWrapper m_simWrapper;
 
     private final PidProperty m_drivePidProperties;
@@ -46,31 +58,40 @@ public class RevSwerveModule {
 
 
 
-    public RevSwerveModule(String name, int absoluteEncoderID, int motorDriveID, int motorSteerID) {
+    public RevSwerveModule(String name, int absoluteEncoderID, int motorDriveID, int motorSteerID, double offset) {
         m_name = name;
 
         m_absoluteEncoder = new CANcoder(absoluteEncoderID);
         m_motorDrive = new SparkFlex(motorDriveID, MotorType.kBrushless);
         m_motorSteer = new SparkFlex(motorSteerID, MotorType.kBrushless);
 
+        CANcoderConfiguration cancoderConfig = new CANcoderConfiguration();
+//        StatusSignal<Angle> ugh = m_absoluteEncoder.getPosition().waitForUpdate(0.1);
+//        ugh.getValue();
+        cancoderConfig.MagnetSensor.withMagnetOffset(-offset);
+        System.out.println("magnet offset for " + name + " is " + cancoderConfig.MagnetSensor.getMagnetOffsetMeasure());
+
+
+        m_absoluteEncoder.getConfigurator().apply(cancoderConfig);
+
         SparkMaxConfig driveConfig = new SparkMaxConfig();
-        driveConfig.idleMode(IdleMode.kBrake);
+        driveConfig.idleMode(IdleMode.kCoast);
         driveConfig.smartCurrentLimit(60);
         driveConfig.inverted(false);
 
-        driveConfig.encoder.positionConversionFactor(1 / GEAR_REDUCTION_DRIVE);
-        driveConfig.encoder.velocityConversionFactor(1 / GEAR_REDUCTION_DRIVE / 60);
-
-
+        driveConfig.encoder.positionConversionFactor(4 *(Math.PI) / GEAR_REDUCTION_DRIVE);
+        driveConfig.encoder.velocityConversionFactor(4 *(Math.PI) / GEAR_REDUCTION_DRIVE / 60);
 
 
         SparkMaxConfig steerConfig = new SparkMaxConfig();
-        steerConfig.idleMode(IdleMode.kBrake);
+        steerConfig.idleMode(IdleMode.kCoast);
         steerConfig.smartCurrentLimit(60);
         steerConfig.inverted(false);
 
-        steerConfig.encoder.positionConversionFactor(1 / GEAR_REDUCTION_STEER);
-        steerConfig.encoder.velocityConversionFactor(1 / GEAR_REDUCTION_STEER / 60);
+        steerConfig.encoder.positionConversionFactor(360 / GEAR_REDUCTION_STEER);
+        steerConfig.encoder.velocityConversionFactor(360 / GEAR_REDUCTION_STEER / 60);
+        steerConfig.closedLoop.positionWrappingEnabled(true)
+                 .positionWrappingInputRange(0, 360);
 
         m_motorDrive.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_motorSteer.configure(steerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -126,11 +147,7 @@ public class RevSwerveModule {
         m_drivePID.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
         m_steerPID.setReference(state.angle.getDegrees(), ControlType.kPosition);
 
-        SmartDashboard.putNumber(m_name + "Goal Velocity", state.speedMetersPerSecond);
-        SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
-
-        SmartDashboard.putNumber(m_name + "Goal Position", state.angle.getDegrees());
-        SmartDashboard.putNumber(m_name + "Current Position", m_steerEncoder.getPosition());
+        m_desiredState = state;
     }
 
     public double getAbsoluteEncoderPosition() {
@@ -159,9 +176,29 @@ public class RevSwerveModule {
     public void periodic() {
         m_steerPidProperties.updateIfChanged();
         m_drivePidProperties.updateIfChanged();
+
+
+        SmartDashboard.putNumber(m_name + "Goal Velocity", getDesiredState().speedMetersPerSecond);
+        SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
+
+        SmartDashboard.putNumber(m_name + "Goal Position", getDesiredState().angle.getDegrees());
+        SmartDashboard.putNumber(m_name + "Current Position", m_steerEncoder.getPosition());
+
+        SmartDashboard.putNumber(m_name + "Cancoder Position", getAbsoluteEncoderPosition());
+
+
+
+//        if(DriverStation.isDisabled()) {
+////            m_steerEncoder.setPosition(m_absoluteEncoder.getAbsolutePosition().getValue().in(Degrees));
+//            m_steerEncoder.setPosition(m_absoluteEncoder.getAbsolutePosition().getValue().in(Degrees));
+//        }
     }
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(getVelocity(), Rotation2d.fromDegrees(getSteerAngle()));
+    }
+
+    public SwerveModuleState getDesiredState() {
+        return m_desiredState;
     }
 }

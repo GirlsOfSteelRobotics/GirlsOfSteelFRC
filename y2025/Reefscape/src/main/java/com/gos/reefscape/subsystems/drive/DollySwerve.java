@@ -9,6 +9,7 @@ import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.config.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.config.RevSwerveChassisConstantsBuilder;
 import com.gos.lib.rev.swerve.config.SwerveGearingKit;
+import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.GosField;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -16,6 +17,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -36,6 +38,8 @@ public class DollySwerve implements Subsystem, GOSSwerveDrive {
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
     private final GosField m_field;
+
+    private final SwerveDrivePublisher m_swerveDrivePublisher;
 
     public DollySwerve() {
         m_gyro = new Pigeon2(Constants.PIGEON_ID);
@@ -65,6 +69,8 @@ public class DollySwerve implements Subsystem, GOSSwerveDrive {
         SmartDashboard.putData("Field3d", m_field.getField3d());
 
         setupPathPlanner();
+
+        m_swerveDrivePublisher = new SwerveDrivePublisher();
     }
 
     private void setupPathPlanner() {
@@ -108,6 +114,7 @@ public class DollySwerve implements Subsystem, GOSSwerveDrive {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
+
     }
 
     @Override

@@ -30,7 +30,7 @@ public final class Constants {
     public static final int BACK_LEFT_CANCODER_ID = 11;
     public static final int BACK_RIGHT_CANCODER_ID = 12;
 
-    public static final int PIGEON_ID = 13;
+    public static final int PIGEON_ID = 20;
     public static final int ELEVATOR_MOTOR_ID = 14;
 
     // DIO
