@@ -7,6 +7,7 @@ package com.gos.reefscape;
 
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
+import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import com.gos.reefscape.subsystems.drive.SdsWithRevChassisSubsystem;
@@ -36,6 +37,7 @@ public class RobotContainer {
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
+    private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -55,6 +57,7 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
         addDebugPathsToShuffleBoard();
+        addAlgaeDebugCommands();
     }
 
 
@@ -83,6 +86,13 @@ public class RobotContainer {
         return Commands.none();
     }
 
+    public Command addAlgaeDebugCommands(){
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Intake Outtake");
+        debugTab.add(m_algae.createMoveIntakeOutCommand());
+        debugTab.add(m_algae.createIntakeUntilAlgaeCommand());
+        debugTab.add(m_algae.createMoveIntakeInCommand());
+        return Commands.none();
+    }
     private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_1fps"));
@@ -109,4 +119,5 @@ public class RobotContainer {
             followChoreoPath(name)
         ).withName(name);
     }
+
 }
