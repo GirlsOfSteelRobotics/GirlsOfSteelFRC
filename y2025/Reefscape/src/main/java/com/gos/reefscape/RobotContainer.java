@@ -86,13 +86,14 @@ public class RobotContainer {
         return Commands.none();
     }
 
-    public Command addAlgaeDebugCommands(){
+    private Command addAlgaeDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Intake Outtake");
         debugTab.add(m_algae.createMoveIntakeOutCommand());
         debugTab.add(m_algae.createIntakeUntilAlgaeCommand());
         debugTab.add(m_algae.createMoveIntakeInCommand());
         return Commands.none();
     }
+
     private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_1fps"));
