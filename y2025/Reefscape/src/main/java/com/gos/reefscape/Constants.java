@@ -38,7 +38,7 @@ public final class Constants {
     // DIO
     public static final int BOTLIMITSWICTH_ID = 0;
     public static final int TOPLIMITSWITCH_ID = 1;
-    public static final int INTAKE_SENSOR_ID =2;
+    public static final int INTAKE_SENSOR_ID = 2;
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;

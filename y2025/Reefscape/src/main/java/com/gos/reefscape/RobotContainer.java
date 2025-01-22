@@ -85,7 +85,7 @@ public class RobotContainer {
         return Commands.none();
     }
 
-    public void addCoralDebugCommands(){
+    public void addCoralDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Coral intake");
         debugTab.add(m_coralIntake.createIntakeInCommand());
         debugTab.add(m_coralIntake.createIntakeOutCommand());

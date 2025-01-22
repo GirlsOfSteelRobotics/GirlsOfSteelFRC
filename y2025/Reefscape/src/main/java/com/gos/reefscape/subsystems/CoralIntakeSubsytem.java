@@ -15,30 +15,36 @@ public class CoralIntakeSubsytem extends SubsystemBase {
         m_intakeMotor = new SparkFlex(Constants.CORAL_INTAKE_MOTOR_ID, MotorType.kBrushless);
         m_intakeSensor = new DigitalInput(Constants.INTAKE_SENSOR_ID);
     }
-    public void intakeIn () {
+
+    public void intakeIn() {
 
         m_intakeMotor.set(1);
 
     }
-    public void intakeOut () {
+
+    public void intakeOut() {
         m_intakeMotor.set(-1);
     }
-    public boolean hasCoral () {
+
+    public boolean hasCoral() {
         return m_intakeSensor.get();
     }
-    public void intakeStop () {
-        m_intakeMotor.set (0);
+
+    public void intakeStop() {
+        m_intakeMotor.set(0);
     }
 
 
     // Command Factories
     public Command createIntakeInCommand() {
-        return runEnd(this::intakeIn,this::intakeStop).withName("Intake IN");
+        return runEnd(this::intakeIn, this::intakeStop).withName("Intake IN");
     }
+
     public Command createIntakeOutCommand() {
-        return runEnd(this::intakeOut,this::intakeStop).withName("Intake OUT :(");
+        return runEnd(this::intakeOut, this::intakeStop).withName("Intake OUT :(");
     }
+
     public Command createIntakeUntilCoral() {
-        return runEnd(this::intakeIn,this::intakeStop).until(this::hasCoral).withName("intake until coral :)");
+        return runEnd(this::intakeIn, this::intakeStop).until(this::hasCoral).withName("intake until coral :)");
     }
 }

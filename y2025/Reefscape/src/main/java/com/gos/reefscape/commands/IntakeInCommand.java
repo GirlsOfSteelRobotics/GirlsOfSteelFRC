@@ -5,13 +5,13 @@ import com.gos.reefscape.subsystems.CoralIntakeSubsytem;
 
 
 public class IntakeInCommand extends Command {
-    private final CoralIntakeSubsytem coralIntakeSubsytem;
+    private final CoralIntakeSubsytem m_coralIntakeSubsytem;
 
     public IntakeInCommand(CoralIntakeSubsytem coralIntakeSubsytem) {
-        this.coralIntakeSubsytem = coralIntakeSubsytem;
+        this.m_coralIntakeSubsytem = coralIntakeSubsytem;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements(this.coralIntakeSubsytem);
+        addRequirements(this.m_coralIntakeSubsytem);
     }
 
     /**
@@ -28,7 +28,7 @@ public class IntakeInCommand extends Command {
      */
     @Override
     public void execute() {
-coralIntakeSubsytem.intakeIn();
+        m_coralIntakeSubsytem.intakeIn();
     }
 
     /**
@@ -61,6 +61,6 @@ coralIntakeSubsytem.intakeIn();
      */
     @Override
     public void end(boolean interrupted) {
-coralIntakeSubsytem.intakeStop();
+        m_coralIntakeSubsytem.intakeStop();
     }
 }
