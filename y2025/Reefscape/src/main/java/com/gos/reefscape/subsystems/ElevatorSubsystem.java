@@ -4,8 +4,12 @@ package com.gos.reefscape.subsystems;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.reefscape.Constants;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -49,13 +53,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("Top Limit Switch", this::isAtTop);
         m_networkTableEntries.addBoolean("Bottom Limit Switch", this::isAtBottom);
 
+        SparkMaxConfig elevatorConfig = new SparkMaxConfig();
+        elevatorConfig.idleMode(IdleMode.kBrake);
+        elevatorConfig.smartCurrentLimit(60);
+        elevatorConfig.inverted(false);
 
-
+        m_elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_checkAlerts = new SparkMaxAlerts(m_elevatorMotor, "Elevator Alert");
-
-
-
 
         if (RobotBase.isSimulation()) {
             ElevatorSim sim = new ElevatorSim(
