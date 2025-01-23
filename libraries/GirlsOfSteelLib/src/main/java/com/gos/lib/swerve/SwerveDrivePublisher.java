@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.StructArrayPublisher;
 public class SwerveDrivePublisher {
     private final StructArrayPublisher<SwerveModuleState> m_measuredStatesEntry;
     private final StructArrayPublisher<SwerveModuleState> m_desiredStatesEntry;
+    private final StructArrayPublisher<SwerveModuleState> m_desiredStates2Entry;
     private final NetworkTableEntry m_robotRotationEntry;
 
     public SwerveDrivePublisher() {
@@ -20,6 +21,7 @@ public class SwerveDrivePublisher {
         table.getEntry("rotationUnit").setString("degrees");
         m_measuredStatesEntry = table.getStructArrayTopic("MeasuredStates", SwerveModuleState.struct).publish();
         m_desiredStatesEntry = table.getStructArrayTopic("DesiredStates", SwerveModuleState.struct).publish();
+        m_desiredStates2Entry = table.getStructArrayTopic("DesiredStates2", SwerveModuleState.struct).publish();
         m_robotRotationEntry = table.getEntry("RobotRotation");
     }
 
@@ -29,6 +31,10 @@ public class SwerveDrivePublisher {
 
     public void setDesiredStates(SwerveModuleState... states) {
         m_desiredStatesEntry.set(states);
+    }
+
+    public void setDesiredStates2(SwerveModuleState... states) {
+        m_desiredStates2Entry.set(states);
     }
 
     public void setRobotRotation(Rotation2d rotation) {

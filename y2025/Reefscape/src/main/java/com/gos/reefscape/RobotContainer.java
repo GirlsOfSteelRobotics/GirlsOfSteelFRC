@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -32,7 +33,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
+    private final SdsWithRevChassisSubsystem m_chassis = new SdsWithRevChassisSubsystem();
     // private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
@@ -55,6 +56,7 @@ public class RobotContainer {
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
+        SmartDashboard.putData("Sync Encoders", m_chassis.createSyncEncodersCommand());
         addDebugPathsToShuffleBoard();
     }
 

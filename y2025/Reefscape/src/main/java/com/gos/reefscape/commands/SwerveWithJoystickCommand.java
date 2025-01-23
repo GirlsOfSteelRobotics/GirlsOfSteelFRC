@@ -1,6 +1,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -25,9 +26,10 @@ public class SwerveWithJoystickCommand extends Command {
     @Override
     public void execute() {
         m_chassis.driveWithJoystick(
-            -m_joystick.getLeftY(),
-            m_joystick.getLeftX(),
-            m_joystick.getRightX());
+            MathUtil.applyDeadband(-m_joystick.getLeftY(), .05),
+            MathUtil.applyDeadband(m_joystick.getLeftX(), .05),
+            MathUtil.applyDeadband( m_joystick.getRightX(),.05));
+
 
     }
 
