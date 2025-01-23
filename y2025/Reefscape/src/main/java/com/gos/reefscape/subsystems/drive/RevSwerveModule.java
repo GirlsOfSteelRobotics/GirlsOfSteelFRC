@@ -146,15 +146,15 @@ public class RevSwerveModule {
     }
 
     public void drive(SwerveModuleState state) {
-        state.optimize(Rotation2d.fromDegrees(getSteerAngle()));
+        state.optimize(getSteerAngle());
         m_drivePID.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
         m_steerPID.setReference(state.angle.getDegrees(), ControlType.kPosition);
 
         m_desiredState = state;
     }
 
-    public double getAbsoluteEncoderPosition() {
-        return m_absoluteEncoder.getAbsolutePosition().getValue().in(Degrees);
+    public Angle getAbsoluteEncoderPosition() {
+        return m_absoluteEncoder.getAbsolutePosition().getValue();
     }
 
     public double getVelocity() {
@@ -162,8 +162,8 @@ public class RevSwerveModule {
 
     }
 
-    public double getSteerAngle() {
-        return m_steerEncoder.getPosition();
+    public Rotation2d getSteerAngle() {
+        return Rotation2d.fromDegrees(m_steerEncoder.getPosition());
     }
 
     public SwerveModuleSimWrapper getSimWrapper() {
@@ -187,7 +187,7 @@ public class RevSwerveModule {
         SmartDashboard.putNumber(m_name + "Goal Position", getDesiredState().angle.getDegrees());
         SmartDashboard.putNumber(m_name + "Current Position", m_steerEncoder.getPosition());
 
-        SmartDashboard.putNumber(m_name + "Cancoder Position", getAbsoluteEncoderPosition());
+        SmartDashboard.putNumber(m_name + "Cancoder Position", getAbsoluteEncoderPosition().in(Degrees));
         SmartDashboard.putNumber(m_name + "Power", m_motorDrive.getAppliedOutput());
 
         syncEncoders();
@@ -197,19 +197,19 @@ public class RevSwerveModule {
 
         if (DriverStation.isDisabled()) {
 //            m_steerEncoder.setPosition(m_absoluteEncoder.getAbsolutePosition().getValue().in(Degrees));
-            m_steerEncoder.setPosition(getAbsoluteEncoderPosition());
+            m_steerEncoder.setPosition(getAbsoluteEncoderPosition().in(Degrees));
         }
     }
 
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getVelocity(), Rotation2d.fromDegrees(getSteerAngle()));
+        return new SwerveModuleState(getVelocity(), getSteerAngle());
     }
 
 
     public SwerveModuleState getPositionWithCancoder() {
         return new SwerveModuleState(
             getVelocity(),
-            Rotation2d.fromDegrees(getAbsoluteEncoderPosition()));
+            new Rotation2d(getAbsoluteEncoderPosition()));
     }
 
     public SwerveModuleState getDesiredState() {
