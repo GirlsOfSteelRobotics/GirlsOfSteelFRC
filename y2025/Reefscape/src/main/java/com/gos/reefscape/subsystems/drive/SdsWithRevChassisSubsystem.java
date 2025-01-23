@@ -54,10 +54,10 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
     private SwerveSimWrapper m_simulator;
 
     public SdsWithRevChassisSubsystem() {
-        m_backLeft = new RevSwerveModule("BL", Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID, 0.119141 );
-        m_backRight = new RevSwerveModule("BR", Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID, -0.141113 );
-        m_frontLeft = new RevSwerveModule("FL", Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID, -0.118652 );
-        m_frontRight = new RevSwerveModule("FR", Constants. FRONT_RIGHT_CANCODER_ID, Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, Constants. FRONT_RIGHT_STEER_MOTOR_ID, -0.472412);
+        m_backLeft = new RevSwerveModule("BL", Constants.BACK_LEFT_CANCODER_ID, Constants. BACK_LEFT_DRIVE_MOTOR_ID, Constants.BACK_LEFT_STEER_MOTOR_ID);
+        m_backRight = new RevSwerveModule("BR", Constants.BACK_RIGHT_CANCODER_ID, Constants.BACK_RIGHT_DRIVE_MOTOR_ID, Constants. BACK_RIGHT_STEER_MOTOR_ID);
+        m_frontLeft = new RevSwerveModule("FL", Constants. FRONT_LEFT_CANCODER_ID, Constants.FRONT_LEFT_DRIVE_MOTOR_ID, Constants.FRONT_LEFT_STEER_MOTOR_ID);
+        m_frontRight = new RevSwerveModule("FR", Constants. FRONT_RIGHT_CANCODER_ID, Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, Constants. FRONT_RIGHT_STEER_MOTOR_ID);
 
         m_gyro = new Pigeon2(Constants.PIGEON_ID);
 
@@ -90,7 +90,6 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
-
 
         m_swerveDrivePublisher = new SwerveDrivePublisher();
         RobotConfig config;
@@ -126,7 +125,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
 
     public SwerveModuleState[] getModuleCancoderStates() {
         SwerveModuleState[] desiredState = new SwerveModuleState[4];
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             desiredState[i] = m_modules[i].getPositionWithCancoder();
         }
         return desiredState;
@@ -134,7 +133,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
 
     public SwerveModuleState[] getDesiredStates() {
         SwerveModuleState[] desiredState = new SwerveModuleState[4];
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             desiredState[i] = m_modules[i].getDesiredState();
         }
         return desiredState;
@@ -195,7 +194,6 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         m_swerveDrivePublisher.setMeasuredStates(getModuleStates());
         m_swerveDrivePublisher.setRobotRotation(getPose().getRotation());
         m_swerveDrivePublisher.setDesiredStates(getDesiredStates());
-        m_swerveDrivePublisher.setDesiredStates2(getModuleCancoderStates());
     }
 
     @Override

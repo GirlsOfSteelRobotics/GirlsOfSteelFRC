@@ -28,7 +28,7 @@ public class SwerveWithJoystickCommand extends Command {
         m_chassis.driveWithJoystick(
             MathUtil.applyDeadband(-m_joystick.getLeftY(), .05),
             MathUtil.applyDeadband(m_joystick.getLeftX(), .05),
-            MathUtil.applyDeadband( m_joystick.getRightX(),.05));
+            MathUtil.applyDeadband(m_joystick.getRightX(), .05));
 
 
     }
