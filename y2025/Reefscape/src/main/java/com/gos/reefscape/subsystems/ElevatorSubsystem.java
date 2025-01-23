@@ -1,6 +1,8 @@
 package com.gos.reefscape.subsystems;
 
 
+import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.reefscape.Constants;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -10,7 +12,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.RelativeEncoder;
 import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
@@ -31,6 +32,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final RelativeEncoder m_encoder;
     private final DigitalInput m_botLimitSwitch;
     private final DigitalInput m_topLimitSwitch;
+    private final SparkMaxAlerts m_checkAlerts;
+    private final LoggingUtil m_networkTableEntries;
 
     private ElevatorSimWrapper m_simulator;
 
@@ -40,6 +43,17 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_encoder = m_elevatorMotor.getEncoder();
         m_botLimitSwitch = new DigitalInput(Constants.BOTLIMITSWICTH_ID);
         m_topLimitSwitch = new DigitalInput(Constants.TOPLIMITSWITCH_ID);
+
+        m_networkTableEntries = new LoggingUtil("Elevator");
+        m_networkTableEntries.addDouble("current height", this::getHeight);
+        m_networkTableEntries.addBoolean("Top Limit Switch", this::isAtTop);
+        m_networkTableEntries.addBoolean("Bottom Limit Switch", this::isAtBottom);
+
+
+
+
+        m_checkAlerts = new SparkMaxAlerts(m_elevatorMotor, "Elevator Alert");
+
 
 
 
@@ -82,10 +96,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Elevator Height", getHeight());
-        SmartDashboard.putBoolean("Top Limit Switch", isAtTop());
-        SmartDashboard.putBoolean("Bot Limit Switch", isAtBottom());
-
+        m_networkTableEntries.updateLogs();
+        m_checkAlerts.checkAlerts();
     }
 
     @Override
