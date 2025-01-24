@@ -29,8 +29,8 @@ public final class Constants {
     public static final int FRONT_RIGHT_CANCODER_ID = 10;
     public static final int BACK_LEFT_CANCODER_ID = 11;
     public static final int BACK_RIGHT_CANCODER_ID = 12;
-    public static final int ALGAE_MOTOR_ID = 15;
-    public static final int ALGAE_SENSOR_ID = 16;
+    public static final int ALGAE_MOTOR_ID = 16;
+
 
     public static final int PIGEON_ID = 20;
     public static final int ELEVATOR_MOTOR_ID = 14;
@@ -41,6 +41,7 @@ public final class Constants {
     public static final int BOTLIMITSWICTH_ID = 0;
     public static final int TOPLIMITSWITCH_ID = 1;
     public static final int INTAKE_SENSOR_ID = 2;
+    public static final int ALGAE_SENSOR_ID = 3;
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
