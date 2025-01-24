@@ -10,6 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.subsystems.drive.TunerConstants.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -44,6 +45,8 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
     private double m_lastSimTime;
     private final GosField m_field;
 
+    private final SwerveDrivePublisher m_swerveDrivePublisher;
+
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
@@ -75,6 +78,8 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
+
+        m_swerveDrivePublisher = new SwerveDrivePublisher();
     }
 
     private void configureAutoBuilder() {
@@ -136,6 +141,9 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
             });
         }
         m_field.setOdometry(getState().Pose);
+        m_swerveDrivePublisher.setMeasuredStates(getState().ModuleStates);
+        m_swerveDrivePublisher.setRobotRotation(getState().Pose.getRotation());
+        m_swerveDrivePublisher.setDesiredStates(getState().ModuleTargets);
     }
 
     private void startSimThread() {
