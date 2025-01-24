@@ -8,6 +8,7 @@ package com.gos.reefscape;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.subsystems.AlgaeSubsystem;
+import com.gos.reefscape.subsystems.CoralIntakeSubsytem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import com.gos.reefscape.subsystems.drive.SdsWithRevChassisSubsystem;
@@ -38,6 +39,7 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
     private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
+    private final CoralIntakeSubsytem m_coralIntake = new CoralIntakeSubsytem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -58,6 +60,7 @@ public class RobotContainer {
         }
         addDebugPathsToShuffleBoard();
         addAlgaeDebugCommands();
+        addCoralDebugCommands();
     }
 
 
@@ -92,6 +95,13 @@ public class RobotContainer {
         debugTab.add(m_algae.createIntakeUntilAlgaeCommand());
         debugTab.add(m_algae.createMoveIntakeInCommand());
         return Commands.none();
+    }
+
+    private void addCoralDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Coral intake");
+        debugTab.add(m_coralIntake.createIntakeInCommand());
+        debugTab.add(m_coralIntake.createIntakeOutCommand());
+        debugTab.add(m_coralIntake.createIntakeUntilCoral());
     }
 
     private void addDebugPathsToShuffleBoard() {

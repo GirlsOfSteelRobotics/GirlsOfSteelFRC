@@ -3,6 +3,7 @@ package com.gos.reefscape.subsystems.drive;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -20,6 +21,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
@@ -30,13 +32,14 @@ import java.util.List;
 public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwerveDrive {
     public static final double WHEEL_BASE = Units.inchesToMeters(25);
     public static final double TRACK_WIDTH = Units.inchesToMeters(25);
-    public static final double MAX_TRANSLATION_SPEED = 4; // Units.feetToMeters(20.1);
+    public static final double MAX_TRANSLATION_SPEED = 0.8 * Units.feetToMeters(22.1);
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(540);
     private final RevSwerveModule m_backLeft;
     private final RevSwerveModule m_backRight;
     private final RevSwerveModule m_frontLeft;
     private final RevSwerveModule m_frontRight;
     private final SwerveDriveOdometry m_odometry;
+    public final SwerveDrivePublisher m_swerveDrivePublisher;
 
 
     private final Pigeon2 m_gyro;
@@ -88,6 +91,7 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
 
+        m_swerveDrivePublisher = new SwerveDrivePublisher();
         RobotConfig config;
         try {
             config = RobotConfig.fromGUISettings();
@@ -119,6 +123,23 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         return modulePositions;
     }
 
+    public SwerveModuleState[] getModuleCancoderStates() {
+        SwerveModuleState[] desiredState = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i++) {
+            desiredState[i] = m_modules[i].getPositionWithCancoder();
+        }
+        return desiredState;
+    }
+
+    public SwerveModuleState[] getDesiredStates() {
+        SwerveModuleState[] desiredState = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i++) {
+            desiredState[i] = m_modules[i].getDesiredState();
+        }
+        return desiredState;
+    }
+
+
     private ChassisSpeeds getChassisSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
@@ -134,7 +155,6 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
 
 
     public void setChassisSpeed(ChassisSpeeds chassisSpeed) {
-        System.out.println(chassisSpeed);
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(chassisSpeed);
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, MAX_TRANSLATION_SPEED);
         setModuleStates(moduleStates);
@@ -171,11 +191,22 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
         m_backRight.periodic();
         m_frontRight.periodic();
         m_frontLeft.periodic();
+        m_swerveDrivePublisher.setMeasuredStates(getModuleStates());
+        m_swerveDrivePublisher.setRobotRotation(getPose().getRotation());
+        m_swerveDrivePublisher.setDesiredStates(getDesiredStates());
     }
 
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public Command createSyncEncodersCommand() {
+        return run(() -> {
+            for (int i = 0; i < 4; ++i) {
+                m_modules[i].syncEncoders();
+            }
+        }).ignoringDisable(true).withName("Sync Encoders");
     }
 }
 

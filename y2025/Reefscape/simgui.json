@@ -26,9 +26,10 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/Algae Intake Outtake/Intake In": "Command",
-      "/Shuffleboard/Algae Intake Outtake/Intake Out": "Command",
-      "/Shuffleboard/Algae Intake Outtake/Intake Till Piece": "Command",
+      "/Shuffleboard/Coral intake/FunctionalCommand": "Command",
+      "/Shuffleboard/Coral intake/Intake IN": "Command",
+      "/Shuffleboard/Coral intake/Intake OUT :(": "Command",
+      "/Shuffleboard/Coral intake/intake until coral :)": "Command",
       "/Shuffleboard/Debug Paths/AbbyPaneer": "Command",
       "/Shuffleboard/Debug Paths/PjNoodles": "Command",
       "/Shuffleboard/Debug Paths/TestPath_1mpss_10fps": "Command",
@@ -48,17 +49,17 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/Algae Intake Outtake/Intake In": {
+      "/Shuffleboard/Coral intake/Intake IN": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Algae Intake Outtake/Intake Out": {
+      "/Shuffleboard/Coral intake/Intake OUT :(": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Algae Intake Outtake/Intake Till Piece": {
+      "/Shuffleboard/Coral intake/intake until coral :)": {
         "window": {
           "visible": true
         }
@@ -87,8 +88,19 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
+        "open": true
+      }
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "Coral intake": {
+          "open": true
+        },
         "open": true
       }
     }
