@@ -35,6 +35,7 @@ public final class Constants {
 
     public static final int CORAL_INTAKE_MOTOR_ID = 15;
 
+    public static final int PIVOT_MOTOR_ID = 16;
     // DIO
     public static final int BOTLIMITSWICTH_ID = 0;
     public static final int TOPLIMITSWITCH_ID = 1;
