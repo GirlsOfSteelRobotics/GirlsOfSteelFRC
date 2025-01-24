@@ -7,6 +7,7 @@ package com.gos.reefscape;
 
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
+import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralIntakeSubsytem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
@@ -36,6 +37,8 @@ public class RobotContainer {
     // private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+
+    private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
     private final CoralIntakeSubsytem m_coralIntake = new CoralIntakeSubsytem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -56,6 +59,7 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
         addDebugPathsToShuffleBoard();
+        addAlgaeDebugCommands();
         addCoralDebugCommands();
     }
 
@@ -82,6 +86,14 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
+        return Commands.none();
+    }
+
+    private Command addAlgaeDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Intake Outtake");
+        debugTab.add(m_algae.createMoveIntakeOutCommand());
+        debugTab.add(m_algae.createIntakeUntilAlgaeCommand());
+        debugTab.add(m_algae.createMoveIntakeInCommand());
         return Commands.none();
     }
 
@@ -118,4 +130,5 @@ public class RobotContainer {
             followChoreoPath(name)
         ).withName(name);
     }
+
 }
