@@ -8,8 +8,7 @@ package com.gos.reefscape;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
-import com.gos.reefscape.subsystems.AlgaeSubsystem;
-import com.gos.reefscape.subsystems.CoralIntakeSubsytem;
+import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
@@ -40,8 +39,7 @@ public class RobotContainer {
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
-    private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
-    private final CoralIntakeSubsytem m_coralIntake = new CoralIntakeSubsytem();
+    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -62,8 +60,8 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
         addDebugPathsToShuffleBoard();
-        addAlgaeDebugCommands();
-        addCoralDebugCommands();
+        addIntakeDebugCommands();
+
     }
 
 
@@ -93,20 +91,14 @@ public class RobotContainer {
         return Commands.none();
     }
 
-    private Command addAlgaeDebugCommands() {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Intake Outtake");
-        debugTab.add(m_algae.createMoveIntakeOutCommand());
-        debugTab.add(m_algae.createIntakeUntilAlgaeCommand());
-        debugTab.add(m_algae.createMoveIntakeInCommand());
+    private Command addIntakeDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Intake Outtake");
+        debugTab.add(m_intakeSubsystem.createMoveIntakeOutCommand());
+        debugTab.add(m_intakeSubsystem.createIntakeUntilCoralCommand());
+        debugTab.add(m_intakeSubsystem.createMoveIntakeInCommand());
         return Commands.none();
     }
 
-    private void addCoralDebugCommands() {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Coral intake");
-        debugTab.add(m_coralIntake.createIntakeInCommand());
-        debugTab.add(m_coralIntake.createIntakeOutCommand());
-        debugTab.add(m_coralIntake.createIntakeUntilCoral());
-    }
 
     private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
