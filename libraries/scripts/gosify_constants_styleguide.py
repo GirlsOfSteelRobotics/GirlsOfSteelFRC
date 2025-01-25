@@ -1,12 +1,11 @@
-
 import re
 import sys
 import pathlib
 
 
 def camel_case_to_upper_snake_case(variable):
-    pattern = re.compile(r'(?<!^)(?=[A-Z])')
-    name = pattern.sub('_', variable).upper()
+    pattern = re.compile(r"(?<!^)(?=[A-Z])")
+    name = pattern.sub("_", variable).upper()
     return name
 
 
@@ -20,20 +19,12 @@ def run_conversion(file_to_convert: pathlib.Path):
         contents = re.sub(
             f"public static final (.*) {constant} =",
             f"public static final \\1 {constant_as_snake} =",
-            contents)
+            contents,
+        )
 
-        contents = re.sub(
-            constant + r"\[",
-            f"{constant_as_snake}[",
-            contents)
-        contents = re.sub(
-            constant + r"\.",
-            f"{constant_as_snake}.",
-            contents)
-        contents = re.sub(
-            constant + r"\,",
-            f"{constant_as_snake},",
-            contents)
+        contents = re.sub(constant + r"\[", f"{constant_as_snake}[", contents)
+        contents = re.sub(constant + r"\.", f"{constant_as_snake}.", contents)
+        contents = re.sub(constant + r"\,", f"{constant_as_snake},", contents)
 
     file_to_convert.write_text(contents)
 
