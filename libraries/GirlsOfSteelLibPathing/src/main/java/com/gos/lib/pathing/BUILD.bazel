@@ -5,8 +5,10 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
         "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
     ],
 )
