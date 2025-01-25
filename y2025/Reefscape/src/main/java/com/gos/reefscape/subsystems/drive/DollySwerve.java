@@ -9,6 +9,7 @@ import com.gos.lib.rev.swerve.RevSwerveChassis;
 import com.gos.lib.rev.swerve.config.RevSwerveChassisConstants;
 import com.gos.lib.rev.swerve.config.RevSwerveChassisConstantsBuilder;
 import com.gos.lib.rev.swerve.config.SwerveGearingKit;
+import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.GosField;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -18,12 +19,16 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.json.simple.parser.ParseException;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import com.gos.reefscape.Constants;
 
 import java.io.IOException;
+
+import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 public class DollySwerve implements Subsystem, GOSSwerveDrive {
     private static final double WHEEL_BASE = 0.381;
@@ -117,5 +122,23 @@ public class DollySwerve implements Subsystem, GOSSwerveDrive {
             yJoystick * MAX_TRANSLATION_SPEED,
             rotationalJoystick * MAX_ROTATION_SPEED);
         setChassisSpeed(chassisSpeeds);
+    }
+
+
+    @Override
+    public Command createResetPoseCommand(Pose2d pose) {
+        return runOnce(() -> resetPose(pose));
+    }
+
+    @Override
+    public Command createResetPoseFromChoreoCommand(String pathName) {
+        return createResetPoseCommand(ChoreoUtils.getPathStartingPose("RightToE").getPose());
+    }
+
+    @Override
+    public Command createResetAndFollowChoreoPathCommand(String pathName) {
+        return Commands.sequence(
+            createResetPoseFromChoreoCommand(pathName),
+            followChoreoPath(pathName));
     }
 }

@@ -35,7 +35,7 @@ public final class Constants {
     public static final int PIGEON_ID = 20;
     public static final int ELEVATOR_MOTOR_ID = 14;
 
-    public static final int PIVOT_MOTOR_ID = 16;
+    public static final int PIVOT_MOTOR_ID = 17;
     public static final int CORAL_INTAKE_MOTOR_ID = 15;
 
     // DIO
