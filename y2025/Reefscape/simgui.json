@@ -6,6 +6,16 @@
       }
     },
     "Other Devices": {
+      "SPARK Flex [14]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [14] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [16]": {
         "header": {
           "open": true
@@ -44,6 +54,9 @@
       "/Shuffleboard/Debug Paths/TestPath_9mpss_13fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_9mpss_1fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_9mpss_5fps": "Command",
+      "/Shuffleboard/Elevator/Elevator go to height0.30479999999999996": "Command",
+      "/Shuffleboard/Elevator/Elevator go to height0.9144": "Command",
+      "/Shuffleboard/Elevator/Elevator go to height1.524": "Command",
       "/Shuffleboard/Intake Outtake/Intake In": "Command",
       "/Shuffleboard/Intake Outtake/Intake Out": "Command",
       "/Shuffleboard/Intake Outtake/Intake Till Piece": "Command",
@@ -79,15 +92,17 @@
           "visible": true
         }
       },
+      "/Shuffleboard/Elevator/Elevator go to height0.30479999999999996": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Auto Modes": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
-        "AprilTags": {
-          "image": "C:\\Users\\ellag\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
-        },
         "bottom": 1638,
         "builtin": "2025 Reefscape",
         "height": 8.051901817321777,
@@ -123,6 +138,9 @@
         "open": true
       }
     }
+  },
+  "NetworkTables Info": {
+    "visible": true
   },
   "NetworkTables View": {
     "visible": false

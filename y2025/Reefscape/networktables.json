@@ -1,32 +1,48 @@
 [
   {
-    "name": "/Preferences/SwerveDrivePid.mm.kp",
-    "type": "double",
-    "value": 0.01,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SwerveDrivePid.mm.kff",
-    "type": "double",
-    "value": 0.1855,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SwerveSteerPid.mm.kp",
-    "type": "double",
-    "value": 0.3,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SwerveSteerPid.mm.kff",
+    "name": "/Preferences/Elevator Profile ff.eff.ks",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Elevator Profile ff.eff.kff",
+    "type": "double",
+    "value": 1.3,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Elevator Profile ff.eff.kg",
+    "type": "double",
+    "value": 0.81,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Elevator.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Elevator Profile PID.mm.max_velocity",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Elevator Profile PID.mm.max_acceleration",
+    "type": "double",
+    "value": 2.0,
     "properties": {
       "persistent": true
     }

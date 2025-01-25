@@ -67,7 +67,8 @@
     ></frc-boolean-box><frc-line-chart
         chart-title="Line Chart"
         source-provider="NetworkTables"
-        style="transform: translate(401px, 394px);"
+        style="transform: translate(604.2px, 290px);"
+        source-key="/Elevator"
     >
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis source-provider="NetworkTables"></frc-line-chart-axis>
@@ -77,6 +78,36 @@
         ></frc-line-chart-axis>
         <frc-line-chart-data
             source-provider="NetworkTables"
-            source-key="/SmartDashboard/Elevator Height"
+            source-key="/Elevator/current height"
+            display-name="height"
         ></frc-line-chart-data>
-    </frc-line-chart></dashboard-tab>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="goal velocity"
+            source-key="/Elevator/Setpoint Velocity"
+        ></frc-line-chart-data><frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend><frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="velocity"
+            source-key="/Elevator/Velocity"
+        ></frc-line-chart-data></frc-line-chart><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(12.8px, 103.6px);"
+        source-key="/Shuffleboard/Elevator/Elevator go to height0.30479999999999996"
+    ></frc-robot-command><frc-preferences-wrapper
+        source-key="/Preferences"
+        source-provider="NetworkTables"
+        style="transform: translate(4.80001px, 386.813px); width: 572.587px; height: 304.388px;"
+    ></frc-preferences-wrapper><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/Elevator/Elevator go to height1.524"
+        style="width: 100px; height: 50px; transform: translate(112px, 17.6px);"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="width: 100px; height: 93.2px; transform: translate(324.8px, 0px);"
+        source-key="/Shuffleboard/Elevator/Elevator go to height0.9144"
+    ></frc-robot-command><frc-mechanism2d-wrapper
+        source-provider="NetworkTables"
+        style="transform: translate(689.6px, 0.0124954px);"
+        source-key="/SmartDashboard/SuperStructureMech"
+        dims="[3,3]"
+    ></frc-mechanism2d-wrapper></dashboard-tab>
