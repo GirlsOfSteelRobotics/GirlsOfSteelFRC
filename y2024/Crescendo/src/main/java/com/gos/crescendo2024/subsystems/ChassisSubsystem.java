@@ -16,6 +16,7 @@ import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.ValidShootingPolygon;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.photonvision.AprilTagCamera;
 import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.GosBooleanProperty;
@@ -33,7 +34,6 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
@@ -79,10 +79,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    private static final GosDoubleProperty ON_THE_FLY_MAX_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 96);
-    private static final GosDoubleProperty ON_THE_FLY_MAX_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 96);
-    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_VELOCITY = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 200);
-    private static final GosDoubleProperty ON_THE_FLY_MAX_ANGULAR_ACCELERATION = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 200);
+    private static final TunablePathConstraints ON_THE_FLY_PATH_CONSTRAINTS = new TunablePathConstraints(false, "Chassis On the Fly", 96, 96, 200, 200);
 
     private static final GosDoubleProperty SLOW_MODE_TRANSLATION_DAMPENING = new GosDoubleProperty(false, "Chassis Slow Mode TranslationJoystickDampening", .5);
     private static final GosDoubleProperty SLOW_MODE_ROTATION_DAMPENING = new GosDoubleProperty(false, "Chassis Slow Mode RotationJoystickDampening", .7);
@@ -412,11 +409,7 @@ public class ChassisSubsystem extends SubsystemBase {
         List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
-            new PathConstraints(
-                Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
-                Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
-                Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
-                Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
+            ON_THE_FLY_PATH_CONSTRAINTS.getConstraints(),
             null,
             new GoalEndState(0.0, endAngle)
         );
@@ -439,12 +432,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createPathfindToPoseCommand(MaybeFlippedPose2d pose) {
         return defer(() -> AutoBuilder.pathfindToPose(
             pose.getPose(),
-
-            new PathConstraints(
-                Units.inchesToMeters(ON_THE_FLY_MAX_VELOCITY.getValue()),
-                Units.inchesToMeters(ON_THE_FLY_MAX_ACCELERATION.getValue()),
-                Units.degreesToRadians(ON_THE_FLY_MAX_ANGULAR_VELOCITY.getValue()),
-                Units.degreesToRadians((ON_THE_FLY_MAX_ANGULAR_ACCELERATION.getValue()))),
+            ON_THE_FLY_PATH_CONSTRAINTS.getConstraints(),
             0.0 // Goal end velocity in meters/sec
         ));
 
