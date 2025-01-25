@@ -66,6 +66,7 @@ public class RobotContainer {
         }
         addDebugPathsToShuffleBoard();
         addIntakeDebugCommands();
+        addPivotDebugCommands();
 
     }
 
@@ -96,12 +97,19 @@ public class RobotContainer {
         return m_autos.getSelectedAuto();
     }
 
-    private Command addIntakeDebugCommands() {
+    private void addIntakeDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Intake Outtake");
         debugTab.add(m_intakeSubsystem.createMoveIntakeOutCommand());
         debugTab.add(m_intakeSubsystem.createIntakeUntilCoralCommand());
         debugTab.add(m_intakeSubsystem.createMoveIntakeInCommand());
-        return Commands.none();
+
+    }
+    private void addPivotDebugCommands() {
+        ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(0.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(45.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(90.0));
+
     }
 
 
