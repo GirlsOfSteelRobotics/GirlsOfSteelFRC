@@ -6,6 +6,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.right.Center_H_GH_EFCommandGroup;
+import com.gos.reefscape.auto.modes.right.Left_J_LCommandGroup;
 import com.gos.reefscape.auto.modes.right.Right_E_CCommandGroupCommandGroup;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,6 +22,7 @@ public final class Autos {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
+        m_autoModes.addOption("Left.J.L);", new Left_J_LCommandGroup(swerveDrive));
         m_autoModes.addOption("Center.H.GH.EF", new Center_H_GH_EFCommandGroup(swerveDrive));
         m_autoModes.addOption("Right.E.C", new Right_E_CCommandGroupCommandGroup(swerveDrive));
     }
