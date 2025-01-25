@@ -50,7 +50,8 @@
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Auto Modes": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
-      "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/SuperStructureMech": "Mechanism2d"
     },
     "windows": {
       "/Shuffleboard/Coral intake/Intake IN": {
@@ -94,6 +95,11 @@
         "right": 3466,
         "top": 291,
         "width": 17.54825210571289,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SuperStructureMech": {
         "window": {
           "visible": true
         }

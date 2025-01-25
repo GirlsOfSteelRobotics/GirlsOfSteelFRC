@@ -12,6 +12,7 @@ import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
+import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import com.gos.reefscape.subsystems.drive.SdsWithRevChassisSubsystem;
 import com.gos.reefscape.subsystems.drive.TunerConstants;
@@ -40,9 +41,10 @@ public class RobotContainer {
      private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+
+    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(); // NOPMD(UnusedPrivateField)
 
     private final Autos m_autos = new Autos(m_chassis);
 
