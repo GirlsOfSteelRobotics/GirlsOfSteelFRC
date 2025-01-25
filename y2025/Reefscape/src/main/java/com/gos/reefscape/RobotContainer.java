@@ -16,6 +16,7 @@ import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import com.gos.reefscape.subsystems.drive.TunerConstants;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -43,7 +44,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
 
-    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(); // NOPMD(UnusedPrivateField)
+    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevator); // NOPMD(UnusedPrivateField)
 
     private final Autos m_autos = new Autos(m_chassis);
 
@@ -66,6 +67,9 @@ public class RobotContainer {
         }
         addDebugPathsToShuffleBoard();
         addIntakeDebugCommands();
+        addElevatorDebugCommands();
+
+        // PropertyManager.purgeExtraKeys();
 
     }
 
@@ -96,12 +100,18 @@ public class RobotContainer {
         return m_autos.getSelectedAuto();
     }
 
-    private Command addIntakeDebugCommands() {
+    private void addIntakeDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Intake Outtake");
         debugTab.add(m_intakeSubsystem.createMoveIntakeOutCommand());
         debugTab.add(m_intakeSubsystem.createIntakeUntilCoralCommand());
         debugTab.add(m_intakeSubsystem.createMoveIntakeInCommand());
-        return Commands.none();
+    }
+
+    private void addElevatorDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
+        debugTab.add(m_elevator.createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
+        debugTab.add(m_elevator.createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
+        debugTab.add(m_elevator.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
     }
 
 
