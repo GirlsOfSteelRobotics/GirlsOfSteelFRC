@@ -1,5 +1,8 @@
 package com.gos.reefscape.subsystems.drive;
 
+import static edu.wpi.first.math.util.Units.inchesToMeters;
+import static edu.wpi.first.units.Units.Degrees;
+
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
@@ -12,12 +15,15 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.swerve.SwerveModuleSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,6 +45,8 @@ public class RevSwerveModule {
     private final SparkClosedLoopController m_drivePID;
     private final SparkClosedLoopController m_steerPID;
 
+    private SwerveModuleState m_desiredState = new SwerveModuleState();
+
     private SwerveModuleSimWrapper m_simWrapper;
 
     private final PidProperty m_drivePidProperties;
@@ -58,19 +66,20 @@ public class RevSwerveModule {
         driveConfig.smartCurrentLimit(60);
         driveConfig.inverted(false);
 
-        driveConfig.encoder.positionConversionFactor(1 / GEAR_REDUCTION_DRIVE);
-        driveConfig.encoder.velocityConversionFactor(1 / GEAR_REDUCTION_DRIVE / 60);
-
-
+        driveConfig.encoder.positionConversionFactor(inchesToMeters(4 * Math.PI) / GEAR_REDUCTION_DRIVE);
+        driveConfig.encoder.velocityConversionFactor(inchesToMeters(4 * Math.PI) / GEAR_REDUCTION_DRIVE / 60);
 
 
         SparkMaxConfig steerConfig = new SparkMaxConfig();
         steerConfig.idleMode(IdleMode.kBrake);
         steerConfig.smartCurrentLimit(60);
-        steerConfig.inverted(false);
+        steerConfig.inverted(true);
 
-        steerConfig.encoder.positionConversionFactor(1 / GEAR_REDUCTION_STEER);
-        steerConfig.encoder.velocityConversionFactor(1 / GEAR_REDUCTION_STEER / 60);
+        steerConfig.encoder.positionConversionFactor(360 / GEAR_REDUCTION_STEER);
+        steerConfig.encoder.velocityConversionFactor(360 / GEAR_REDUCTION_STEER / 60);
+        steerConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
+        steerConfig.closedLoop.positionWrappingEnabled(true)
+                 .positionWrappingInputRange(0, 360);
 
         m_motorDrive.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_motorSteer.configure(steerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -122,19 +131,15 @@ public class RevSwerveModule {
     }
 
     public void drive(SwerveModuleState state) {
-        state.optimize(Rotation2d.fromDegrees(getSteerAngle()));
+        state.optimize(getSteerAngle());
         m_drivePID.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
         m_steerPID.setReference(state.angle.getDegrees(), ControlType.kPosition);
 
-        SmartDashboard.putNumber(m_name + "Goal Velocity", state.speedMetersPerSecond);
-        SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
-
-        SmartDashboard.putNumber(m_name + "Goal Position", state.angle.getDegrees());
-        SmartDashboard.putNumber(m_name + "Current Position", m_steerEncoder.getPosition());
+        m_desiredState = state;
     }
 
-    public double getAbsoluteEncoderPosition() {
-        return m_absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+    public Angle getAbsoluteEncoderPosition() {
+        return m_absoluteEncoder.getAbsolutePosition().getValue();
     }
 
     public double getVelocity() {
@@ -142,8 +147,8 @@ public class RevSwerveModule {
 
     }
 
-    public double getSteerAngle() {
-        return m_steerEncoder.getPosition();
+    public Rotation2d getSteerAngle() {
+        return Rotation2d.fromDegrees(m_steerEncoder.getPosition());
     }
 
     public SwerveModuleSimWrapper getSimWrapper() {
@@ -159,9 +164,38 @@ public class RevSwerveModule {
     public void periodic() {
         m_steerPidProperties.updateIfChanged();
         m_drivePidProperties.updateIfChanged();
+
+
+        SmartDashboard.putNumber(m_name + "Goal Velocity", getDesiredState().speedMetersPerSecond);
+        SmartDashboard.putNumber(m_name + "Current Velocity", m_driveEncoder.getVelocity());
+
+        SmartDashboard.putNumber(m_name + "Goal Position", getDesiredState().angle.getDegrees());
+        SmartDashboard.putNumber(m_name + "Current Position", m_steerEncoder.getPosition());
+
+        SmartDashboard.putNumber(m_name + "Cancoder Position", getAbsoluteEncoderPosition().in(Degrees));
+        SmartDashboard.putNumber(m_name + "Power", m_motorDrive.getAppliedOutput());
+
+        syncEncoders();
+    }
+
+    public void syncEncoders() {
+
+        if (DriverStation.isDisabled()) {
+            m_steerEncoder.setPosition(getAbsoluteEncoderPosition().in(Degrees));
+        }
     }
 
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getVelocity(), Rotation2d.fromDegrees(getSteerAngle()));
+        return new SwerveModuleState(getVelocity(), getSteerAngle());
+    }
+
+    public SwerveModuleState getPositionWithCancoder() {
+        return new SwerveModuleState(
+            getVelocity(),
+            new Rotation2d(getAbsoluteEncoderPosition()));
+    }
+
+    public SwerveModuleState getDesiredState() {
+        return m_desiredState;
     }
 }

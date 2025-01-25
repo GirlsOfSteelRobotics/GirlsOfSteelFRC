@@ -5,10 +5,13 @@
 
 package com.gos.reefscape;
 
+import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
+import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.CoralIntakeSubsytem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
+import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import com.gos.reefscape.subsystems.drive.SdsWithRevChassisSubsystem;
 import edu.wpi.first.hal.AllianceStationID;
@@ -36,7 +39,9 @@ public class RobotContainer {
     // private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-    private final CoralIntakeSubsytem m_coralIntake = new CoralIntakeSubsytem();
+
+    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -56,7 +61,8 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
         addDebugPathsToShuffleBoard();
-        addCoralDebugCommands();
+        addIntakeDebugCommands();
+
     }
 
 
@@ -72,6 +78,7 @@ public class RobotContainer {
     private void configureBindings() {
         m_chassis.setDefaultCommand(new SwerveWithJoystickCommand(m_chassis, m_driverController));
         m_elevator.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevator, m_operatorController));
+        m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
     }
 
 
@@ -85,12 +92,14 @@ public class RobotContainer {
         return Commands.none();
     }
 
-    public void addCoralDebugCommands() {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Coral intake");
-        debugTab.add(m_coralIntake.createIntakeInCommand());
-        debugTab.add(m_coralIntake.createIntakeOutCommand());
-        debugTab.add(m_coralIntake.createIntakeUntilCoral());
+    private Command addIntakeDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Intake Outtake");
+        debugTab.add(m_intakeSubsystem.createMoveIntakeOutCommand());
+        debugTab.add(m_intakeSubsystem.createIntakeUntilCoralCommand());
+        debugTab.add(m_intakeSubsystem.createMoveIntakeInCommand());
+        return Commands.none();
     }
+
 
     private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
@@ -118,4 +127,5 @@ public class RobotContainer {
             followChoreoPath(name)
         ).withName(name);
     }
+
 }

@@ -1,11 +1,10 @@
 package com.gos.reefscape;
 
 import com.gos.lib.field.BaseGosField;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
+import org.littletonrobotics.frc2025.FieldConstants;
 
 public class GosField extends BaseGosField {
     public GosField() {
-        super(AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField));
+        super(FieldConstants.APRIL_TAG_LAYOUT);
     }
 }
