@@ -4,6 +4,7 @@ package com.gos.reefscape.subsystems.drive;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.swerve.SwerveDrivePublisher;
+import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -22,12 +23,15 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveSimWrapper;
 
 import java.util.List;
+
+import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwerveDrive {
     public static final double WHEEL_BASE = Units.inchesToMeters(25);
@@ -207,6 +211,23 @@ public class SdsWithRevChassisSubsystem extends SubsystemBase implements GOSSwer
                 m_modules[i].syncEncoders();
             }
         }).ignoringDisable(true).withName("Sync Encoders");
+    }
+
+    @Override
+    public Command createResetPoseCommand(Pose2d pose) {
+        return runOnce(() -> resetPose(pose));
+    }
+
+    @Override
+    public Command createResetPoseFromChoreoCommand(String pathName) {
+        return createResetPoseCommand(ChoreoUtils.getPathStartingPose(pathName).getPose());
+    }
+
+    @Override
+    public Command createResetAndFollowChoreoPathCommand(String pathName) {
+        return Commands.sequence(
+            createResetPoseFromChoreoCommand(pathName),
+            followChoreoPath(pathName));
     }
 }
 

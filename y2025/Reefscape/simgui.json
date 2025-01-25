@@ -48,6 +48,7 @@
       "/Shuffleboard/Intake Outtake/Intake Out": "Command",
       "/Shuffleboard/Intake Outtake/Intake Till Piece": "Command",
       "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Auto Modes": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/SuperStructureMech": "Mechanism2d"
@@ -78,7 +79,15 @@
           "visible": true
         }
       },
+      "/SmartDashboard/Auto Modes": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "C:\\Users\\ellag\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+        },
         "bottom": 1638,
         "builtin": "2025 Reefscape",
         "height": 8.051901817321777,
@@ -115,7 +124,7 @@
       }
     }
   },
-  "NetworkTables Info": {
-    "visible": true
+  "NetworkTables View": {
+    "visible": false
   }
 }

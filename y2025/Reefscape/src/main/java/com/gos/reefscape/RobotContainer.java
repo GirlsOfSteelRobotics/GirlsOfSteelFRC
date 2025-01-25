@@ -5,6 +5,7 @@
 
 package com.gos.reefscape;
 
+import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
@@ -13,7 +14,7 @@ import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
-import com.gos.reefscape.subsystems.drive.SdsWithRevChassisSubsystem;
+import com.gos.reefscape.subsystems.drive.TunerConstants;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -35,14 +36,16 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
-    // private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
+    //    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
+    private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
 
     private final SuperStructureViz m_superStructureViz = new SuperStructureViz(); // NOPMD(UnusedPrivateField)
+
+    private final Autos m_autos = new Autos(m_chassis);
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -90,7 +93,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Commands.none();
+        return m_autos.getSelectedAuto();
     }
 
     private Command addIntakeDebugCommands() {
