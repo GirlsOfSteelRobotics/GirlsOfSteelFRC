@@ -10,6 +10,8 @@ public interface GOSSwerveDrive extends Subsystem {
     void resetPose(Pose2d pose);
 
     Command createResetPoseCommand(Pose2d pose);
+
     Command createResetPoseFromChoreoCommand(String pathName);
+
     Command createResetAndFollowChoreoPathCommand(String pathName);
 }

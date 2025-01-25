@@ -5,8 +5,8 @@
 
 package com.gos.reefscape.commands;
 
-import com.gos.reefscape.auto.modes.right.Center_H_GH_EFCommandGroup;
-import com.gos.reefscape.auto.modes.right.Left_J_LCommandGroup;
+import com.gos.reefscape.auto.modes.center.Center_H_GH_EFCommandGroup;
+import com.gos.reefscape.auto.modes.left.Left_J_LCommandGroup;
 import com.gos.reefscape.auto.modes.right.Right_E_CCommandGroupCommandGroup;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

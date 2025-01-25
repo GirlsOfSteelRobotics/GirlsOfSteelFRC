@@ -186,6 +186,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
     public Command createResetPoseCommand(MaybeFlippedPose2d pose) {
         return runOnce(() -> resetPose(pose.getPose()));
     }
+
     @Override
     public Command createResetPoseFromChoreoCommand(String pathName) {
         return createResetPoseCommand(ChoreoUtils.getPathStartingPose(pathName));
