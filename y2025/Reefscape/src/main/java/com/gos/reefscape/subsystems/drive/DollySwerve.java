@@ -132,7 +132,7 @@ public class DollySwerve implements Subsystem, GOSSwerveDrive {
 
     @Override
     public Command createResetPoseFromChoreoCommand(String pathName) {
-        return createResetPoseCommand(ChoreoUtils.getPathStartingPose("RightToE").getPose());
+        return createResetPoseCommand(ChoreoUtils.getPathStartingPose(pathName).getPose());
     }
 
     @Override
