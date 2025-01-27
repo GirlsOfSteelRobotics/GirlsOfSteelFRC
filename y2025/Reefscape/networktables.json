@@ -34,7 +34,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.001,
     "properties": {
       "persistent": true
     }
@@ -42,7 +42,7 @@
   {
     "name": "/Preferences/Arm Profile PID.mm.max_velocity",
     "type": "double",
-    "value": 200.0,
+    "value": 90.0,
     "properties": {
       "persistent": true
     }
@@ -66,7 +66,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
     "type": "double",
-    "value": 2.2,
+    "value": 2.6,
     "properties": {
       "persistent": true
     }
@@ -74,7 +74,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kg",
     "type": "double",
-    "value": 1.2,
+    "value": 1.7,
     "properties": {
       "persistent": true
     }

@@ -85,7 +85,17 @@
           "visible": true
         }
       },
+      "/Shuffleboard/arm pivot/Go to angle0.0": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/arm pivot/Go to angle45.0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/arm pivot/Go to angle90.0": {
         "window": {
           "visible": true
         }
@@ -96,9 +106,6 @@
         }
       },
       "/SmartDashboard/Field": {
-        "AprilTags": {
-          "image": "C:\\Users\\ellag\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
-        },
         "bottom": 1638,
         "builtin": "2025 Reefscape",
         "height": 8.051901817321777,
@@ -153,7 +160,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 338,
+          "height": 680,
           "series": [
             {
               "color": [

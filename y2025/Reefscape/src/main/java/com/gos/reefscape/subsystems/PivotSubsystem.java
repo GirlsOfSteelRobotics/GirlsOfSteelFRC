@@ -108,7 +108,7 @@ public class PivotSubsystem extends SubsystemBase {
 
         syncRelativeEncoder();
     }
-
+@SuppressWarnings("removal")
     public void moveArmToAngle(double goal){
 
         m_armGoalAngle = goal;
@@ -116,10 +116,8 @@ public class PivotSubsystem extends SubsystemBase {
         m_profilePID.calculate(currentAngle, goal);
         TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
 
-        double feedForwardVolts = m_wpiFeedForward.calculateWithVelocities(
-            currentAngle,
-            m_relativeEncoder.getVelocity(),
-            setpoint.velocity);
+        //double feedForwardVolts = m_wpiFeedForward.calculateWithVelocities(currentAngle, m_relativeEncoder.getVelocity(), setpoint.velocity);
+        double feedForwardVolts = m_wpiFeedForward.calculate(Math.toRadians(currentAngle), Math.toRadians(setpoint.velocity));
 
         m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
         SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
@@ -169,12 +167,16 @@ public class PivotSubsystem extends SubsystemBase {
         return m_relativeEncoder.getPosition();
     }
 
+    public double getRelativeVelocity() {
+        return m_relativeEncoder.getVelocity();
+    }
+
     public double getAbsoluteAngle() {
         return m_absoluteEncoder.getPosition();
     }
 
     private void resetPidController() {
-        m_profilePID.reset(getRelativeAngle(), getRelativeAngle());
+        m_profilePID.reset(getRelativeAngle(), getRelativeVelocity());
     }
 
 
