@@ -14,13 +14,29 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SuperStructureViz extends SubsystemBase {
     private static final double CANVAS_WIDTH = Units.inchesToMeters(60);
     private static final double CANVAS_HEIGHT = Units.inchesToMeters(120);
+    private final ElevatorSubsystem m_elevator;
+    private final MechanismLigament2d m_goalElevatorHeight;
+    private final MechanismLigament2d m_elevatorMechanism;
 
-    public SuperStructureViz() {
+    public SuperStructureViz(ElevatorSubsystem elevatorSubsystem) {
         Mechanism2d canvas = new Mechanism2d(CANVAS_WIDTH, CANVAS_HEIGHT);
         SmartDashboard.putData("SuperStructureMech", canvas);
 
+
         addReef(canvas);
         addLoadingStation(canvas);
+
+        m_elevator = elevatorSubsystem;
+
+        MechanismRoot2d root = canvas.getRoot("elevator", CANVAS_WIDTH / 2, 0);
+        m_elevatorMechanism = root.append(new MechanismLigament2d("elevator", 1, 90, 13, new Color8Bit(Color.kRoyalBlue)));
+        m_goalElevatorHeight = root.append(new MechanismLigament2d("elevator goal height", 1, 90, 7, new Color8Bit(Color.kTomato)));
+    }
+
+    @Override
+    public void periodic() {
+        m_elevatorMechanism.setLength(m_elevator.getHeight());
+        m_goalElevatorHeight.setLength(m_elevator.getGoalHeight());
     }
 
     private void addReef(Mechanism2d canvas) {
