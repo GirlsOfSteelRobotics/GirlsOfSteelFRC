@@ -44,7 +44,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
 
-    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevator); // NOPMD(UnusedPrivateField)
+    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevator, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
 
     private final Autos m_autos = new Autos(m_chassis);
 
@@ -67,6 +67,7 @@ public class RobotContainer {
         }
         addDebugPathsToShuffleBoard();
         addIntakeDebugCommands();
+        addPivotDebugCommands();
         addElevatorDebugCommands();
 
         // PropertyManager.purgeExtraKeys();
@@ -105,6 +106,15 @@ public class RobotContainer {
         debugTab.add(m_intakeSubsystem.createMoveIntakeOutCommand());
         debugTab.add(m_intakeSubsystem.createIntakeUntilCoralCommand());
         debugTab.add(m_intakeSubsystem.createMoveIntakeInCommand());
+
+    }
+
+    private void addPivotDebugCommands() {
+        ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(0.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(45.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(90.0));
+
     }
 
     private void addElevatorDebugCommands() {

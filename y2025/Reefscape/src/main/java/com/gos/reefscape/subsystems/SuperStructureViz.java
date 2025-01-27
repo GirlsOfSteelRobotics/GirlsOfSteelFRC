@@ -15,10 +15,13 @@ public class SuperStructureViz extends SubsystemBase {
     private static final double CANVAS_WIDTH = Units.inchesToMeters(60);
     private static final double CANVAS_HEIGHT = Units.inchesToMeters(120);
     private final ElevatorSubsystem m_elevator;
+    private final PivotSubsystem m_pivot;
     private final MechanismLigament2d m_goalElevatorHeight;
     private final MechanismLigament2d m_elevatorMechanism;
+    private final MechanismLigament2d m_goalPivotHeight;
+    private final MechanismLigament2d m_pivotMechanism;
 
-    public SuperStructureViz(ElevatorSubsystem elevatorSubsystem) {
+    public SuperStructureViz(ElevatorSubsystem elevatorSubsystem, PivotSubsystem pivotSubsystem) {
         Mechanism2d canvas = new Mechanism2d(CANVAS_WIDTH, CANVAS_HEIGHT);
         SmartDashboard.putData("SuperStructureMech", canvas);
 
@@ -27,16 +30,21 @@ public class SuperStructureViz extends SubsystemBase {
         addLoadingStation(canvas);
 
         m_elevator = elevatorSubsystem;
+        m_pivot = pivotSubsystem;
 
         MechanismRoot2d root = canvas.getRoot("elevator", CANVAS_WIDTH / 2, 0);
         m_elevatorMechanism = root.append(new MechanismLigament2d("elevator", 1, 90, 13, new Color8Bit(Color.kRoyalBlue)));
         m_goalElevatorHeight = root.append(new MechanismLigament2d("elevator goal height", 1, 90, 7, new Color8Bit(Color.kTomato)));
+        m_pivotMechanism = m_elevatorMechanism.append(new MechanismLigament2d("pivot", .5, 90, 13, new Color8Bit(Color.kPapayaWhip)));
+        m_goalPivotHeight = m_elevatorMechanism.append(new MechanismLigament2d("pivot goal height", .5, 90, 7, new Color8Bit(Color.kGold)));
     }
 
     @Override
     public void periodic() {
         m_elevatorMechanism.setLength(m_elevator.getHeight());
         m_goalElevatorHeight.setLength(m_elevator.getGoalHeight());
+        m_goalPivotHeight.setAngle(90 - m_pivot.getArmGoalAngle());
+        m_pivotMechanism.setAngle(90 - m_pivot.getRelativeAngle());
     }
 
     private void addReef(Mechanism2d canvas) {
