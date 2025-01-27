@@ -190,7 +190,7 @@ public class PivotSubsystem extends SubsystemBase {
     ////////////////
     ///
     public Command createMoveArmtoAngleCommand(Double angle) {
-        return createResetPidControllerCommand().andThen(runEnd(() -> moveArmToAngle(angle), this::stop).withName("Go to angle" + angle));
+        return createResetPidControllerCommand().andThen(runEnd(() -> moveArmToAngle(angle), this::stop)).withName("Go to angle" + angle);
 
 
     }
