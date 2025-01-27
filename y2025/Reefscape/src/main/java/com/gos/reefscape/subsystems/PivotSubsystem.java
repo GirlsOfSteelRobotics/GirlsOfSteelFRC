@@ -108,8 +108,9 @@ public class PivotSubsystem extends SubsystemBase {
 
         syncRelativeEncoder();
     }
-@SuppressWarnings("removal")
-    public void moveArmToAngle(double goal){
+
+    @SuppressWarnings("removal")
+    public void moveArmToAngle(double goal) {
 
         m_armGoalAngle = goal;
         double currentAngle = getRelativeAngle();
@@ -128,6 +129,7 @@ public class PivotSubsystem extends SubsystemBase {
     private void syncRelativeEncoder() {
         m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
     }
+
     @Override
     public void simulationPeriodic() {
         m_pivotSimulator.update();
@@ -150,6 +152,9 @@ public class PivotSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    public double getArmGoalAngle() {
+        return m_armGoalAngle;
+    }
 
     public double getSpeed() {
         return m_pivotMotor.getAppliedOutput();
@@ -183,8 +188,10 @@ public class PivotSubsystem extends SubsystemBase {
     ////////////////
     //command factories yay :))
     ////////////////
+    ///
     public Command createMoveArmtoAngleCommand(Double angle) {
-        return runEnd(() -> moveArmToAngle(angle), this::stop).withName("Go to angle"+angle);
+        return createResetPidControllerCommand().andThen(runEnd(() -> moveArmToAngle(angle), this::stop).withName("Go to angle" + angle));
+
 
     }
 
