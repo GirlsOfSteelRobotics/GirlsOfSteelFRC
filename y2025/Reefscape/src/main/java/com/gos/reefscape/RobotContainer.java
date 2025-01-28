@@ -6,6 +6,7 @@
 package com.gos.reefscape;
 
 import com.gos.reefscape.commands.Autos;
+import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
@@ -43,10 +44,11 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_intakeSubsystem, m_elevator, m_pivotSubsystem);
 
     private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevator, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
 
-    private final Autos m_autos = new Autos(m_chassis);
+    private final Autos m_autos = new Autos(m_chassis, m_combinedCommand);
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -69,6 +71,8 @@ public class RobotContainer {
         addIntakeDebugCommands();
         addPivotDebugCommands();
         addElevatorDebugCommands();
+
+        createMovePIECommand();
 
         // PropertyManager.purgeExtraKeys();
 
@@ -150,6 +154,19 @@ public class RobotContainer {
             Commands.runOnce(() -> m_chassis.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),
             followChoreoPath(name)
         ).withName(name);
+    }
+
+    private void createMovePIECommand() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelOne).withName("Level One"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelTwo).withName("Level Two"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelThree).withName("Level Three"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelFour).withName("Level Four"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.scoreIntoNet).withName("Score Into net"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.scoreIntoProcessor).withName("Score into processor"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.humanPlayerStation).withName("human player station"));
+
+
     }
 
 }

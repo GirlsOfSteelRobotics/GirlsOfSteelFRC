@@ -18,13 +18,13 @@ public final class Autos {
 
     private final SendableChooser<Command> m_autoModes;
 
-    public Autos(GOSSwerveDrive swerveDrive) {
+    public Autos(GOSSwerveDrive swerveDrive, CombinedCommands combinedCommands) {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
-        m_autoModes.addOption("Left.J.L);", new Left_J_LCommandGroup(swerveDrive));
-        m_autoModes.addOption("Center.H.GH.EF", new Center_H_GH_EFCommandGroup(swerveDrive));
-        m_autoModes.addOption("Right.E.C", new Right_E_CCommandGroupCommandGroup(swerveDrive));
+        m_autoModes.addOption("Left.J.L);", new Left_J_LCommandGroup(swerveDrive, combinedCommands));
+        m_autoModes.addOption("Center.H.GH.EF", new Center_H_GH_EFCommandGroup(swerveDrive, combinedCommands));
+        m_autoModes.addOption("Right.E.C", new Right_E_CCommandGroupCommandGroup(swerveDrive, combinedCommands));
     }
 
     public Command getSelectedAuto() {
