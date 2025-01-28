@@ -3,9 +3,6 @@ package com.gos.reefscape.auto.modes.center;
 
 import com.gos.reefscape.PIE;
 import com.gos.reefscape.commands.CombinedCommands;
-import com.gos.reefscape.subsystems.ElevatorSubsystem;
-import com.gos.reefscape.subsystems.IntakeSubsystem;
-import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
