@@ -14,7 +14,7 @@ public class Right_E_CCommandGroupCommandGroup extends SequentialCommandGroup {
         addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("RightToE"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.levelFour)); //might be dif
         addCommands(followChoreoPath("EToHumanPlayer"));
-        addCommands(combinedCommands.scoreCoralCommand(PIE.humanPlayerStation));
+        addCommands(combinedCommands.fetchPieceFromHPStation());
         addCommands(followChoreoPath("HumanPlayertoC"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.levelFour));//might be dif
 

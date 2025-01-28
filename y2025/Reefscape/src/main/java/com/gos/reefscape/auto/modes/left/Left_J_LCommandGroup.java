@@ -14,7 +14,7 @@ public class Left_J_LCommandGroup extends SequentialCommandGroup {
         addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("LeftToJ"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.levelFour)); //might be dif
         addCommands(followChoreoPath("JToLeftHumanPlayer"));
-        addCommands(combinedCommands.scoreCoralCommand(PIE.humanPlayerStation));
+        addCommands(combinedCommands.fetchPieceFromHPStation());
         addCommands(followChoreoPath("LeftHumanPlayerToL"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.levelFour)); //might be dif
     }

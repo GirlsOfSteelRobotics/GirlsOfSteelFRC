@@ -24,4 +24,15 @@ public class CombinedCommands {
 
     }
 
+    public Command fetchPieceFromHPStation() {
+        return m_elevator.createMoveElevatorToHeightCommand(0.0)
+            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0)).andThen(m_intake.createMoveIntakeInCommand()); //do we need intake in? not rlly sure how FTC human player station works
+    }
+
+    public Command fetchAlgae() {
+        return m_elevator.createMoveElevatorToHeightCommand(1)
+            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0)).andThen(m_intake.createMoveIntakeInCommand()); //do we need intake in? not rlly sure how FTC human player station works
+    }
+
+
 }
