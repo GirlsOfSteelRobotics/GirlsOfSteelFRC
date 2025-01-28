@@ -164,7 +164,8 @@ public class RobotContainer {
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelFour).withName("Level Four"));
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.scoreIntoNet).withName("Score Into net"));
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.scoreIntoProcessor).withName("Score into processor"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.humanPlayerStation).withName("human player station"));
+        debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
+        debugTab.add(m_combinedCommand.fetchAlgae().withName("Fetch Algae"));
 
 
     }

@@ -6,9 +6,7 @@ public enum PIE {
     levelThree(.75, 45),
     levelFour(1, 90),
     scoreIntoNet(1.5, 100),
-    scoreIntoProcessor(.5, 40),
-    humanPlayerStation(1, 90),
-    collectAlgae(1, 45);
+    scoreIntoProcessor(.5, 40);
 
     public double m_height;
     public double m_angle;
