@@ -17,15 +17,17 @@ public class CombinedCommands {
         m_pivot = pivot;
     }
 
-    public Command scoreCoralCommand(PIE combo) {
-
+    public Command pieCommand(PIE combo) {
         return m_elevator.createMoveElevatorToHeightCommand(combo.m_height)
-            .alongWith(m_pivot.createMoveArmtoAngleCommand(combo.m_angle)).until(this::isAtGoalHeightAngle)
-            .until(this::isAtGoalHeightAngle)
-            .andThen(m_intake.createMoveIntakeOutCommand()
-                .withTimeout(1));
-
+            .alongWith(m_pivot.createMoveArmtoAngleCommand(combo.m_angle))
+            .until(this::isAtGoalHeightAngle);
     }
+
+    public Command scoreCoralCommand(PIE combo) {
+        return pieCommand(combo).andThen(m_intake.createMoveIntakeOutCommand().withTimeout(1));
+    }
+
+
 
     public boolean isAtGoalHeightAngle() {
         return m_elevator.isAtGoalHeight() && m_pivot.isAtGoalAngle();
@@ -33,19 +35,21 @@ public class CombinedCommands {
 
 
     public Command fetchPieceFromHPStation() {
-        return m_elevator.createMoveElevatorToHeightCommand(0)
-            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0))
-            .until(this::isAtGoalHeightAngle)
+        return pieCommand(PIE.HUMAN_PLAYER_STATION)
             .andThen(m_intake.createIntakeUntilCoralCommand()
-                .withTimeout(2));//do we need intake in? not rlly sure how FTC human player station works
+                .withTimeout(2));
     }
 
-    public Command fetchAlgae() {
-        return m_elevator.createMoveElevatorToHeightCommand(1)
-            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0))
-            .until(this::isAtGoalHeightAngle)
+    public Command fetchAlgaeTwo() {
+        return pieCommand(PIE.FETCH_ALGAE_2)
             .andThen(m_intake.createMoveIntakeInCommand()
-                .withTimeout(2)); //do we need intake in? not rlly sure how FTC human player station works
+                .withTimeout(2));
+    }
+
+    public Command fetchAlgaeThree() {
+        return pieCommand(PIE.FETCH_ALGAE_3)
+            .andThen(m_intake.createMoveIntakeInCommand()
+                .withTimeout(2));
     }
 
 }

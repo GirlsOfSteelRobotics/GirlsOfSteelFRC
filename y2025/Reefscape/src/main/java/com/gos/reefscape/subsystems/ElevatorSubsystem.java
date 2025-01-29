@@ -191,6 +191,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public boolean isAtGoalHeight() {
         return Math.abs(getHeight() - m_goalHeight) <= ELEVATOR_ERROR;
     }
+
     //command factories//
     public Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);

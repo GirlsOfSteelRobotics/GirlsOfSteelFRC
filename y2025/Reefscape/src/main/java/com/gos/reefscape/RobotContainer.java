@@ -158,14 +158,14 @@ public class RobotContainer {
 
     private void createMovePIECommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelOne).withName("Level One"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelTwo).withName("Level Two"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelThree).withName("Level Three"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.levelFour).withName("Level Four"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.scoreIntoNet).withName("Score Into net"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.scoreIntoProcessor).withName("Score into processor"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L1).withName("Level One"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L2).withName("Level Two"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L3).withName("Level Three"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L4).withName("Level Four"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_NET).withName("Score Into net"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_PROCESSOR).withName("Score into processor"));
         debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
-        debugTab.add(m_combinedCommand.fetchAlgae().withName("Fetch Algae"));
+        debugTab.add(m_combinedCommand.fetchAlgaeTwo().withName("Fetch Algae"));
 
 
     }

@@ -40,8 +40,8 @@ public class PivotSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
-    private final double PIVOT_ERROR = 3;
 
+    private static final double PIVOT_ERROR = 3;
     private static final double GEAR_RATIO = (58.0 / 15.0) * 45;
 
     private final PidProperty m_sparkPidProperties;
@@ -104,7 +104,7 @@ public class PivotSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(1);
             SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, 252, 1,
-                0.381, Units.degreesToRadians(-2), Units.degreesToRadians(90), true, 0);
+                0.381, Units.degreesToRadians(-40), Units.degreesToRadians(90), true, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
