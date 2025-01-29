@@ -31,11 +31,24 @@
           "open": true
         }
       }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
+      }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Combined Commands/Fetch Algae": "Command",
+      "/Shuffleboard/Combined Commands/Level Four": "Command",
+      "/Shuffleboard/Combined Commands/Level One": "Command",
+      "/Shuffleboard/Combined Commands/Level Three": "Command",
+      "/Shuffleboard/Combined Commands/Level Two": "Command",
+      "/Shuffleboard/Combined Commands/Score Into net": "Command",
+      "/Shuffleboard/Combined Commands/Score into processor": "Command",
+      "/Shuffleboard/Combined Commands/human player station": "Command",
       "/Shuffleboard/Coral intake/FunctionalCommand": "Command",
       "/Shuffleboard/Coral intake/Intake IN": "Command",
       "/Shuffleboard/Coral intake/Intake OUT :(": "Command",
@@ -70,37 +83,42 @@
       "/SmartDashboard/SuperStructureMech": "Mechanism2d"
     },
     "windows": {
+      "/Shuffleboard/Combined Commands/Level Four": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Combined Commands/Level One": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Combined Commands/Level Three": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Combined Commands/Level Two": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Combined Commands/Score Into net": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Combined Commands/Score into processor": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Coral intake/Intake IN": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Coral intake/Intake OUT :(": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/Coral intake/intake until coral :)": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Debug Paths/AbbyPaneer": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Debug Paths/PjNoodles": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Elevator/Elevator go to height0.30479999999999996": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Elevator/Elevator go to height0.9144": {
         "window": {
           "visible": true
         }

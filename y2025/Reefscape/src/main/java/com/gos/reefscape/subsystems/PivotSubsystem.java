@@ -41,6 +41,7 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
+    private static final double PIVOT_ERROR = 3;
     private static final double GEAR_RATIO = (58.0 / 15.0) * 45;
 
     private final PidProperty m_sparkPidProperties;
@@ -93,15 +94,17 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Speed", this::getSpeed);
         m_networkTableEntries.addDouble("Relative Angle", this::getRelativeAngle);
         m_networkTableEntries.addDouble("Absolute Angle", this::getAbsoluteAngle);
+        m_networkTableEntries.addDouble("Setpoint angle", this::getArmGoalAngle);
         m_networkTableEntries.addDouble("Setpoint Velocity", () -> m_profilePID.getSetpoint().velocity);
         m_networkTableEntries.addDouble("Rel Encoder Velocity", m_relativeEncoder::getVelocity);
+        m_networkTableEntries.addBoolean("Is at goal", this::isPivotAtGoal);
         m_checkAlerts = new SparkMaxAlerts(m_pivotMotor, "Pivot Alert");
 
         m_pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(1);
             SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, 252, 1,
-                0.381, Units.degreesToRadians(-2), Units.degreesToRadians(90), true, 0);
+                0.381, Units.degreesToRadians(-40), Units.degreesToRadians(90), true, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
@@ -147,7 +150,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
 
-    public boolean isArmAtGoal() {
+    public boolean isPivotAtGoal() {
         double error = m_armGoalAngle - getRelativeAngle();
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
@@ -184,6 +187,9 @@ public class PivotSubsystem extends SubsystemBase {
         m_profilePID.reset(getRelativeAngle(), getRelativeVelocity());
     }
 
+    public boolean isAtGoalAngle() {
+        return (Math.abs(this.getRelativeAngle() - this.getArmGoalAngle()) <= this.PIVOT_ERROR);
+    }
 
     ////////////////
     //command factories yay :))

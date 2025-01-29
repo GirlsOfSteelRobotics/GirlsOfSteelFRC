@@ -43,6 +43,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(120);
     public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getVex775Pro(4);
     public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(2.0);
+    public static final double ELEVATOR_ERROR = Units.inchesToMeters(3);
 
 
     private final SparkFlex m_elevatorMotor;
@@ -123,6 +124,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Setpoint Position", () -> m_profilePID.getSetpoint().position);
         m_networkTableEntries.addDouble("Setpoint Velocity", () -> m_profilePID.getSetpoint().velocity);
         m_networkTableEntries.addDouble("Goal Height", () -> m_goalHeight);
+        m_networkTableEntries.addBoolean("Is at good height", this::isAtGoalHeight);
     }
 
     public double getHeight() {
@@ -186,6 +188,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_profilePID.reset(getHeight(), getEncoderVel());
     }
 
+    public boolean isAtGoalHeight() {
+        return Math.abs(getHeight() - m_goalHeight) <= ELEVATOR_ERROR;
+    }
+
     //command factories//
     public Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);
@@ -195,5 +201,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         return createResetPidControllerCommand().andThen(
         runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).withName("Elevator go to height" + height);
     }
+
+
 }
 

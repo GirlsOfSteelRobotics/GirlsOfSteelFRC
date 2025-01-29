@@ -26,7 +26,7 @@
   {
     "name": "/Preferences/Elevator.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.3,
     "properties": {
       "persistent": true
     }
@@ -50,7 +50,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.001,
+    "value": 0.03,
     "properties": {
       "persistent": true
     }
