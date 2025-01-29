@@ -71,6 +71,8 @@ public class IntakeSubsystem extends SubsystemBase {
         return createMoveIntakeInCommand().until(this::hasCoral).withName("Intake Till Piece");
     }
 
+
+
     public Command createMoveIntakeInCommand() {
         return this.runEnd(this::intakeIn, this::intakeStop).withName("Intake In");
     }

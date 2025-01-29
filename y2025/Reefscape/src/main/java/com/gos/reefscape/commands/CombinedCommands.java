@@ -18,21 +18,34 @@ public class CombinedCommands {
     }
 
     public Command scoreCoralCommand(PIE combo) {
+
         return m_elevator.createMoveElevatorToHeightCommand(combo.m_height)
-            .alongWith(m_pivot.createMoveArmtoAngleCommand(combo.m_angle))
-            .andThen(m_intake.createMoveIntakeOutCommand());
+            .alongWith(m_pivot.createMoveArmtoAngleCommand(combo.m_angle)).until(this::isAtGoalHeightAngle)
+            .until(this::isAtGoalHeightAngle)
+            .andThen(m_intake.createMoveIntakeOutCommand()
+                .withTimeout(1));
 
     }
 
+    public boolean isAtGoalHeightAngle() {
+        return m_elevator.isAtGoalHeight() && m_pivot.isAtGoalAngle();
+    }
+
+
     public Command fetchPieceFromHPStation() {
         return m_elevator.createMoveElevatorToHeightCommand(0)
-            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0)).andThen(m_intake.createMoveIntakeInCommand()); //do we need intake in? not rlly sure how FTC human player station works
+            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0))
+            .until(this::isAtGoalHeightAngle)
+            .andThen(m_intake.createIntakeUntilCoralCommand()
+                .withTimeout(2));//do we need intake in? not rlly sure how FTC human player station works
     }
 
     public Command fetchAlgae() {
         return m_elevator.createMoveElevatorToHeightCommand(1)
-            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0)).andThen(m_intake.createMoveIntakeInCommand()); //do we need intake in? not rlly sure how FTC human player station works
+            .alongWith(m_pivot.createMoveArmtoAngleCommand(45.0))
+            .until(this::isAtGoalHeightAngle)
+            .andThen(m_intake.createMoveIntakeInCommand()
+                .withTimeout(2)); //do we need intake in? not rlly sure how FTC human player station works
     }
-
 
 }
