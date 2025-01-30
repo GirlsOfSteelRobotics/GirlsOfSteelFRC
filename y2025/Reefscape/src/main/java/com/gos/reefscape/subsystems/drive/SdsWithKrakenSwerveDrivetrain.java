@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
  */
-public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem, GOSSwerveDrive {
+public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     public static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
@@ -166,7 +166,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
 
-    @Override
+
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
@@ -178,7 +178,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
 
     }
 
-    @Override
+
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetPose(pose));
     }
@@ -187,12 +187,12 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         return runOnce(() -> resetPose(pose.getPose()));
     }
 
-    @Override
+
     public Command createResetPoseFromChoreoCommand(String pathName) {
         return createResetPoseCommand(ChoreoUtils.getPathStartingPose(pathName));
     }
 
-    @Override
+
     public Command createResetAndFollowChoreoPathCommand(String pathName) {
         return Commands.sequence(
             createResetPoseFromChoreoCommand(pathName),

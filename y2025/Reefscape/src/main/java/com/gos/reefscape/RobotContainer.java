@@ -14,7 +14,7 @@ import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
-import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
+import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
 import com.gos.reefscape.subsystems.drive.TunerConstants;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.util.Units;
@@ -39,7 +39,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     //    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
-    private final GOSSwerveDrive m_chassis = TunerConstants.createDrivetrain();
+    private final SdsWithKrakenSwerveDrivetrain m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();

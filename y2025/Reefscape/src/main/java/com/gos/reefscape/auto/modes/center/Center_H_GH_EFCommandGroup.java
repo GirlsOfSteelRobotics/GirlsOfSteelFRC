@@ -3,7 +3,7 @@ package com.gos.reefscape.auto.modes.center;
 
 import com.gos.reefscape.PIE;
 import com.gos.reefscape.commands.CombinedCommands;
-import com.gos.reefscape.subsystems.drive.GOSSwerveDrive;
+import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
@@ -12,7 +12,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 public class Center_H_GH_EFCommandGroup extends SequentialCommandGroup {
 
 
-    public Center_H_GH_EFCommandGroup(GOSSwerveDrive swerveDrive, CombinedCommands combinedCommands) {
+    public Center_H_GH_EFCommandGroup(SdsWithKrakenSwerveDrivetrain swerveDrive, CombinedCommands combinedCommands) {
         addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("MiddleToH"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.L4)); //might be dif
         addCommands(followChoreoPath("HToGHAlgae"));
