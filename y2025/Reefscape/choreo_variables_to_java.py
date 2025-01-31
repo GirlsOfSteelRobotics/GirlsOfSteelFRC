@@ -1,14 +1,14 @@
-
 import json
+
 
 def write_variables(choreo_data):
     output = ""
-
 
     for poseName in choreo_data["variables"]["poses"]:
         pose = choreo_data["variables"]["poses"][poseName]
         output += f"    public static final Pose2d {poseName} = new Pose2d({pose['x']['val']}, {pose['y']['val']}, Rotation2d.fromRadians({pose['heading']['val']}));\n"
     return output
+
 
 def main():
     choreo_file = "y2025/Reefscape/src/main/deploy/choreo/ChoreoAutos.chor"
@@ -30,7 +30,7 @@ public class ChoreoPoses {
     output_contents += write_variables(choreo_data)
 
     output_contents += "\n}"
-    with open(output_file, 'w') as f:
+    with open(output_file, "w") as f:
         f.write(output_contents)
 
 
