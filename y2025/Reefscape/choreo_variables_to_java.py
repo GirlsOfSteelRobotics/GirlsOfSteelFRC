@@ -15,9 +15,7 @@ def main():
     output_file = "y2025/Reefscape/src/main/java/com/gos/reefscape/ChoreoPoses.java"
 
     choreo_data = json.load(open(choreo_file))
-    # print(choreo_data)
-    # print("\n\n\n")
-    # print(choreo_data["config"])
+
 
     output_contents = """package com.gos.reefscape;
 

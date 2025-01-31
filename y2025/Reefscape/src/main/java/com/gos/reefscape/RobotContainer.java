@@ -170,17 +170,13 @@ public class RobotContainer {
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_PROCESSOR).withName("Score into processor"));
         debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
         debugTab.add(m_combinedCommand.fetchAlgaeTwo().withName("Fetch Algae"));
+
     }
 
     private void createMoveRobotToPositionCommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Move Robot To Position");
         debugTab.add(m_chassis.createDriveToPose(ChoreoPoses.E).withName("E"));
         debugTab.add(m_chassis.createDriveToPose(ChoreoPoses.C).withName("C"));
-
-
-
-
-
 
     }
 
