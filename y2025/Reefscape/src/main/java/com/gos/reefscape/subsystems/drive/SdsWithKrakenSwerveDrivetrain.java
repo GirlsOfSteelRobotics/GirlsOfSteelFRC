@@ -11,6 +11,8 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.GosField;
@@ -37,7 +39,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
  */
-public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem, GOSSwerveDrive {
+public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     public static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
@@ -46,6 +48,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
 
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
     private Notifier m_simNotifier;
+    private final PidProperty m_pidControllerProperty;
 
     private double m_lastSimTime;
     private final GosField m_field;
@@ -53,6 +56,10 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+    private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
@@ -83,7 +90,8 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
-
+        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
+            .addP(0).build();
         m_swerveDrivePublisher = new SwerveDrivePublisher();
     }
 
@@ -149,6 +157,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_swerveDrivePublisher.setMeasuredStates(getState().ModuleStates);
         m_swerveDrivePublisher.setRobotRotation(getState().Pose.getRotation());
         m_swerveDrivePublisher.setDesiredStates(getState().ModuleTargets);
+        m_pidControllerProperty.updateIfChanged();
     }
 
     private void startSimThread() {
@@ -166,7 +175,13 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
 
-    @Override
+    public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
+        setControl(
+            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)
+                .withTargetDirection(new Rotation2d(angleJoystick)));
+    }
+
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
@@ -178,7 +193,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
 
     }
 
-    @Override
+
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetPose(pose));
     }
@@ -187,12 +202,12 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         return runOnce(() -> resetPose(pose.getPose()));
     }
 
-    @Override
+
     public Command createResetPoseFromChoreoCommand(String pathName) {
         return createResetPoseCommand(ChoreoUtils.getPathStartingPose(pathName));
     }
 
-    @Override
+
     public Command createResetAndFollowChoreoPathCommand(String pathName) {
         return Commands.sequence(
             createResetPoseFromChoreoCommand(pathName),
