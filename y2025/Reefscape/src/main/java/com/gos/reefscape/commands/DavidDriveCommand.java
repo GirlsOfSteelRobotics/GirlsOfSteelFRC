@@ -2,16 +2,16 @@ package com.gos.reefscape.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
+import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class DavidDriveCommand extends Command {
-    private final SdsWithKrakenSwerveDrivetrain m_chassis;
+    private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
     private double m_lastAngle;
 
-    public DavidDriveCommand(SdsWithKrakenSwerveDrivetrain chassis, CommandXboxController joystick) {
+    public DavidDriveCommand(ChassisSubsystem chassis, CommandXboxController joystick) {
         m_chassis = chassis;
         m_joystick = joystick;
         // each subsystem used by the command must be passed into the
@@ -21,7 +21,7 @@ public class DavidDriveCommand extends Command {
 
     @Override
     public void initialize() {
-
+        m_lastAngle = m_chassis.getState().Pose.getRotation().getRadians();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.gos.reefscape.subsystems.drive;
+package com.gos.reefscape.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -199,8 +199,8 @@ public class TunerConstants {
      * Creates a CommandSwerveDrivetrain instance.
      * This should only be called once in your robot program,.
      */
-    public static SdsWithKrakenSwerveDrivetrain createDrivetrain() {
-        return new SdsWithKrakenSwerveDrivetrain(
+    public static ChassisSubsystem createDrivetrain() {
+        return new ChassisSubsystem(
             DrivetrainConstants, FrontLeft, FrontRight, BackLeft, BackRight
         );
     }

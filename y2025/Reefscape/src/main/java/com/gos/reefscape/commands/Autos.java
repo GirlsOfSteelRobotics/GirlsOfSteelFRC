@@ -8,7 +8,7 @@ package com.gos.reefscape.commands;
 import com.gos.reefscape.PIE;
 import com.gos.reefscape.auto.modes.center.Center_H_GH_EFCommandGroup;
 import com.gos.reefscape.auto.modes.TwoPieceCoral;
-import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
+import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,12 +18,12 @@ public final class Autos {
 
     private final SendableChooser<Command> m_autoModes;
 
-    public Autos(SdsWithKrakenSwerveDrivetrain swerveDrive, CombinedCommands combinedCommands) {
+    public Autos(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands) {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
         m_autoModes.addOption("Left.J4.L4", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Left", "J", "L"));
-        m_autoModes.addOption("Center.H.GH.EF", new Center_H_GH_EFCommandGroup(swerveDrive, combinedCommands));
+        m_autoModes.setDefaultOption("Center.H.GH.EF", new Center_H_GH_EFCommandGroup(swerveDrive, combinedCommands));
         m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
     }
 
