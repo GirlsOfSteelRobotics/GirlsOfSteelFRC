@@ -48,7 +48,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
 
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
     private Notifier m_simNotifier;
-    private PidProperty m_PIDcontrollerProperty;
+    private final PidProperty m_pidControllerProperty;
 
     private double m_lastSimTime;
     private final GosField m_field;
@@ -90,7 +90,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
-        m_PIDcontrollerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
+        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
             .addP(0).build();
         m_swerveDrivePublisher = new SwerveDrivePublisher();
     }
@@ -157,7 +157,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         m_swerveDrivePublisher.setMeasuredStates(getState().ModuleStates);
         m_swerveDrivePublisher.setRobotRotation(getState().Pose.getRotation());
         m_swerveDrivePublisher.setDesiredStates(getState().ModuleTargets);
-        m_PIDcontrollerProperty.updateIfChanged();
+        m_pidControllerProperty.updateIfChanged();
     }
 
     private void startSimThread() {
@@ -174,7 +174,8 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         });
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
-    public void davidDrive(double xJoystick, double yJoystick, double angleJoystick){
+
+    public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
         setControl(
             m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)

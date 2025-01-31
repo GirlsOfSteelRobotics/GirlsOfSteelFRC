@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class DavidDriveCommand extends Command {
     private final SdsWithKrakenSwerveDrivetrain m_chassis;
     private final CommandXboxController m_joystick;
-    private double m_lastAngle = 0;
+    private double m_lastAngle;
+
     public DavidDriveCommand(SdsWithKrakenSwerveDrivetrain chassis, CommandXboxController joystick) {
         m_chassis = chassis;
         m_joystick = joystick;
