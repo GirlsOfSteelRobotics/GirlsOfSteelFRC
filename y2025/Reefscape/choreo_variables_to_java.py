@@ -16,7 +16,6 @@ def main():
 
     choreo_data = json.load(open(choreo_file))
 
-
     output_contents = """package com.gos.reefscape;
 
 import edu.wpi.first.math.geometry.Pose2d;

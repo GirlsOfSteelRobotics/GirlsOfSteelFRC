@@ -224,11 +224,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createDriveToPose(Pose2d pose) {
-        Command pathfindingCommand = AutoBuilder.pathfindToPose(
-            pose,
-            TUNABLE_PATH_CONSTRAINTS.getConstraints(),
-            0.0);
-        return pathfindingCommand;
+        return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
     }
 }
 
