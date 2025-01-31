@@ -1,4 +1,4 @@
-package com.gos.reefscape.subsystems.drive;
+package com.gos.reefscape.subsystems;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 import static edu.wpi.first.units.Units.*;
@@ -11,13 +11,14 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
-import com.gos.reefscape.subsystems.drive.TunerConstants.TunerSwerveDrivetrain;
+import com.gos.reefscape.subsystems.TunerConstants.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -39,12 +40,20 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
  */
-public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
     public static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
     private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
     private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
+
+    private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
+        false,
+        "Tunable path constraints",
+        60,
+        60,
+        360,
+        360);
 
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
     private Notifier m_simNotifier;
@@ -78,7 +87,7 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
      * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
      * @param modules             Constants for each specific module
      */
-    public SdsWithKrakenSwerveDrivetrain(
+    public ChassisSubsystem(
         SwerveDrivetrainConstants drivetrainConstants,
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
@@ -212,6 +221,10 @@ public class SdsWithKrakenSwerveDrivetrain extends TunerSwerveDrivetrain impleme
         return Commands.sequence(
             createResetPoseFromChoreoCommand(pathName),
             followChoreoPath(pathName));
+    }
+
+    public Command createDriveToPose(Pose2d pose) {
+        return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
     }
 }
 

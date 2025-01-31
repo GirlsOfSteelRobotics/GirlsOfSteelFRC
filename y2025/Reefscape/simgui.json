@@ -73,6 +73,8 @@
       "/Shuffleboard/Intake Outtake/Intake In": "Command",
       "/Shuffleboard/Intake Outtake/Intake Out": "Command",
       "/Shuffleboard/Intake Outtake/Intake Till Piece": "Command",
+      "/Shuffleboard/Move Robot To Position/C": "Command",
+      "/Shuffleboard/Move Robot To Position/E": "Command",
       "/Shuffleboard/arm pivot/Go to angle0.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
@@ -123,12 +125,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/arm pivot/Go to angle0.0": {
+      "/Shuffleboard/Move Robot To Position/C": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/arm pivot/Go to angle45.0": {
+      "/Shuffleboard/Move Robot To Position/E": {
         "window": {
           "visible": true
         }
@@ -144,6 +146,9 @@
         }
       },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+        },
         "bottom": 1638,
         "builtin": "2025 Reefscape",
         "height": 8.051901817321777,
@@ -178,6 +183,9 @@
     }
   },
   "NetworkTables Info": {
+    "Connections": {
+      "open": true
+    },
     "visible": true
   },
   "Plot": {

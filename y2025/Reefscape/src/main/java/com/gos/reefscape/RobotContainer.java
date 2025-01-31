@@ -14,8 +14,9 @@ import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
-import com.gos.reefscape.subsystems.drive.SdsWithKrakenSwerveDrivetrain;
-import com.gos.reefscape.subsystems.drive.TunerConstants;
+import com.gos.reefscape.subsystems.ChassisSubsystem;
+import com.gos.reefscape.subsystems.TunerConstants;
+import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -39,7 +40,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     //    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
-    private final SdsWithKrakenSwerveDrivetrain m_chassis = TunerConstants.createDrivetrain();
+    private final ChassisSubsystem m_chassis = TunerConstants.createDrivetrain();
     //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
@@ -62,6 +63,7 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
+        PathfindingCommand.warmupCommand().schedule();
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
             DriverStationSim.setDsAttached(true);
@@ -73,6 +75,7 @@ public class RobotContainer {
         addElevatorDebugCommands();
 
         createMovePIECommand();
+        createMoveRobotToPositionCommand();
 
         // PropertyManager.purgeExtraKeys();
 
@@ -92,6 +95,7 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new DavidDriveCommand(m_chassis, m_driverController));
         m_elevator.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevator, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
+        m_driverController.b().whileTrue(m_chassis.createDriveToPose(ChoreoPoses.C));
     }
 
 
@@ -167,6 +171,12 @@ public class RobotContainer {
         debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
         debugTab.add(m_combinedCommand.fetchAlgaeTwo().withName("Fetch Algae"));
 
+    }
+
+    private void createMoveRobotToPositionCommand() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Move Robot To Position");
+        debugTab.add(m_chassis.createDriveToPose(ChoreoPoses.E).withName("E"));
+        debugTab.add(m_chassis.createDriveToPose(ChoreoPoses.C).withName("C"));
 
     }
 
