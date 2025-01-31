@@ -163,9 +163,6 @@
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
     "persistent": {
       "Preferences": {
         "open": true
@@ -183,7 +180,19 @@
   "NetworkTables Info": {
     "visible": true
   },
-  "NetworkTables View": {
-    "visible": false
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332
+        }
+      ]
+    }
   }
 }

@@ -94,5 +94,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/chassis Pid.mm.kp",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

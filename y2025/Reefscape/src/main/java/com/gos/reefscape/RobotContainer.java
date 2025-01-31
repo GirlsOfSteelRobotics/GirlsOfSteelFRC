@@ -7,6 +7,7 @@ package com.gos.reefscape;
 
 import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.CombinedCommands;
+import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
@@ -89,7 +90,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand(new SwerveWithJoystickCommand(m_chassis, m_driverController));
+        m_chassis.setDefaultCommand(new DavidDriveCommand(m_chassis, m_driverController));
         m_elevator.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevator, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
     }
