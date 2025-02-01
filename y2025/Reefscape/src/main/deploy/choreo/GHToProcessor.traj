@@ -1,5 +1,5 @@
 {
- "name":"GHAlgaeToProcessor",
+ "name":"GHToProcessor",
  "version":1,
  "snapshot":{
   "waypoints":[
@@ -14,7 +14,7 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"GHAlgae.x", "val":5.739912986755371}, "y":{"exp":"GHAlgae.y", "val":3.987903594970703}, "heading":{"exp":"GHAlgae.heading", "val":0.0}, "intervals":61, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"GH.x", "val":5.739912986755371}, "y":{"exp":"GH.y", "val":3.987903594970703}, "heading":{"exp":"GH.heading", "val":0.0}, "intervals":61, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"Processor.x", "val":6.35289192199707}, "y":{"exp":"Processor.y", "val":0.45048725605010986}, "heading":{"exp":"Processor.heading", "val":1.5707963267948966}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
