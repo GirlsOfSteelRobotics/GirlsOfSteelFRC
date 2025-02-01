@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "DIO": {
       "window": {
         "visible": true
