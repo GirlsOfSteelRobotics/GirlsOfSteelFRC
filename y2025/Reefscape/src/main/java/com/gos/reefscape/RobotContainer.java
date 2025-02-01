@@ -12,6 +12,7 @@ import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
+import com.gos.reefscape.subsystems.LEDSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
@@ -39,15 +40,14 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    //    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
     private final ChassisSubsystem m_chassis = TunerConstants.createDrivetrain();
-    //    private final GOSSwerveDrive m_chassis = new DollySwerve();
     private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
     private final CombinedCommands m_combinedCommand = new CombinedCommands(m_intakeSubsystem, m_elevator, m_pivotSubsystem);
 
     private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevator, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
+    private final LEDSubsystem m_leds = new LEDSubsystem(m_intakeSubsystem); // NOPMD(UnusedPrivateField)
 
     private final Autos m_autos = new Autos(m_chassis, m_combinedCommand);
 
