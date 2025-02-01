@@ -82,7 +82,8 @@
       "/SmartDashboard/Auto Modes": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/SuperStructureMech": "Mechanism2d"
+      "/SmartDashboard/SuperStructureMech": "Mechanism2d",
+      "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
       "/Shuffleboard/Combined Commands/Level Four": {

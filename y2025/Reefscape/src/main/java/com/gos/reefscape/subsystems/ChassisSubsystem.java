@@ -3,6 +3,7 @@ package com.gos.reefscape.subsystems;
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 import static edu.wpi.first.units.Units.*;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
@@ -13,19 +14,26 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
+import com.gos.lib.photonvision.AprilTagCamera;
+import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
+import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.subsystems.TunerConstants.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -34,6 +42,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+
+import org.littletonrobotics.frc2025.FieldConstants;
+import org.photonvision.EstimatedRobotPose;
 
 
 /**
@@ -61,6 +72,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private double m_lastSimTime;
     private final GosField m_field;
+    private final AprilTagCameraManager m_aprilTagCameras;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
@@ -102,6 +114,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
             .addP(0).build();
         m_swerveDrivePublisher = new SwerveDrivePublisher();
+
+        m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
+            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Front Camera", RobotExtrinsic.FRONT_CAMERA),
+            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Back Camera", RobotExtrinsic.BACK_CAMERA)
+        ));
     }
 
     private void configureAutoBuilder() {
@@ -144,6 +161,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     @Override
+    public void simulationPeriodic() {
+        m_aprilTagCameras.updateSimulator(getState().Pose);
+    }
+
+    @Override
     public void periodic() {
         /*
          * Periodically try to apply the operator perspective.
@@ -167,6 +189,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_swerveDrivePublisher.setRobotRotation(getState().Pose.getRotation());
         m_swerveDrivePublisher.setDesiredStates(getState().ModuleTargets);
         m_pidControllerProperty.updateIfChanged();
+
+        List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(getState().Pose);
+
+        for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
+
+            EstimatedRobotPose camPose = estimatePair.getFirst();
+            Pose2d camEstPose = camPose.estimatedPose.toPose2d();
+            addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
+        }
+
+
+
     }
 
     private void startSimThread() {
