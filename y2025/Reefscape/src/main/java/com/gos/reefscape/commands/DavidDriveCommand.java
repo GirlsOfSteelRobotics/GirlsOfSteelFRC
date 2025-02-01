@@ -1,5 +1,7 @@
 package com.gos.reefscape.commands;
 
+import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.reefscape.Constants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
@@ -7,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class DavidDriveCommand extends Command {
+    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.4);
+
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
     private double m_lastAngle;
@@ -32,14 +36,14 @@ public class DavidDriveCommand extends Command {
             double angle = Math.atan2(-m_joystick.getRightX(), -m_joystick.getRightY());
 
             m_chassis.davidDrive(
-                MathUtil.applyDeadband(-m_joystick.getLeftY(), .05),
-                MathUtil.applyDeadband(-m_joystick.getLeftX(), .05),
+                MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
+                MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
                 angle);
             m_lastAngle = angle;
         } else {
             m_chassis.davidDrive(
-                MathUtil.applyDeadband(-m_joystick.getLeftY(), .05),
-                MathUtil.applyDeadband(-m_joystick.getLeftX(), .05),
+                MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
+                MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
                 m_lastAngle);
         }
 

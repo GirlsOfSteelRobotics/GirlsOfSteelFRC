@@ -48,7 +48,15 @@
             source-provider="NetworkTables"
             style="transform: translate(105px, 241px);"
             source-key="/SmartDashboard/FLCurrent Position"
-        ></frc-line-chart-data></frc-line-chart></dashboard-tab><dashboard-tab
+        ></frc-line-chart-data></frc-line-chart><frc-swerve-drivebase
+        source-provider="NetworkTables"
+        style="transform: translate(365.4px, 241.8px);"
+        wheellocations="[2.5,2,2.5,-2,-2.5,2,-2.5,-2]"
+        measuredstates="[0,0,0,0,0,0,0,0]"
+        desiredstates="[0,0,0,0,0,0,0,0]"
+        sizeleftright="4"
+        sizefrontback="5"
+    ></frc-swerve-drivebase></dashboard-tab><dashboard-tab
     tab-name="Elevator"
     slot="tab"
     source-provider="NetworkTables"
@@ -110,4 +118,11 @@
         style="transform: translate(689.6px, 0.0124954px);"
         source-key="/SmartDashboard/SuperStructureMech"
         dims="[3,3]"
-    ></frc-mechanism2d-wrapper></dashboard-tab>
+    ></frc-mechanism2d-wrapper><frc-network-alerts
+        source-provider="NetworkTables"
+        style="transform: translate(50.4px, 200px); width: 300px; height: 144.8px;"
+        source-key="/SmartDashboard/Alerts"
+        errors="[]"
+        warnings="[]"
+        infos="[]"
+    ></frc-network-alerts></dashboard-tab>
