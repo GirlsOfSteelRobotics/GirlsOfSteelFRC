@@ -11,11 +11,11 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 @SuppressWarnings("PMD.ClassNamingConventions")
 public class TwoPieceCoral extends SequentialCommandGroup {
     public TwoPieceCoral(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE combo, String side, String firstPiece, String secondPiece) {
-        addCommands(swerveDrive.createResetAndFollowChoreoPathCommand(side + "To" + firstPiece));
+        addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("StartingPos" + side + "To" + firstPiece));
         addCommands(combinedCommands.scoreCoralCommand(combo));
-        addCommands(followChoreoPath(firstPiece + "To" + side + "HumanPlayer"));
+        addCommands(followChoreoPath(firstPiece + "ToHumanPlayer" + side));
         addCommands(combinedCommands.fetchPieceFromHPStation());
-        addCommands(followChoreoPath(side + "HumanPlayerTo" + secondPiece));
+        addCommands(followChoreoPath("HumanPlayer" + side + "To" + secondPiece));
         addCommands(combinedCommands.scoreCoralCommand(combo));
     }
 }

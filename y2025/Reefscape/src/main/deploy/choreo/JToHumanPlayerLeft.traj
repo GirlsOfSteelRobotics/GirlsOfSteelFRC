@@ -1,5 +1,5 @@
 {
- "name":"JToLeftHumanPlayer",
+ "name":"JToHumanPlayerLeft",
  "version":1,
  "snapshot":{
   "waypoints":[
@@ -15,7 +15,7 @@
  "params":{
   "waypoints":[
     {"x":{"exp":"J.x", "val":4.943519115447998}, "y":{"exp":"J.y", "val":5.226694107055664}, "heading":{"exp":"J.heading", "val":1.0370881817864992}, "intervals":67, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"LeftHumanPlayerStation.x", "val":1.3718515634536743}, "y":{"exp":"LeftHumanPlayerStation.y", "val":7.273766994476318}, "heading":{"exp":"LeftHumanPlayerStation.heading", "val":2.279422598922567}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
+    {"x":{"exp":"HumanPlayerLeft.x", "val":1.3718515634536743}, "y":{"exp":"HumanPlayerLeft.y", "val":7.273766994476318}, "heading":{"exp":"HumanPlayerLeft.heading", "val":2.279422598922567}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},

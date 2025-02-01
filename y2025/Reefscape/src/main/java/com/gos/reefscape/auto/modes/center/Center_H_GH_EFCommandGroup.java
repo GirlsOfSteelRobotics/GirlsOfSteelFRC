@@ -13,11 +13,11 @@ public class Center_H_GH_EFCommandGroup extends SequentialCommandGroup {
 
 
     public Center_H_GH_EFCommandGroup(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands) {
-        addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("CenterToH"));
+        addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("StartingPosCenterToH"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.L4)); //might be dif
-        addCommands(followChoreoPath("HToGHAlgae"));
+        addCommands(followChoreoPath("HToGH"));
         addCommands(combinedCommands.fetchAlgaeTwo());
-        addCommands(followChoreoPath("GHAlgaeToProcessor"));
+        addCommands(followChoreoPath("GHToProcessor"));
         addCommands(combinedCommands.scoreCoralCommand(PIE.SCORE_INTO_PROCESSOR));
         addCommands(followChoreoPath("ProcessorToEF"));
         addCommands(combinedCommands.fetchAlgaeTwo());
