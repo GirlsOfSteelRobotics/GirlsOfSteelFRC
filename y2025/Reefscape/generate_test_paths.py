@@ -1,4 +1,3 @@
-
 import json
 import pathlib
 import itertools
@@ -30,18 +29,13 @@ def main():
         has_constraints = a is not None or v is not None
 
         contents = Template(TRAJECTORY_TEMPLATE).render(
-            name = traj_name,
-            max_accel = a,
-            max_velocity_fps = v,
-            has_constraints = has_constraints
+            name=traj_name, max_accel=a, max_velocity_fps=v, has_constraints=has_constraints
         )
         output_file.write_text(contents)
         paths_to_do.append(traj_name)
 
     for path in paths_to_do:
         run_choreo_cli(path)
-
-
 
 
 TRAJECTORY_TEMPLATE = """{

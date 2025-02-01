@@ -20,6 +20,7 @@ import com.gos.reefscape.subsystems.TunerConstants;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -49,7 +50,7 @@ public class RobotContainer {
     private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
     private final LEDSubsystem m_leds = new LEDSubsystem(m_intakeSubsystem, m_elevatorSubsystem, m_combinedCommand); // NOPMD(UnusedPrivateField)
 
-    private final Autos m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
+    private final Autos m_autos;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -68,7 +69,9 @@ public class RobotContainer {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
+            DriverStation.silenceJoystickConnectionWarning(true);
         }
+        m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
         addDebugPathsToShuffleBoard();
         addIntakeDebugCommands();
         addPivotDebugCommands();
