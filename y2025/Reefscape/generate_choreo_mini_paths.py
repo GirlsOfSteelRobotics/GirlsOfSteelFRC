@@ -1,14 +1,16 @@
-
 import json
 import pathlib
 from jinja2 import Template
 
+
 def load_choreo_variables(choreo_file: pathlib.Path):
     data = json.loads(choreo_file.read_text())
     variables = {}
-    for var_name, var in data['variables']['poses'].items():
+    for var_name, var in data["variables"]["poses"].items():
         print(var_name)
-        variables[var_name] = dict(name=var_name, x=var['x']['val'], y=var['y']['val'], heading=var['heading']['val'])
+        variables[var_name] = dict(
+            name=var_name, x=var["x"]["val"], y=var["y"]["val"], heading=var["heading"]["val"]
+        )
 
     return variables
 
@@ -17,9 +19,9 @@ def create_path(choreo_dir, variables, first_variable, second_variable):
     filename = f"{first_variable}To{second_variable}"
 
     contents = Template(TRAJECTORY_TEMPLATE).render(
-        name = filename,
-        first_pose = variables[first_variable],
-        second_pose = variables[second_variable],
+        name=filename,
+        first_pose=variables[first_variable],
+        second_pose=variables[second_variable],
     )
 
     path_to_write = choreo_dir / f"{filename}.traj"
