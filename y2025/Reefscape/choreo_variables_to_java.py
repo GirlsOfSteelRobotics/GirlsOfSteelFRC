@@ -33,7 +33,7 @@ public class ChoreoPoses {
 
     output_contents += write_variables(choreo_data)
 
-    output_contents += "\n}"
+    output_contents += "\n}\n"
     with open(output_file, "w") as f:
         f.write(output_contents)
 
