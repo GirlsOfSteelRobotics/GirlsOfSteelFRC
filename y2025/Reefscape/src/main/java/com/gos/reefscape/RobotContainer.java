@@ -12,6 +12,7 @@ import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.subsystems.IntakeSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
+import com.gos.reefscape.subsystems.LEDSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
@@ -40,15 +41,14 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    //    private final GOSSwerveDrive m_chassis = new SdsWithRevChassisSubsystem();
-    private final ChassisSubsystem m_chassis = TunerConstants.createDrivetrain();
-    //    private final GOSSwerveDrive m_chassis = new DollySwerve();
-    private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+    private final ChassisSubsystem m_chassisSubsystem = TunerConstants.createDrivetrain();
+    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_intakeSubsystem, m_elevator, m_pivotSubsystem);
+    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_intakeSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
 
-    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevator, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
+    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
+    private final LEDSubsystem m_leds = new LEDSubsystem(m_intakeSubsystem, m_elevatorSubsystem, m_combinedCommand); // NOPMD(UnusedPrivateField)
 
     private final Autos m_autos;
 
@@ -71,7 +71,7 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
             DriverStation.silenceJoystickConnectionWarning(true);
         }
-        m_autos = new Autos(m_chassis, m_combinedCommand);
+        m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
         addDebugPathsToShuffleBoard();
         addIntakeDebugCommands();
         addPivotDebugCommands();
@@ -95,10 +95,10 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand(new DavidDriveCommand(m_chassis, m_driverController));
-        m_elevator.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevator, m_operatorController));
+        m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
+        m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
-        m_driverController.b().whileTrue(m_chassis.createDriveToPose(ChoreoPoses.C));
+        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C));
     }
 
 
@@ -130,9 +130,9 @@ public class RobotContainer {
 
     private void addElevatorDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
-        debugTab.add(m_elevator.createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
-        debugTab.add(m_elevator.createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
-        debugTab.add(m_elevator.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
     }
 
 
@@ -158,7 +158,7 @@ public class RobotContainer {
 
     private Command createDebugPathCommand(String name) {
         return Commands.sequence(
-            Commands.runOnce(() -> m_chassis.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),
+            Commands.runOnce(() -> m_chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),
             followChoreoPath(name)
         ).withName(name);
     }
@@ -178,8 +178,8 @@ public class RobotContainer {
 
     private void createMoveRobotToPositionCommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Move Robot To Position");
-        debugTab.add(m_chassis.createDriveToPose(ChoreoPoses.E).withName("E"));
-        debugTab.add(m_chassis.createDriveToPose(ChoreoPoses.C).withName("C"));
+        debugTab.add(m_chassisSubsystem.createDriveToPose(ChoreoPoses.E).withName("E"));
+        debugTab.add(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C).withName("C"));
 
     }
 
