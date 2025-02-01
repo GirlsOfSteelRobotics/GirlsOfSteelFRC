@@ -10,7 +10,8 @@ import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
-import com.gos.reefscape.subsystems.IntakeSubsystem;
+import com.gos.reefscape.subsystems.AlgaeSubsystem;
+import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.LEDSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
@@ -42,12 +43,13 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final ChassisSubsystem m_chassisSubsystem = TunerConstants.createDrivetrain();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
-    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_intakeSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
+    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
 
     private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
-    private final LEDSubsystem m_leds = new LEDSubsystem(m_intakeSubsystem, m_elevatorSubsystem, m_combinedCommand); // NOPMD(UnusedPrivateField)
+    private final LEDSubsystem m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand); // NOPMD(UnusedPrivateField)
 
     private final Autos m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
 
@@ -111,9 +113,9 @@ public class RobotContainer {
 
     private void addIntakeDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Intake Outtake");
-        debugTab.add(m_intakeSubsystem.createMoveIntakeOutCommand());
-        debugTab.add(m_intakeSubsystem.createIntakeUntilCoralCommand());
-        debugTab.add(m_intakeSubsystem.createMoveIntakeInCommand());
+        debugTab.add(m_coralSubsystem.createMoveCoralInCommand());
+        debugTab.add(m_coralSubsystem.createIntakeUntilCoralCommand());
+        debugTab.add(m_coralSubsystem.createMoveCoralOutCommand());
 
     }
 

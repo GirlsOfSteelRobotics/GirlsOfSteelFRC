@@ -20,14 +20,14 @@ public class LEDSubsystem extends SubsystemBase {
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
 
-    public LEDSubsystem(IntakeSubsystem intake, ElevatorSubsystem elevator, CombinedCommands combinedCommands) {
+    public LEDSubsystem(AlgaeSubsystem algae, CoralSubsystem coral, ElevatorSubsystem elevator, CombinedCommands combinedCommands) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT_ID);
         m_led.setLength(m_buffer.getLength());
         m_led.setData((m_buffer));
         m_led.start();
 
-        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intake, combinedCommands);
+        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, coral, combinedCommands, algae);
         m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, elevator);
     }
 
