@@ -78,6 +78,7 @@ public class RobotContainer {
         addCoralDebugCommands();
         addPivotDebugCommands();
         addElevatorDebugCommands();
+        addAlgaeDebugCommands();
 
         createMovePIECommand();
         createMoveRobotToPositionCommand();

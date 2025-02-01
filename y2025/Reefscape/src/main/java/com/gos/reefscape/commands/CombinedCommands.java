@@ -34,9 +34,6 @@ public class CombinedCommands {
         return pieCommand(combo).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
-    public Command scoreAlgaeCommand(PIE combo) {
-        return pieCommand(combo).andThen(m_intake.createMoveIntakeOutCommand().withTimeout(1));
-    }
 
     public boolean isAtGoalHeightAngle() {
         return m_elevatorSubsystem.isAtGoalHeight() && m_pivotSubsystem.isAtGoalAngle();
