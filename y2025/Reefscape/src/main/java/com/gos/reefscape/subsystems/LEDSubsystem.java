@@ -1,6 +1,8 @@
 package com.gos.reefscape.subsystems;
 
 import com.gos.reefscape.Constants;
+import com.gos.reefscape.commands.CombinedCommands;
+import com.gos.reefscape.led_patterns.DisabledPatterns;
 import com.gos.reefscape.led_patterns.EnabledPatterns;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -16,28 +18,29 @@ public class LEDSubsystem extends SubsystemBase {
     protected final AddressableLED m_led;
 
     private final EnabledPatterns m_enabledPatterns;
+    private final DisabledPatterns m_disabledPatterns;
     //private final DisabledPatterns m_disabledPatterns;
 
-    public LEDSubsystem(IntakeSubsystem intake) {
+    public LEDSubsystem(IntakeSubsystem intake, ElevatorSubsystem elevator, CombinedCommands combinedCommands) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT_ID);
         m_led.setLength(m_buffer.getLength());
         m_led.setData((m_buffer));
         m_led.start();
 
-        //patternssss
-
-        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intake);
-        //m_disabledPatterns = new DisabledPatterns();
+        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intake, combinedCommands);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, elevator);        //m_disabledPatterns = new DisabledPatterns();
     }
 
     @Override
     public void periodic() {
         clear();
         if (DriverStation.isEnabled()) {
-            m_enabledPatterns.writeLED();
+            m_enabledPatterns.ledUpdates();
         } // make else for disabled patterns
-
+        else {
+            m_disabledPatterns.ledUpdates();
+        }
         m_led.setData(m_buffer);
 
 

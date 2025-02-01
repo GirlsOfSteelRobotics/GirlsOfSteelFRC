@@ -47,4 +47,5 @@ public final class Constants {
 
     // PWM
     public static final int LED_PORT_ID = 0;
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
 }
