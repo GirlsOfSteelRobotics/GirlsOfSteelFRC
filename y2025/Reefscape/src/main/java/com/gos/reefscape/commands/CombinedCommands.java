@@ -31,7 +31,7 @@ public class CombinedCommands {
     }
 
     public Command scoreAlgaeCommand(PIE combo) {
-        return pieCommand(combo).andThen(m_algaeSubsystem.createMoveCoralOutCommand().withTimeout(1));
+        return pieCommand(combo).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
 
@@ -42,19 +42,19 @@ public class CombinedCommands {
 
     public Command fetchPieceFromHPStation() {
         return pieCommand(PIE.HUMAN_PLAYER_STATION)
-            .andThen(m_algaeSubsystem.createIntakeUntilAlgaeCommand()
+            .andThen(m_coralSubsystem.createMoveCoralInCommand()
                 .withTimeout(2));
     }
 
     public Command fetchAlgaeTwo() {
         return pieCommand(PIE.FETCH_ALGAE_2)
-            .andThen(m_algaeSubsystem.createMoveCoralInCommand()
+            .andThen(m_algaeSubsystem.createMoveAlgaeInCommand()
                 .withTimeout(2));
     }
 
     public Command fetchAlgaeThree() {
         return pieCommand(PIE.FETCH_ALGAE_3)
-            .andThen(m_algaeSubsystem.createMoveCoralInCommand()
+            .andThen(m_algaeSubsystem.createMoveAlgaeInCommand()
                 .withTimeout(2));
     }
 

@@ -63,16 +63,16 @@ public class AlgaeSubsystem extends SubsystemBase {
         return !m_algaeSensor.get();
     }
 
-    public Command createMoveCoralOutCommand() {
-        return this.runEnd(this::algaeIntakeOut, this::intakeStop).withName("Coral Out");
+    public Command createMoveAlgaeOutCommand() {
+        return this.runEnd(this::algaeIntakeOut, this::intakeStop).withName("Algae Out");
     }
 
     public Command createIntakeUntilAlgaeCommand() {
-        return createMoveCoralInCommand().until(this::hasAlgae).withName("Intake Till Piece");
+        return createMoveAlgaeInCommand().until(this::hasAlgae).withName("Intake Till Piece");
     }
 
-    public Command createMoveCoralInCommand() {
-        return this.runEnd(this::algaeIntakeIn, this::intakeStop).withName("Coral In");
+    public Command createMoveAlgaeInCommand() {
+        return this.runEnd(this::algaeIntakeIn, this::intakeStop).withName("Algae In");
     }
 }
 

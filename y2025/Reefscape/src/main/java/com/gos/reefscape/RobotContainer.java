@@ -72,7 +72,7 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
         addDebugPathsToShuffleBoard();
-        addIntakeDebugCommands();
+        addCoralDebugCommands();
         addPivotDebugCommands();
         addElevatorDebugCommands();
 
@@ -111,12 +111,18 @@ public class RobotContainer {
         return m_autos.getSelectedAuto();
     }
 
-    private void addIntakeDebugCommands() {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Intake Outtake");
+    private void addCoralDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
         debugTab.add(m_coralSubsystem.createMoveCoralInCommand());
         debugTab.add(m_coralSubsystem.createIntakeUntilCoralCommand());
         debugTab.add(m_coralSubsystem.createMoveCoralOutCommand());
+    }
 
+    private void addAlgaeDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Debug");
+        debugTab.add(m_algaeSubsystem.createMoveAlgaeInCommand());
+        debugTab.add(m_algaeSubsystem.createIntakeUntilAlgaeCommand());
+        debugTab.add(m_algaeSubsystem.createIntakeUntilAlgaeCommand());
     }
 
     private void addPivotDebugCommands() {
