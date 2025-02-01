@@ -22,8 +22,8 @@ public class EnabledPatterns {
 
 
         m_rainbow = new LEDRainbow(buffer, 0, numberOfLeds);
-        m_hasCoral = new LEDBoolean(buffer, 0, 35, Color.kGreen, Color.kRed);
-        m_heightAngleAtGoal = new LEDBoolean(buffer, 35, 70, Color.kGreen, Color.kRed);
+        m_hasCoral = new LEDBoolean(buffer, 0, numberOfLeds / 2, Color.kGreen, Color.kRed);
+        m_heightAngleAtGoal = new LEDBoolean(buffer, numberOfLeds / 2, numberOfLeds, Color.kGreen, Color.kRed);
 
     }
 
@@ -32,9 +32,7 @@ public class EnabledPatterns {
 
         m_hasCoral.setStateAndWrite(m_intake.hasCoral());
         m_heightAngleAtGoal.setStateAndWrite(m_combinedCommands.isAtGoalHeightAngle());
-
-
     }
 }
-//algae in algae sensor
+
 

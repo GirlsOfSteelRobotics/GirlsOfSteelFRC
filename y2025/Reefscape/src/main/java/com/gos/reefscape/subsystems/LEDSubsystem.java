@@ -19,7 +19,6 @@ public class LEDSubsystem extends SubsystemBase {
 
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
-    //private final DisabledPatterns m_disabledPatterns;
 
     public LEDSubsystem(IntakeSubsystem intake, ElevatorSubsystem elevator, CombinedCommands combinedCommands) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
@@ -29,7 +28,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.start();
 
         m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, intake, combinedCommands);
-        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, elevator);        //m_disabledPatterns = new DisabledPatterns();
+        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, elevator);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class LEDSubsystem extends SubsystemBase {
         clear();
         if (DriverStation.isEnabled()) {
             m_enabledPatterns.ledUpdates();
-        } // make else for disabled patterns
+        }
         else {
             m_disabledPatterns.ledUpdates();
         }
@@ -47,6 +46,9 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
     private void clear() {
+        for (int i = 0; i < MAX_INDEX_LED; i++) {
+            m_buffer.setRGB(i, 0, 0, 0);
+        }
 
     }
 

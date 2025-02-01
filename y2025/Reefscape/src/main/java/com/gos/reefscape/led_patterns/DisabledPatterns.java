@@ -27,8 +27,8 @@ public class DisabledPatterns {
     public void ledUpdates() {
         if (DriverStation.isFMSAttached() || ALWAYS_SHOW_LIGHTS.getValue()) {
             m_alert.writeLEDs();
+            m_elevatorGood.setStateAndWrite(m_elevator.isAtBottom());
         }
-        m_elevatorGood.setStateAndWrite(m_elevator.isAtBottom());
 
     }
 
