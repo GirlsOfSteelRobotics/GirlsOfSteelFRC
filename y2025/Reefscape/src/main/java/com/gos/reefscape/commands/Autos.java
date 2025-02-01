@@ -6,7 +6,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.PIE;
-import com.gos.reefscape.auto.modes.center.Center_H_GH_EFCommandGroup;
+import com.gos.reefscape.auto.modes.TwoPieceAlgae;
 import com.gos.reefscape.auto.modes.TwoPieceCoral;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -23,8 +23,9 @@ public final class Autos {
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
         m_autoModes.addOption("Left.J4.L4", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Left", "J", "L"));
-        m_autoModes.setDefaultOption("Center.H.GH.EF", new Center_H_GH_EFCommandGroup(swerveDrive, combinedCommands));
+        m_autoModes.setDefaultOption("Center.H.GH.EF", new TwoPieceAlgae(swerveDrive, combinedCommands, "GH", "EF"));
         m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
+        m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
     }
 
     public Command getSelectedAuto() {
