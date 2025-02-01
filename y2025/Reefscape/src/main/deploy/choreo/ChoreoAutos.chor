@@ -167,7 +167,7 @@
      "val":0.0
     }
    },
-   "StartingPosLeft":{
+   "StartingPosRight":{
     "x":{
      "exp":"7.901095867156982 m",
      "val":7.901095867156982
@@ -181,7 +181,7 @@
      "val":0.0
     }
    },
-   "StartingPosRight":{
+   "StartingPosLeft":{
     "x":{
      "exp":"7.84056282043457 m",
      "val":7.84056282043457
