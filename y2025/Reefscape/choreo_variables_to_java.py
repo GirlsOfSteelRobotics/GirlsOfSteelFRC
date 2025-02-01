@@ -1,4 +1,10 @@
 import json
+import re
+
+def camel_case_to_snake_case(name):
+    pattern = re.compile(r'(?<!^)(?=[A-Z])')
+    name = pattern.sub('_', name).lower()
+    return name.upper()
 
 
 def write_variables(choreo_data):
@@ -6,7 +12,7 @@ def write_variables(choreo_data):
 
     for poseName in choreo_data["variables"]["poses"]:
         pose = choreo_data["variables"]["poses"][poseName]
-        output += f"    public static final Pose2d {poseName} = new Pose2d({pose['x']['val']}, {pose['y']['val']}, Rotation2d.fromRadians({pose['heading']['val']}));\n"
+        output += f"    public static final Pose2d {camel_case_to_snake_case(poseName)} = new Pose2d({pose['x']['val']}, {pose['y']['val']}, Rotation2d.fromRadians({pose['heading']['val']}));\n"
     return output
 
 
