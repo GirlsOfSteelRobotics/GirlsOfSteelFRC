@@ -1,5 +1,5 @@
 {
- "name":"HumanPlayerRightToC",
+ "name":"HumanPlayerLeftToK",
  "version":1,
  "snapshot":{
   "waypoints":[],
@@ -8,8 +8,8 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"HumanPlayerRight.x", "val":1.5276724100112915}, "y":{"exp":"HumanPlayerRight.y", "val":0.642888605594635}, "heading":{"exp":"HumanPlayerRight.heading", "val":-2.248504688139378}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"C.x", "val":3.606261730194092}, "y":{"exp":"C.y", "val":3.079380989074707}, "heading":{"exp":"C.heading", "val":-2.1662063752267593}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
+    {"x":{"exp":"HumanPlayerLeft.x", "val":1.3718515634536743}, "y":{"exp":"HumanPlayerLeft.y", "val":7.273766994476318}, "heading":{"exp":"HumanPlayerLeft.heading", "val":2.279422598922567}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"K.x", "val":4.048266887664795}, "y":{"exp":"K.y", "val":5.257174491882324}, "heading":{"exp":"K.heading", "val":2.077895386035358}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},

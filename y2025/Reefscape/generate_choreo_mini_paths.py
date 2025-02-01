@@ -31,41 +31,26 @@ def main():
     choreo_dir = root_dir / r"y2025\Reefscape\src\main\deploy\choreo"
     variables = load_choreo_variables(choreo_dir / r"ChoreoAutos.chor")
 
-    for reef_position in ["C"]:
-        starting_position = "HumanPlayerRight"
-        create_path(choreo_dir, variables, starting_position, reef_position)
+    for reef_position in ["A", "L", "K", "J", "I", "H"]:
+        create_path(choreo_dir, variables, reef_position, "HumanPlayerLeft")
+        create_path(choreo_dir, variables, "HumanPlayerLeft", reef_position)
 
-    for reef_position in ["E"]:
-        starting_position = "HumanPlayerRight"
-        create_path(choreo_dir, variables, reef_position, starting_position)
+    for reef_position in ["B", "C", "D", "E", "F", "G"]:
+        create_path(choreo_dir, variables, reef_position, "HumanPlayerRight")
+        create_path(choreo_dir, variables, "HumanPlayerRight", reef_position)
 
-    for reef_position in ["L"]:
-        starting_position = "HumanPlayerLeft"
-        create_path(choreo_dir, variables, starting_position, reef_position)
+    for reef_position in ["D", "E", "F", "G"]:
+        create_path(choreo_dir, variables, "StartingPosRight", reef_position)
 
-    for reef_position in ["J"]:
-        starting_position = "HumanPlayerLeft"
-        create_path(choreo_dir, variables, reef_position, starting_position)
+    for reef_position in ["H", "I", "J", "K"]:
+        create_path(choreo_dir, variables, "StartingPosLeft", reef_position)
 
-    for algae_position in ["EF"]:
+    for reef_position in ["H", "G"]:
+        create_path(choreo_dir, variables, "StartingPosCenter", reef_position)
+
+    for algae_position in ["GH", "EF", "IJ"]:
         create_path(choreo_dir, variables, algae_position, "Processor")
         create_path(choreo_dir, variables, "Processor", algae_position)
-
-    for algae_position in ["GH"]:
-        create_path(choreo_dir, variables, algae_position, "Processor")
-
-
-    for reef_position in ["H"]:
-        starting_position = "StartingPosCenter"
-        create_path(choreo_dir, variables, starting_position, reef_position)
-
-    for reef_position in ["J"]:
-        starting_position = "StartingPosLeft"
-        create_path(choreo_dir, variables, starting_position, reef_position)
-
-    for reef_position in ["E"]:
-        starting_position = "StartingPosRight"
-        create_path(choreo_dir, variables, starting_position, reef_position)
 
 
 TRAJECTORY_TEMPLATE = """{
@@ -101,4 +86,5 @@ TRAJECTORY_TEMPLATE = """{
 """
 
 if __name__ == "__main__":
+    # py -m y2025.Reefscape.generate_choreo_mini_paths
     main()
