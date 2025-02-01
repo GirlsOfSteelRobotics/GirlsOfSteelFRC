@@ -1,9 +1,10 @@
 import json
 import re
 
+
 def camel_case_to_snake_case(name):
-    pattern = re.compile(r'(?<!^)(?=[A-Z])')
-    name = pattern.sub('_', name).lower()
+    pattern = re.compile(r"(?<!^)(?=[A-Z])")
+    name = pattern.sub("_", name).lower()
     return name.upper()
 
 
