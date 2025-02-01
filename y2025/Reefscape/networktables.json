@@ -102,5 +102,37 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
+    "type": "double",
+    "value": 60.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Max Acceleration (inches)",
+    "type": "double",
+    "value": 60.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Angular Velocity (degrees)",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Angular Acceleration (degrees)",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
