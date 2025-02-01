@@ -135,16 +135,16 @@ public class RobotContainer {
 
     private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
-        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_1fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_5fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_01fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_05fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_10fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_13fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_1fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_5fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_01fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_05fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_10fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_13fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_1fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_5fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_01fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_05fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_10fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_13fps"));
         debugPathsTab.add(createDebugPathCommand("AbbyPaneer"));
