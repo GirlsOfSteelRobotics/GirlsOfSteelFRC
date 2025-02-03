@@ -1,10 +1,11 @@
 package com.gos.lib.checklists;
 
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.function.DoubleSupplier;
 
@@ -26,7 +27,7 @@ public class SolenoidMovesChecklist extends Command {
         m_pressureSupplier = pressureSupplier;
         m_solenoid = solenoid;
         m_startPressure = 0;
-        m_alert = new Alert(label, Alert.AlertType.ERROR);
+        m_alert = new Alert(label, AlertType.kError);
         m_timer = new Timer();
     }
 

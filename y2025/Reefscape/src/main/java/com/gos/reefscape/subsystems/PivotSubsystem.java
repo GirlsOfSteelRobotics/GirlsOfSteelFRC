@@ -94,7 +94,8 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Speed", this::getSpeed);
         m_networkTableEntries.addDouble("Relative Angle", this::getRelativeAngle);
         m_networkTableEntries.addDouble("Absolute Angle", this::getAbsoluteAngle);
-        m_networkTableEntries.addDouble("Setpoint angle", this::getArmGoalAngle);
+        m_networkTableEntries.addDouble("Goal angle", this::getArmGoalAngle);
+        m_networkTableEntries.addDouble("Setpoint angle", () -> m_profilePID.getSetpoint().position);
         m_networkTableEntries.addDouble("Setpoint Velocity", () -> m_profilePID.getSetpoint().velocity);
         m_networkTableEntries.addDouble("Rel Encoder Velocity", m_relativeEncoder::getVelocity);
         m_networkTableEntries.addBoolean("Is at goal", this::isPivotAtGoal);

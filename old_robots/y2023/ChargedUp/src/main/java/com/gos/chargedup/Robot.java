@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.littletonrobotics.frc2023.util.Alert;
+import edu.wpi.first.wpilibj.Alert;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
         1, 2, 3, 6, 7, 8, 11, 12, 13, 15, 17, 19, 23
     ));
 
-    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
+    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.kError);
     private static final double LOW_BATTERY_VOLTAGE = 11.9;
 
 

@@ -1,7 +1,8 @@
 package com.gos.lib.phoenix6.alerts;
 
 import com.ctre.phoenix6.StatusSignal;
-import org.littletonrobotics.frc2023.util.Alert;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class BasePhoenix6Alerts {
         m_faultAlertName = faultName;
         m_stickyFaultAlertName = stickyFaultName;
 
-        m_faultAlert = new Alert(faultName, Alert.AlertType.ERROR);
-        m_stickyFaultAlert = new Alert(stickyFaultName, Alert.AlertType.WARNING);
+        m_faultAlert = new Alert(faultName, AlertType.kError);
+        m_stickyFaultAlert = new Alert(stickyFaultName, AlertType.kWarning);
 
         m_faultSignals = faultSignals;
         m_stickyFaultSignals = stickyFaultSignals;

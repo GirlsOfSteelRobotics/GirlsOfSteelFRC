@@ -6,6 +6,8 @@
 package com.gos.crescendo2024;
 
 import com.gos.lib.alerts.PowerDistributionAlerts;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -14,7 +16,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class Robot extends TimedRobot {
         0, 1, 2, 4, 5, 23
     ));
 
-    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
+    private final Alert m_lowBatterVoltage = new Alert("low battery", AlertType.kError);
     private static final double LOW_BATTERY_VOLTAGE = 11.9;
 
     /**

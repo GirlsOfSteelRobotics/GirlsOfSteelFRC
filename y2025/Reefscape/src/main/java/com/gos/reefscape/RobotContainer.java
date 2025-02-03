@@ -118,14 +118,14 @@ public class RobotContainer {
     private void addCoralDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
         debugTab.add(m_coralSubsystem.createMoveCoralInCommand());
-        debugTab.add(m_coralSubsystem.createIntakeUntilCoralCommand());
         debugTab.add(m_coralSubsystem.createMoveCoralOutCommand());
+        debugTab.add(m_coralSubsystem.createIntakeUntilCoralCommand());
     }
 
     private void addAlgaeDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Debug");
         debugTab.add(m_algaeSubsystem.createMoveAlgaeInCommand());
-        debugTab.add(m_algaeSubsystem.createIntakeUntilAlgaeCommand());
+        debugTab.add(m_algaeSubsystem.createMoveAlgaeOutCommand());
         debugTab.add(m_algaeSubsystem.createIntakeUntilAlgaeCommand());
     }
 
@@ -147,18 +147,22 @@ public class RobotContainer {
 
     private void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
+
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_01fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_05fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_10fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_13fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_01fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_05fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_10fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_13fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_10fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_13fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_Maxfps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_01fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_05fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_10fps"));
-        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_13fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_05fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_10fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_13fps"));
+        // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_Maxfps"));
+
         debugPathsTab.add(createDebugPathCommand("AbbyPaneer"));
         debugPathsTab.add(createDebugPathCommand("PjNoodles"));
 

@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,10 +88,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final LEDFlash m_clawAlignedSignal;
     private final LEDFlash m_isInLoadingZoneSignal;
-
-    private final LEDFlash m_alertError;
-    private final LEDFlash m_alertWarning;
-    private final LEDFlash m_noAlerts;
 
     private final LEDFlash m_isHoldingPieceClaw;
 
@@ -185,11 +180,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_isHoldingPieceClaw = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
         m_clawWasTripped = false;
 
-        // disabled -- show if there's alerts
-        m_alertError = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kRed);
-        m_alertWarning = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kYellow);
-        m_noAlerts = new LEDFlash(m_buffer, 10, 20, 0.5, Color.kGreen);
-
 
         m_led.setLength(m_buffer.getLength());
 
@@ -236,15 +226,15 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_autoModeColor.writeLeds();
         }
 
-        if (Alert.hasErrors()) {
-            m_alertError.writeLeds();
-        }
-        else if (Alert.hasWarnings()) {
-            m_alertWarning.writeLeds();
-        }
-        else {
-            m_noAlerts.writeLeds();
-        }
+        // if (Alert.hasErrors()) {
+        //     m_alertError.writeLeds();
+        // }
+        // else if (Alert.hasWarnings()) {
+        //     m_alertWarning.writeLeds();
+        // }
+        // else {
+        //     m_noAlerts.writeLeds();
+        // }
 
     }
 

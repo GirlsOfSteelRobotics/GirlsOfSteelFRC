@@ -2,8 +2,9 @@ package com.gos.lib.alerts;
 
 import edu.wpi.first.hal.REVPHFaults;
 import edu.wpi.first.hal.REVPHStickyFaults;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import org.littletonrobotics.frc2023.util.Alert;
 
 public class PneumaticHubAlerts {
     private static final String ALERT_NAME = "pneumatic hub";
@@ -15,8 +16,8 @@ public class PneumaticHubAlerts {
 
     public PneumaticHubAlerts(PneumaticHub pneumaticHub) {
         m_pneumaticHub = pneumaticHub;
-        m_alert = new Alert("pneumatic hub", Alert.AlertType.ERROR);
-        m_alertSticky = new Alert("pneumatic hub (sticky) ", Alert.AlertType.WARNING);
+        m_alert = new Alert("pneumatic hub", AlertType.kError);
+        m_alertSticky = new Alert("pneumatic hub (sticky) ", AlertType.kWarning);
     }
 
     public void checkAlerts() {

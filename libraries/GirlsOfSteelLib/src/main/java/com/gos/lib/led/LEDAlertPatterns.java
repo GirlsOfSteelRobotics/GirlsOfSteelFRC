@@ -2,7 +2,6 @@ package com.gos.lib.led;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
-import org.littletonrobotics.frc2023.util.Alert;
 
 public class LEDAlertPatterns {
     private final LEDFlash m_alertErrorPattern;
@@ -16,12 +15,22 @@ public class LEDAlertPatterns {
     }
 
     public void writeLEDs() {
-        if (Alert.hasErrors()) {
+        if (hasErrors()) {
             m_alertErrorPattern.writeLeds();
-        } else if (Alert.hasWarnings()) {
+        } else if (hasWarnings()) {
             m_alertWarningPattern.writeLeds();
         } else {
             m_noAlertsPattern.writeLeds();
         }
+    }
+
+    private boolean hasErrors() {
+        // TODO wait for wpilib update
+        return false;
+    }
+
+    public static boolean hasWarnings() {
+        // TODO wait for wpilib update
+        return false;
     }
 }

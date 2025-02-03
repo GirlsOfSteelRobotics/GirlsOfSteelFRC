@@ -3,8 +3,8 @@ package com.gos.lib.rev.alerts;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.Faults;
 import com.revrobotics.spark.SparkBase.Warnings;
-import org.littletonrobotics.frc2023.util.Alert;
-import org.littletonrobotics.frc2023.util.Alert.AlertType;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 
 @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class SparkMaxAlerts {
@@ -19,11 +19,11 @@ public class SparkMaxAlerts {
         m_sparkMax = sparkMax;
         m_motorString = motor;
 
-        m_faultAlert = new Alert(m_motorString, Alert.AlertType.ERROR);
-        m_stickyFaultAlert = new Alert(m_motorString, Alert.AlertType.WARNING);
+        m_faultAlert = new Alert(m_motorString, AlertType.kError);
+        m_stickyFaultAlert = new Alert(m_motorString, AlertType.kWarning);
 
-        m_warningsAlert = new Alert(m_motorString, AlertType.WARNING);
-        m_stickyWarningAlert = new Alert(m_motorString, AlertType.INFO);
+        m_warningsAlert = new Alert(m_motorString, AlertType.kWarning);
+        m_stickyWarningAlert = new Alert(m_motorString, AlertType.kInfo);
     }
 
     public void checkAlerts() {
