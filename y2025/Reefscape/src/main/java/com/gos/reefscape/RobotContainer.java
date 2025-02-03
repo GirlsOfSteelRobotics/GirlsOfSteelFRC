@@ -152,16 +152,30 @@ public class RobotContainer {
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_05fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_10fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_13fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_Maxfps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_01fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_05fps"));
-        // debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_10fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_10fps"));
         // debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_13fps"));
         // debugPathsTab.add(createDebugPathCommand("TestPath_4mpss_Maxfps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_01fps"));
-        // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_05fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_05fps"));
         // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_10fps"));
         // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_13fps"));
         // debugPathsTab.add(createDebugPathCommand("TestPath_9mpss_Maxfps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_Maxmpss_01fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_Maxmpss_05fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_Maxmpss_10fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_Maxmpss_13fps"));
+        debugPathsTab.add(createDebugPathCommand("TestPath_Maxmpss_Maxfps"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_020DegPerSec"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_045DegPerSec"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_090DegPerSec"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_180DegPerSec"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_270DegPerSec"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_360DegPerSec"));
+        debugPathsTab.add(createDebugPathCommand("TestRotation_MaxDegPerSec"));
+
 
         debugPathsTab.add(createDebugPathCommand("AbbyPaneer"));
         debugPathsTab.add(createDebugPathCommand("PjNoodles"));
