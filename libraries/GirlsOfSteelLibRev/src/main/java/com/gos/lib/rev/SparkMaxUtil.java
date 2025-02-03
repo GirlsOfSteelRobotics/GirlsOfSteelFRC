@@ -1,15 +1,16 @@
 package com.gos.lib.rev;
 
 import com.revrobotics.REVLibError;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
-import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.function.Supplier;
 
 public class SparkMaxUtil {
 
     private static final StringBuilder ALERT_BUILDER = new StringBuilder(100); // NOPMD(AvoidStringBufferField)
-    private static final Alert CONFIG_FAILED_ALERT = new Alert("Rev CAN config failure", Alert.AlertType.ERROR);
+    private static final Alert CONFIG_FAILED_ALERT = new Alert("Rev CAN config failure", AlertType.kError);
     private static boolean configFailed;
 
     public static void autoRetry(Supplier<REVLibError> command) {

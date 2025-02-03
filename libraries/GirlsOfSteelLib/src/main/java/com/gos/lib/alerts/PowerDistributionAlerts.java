@@ -2,8 +2,9 @@ package com.gos.lib.alerts;
 
 import edu.wpi.first.hal.PowerDistributionFaults;
 import edu.wpi.first.hal.PowerDistributionStickyFaults;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,8 +28,8 @@ public class PowerDistributionAlerts {
 
     public PowerDistributionAlerts(PowerDistribution powerDistribution, List<Integer> ignoredBreakers) {
         m_powerDistribution = powerDistribution;
-        m_alert = new Alert("power distribution", Alert.AlertType.ERROR);
-        m_alertSticky = new Alert("power distribution (sticky)", Alert.AlertType.WARNING);
+        m_alert = new Alert("power distribution", AlertType.kError);
+        m_alertSticky = new Alert("power distribution (sticky)", AlertType.kWarning);
 
         m_ignoredBreakers = new HashSet<>();
         m_ignoredBreakers.addAll(ignoredBreakers);

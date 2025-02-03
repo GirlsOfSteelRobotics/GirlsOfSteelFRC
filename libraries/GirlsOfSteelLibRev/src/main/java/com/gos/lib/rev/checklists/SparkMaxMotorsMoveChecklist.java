@@ -3,10 +3,11 @@ package com.gos.lib.rev.checklists;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import org.littletonrobotics.frc2023.util.Alert;
 
 public class SparkMaxMotorsMoveChecklist extends Command {
 
@@ -32,7 +33,7 @@ public class SparkMaxMotorsMoveChecklist extends Command {
         m_timer = new Timer();
         m_label = label;
         m_expectedDist = expectedDist;
-        m_alert = new Alert(m_label, Alert.AlertType.ERROR);
+        m_alert = new Alert(m_label, AlertType.kError);
 
     }
 
