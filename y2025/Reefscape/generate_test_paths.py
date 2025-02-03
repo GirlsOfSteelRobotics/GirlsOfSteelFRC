@@ -98,7 +98,7 @@ def generate_rotation_paths(choreo_dir):
 def main():
     root_dir = pathlib.Path(".")
     choreo_dir = root_dir / r"y2025\Reefscape\src\main\deploy\choreo"
-    run_cli = False
+    run_cli = True
 
     all_test_paths = []
     all_test_paths.extend(generate_straight_paths(choreo_dir))
