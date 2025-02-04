@@ -61,6 +61,6 @@ public class DavidDriveCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-
+        m_chassis.driveWithJoystick(0, 0, 0);
     }
 }

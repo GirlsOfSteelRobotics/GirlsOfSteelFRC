@@ -98,10 +98,14 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        // m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
         m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
+
+
         m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C));
+        m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
     }
 
 
