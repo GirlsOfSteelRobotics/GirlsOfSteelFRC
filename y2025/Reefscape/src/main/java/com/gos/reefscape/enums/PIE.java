@@ -1,4 +1,4 @@
-package com.gos.reefscape;
+package com.gos.reefscape.enums;
 
 import edu.wpi.first.math.util.Units;
 
