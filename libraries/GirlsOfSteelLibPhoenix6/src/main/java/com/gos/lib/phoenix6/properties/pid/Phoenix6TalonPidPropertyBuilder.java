@@ -43,7 +43,7 @@ public final class Phoenix6TalonPidPropertyBuilder {
     }
 
     private HeavyDoubleProperty createDoubleProperty(String propertyNameSuffix, double defaultValue, DoubleConsumer setter) {
-        String propertyName = m_baseName + ".mm." + propertyNameSuffix;
+        String propertyName = m_baseName + propertyNameSuffix;
         GosDoubleProperty prop = new GosDoubleProperty(m_isConstant, propertyName, defaultValue);
 
         return new HeavyDoubleProperty(setter, prop);
@@ -108,5 +108,31 @@ public final class Phoenix6TalonPidPropertyBuilder {
 
     public PidProperty build() {
         return new PidProperty(m_props);
+    }
+
+    public Phoenix6TalonPidPropertyBuilder fromDefaults(SlotConfigs config) {
+        if (config.kP != 0) {
+            addP(config.kP);
+        }
+        if (config.kI != 0) {
+            addI(config.kI);
+        }
+        if (config.kD != 0) {
+            addD(config.kD);
+        }
+        if (config.kS != 0) {
+            addKS(config.kS);
+        }
+        if (config.kV != 0) {
+            addKV(config.kV);
+        }
+        if (config.kA != 0) {
+            addKA(config.kA);
+        }
+        if (config.kG != 0) {
+            addKG(config.kG, config.GravityType);
+        }
+
+        return this;
     }
 }

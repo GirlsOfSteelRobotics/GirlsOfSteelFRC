@@ -1,6 +1,6 @@
 [
   {
-    "name": "/Preferences/Elevator Profile ff.eff.ks",
+    "name": "/Preferences/Elevator.eff.ks",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -8,7 +8,7 @@
     }
   },
   {
-    "name": "/Preferences/Elevator Profile ff.eff.kff",
+    "name": "/Preferences/Elevator.eff.kff",
     "type": "double",
     "value": 1.3,
     "properties": {
@@ -16,7 +16,7 @@
     }
   },
   {
-    "name": "/Preferences/Elevator Profile ff.eff.kg",
+    "name": "/Preferences/Elevator.eff.kg",
     "type": "double",
     "value": 0.81,
     "properties": {
@@ -32,7 +32,7 @@
     }
   },
   {
-    "name": "/Preferences/Elevator Profile PID.mm.max_velocity",
+    "name": "/Preferences/Elevator.mm.max_velocity",
     "type": "double",
     "value": 2.0,
     "properties": {
@@ -40,7 +40,7 @@
     }
   },
   {
-    "name": "/Preferences/Elevator Profile PID.mm.max_acceleration",
+    "name": "/Preferences/Elevator.mm.max_acceleration",
     "type": "double",
     "value": 2.0,
     "properties": {
@@ -56,7 +56,7 @@
     }
   },
   {
-    "name": "/Preferences/Arm Profile PID.mm.max_velocity",
+    "name": "/Preferences/Arm Pivot.mm.max_velocity",
     "type": "double",
     "value": 90.0,
     "properties": {
@@ -64,7 +64,7 @@
     }
   },
   {
-    "name": "/Preferences/Arm Profile PID.mm.max_acceleration",
+    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
     "type": "double",
     "value": 300.0,
     "properties": {
@@ -72,7 +72,7 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.ks",
+    "name": "/Preferences/Arm Pivot.aff.ks",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -80,7 +80,7 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
+    "name": "/Preferences/Arm Pivot.aff.kff",
     "type": "double",
     "value": 2.6,
     "properties": {
@@ -88,7 +88,7 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.kg",
+    "name": "/Preferences/Arm Pivot.aff.kg",
     "type": "double",
     "value": 1.7,
     "properties": {

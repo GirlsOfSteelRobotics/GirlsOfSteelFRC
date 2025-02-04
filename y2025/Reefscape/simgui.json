@@ -173,7 +173,13 @@
       },
       "/SmartDashboard/Field": {
         "AprilTags": {
-          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+          "image": "../../libraries/shared_images/tag-blue.png"
+        },
+        "Back Camera detected tags": {
+          "image": "../../libraries/shared_images/tag-orange.png"
+        },
+        "Front Camera detected tags": {
+          "image": "../../libraries/shared_images/tag-green.png"
         },
         "bottom": 1638,
         "builtin": "2025 Reefscape",
@@ -219,7 +225,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 332
+          "height": -43
         }
       ]
     }
