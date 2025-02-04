@@ -9,13 +9,25 @@ targetCompatibility = JavaVersion.VERSION_17
 dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
+    nativeRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.desktop)
+    nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
+
     implementation project(":libraries:GirlsOfSteelLib")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
+
+wpi.java.configureTestTasks(test)
 
 test {
     useJUnitPlatform()
 }
 
-
 ext.groupId = "com.gos.lib.ctre"
 apply from: "${rootDir}/build_scripts/gradle/publish_java.gradle"
+
+test {
+    finalizedBy jacocoTestReport
+}

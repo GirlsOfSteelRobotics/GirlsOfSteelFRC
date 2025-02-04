@@ -1,5 +1,7 @@
 package com.gos.reefscape.commands;
 
+import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.reefscape.Constants;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -7,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class SwerveWithJoystickCommand extends Command {
+    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.4);
+
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
 
@@ -26,8 +30,8 @@ public class SwerveWithJoystickCommand extends Command {
     @Override
     public void execute() {
         m_chassis.driveWithJoystick(
-            MathUtil.applyDeadband(-m_joystick.getLeftY(), .05),
-            MathUtil.applyDeadband(m_joystick.getLeftX(), .05),
+            MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
+            MathUtil.applyDeadband(m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(m_joystick.getRightX(), .05));
 
 

@@ -3,16 +3,22 @@ package com.gos.reefscape.subsystems;
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 import static edu.wpi.first.units.Units.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.pathing.TunablePathConstraints;
+import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.photonvision.AprilTagCamera;
 import com.gos.lib.photonvision.AprilTagCameraManager;
@@ -69,6 +75,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
     private Notifier m_simNotifier;
     private final PidProperty m_pidControllerProperty;
+    private final List<PidProperty> m_moduleProperties;
 
     private double m_lastSimTime;
     private final GosField m_field;
@@ -77,11 +84,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private boolean m_hasAppliedOperatorPerspective;
@@ -107,12 +116,26 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         if (Utils.isSimulation()) {
             startSimThread();
         }
+
+        m_moduleProperties = new ArrayList<>();
+        for (int i = 0; i < 4; ++i) {
+            SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(0);
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", false, module.getSteerMotor(), 0)
+                .fromDefaults(SlotConfigs.from(TunerConstants.steerGains))
+                .build());
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
+                .fromDefaults(SlotConfigs.from(TunerConstants.driveGains))
+                .build());
+        }
+
         configureAutoBuilder();
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
         m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
-            .addP(0).build();
+            .addP(0)
+            .addD(0)
+            .build();
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
@@ -184,13 +207,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-        m_field.setOdometry(getState().Pose);
-        m_swerveDrivePublisher.setMeasuredStates(getState().ModuleStates);
-        m_swerveDrivePublisher.setRobotRotation(getState().Pose.getRotation());
-        m_swerveDrivePublisher.setDesiredStates(getState().ModuleTargets);
-        m_pidControllerProperty.updateIfChanged();
 
-        List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(getState().Pose);
+        SwerveDriveState state = getState();
+        m_field.setOdometry(state.Pose);
+        m_swerveDrivePublisher.setMeasuredStates(state.ModuleStates);
+        m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
+        m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
+        m_pidControllerProperty.updateIfChanged();
+        for (PidProperty property : m_moduleProperties) {
+            property.updateIfChanged();
+        }
+
+        List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
 
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
 
@@ -218,18 +246,23 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
 
+    private void resetGyro() {
+        Pose2d currentPose = getState().Pose;
+        resetPose(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
+    }
+
     public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
         setControl(
-            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
-                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)
+            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(new Rotation2d(angleJoystick)));
     }
 
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
-            m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
-                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)
-                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED) // Drive counterclockwise with negative X (left)
+            m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
         );
 
@@ -259,6 +292,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createDriveToPose(Pose2d pose) {
         return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
+    }
+
+    public Command createResetGyroCommand() {
+        return run(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 }
 
