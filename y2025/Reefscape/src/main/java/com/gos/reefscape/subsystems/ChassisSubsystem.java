@@ -77,11 +77,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private boolean m_hasAppliedOperatorPerspective;
@@ -218,18 +220,23 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
 
+    private void resetGyro() {
+        Pose2d currentPose = getState().Pose;
+        resetPose(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
+    }
+
     public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
         setControl(
-            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
-                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)
+            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(new Rotation2d(angleJoystick)));
     }
 
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
-            m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED) // Drive forward with negative Y (forward)
-                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED) // Drive left with negative X (left)
-                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED) // Drive counterclockwise with negative X (left)
+            m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
         );
 
@@ -259,6 +266,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createDriveToPose(Pose2d pose) {
         return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
+    }
+
+    public Command createResetGyroCommand() {
+        return run(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 }
 

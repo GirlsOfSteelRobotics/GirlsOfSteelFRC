@@ -41,6 +41,9 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Algae Debug/Algae In": "Command",
+      "/Shuffleboard/Algae Debug/Algae Out": "Command",
+      "/Shuffleboard/Algae Debug/Intake Till Piece": "Command",
       "/Shuffleboard/Combined Commands/Fetch Algae": "Command",
       "/Shuffleboard/Combined Commands/Level Four": "Command",
       "/Shuffleboard/Combined Commands/Level One": "Command",
@@ -49,6 +52,9 @@
       "/Shuffleboard/Combined Commands/Score Into net": "Command",
       "/Shuffleboard/Combined Commands/Score into processor": "Command",
       "/Shuffleboard/Combined Commands/human player station": "Command",
+      "/Shuffleboard/Coral Debug/Coral In": "Command",
+      "/Shuffleboard/Coral Debug/Coral Out": "Command",
+      "/Shuffleboard/Coral Debug/Intake Till Coral": "Command",
       "/Shuffleboard/Coral intake/FunctionalCommand": "Command",
       "/Shuffleboard/Coral intake/Intake IN": "Command",
       "/Shuffleboard/Coral intake/Intake OUT :(": "Command",
@@ -61,6 +67,7 @@
       "/Shuffleboard/Debug Paths/TestPath_1mpss_13fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_1mpss_1fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_1mpss_5fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_1mpss_Maxfps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_4mpss_01fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_4mpss_05fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_4mpss_10fps": "Command",
@@ -73,6 +80,18 @@
       "/Shuffleboard/Debug Paths/TestPath_9mpss_13fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_9mpss_1fps": "Command",
       "/Shuffleboard/Debug Paths/TestPath_9mpss_5fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_Maxmpss_01fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_Maxmpss_05fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_Maxmpss_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_Maxmpss_13fps": "Command",
+      "/Shuffleboard/Debug Paths/TestPath_Maxmpss_Maxfps": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_020DegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_045DegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_090DegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_180DegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_270DegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_360DegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestRotation_MaxDegPerSec": "Command",
       "/Shuffleboard/Elevator/Elevator go to height0.30479999999999996": "Command",
       "/Shuffleboard/Elevator/Elevator go to height0.9144": "Command",
       "/Shuffleboard/Elevator/Elevator go to height1.524": "Command",
@@ -200,7 +219,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 0
+          "height": 332
         }
       ]
     }
