@@ -6,6 +6,7 @@ gos_java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
         "@bzlmodrio-revlib//libraries/java/revlib-java",
     ],
 )
