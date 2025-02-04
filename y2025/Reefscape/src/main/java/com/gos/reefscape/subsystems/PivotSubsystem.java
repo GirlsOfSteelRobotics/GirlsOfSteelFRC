@@ -2,30 +2,22 @@ package com.gos.reefscape.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
-import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
-import com.gos.lib.properties.pid.PidProperty;
-import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
-import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
+import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.reefscape.Constants;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -34,6 +26,10 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 
 public class PivotSubsystem extends SubsystemBase {
+    private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
+    private static final double PIVOT_ERROR = 3;
+    private static final double GEAR_RATIO = (58.0 / 15.0) * 45;
+
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
     private final AbsoluteEncoder m_absoluteEncoder;
@@ -41,17 +37,8 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
-    private static final double PIVOT_ERROR = 3;
-    private static final double GEAR_RATIO = (58.0 / 15.0) * 45;
+    private final RevProfiledSingleJointedArmController m_armPidController;
 
-    private final PidProperty m_sparkPidProperties;
-    private final SparkClosedLoopController m_sparkPidController;
-
-    private final ProfiledPIDController m_profilePID;
-    private final PidProperty m_profilePidProperties;
-
-    private final ArmFeedForwardProperty m_wpiFeedForward;
-    private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
     private double m_armGoalAngle = Double.MIN_VALUE;
 
     public PivotSubsystem() {
@@ -65,24 +52,21 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(false);
 
-        m_sparkPidController = m_pivotMotor.getClosedLoopController();
-
         pivotConfig.closedLoop.positionWrappingEnabled(true);
         pivotConfig.closedLoop.positionWrappingMinInput(0);
         pivotConfig.closedLoop.positionWrappingMaxInput(360);
-        m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
-            .addP(0)
-            .build();
-        m_profilePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
-        m_profilePID.enableContinuousInput(0, 360);
-        m_profilePidProperties = new WpiProfiledPidPropertyBuilder("Arm Profile PID", false, m_profilePID)
+
+        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
+            // Speed Limits
             .addMaxVelocity(200)
             .addMaxAcceleration(300)
-            .build();
-        m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
+            // Arm FF
             .addKs(0)
-            .addKff(2.2)
-            .addKg(1.2);
+            .addKv(0)
+            .addKg(0)
+            // REV Position controller
+            .addKp(0)
+            .build();
 
         pivotConfig.signals.absoluteEncoderPositionPeriodMs(20);
         pivotConfig.signals.absoluteEncoderVelocityPeriodMs(20);
@@ -95,8 +79,8 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Relative Angle", this::getRelativeAngle);
         m_networkTableEntries.addDouble("Absolute Angle", this::getAbsoluteAngle);
         m_networkTableEntries.addDouble("Goal angle", this::getArmGoalAngle);
-        m_networkTableEntries.addDouble("Setpoint angle", () -> m_profilePID.getSetpoint().position);
-        m_networkTableEntries.addDouble("Setpoint Velocity", () -> m_profilePID.getSetpoint().velocity);
+        m_networkTableEntries.addDouble("Setpoint angle", m_armPidController::getPositionSetpoint);
+        m_networkTableEntries.addDouble("Setpoint Velocity", m_armPidController::getVelocitySetpoint);
         m_networkTableEntries.addDouble("Rel Encoder Velocity", m_relativeEncoder::getVelocity);
         m_networkTableEntries.addBoolean("Is at goal", this::isPivotAtGoal);
         m_checkAlerts = new SparkMaxAlerts(m_pivotMotor, "Pivot Alert");
@@ -115,19 +99,11 @@ public class PivotSubsystem extends SubsystemBase {
 
     @SuppressWarnings("removal")
     public void moveArmToAngle(double goal) {
-
         m_armGoalAngle = goal;
-        double currentAngle = getRelativeAngle();
-        m_profilePID.calculate(currentAngle, goal);
-        TrapezoidProfile.State setpoint = m_profilePID.getSetpoint();
 
-        //double feedForwardVolts = m_wpiFeedForward.calculateWithVelocities(currentAngle, m_relativeEncoder.getVelocity(), setpoint.velocity);
-        double feedForwardVolts = m_wpiFeedForward.calculate(Math.toRadians(currentAngle), Math.toRadians(setpoint.velocity));
-
-        m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
-        SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
+        // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
+        m_armPidController.goToAngle(goal, getRelativeAngle());
     }
-
 
 
     private void syncRelativeEncoder() {
@@ -145,9 +121,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.updateLogs();
         m_checkAlerts.checkAlerts();
 
-        m_sparkPidProperties.updateIfChanged();
-        m_wpiFeedForward.updateIfChanged();
-        m_profilePidProperties.updateIfChanged();
+        m_armPidController.updateIfChanged();
     }
 
 
@@ -185,11 +159,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     private void resetPidController() {
-        m_profilePID.reset(getRelativeAngle(), getRelativeVelocity());
+        m_armPidController.resetPidController(getRelativeAngle(), getRelativeVelocity());
     }
 
     public boolean isAtGoalAngle() {
-        return (Math.abs(this.getRelativeAngle() - this.getArmGoalAngle()) <= this.PIVOT_ERROR);
+        return (Math.abs(getRelativeAngle() - getArmGoalAngle()) <= PIVOT_ERROR);
     }
 
     ////////////////
@@ -197,7 +171,9 @@ public class PivotSubsystem extends SubsystemBase {
     ////////////////
     ///
     public Command createMoveArmtoAngleCommand(Double angle) {
-        return createResetPidControllerCommand().andThen(runEnd(() -> moveArmToAngle(angle), this::stop)).withName("Go to angle" + angle);
+        return createResetPidControllerCommand()
+            .andThen(runEnd(() -> moveArmToAngle(angle), this::stop))
+            .withName("Go to angle" + angle);
 
 
     }
