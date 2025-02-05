@@ -1,6 +1,6 @@
 package com.gos.reefscape.commands;
 
-import com.gos.reefscape.PIE;
+import com.gos.reefscape.enums.PIE;
 import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
@@ -46,16 +46,14 @@ public class CombinedCommands {
                 .withTimeout(2));
     }
 
-    public Command fetchAlgaeTwo() {
-        return pieCommand(PIE.FETCH_ALGAE_2)
+
+
+    public Command fetchAlgae(PIE algaePosition) {
+        return pieCommand(algaePosition)
             .andThen(m_algaeSubsystem.createMoveAlgaeInCommand()
                 .withTimeout(2));
     }
 
-    public Command fetchAlgaeThree() {
-        return pieCommand(PIE.FETCH_ALGAE_3)
-            .andThen(m_algaeSubsystem.createMoveAlgaeInCommand()
-                .withTimeout(2));
-    }
+
 
 }

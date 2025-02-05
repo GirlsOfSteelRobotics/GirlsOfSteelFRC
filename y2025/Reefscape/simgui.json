@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "DIO": {
       "window": {
         "visible": true
@@ -51,6 +56,8 @@
       "/Shuffleboard/Combined Commands/Level Two": "Command",
       "/Shuffleboard/Combined Commands/Score Into net": "Command",
       "/Shuffleboard/Combined Commands/Score into processor": "Command",
+      "/Shuffleboard/Combined Commands/fetch algae three! :)": "Command",
+      "/Shuffleboard/Combined Commands/fetch algae two! :)": "Command",
       "/Shuffleboard/Combined Commands/human player station": "Command",
       "/Shuffleboard/Coral Debug/Coral In": "Command",
       "/Shuffleboard/Coral Debug/Coral Out": "Command",
@@ -141,6 +148,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/Combined Commands/fetch algae two! :)": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Coral intake/Intake IN": {
         "window": {
           "visible": true
@@ -191,6 +203,11 @@
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/SuperStructureMech": {
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -225,7 +242,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": -43
+          "height": 332
         }
       ]
     }

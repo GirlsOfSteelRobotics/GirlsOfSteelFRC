@@ -1,6 +1,7 @@
 package com.gos.reefscape.subsystems;
 
 import com.gos.reefscape.Constants;
+import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.led_patterns.DisabledPatterns;
 import com.gos.reefscape.led_patterns.EnabledPatterns;
@@ -20,7 +21,7 @@ public class LEDSubsystem extends SubsystemBase {
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
 
-    public LEDSubsystem(AlgaeSubsystem algae, CoralSubsystem coral, ElevatorSubsystem elevator, CombinedCommands combinedCommands) {
+    public LEDSubsystem(AlgaeSubsystem algae, CoralSubsystem coral, ElevatorSubsystem elevator, CombinedCommands combinedCommands, Autos autoModeFactory) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT_ID);
         m_led.setLength(m_buffer.getLength());
@@ -28,7 +29,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.start();
 
         m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, coral, combinedCommands, algae);
-        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, elevator);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory, elevator);
     }
 
     @Override

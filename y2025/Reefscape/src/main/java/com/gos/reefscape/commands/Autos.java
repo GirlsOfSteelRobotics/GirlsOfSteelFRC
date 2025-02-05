@@ -5,30 +5,34 @@
 
 package com.gos.reefscape.commands;
 
-import com.gos.reefscape.PIE;
+import com.gos.reefscape.auto.modes.GosAuto;
+import com.gos.reefscape.enums.AlgaePositions;
+import com.gos.reefscape.enums.CoralPositions;
+import com.gos.reefscape.enums.PIE;
 import com.gos.reefscape.auto.modes.TwoPieceAlgae;
 import com.gos.reefscape.auto.modes.TwoPieceCoral;
+import com.gos.reefscape.enums.StartingPositions;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class Autos {
 
-    private final SendableChooser<Command> m_autoModes;
+    private final SendableChooser<GosAuto> m_autoModes;
 
     public Autos(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands) {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
-        m_autoModes.addOption("Left.J4.L4", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Left", "J", "L"));
-        m_autoModes.setDefaultOption("Center.H.GH.EF", new TwoPieceAlgae(swerveDrive, combinedCommands, "GH", "EF"));
-        m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
-        m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
+        m_autoModes.addOption("Left.J4.L4", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, StartingPositions.LEFT, CoralPositions.J, CoralPositions.L));
+        m_autoModes.setDefaultOption("Center.H.GH.EF", new TwoPieceAlgae(swerveDrive, combinedCommands, CoralPositions.H, StartingPositions.CENTER, AlgaePositions.GH, AlgaePositions.EF));
+        m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, CoralPositions.E, CoralPositions.B));
+        //m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
+        //m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
     }
 
-    public Command getSelectedAuto() {
+    public GosAuto getSelectedAuto() {
         return m_autoModes.getSelected();
     }
 }
