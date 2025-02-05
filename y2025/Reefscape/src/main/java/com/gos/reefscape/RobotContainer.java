@@ -50,9 +50,9 @@ public class RobotContainer {
     private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
     private final CombinedCommands m_combinedCommand = new CombinedCommands(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
 
-    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
-    private final LEDSubsystem m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand); // NOPMD(UnusedPrivateField)
 
+    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
+    private final LEDSubsystem m_leds; //NOPMD
     private final Autos m_autos;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -83,6 +83,9 @@ public class RobotContainer {
 
         createMovePIECommand();
         createMoveRobotToPositionCommand();
+
+        m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
+
 
         // PropertyManager.purgeExtraKeys();
 
@@ -204,7 +207,8 @@ public class RobotContainer {
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_NET).withName("Score Into net"));
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_PROCESSOR).withName("Score into processor"));
         debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
-        debugTab.add(m_combinedCommand.fetchAlgaeTwo().withName("Fetch Algae"));
+        debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_2).withName("fetch algae two! :)"));
+        debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_3).withName("fetch algae three! :)"));
 
     }
 
