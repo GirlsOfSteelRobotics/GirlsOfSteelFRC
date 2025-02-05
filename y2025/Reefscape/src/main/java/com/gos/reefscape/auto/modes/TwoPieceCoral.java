@@ -15,11 +15,11 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 public class TwoPieceCoral extends GosAuto {
     public TwoPieceCoral(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE combo, StartingPositions side, CoralPositions firstPiece, CoralPositions secondPiece) {
         super (side, List.of(firstPiece, secondPiece), List.of());
-        addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("StartingPos" + side + "To" + firstPiece));
+        addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("StartingPos" + side.variableName() + "To" + firstPiece));
         addCommands(combinedCommands.scoreCoralCommand(combo));
-        addCommands(followChoreoPath(firstPiece + "ToHumanPlayer" + side));
+        addCommands(followChoreoPath(firstPiece + "ToHumanPlayer" + side.variableName()));
         addCommands(combinedCommands.fetchPieceFromHPStation());
-        addCommands(followChoreoPath("HumanPlayer" + side + "To" + secondPiece));
+        addCommands(followChoreoPath("HumanPlayer" + side.variableName() + "To" + secondPiece));
         addCommands(combinedCommands.scoreCoralCommand(combo));
     }
 }

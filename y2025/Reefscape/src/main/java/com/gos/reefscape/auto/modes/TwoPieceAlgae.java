@@ -14,7 +14,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 public class TwoPieceAlgae extends GosAuto {
     public TwoPieceAlgae (ChassisSubsystem chassis, CombinedCommands combinedCommands, CoralPositions coral, StartingPositions start, AlgaePositions firstAlgae, AlgaePositions secondAlgae) {
         super (StartingPositions.CENTER, List.of(CoralPositions.H), List.of(firstAlgae,secondAlgae));
-        addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start + "To" + coral));
+        addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
         addCommands(combinedCommands.scoreCoralCommand(PIE.L4));
         addCommands(followChoreoPath("HTo" + firstAlgae));
         addCommands(combinedCommands.fetchAlgae(firstAlgae.m_algaePosition));

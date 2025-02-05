@@ -13,7 +13,19 @@ public enum StartingPositions {
 
     StartingPositions(Pose2d pose) {
         m_pose = pose;
+    }
 
+    public String variableName() {
+        switch (this) {
+        case LEFT:
+            return "Left";
+        case CENTER:
+            return "Center";
+        case RIGHT:
+            return "Right";
+        default:
+            throw new IllegalArgumentException();
+        }
     }
 
 }
