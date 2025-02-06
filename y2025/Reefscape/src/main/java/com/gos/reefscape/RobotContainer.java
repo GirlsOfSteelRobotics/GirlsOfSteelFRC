@@ -110,6 +110,11 @@ public class RobotContainer {
 
         m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
+        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand());
+        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
+        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
+
+
     }
 
 

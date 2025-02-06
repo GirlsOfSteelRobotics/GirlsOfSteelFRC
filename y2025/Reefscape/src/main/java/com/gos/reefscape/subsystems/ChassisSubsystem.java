@@ -184,16 +184,23 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return run(() -> this.setControl(requestSupplier.get()));
     }
 
-    public void scoringPositionButtons () {
+    public AlgaePositions findClosestAlgae() {
         Pose2d curPose = getState().Pose;
-        System.out.println("Distances");
+        double minDist = 999999999999999999.9;
+        AlgaePositions closestAlgae = AlgaePositions.AB;
         for (AlgaePositions pos : AlgaePositions.values()) {
             Pose2d algaePose = pos.m_pose;
             double dx = algaePose.getX() - curPose.getX();
             double dy = algaePose.getY() - curPose.getY();
             double distance = Math.sqrt(dx * dx + dy * dy);
-            System.out.println("  " + pos + " - " + distance);
+
+            if (distance < minDist) {
+                minDist = distance;
+                closestAlgae = pos;
+            }
+
         }
+        return closestAlgae;
     }
 
     @Override
@@ -210,7 +217,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        scoringPositionButtons();
+        findClosestAlgae();
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
@@ -313,6 +320,27 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return run(this::resetGyro)
             .ignoringDisable(true)
             .withName("Reset Gyro");
+    }
+
+    public Command createDriveToClosestAlgaeCommand() {
+        return defer(() -> {
+            AlgaePositions closestAlgae = findClosestAlgae();
+            return createDriveToPose(closestAlgae.m_pose);
+        });
+    }
+
+    public Command createDriveToRightCoral() {
+        return defer(() -> {
+            AlgaePositions closestAlgae = findClosestAlgae();
+            return createDriveToPose(closestAlgae.m_coralRight.m_pose);
+        });
+    }
+
+    public Command createDriveToLeftCoral() {
+        return defer(() -> {
+            AlgaePositions closestAlgae = findClosestAlgae();
+            return createDriveToPose(closestAlgae.m_coralLeft.m_pose);
+        });
     }
 }
 
