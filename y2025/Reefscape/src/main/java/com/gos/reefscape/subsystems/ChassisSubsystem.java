@@ -28,6 +28,7 @@ import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;
+import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.subsystems.TunerConstants.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -183,6 +184,25 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return run(() -> this.setControl(requestSupplier.get()));
     }
 
+    public AlgaePositions findClosestAlgae() {
+        Pose2d curPose = getState().Pose;
+        double minDist = 999999999999999999.9;
+        AlgaePositions closestAlgae = AlgaePositions.AB;
+        for (AlgaePositions pos : AlgaePositions.values()) {
+            Pose2d algaePose = pos.m_pose;
+            double dx = algaePose.getX() - curPose.getX();
+            double dy = algaePose.getY() - curPose.getY();
+            double distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < minDist) {
+                minDist = distance;
+                closestAlgae = pos;
+            }
+
+        }
+        return closestAlgae;
+    }
+
     @Override
     public void simulationPeriodic() {
         m_aprilTagCameras.updateSimulator(getState().Pose);
@@ -197,6 +217,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
+        findClosestAlgae();
+
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
@@ -298,6 +320,27 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return run(this::resetGyro)
             .ignoringDisable(true)
             .withName("Reset Gyro");
+    }
+
+    public Command createDriveToClosestAlgaeCommand() {
+        return defer(() -> {
+            AlgaePositions closestAlgae = findClosestAlgae();
+            return createDriveToPose(closestAlgae.m_pose);
+        });
+    }
+
+    public Command createDriveToRightCoral() {
+        return defer(() -> {
+            AlgaePositions closestAlgae = findClosestAlgae();
+            return createDriveToPose(closestAlgae.m_coralRight.m_pose);
+        });
+    }
+
+    public Command createDriveToLeftCoral() {
+        return defer(() -> {
+            AlgaePositions closestAlgae = findClosestAlgae();
+            return createDriveToPose(closestAlgae.m_coralLeft.m_pose);
+        });
     }
 }
 
