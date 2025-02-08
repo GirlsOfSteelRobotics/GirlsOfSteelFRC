@@ -11,7 +11,7 @@ public class RobotExtrinsic {
     public static final double ROBOT_WIDTH = Units.inchesToMeters(28);
     public static final double ROBOT_LENGTH = Units.inchesToMeters(28);
 
-    public static final TunableTransform3d FRONT_CAMERA = new TunableTransform3d(true, "CameraExtrinsics/Front", new Transform3d(
+    public static final TunableTransform3d FRONT_CAMERA = new TunableTransform3d(false, "CameraExtrinsics/Front", new Transform3d(
         new Translation3d(
             Units.inchesToMeters(1),
             Units.inchesToMeters(1),

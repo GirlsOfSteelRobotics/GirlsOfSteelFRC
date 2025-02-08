@@ -169,16 +169,6 @@ public class ElevatorSubsystem extends SubsystemBase {
         return Math.abs(getHeight() - m_goalHeight) <= ELEVATOR_ERROR;
     }
 
-    //command factories//
-    public Command createResetPidControllerCommand() {
-        return runOnce(this::resetPidController);
-    }
-
-    public Command createMoveElevatorToHeightCommand(double height) {
-        return createResetPidControllerCommand().andThen(
-        runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).withName("Elevator go to height" + height);
-    }
-
     public void setVoltage(double outputVolts) {
         m_elevatorMotor.setVoltage(outputVolts);
     }
@@ -189,5 +179,17 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
         return m_elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
+
+    //command factories//
+    public Command createResetPidControllerCommand() {
+        return runOnce(this::resetPidController);
+    }
+
+    public Command createMoveElevatorToHeightCommand(double height) {
+        return createResetPidControllerCommand().andThen(
+        runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).withName("Elevator go to height" + height);
+    }
+
+
 }
 

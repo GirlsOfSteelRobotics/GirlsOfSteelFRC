@@ -46,7 +46,7 @@ public class PivotSysId {
                     m_pivot.getVoltage(), Volts))
             .angularPosition(m_angle.mut_replace(m_pivot.getRelativeAngle(), Degrees))
             .angularVelocity(
-                m_velocity.mut_replace(m_pivot.getEncoderVel(), DegreesPerSecond));
+                m_velocity.mut_replace(m_pivot.getRelativeVelocity(), DegreesPerSecond));
     }
 
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {

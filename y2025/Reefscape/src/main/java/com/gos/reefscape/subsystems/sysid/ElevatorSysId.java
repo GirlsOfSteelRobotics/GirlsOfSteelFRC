@@ -61,19 +61,19 @@ public class ElevatorSysId {
         return Commands.sequence(
             Commands.print("Waiting to start DynamicForward"),
             Commands.waitSeconds(2),
-            sysIdDynamic(SysIdRoutine.Direction.kForward).until(() -> m_elevator.isAtTop()),
+            sysIdDynamic(SysIdRoutine.Direction.kForward).until(() -> m_elevator.getHeight() > 60),
 
             Commands.print("Waiting to start DynamicReverse"),
             Commands.waitSeconds(2),
-            sysIdDynamic(SysIdRoutine.Direction.kReverse).until(() -> m_elevator.isAtBottom()),
+            sysIdDynamic(SysIdRoutine.Direction.kReverse).until(() -> m_elevator.getHeight() < 5),
 
             Commands.print("Waiting to start QuasistaticForward"),
             Commands.waitSeconds(2),
-            sysIdQuasistatic(SysIdRoutine.Direction.kForward).until(() -> m_elevator.isAtTop()),
+            sysIdQuasistatic(SysIdRoutine.Direction.kForward).until(() -> m_elevator.getHeight() > 60),
 
             Commands.print("Waiting to start QuasistaticReverse"),
             Commands.waitSeconds(2),
-            sysIdQuasistatic(SysIdRoutine.Direction.kReverse).until(() -> m_elevator.isAtBottom())
+            sysIdQuasistatic(SysIdRoutine.Direction.kReverse).until(() -> m_elevator.getHeight() < 5)
 
         ).withName("Elevator SysID Routine");
     }

@@ -237,7 +237,7 @@ public class RobotContainer {
 
     private void addSysIdDebugDebugTab() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Sys Id debug");
-        debugTab.add(m_elevatorSysId.createSysidRoutineCommand().withName("Sysid routine"));
+        debugTab.add(m_elevatorSysId.createSysidRoutineCommand().withName("Elevator sysid"));
         debugTab.add(m_swerveSysId.createTranslationSysIdCommand().withName("Translation sysid"));
         debugTab.add(m_swerveSysId.createSteerSysIdCommand().withName("Steer sysid"));
         debugTab.add(m_swerveSysId.createRotationSysIdCommand().withName("Rotation sysid"));
