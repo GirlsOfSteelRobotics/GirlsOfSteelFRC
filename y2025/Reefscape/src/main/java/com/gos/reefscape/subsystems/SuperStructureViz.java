@@ -47,6 +47,7 @@ public class SuperStructureViz extends SubsystemBase {
         m_pivotMechanism.setAngle(90 - m_pivot.getRelativeAngle());
     }
 
+
     private void addReef(Mechanism2d canvas) {
         // https://github.com/frc2053/Robot2025/blob/dd302767522e812b0bbfe350672c9a416b680353/src/main/include/str/SuperstructureDisplay.h
         double pipeThickness = Units.inchesToMeters(1.66);

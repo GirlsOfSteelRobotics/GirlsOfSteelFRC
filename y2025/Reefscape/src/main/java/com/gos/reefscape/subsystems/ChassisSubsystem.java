@@ -141,8 +141,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
             new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Front Camera", RobotExtrinsic.FRONT_CAMERA),
-            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Back Camera", RobotExtrinsic.BACK_CAMERA)
-        ));
+            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Back Camera", RobotExtrinsic.BACK_CAMERA)));
     }
 
     private void configureAutoBuilder() {
@@ -242,6 +241,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
 
+
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
 
             EstimatedRobotPose camPose = estimatePair.getFirst();
@@ -289,6 +289,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         );
 
 
+    }
+
+    @Override
+    public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds) {
+        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds));
+    }
+
+    @Override
+    public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds, Matrix<N3, N1> stds) {
+        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), stds);
     }
 
 
