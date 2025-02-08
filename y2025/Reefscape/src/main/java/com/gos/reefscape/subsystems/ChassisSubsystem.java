@@ -37,7 +37,6 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
@@ -247,7 +246,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
             EstimatedRobotPose camPose = estimatePair.getFirst();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-            System.out.println(camEstPose);
             addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
         }
 

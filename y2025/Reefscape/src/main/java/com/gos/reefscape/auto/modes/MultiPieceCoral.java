@@ -12,21 +12,22 @@ import java.util.List;
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 @SuppressWarnings("PMD.ClassNamingConventions")
-public class TwoPieceCoral extends GosAuto {
-    public TwoPieceCoral(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE combo, StartingPositions side, List<CoralPositions> coralPositions) {
+public class MultiPieceCoral extends GosAuto {
+    public MultiPieceCoral(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE combo, StartingPositions side, List<CoralPositions> coralPositions) {
         super (side, coralPositions, List.of());
-        String autoName = side.toString();
+        StringBuilder autoName = new StringBuilder();
+        autoName.append(side.toString());
         addCommands(swerveDrive.createResetAndFollowChoreoPathCommand("StartingPos" + side.variableName() + "To" + coralPositions.get(0)));
 
         for(int i = 0; i < coralPositions.size() - 1; i++) {
-            autoName += "." + coralPositions.get(i) + "" + combo + ".";
+            autoName.append('.').append(coralPositions.get(i)).append(combo).append('.');
             addCommands(combinedCommands.scoreCoralCommand(combo));
             addCommands(followChoreoPath(coralPositions.get(i) + "ToHumanPlayer" + side.variableName()));
             addCommands(combinedCommands.fetchPieceFromHPStation());
             addCommands(followChoreoPath("HumanPlayer" + side.variableName() + "To" + coralPositions.get(i+1)));
         }
         addCommands(combinedCommands.scoreCoralCommand(combo));
-        setName(autoName);
+        setName(autoName.toString());
 
 
     }

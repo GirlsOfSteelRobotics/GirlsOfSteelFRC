@@ -10,7 +10,7 @@ import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
 import com.gos.reefscape.enums.PIE;
 import com.gos.reefscape.auto.modes.TwoPieceAlgae;
-import com.gos.reefscape.auto.modes.TwoPieceCoral;
+import com.gos.reefscape.auto.modes.MultiPieceCoral;
 import com.gos.reefscape.enums.StartingPositions;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -36,13 +36,13 @@ public final class Autos {
             CoralPositions.L,
             CoralPositions.A), swerveDrive, combinedCommands);
         m_autoModes.setDefaultOption("Center.H.GH.EF", new TwoPieceAlgae(swerveDrive, combinedCommands, CoralPositions.H, StartingPositions.CENTER, AlgaePositions.GH, AlgaePositions.EF));
-//        m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.A)));
+        // m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.A)));
         //m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
         //m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
     }
 
     private void createMutliCoralAuto(PIE height, StartingPositions starting, List<CoralPositions> positions, ChassisSubsystem chassis, CombinedCommands combinedCommands) {
-        GosAuto example = new TwoPieceCoral(chassis, combinedCommands, height, starting, positions);
+        GosAuto example = new MultiPieceCoral(chassis, combinedCommands, height, starting, positions);
         m_autoModes.addOption(example.getName(), example);
 
     }
