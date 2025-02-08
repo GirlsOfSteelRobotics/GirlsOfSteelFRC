@@ -22,7 +22,7 @@ public class RobotExtrinsic {
             Math.toRadians(0))
     ));
 
-    public static final TunableTransform3d BACK_CAMERA = new TunableTransform3d(true, "CameraExtrinsics/Back", new Transform3d(
+    public static final TunableTransform3d BACK_CAMERA = new TunableTransform3d(false, "CameraExtrinsics/Back", new Transform3d(
         new Translation3d(
             Units.inchesToMeters(5.25),
             Units.inchesToMeters(-14.75),

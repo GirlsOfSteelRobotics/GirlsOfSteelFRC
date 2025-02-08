@@ -33,11 +33,11 @@ def main():
     choreo_dir = root_dir / r"y2025\Reefscape\src\main\deploy\choreo"
     variables = load_choreo_variables(choreo_dir / r"ChoreoAutos.chor")
 
-    for reef_position in ["A", "L", "K", "J", "I", "H"]:
+    for reef_position in ["A", "B", "L", "K", "J", "I", "G", "H"]:
         create_path(choreo_dir, variables, reef_position, "HumanPlayerLeft")
         create_path(choreo_dir, variables, "HumanPlayerLeft", reef_position)
 
-    for reef_position in ["B", "C", "D", "E", "F", "G"]:
+    for reef_position in ["A", "B", "C", "D", "E", "F", "G", "H"]:
         create_path(choreo_dir, variables, reef_position, "HumanPlayerRight")
         create_path(choreo_dir, variables, "HumanPlayerRight", reef_position)
 

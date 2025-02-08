@@ -16,6 +16,8 @@ import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.List;
+
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class Autos {
 
@@ -25,11 +27,24 @@ public final class Autos {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
-        m_autoModes.addOption("Left.J4.L4", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, StartingPositions.LEFT, CoralPositions.J, CoralPositions.L));
+        createMutliCoralAuto(PIE.L4, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.C), swerveDrive, combinedCommands);
+        createMutliCoralAuto(PIE.L4, StartingPositions.LEFT, List.of(
+            CoralPositions.H,
+            CoralPositions.I,
+            CoralPositions.J,
+            CoralPositions.K,
+            CoralPositions.L,
+            CoralPositions.A), swerveDrive, combinedCommands);
         m_autoModes.setDefaultOption("Center.H.GH.EF", new TwoPieceAlgae(swerveDrive, combinedCommands, CoralPositions.H, StartingPositions.CENTER, AlgaePositions.GH, AlgaePositions.EF));
-        m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, CoralPositions.E, CoralPositions.B));
+//        m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.A)));
         //m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
         //m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
+    }
+
+    private void createMutliCoralAuto(PIE height, StartingPositions starting, List<CoralPositions> positions, ChassisSubsystem chassis, CombinedCommands combinedCommands) {
+        GosAuto example = new TwoPieceCoral(chassis, combinedCommands, height, starting, positions);
+        m_autoModes.addOption(example.getName(), example);
+
     }
 
     public GosAuto getSelectedAuto() {

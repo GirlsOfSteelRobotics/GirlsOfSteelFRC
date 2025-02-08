@@ -107,6 +107,8 @@
       "/Shuffleboard/Intake Outtake/Intake Till Piece": "Command",
       "/Shuffleboard/Move Robot To Position/C": "Command",
       "/Shuffleboard/Move Robot To Position/E": "Command",
+      "/Shuffleboard/Sys Id debug/Elevator sysid": "Command",
+      "/Shuffleboard/Sys Id debug/Pivot sysid": "Command",
       "/Shuffleboard/Sys Id debug/Rotation sysid": "Command",
       "/Shuffleboard/Sys Id debug/Steer sysid": "Command",
       "/Shuffleboard/Sys Id debug/Sysid routine": "Command",
@@ -266,7 +268,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 332
+          "height": 0
         }
       ]
     }
