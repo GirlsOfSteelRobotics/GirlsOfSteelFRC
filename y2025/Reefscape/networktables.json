@@ -10,7 +10,7 @@
   {
     "name": "/Preferences/Elevator.eff.kff",
     "type": "double",
-    "value": 1.3,
+    "value": 3.2683,
     "properties": {
       "persistent": true
     }
@@ -18,7 +18,7 @@
   {
     "name": "/Preferences/Elevator.eff.kg",
     "type": "double",
-    "value": 0.81,
+    "value": 0.66377,
     "properties": {
       "persistent": true
     }
@@ -26,7 +26,7 @@
   {
     "name": "/Preferences/Elevator.mm.kp",
     "type": "double",
-    "value": 0.3,
+    "value": 0.1,
     "properties": {
       "persistent": true
     }
@@ -179,6 +179,14 @@
     "name": "/Preferences/chassis Pid.mm.kd",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Elevator.eff.ka",
+    "type": "double",
+    "value": 0.062276,
     "properties": {
       "persistent": true
     }

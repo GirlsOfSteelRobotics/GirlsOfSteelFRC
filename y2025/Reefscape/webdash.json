@@ -14,7 +14,7 @@
           "type": "tabset",
           "id": "aaaa2713-f785-4f46-b686-34a948586601",
           "weight": 50,
-          "selected": 6,
+          "selected": 1,
           "children": [
             {
               "type": "tab",
@@ -62,6 +62,16 @@
               "type": "tab",
               "id": "9a44d995-23e1-46b7-9b39-db896c253129",
               "name": "Move Robot To Position"
+            },
+            {
+              "type": "tab",
+              "id": "#562467f1-5d84-4cda-bbd7-5a81e8326054",
+              "name": "Unnamed Tab",
+              "component": "components"
+            },
+            {
+              "id": "ef67f872-4e75-41c0-b762-2c70f2fb28aa",
+              "name": "Sys Id debug"
             }
           ],
           "active": true
@@ -3165,7 +3175,8 @@
       },
       "properties": {
         "search": {
-          "value": ""
+          "value": "",
+          "temporaryValue": "s"
         },
         "hideTitle": {
           "value": false
@@ -3256,8 +3267,8 @@
         "height": 2
       },
       "position": {
-        "x": 7,
-        "y": 9
+        "x": 6,
+        "y": 8
       },
       "properties": {
         "value": {
@@ -3292,8 +3303,8 @@
         "height": 2
       },
       "position": {
-        "x": 7,
-        "y": 12
+        "x": 6,
+        "y": 10
       },
       "properties": {
         "value": {
@@ -3328,8 +3339,8 @@
         "height": 2
       },
       "position": {
-        "x": 10,
-        "y": 9
+        "x": 8,
+        "y": 8
       },
       "properties": {
         "value": {
@@ -3364,8 +3375,8 @@
         "height": 2
       },
       "position": {
-        "x": 10,
-        "y": 12
+        "x": 8,
+        "y": 10
       },
       "properties": {
         "value": {
@@ -3523,6 +3534,114 @@
       },
       "type": "preferences",
       "name": "Preferences"
+    },
+    "b44b1b02-c7df-41ca-a53c-83301a47c993": {
+      "id": "b44b1b02-c7df-41ca-a53c-83301a47c993",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/Sys Id debug/Translation sysid"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 7,
+        "y": 13
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "3bcea1e4-76eb-4028-9249-90ef819c609b": {
+      "id": "3bcea1e4-76eb-4028-9249-90ef819c609b",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/Sys Id debug/Rotation sysid"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 7,
+        "y": 15
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "a577d5df-007a-422a-8325-7cba8b2b42f6": {
+      "id": "a577d5df-007a-422a-8325-7cba8b2b42f6",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/Sys Id debug/Steer sysid"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 7,
+        "y": 14
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
     }
   },
   "tabs": {
@@ -3656,7 +3775,10 @@
         "1271e903-8f3e-4cde-892e-effed226a082",
         "45dc36b1-7f97-4377-829c-7d8955a03fdc",
         "8f5a278b-5e71-4a85-83db-ac0c719d05ad",
-        "ac25ec83-c349-407c-862e-8631b0ef0d83"
+        "ac25ec83-c349-407c-862e-8631b0ef0d83",
+        "b44b1b02-c7df-41ca-a53c-83301a47c993",
+        "3bcea1e4-76eb-4028-9249-90ef819c609b",
+        "a577d5df-007a-422a-8325-7cba8b2b42f6"
       ]
     }
   },

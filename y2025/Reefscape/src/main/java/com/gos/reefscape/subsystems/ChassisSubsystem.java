@@ -120,7 +120,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_moduleProperties = new ArrayList<>();
         for (int i = 0; i < 4; ++i) {
-            SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(0);
+            SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", false, module.getSteerMotor(), 0)
                 .fromDefaults(SlotConfigs.from(TunerConstants.steerGains))
                 .build());

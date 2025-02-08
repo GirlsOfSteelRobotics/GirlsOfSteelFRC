@@ -17,6 +17,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -74,6 +75,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             .addKs(0)
             .addKv(0)
             .addKg(0)
+            .addKa(0)
             // REV Position controller
             .addKp(0)
             .build();
@@ -167,6 +169,17 @@ public class ElevatorSubsystem extends SubsystemBase {
         return Math.abs(getHeight() - m_goalHeight) <= ELEVATOR_ERROR;
     }
 
+    public void setVoltage(double outputVolts) {
+        m_elevatorMotor.setVoltage(outputVolts);
+    }
+
+    public double getVoltage() {
+        if (RobotBase.isReal()) {
+            return m_elevatorMotor.getBusVoltage();
+        }
+        return m_elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
+    }
+
     //command factories//
     public Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);
@@ -176,6 +189,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         return createResetPidControllerCommand().andThen(
         runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).withName("Elevator go to height" + height);
     }
+
 
 }
 

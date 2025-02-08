@@ -19,6 +19,9 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.TunerConstants;
+import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
+import com.gos.reefscape.subsystems.sysid.PivotSysId;
+import com.gos.reefscape.subsystems.sysid.SwerveDriveSysId;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.util.Units;
@@ -50,6 +53,9 @@ public class RobotContainer {
     private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
     private final CombinedCommands m_combinedCommand = new CombinedCommands(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
 
+    private final ElevatorSysId m_elevatorSysId;
+    private final SwerveDriveSysId m_swerveSysId;
+    private final PivotSysId m_pivotSysId;
 
     private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
     private final LEDSubsystem m_leds; //NOPMD
@@ -75,11 +81,16 @@ public class RobotContainer {
             DriverStation.silenceJoystickConnectionWarning(true);
         }
         m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
+        m_elevatorSysId = new ElevatorSysId(m_elevatorSubsystem);
+        m_swerveSysId = new SwerveDriveSysId(m_chassisSubsystem);
+        m_pivotSysId = new PivotSysId(m_pivotSubsystem);
+
         addDebugPathsToShuffleBoard();
         addCoralDebugCommands();
         addPivotDebugCommands();
         addElevatorDebugCommands();
         addAlgaeDebugCommands();
+        addSysIdDebugDebugTab();
 
         createMovePIECommand();
         createMoveRobotToPositionCommand();
@@ -221,6 +232,16 @@ public class RobotContainer {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Move Robot To Position");
         debugTab.add(m_chassisSubsystem.createDriveToPose(ChoreoPoses.E).withName("E"));
         debugTab.add(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C).withName("C"));
+
+    }
+
+    private void addSysIdDebugDebugTab() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Sys Id debug");
+        debugTab.add(m_elevatorSysId.createSysidRoutineCommand().withName("Elevator sysid"));
+        debugTab.add(m_swerveSysId.createTranslationSysIdCommand().withName("Translation sysid"));
+        debugTab.add(m_swerveSysId.createSteerSysIdCommand().withName("Steer sysid"));
+        debugTab.add(m_swerveSysId.createRotationSysIdCommand().withName("Rotation sysid"));
+        debugTab.add(m_pivotSysId.createSysidRoutineCommand().withName("Pivot sysid"));
 
     }
 

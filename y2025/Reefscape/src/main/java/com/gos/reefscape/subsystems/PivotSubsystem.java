@@ -17,6 +17,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -166,8 +167,21 @@ public class PivotSubsystem extends SubsystemBase {
         return (Math.abs(getRelativeAngle() - getArmGoalAngle()) <= PIVOT_ERROR);
     }
 
+
+    public void setVoltage(double outputVolts) {
+        m_pivotMotor.setVoltage(outputVolts);
+    }
+
+    public double getVoltage() {
+        if (RobotBase.isReal()) {
+            return m_pivotMotor.getBusVoltage();
+        }
+        return m_pivotMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
+    }
+
+
     ////////////////
-    //command factories yay :))
+    //command factories
     ////////////////
     ///
     public Command createMoveArmtoAngleCommand(Double angle) {
@@ -184,3 +198,5 @@ public class PivotSubsystem extends SubsystemBase {
 
 
 }
+
+
