@@ -144,6 +144,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Back Camera", RobotExtrinsic.BACK_CAMERA)));
     }
 
+    public void clearStickyFaults() {
+        for (int i = 0; i < 4; i++) {
+            getModule(i).getSteerMotor().clearStickyFaults();
+            getModule(i).getDriveMotor().clearStickyFaults();
+        }
+    }
+
     private void configureAutoBuilder() {
         try {
             var config = RobotConfig.fromGUISettings();

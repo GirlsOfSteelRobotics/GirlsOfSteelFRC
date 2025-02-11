@@ -46,6 +46,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_checkAlerts;
     private final LoggingUtil m_networkTableEntries;
 
+    private final SparkFlex m_followMotor;
+    private final SparkMaxAlerts m_elevatorFollowerErrorAlerts;
+
+
     private final RevProfiledElevatorController m_elevatorPidController;
 
     private double m_goalHeight;
@@ -56,6 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public ElevatorSubsystem() {
 
         m_elevatorMotor = new SparkFlex(Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
+        m_followMotor = new SparkFlex(Constants.ELEVATOR_FOLLOW_MOTOR_ID, MotorType.kBrushless);
         m_encoder = m_elevatorMotor.getEncoder();
         m_botLimitSwitch = new DigitalInput(Constants.BOTLIMITSWICTH_ID);
         m_topLimitSwitch = new DigitalInput(Constants.TOPLIMITSWITCH_ID);
@@ -64,6 +69,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.idleMode(IdleMode.kBrake);
         elevatorConfig.smartCurrentLimit(60);
         elevatorConfig.inverted(false);
+
+
+        SparkMaxConfig followMotorConfig = new SparkMaxConfig();
+        followMotorConfig.follow(m_elevatorMotor, true);
+        followMotorConfig.idleMode(IdleMode.kBrake);
+        followMotorConfig.smartCurrentLimit(60);
 
         elevatorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
 
@@ -81,6 +92,10 @@ public class ElevatorSubsystem extends SubsystemBase {
             .build();
 
         m_elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_elevatorFollowerErrorAlerts = new SparkMaxAlerts(m_followMotor, "elevator follower");
+        m_followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+
 
         m_checkAlerts = new SparkMaxAlerts(m_elevatorMotor, "Elevator Alert");
 
@@ -115,6 +130,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("Is at good height", this::isAtGoalHeight);
     }
 
+    public void clearStickyFaults() {
+        m_elevatorMotor.clearFaults();
+        m_followMotor.clearFaults();
+    }
+
+
     public double getHeight() {
         return m_encoder.getPosition();
     }
@@ -145,6 +166,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_checkAlerts.checkAlerts();
 
         m_elevatorPidController.updateIfChanged();
+        m_elevatorFollowerErrorAlerts.checkAlerts();
+
     }
 
     @Override
