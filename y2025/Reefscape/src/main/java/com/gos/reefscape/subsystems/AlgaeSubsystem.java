@@ -46,6 +46,10 @@ public class AlgaeSubsystem extends SubsystemBase {
 
     }
 
+    public void clearStickyFaults() {
+        m_algaeMotor.clearFaults();
+    }
+
 
     public void intakeStop() {
         m_algaeMotor.set(0);

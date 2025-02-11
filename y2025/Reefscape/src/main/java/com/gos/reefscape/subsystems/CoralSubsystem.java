@@ -35,6 +35,10 @@ public class CoralSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("Has Coral", this::hasCoral);
     }
 
+    public void clearStickyFaults() {
+        m_coralMotor.clearFaults();
+    }
+
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();

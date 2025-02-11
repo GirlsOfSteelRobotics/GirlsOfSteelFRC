@@ -98,6 +98,10 @@ public class PivotSubsystem extends SubsystemBase {
         syncRelativeEncoder();
     }
 
+    public void clearStickyFaults() {
+        m_pivotMotor.clearFaults();
+    }
+
     @SuppressWarnings("removal")
     public void moveArmToAngle(double goal) {
         m_armGoalAngle = goal;

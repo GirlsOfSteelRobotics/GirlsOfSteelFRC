@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -91,6 +92,8 @@ public class RobotContainer {
         addElevatorDebugCommands();
         addAlgaeDebugCommands();
         addSysIdDebugDebugTab();
+        SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
+
 
         createMovePIECommand();
         createMoveRobotToPositionCommand();
@@ -243,6 +246,14 @@ public class RobotContainer {
         debugTab.add(m_swerveSysId.createRotationSysIdCommand().withName("Rotation sysid"));
         debugTab.add(m_pivotSysId.createSysidRoutineCommand().withName("Pivot sysid"));
 
+    }
+
+    private void resetStickyFaults() {
+        m_elevatorSubsystem.clearStickyFaults();
+        m_pivotSubsystem.clearStickyFaults();
+        m_algaeSubsystem.clearStickyFaults();
+        m_chassisSubsystem.clearStickyFaults();
+        m_coralSubsystem.clearStickyFaults();
     }
 
 }
