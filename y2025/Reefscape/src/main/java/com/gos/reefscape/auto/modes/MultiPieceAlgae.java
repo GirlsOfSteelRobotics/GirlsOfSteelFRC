@@ -15,16 +15,6 @@ public class MultiPieceAlgae extends GosAuto {
     public MultiPieceAlgae(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIE combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
         super (StartingPositions.CENTER, List.of(CoralPositions.H), algaePositions);
         StringBuilder autoname = new StringBuilder();
-//        addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
-//        addCommands(combinedCommands.scoreCoralCommand(PIE.L4));
-//        addCommands(followChoreoPath("HTo" + firstAlgae));
-//        addCommands(combinedCommands.fetchAlgae(firstAlgae.m_algaePosition));
-//        addCommands(followChoreoPath(firstAlgae + "ToProcessor"));
-//        addCommands(combinedCommands.scoreAlgaeCommand(PIE.SCORE_INTO_PROCESSOR));
-//        addCommands(followChoreoPath("ProcessorTo" + secondAlgae));
-//        addCommands(combinedCommands.fetchAlgae(secondAlgae.m_algaePosition));
-//        addCommands(followChoreoPath(secondAlgae + "ToProcessor"));
-//        addCommands(combinedCommands.scoreAlgaeCommand(PIE.SCORE_INTO_PROCESSOR));
 
 
         //
