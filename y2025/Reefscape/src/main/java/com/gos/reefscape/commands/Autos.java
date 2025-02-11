@@ -58,8 +58,8 @@ public final class Autos {
     }
 
     private void createMultiAlgeeAuto(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
-        GosAuto fjkdslfjdskl = new MultiPieceAlgae(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
-        m_autoModes.setDefaultOption(fjkdslfjdskl.getName(), fjkdslfjdskl);
+        GosAuto multipiecealgae = new MultiPieceAlgae(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
+        m_autoModes.setDefaultOption(multipiecealgae.getName(), multipiecealgae);
     }
 
     public GosAuto getSelectedAuto() {
