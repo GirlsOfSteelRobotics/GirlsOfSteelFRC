@@ -30,7 +30,7 @@ import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
-    public static final double K_ELEVATOR_GEARING = 10.0;
+    public static final double K_ELEVATOR_GEARING = 12.0;
     public static final double K_CARRIAGE_MASS = 4.0; // kg
     public static final double K_MIN_ELEVATOR_HEIGHT = Units.inchesToMeters(-4);
     public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(120);
@@ -68,7 +68,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         SparkMaxConfig elevatorConfig = new SparkMaxConfig();
         elevatorConfig.idleMode(IdleMode.kBrake);
         elevatorConfig.smartCurrentLimit(60);
-        elevatorConfig.inverted(false);
+        elevatorConfig.inverted(true);
+
+        elevatorConfig.encoder.positionConversionFactor(1 / K_ELEVATOR_GEARING);
+        elevatorConfig.encoder.velocityConversionFactor(1 / K_ELEVATOR_GEARING / 60);
 
 
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
@@ -128,6 +131,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Setpoint Velocity", m_elevatorPidController::getVelocitySetpoint);
         m_networkTableEntries.addDouble("Goal Height", () -> m_goalHeight);
         m_networkTableEntries.addBoolean("Is at good height", this::isAtGoalHeight);
+        m_networkTableEntries.addDouble("Percent Output", m_elevatorMotor::getAppliedOutput);
     }
 
     public void clearStickyFaults() {
@@ -203,6 +207,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         return m_elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
 
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_elevatorMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
     //command factories//
     public Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);
@@ -212,6 +223,20 @@ public class ElevatorSubsystem extends SubsystemBase {
         return createResetPidControllerCommand().andThen(
         runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).withName("Elevator go to height" + height);
     }
+
+    public Command createResetEncoderCommand() {
+        return run(() -> m_encoder.setPosition(0));
+    }
+
+    public Command createElevatorToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Elevator to Coast");
+    }
+
+
+
 
 
 }

@@ -310,5 +310,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ElevatorDamp",
+    "type": "double",
+    "value": 0.4,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
