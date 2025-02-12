@@ -17,7 +17,7 @@ public class ChoreoPoses {
     public static final Pose2d GH = new Pose2d(5.739912986755371, 3.987903594970703, Rotation2d.fromRadians(0.0));
     public static final Pose2d H = new Pose2d(5.739912986755371, 4.194386005401611, Rotation2d.fromRadians(0.0));
     public static final Pose2d HUMAN_PLAYER_LEFT = new Pose2d(1.3718515634536743, 7.273766994476318, Rotation2d.fromRadians(2.279422598922567));
-    public static final Pose2d HUMAN_PLAYER_RIGHT = new Pose2d(1.5276724100112915, 0.642888605594635, Rotation2d.fromRadians(-2.248504688139378));
+    public static final Pose2d HUMAN_PLAYER_RIGHT = new Pose2d(1.5276724100112915, 0.642888605594635, Rotation2d.fromRadians(0.8930879654504151));
     public static final Pose2d I = new Pose2d(5.345475196838379, 5.0139479637146, Rotation2d.fromRadians(1.0460000182544436));
     public static final Pose2d IJ = new Pose2d(5.142786502838135, 5.115292549133301, Rotation2d.fromRadians(1.0460000182544436));
     public static final Pose2d J = new Pose2d(4.943519115447998, 5.226694107055664, Rotation2d.fromRadians(1.0370881817864992));
