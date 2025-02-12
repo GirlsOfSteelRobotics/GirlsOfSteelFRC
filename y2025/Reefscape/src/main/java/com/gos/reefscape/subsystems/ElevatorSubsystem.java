@@ -207,6 +207,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         return m_elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
 
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_elevatorMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
     //command factories//
     public Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);
@@ -220,6 +227,15 @@ public class ElevatorSubsystem extends SubsystemBase {
     public Command createResetEncoderCommand() {
         return run(() -> m_encoder.setPosition(0));
     }
+
+    public Command createElevatorToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Elevator to Coast");
+    }
+
+
 
 
 

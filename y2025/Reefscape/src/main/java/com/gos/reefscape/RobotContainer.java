@@ -24,6 +24,7 @@ import com.gos.reefscape.subsystems.sysid.PivotSysId;
 import com.gos.reefscape.subsystems.sysid.SwerveDriveSysId;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -35,6 +36,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import java.util.Set;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
@@ -93,6 +96,7 @@ public class RobotContainer {
         addAlgaeDebugCommands();
         addSysIdDebugDebugTab();
         SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
+        SmartDashboard.putData("drive to starting position", createDriveChassisToStartingPoseCommand().withName("drive chassis to start position"));
 
 
         createMovePIECommand();
@@ -115,6 +119,13 @@ public class RobotContainer {
      * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
+    public Command createDriveChassisToStartingPoseCommand() {
+        return Commands.defer(() -> {
+            Pose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose;
+            return m_chassisSubsystem.createDriveToPose(startingLocation);
+        }, Set.of(m_chassisSubsystem));
+    }
+
     private void configureBindings() {
         // m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
         m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
@@ -171,6 +182,7 @@ public class RobotContainer {
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
         debugTab.add(m_elevatorSubsystem.createResetEncoderCommand().withName("reset encoder omg"));
+        debugTab.add(m_elevatorSubsystem.createElevatorToCoastModeCommand().withName("Move elevator to coast"));
     }
 
 
