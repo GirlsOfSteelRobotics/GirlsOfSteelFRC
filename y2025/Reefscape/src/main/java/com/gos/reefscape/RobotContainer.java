@@ -169,6 +169,8 @@ public class RobotContainer {
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
+        debugTab.add(m_elevatorSubsystem.createResetEncoderCommand().withName("reset encoder omg"));
     }
 
 
