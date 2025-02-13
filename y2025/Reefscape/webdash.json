@@ -14,7 +14,7 @@
           "type": "tabset",
           "id": "aaaa2713-f785-4f46-b686-34a948586601",
           "weight": 50,
-          "selected": 1,
+          "selected": 5,
           "children": [
             {
               "type": "tab",
@@ -70,6 +70,7 @@
               "component": "components"
             },
             {
+              "type": "tab",
               "id": "ef67f872-4e75-41c0-b762-2c70f2fb28aa",
               "name": "Sys Id debug"
             }
@@ -565,7 +566,7 @@
       },
       "position": {
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "properties": {
         "name": {
@@ -601,7 +602,7 @@
       },
       "position": {
         "x": 0,
-        "y": 1
+        "y": 2
       },
       "properties": {
         "name": {
@@ -637,7 +638,7 @@
       },
       "position": {
         "x": 0,
-        "y": 2
+        "y": 3
       },
       "properties": {
         "name": {
@@ -3488,11 +3489,11 @@
       },
       "size": {
         "width": 8,
-        "height": 10
+        "height": 9
       },
       "position": {
         "x": 0,
-        "y": 6
+        "y": 8
       },
       "properties": {
         "search": {
@@ -3642,6 +3643,368 @@
       },
       "type": "robotCommand",
       "name": "Command"
+    },
+    "15af26f8-5770-424d-a0a9-00fcb3e24c75": {
+      "id": "15af26f8-5770-424d-a0a9-00fcb3e24c75",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/Elevator/Elevator go to height0.0"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 5,
+        "height": 1
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "16ad9574-3c3f-47cc-8804-e4f6b8bf2f30": {
+      "id": "16ad9574-3c3f-47cc-8804-e4f6b8bf2f30",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/Elevator/reset encoder omg"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 5,
+        "height": 1
+      },
+      "position": {
+        "x": 0,
+        "y": 4
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "872e9f6f-7420-4bf1-9b83-697a534cd605": {
+      "id": "872e9f6f-7420-4bf1-9b83-697a534cd605",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Elevator/current height (inches)"
+      },
+      "minSize": {
+        "width": 2,
+        "height": 2
+      },
+      "size": {
+        "width": 4,
+        "height": 2
+      },
+      "position": {
+        "x": 0,
+        "y": 6
+      },
+      "properties": {
+        "value": {
+          "value": 0
+        },
+        "max": {
+          "value": 120
+        },
+        "min": {
+          "value": -5
+        },
+        "center": {
+          "value": 0
+        },
+        "precision": {
+          "value": 2
+        },
+        "hideText": {
+          "value": false
+        },
+        "numTickMarks": {
+          "value": 3
+        },
+        "unit": {
+          "value": "Inches"
+        }
+      },
+      "type": "numberBar",
+      "name": "Number Bar"
+    },
+    "0e8ae69b-d36e-4aa4-a8de-38941a30fa08": {
+      "id": "0e8ae69b-d36e-4aa4-a8de-38941a30fa08",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Elevator/current height"
+      },
+      "minSize": {
+        "width": 2,
+        "height": 2
+      },
+      "size": {
+        "width": 4,
+        "height": 2
+      },
+      "position": {
+        "x": 4,
+        "y": 6
+      },
+      "properties": {
+        "value": {
+          "value": 0
+        },
+        "max": {
+          "value": 3
+        },
+        "min": {
+          "value": -0.05
+        },
+        "center": {
+          "value": 0
+        },
+        "precision": {
+          "value": 2
+        },
+        "hideText": {
+          "value": false
+        },
+        "numTickMarks": {
+          "value": 3
+        },
+        "unit": {
+          "value": "Meters"
+        }
+      },
+      "type": "numberBar",
+      "name": "Number Bar"
+    },
+    "714da0fb-1343-4c4b-a54d-38fa9a0a48e5": {
+      "id": "714da0fb-1343-4c4b-a54d-38fa9a0a48e5",
+      "children": [
+        "2774ae02-24b9-459d-b2e6-91212ae29271",
+        "af1c648b-6afa-49ee-b2c7-c1d00a50b3df",
+        "c93af984-8c09-404e-891e-db4a1ed986af",
+        "cd06a01b-8a20-4ee1-a2fb-5c990c400b70"
+      ],
+      "minSize": {
+        "width": 2,
+        "height": 2
+      },
+      "size": {
+        "width": 11,
+        "height": 8
+      },
+      "position": {
+        "x": 22,
+        "y": 0
+      },
+      "properties": {
+        "chartTitle": {
+          "value": "Percent Output"
+        },
+        "viewTime": {
+          "value": 10
+        }
+      },
+      "type": "lineChart",
+      "name": "Line Chart"
+    },
+    "2774ae02-24b9-459d-b2e6-91212ae29271": {
+      "id": "2774ae02-24b9-459d-b2e6-91212ae29271",
+      "parent": "714da0fb-1343-4c4b-a54d-38fa9a0a48e5",
+      "children": [],
+      "minSize": {
+        "width": 0,
+        "height": 0
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "value": {
+          "source": {
+            "provider": "NT",
+            "key": "/Elevator/Percent Output"
+          },
+          "value": 0
+        },
+        "color": {
+          "value": ""
+        },
+        "hide": {
+          "value": false
+        },
+        "yAxis": {
+          "value": 0
+        },
+        "displayName": {
+          "value": ""
+        }
+      },
+      "type": "lineChartData",
+      "name": "Data"
+    },
+    "af1c648b-6afa-49ee-b2c7-c1d00a50b3df": {
+      "id": "af1c648b-6afa-49ee-b2c7-c1d00a50b3df",
+      "parent": "714da0fb-1343-4c4b-a54d-38fa9a0a48e5",
+      "children": [],
+      "minSize": {
+        "width": 0,
+        "height": 0
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "min": {
+          "value": -1
+        },
+        "max": {
+          "value": 1
+        },
+        "lockMin": {
+          "value": false
+        },
+        "lockMax": {
+          "value": false
+        },
+        "invert": {
+          "value": false
+        },
+        "side": {
+          "value": "left"
+        },
+        "hideGridLines": {
+          "value": false
+        },
+        "hide": {
+          "value": false
+        }
+      },
+      "type": "lineChartAxis",
+      "name": "Left Axis"
+    },
+    "c93af984-8c09-404e-891e-db4a1ed986af": {
+      "id": "c93af984-8c09-404e-891e-db4a1ed986af",
+      "parent": "714da0fb-1343-4c4b-a54d-38fa9a0a48e5",
+      "children": [],
+      "minSize": {
+        "width": 0,
+        "height": 0
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "min": {
+          "value": -1
+        },
+        "max": {
+          "value": 1
+        },
+        "lockMin": {
+          "value": false
+        },
+        "lockMax": {
+          "value": false
+        },
+        "invert": {
+          "value": false
+        },
+        "side": {
+          "value": "right"
+        },
+        "hideGridLines": {
+          "value": false
+        },
+        "hide": {
+          "value": true
+        }
+      },
+      "type": "lineChartAxis",
+      "name": "Right Axis"
+    },
+    "cd06a01b-8a20-4ee1-a2fb-5c990c400b70": {
+      "id": "cd06a01b-8a20-4ee1-a2fb-5c990c400b70",
+      "parent": "714da0fb-1343-4c4b-a54d-38fa9a0a48e5",
+      "children": [],
+      "minSize": {
+        "width": 0,
+        "height": 0
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "position": {
+          "value": "n"
+        },
+        "direction": {
+          "value": "horizontal"
+        },
+        "hide": {
+          "value": false
+        },
+        "inside": {
+          "value": false
+        }
+      },
+      "type": "lineChartLegend",
+      "name": "Legend"
     }
   },
   "tabs": {
@@ -3690,7 +4053,16 @@
         "014404d6-d2f6-4da6-bf7e-fde368b3b18d",
         "c5f7db38-608f-49d8-b135-6615894bfd29",
         "455e1290-8142-489a-a974-ddf032ac314b",
-        "1895d4cf-ff00-445b-b7a5-6f105103c661"
+        "1895d4cf-ff00-445b-b7a5-6f105103c661",
+        "15af26f8-5770-424d-a0a9-00fcb3e24c75",
+        "16ad9574-3c3f-47cc-8804-e4f6b8bf2f30",
+        "872e9f6f-7420-4bf1-9b83-697a534cd605",
+        "0e8ae69b-d36e-4aa4-a8de-38941a30fa08",
+        "714da0fb-1343-4c4b-a54d-38fa9a0a48e5",
+        "2774ae02-24b9-459d-b2e6-91212ae29271",
+        "af1c648b-6afa-49ee-b2c7-c1d00a50b3df",
+        "c93af984-8c09-404e-891e-db4a1ed986af",
+        "cd06a01b-8a20-4ee1-a2fb-5c990c400b70"
       ]
     },
     "a75ea2f1-cde4-4fc3-8846-8c90fa7d5cf0": {

@@ -12,6 +12,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.util.Units;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ public class FieldConstants {
     public static final double FIELD_WIDTH = Units.inchesToMeters(317);
     public static final double STARTING_LINE_X =
         Units.inchesToMeters(299.438); // Measured from the inside of starting line
+    public static final double ALGAE_DIAMETER = Units.inchesToMeters(16);
 
     public static class Processor {
         public static final Pose2d CENTER_FACE =
@@ -52,6 +54,7 @@ public class FieldConstants {
     }
 
     public static class CoralStation {
+        public static final double STATION_LENGTH = Units.inchesToMeters(79.750);
         public static final Pose2d LEFT_CENTER_FACE =
             new Pose2d(
                 Units.inchesToMeters(33.526),
@@ -65,6 +68,7 @@ public class FieldConstants {
     }
 
     public static class Reef {
+        public static final double FACE_LENGTH = Units.inchesToMeters(36.792600);
         public static final Translation2d CENTER =
             new Translation2d(Units.inchesToMeters(176.746), Units.inchesToMeters(158.501));
         public static final double FACE_TO_ZONE_LINE =
@@ -72,7 +76,7 @@ public class FieldConstants {
 
         public static final Pose2d[] CENTER_FACES =
             new Pose2d[6]; // Starting facing the driver station in clockwise order
-        public static final List<Map<ReefHeight, Pose3d>> BRANCH_POSITIONS =
+        public static final List<Map<ReefLevel, Pose3d>> BRANCH_POSITIONS =
             new ArrayList<>(); // Starting at the right branch facing the driver station in clockwise
 
         static {
@@ -110,9 +114,9 @@ public class FieldConstants {
 
             // Initialize branch positions
             for (int face = 0; face < 6; face++) {
-                Map<ReefHeight, Pose3d> fillRight = new HashMap<>();
-                Map<ReefHeight, Pose3d> fillLeft = new HashMap<>();
-                for (var level : ReefHeight.values()) {
+                Map<ReefLevel, Pose3d> fillRight = new HashMap<>();
+                Map<ReefLevel, Pose3d> fillLeft = new HashMap<>();
+                for (var level : ReefLevel.values()) {
                     Pose2d poseDirection = new Pose2d(CENTER, Rotation2d.fromDegrees(180 - (60 * face)));
                     double adjustX = Units.inchesToMeters(30.738);
                     double adjustY = Units.inchesToMeters(6.469);
@@ -148,8 +152,8 @@ public class FieldConstants {
                                 Units.degreesToRadians(level.m_pitch),
                                 poseDirection.getRotation().getRadians())));
                 }
-                BRANCH_POSITIONS.add((face * 2) + 1, fillRight);
-                BRANCH_POSITIONS.add((face * 2) + 2, fillLeft);
+                BRANCH_POSITIONS.add(fillRight);
+                BRANCH_POSITIONS.add(fillLeft);
             }
         }
     }
@@ -164,18 +168,25 @@ public class FieldConstants {
             new Pose2d(Units.inchesToMeters(48), Units.inchesToMeters(86.5), new Rotation2d());
     }
 
-    public enum ReefHeight {
-        L4(Units.inchesToMeters(72), -90),
-        L3(Units.inchesToMeters(47.625), -35),
+    public enum ReefLevel {
+        L1(Units.inchesToMeters(25.0), 0),
         L2(Units.inchesToMeters(31.875), -35),
-        L1(Units.inchesToMeters(18), 0);
+        L3(Units.inchesToMeters(47.625), -35),
+        L4(Units.inchesToMeters(72), -90);
 
         public final double m_height;
         public final double m_pitch;
 
-        ReefHeight(double height, double pitch) {
+        ReefLevel(double height, double pitch) {
             this.m_height = height;
             this.m_pitch = pitch; // in degrees
+        }
+
+        public static ReefLevel fromLevel(int level) {
+            return Arrays.stream(values())
+                .filter(height -> height.ordinal() == level)
+                .findFirst()
+                .orElse(L4);
         }
     }
 }
