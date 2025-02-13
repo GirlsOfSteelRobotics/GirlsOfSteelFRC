@@ -13,32 +13,27 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 public class MultiPieceAlgae extends GosAuto {
     public MultiPieceAlgae(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIE combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
-        super (StartingPositions.CENTER, List.of(CoralPositions.H), algaePositions);
+        super(StartingPositions.CENTER, List.of(CoralPositions.H), algaePositions);
         StringBuilder autoname = new StringBuilder();
+        autoname.append(start.toString());
 
-
-        //
-        addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos"+start.variableName()+"To"+coral));
+        addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
         addCommands(combinedCommands.scoreCoralCommand(combo));
-        addCommands(followChoreoPath(coral+"To" + algaePositions.get(0)));
+        addCommands(followChoreoPath(coral + "To" + algaePositions.get(0)));
 
 
-        for (int i =0; i< algaePositions.size()-1;i++){
+        for (int i = 0; i < algaePositions.size() - 1; i++) {
             addCommands(combinedCommands.fetchAlgae(combo));
-            addCommands((followChoreoPath((algaePositions.get(i))+"ToProcessor"))); //need more? idk what the path is called
+            addCommands((followChoreoPath(algaePositions.get(i) + "ToProcessor")));
             addCommands(combinedCommands.scoreAlgaeCommand(combo));
-            addCommands(followChoreoPath("ProcessorTo" + algaePositions.get(i+1)));
+            addCommands(followChoreoPath("ProcessorTo" + algaePositions.get(i + 1)));
             autoname.append('.').append(algaePositions.get(i)).append(combo);
-
-
-
-
         }
         addCommands(combinedCommands.fetchAlgae(combo));
-        addCommands((followChoreoPath((algaePositions.get(algaePositions.size()-1))+"ToProcessor"))); //need more? idk what the path is called
+        addCommands((followChoreoPath(algaePositions.get(algaePositions.size() - 1) + "ToProcessor")));
         addCommands(combinedCommands.scoreAlgaeCommand(combo));
 
-        autoname.append(('.')).append(algaePositions.get(algaePositions.size()-1)).append(combo);
+        autoname.append('.').append(algaePositions.get(algaePositions.size() - 1)).append(combo);
         setName(autoname.toString());
     }
 }

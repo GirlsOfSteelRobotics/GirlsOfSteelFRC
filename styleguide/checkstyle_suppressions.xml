@@ -10,7 +10,6 @@
     <suppress files="GripPipelineListener.java"
         checks="[a-zA-Z0-9]*" />
     <suppress files="[\\/]edu[\\/]wpi[\\/]" checks="." />
-    <suppress files="[\\/]com[\\/]gos[\\/]reefscape[\\/]auto[\\/]" checks="." />
     <suppress files="[\\/]com[\\/]gos[\\/]chargedup[\\/]temp[\\/]"
         checks="." />
 </suppressions>

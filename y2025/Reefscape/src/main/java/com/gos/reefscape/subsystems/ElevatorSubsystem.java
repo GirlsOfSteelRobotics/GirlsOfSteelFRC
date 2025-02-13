@@ -124,6 +124,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         m_networkTableEntries = new LoggingUtil("Elevator");
         m_networkTableEntries.addDouble("current height", this::getHeight);
+        m_networkTableEntries.addDouble("current height (inches)", () -> Units.metersToInches(getHeight()));
         m_networkTableEntries.addBoolean("Top Limit Switch", this::isAtTop);
         m_networkTableEntries.addBoolean("Bottom Limit Switch", this::isAtBottom);
         m_networkTableEntries.addDouble("Velocity", this::getEncoderVel);

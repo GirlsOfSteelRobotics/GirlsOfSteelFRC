@@ -13,7 +13,7 @@ public class GosAuto extends SequentialCommandGroup {
     private final List<AlgaePositions> m_algaePosition;
 
 
-    public GosAuto (StartingPositions startingPos, List<CoralPositions> coralPos, List<AlgaePositions> algaePos){
+    public GosAuto(StartingPositions startingPos, List<CoralPositions> coralPos, List<AlgaePositions> algaePos) {
         m_startingPosition = startingPos;
         m_coralPosition  = coralPos;
         m_algaePosition = algaePos;
