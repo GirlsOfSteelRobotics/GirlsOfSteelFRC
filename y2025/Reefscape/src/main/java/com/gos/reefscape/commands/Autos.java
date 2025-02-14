@@ -6,6 +6,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.GosAuto;
+import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
 import com.gos.reefscape.enums.PIE;
@@ -46,6 +47,8 @@ public final class Autos {
             CoralPositions.A), swerveDrive, combinedCommands);
 
         createMultiAlgeeAuto(swerveDrive, combinedCommands, PIE.L3, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
+        createScoreNetAuto(swerveDrive, combinedCommands, PIE.SCORE_INTO_NET, StartingPositions.RIGHT, List.of(AlgaePositions.IJ));
+
         // m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.A)));
         //m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
         //m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
@@ -60,6 +63,11 @@ public final class Autos {
     private void createMultiAlgeeAuto(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
         GosAuto multipiecealgae = new MultiPieceAlgae(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
         m_autoModes.setDefaultOption(multipiecealgae.getName(), multipiecealgae);
+    }
+
+    private void createScoreNetAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIE combo, StartingPositions start, List<AlgaePositions> algaePositions) {
+        GosAuto scoreIntoNetAuto = new MultiPieceNet(chassis, combinedCommands, combo, start, algaePositions);
+        m_autoModes.addOption(scoreIntoNetAuto.getName(), scoreIntoNetAuto);
     }
 
     public GosAuto getSelectedAuto() {

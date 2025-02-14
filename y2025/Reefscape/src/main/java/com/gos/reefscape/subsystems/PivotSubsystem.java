@@ -182,6 +182,13 @@ public class PivotSubsystem extends SubsystemBase {
         }
         return m_pivotMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
 
 
     ////////////////
@@ -198,6 +205,13 @@ public class PivotSubsystem extends SubsystemBase {
 
     private Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);
+    }
+
+    public Command createElevatorToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Elevator to Coast");
     }
 
 

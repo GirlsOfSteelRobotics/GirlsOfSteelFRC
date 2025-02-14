@@ -243,6 +243,7 @@ public class RobotContainer {
         debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_2).withName("fetch algae two! :)"));
         debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_3).withName("fetch algae three! :)"));
 
+
     }
 
     private void createMoveRobotToPositionCommand() {
