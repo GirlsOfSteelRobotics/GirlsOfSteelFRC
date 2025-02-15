@@ -10,7 +10,6 @@ import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
-import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.subsystems.AlgaeSubsystem;
@@ -129,8 +128,8 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
-        //m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
+        // m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
+        m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
 
@@ -148,11 +147,6 @@ public class RobotContainer {
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
         m_driverController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
-
-
-
-
-
     }
 
 
@@ -183,10 +177,14 @@ public class RobotContainer {
     private void addPivotDebugCommands() {
         ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
         debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(0.0));
-        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(45.0));
-        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(90.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(-15.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(-30.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(-45.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(-90.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(-135.0));
+        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(-180.0));
         debugTabPivot.add(m_pivotSubsystem.createPivotoCoastModeCommand());
-        debugTabPivot.add(m_pivotSubsystem.createResetEncoderCommand().withName("Reset pivot wow"));
+        debugTabPivot.add(m_pivotSubsystem.createResetEncoderCommand().withName("Reset pivot"));
 
     }
 

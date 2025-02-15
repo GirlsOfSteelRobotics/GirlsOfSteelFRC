@@ -24,19 +24,21 @@ public class MultiPieceAlgae extends GosAuto {
 
 
         for (int i = 0; i < algaePositions.size() - 1; i++) {
-            AlgaePositions currentAlgee = algaePositions.get(i);
-            PIEAlgae height = currentAlgee.m_algaeHeight;
+            AlgaePositions currentAlgae = algaePositions.get(i);
+            PIEAlgae height = currentAlgae.m_algaeHeight;
             addCommands(combinedCommands.fetchAlgae(height));
             addCommands((followChoreoPath(algaePositions.get(i) + "ToProcessor")));
             addCommands(combinedCommands.scoreAlgaeInProcessorCommand());
             addCommands(followChoreoPath("ProcessorTo" + algaePositions.get(i + 1)));
             autoname.append('.').append(algaePositions.get(i)).append(combo);
         }
-        addCommands(combinedCommands.fetchAlgae(algaePositions.get(algaePositions.size() - 1).m_algaeHeight));
-        addCommands((followChoreoPath(algaePositions.get(algaePositions.size() - 1) + "ToProcessor")));
+
+        AlgaePositions currentAlgae = algaePositions.get(algaePositions.size() - 1);
+        addCommands(combinedCommands.fetchAlgae(currentAlgae.m_algaeHeight));
+        addCommands((followChoreoPath(currentAlgae + "ToProcessor")));
         addCommands(combinedCommands.scoreAlgaeInProcessorCommand());
 
-        autoname.append('.').append(algaePositions.get(algaePositions.size() - 1)).append(combo);
+        autoname.append('.').append(currentAlgae).append(combo);
         setName(autoname.toString());
     }
 }

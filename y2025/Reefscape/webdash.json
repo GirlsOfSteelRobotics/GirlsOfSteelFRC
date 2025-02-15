@@ -14,7 +14,6 @@
           "type": "tabset",
           "id": "aaaa2713-f785-4f46-b686-34a948586601",
           "weight": 50,
-          "selected": 6,
           "children": [
             {
               "type": "tab",
@@ -692,78 +691,6 @@
       },
       "type": "robotCommand",
       "name": "Go to angle0.0"
-    },
-    "4215d550-edb3-44de-a0e5-1319b9900dbf": {
-      "id": "4215d550-edb3-44de-a0e5-1319b9900dbf",
-      "children": [],
-      "source": {
-        "provider": "NT",
-        "key": "/Shuffleboard/arm pivot/Go to angle45.0"
-      },
-      "minSize": {
-        "width": 1,
-        "height": 1
-      },
-      "size": {
-        "width": 2,
-        "height": 1
-      },
-      "position": {
-        "x": 0,
-        "y": 1
-      },
-      "properties": {
-        "name": {
-          "value": "Command"
-        },
-        "running": {
-          "value": false
-        },
-        "controllable": {
-          "value": false
-        },
-        "label": {
-          "value": ""
-        }
-      },
-      "type": "robotCommand",
-      "name": "Go to angle45.0"
-    },
-    "2ef829bb-aeba-4ff9-a984-38d5323699f8": {
-      "id": "2ef829bb-aeba-4ff9-a984-38d5323699f8",
-      "children": [],
-      "source": {
-        "provider": "NT",
-        "key": "/Shuffleboard/arm pivot/Go to angle90.0"
-      },
-      "minSize": {
-        "width": 1,
-        "height": 1
-      },
-      "size": {
-        "width": 2,
-        "height": 1
-      },
-      "position": {
-        "x": 0,
-        "y": 2
-      },
-      "properties": {
-        "name": {
-          "value": "Command"
-        },
-        "running": {
-          "value": false
-        },
-        "controllable": {
-          "value": false
-        },
-        "label": {
-          "value": ""
-        }
-      },
-      "type": "robotCommand",
-      "name": "Go to angle90.0"
     },
     "b2234289-ceaa-4a70-ad5b-01cc3ffd480c": {
       "id": "b2234289-ceaa-4a70-ad5b-01cc3ffd480c",
@@ -3036,12 +2963,12 @@
         "height": 1
       },
       "size": {
-        "width": 6,
-        "height": 4
+        "width": 14,
+        "height": 8
       },
       "position": {
-        "x": 7,
-        "y": 1
+        "x": 5,
+        "y": 0
       },
       "properties": {
         "errors": {
@@ -3080,7 +3007,7 @@
       },
       "position": {
         "x": 7,
-        "y": 5
+        "y": 9
       },
       "properties": {
         "errors": {
@@ -4041,6 +3968,258 @@
       },
       "type": "robotCommand",
       "name": "Command"
+    },
+    "b009e054-ae77-45c3-b446-6828ea52cf4a": {
+      "id": "b009e054-ae77-45c3-b446-6828ea52cf4a",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/arm pivot/Go to angle-15.0"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "d43e1344-67fc-432c-890a-84dcaedf9a4e": {
+      "id": "d43e1344-67fc-432c-890a-84dcaedf9a4e",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/arm pivot/Go to angle-30.0"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 0,
+        "y": 2
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "84032810-c0a0-4cf3-a184-407431067df6": {
+      "id": "84032810-c0a0-4cf3-a184-407431067df6",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/arm pivot/Go to angle-45.0"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 0,
+        "y": 3
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "43e677b7-2244-4179-9667-1565d668e50a": {
+      "id": "43e677b7-2244-4179-9667-1565d668e50a",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/arm pivot/Go to angle-90.0"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 0,
+        "y": 4
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "afef9034-60b2-4c0d-ab89-f4eb5cb61d69": {
+      "id": "afef9034-60b2-4c0d-ab89-f4eb5cb61d69",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/arm pivot/Pivot to Coast"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 2,
+        "y": 2
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "6ef8c8f1-626b-4df6-8649-f529f5ea6590": {
+      "id": "6ef8c8f1-626b-4df6-8649-f529f5ea6590",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/arm pivot/Reset pivot"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "487cc399-cfb6-4f0d-a3f7-af18c9b15f32": {
+      "id": "487cc399-cfb6-4f0d-a3f7-af18c9b15f32",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/SmartDashboard/Clear Sticky Faults"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 3,
+        "height": 2
+      },
+      "position": {
+        "x": 1,
+        "y": 4
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
     }
   },
   "tabs": {
@@ -4105,8 +4284,6 @@
     "a75ea2f1-cde4-4fc3-8846-8c90fa7d5cf0": {
       "componentIds": [
         "f4a51531-0549-4b50-ab2e-7a5fc58d8ed0",
-        "4215d550-edb3-44de-a0e5-1319b9900dbf",
-        "2ef829bb-aeba-4ff9-a984-38d5323699f8",
         "e695ddc7-65d0-4af2-acf6-ce2e8320a50d",
         "b3858398-8a17-49e0-9f9e-3ad413b79f09",
         "c2bc5452-3fcf-4cf6-9e75-cc7e4a110af2",
@@ -4118,7 +4295,13 @@
         "9306dabd-7baf-4734-990b-ab99afc21086",
         "4dfd44ac-fb90-4b54-adaa-d855e2933c05",
         "f7204a5d-3907-4358-8ff2-01549b59fb4b",
-        "f922591f-f338-4ba7-92cc-1f787bbacdce"
+        "f922591f-f338-4ba7-92cc-1f787bbacdce",
+        "b009e054-ae77-45c3-b446-6828ea52cf4a",
+        "d43e1344-67fc-432c-890a-84dcaedf9a4e",
+        "84032810-c0a0-4cf3-a184-407431067df6",
+        "43e677b7-2244-4179-9667-1565d668e50a",
+        "afef9034-60b2-4c0d-ab89-f4eb5cb61d69",
+        "6ef8c8f1-626b-4df6-8649-f529f5ea6590"
       ]
     },
     "b83d02a7-68ee-49ea-8474-93983d56ccb5": {
@@ -4173,7 +4356,8 @@
       "componentIds": [
         "e803c72b-c60d-42fe-a45a-0f227e2f955e",
         "08fe86a1-3495-4811-a1b3-b033f432f003",
-        "72eda1c8-4858-498b-897c-1dbb3e61eebf"
+        "72eda1c8-4858-498b-897c-1dbb3e61eebf",
+        "487cc399-cfb6-4f0d-a3f7-af18c9b15f32"
       ]
     },
     "#cea66568-d564-4f34-bd19-69d0a16cc8d7": {

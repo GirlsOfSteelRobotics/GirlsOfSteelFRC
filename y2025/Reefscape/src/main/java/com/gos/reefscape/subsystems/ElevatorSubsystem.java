@@ -75,8 +75,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         // At bottom - 18.5
         // Top - 33.4 rotations, 62.5 inches
 
-        elevatorConfig.encoder.positionConversionFactor((double) Units.inchesToMeters(44) / 33.4);
-        elevatorConfig.encoder.velocityConversionFactor((double) Units.inchesToMeters(44) / 33.4 / 60);
+        elevatorConfig.encoder.positionConversionFactor(Units.inchesToMeters(44) / 33.4);
+        elevatorConfig.encoder.velocityConversionFactor(Units.inchesToMeters(44) / 33.4 / 60);
 
 
 

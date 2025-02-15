@@ -7,7 +7,6 @@ import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 
 public class CombinedCommands {
     private final CoralSubsystem m_coralSubsystem;
@@ -23,17 +22,15 @@ public class CombinedCommands {
     }
 
     public Command pieCommand(PIECoral combo) {
-//        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
-//            .alongWith(m_pivotSubsystem.createMoveArmtoAngleCommand(combo.m_angle))
-//            .until(this::isAtGoalHeightAngle);
-        return Commands.waitSeconds(1);
+        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
+            .alongWith(m_pivotSubsystem.createMoveArmtoAngleCommand(combo.m_angle))
+            .until(this::isAtGoalHeightAngle);
     }
 
     public Command pieCommand(PIEAlgae combo) {
-//        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
-//            .alongWith(m_pivotSubsystem.createMoveArmtoAngleCommand(combo.m_angle))
-//            .until(this::isAtGoalHeightAngle);
-        return Commands.waitSeconds(1);
+        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
+            .alongWith(m_pivotSubsystem.createMoveArmtoAngleCommand(combo.m_angle))
+            .until(this::isAtGoalHeightAngle);
     }
 
     public Command scoreCoralCommand(PIECoral combo) {
