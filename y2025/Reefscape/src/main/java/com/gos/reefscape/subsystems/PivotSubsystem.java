@@ -51,7 +51,10 @@ public class PivotSubsystem extends SubsystemBase {
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
-        pivotConfig.inverted(false);
+        pivotConfig.inverted(true);
+
+        pivotConfig.encoder.positionConversionFactor(360 / 45.0);
+        pivotConfig.encoder.velocityConversionFactor(360 / 45.0 / 60);
 
         pivotConfig.closedLoop.positionWrappingEnabled(true);
         pivotConfig.closedLoop.positionWrappingMinInput(0);

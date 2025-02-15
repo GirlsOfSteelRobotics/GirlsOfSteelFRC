@@ -2,7 +2,7 @@ package com.gos.reefscape.auto.modes;
 
 
 import com.gos.reefscape.enums.CoralPositions;
-import com.gos.reefscape.enums.PIE;
+import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.enums.StartingPositions;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
@@ -13,7 +13,7 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 @SuppressWarnings("PMD.ClassNamingConventions")
 public class MultiPieceCoral extends GosAuto {
-    public MultiPieceCoral(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIE combo, StartingPositions side, List<CoralPositions> coralPositions) {
+    public MultiPieceCoral(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIECoral combo, StartingPositions side, List<CoralPositions> coralPositions) {
         super(side, coralPositions, List.of());
         StringBuilder autoName = new StringBuilder();
         autoName.append(side.toString());

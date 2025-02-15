@@ -2,12 +2,7 @@ package com.gos.reefscape.enums;
 
 import edu.wpi.first.math.util.Units;
 
-public enum PIE {
-    L1(Units.inchesToMeters(0), 45),
-    L2(Units.inchesToMeters(0), 45),
-    L3(Units.inchesToMeters(15.5), 45),
-    L4(Units.inchesToMeters(30), 90),
-    HUMAN_PLAYER_STATION(Units.inchesToMeters(37), -35),
+public enum PIEAlgae {
     FETCH_ALGAE_2(Units.inchesToMeters(39), 45),
     FETCH_ALGAE_3(Units.inchesToMeters(50), 45),
     SCORE_INTO_NET(1.5, 100),
@@ -16,7 +11,7 @@ public enum PIE {
     public double m_height;
     public double m_angle;
 
-    PIE(double height, double angle) {
+    PIEAlgae(double height, double angle) {
         m_height = height;
         m_angle = angle;
     }

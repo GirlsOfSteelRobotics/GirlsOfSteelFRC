@@ -79,6 +79,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.encoder.velocityConversionFactor((double) Units.inchesToMeters(44) / 33.4 / 60);
 
 
+
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
         followMotorConfig.follow(m_elevatorMotor, true);
         followMotorConfig.idleMode(IdleMode.kBrake);

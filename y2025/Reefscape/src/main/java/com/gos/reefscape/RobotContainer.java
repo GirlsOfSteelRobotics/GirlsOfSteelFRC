@@ -10,7 +10,8 @@ import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
-import com.gos.reefscape.enums.PIE;
+import com.gos.reefscape.enums.PIEAlgae;
+import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
@@ -139,9 +140,9 @@ public class RobotContainer {
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
 
-        m_driverController.leftBumper().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIE.L2.m_height));
-        m_driverController.rightBumper().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIE.L3.m_height));
-        m_driverController.leftTrigger().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIE.L4.m_height));
+        m_driverController.leftBumper().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L2.m_height));
+        m_driverController.rightBumper().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L3.m_height));
+        m_driverController.leftTrigger().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_height));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
@@ -251,15 +252,15 @@ public class RobotContainer {
 
     private void createMovePIECommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L1).withName("Level One"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L2).withName("Level Two"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L3).withName("Level Three"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L4).withName("Level Four"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_NET).withName("Score Into net"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_PROCESSOR).withName("Score into processor"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L1).withName("Level One"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L2).withName("Level Two"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L3).withName("Level Three"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L4).withName("Level Four"));
+        debugTab.add(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_NET).withName("Score Into net"));
+        debugTab.add(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR).withName("Score into processor"));
         debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
-        debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_2).withName("fetch algae two! :)"));
-        debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_3).withName("fetch algae three! :)"));
+        debugTab.add(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2).withName("fetch algae two! :)"));
+        debugTab.add(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3).withName("fetch algae three! :)"));
 
     }
 
