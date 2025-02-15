@@ -3,10 +3,10 @@ package com.gos.reefscape.enums;
 import edu.wpi.first.math.util.Units;
 
 public enum PIE {
-    L1(Units.inchesToMeters(18), 45),
-    L2(Units.inchesToMeters(31.875), 45),
-    L3(Units.inchesToMeters(47.625), 45),
-    L4(1.5, 90),
+    L1(Units.inchesToMeters(0), 45),
+    L2(Units.inchesToMeters(0), 45),
+    L3(Units.inchesToMeters(15.5), 45),
+    L4(Units.inchesToMeters(30), 90),
     HUMAN_PLAYER_STATION(Units.inchesToMeters(37), -35),
     FETCH_ALGAE_2(Units.inchesToMeters(39), 45),
     FETCH_ALGAE_3(Units.inchesToMeters(50), 45),

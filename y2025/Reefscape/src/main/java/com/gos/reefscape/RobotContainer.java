@@ -133,11 +133,22 @@ public class RobotContainer {
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
 
 
-        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
+
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand());
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
+
+        m_driverController.leftBumper().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIE.L2.m_height));
+        m_driverController.rightBumper().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIE.L3.m_height));
+        m_driverController.leftTrigger().whileTrue(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIE.L4.m_height));
+
+        // intake stuff
+        m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
+        m_driverController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
+
+
+
 
 
     }
@@ -181,6 +192,13 @@ public class RobotContainer {
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
+        //l3 15.5
+
+
+
+
         debugTab.add(m_elevatorSubsystem.createResetEncoderCommand().withName("reset encoder omg"));
         debugTab.add(m_elevatorSubsystem.createElevatorToCoastModeCommand().withName("Move elevator to coast"));
     }
