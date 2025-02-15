@@ -184,6 +184,8 @@ public class RobotContainer {
         debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(0.0));
         debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(45.0));
         debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(90.0));
+        debugTabPivot.add(m_pivotSubsystem.createPivotoCoastModeCommand());
+        debugTabPivot.add(m_pivotSubsystem.createResetEncoderCommand().withName("Reset pivot wow"));
 
     }
 

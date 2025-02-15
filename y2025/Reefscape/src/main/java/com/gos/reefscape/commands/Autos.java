@@ -21,14 +21,18 @@ import java.util.List;
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class Autos {
 
+    private static final String DEFAULT_MODE = "RIGHT.EL4.BL4.CL4";
+
     private final SendableChooser<GosAuto> m_autoModes;
 
     public Autos(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands) {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L1, StartingPositions.CENTER, List.of(CoralPositions.G));
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
 
+        ///////////////////////////////
+        /// Right Side
+        ///////////////////////////////
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
             CoralPositions.G,
             CoralPositions.F,
             CoralPositions.E,
@@ -36,7 +40,24 @@ public final class Autos {
             CoralPositions.C,
             CoralPositions.B)
         );
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.C));
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+            CoralPositions.E,
+            CoralPositions.B,
+            CoralPositions.C));
+
+        ///////////////////////////////
+        /// Center Side
+        ///////////////////////////////
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L1, StartingPositions.CENTER, List.of(CoralPositions.G));
+
+        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L1, CoralPositions.H, StartingPositions.CENTER, List.of(
+            AlgaePositions.GH,
+            AlgaePositions.EF,
+            AlgaePositions.IJ));
+
+        ///////////////////////////////
+        /// Left Side
+        ///////////////////////////////
         createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
             CoralPositions.H,
             CoralPositions.I,
@@ -44,24 +65,26 @@ public final class Autos {
             CoralPositions.K,
             CoralPositions.L,
             CoralPositions.A));
-
-        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L1, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
-        // m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.A)));
-        //m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
-        //m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
-
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L1, StartingPositions.CENTER, List.of(CoralPositions.G));
     }
 
     private void createMultiCoralAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
         GosAuto example = new MultiPieceCoral(chassis, combinedCommands, height, starting, positions);
-        m_autoModes.addOption(example.getName(), example);
-
+        addAutoMode(example);
     }
 
     private void createMultiAlgaeAuto(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
         GosAuto multiPieceAlgae = new MultiPieceAlgae(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
-        m_autoModes.setDefaultOption(multiPieceAlgae.getName(), multiPieceAlgae);
+        addAutoMode(multiPieceAlgae);
+    }
+
+    private void addAutoMode(GosAuto auto) {
+        String name = auto.getName();
+        System.out.println("Adding auto: '" + name + "'");
+        if (name.equals(DEFAULT_MODE)) {
+            m_autoModes.setDefaultOption(name, auto);
+        } else {
+            m_autoModes.addOption(name, auto);
+        }
     }
 
     public GosAuto getSelectedAuto() {

@@ -29,7 +29,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class PivotSubsystem extends SubsystemBase {
     private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
     private static final double PIVOT_ERROR = 3;
-    private static final double GEAR_RATIO = (58.0 / 15.0) * 45;
+    private static final double GEAR_RATIO = 45.0; // reduction
 
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
@@ -52,9 +52,6 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(true);
-
-        pivotConfig.encoder.positionConversionFactor(360 / 45.0);
-        pivotConfig.encoder.velocityConversionFactor(360 / 45.0 / 60);
 
         pivotConfig.closedLoop.positionWrappingEnabled(true);
         pivotConfig.closedLoop.positionWrappingMinInput(0);
@@ -187,6 +184,13 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
 
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+
     ////////////////
     //command factories
     ////////////////
@@ -202,6 +206,18 @@ public class PivotSubsystem extends SubsystemBase {
     private Command createResetPidControllerCommand() {
         return runOnce(this::resetPidController);
     }
+
+    public Command createResetEncoderCommand() {
+        return run(() -> m_relativeEncoder.setPosition(0)).ignoringDisable(true);
+    }
+
+    public Command createPivotoCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Pivot to Coast");
+    }
+
 
 
 }

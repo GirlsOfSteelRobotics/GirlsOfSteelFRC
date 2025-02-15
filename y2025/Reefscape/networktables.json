@@ -318,5 +318,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/PivotDamp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
