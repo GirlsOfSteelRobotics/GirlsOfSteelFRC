@@ -80,7 +80,7 @@ public final class Autos {
     private void addAutoMode(GosAuto auto) {
         String name = auto.getName();
         System.out.println("Adding auto: '" + name + "'");
-        if (name.equals(DEFAULT_MODE)) {
+        if (DEFAULT_MODE.equals(name)) {
             m_autoModes.setDefaultOption(name, auto);
         } else {
             m_autoModes.addOption(name, auto);
