@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.RelativeEncoder;
 import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
@@ -35,7 +36,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double K_MIN_ELEVATOR_HEIGHT = Units.inchesToMeters(-4);
     public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(120);
     public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getNeoVortex(1);
-    public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(2.0);
+    public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.0);
+    public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(3);
 
 
@@ -70,8 +72,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.smartCurrentLimit(60);
         elevatorConfig.inverted(true);
 
-        elevatorConfig.encoder.positionConversionFactor(1 / K_ELEVATOR_GEARING);
-        elevatorConfig.encoder.velocityConversionFactor(1 / K_ELEVATOR_GEARING / 60);
+        // At bottom - 18.5
+        // Top - 33.4 rotations, 62.5 inches
+
+        elevatorConfig.encoder.positionConversionFactor(Units.inchesToMeters(44) / 33.4);
+        elevatorConfig.encoder.velocityConversionFactor(Units.inchesToMeters(44) / 33.4 / 60);
+
 
 
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
@@ -187,6 +193,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void goToHeight(double goalHeight) {
         m_goalHeight = goalHeight;
         m_elevatorPidController.goToHeight(goalHeight, getHeight(), getEncoderVel());
+        System.out.println(goalHeight);
     }
 
     public void resetPidController() {
@@ -222,11 +229,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public Command createMoveElevatorToHeightCommand(double height) {
         return createResetPidControllerCommand().andThen(
-        runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).withName("Elevator go to height" + height);
+        runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).andThen(new PrintCommand("done")).withName("Elevator go to height" + height);
     }
 
     public Command createResetEncoderCommand() {
-        return run(() -> m_encoder.setPosition(0));
+        return run(() -> m_encoder.setPosition(0)).ignoringDisable(true);
     }
 
     public Command createElevatorToCoastModeCommand() {
@@ -235,8 +242,6 @@ public class ElevatorSubsystem extends SubsystemBase {
                 () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Elevator to Coast");
     }
-
-
 
 
 

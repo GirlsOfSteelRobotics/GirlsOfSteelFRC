@@ -18,6 +18,9 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.pathing.TunablePathConstraints;
+import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
+import com.gos.lib.phoenix6.alerts.PigeonAlerts;
+import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.photonvision.AprilTagCamera;
@@ -77,6 +80,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private Notifier m_simNotifier;
     private final PidProperty m_pidControllerProperty;
     private final List<PidProperty> m_moduleProperties;
+    private final List<BasePhoenix6Alerts> m_alerts;
 
     private double m_lastSimTime;
     private final GosField m_field;
@@ -119,6 +123,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
 
         m_moduleProperties = new ArrayList<>();
+        m_alerts = new ArrayList<>();
+
         for (int i = 0; i < 4; ++i) {
             SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", false, module.getSteerMotor(), 0)
@@ -127,7 +133,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
                 .fromDefaults(SlotConfigs.from(TunerConstants.driveGains))
                 .build());
+
+            m_alerts.add(new TalonFxAlerts(module.getDriveMotor(), "Swerve Drive[" + i + "]"));
+            m_alerts.add(new TalonFxAlerts(module.getSteerMotor(), "Swerve Steer[" + i + "]"));
         }
+        m_alerts.add(new PigeonAlerts(getPigeon2()));
 
         configureAutoBuilder();
         m_field = new GosField();
@@ -246,18 +256,17 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             property.updateIfChanged();
         }
 
+        // for (BasePhoenix6Alerts alert : m_alerts) {
+        //     alert.checkAlerts();
+        // }
+
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
-
-
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
 
             EstimatedRobotPose camPose = estimatePair.getFirst();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
         }
-
-
-
     }
 
     private void startSimThread() {

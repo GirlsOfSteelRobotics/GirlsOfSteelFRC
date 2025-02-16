@@ -13,8 +13,8 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"HumanPlayerLeft.x", "val":1.3718515634536743}, "y":{"exp":"HumanPlayerLeft.y", "val":7.273766994476318}, "heading":{"exp":"HumanPlayerLeft.heading", "val":5.42101525251236}, "intervals":53, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"K.x", "val":4.048266887664795}, "y":{"exp":"K.y", "val":5.257174491882324}, "heading":{"exp":"K.heading", "val":5.219488039625151}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
+    {"x":{"exp":"HumanPlayerLeft.x", "val":1.3718515634536743}, "y":{"exp":"HumanPlayerLeft.y", "val":7.273766994476318}, "heading":{"exp":"HumanPlayerLeft.heading", "val":5.340707511102648}, "intervals":53, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"K.x", "val":4.000457285761871}, "y":{"exp":"K.y", "val":5.2013348492294}, "heading":{"exp":"K.heading", "val":-1.0471975511965976}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
