@@ -9,9 +9,8 @@ import com.gos.reefscape.auto.modes.GosAuto;
 import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
-import com.gos.reefscape.enums.PIE;
 import com.gos.reefscape.enums.PIECoral;
-import com.gos.reefscape.auto.modes.MultiPieceAlgae;
+import com.gos.reefscape.auto.modes.MultiPieceProcessor;
 import com.gos.reefscape.auto.modes.MultiPieceCoral;
 import com.gos.reefscape.enums.StartingPositions;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
@@ -47,6 +46,9 @@ public final class Autos {
             CoralPositions.B,
             CoralPositions.C));
 
+        createScoreNetAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.G, StartingPositions.RIGHT, List.of(AlgaePositions.IJ));
+
+
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
@@ -57,6 +59,9 @@ public final class Autos {
             AlgaePositions.EF,
             AlgaePositions.IJ));
 
+        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L3, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
+
+
         ///////////////////////////////
         /// Left Side
         ///////////////////////////////
@@ -66,11 +71,9 @@ public final class Autos {
             CoralPositions.J,
             CoralPositions.K,
             CoralPositions.L,
-            CoralPositions.A), swerveDrive, combinedCommands);
+            CoralPositions.A));
 
-        createScoreNetAuto(swerveDrive, combinedCommands, PIE.SCORE_INTO_NET, StartingPositions.RIGHT, List.of(AlgaePositions.IJ));
 
-        createMultiAlgeeAuto(swerveDrive, combinedCommands, PIE.L3, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
         // m_autoModes.addOption("Right.E.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L1, StartingPositions.RIGHT, List.of(CoralPositions.E, CoralPositions.B, CoralPositions.A)));
         //m_autoModes.addOption("Right.E.C", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "E", "C"));
         //m_autoModes.addOption("Right.F.B", new TwoPieceCoral(swerveDrive, combinedCommands, PIE.L4, "Right", "F", "B"));
@@ -82,7 +85,7 @@ public final class Autos {
     }
 
     private void createMultiAlgaeAuto(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
-        GosAuto multiPieceAlgae = new MultiPieceAlgae(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
+        GosAuto multiPieceAlgae = new MultiPieceProcessor(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
         addAutoMode(multiPieceAlgae);
     }
 
@@ -96,8 +99,8 @@ public final class Autos {
         }
     }
 
-    private void createScoreNetAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIE combo, StartingPositions start, List<AlgaePositions> algaePositions) {
-        GosAuto scoreIntoNetAuto = new MultiPieceNet(chassis, combinedCommands, combo, start, algaePositions);
+    private void createScoreNetAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
+        GosAuto scoreIntoNetAuto = new MultiPieceNet(chassis, combinedCommands, combo, coral, start, algaePositions);
         m_autoModes.addOption(scoreIntoNetAuto.getName(), scoreIntoNetAuto);
     }
 

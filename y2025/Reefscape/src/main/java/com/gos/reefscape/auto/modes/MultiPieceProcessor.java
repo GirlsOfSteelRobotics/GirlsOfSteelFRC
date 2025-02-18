@@ -12,8 +12,8 @@ import java.util.List;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
-public class MultiPieceAlgae extends GosAuto {
-    public MultiPieceAlgae(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
+public class MultiPieceProcessor extends GosAuto {
+    public MultiPieceProcessor(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
         super(StartingPositions.CENTER, List.of(CoralPositions.H), algaePositions);
         StringBuilder autoname = new StringBuilder();
         autoname.append(start.toString());

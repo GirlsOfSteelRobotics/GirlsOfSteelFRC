@@ -186,12 +186,7 @@ public class PivotSubsystem extends SubsystemBase {
         }
         return m_pivotMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     }
-    public void setIdleMode(IdleMode idleMode) {
-        SparkMaxConfig config = new SparkMaxConfig();
-        config.idleMode(idleMode);
-        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-    }
+   
 
 
 
