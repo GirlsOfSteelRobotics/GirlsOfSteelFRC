@@ -2,6 +2,7 @@ package com.gos.reefscape.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.reefscape.Constants;
@@ -37,6 +38,9 @@ public class PivotSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(false, "tunablePivot", 0);
+
 
     private final RevProfiledSingleJointedArmController m_armPidController;
 
@@ -195,16 +199,17 @@ public class PivotSubsystem extends SubsystemBase {
     //command factories
     ////////////////
     ///
-    public Command createMoveArmtoAngleCommand(Double angle) {
-        return createResetPidControllerCommand()
+    public Command createMovePivotToAngleCommand(double angle) {
+        return createResetPidControllerCommand(angle)
             .andThen(runEnd(() -> moveArmToAngle(angle), this::stop))
             .withName("Go to angle" + angle);
-
-
     }
 
-    private Command createResetPidControllerCommand() {
-        return runOnce(this::resetPidController);
+    private Command createResetPidControllerCommand(double goalAngle) {
+        return runOnce(() -> {
+            m_armGoalAngle = goalAngle;
+            resetPidController();
+        });
     }
 
     public Command createResetEncoderCommand() {
@@ -216,6 +221,10 @@ public class PivotSubsystem extends SubsystemBase {
                 () -> setIdleMode(IdleMode.kCoast),
                 () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Pivot to Coast");
+    }
+
+    public Command createPivotToTunableAngleCommand() {
+        return defer(() -> createMovePivotToAngleCommand(PIVOT_TUNABLE_ANGLE.getValue())).withName("pivot to tunable angle ");
     }
 
 

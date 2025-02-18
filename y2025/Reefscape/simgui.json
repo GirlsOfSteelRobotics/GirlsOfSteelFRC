@@ -31,6 +31,11 @@
           "open": true
         }
       },
+      "Talon FX (v6)[4]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX (v6)[7]/Fwd Limit": {
         "header": {
           "open": true
@@ -56,6 +61,7 @@
       "/Shuffleboard/Combined Commands/Level Two": "Command",
       "/Shuffleboard/Combined Commands/Score Into net": "Command",
       "/Shuffleboard/Combined Commands/Score into processor": "Command",
+      "/Shuffleboard/Combined Commands/elevator and pivot to tunable position": "Command",
       "/Shuffleboard/Combined Commands/fetch algae three! :)": "Command",
       "/Shuffleboard/Combined Commands/fetch algae two! :)": "Command",
       "/Shuffleboard/Combined Commands/human player station": "Command",
@@ -106,6 +112,8 @@
       "/Shuffleboard/Elevator/Elevator go to height0.9144": "Command",
       "/Shuffleboard/Elevator/Elevator go to height1.524": "Command",
       "/Shuffleboard/Elevator/Move elevator to coast": "Command",
+      "/Shuffleboard/Elevator/elevator to tunable height": "Command",
+      "/Shuffleboard/Elevator/elevator to tunable height ": "Command",
       "/Shuffleboard/Elevator/reset encoder omg": "Command",
       "/Shuffleboard/Intake Outtake/Intake In": "Command",
       "/Shuffleboard/Intake Outtake/Intake Out": "Command",
@@ -118,7 +126,9 @@
       "/Shuffleboard/Sys Id debug/Steer sysid": "Command",
       "/Shuffleboard/Sys Id debug/Sysid routine": "Command",
       "/Shuffleboard/Sys Id debug/Translation sysid": "Command",
+      "/Shuffleboard/arm pivot/Go to angle-135.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle-15.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle-180.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle-30.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle-45.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle-90.0": "Command",
@@ -126,6 +136,8 @@
       "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
       "/Shuffleboard/arm pivot/Pivot to Coast": "Command",
+      "/Shuffleboard/arm pivot/Pivot to tunable angle": "Command",
+      "/Shuffleboard/arm pivot/Reset pivot": "Command",
       "/Shuffleboard/arm pivot/Reset pivot wow": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Auto Modes": "String Chooser",
@@ -178,6 +190,11 @@
         }
       },
       "/Shuffleboard/Coral intake/intake until coral :)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Elevator/elevator to tunable height ": {
         "window": {
           "visible": true
         }

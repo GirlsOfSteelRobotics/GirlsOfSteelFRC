@@ -2,6 +2,7 @@ package com.gos.reefscape.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledElevatorController;
 import com.gos.reefscape.Constants;
@@ -39,6 +40,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.0);
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(3);
+    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0);
+
 
 
     private final SparkFlex m_elevatorMotor;
@@ -223,12 +226,15 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     //command factories//
-    public Command createResetPidControllerCommand() {
-        return runOnce(this::resetPidController);
+    public Command createResetPidControllerCommand(double goalHeight) {
+        return runOnce(() -> {
+            m_goalHeight = goalHeight;
+            resetPidController();
+        });
     }
 
     public Command createMoveElevatorToHeightCommand(double height) {
-        return createResetPidControllerCommand().andThen(
+        return createResetPidControllerCommand(height).andThen(
         runEnd(() -> goToHeight(height), m_elevatorMotor::stopMotor)).andThen(new PrintCommand("done")).withName("Elevator go to height" + height);
     }
 
@@ -241,6 +247,10 @@ public class ElevatorSubsystem extends SubsystemBase {
                 () -> setIdleMode(IdleMode.kCoast),
                 () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Elevator to Coast");
+    }
+
+    public Command createELevatorToTunableHeightCommand() {
+        return defer(() -> createMoveElevatorToHeightCommand(ELEVATOR_TUNABLE_HEIGHT.getValue())).withName("elevator to tunable height ");
     }
 
 
