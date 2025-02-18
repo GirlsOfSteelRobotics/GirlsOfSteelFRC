@@ -18,7 +18,6 @@ public class MultiPieceNet extends GosAuto {
         super(start, List.of(CoralPositions.H), algaePositions);
         StringBuilder autoName = new StringBuilder();
         autoName.append(start.toString());
-        System.out.print(algaePositions.get(0));
 
 
         addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
