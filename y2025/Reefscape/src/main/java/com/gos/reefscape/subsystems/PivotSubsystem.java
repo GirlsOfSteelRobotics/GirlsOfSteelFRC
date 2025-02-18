@@ -2,6 +2,7 @@ package com.gos.reefscape.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.reefscape.Constants;
@@ -29,7 +30,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class PivotSubsystem extends SubsystemBase {
     private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
     private static final double PIVOT_ERROR = 3;
-    private static final double GEAR_RATIO = (58.0 / 15.0) * 45;
+    private static final double GEAR_RATIO = 45.0; // reduction
 
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
@@ -37,6 +38,9 @@ public class PivotSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(false, "tunablePivot", 0);
+
 
     private final RevProfiledSingleJointedArmController m_armPidController;
 
@@ -51,7 +55,7 @@ public class PivotSubsystem extends SubsystemBase {
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
-        pivotConfig.inverted(false);
+        pivotConfig.inverted(true);
 
         pivotConfig.closedLoop.positionWrappingEnabled(true);
         pivotConfig.closedLoop.positionWrappingMinInput(0);
@@ -191,21 +195,45 @@ public class PivotSubsystem extends SubsystemBase {
 
 
 
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+
     ////////////////
     //command factories
     ////////////////
     ///
-    public Command createMoveArmtoAngleCommand(Double angle) {
-        return createResetPidControllerCommand()
+    public Command createMovePivotToAngleCommand(double angle) {
+        return createResetPidControllerCommand(angle)
             .andThen(runEnd(() -> moveArmToAngle(angle), this::stop))
             .withName("Go to angle" + angle);
-
-
     }
 
-    private Command createResetPidControllerCommand() {
-        return runOnce(this::resetPidController);
+    private Command createResetPidControllerCommand(double goalAngle) {
+        return runOnce(() -> {
+            m_armGoalAngle = goalAngle;
+            resetPidController();
+        });
     }
+
+    public Command createResetEncoderCommand() {
+        return run(() -> m_relativeEncoder.setPosition(0)).ignoringDisable(true);
+    }
+
+    public Command createPivotoCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Pivot to Coast");
+    }
+
+    public Command createPivotToTunableAngleCommand() {
+        return defer(() -> createMovePivotToAngleCommand(PIVOT_TUNABLE_ANGLE.getValue())).withName("pivot to tunable angle ");
+    }
+
 
     public Command createElevatorToCoastModeCommand() {
         return this.runEnd(

@@ -28,7 +28,7 @@ public class CoralSubsystem extends SubsystemBase {
         SparkMaxConfig coralConfig = new SparkMaxConfig();
         coralConfig.idleMode(IdleMode.kBrake);
         coralConfig.smartCurrentLimit(60);
-        coralConfig.inverted(true);
+        coralConfig.inverted(false);
 
         m_coralMotor.configure(coralConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -51,11 +51,11 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public void coralOut() {
-        m_coralMotor.set(-1);
+        m_coralMotor.set(-0.2);
     }
 
     public void coralIn() {
-        m_coralMotor.set(1);
+        m_coralMotor.set(0.2);
     }
 
     public boolean hasCoral() {

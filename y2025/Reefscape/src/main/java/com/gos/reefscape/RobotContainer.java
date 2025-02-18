@@ -10,7 +10,8 @@ import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
-import com.gos.reefscape.enums.PIE;
+import com.gos.reefscape.enums.PIEAlgae;
+import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
@@ -132,14 +133,24 @@ public class RobotContainer {
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
 
-
-        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
+
+        m_operatorController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
+        m_operatorController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
+
+
+
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand());
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
 
+        m_driverController.leftBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L2));
+        m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L3));
+        m_driverController.leftTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L4));
 
+        // intake stuff
+        m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
+        m_driverController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
     }
 
 
@@ -169,10 +180,16 @@ public class RobotContainer {
 
     private void addPivotDebugCommands() {
         ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
-        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(0.0));
-        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(45.0));
-        debugTabPivot.add(m_pivotSubsystem.createMoveArmtoAngleCommand(90.0));
-
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(0.0));
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(-15.0));
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(-30.0));
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(-45.0));
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(-90.0));
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(-135.0));
+        debugTabPivot.add(m_pivotSubsystem.createMovePivotToAngleCommand(-180.0));
+        debugTabPivot.add(m_pivotSubsystem.createPivotoCoastModeCommand());
+        debugTabPivot.add(m_pivotSubsystem.createResetEncoderCommand().withName("Reset pivot"));
+        debugTabPivot.add(m_pivotSubsystem.createPivotToTunableAngleCommand().withName("Pivot to tunable angle"));
     }
 
     private void addElevatorDebugCommands() {
@@ -181,6 +198,14 @@ public class RobotContainer {
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
         debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
+        debugTab.add(m_elevatorSubsystem.createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
+        debugTab.add(m_elevatorSubsystem.createELevatorToTunableHeightCommand().withName("elevator to tunable height"));
+        //l3 15.5
+
+
+
+
         debugTab.add(m_elevatorSubsystem.createResetEncoderCommand().withName("reset encoder omg"));
         debugTab.add(m_elevatorSubsystem.createElevatorToCoastModeCommand().withName("Move elevator to coast"));
     }
@@ -233,17 +258,16 @@ public class RobotContainer {
 
     private void createMovePIECommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L1).withName("Level One"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L2).withName("Level Two"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L3).withName("Level Three"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.L4).withName("Level Four"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_NET).withName("Score Into net"));
-        debugTab.add(m_combinedCommand.scoreCoralCommand(PIE.SCORE_INTO_PROCESSOR).withName("Score into processor"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L1).withName("Level One"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L2).withName("Level Two"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L3).withName("Level Three"));
+        debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L4).withName("Level Four"));
+        debugTab.add(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_NET).withName("Score Into net"));
+        debugTab.add(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR).withName("Score into processor"));
         debugTab.add(m_combinedCommand.fetchPieceFromHPStation().withName("human player station"));
-        debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_2).withName("fetch algae two! :)"));
-        debugTab.add(m_combinedCommand.fetchAlgae(PIE.FETCH_ALGAE_3).withName("fetch algae three! :)"));
-
-
+        debugTab.add(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2).withName("fetch algae two! :)"));
+        debugTab.add(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3).withName("fetch algae three! :)"));
+        debugTab.add(m_combinedCommand.moveElevatorAndPivotToTunablePosition().withName("elevator and pivot to tunable position"));
     }
 
     private void createMoveRobotToPositionCommand() {
