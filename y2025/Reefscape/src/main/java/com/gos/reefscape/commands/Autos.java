@@ -51,19 +51,19 @@ public final class Autos {
             CoralPositions.C));
 
         //created for all 12
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
-            CoralPositions.A,
-            CoralPositions.B,
-            CoralPositions.C,
-            CoralPositions.D,
-            CoralPositions.E,
-            CoralPositions.F,
-            CoralPositions.G,
-            CoralPositions.H,
-            CoralPositions.I,
-            CoralPositions.J,
-            CoralPositions.K,
-            CoralPositions.L));
+        //        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+        //            CoralPositions.A,
+        //            CoralPositions.B,
+        //            CoralPositions.C,
+        //            CoralPositions.D,
+        //            CoralPositions.E,
+        //            CoralPositions.F,
+        //            CoralPositions.G,
+        //            CoralPositions.H,
+        //            CoralPositions.I,
+        //            CoralPositions.J,
+        //            CoralPositions.K,
+        //            CoralPositions.L));
 
         ///////////////////////////////
         /// Center Side
