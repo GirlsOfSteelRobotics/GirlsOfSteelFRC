@@ -9,35 +9,21 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AToHumanPlayerLeft"
+            "pathName": "StartingPosLeftToH"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "BToHumanPlayerLeft"
+            "pathName": "HToHumanPlayerLeft"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "LToHumanPlayerLeft"
-          }
-        }
-        ,
-        {
-          "type": "path",
-          "data": {
-            "pathName": "KToHumanPlayerLeft"
-          }
-        }
-        ,
-        {
-          "type": "path",
-          "data": {
-            "pathName": "JToHumanPlayerLeft"
+            "pathName": "HumanPlayerLeftToI"
           }
         }
         ,
@@ -51,14 +37,49 @@
         {
           "type": "path",
           "data": {
-            "pathName": "GToHumanPlayerLeft"
+            "pathName": "HumanPlayerLeftToJ"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "HToHumanPlayerLeft"
+            "pathName": "JToHumanPlayerLeft"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToK"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "KToHumanPlayerLeft"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToL"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LToHumanPlayerLeft"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToA"
           }
         }
         

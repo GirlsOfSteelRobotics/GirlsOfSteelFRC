@@ -9,56 +9,70 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AToHumanPlayerLeft"
+            "pathName": "StartingPosRightToD"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "BToHumanPlayerLeft"
+            "pathName": "StartingPosRightToE"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "LToHumanPlayerLeft"
+            "pathName": "StartingPosRightToF"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "KToHumanPlayerLeft"
+            "pathName": "StartingPosRightToG"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "JToHumanPlayerLeft"
+            "pathName": "StartingPosLeftToH"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "IToHumanPlayerLeft"
+            "pathName": "StartingPosLeftToI"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "GToHumanPlayerLeft"
+            "pathName": "StartingPosLeftToJ"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "HToHumanPlayerLeft"
+            "pathName": "StartingPosLeftToK"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosCenterToH"
+          }
+        }
+        ,
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosCenterToG"
           }
         }
         

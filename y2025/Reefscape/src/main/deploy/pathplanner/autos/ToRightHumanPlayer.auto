@@ -9,56 +9,56 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AToHumanPlayerLeft"
+            "pathName": "AToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "BToHumanPlayerLeft"
+            "pathName": "BToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "LToHumanPlayerLeft"
+            "pathName": "CToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "KToHumanPlayerLeft"
+            "pathName": "DToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "JToHumanPlayerLeft"
+            "pathName": "EToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "IToHumanPlayerLeft"
+            "pathName": "FToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "GToHumanPlayerLeft"
+            "pathName": "GToHumanPlayerRight"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "HToHumanPlayerLeft"
+            "pathName": "HToHumanPlayerRight"
           }
         }
         

@@ -9,56 +9,42 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AToHumanPlayerLeft"
+            "pathName": "ProcessorToAB"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "BToHumanPlayerLeft"
+            "pathName": "ProcessorToCD"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "LToHumanPlayerLeft"
+            "pathName": "ProcessorToEF"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "KToHumanPlayerLeft"
+            "pathName": "ProcessorToGH"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "JToHumanPlayerLeft"
+            "pathName": "ProcessorToEF"
           }
         }
         ,
         {
           "type": "path",
           "data": {
-            "pathName": "IToHumanPlayerLeft"
-          }
-        }
-        ,
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GToHumanPlayerLeft"
-          }
-        }
-        ,
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HToHumanPlayerLeft"
+            "pathName": "ProcessorToIJ"
           }
         }
         
