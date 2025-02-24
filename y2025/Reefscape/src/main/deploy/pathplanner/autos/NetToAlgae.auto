@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueNetToGH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueNetToEF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueNetToIJ"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Mini Paths",
+  "choreoAuto": true
+}
