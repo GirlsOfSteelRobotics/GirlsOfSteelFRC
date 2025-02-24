@@ -44,7 +44,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     private final RevProfiledSingleJointedArmController m_armPidController;
 
-    private double m_armGoalAngle = Double.MIN_VALUE;
+    private double m_armGoalAngle = -Double.MAX_VALUE;
 
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
@@ -100,6 +100,7 @@ public class PivotSubsystem extends SubsystemBase {
         }
 
         syncRelativeEncoder();
+        m_relativeEncoder.setPosition(-24);
     }
 
     public void clearStickyFaults() {
@@ -148,6 +149,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public void stop() {
+        m_armGoalAngle = -Double.MAX_VALUE;
         m_pivotMotor.set(0);
     }
 
@@ -213,7 +215,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createResetEncoderCommand() {
-        return run(() -> m_relativeEncoder.setPosition(0)).ignoringDisable(true);
+        return run(() -> m_relativeEncoder.setPosition(-24)).ignoringDisable(true);
     }
 
     public Command createPivotoCoastModeCommand() {

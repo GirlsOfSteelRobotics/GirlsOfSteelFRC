@@ -65,6 +65,10 @@ public final class Autos {
             CoralPositions.K,
             CoralPositions.L,
             CoralPositions.A));
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L3, StartingPositions.LEFT, List.of(
+            CoralPositions.J,
+            CoralPositions.L
+        ));
     }
 
     private void createMultiCoralAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
