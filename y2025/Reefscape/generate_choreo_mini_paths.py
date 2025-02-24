@@ -25,7 +25,7 @@ def create_path(choreo_dir, variables, first_variable, second_variable):
     )
 
     path_to_write = choreo_dir / f"{filename}.traj"
-    # path_to_write.write_text(contents)
+    path_to_write.write_text(contents)
 
     return filename
 
