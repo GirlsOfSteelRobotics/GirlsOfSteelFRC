@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosRightToE"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EToHumanPlayerRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerRightToB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BToHumanPlayerRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerRightToC"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Autos",
+  "choreoAuto": true
+}

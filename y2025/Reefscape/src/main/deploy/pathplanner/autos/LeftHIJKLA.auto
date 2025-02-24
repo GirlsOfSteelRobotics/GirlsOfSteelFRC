@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosLeftToH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HToHumanPlayerLeft"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToI"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "IToHumanPlayerLeft"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToJ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "JToHumanPlayerLeft"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToK"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "KToHumanPlayerLeft"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LToHumanPlayerLeft"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerLeftToA"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Autos",
+  "choreoAuto": true
+}

@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToAB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToCD"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToEF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToGH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToEF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToIJ"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Mini Paths",
+  "choreoAuto": true
+}

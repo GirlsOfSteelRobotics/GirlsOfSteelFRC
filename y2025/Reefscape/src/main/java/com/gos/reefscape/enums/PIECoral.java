@@ -3,11 +3,12 @@ package com.gos.reefscape.enums;
 import edu.wpi.first.math.util.Units;
 
 public enum PIECoral {
-    HUMAN_PLAYER_STATION(Units.inchesToMeters(0), 0),
-    L1((0), 0),
-    L2((0), -37.95),
-    L3((0.44), -37.95),
-    L4((1.10), -37.95);
+    HUMAN_PLAYER_STATION(Units.inchesToMeters(0), -24),
+    L1(0, 0),
+    L2(0.14, -45.95),
+    L3(0.6, -45.95),
+    L4(1.17, -90);
+
 
     public PIESetpoint m_setpoint;
 

@@ -32,7 +32,7 @@ public class CombinedCommands {
     public Command scoreCoralCommand(PIECoral combo) {
         return pieCommand(combo.m_setpoint)
             .andThen(m_coralSubsystem.createMoveCoralOutCommand()
-                .withTimeout(1));
+                .withTimeout(2));
     }
 
     public Command scoreAlgaeCommand(PIEAlgae combo) {

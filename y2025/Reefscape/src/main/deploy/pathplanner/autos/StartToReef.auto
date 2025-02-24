@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosRightToD"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosRightToE"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosRightToF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosRightToG"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosLeftToH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosLeftToI"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosLeftToJ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosLeftToK"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosCenterToH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosCenterToG"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Mini Paths",
+  "choreoAuto": true
+}
