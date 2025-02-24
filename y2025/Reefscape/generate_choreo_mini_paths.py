@@ -50,7 +50,7 @@ def main():
     for reef_position in ["H", "G"]:
         create_path(choreo_dir, variables, "StartingPosCenter", reef_position)
 
-    for algae_position in ["AB","CD","EF","GH", "EF", "IJ"]:
+    for algae_position in ["AB", "CD", "EF", "GH", "EF", "IJ"]:
         create_path(choreo_dir, variables, algae_position, "Processor")
         create_path(choreo_dir, variables, "Processor", algae_position)
 
