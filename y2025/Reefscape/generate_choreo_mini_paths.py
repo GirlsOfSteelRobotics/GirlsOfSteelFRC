@@ -125,17 +125,55 @@ def main():
     write_pathplanner_auto(net_to_algae, pathplanner_dir / "NetToAlgae.auto")
     write_pathplanner_auto(algae_to_net, pathplanner_dir / "AlgaeToNet.auto")
 
-    right_ebc_auto = ["StartingPosRightToE","EToHumanPlayerRight","HumanPlayerRightToB","BToHumanPlayerRight","HumanPlayerRightToC"]
+    right_ebc_auto = [
+        "StartingPosRightToE",
+        "EToHumanPlayerRight",
+        "HumanPlayerRightToB",
+        "BToHumanPlayerRight",
+        "HumanPlayerRightToC",
+    ]
     write_pathplanner_auto(right_ebc_auto, pathplanner_dir / "RightEBC.auto")
 
-    right_gfedcb_auto = ["StartingPosRightToG", "GToHumanPlayerRight", "HumanPlayerRightToF", "FToHumanPlayerRight", "HumanPlayerRightToE", "EToHumanPlayerRight", "HumanPlayerRightToD", "DToHumanPlayerRight", "HumanPlayerRightToC", "CToHumanPlayerRight", "HumanPlayerRightToB"]
+    right_gfedcb_auto = [
+        "StartingPosRightToG",
+        "GToHumanPlayerRight",
+        "HumanPlayerRightToF",
+        "FToHumanPlayerRight",
+        "HumanPlayerRightToE",
+        "EToHumanPlayerRight",
+        "HumanPlayerRightToD",
+        "DToHumanPlayerRight",
+        "HumanPlayerRightToC",
+        "CToHumanPlayerRight",
+        "HumanPlayerRightToB",
+    ]
     write_pathplanner_auto(right_gfedcb_auto, pathplanner_dir / "RightGFEDCB.auto")
 
-    center_GH_EF_IJ_auto = ["StartingPosCenterToH","HToGH","GHToProcessor","ProcessorToEF","EFToProcessor","ProcessorToIJ"]
+    center_GH_EF_IJ_auto = [
+        "StartingPosCenterToH",
+        "HToGH",
+        "GHToProcessor",
+        "ProcessorToEF",
+        "EFToProcessor",
+        "ProcessorToIJ",
+    ]
     write_pathplanner_auto(center_GH_EF_IJ_auto, pathplanner_dir / "CenterGH_EF_IJ.auto")
 
-    left_hijkla_auto = ["StartingPosLeftToH", "HToHumanPlayerLeft", "HumanPlayerLeftToI", "IToHumanPlayerLeft", "HumanPlayerLeftToJ", "JToHumanPlayerLeft", "HumanPlayerLeftToK", "KToHumanPlayerLeft", "HumanPlayerLeftToL", "LToHumanPlayerLeft", "HumanPlayerLeftToA"]
+    left_hijkla_auto = [
+        "StartingPosLeftToH",
+        "HToHumanPlayerLeft",
+        "HumanPlayerLeftToI",
+        "IToHumanPlayerLeft",
+        "HumanPlayerLeftToJ",
+        "JToHumanPlayerLeft",
+        "HumanPlayerLeftToK",
+        "KToHumanPlayerLeft",
+        "HumanPlayerLeftToL",
+        "LToHumanPlayerLeft",
+        "HumanPlayerLeftToA",
+    ]
     write_pathplanner_auto(left_hijkla_auto, pathplanner_dir / "LeftHIJKLA.auto")
+
 
 TRAJECTORY_TEMPLATE = """{
  "name":"{{ name }}",

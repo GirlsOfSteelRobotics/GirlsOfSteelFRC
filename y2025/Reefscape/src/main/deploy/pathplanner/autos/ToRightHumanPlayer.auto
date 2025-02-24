@@ -1,72 +1,61 @@
-
 {
   "version": "2025.0",
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-    
         {
           "type": "path",
           "data": {
             "pathName": "AToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "BToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "CToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "DToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "EToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "FToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "GToHumanPlayerRight"
           }
-        }
-        ,
+        },
         {
           "type": "path",
           "data": {
             "pathName": "HToHumanPlayerRight"
           }
         }
-        
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Mini Paths",
   "choreoAuto": true
 }
-    
