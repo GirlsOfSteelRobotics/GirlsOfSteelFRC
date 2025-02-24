@@ -44,6 +44,11 @@ public class CombinedCommands {
         return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
+    //
+    public Command scoreAlgaeInNet() {
+        return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+    }
+    //
 
     public boolean isAtGoalHeightAngle() {
         return m_elevatorSubsystem.isAtGoalHeight() && m_pivotSubsystem.isAtGoalAngle();

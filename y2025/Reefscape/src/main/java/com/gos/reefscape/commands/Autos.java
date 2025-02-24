@@ -6,10 +6,11 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.GosAuto;
+import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
 import com.gos.reefscape.enums.PIECoral;
-import com.gos.reefscape.auto.modes.MultiPieceAlgae;
+import com.gos.reefscape.auto.modes.MultiPieceProcessor;
 import com.gos.reefscape.auto.modes.MultiPieceCoral;
 import com.gos.reefscape.enums.StartingPositions;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
@@ -45,6 +46,9 @@ public final class Autos {
             CoralPositions.B,
             CoralPositions.C));
 
+        createScoreNetAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.G, StartingPositions.RIGHT, List.of(AlgaePositions.IJ));
+
+
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
@@ -54,6 +58,9 @@ public final class Autos {
             AlgaePositions.GH,
             AlgaePositions.EF,
             AlgaePositions.IJ));
+
+        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L3, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
+
 
         ///////////////////////////////
         /// Left Side
@@ -77,7 +84,7 @@ public final class Autos {
     }
 
     private void createMultiAlgaeAuto(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
-        GosAuto multiPieceAlgae = new MultiPieceAlgae(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
+        GosAuto multiPieceAlgae = new MultiPieceProcessor(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
         addAutoMode(multiPieceAlgae);
     }
 
@@ -89,6 +96,11 @@ public final class Autos {
         } else {
             m_autoModes.addOption(name, auto);
         }
+    }
+
+    private void createScoreNetAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
+        GosAuto scoreIntoNetAuto = new MultiPieceNet(chassis, combinedCommands, combo, coral, start, algaePositions);
+        m_autoModes.addOption(scoreIntoNetAuto.getName(), scoreIntoNetAuto);
     }
 
     public GosAuto getSelectedAuto() {

@@ -190,6 +190,8 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
 
+
+
     public void setIdleMode(IdleMode idleMode) {
         SparkMaxConfig config = new SparkMaxConfig();
         config.idleMode(idleMode);
@@ -229,6 +231,13 @@ public class PivotSubsystem extends SubsystemBase {
         return defer(() -> createMovePivotToAngleCommand(PIVOT_TUNABLE_ANGLE.getValue())).withName("pivot to tunable angle ");
     }
 
+
+    public Command createElevatorToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Elevator to Coast");
+    }
 
 
 }
