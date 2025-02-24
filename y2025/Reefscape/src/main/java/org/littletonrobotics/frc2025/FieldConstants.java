@@ -27,7 +27,7 @@ public class FieldConstants {
     public static final double APRIL_TAG_WIDTH = Units.inchesToMeters(6.50);
     public static final int APRIL_TAG_COUNT = 22;
 
-    public static final AprilTagFieldLayout TAG_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+    public static final AprilTagFieldLayout TAG_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
     public static final double FIELD_LENGTH = Units.inchesToMeters(690.876);
     public static final double FIELD_WIDTH = Units.inchesToMeters(317);
