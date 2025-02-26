@@ -11,7 +11,7 @@ public class MovePivotWithJoystickCommand extends Command {
     private final PivotSubsystem m_pivotSubsystem;
     private final CommandXboxController m_controller;
 
-    private static final GosDoubleProperty JOYSTICK_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "PivotDamp", 0.1);
+    private static final GosDoubleProperty JOYSTICK_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "PivotDamp", 0.25);
 
     public MovePivotWithJoystickCommand(PivotSubsystem pivotSubsystem, CommandXboxController joystick) {
         m_pivotSubsystem = pivotSubsystem;

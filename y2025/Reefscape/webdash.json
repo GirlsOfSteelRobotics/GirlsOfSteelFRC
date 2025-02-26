@@ -14,7 +14,7 @@
           "type": "tabset",
           "id": "aaaa2713-f785-4f46-b686-34a948586601",
           "weight": 50,
-          "selected": 6,
+          "selected": 7,
           "children": [
             {
               "type": "tab",
@@ -73,6 +73,17 @@
               "type": "tab",
               "id": "ef67f872-4e75-41c0-b762-2c70f2fb28aa",
               "name": "Sys Id debug"
+            },
+            {
+              "type": "tab",
+              "id": "#c5abbc04-3ba6-41f8-b1ad-a38a0ef8256c",
+              "name": "Unnamed Tab",
+              "component": "components"
+            },
+            {
+              "type": "tab",
+              "id": "02897e81-5646-4452-82ff-844f2c44b0cc",
+              "name": "chassis"
             }
           ],
           "active": true
@@ -4419,6 +4430,114 @@
       },
       "type": "booleanBox",
       "name": "Boolean Box"
+    },
+    "24c00705-83a5-405c-938b-4bd1755169df": {
+      "id": "24c00705-83a5-405c-938b-4bd1755169df",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/chassis/chassis to coast"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 2,
+        "y": 5
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "e904a5da-740e-4efa-a4f2-ca52e182b733": {
+      "id": "e904a5da-740e-4efa-a4f2-ca52e182b733",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/chassis/chassis to coast"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 3,
+        "y": 2
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
+    },
+    "442c8ab4-cb42-48a1-97e2-524d2b4f395c": {
+      "id": "442c8ab4-cb42-48a1-97e2-524d2b4f395c",
+      "children": [],
+      "source": {
+        "provider": "NT",
+        "key": "/Shuffleboard/Combined Commands/pivot & elevator to coast"
+      },
+      "minSize": {
+        "width": 1,
+        "height": 1
+      },
+      "size": {
+        "width": 2,
+        "height": 1
+      },
+      "position": {
+        "x": 10,
+        "y": 12
+      },
+      "properties": {
+        "name": {
+          "value": "Command"
+        },
+        "running": {
+          "value": false
+        },
+        "controllable": {
+          "value": false
+        },
+        "label": {
+          "value": ""
+        }
+      },
+      "type": "robotCommand",
+      "name": "Command"
     }
   },
   "tabs": {
@@ -4444,7 +4563,8 @@
         "fcb7bf0d-dd0b-4e21-8853-2ef57fb003f7",
         "cb41f664-3326-427e-9846-93f245804a8b",
         "808292d0-b8e1-456e-a383-c227923cde89",
-        "1a6c49ae-93bd-4676-b02f-a527c4311aa6"
+        "1a6c49ae-93bd-4676-b02f-a527c4311aa6",
+        "442c8ab4-cb42-48a1-97e2-524d2b4f395c"
       ]
     },
     "f638241a-2454-4430-b9cb-e5a3d5a4d25e": {
@@ -4577,6 +4697,16 @@
         "b44b1b02-c7df-41ca-a53c-83301a47c993",
         "3bcea1e4-76eb-4028-9249-90ef819c609b",
         "a577d5df-007a-422a-8325-7cba8b2b42f6"
+      ]
+    },
+    "#c5abbc04-3ba6-41f8-b1ad-a38a0ef8256c": {
+      "componentIds": [
+        "24c00705-83a5-405c-938b-4bd1755169df"
+      ]
+    },
+    "02897e81-5646-4452-82ff-844f2c44b0cc": {
+      "componentIds": [
+        "e904a5da-740e-4efa-a4f2-ca52e182b733"
       ]
     }
   },

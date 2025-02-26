@@ -31,6 +31,7 @@ public class PivotSubsystem extends SubsystemBase {
     private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
     private static final double PIVOT_ERROR = 3;
     private static final double GEAR_RATIO = 45.0; // reduction
+    public static final double DEFAULT_ANGLE = -24;
 
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
@@ -63,14 +64,14 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
-            .addMaxVelocity(200)
-            .addMaxAcceleration(300)
+            .addMaxVelocity(180)
+            .addMaxAcceleration(360)
             // Arm FF
             .addKs(0)
-            .addKv(0)
-            .addKg(0)
+            .addKv(1.0)
+            .addKg(0.1)
             // REV Position controller
-            .addKp(0)
+            .addKp(.05)
             .build();
 
         pivotConfig.signals.absoluteEncoderPositionPeriodMs(20);
@@ -100,7 +101,7 @@ public class PivotSubsystem extends SubsystemBase {
         }
 
         syncRelativeEncoder();
-        m_relativeEncoder.setPosition(-24);
+        m_relativeEncoder.setPosition(DEFAULT_ANGLE);
     }
 
     public void clearStickyFaults() {
@@ -217,7 +218,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createResetEncoderCommand() {
-        return run(() -> m_relativeEncoder.setPosition(-24)).ignoringDisable(true);
+        return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).ignoringDisable(true);
     }
 
     public Command createPivotoCoastModeCommand() {
