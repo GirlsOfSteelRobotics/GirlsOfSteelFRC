@@ -92,15 +92,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", false, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
-            .addMaxVelocity(Units.inchesToMeters(20))
-            .addMaxAcceleration(Units.inchesToMeters(20))
+            .addMaxVelocity(1.0)
+            .addMaxAcceleration(2.0)
             // Elevator FF
             .addKs(0)
-            .addKv(0)
-            .addKg(0)
+            .addKv(3.5)
+            .addKg(0.3)
             .addKa(0)
             // REV Position controller
-            .addKp(0)
+            .addKp(2)
             .build();
 
         m_elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

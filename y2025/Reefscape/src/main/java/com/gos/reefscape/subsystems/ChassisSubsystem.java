@@ -145,8 +145,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
         m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
-            .addP(0)
-            .addD(0)
+            .addP(10.0)
+            .addD(0.1)
             .build();
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 

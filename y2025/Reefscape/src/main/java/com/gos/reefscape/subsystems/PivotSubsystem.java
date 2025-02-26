@@ -64,14 +64,14 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
-            .addMaxVelocity(200)
-            .addMaxAcceleration(300)
+            .addMaxVelocity(180)
+            .addMaxAcceleration(360)
             // Arm FF
             .addKs(0)
-            .addKv(0)
-            .addKg(0)
+            .addKv(1.0)
+            .addKg(0.1)
             // REV Position controller
-            .addKp(0)
+            .addKp(.05)
             .build();
 
         pivotConfig.signals.absoluteEncoderPositionPeriodMs(20);
