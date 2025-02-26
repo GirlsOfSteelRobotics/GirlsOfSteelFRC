@@ -5,6 +5,7 @@
 
 package com.gos.reefscape;
 
+import com.gos.lib.properties.PropertyManager;
 import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
@@ -106,6 +107,10 @@ public class RobotContainer {
 
         m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
 
+
+        if (RobotBase.isReal()) {
+            PropertyManager.printDynamicProperties(true);
+        }
 
         // PropertyManager.purgeExtraKeys();
 
