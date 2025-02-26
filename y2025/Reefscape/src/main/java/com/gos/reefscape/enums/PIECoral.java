@@ -4,7 +4,7 @@ import edu.wpi.first.math.util.Units;
 
 public enum PIECoral {
     HUMAN_PLAYER_STATION(Units.inchesToMeters(0), -24),
-    L1(0, 0),
+    L1(0, -90),
     L2(0.14, -45.95),
     L3(0.6, -45.95),
     L4(1.17, -90);

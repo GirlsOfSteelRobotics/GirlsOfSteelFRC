@@ -11,6 +11,7 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
@@ -89,13 +90,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.1)
-        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.1)
-        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.1) // Add a 10% deadband
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private boolean m_hasAppliedOperatorPerspective;
@@ -205,7 +206,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         double minDist = 999999999999999999.9;
         AlgaePositions closestAlgae = AlgaePositions.AB;
         for (AlgaePositions pos : AlgaePositions.values()) {
-            Pose2d algaePose = pos.m_pose;
+            Pose2d algaePose = pos.m_pose.getPose();
             double dx = algaePose.getX() - curPose.getX();
             double dy = algaePose.getY() - curPose.getY();
             double distance = Math.sqrt(dx * dx + dy * dy);
@@ -317,6 +318,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), stds);
     }
 
+    public void setIdleMode(NeutralModeValue neutralModeValue) {
+        for (int i = 0; i < 4; i++) {
+            getModule(i).getSteerMotor().setNeutralMode(neutralModeValue);
+            getModule(i).getDriveMotor().setNeutralMode(neutralModeValue);
+        }
+
+    }
+
 
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetPose(pose));
@@ -342,6 +351,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
     }
 
+    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d pose) {
+        return defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0));
+    }
+
     public Command createResetGyroCommand() {
         return run(this::resetGyro)
             .ignoringDisable(true)
@@ -351,14 +364,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public Command createDriveToClosestAlgaeCommand() {
         return defer(() -> {
             AlgaePositions closestAlgae = findClosestAlgae();
-            return createDriveToPose(closestAlgae.m_pose);
+            return createDriveToMaybeFlippedPose(closestAlgae.m_pose);
         });
     }
 
     public Command createDriveToRightCoral() {
         return defer(() -> {
             AlgaePositions closestAlgae = findClosestAlgae();
-            return createDriveToPose(closestAlgae.m_coralRight.m_pose);
+            return createDriveToMaybeFlippedPose(closestAlgae.m_coralRight.m_pose);
         });
     }
 
@@ -366,8 +379,17 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public Command createDriveToLeftCoral() {
         return defer(() -> {
             AlgaePositions closestAlgae = findClosestAlgae();
-            return createDriveToPose(closestAlgae.m_coralLeft.m_pose);
+            return createDriveToMaybeFlippedPose(closestAlgae.m_coralLeft.m_pose);
         });
     }
+
+    public Command createChassisToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(NeutralModeValue.Coast),
+                () -> setIdleMode(NeutralModeValue.Brake))
+            .ignoringDisable(true).withName("Chassis to Coast");
+    }
+
+
 }
 

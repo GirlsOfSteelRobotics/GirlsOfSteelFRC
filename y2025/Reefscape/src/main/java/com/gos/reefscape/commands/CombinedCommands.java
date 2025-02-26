@@ -30,6 +30,15 @@ public class CombinedCommands {
     }
 
     public Command scoreCoralCommand(PIECoral combo) {
+
+        if (combo == PIECoral.L4) {
+            return pieCommand(PIECoral.L2.m_setpoint)
+                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
+                .andThen(pieCommand(PIECoral.L4.m_setpoint))
+                    .andThen(m_coralSubsystem.createMoveCoralOutCommand()
+                        .withTimeout(2));
+        }
+
         return pieCommand(combo.m_setpoint)
             .andThen(m_coralSubsystem.createMoveCoralOutCommand()
                 .withTimeout(2));
@@ -42,6 +51,8 @@ public class CombinedCommands {
     public Command scoreAlgaeInProcessorCommand() {
         return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
+
+
 
     //
     public Command scoreAlgaeInNet() {
@@ -73,5 +84,12 @@ public class CombinedCommands {
     }
 
 
+    public Command elevatorPivotToCoast() {
+        return m_elevatorSubsystem.createElevatorToCoastModeCommand().alongWith(m_pivotSubsystem.createPivotoCoastModeCommand());
+    }
 
+    public Command goHome() {
+        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0)
+            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE));
+    }
 }

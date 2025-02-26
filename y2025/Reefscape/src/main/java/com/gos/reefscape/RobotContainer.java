@@ -96,11 +96,12 @@ public class RobotContainer {
         addElevatorDebugCommands();
         addAlgaeDebugCommands();
         addSysIdDebugDebugTab();
+        addChassisDebugCommands();
         SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         SmartDashboard.putData("drive to starting position", createDriveChassisToStartingPoseCommand().withName("drive chassis to start position"));
 
 
-        createMovePIECommand();
+        createCombinedCommand();
         createMoveRobotToPositionCommand();
 
         m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
@@ -122,7 +123,7 @@ public class RobotContainer {
      */
     public Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
-            Pose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose;
+            Pose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose.getPose();
             return m_chassisSubsystem.createDriveToPose(startingLocation);
         }, Set.of(m_chassisSubsystem));
     }
@@ -144,14 +145,17 @@ public class RobotContainer {
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
 
-        m_driverController.leftBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L2));
+        m_driverController.leftBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L1));
+        m_driverController.leftTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L2));
         m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L3));
-        m_driverController.leftTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L4));
+        m_driverController.rightTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L4));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
         m_driverController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
+        m_driverController.b().whileTrue(m_combinedCommand.goHome());
     }
+
 
 
     /**
@@ -163,6 +167,8 @@ public class RobotContainer {
         // An example command will be run in autonomous
         return m_autos.getSelectedAuto();
     }
+
+
 
     private void addCoralDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
@@ -176,6 +182,13 @@ public class RobotContainer {
         debugTab.add(m_algaeSubsystem.createMoveAlgaeInCommand());
         debugTab.add(m_algaeSubsystem.createMoveAlgaeOutCommand());
         debugTab.add(m_algaeSubsystem.createIntakeUntilAlgaeCommand());
+    }
+
+    private void addChassisDebugCommands() {
+        ShuffleboardTab debugTabChassis = Shuffleboard.getTab("chassis");
+        debugTabChassis.add(m_chassisSubsystem.createChassisToCoastModeCommand().withName("chassis to coast"));
+
+
     }
 
     private void addPivotDebugCommands() {
@@ -256,7 +269,7 @@ public class RobotContainer {
         ).withName(name);
     }
 
-    private void createMovePIECommand() {
+    private void createCombinedCommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L1).withName("Level One"));
         debugTab.add(m_combinedCommand.scoreCoralCommand(PIECoral.L2).withName("Level Two"));
@@ -268,12 +281,15 @@ public class RobotContainer {
         debugTab.add(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2).withName("fetch algae two! :)"));
         debugTab.add(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3).withName("fetch algae three! :)"));
         debugTab.add(m_combinedCommand.moveElevatorAndPivotToTunablePosition().withName("elevator and pivot to tunable position"));
+        debugTab.add(m_combinedCommand.elevatorPivotToCoast().withName("pivot & elevator to coast"));
+        debugTab.add(m_combinedCommand.goHome().withName("go home"));
+
     }
 
     private void createMoveRobotToPositionCommand() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Move Robot To Position");
-        debugTab.add(m_chassisSubsystem.createDriveToPose(ChoreoPoses.E).withName("E"));
-        debugTab.add(m_chassisSubsystem.createDriveToPose(ChoreoPoses.C).withName("C"));
+        debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.E).withName("E"));
+        debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.C).withName("C"));
 
     }
 

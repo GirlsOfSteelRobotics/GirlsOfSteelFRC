@@ -1,7 +1,7 @@
 package com.gos.reefscape.enums;
 
 import com.gos.reefscape.ChoreoPoses;
-import edu.wpi.first.math.geometry.Pose2d;
+import com.gos.reefscape.MaybeFlippedPose2d;
 
 public enum CoralPositions {
     A(ChoreoPoses.A),
@@ -17,10 +17,10 @@ public enum CoralPositions {
     K(ChoreoPoses.K),
     L(ChoreoPoses.L);
 
-    public Pose2d m_pose;
+    public MaybeFlippedPose2d m_pose;
 
 
-    CoralPositions(Pose2d pose) {
+    CoralPositions(MaybeFlippedPose2d pose) {
         m_pose = pose;
     }
 }

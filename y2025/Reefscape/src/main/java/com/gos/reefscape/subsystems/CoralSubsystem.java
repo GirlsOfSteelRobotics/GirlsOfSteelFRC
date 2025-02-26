@@ -55,7 +55,7 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public void coralIn() {
-        m_coralMotor.set(0.2);
+        m_coralMotor.set(0.5);
     }
 
     public boolean hasCoral() {

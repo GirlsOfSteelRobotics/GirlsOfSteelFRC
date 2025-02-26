@@ -1,7 +1,7 @@
 package com.gos.reefscape.enums;
 
 import com.gos.reefscape.ChoreoPoses;
-import edu.wpi.first.math.geometry.Pose2d;
+import com.gos.reefscape.MaybeFlippedPose2d;
 
 public enum AlgaePositions {
     AB(ChoreoPoses.AB, PIEAlgae.FETCH_ALGAE_3, CoralPositions.A, CoralPositions.B),
@@ -12,13 +12,13 @@ public enum AlgaePositions {
     KL(ChoreoPoses.KL, PIEAlgae.FETCH_ALGAE_2, CoralPositions.K, CoralPositions.L);
 
 
-    public Pose2d m_pose;
+    public MaybeFlippedPose2d m_pose;
     public PIEAlgae m_algaeHeight;
     public CoralPositions m_coralLeft;
     public CoralPositions m_coralRight;
 
 
-    AlgaePositions(Pose2d pose, PIEAlgae algaePosition, CoralPositions coralLeft, CoralPositions coralRight) {
+    AlgaePositions(MaybeFlippedPose2d pose, PIEAlgae algaePosition, CoralPositions coralLeft, CoralPositions coralRight) {
         m_pose = pose;
         m_algaeHeight = algaePosition;
         m_coralLeft = coralLeft;
