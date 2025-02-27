@@ -33,14 +33,15 @@ import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 public class ElevatorSubsystem extends SubsystemBase {
 
     public static final double K_ELEVATOR_GEARING = 12.0;
-    public static final double K_CARRIAGE_MASS = 4.0; // kg
+    public static final double K_CARRIAGE_MASS = Units.lbsToKilograms(9);
     public static final double K_MIN_ELEVATOR_HEIGHT = Units.inchesToMeters(-4);
     public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(120);
-    public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getNeoVortex(1);
+    public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getNeoVortex(2);
     public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.0);
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
     public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0);
+    public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
 
 
 
@@ -57,7 +58,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private final RevProfiledElevatorController m_elevatorPidController;
 
-    private double m_goalHeight = -Double.MAX_VALUE;
+    private double m_goalHeight = NO_GOAL_HEIGHT;
 
 
     private ElevatorSimWrapper m_simulator;
@@ -116,7 +117,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             ElevatorSim sim = new ElevatorSim(
                 K_ELEVATOR_GEARBOX,
-                K_ELEVATOR_GEARING,
+                K_ELEVATOR_GEARING * 0.5, // Cut in half because of how a two stage elevator works (???)
                 K_CARRIAGE_MASS,
                 K_ELEVATOR_DRUM_RADIUS,
                 K_MIN_ELEVATOR_HEIGHT,
@@ -167,7 +168,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void stop() {
-        m_goalHeight = -Double.MAX_VALUE;
+        m_goalHeight = NO_GOAL_HEIGHT;
         m_elevatorMotor.set(0);
     }
 
@@ -197,7 +198,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void goToHeight(double goalHeight) {
         m_goalHeight = goalHeight;
         m_elevatorPidController.goToHeight(goalHeight, getHeight(), getEncoderVel());
-        System.out.println(goalHeight);
     }
 
     public void resetPidController() {
