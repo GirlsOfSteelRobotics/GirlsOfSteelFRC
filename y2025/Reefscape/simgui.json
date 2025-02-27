@@ -31,11 +31,6 @@
           "open": true
         }
       },
-      "Talon FX (v6)[4]/Rev Limit": {
-        "header": {
-          "open": true
-        }
-      },
       "Talon FX (v6)[7]/Fwd Limit": {
         "header": {
           "open": true
@@ -64,7 +59,9 @@
       "/Shuffleboard/Combined Commands/elevator and pivot to tunable position": "Command",
       "/Shuffleboard/Combined Commands/fetch algae three! :)": "Command",
       "/Shuffleboard/Combined Commands/fetch algae two! :)": "Command",
+      "/Shuffleboard/Combined Commands/go home": "Command",
       "/Shuffleboard/Combined Commands/human player station": "Command",
+      "/Shuffleboard/Combined Commands/pivot & elevator to coast": "Command",
       "/Shuffleboard/Coral Debug/Coral In": "Command",
       "/Shuffleboard/Coral Debug/Coral Out": "Command",
       "/Shuffleboard/Coral Debug/Intake Till Coral": "Command",
@@ -105,6 +102,11 @@
       "/Shuffleboard/Debug Paths/TestRotation_270DegPerSec": "Command",
       "/Shuffleboard/Debug Paths/TestRotation_360DegPerSec": "Command",
       "/Shuffleboard/Debug Paths/TestRotation_MaxDegPerSec": "Command",
+      "/Shuffleboard/Debug Paths/TestSquiggle01Fps": "Command",
+      "/Shuffleboard/Debug Paths/TestSquiggle05Fps": "Command",
+      "/Shuffleboard/Debug Paths/TestSquiggle10Fps": "Command",
+      "/Shuffleboard/Debug Paths/TestSquiggle13Fps": "Command",
+      "/Shuffleboard/Debug Paths/TestSquiggleMaxFps": "Command",
       "/Shuffleboard/Elevator/Elevator go to height0.0": "Command",
       "/Shuffleboard/Elevator/Elevator go to height0.30479999999999996": "Command",
       "/Shuffleboard/Elevator/Elevator go to height0.6095999999999999": "Command",
@@ -113,7 +115,6 @@
       "/Shuffleboard/Elevator/Elevator go to height1.524": "Command",
       "/Shuffleboard/Elevator/Move elevator to coast": "Command",
       "/Shuffleboard/Elevator/elevator to tunable height": "Command",
-      "/Shuffleboard/Elevator/elevator to tunable height ": "Command",
       "/Shuffleboard/Elevator/reset encoder omg": "Command",
       "/Shuffleboard/Intake Outtake/Intake In": "Command",
       "/Shuffleboard/Intake Outtake/Intake Out": "Command",
@@ -138,7 +139,7 @@
       "/Shuffleboard/arm pivot/Pivot to Coast": "Command",
       "/Shuffleboard/arm pivot/Pivot to tunable angle": "Command",
       "/Shuffleboard/arm pivot/Reset pivot": "Command",
-      "/Shuffleboard/arm pivot/Reset pivot wow": "Command",
+      "/Shuffleboard/chassis/chassis to coast": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Auto Modes": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
@@ -149,91 +150,6 @@
       "/SmartDashboard/drive to starting position": "Command"
     },
     "windows": {
-      "/Shuffleboard/Combined Commands/Level Four": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Combined Commands/Level One": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Combined Commands/Level Three": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Combined Commands/Level Two": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Combined Commands/Score Into net": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Combined Commands/Score into processor": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Combined Commands/fetch algae two! :)": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Coral intake/Intake IN": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Coral intake/intake until coral :)": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Elevator/elevator to tunable height ": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Move Robot To Position/C": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Move Robot To Position/E": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Sys Id debug/Rotation sysid": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Sys Id debug/Steer sysid": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Sys Id debug/Sysid routine": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Sys Id debug/Translation sysid": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/arm pivot/Go to angle90.0": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Auto Modes": {
         "window": {
           "visible": true
@@ -264,11 +180,6 @@
         "window": {
           "visible": true
         }
-      },
-      "/SmartDashboard/drive to starting position": {
-        "window": {
-          "visible": true
-        }
       }
     }
   },
@@ -290,8 +201,7 @@
   "NetworkTables Info": {
     "Connections": {
       "open": true
-    },
-    "visible": true
+    }
   },
   "Plot": {
     "Plot <0>": {
@@ -303,7 +213,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 0
+          "height": -43
         }
       ],
       "window": {

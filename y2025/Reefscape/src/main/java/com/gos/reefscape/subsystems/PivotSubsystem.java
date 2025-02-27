@@ -32,6 +32,7 @@ public class PivotSubsystem extends SubsystemBase {
     private static final double PIVOT_ERROR = 3;
     private static final double GEAR_RATIO = 45.0; // reduction
     public static final double DEFAULT_ANGLE = -24;
+    public static final double NO_GOAL_ANGLE = -360;
 
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
@@ -45,7 +46,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     private final RevProfiledSingleJointedArmController m_armPidController;
 
-    private double m_armGoalAngle = -Double.MAX_VALUE;
+    private double m_armGoalAngle = NO_GOAL_ANGLE;
 
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
@@ -93,9 +94,9 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         if (RobotBase.isSimulation()) {
-            DCMotor gearbox = DCMotor.getNeo550(1);
-            SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, 252, 1,
-                0.381, Units.degreesToRadians(-40), Units.degreesToRadians(90), true, 0);
+            DCMotor gearbox = DCMotor.getNeoVortex(1);
+            SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
+                0.381, Units.degreesToRadians(-220), Units.degreesToRadians(90), true, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
@@ -150,7 +151,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public void stop() {
-        m_armGoalAngle = -Double.MAX_VALUE;
+        m_armGoalAngle = NO_GOAL_ANGLE;
         m_pivotMotor.set(0);
     }
 

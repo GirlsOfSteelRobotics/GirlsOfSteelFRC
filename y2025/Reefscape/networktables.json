@@ -10,7 +10,7 @@
   {
     "name": "/Preferences/Elevator.eff.kff",
     "type": "double",
-    "value": 3.2683,
+    "value": 3.5,
     "properties": {
       "persistent": true
     }
@@ -18,7 +18,7 @@
   {
     "name": "/Preferences/Elevator.eff.kg",
     "type": "double",
-    "value": 0.66377,
+    "value": 0.3,
     "properties": {
       "persistent": true
     }
@@ -26,7 +26,7 @@
   {
     "name": "/Preferences/Elevator.mm.kp",
     "type": "double",
-    "value": 0.1,
+    "value": 2.0,
     "properties": {
       "persistent": true
     }
@@ -34,7 +34,7 @@
   {
     "name": "/Preferences/Elevator.mm.max_velocity",
     "type": "double",
-    "value": 2.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -50,7 +50,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.03,
+    "value": 0.05,
     "properties": {
       "persistent": true
     }
@@ -58,7 +58,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.max_velocity",
     "type": "double",
-    "value": 90.0,
+    "value": 180.0,
     "properties": {
       "persistent": true
     }
@@ -66,7 +66,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.max_acceleration",
     "type": "double",
-    "value": 300.0,
+    "value": 360.0,
     "properties": {
       "persistent": true
     }
@@ -82,7 +82,7 @@
   {
     "name": "/Preferences/Arm Pivot.aff.kff",
     "type": "double",
-    "value": 2.6,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -90,7 +90,7 @@
   {
     "name": "/Preferences/Arm Pivot.aff.kg",
     "type": "double",
-    "value": 1.7,
+    "value": 0.1,
     "properties": {
       "persistent": true
     }
@@ -146,7 +146,7 @@
   {
     "name": "/Preferences/ChassisTranslationDamper",
     "type": "double",
-    "value": 1.0,
+    "value": 0.4,
     "properties": {
       "persistent": true
     }
@@ -178,7 +178,7 @@
   {
     "name": "/Preferences/chassis Pid.mm.kd",
     "type": "double",
-    "value": 0.0,
+    "value": 0.1,
     "properties": {
       "persistent": true
     }
@@ -186,7 +186,7 @@
   {
     "name": "/Preferences/Elevator.eff.ka",
     "type": "double",
-    "value": 0.062276,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -202,7 +202,7 @@
   {
     "name": "/Preferences/SdsModule.SteerkV",
     "type": "double",
-    "value": 2.075,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
@@ -218,7 +218,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Front.x(in)",
     "type": "double",
-    "value": 1.0,
+    "value": 14.0,
     "properties": {
       "persistent": true
     }
@@ -242,7 +242,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Front.yaw(deg)",
     "type": "double",
-    "value": 0.0,
+    "value": 11.0,
     "properties": {
       "persistent": true
     }
@@ -266,7 +266,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.x(in)",
     "type": "double",
-    "value": 5.25,
+    "value": -14.0,
     "properties": {
       "persistent": true
     }
@@ -274,7 +274,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.y(in)",
     "type": "double",
-    "value": -14.75,
+    "value": -4.0,
     "properties": {
       "persistent": true
     }
@@ -290,7 +290,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.yaw(deg)",
     "type": "double",
-    "value": 180.0,
+    "value": 178.0,
     "properties": {
       "persistent": true
     }
@@ -298,7 +298,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.pitch(deg)",
     "type": "double",
-    "value": -19.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
