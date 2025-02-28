@@ -11,6 +11,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -65,6 +67,13 @@ public class AlgaeSubsystem extends SubsystemBase {
 
     public boolean hasAlgae() {
         return !m_algaeSensor.get();
+    }
+
+    public void addAlgaeDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Algae Debug");
+        debugTab.add(createMoveAlgaeInCommand());
+        debugTab.add(createMoveAlgaeOutCommand());
+        debugTab.add(createIntakeUntilAlgaeCommand());
     }
 
     public Command createMoveAlgaeOutCommand() {

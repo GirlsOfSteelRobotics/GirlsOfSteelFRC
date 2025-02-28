@@ -330,7 +330,7 @@
   {
     "name": "/Preferences/tunableElevator",
     "type": "double",
-    "value": 10.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -338,7 +338,7 @@
   {
     "name": "/Preferences/tunablePivot",
     "type": "double",
-    "value": 90.0,
+    "value": -180.0,
     "properties": {
       "persistent": true
     }

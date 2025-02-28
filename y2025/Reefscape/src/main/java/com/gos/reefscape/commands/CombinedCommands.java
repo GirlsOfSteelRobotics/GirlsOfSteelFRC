@@ -7,6 +7,8 @@ import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class CombinedCommands {
@@ -32,7 +34,7 @@ public class CombinedCommands {
     public Command scoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
-            return pieCommand(PIECoral.L2.m_setpoint)
+            return pieCommand (new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
                 .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(pieCommand(PIECoral.L4.m_setpoint))
                     .andThen(m_coralSubsystem.createMoveCoralOutCommand()
@@ -80,16 +82,36 @@ public class CombinedCommands {
     }
 
     public Command moveElevatorAndPivotToTunablePosition() {
-        return m_pivotSubsystem.createPivotToTunableAngleCommand().andThen(m_elevatorSubsystem.createELevatorToTunableHeightCommand());
+        return m_pivotSubsystem.createPivotToTunableAngleCommand().until(m_pivotSubsystem::isPivotAtGoal)
+            .andThen(m_elevatorSubsystem.createELevatorToTunableHeightCommand()
+                .until(m_elevatorSubsystem::isAtGoalHeight));
     }
 
 
     public Command elevatorPivotToCoast() {
-        return m_elevatorSubsystem.createElevatorToCoastModeCommand().alongWith(m_pivotSubsystem.createPivotoCoastModeCommand());
+        return m_elevatorSubsystem.createElevatorToCoastModeCommand()
+            .alongWith(m_pivotSubsystem.createPivotoCoastModeCommand());
     }
 
     public Command goHome() {
         return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0)
             .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE));
+    }
+
+    public void createCombinedCommand() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
+        debugTab.add(scoreCoralCommand(PIECoral.L1).withName("Level One"));
+        debugTab.add(scoreCoralCommand(PIECoral.L2).withName("Level Two"));
+        debugTab.add(scoreCoralCommand(PIECoral.L3).withName("Level Three"));
+        debugTab.add(scoreCoralCommand(PIECoral.L4).withName("Level Four"));
+        debugTab.add(scoreAlgaeCommand(PIEAlgae.SCORE_INTO_NET).withName("Score Into net"));
+        debugTab.add(scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR).withName("Score into processor"));
+        debugTab.add(fetchPieceFromHPStation().withName("human player station"));
+        debugTab.add(fetchAlgae(PIEAlgae.FETCH_ALGAE_2).withName("fetch algae two! :)"));
+        debugTab.add(fetchAlgae(PIEAlgae.FETCH_ALGAE_3).withName("fetch algae three! :)"));
+        debugTab.add(moveElevatorAndPivotToTunablePosition().withName("elevator and pivot to tunable position"));
+        debugTab.add(elevatorPivotToCoast().withName("pivot & elevator to coast"));
+        debugTab.add(goHome().withName("go home"));
+
     }
 }

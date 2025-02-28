@@ -49,6 +49,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -190,7 +192,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
         }
     }
+    public void addChassisDebugCommands() {
+        ShuffleboardTab debugTabChassis = Shuffleboard.getTab("chassis");
+        debugTabChassis.add(createChassisToCoastModeCommand().withName("chassis to coast"));
 
+
+    }
     /**
      * Returns a command that applies the specified control request to this swerve drivetrain.
      *
