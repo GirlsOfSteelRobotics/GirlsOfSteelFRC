@@ -10,9 +10,11 @@ import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
 public class DebugPaths {
     private final ChassisSubsystem m_chassisSubsystem;
-    public DebugPaths(ChassisSubsystem chassis){
+
+    public DebugPaths(ChassisSubsystem chassis) {
         m_chassisSubsystem = chassis;
     }
+
     public void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
 
@@ -50,6 +52,7 @@ public class DebugPaths {
 
 
     }
+
     private Command createDebugPathCommand(String name) {
         return Commands.sequence(
             Commands.runOnce(() -> m_chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),

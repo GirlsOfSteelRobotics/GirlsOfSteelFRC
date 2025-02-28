@@ -201,6 +201,7 @@ public class PivotSubsystem extends SubsystemBase {
         config.idleMode(idleMode);
         m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
+
     public void addPivotDebugCommands() {
         ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
         debugTabPivot.add(createMovePivotToAngleCommand(0.0));

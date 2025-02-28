@@ -227,6 +227,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_elevatorMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         m_followMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
+
     public void addElevatorDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
         debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(1)));

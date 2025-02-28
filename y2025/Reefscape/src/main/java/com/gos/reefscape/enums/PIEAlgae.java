@@ -1,7 +1,5 @@
 package com.gos.reefscape.enums;
 
-import edu.wpi.first.math.util.Units;
-
 public enum PIEAlgae {
     FETCH_ALGAE_2(0.6, -210),
     FETCH_ALGAE_3(1.1, -210),

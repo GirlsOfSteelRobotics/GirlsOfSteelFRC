@@ -34,7 +34,7 @@ public class CombinedCommands {
     public Command scoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
-            return pieCommand (new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
+            return pieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
                 .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(pieCommand(PIECoral.L4.m_setpoint))
                     .andThen(m_coralSubsystem.createMoveCoralOutCommand()

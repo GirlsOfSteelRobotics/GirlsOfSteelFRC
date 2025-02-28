@@ -192,6 +192,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
         }
     }
+
     public void addChassisDebugCommands() {
         ShuffleboardTab debugTabChassis = Shuffleboard.getTab("chassis");
         debugTabChassis.add(createChassisToCoastModeCommand().withName("chassis to coast"));
@@ -204,6 +205,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
      * @param requestSupplier Function returning the request to apply
      * @return Command to run
      */
+
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
         return run(() -> this.setControl(requestSupplier.get()));
     }
