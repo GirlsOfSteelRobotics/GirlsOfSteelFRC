@@ -19,6 +19,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -200,6 +202,19 @@ public class PivotSubsystem extends SubsystemBase {
         m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
+    public void addPivotDebugCommands() {
+        ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
+        debugTabPivot.add(createMovePivotToAngleCommand(0.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(-15.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(-30.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(-45.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(-90.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(-135.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(-180.0));
+        debugTabPivot.add(createPivotoCoastModeCommand());
+        debugTabPivot.add(createResetEncoderCommand().withName("Reset pivot"));
+        debugTabPivot.add(createPivotToTunableAngleCommand().withName("Pivot to tunable angle"));
+    }
 
     ////////////////
     //command factories

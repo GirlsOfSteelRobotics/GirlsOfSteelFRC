@@ -16,7 +16,7 @@ public class MultiPieceProcessor extends GosAuto {
     public MultiPieceProcessor(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
         super(StartingPositions.CENTER, List.of(CoralPositions.H), algaePositions);
         StringBuilder autoname = new StringBuilder();
-        autoname.append(start.toString());
+        autoname.append(start.toString()).append(".processor");
 
         addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
         addCommands(combinedCommands.scoreCoralCommand(combo));
@@ -27,7 +27,8 @@ public class MultiPieceProcessor extends GosAuto {
             AlgaePositions currentAlgae = algaePositions.get(i);
             PIEAlgae height = currentAlgae.m_algaeHeight;
             addCommands(combinedCommands.fetchAlgae(height));
-            addCommands((followChoreoPath(algaePositions.get(i) + "ToProcessor")));
+            addCommands((followChoreoPath(algaePositions.get(i) + "ToProcessor"))
+                .alongWith(combinedCommands.pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
             addCommands(combinedCommands.scoreAlgaeInProcessorCommand());
             addCommands(followChoreoPath("ProcessorTo" + algaePositions.get(i + 1)));
             autoname.append('.').append(algaePositions.get(i)).append(combo);
@@ -35,7 +36,8 @@ public class MultiPieceProcessor extends GosAuto {
 
         AlgaePositions currentAlgae = algaePositions.get(algaePositions.size() - 1);
         addCommands(combinedCommands.fetchAlgae(currentAlgae.m_algaeHeight));
-        addCommands((followChoreoPath(currentAlgae + "ToProcessor")));
+        addCommands((followChoreoPath(currentAlgae + "ToProcessor"))
+            .alongWith(combinedCommands.pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
         addCommands(combinedCommands.scoreAlgaeInProcessorCommand());
 
         autoname.append('.').append(currentAlgae).append(combo);

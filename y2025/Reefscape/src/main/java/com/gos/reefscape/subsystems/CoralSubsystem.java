@@ -10,6 +10,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -60,6 +62,15 @@ public class CoralSubsystem extends SubsystemBase {
 
     public boolean hasCoral() {
         return !m_coralSensor.get();
+    }
+
+
+
+    public void addCoralDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
+        debugTab.add(createMoveCoralInCommand());
+        debugTab.add(createMoveCoralOutCommand());
+        debugTab.add(createIntakeUntilCoralCommand());
     }
 
     public Command createMoveCoralOutCommand() {

@@ -19,6 +19,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -224,6 +226,24 @@ public class ElevatorSubsystem extends SubsystemBase {
         config.idleMode(idleMode);
         m_elevatorMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         m_followMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+    public void addElevatorDebugCommands() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
+        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
+        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
+        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
+        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
+        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
+        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
+        debugTab.add(createELevatorToTunableHeightCommand().withName("elevator to tunable height"));
+        //l3 15.5
+
+
+
+
+        debugTab.add(createResetEncoderCommand().withName("reset encoder omg"));
+        debugTab.add(createElevatorToCoastModeCommand().withName("Move elevator to coast"));
     }
 
     //command factories//
