@@ -87,7 +87,7 @@ public class RobotContainer {
         m_swerveSysId = new SwerveDriveSysId(m_chassisSubsystem);
         m_pivotSysId = new PivotSysId(m_pivotSubsystem);
 
-        new DebugPaths(m_chassisSubsystem).addDebugPathsToShuffleBoard();
+        new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
         m_coralSubsystem.addCoralDebugCommands();
         m_pivotSubsystem.addPivotDebugCommands();
         m_elevatorSubsystem.addElevatorDebugCommands();
@@ -99,7 +99,7 @@ public class RobotContainer {
 
 
         m_combinedCommand.createCombinedCommand();
-        new DriveToPositionDebug(m_chassisSubsystem).createMoveRobotToPositionCommand();
+        new DriveToPositionDebugTab(m_chassisSubsystem).createMoveRobotToPositionCommand();
 
         m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
 

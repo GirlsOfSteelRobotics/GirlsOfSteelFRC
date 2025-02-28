@@ -1,4 +1,5 @@
 import math
+import json
 import pathlib
 import itertools
 import jinja2
@@ -95,9 +96,57 @@ def generate_rotation_paths(choreo_dir):
     return paths_to_do
 
 
+def write_debug_tab_file(output_file, choreo_dir, all_paths):
+    contents = """package com.gos.reefscape;
+
+import com.gos.reefscape.subsystems.ChassisSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+
+import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
+
+public class DebugPathsTab {
+    private final ChassisSubsystem m_chassisSubsystem;
+
+    public DebugPathsTab(ChassisSubsystem chassis) {
+        m_chassisSubsystem = chassis;
+    }
+
+    public void addDebugPathsToShuffleBoard() {
+        ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
+"""
+
+    for path in all_paths:
+        with open(choreo_dir / (path + ".traj")) as f:
+            json_contents = json.load(f)
+        if json_contents["trajectory"]["waypoints"]:
+            contents += f'        debugPathsTab.add(createDebugPathCommand("{path}"));\n'
+        else:
+            contents += f'        // debugPathsTab.add(createDebugPathCommand("{path}"));\n'
+
+    contents += """    }
+
+    private Command createDebugPathCommand(String name) {
+        return Commands.sequence(
+            Commands.runOnce(() -> m_chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),
+            followChoreoPath(name)
+        ).withName(name);
+    }
+
+}
+"""
+
+    output_file.write_text(contents)
+
+
 def main():
     root_dir = pathlib.Path(".")
     choreo_dir = root_dir / r"y2025\Reefscape\src\main\deploy\choreo"
+    debug_paths_file = (
+        root_dir / "y2025/Reefscape/src/main/java/com/gos/reefscape/DebugPathsTab.java"
+    )
     run_cli = True
 
     all_test_paths = []
@@ -107,11 +156,7 @@ def main():
     if run_cli:
         run_choreo_cli(all_test_paths)
 
-    all_paths_str = ""
-    for path in all_test_paths:
-        all_paths_str += f'        debugPathsTab.add(createDebugPathCommand("{path}"));\n'
-
-    print(all_paths_str)
+    write_debug_tab_file(debug_paths_file, choreo_dir, all_test_paths)
 
 
 TRAJECTORY_TEMPLATE = """{
