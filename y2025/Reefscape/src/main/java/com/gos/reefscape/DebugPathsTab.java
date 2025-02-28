@@ -8,16 +8,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
-public class DebugPaths {
+public class DebugPathsTab {
     private final ChassisSubsystem m_chassisSubsystem;
 
-    public DebugPaths(ChassisSubsystem chassis) {
+    public DebugPathsTab(ChassisSubsystem chassis) {
         m_chassisSubsystem = chassis;
     }
 
     public void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
-
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_01fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_05fps"));
         debugPathsTab.add(createDebugPathCommand("TestPath_1mpss_10fps"));
@@ -45,12 +44,6 @@ public class DebugPaths {
         debugPathsTab.add(createDebugPathCommand("TestRotation_270DegPerSec"));
         debugPathsTab.add(createDebugPathCommand("TestRotation_360DegPerSec"));
         debugPathsTab.add(createDebugPathCommand("TestRotation_MaxDegPerSec"));
-
-
-        debugPathsTab.add(createDebugPathCommand("AbbyPaneer"));
-        debugPathsTab.add(createDebugPathCommand("PjNoodles"));
-
-
     }
 
     private Command createDebugPathCommand(String name) {
