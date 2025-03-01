@@ -3,7 +3,8 @@ apply plugin: 'maven-publish'
 task javadoc(type: Javadoc, overwrite: true) {
     source = sourceSets.main.allJava
 
-    javadoc.options.links("http://docs.oracle.com/javase/8/docs/api/")
+    options.links("https://docs.oracle.com/en/java/javase/17/docs/api/")
+    javadoc.options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

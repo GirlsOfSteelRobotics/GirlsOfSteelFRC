@@ -16,11 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Helper class to manage a list of photon vision cameras. Supports simulation on all the cameras at once.
+ */
 public class AprilTagCameraManager {
     private final List<AprilTagCamera> m_aprilTagCameras;
 
     private final VisionSystemSim m_visionSim;
 
+    /**
+     * Constructor
+     * @param tagLayout The april tag layout
+     * @param cameras A list of cameras to manage
+     */
     public AprilTagCameraManager(AprilTagFieldLayout tagLayout, List<AprilTagCamera> cameras) {
         m_aprilTagCameras = cameras;
 
@@ -35,6 +43,11 @@ public class AprilTagCameraManager {
         }
     }
 
+    /**
+     * Updates each camera. If the camera has a result, its stddev is also calculated and packed into the output list.
+     * @param prevEstimatedPose The current pose estimate of the robot
+     * @return A list of valid camera estimates and their corresponding stddev.
+     */
     public List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> update(Pose2d prevEstimatedPose) {
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> validEstimates = new ArrayList<>();
 
@@ -52,10 +65,18 @@ public class AprilTagCameraManager {
         return validEstimates;
     }
 
+    /**
+     * Updates the simulator
+     * @param pose The robot pose
+     */
     public void updateSimulator(Pose2d pose) {
         m_visionSim.update(pose);
     }
 
+    /**
+     * Calculates the total number of april tags seen by all of the cameras
+     * @return The number of april tags seen.
+     */
     public int numAprilTagsSeen() {
         int seen = 0;
         for (AprilTagCamera camera : m_aprilTagCameras) {
@@ -67,12 +88,19 @@ public class AprilTagCameraManager {
         return seen;
     }
 
+    /**
+     * Takes a screenshot on all the cameras
+     */
     public void takeScreenshot() {
         for (AprilTagCamera camera : m_aprilTagCameras) {
             camera.takeScreenshot();
         }
     }
 
+    /**
+     * Gets the pose estimate from the first camera in the list.
+     * @return Null if there no camera currently has an estimate, otherwise the first valid estimate.
+     */
     public Pose3d getFirstEstimatedPose() {
         for (AprilTagCamera camera : m_aprilTagCameras) {
             Optional<EstimatedRobotPose> maybeResult = camera.getEstimateGlobalPose();

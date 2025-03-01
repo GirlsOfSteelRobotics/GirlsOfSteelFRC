@@ -15,12 +15,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Contains utility functions for interacting with Path Planner
+ */
 public final class PathPlannerUtils {
 
     private PathPlannerUtils() {
 
     }
 
+    /**
+     * Will create commands to follow trajectories for each one inside the paths folder.
+     * @param pathFactory The factory used to create paths
+     */
     public static void createTrajectoriesShuffleboardTab(Function<PathPlannerPath, Command> pathFactory) {
         ShuffleboardTab tab = Shuffleboard.getTab("PP Paths");
 
@@ -44,6 +51,11 @@ public final class PathPlannerUtils {
         }
     }
 
+    /**
+     * Wraps the {@link AutoBuilder#followPath(PathPlannerPath)} function to avoid passing down the exception handling.
+     * @param trajectoryName The trajectory to follow
+     * @return The path following command
+     */
     public static Command followChoreoPath(String trajectoryName) {
         try {
             return AutoBuilder.followPath(PathPlannerPath.fromChoreoTrajectory(trajectoryName));

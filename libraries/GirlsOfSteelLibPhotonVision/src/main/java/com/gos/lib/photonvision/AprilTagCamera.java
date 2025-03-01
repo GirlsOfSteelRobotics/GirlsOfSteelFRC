@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A class for doing april tag work for a single photon vision camera. Reads the results and does basic STDDEV calculations.
+ */
 public class AprilTagCamera {
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
     public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
@@ -50,11 +53,29 @@ public class AprilTagCamera {
 
     private final LoggingUtil m_logger;
 
+    /**
+     * Constructor. Uses default STDDEV values for single and multi-tag.
+     *
+     * @param aprilTagLayout The april tag layout
+     * @param field The GOS field, used to draw results onto
+     * @param name The name of the camera. Should match camera name in photonvision gui
+     * @param transform3d The transform used to set the extrinsic location of the camera on the robot
+     */
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
         this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
     }
 
 
+    /**
+     * Constructor
+     *
+     * @param aprilTagLayout The april tag layout
+     * @param field The GOS field, used to draw results onto
+     * @param name The name of the camera. Should match camera name in photonvision gui
+     * @param transform3d The transform used to set the extrinsic location of the camera on the robot
+     * @param singleTagStddev The base STDDEV to use if only a single april tag is seen
+     * @param multiTagStddev The base STDDEV to use if multiple april tags are seen
+     */
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
@@ -85,6 +106,10 @@ public class AprilTagCamera {
         m_logger.addDouble("Average Ambiguity", () -> m_avgAmbiguity);
     }
 
+    /**
+     * Asks the camera for a new pose estimate.
+     * @param prevEstimatedRobotPose The current estimate for the robots location on the field.
+     */
     public void update(Pose2d prevEstimatedRobotPose) {
         Transform3d robotToCamera = m_robotToCamera.getTransform();
 
@@ -121,10 +146,20 @@ public class AprilTagCamera {
         m_logger.updateLogs();
     }
 
+    /**
+     * Gets the last pose estimate from the camera, if it exists.
+     * @return The last estimate
+     */
     public Optional<EstimatedRobotPose> getEstimateGlobalPose() {
         return m_maybeResult;
     }
 
+    /**
+     * Calculates the STDDEV for the measurement. This is based on how many tags are seen, the ambiguity of the tags, and how far away they are.
+     *
+     * @param estimatedPose The estimated pose
+     * @return A corrected estimate of the cameras STDDEV measurement
+     */
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
         Matrix<N3, N1> estStdDevs = m_singleTagStddev;
@@ -168,19 +203,34 @@ public class AprilTagCamera {
         return estStdDevs;
     }
 
+    /**
+     * Tells the camera to take a screenshot. Will do it on both the input and output images.
+     */
     public void takeScreenshot() {
         m_photonCamera.takeInputSnapshot();
         m_photonCamera.takeOutputSnapshot();
     }
 
+    /**
+     * Gets the latest results from the camera
+     * @return The result
+     */
     public Optional<PhotonPipelineResult> getLatestResult() {
         return m_lastPipelineResult;
     }
 
+    /**
+     * Returns the single camera simulator
+     * @return The simulator
+     */
     public PhotonCameraSim getSimulator() {
         return m_cameraSim;
     }
 
+    /**
+     * Gets the robot-to-camera transform
+     * @return The transform
+     */
     public Transform3d getRobotToCamera() {
         return m_robotToCamera.getTransform();
     }

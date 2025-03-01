@@ -9,6 +9,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An implementation of {@link Field2d}, but in 3D
+ */
 public class Field3d implements NTSendable, AutoCloseable {
 
     private final List<FieldObject3d> m_objects = new ArrayList<>();

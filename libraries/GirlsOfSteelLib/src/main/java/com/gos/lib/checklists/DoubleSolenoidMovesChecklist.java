@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import java.util.function.DoubleSupplier;
 
 
+/**
+ * Checklist for testing a double solenoid. Will extend and retract the solenoid for a certain amount of time and make sure the pressure in the tanks has dropped.
+ */
 public class DoubleSolenoidMovesChecklist extends Command {
 
     private final DoubleSupplier m_pressureSupplier;

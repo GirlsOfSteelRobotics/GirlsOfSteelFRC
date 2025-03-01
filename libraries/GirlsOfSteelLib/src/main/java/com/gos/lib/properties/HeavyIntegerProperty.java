@@ -12,6 +12,11 @@ import java.util.function.IntConsumer;
  */
 public class HeavyIntegerProperty extends BaseHeavyProperty<Integer> {
 
+    /**
+     * Constructor.
+     * @param setter The consumer to call when the value is changed
+     * @param property The underlying property
+     */
     public HeavyIntegerProperty(IntConsumer setter, GosIntProperty property) {
         super(setter::accept, property);
     }

@@ -6,10 +6,17 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class for managing alerts for a {@link Pigeon2} device.
+ */
 public class PigeonAlerts extends BasePhoenix6Alerts {
     private static final String FAULT_ALERT_NAME = "pigeon";
     private static final String STICKY_ALERT_NAME = "pigeon (sticky)";
 
+    /**
+     * Constructor
+     * @param pigeon2 the pigeon
+     */
     public PigeonAlerts(Pigeon2 pigeon2) {
         super(FAULT_ALERT_NAME, populateFaultSignals(pigeon2), STICKY_ALERT_NAME, populateStickyFaultSignals(pigeon2));
     }
