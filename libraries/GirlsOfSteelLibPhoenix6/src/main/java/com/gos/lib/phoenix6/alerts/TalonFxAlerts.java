@@ -1,7 +1,6 @@
 package com.gos.lib.phoenix6.alerts;
 
 import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import java.util.ArrayList;

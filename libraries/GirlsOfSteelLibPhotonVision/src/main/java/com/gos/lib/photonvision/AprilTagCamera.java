@@ -221,7 +221,7 @@ public class AprilTagCamera {
 
     /**
      * Returns the single camera simulator
-     * @return
+     * @return The simulator
      */
     public PhotonCameraSim getSimulator() {
         return m_cameraSim;
