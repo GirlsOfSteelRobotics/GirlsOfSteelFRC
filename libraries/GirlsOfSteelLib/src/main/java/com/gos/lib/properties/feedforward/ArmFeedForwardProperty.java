@@ -40,35 +40,56 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
         return this;
     }
 
+    /**
+     * @see ArmFeedforward#calculate
+     */
     @SuppressWarnings("removal")
     @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double positionRadians, double velocity) {
         return m_feedForward.calculate(positionRadians, velocity);
     }
 
+    /**
+     * @see ArmFeedforward#calculate
+     */
     @SuppressWarnings("removal")
     @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double positionRadians, double velocityRadPerSec, double accelRadPerSecSquared) {
         return m_feedForward.calculate(positionRadians, velocityRadPerSec, accelRadPerSecSquared);
     }
 
+    /**
+     * @see ArmFeedforward#calculateWithVelocities
+     */
     public double calculateWithVelocities(
         double currentAngle, double currentVelocity, double nextVelocity) {
         return m_feedForward.calculateWithVelocities(currentAngle, currentVelocity, nextVelocity);
     }
 
+    /**
+     * @see ArmFeedforward#getKs
+     */
     public double getKs() {
         return m_feedForward.getKs();
     }
 
+    /**
+     * @see ArmFeedforward#getKg
+     */
     public double getKg() {
         return m_feedForward.getKg();
     }
 
+    /**
+     * @see ArmFeedforward#getKv
+     */
     public double getKFf() {
         return m_feedForward.getKv();
     }
 
+    /**
+     * @see ArmFeedforward#getKa
+     */
     public double getKa() {
         return m_feedForward.getKa();
     }

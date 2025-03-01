@@ -1,12 +1,21 @@
 package com.gos.lib.phoenix6.alerts;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class for managing alerts for a {@link TalonFX} device.
+ */
 public class TalonFxAlerts extends BasePhoenix6Alerts {
+    /**
+     * Constructor
+     * @param device The motor controller
+     * @param motorName A name for the motor controller, used to prefix the alerts names
+     */
     public TalonFxAlerts(TalonFX device, String motorName) {
         super(motorName + " Faults",
             populateFaultSignals(device),

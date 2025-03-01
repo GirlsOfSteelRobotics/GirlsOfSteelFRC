@@ -6,7 +6,14 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class for managing alerts for a {@link CANcoder} device.
+ */
 public class CancoderAlerts extends BasePhoenix6Alerts {
+    /**
+     * Constructor.
+     * @param device The cancoder
+     */
     public CancoderAlerts(CANcoder device) {
         super("CANcoder " + device.getDeviceID() + " Faults",
             populateFaultSignals(device),

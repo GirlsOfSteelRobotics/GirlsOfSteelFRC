@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 
 import java.util.List;
 
+/**
+ * Base class for Phoenix6 alerts. Basically just a holder for the fault and sticky fault signals.
+ */
 public class BasePhoenix6Alerts {
     private final String m_faultAlertName;
     private final String m_stickyFaultAlertName;
@@ -16,6 +19,13 @@ public class BasePhoenix6Alerts {
     protected final List<StatusSignal<Boolean>> m_faultSignals;
     protected final List<StatusSignal<Boolean>> m_stickyFaultSignals;
 
+    /**
+     * Constructor
+     * @param faultName The name to use in the alert if there is a fault
+     * @param faultSignals A list of signals for faults
+     * @param stickyFaultName The name to use in the alert if there is a sticky fault
+     * @param stickyFaultSignals A list of signals for sticky faults
+     */
     public BasePhoenix6Alerts(
         String faultName,
         List<StatusSignal<Boolean>> faultSignals,
@@ -31,6 +41,9 @@ public class BasePhoenix6Alerts {
         m_stickyFaultSignals = stickyFaultSignals;
     }
 
+    /**
+     * Checks all the signals for both faults and sticky faults
+     */
     public void checkAlerts() {
         checkFaultList(m_faultSignals, m_faultAlert, m_faultAlertName);
         checkFaultList(m_stickyFaultSignals, m_stickyFaultAlert, m_stickyFaultAlertName);
