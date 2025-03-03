@@ -12,6 +12,7 @@ import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.enums.PIECoral;
+import com.gos.reefscape.generated.DebugPathsTab;
 import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
@@ -19,7 +20,8 @@ import com.gos.reefscape.subsystems.LEDSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
-import com.gos.reefscape.subsystems.TunerConstants;
+import frc.robot.generated.TunerConstantsCompetition;
+import frc.robot.generated.TunerConstantsPrototype;
 import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
 import com.gos.reefscape.subsystems.sysid.PivotSysId;
 import com.gos.reefscape.subsystems.sysid.SwerveDriveSysId;
@@ -48,7 +50,8 @@ import java.util.Set;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ChassisSubsystem m_chassisSubsystem = TunerConstants.createDrivetrain();
+    private final ChassisSubsystem m_chassisSubsystem = Constants.IS_COMPETITION_ROBOT
+        ? TunerConstantsCompetition.createDrivetrain() : TunerConstantsPrototype.createDrivetrain();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
@@ -87,19 +90,21 @@ public class RobotContainer {
         m_swerveSysId = new SwerveDriveSysId(m_chassisSubsystem);
         m_pivotSysId = new PivotSysId(m_pivotSubsystem);
 
-        new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
         m_coralSubsystem.addCoralDebugCommands();
         m_pivotSubsystem.addPivotDebugCommands();
         m_elevatorSubsystem.addElevatorDebugCommands();
         m_algaeSubsystem.addAlgaeDebugCommands();
-        addSysIdDebugDebugTab();
         m_chassisSubsystem.addChassisDebugCommands();
+        m_combinedCommand.createCombinedCommand();
+        addSysIdDebugDebugTab();
+
+        // new DriveToPositionDebugTab(m_chassisSubsystem).createMoveRobotToPositionCommand();
+        new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
+
         SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         SmartDashboard.putData("drive to starting position", createDriveChassisToStartingPoseCommand().withName("drive chassis to start position"));
 
 
-        m_combinedCommand.createCombinedCommand();
-        new DriveToPositionDebugTab(m_chassisSubsystem).createMoveRobotToPositionCommand();
 
         m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
 
@@ -123,22 +128,26 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        ///////////////////////////
+        // Default Commands
+        ///////////////////////////
         // m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
         m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
 
+
+        ///////////////////////////
+        // Driver controller
+        ///////////////////////////
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
 
-        m_operatorController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
-        m_operatorController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
-
-
-
+        // Drive to position
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand());
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
 
+        // PIE setpoints
         m_driverController.leftBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L1));
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L2));
         m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L3));
@@ -148,6 +157,13 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
         m_driverController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
         m_driverController.b().whileTrue(m_combinedCommand.goHome());
+
+        ///////////////////////////
+        // Operator controller
+        ///////////////////////////
+        m_operatorController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
+        m_operatorController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
+
     }
 
 

@@ -14,6 +14,10 @@ package com.gos.reefscape;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
+    public static final boolean IS_COMPETITION_ROBOT = false;
+
     // CAN
     public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
     public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 4;
@@ -50,5 +54,4 @@ public final class Constants {
 
     // PWM
     public static final int LED_PORT_ID = 0;
-    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
 }
