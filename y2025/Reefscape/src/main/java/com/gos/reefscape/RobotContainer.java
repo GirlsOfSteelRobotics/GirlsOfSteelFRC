@@ -164,6 +164,8 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
         m_operatorController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
 
+        m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
+
     }
 
 

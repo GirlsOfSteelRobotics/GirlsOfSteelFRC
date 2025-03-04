@@ -82,9 +82,8 @@ public class CombinedCommands {
     }
 
     public Command moveElevatorAndPivotToTunablePosition() {
-        return m_pivotSubsystem.createPivotToTunableAngleCommand().until(m_pivotSubsystem::isPivotAtGoal)
-            .andThen(m_elevatorSubsystem.createELevatorToTunableHeightCommand()
-                .until(m_elevatorSubsystem::isAtGoalHeight));
+        return m_pivotSubsystem.createPivotToTunableAngleCommand()
+            .alongWith(m_elevatorSubsystem.createELevatorToTunableHeightCommand());
     }
 
 

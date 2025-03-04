@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.RelativeEncoder;
 import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
@@ -197,7 +196,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         return m_encoder.getVelocity();
     }
 
+    public void goToTunableHeight() {
+        goToHeight(ELEVATOR_TUNABLE_HEIGHT.getValue());
+    }
+
     public void goToHeight(double goalHeight) {
+        if (Math.abs(m_goalHeight - goalHeight) > Units.inchesToMeters(5)) {
+            resetPidController();
+        }
         m_goalHeight = goalHeight;
         m_elevatorPidController.goToHeight(goalHeight, getHeight(), getEncoderVel());
     }
@@ -247,16 +253,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     //command factories//
-    public Command createResetPidControllerCommand(double goalHeight) {
-        return runOnce(() -> {
-            m_goalHeight = goalHeight;
-            resetPidController();
-        });
-    }
 
     public Command createMoveElevatorToHeightCommand(double height) {
-        return createResetPidControllerCommand(height).andThen(
-        runEnd(() -> goToHeight(height), this::stop)).andThen(new PrintCommand("done")).withName("Elevator go to height" + height);
+        return runEnd(() -> goToHeight(height), this::stop)
+            .withName("Elevator go to height" + height);
+    }
+
+    public Command createELevatorToTunableHeightCommand() {
+        return runEnd(this::goToTunableHeight, this::stop).withName("elevator to tunable height ");
     }
 
     public Command createResetEncoderCommand() {
@@ -268,10 +272,6 @@ public class ElevatorSubsystem extends SubsystemBase {
                 () -> setIdleMode(IdleMode.kCoast),
                 () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Elevator to Coast");
-    }
-
-    public Command createELevatorToTunableHeightCommand() {
-        return defer(() -> createMoveElevatorToHeightCommand(ELEVATOR_TUNABLE_HEIGHT.getValue())).withName("elevator to tunable height ");
     }
 
 

@@ -43,10 +43,10 @@ public final class Constants {
     public static final int PIGEON_ID = 20;
 
     // DIO
-    public static final int BOTLIMITSWICTH_ID = 0;
-    public static final int TOPLIMITSWITCH_ID = 1;
-    public static final int CORAL_SENSOR_ID = 2;
-    public static final int ALGAE_SENSOR_ID = 3;
+    public static final int CORAL_SENSOR_ID = 0;
+    public static final int ALGAE_SENSOR_ID = 1;
+    public static final int BOTLIMITSWICTH_ID = 2;
+    public static final int TOPLIMITSWITCH_ID = 3;
 
     // Joysticks
     public static final int DRIVER_CONTROLLER_PORT = 0;

@@ -113,10 +113,17 @@ public class PivotSubsystem extends SubsystemBase {
 
     @SuppressWarnings("removal")
     public void moveArmToAngle(double goal) {
+        if (Math.abs(m_armGoalAngle - goal) > 2) {
+            resetPidController();
+        }
         m_armGoalAngle = goal;
 
         // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
         m_armPidController.goToAngle(goal, getRelativeAngle());
+    }
+
+    public void moveArmToTunableAngle() {
+        moveArmToAngle(PIVOT_TUNABLE_ANGLE.getValue());
     }
 
 
@@ -221,16 +228,8 @@ public class PivotSubsystem extends SubsystemBase {
     ////////////////
     ///
     public Command createMovePivotToAngleCommand(double angle) {
-        return createResetPidControllerCommand(angle)
-            .andThen(runEnd(() -> moveArmToAngle(angle), this::stop))
+        return runEnd(() -> moveArmToAngle(angle), this::stop)
             .withName("Go to angle" + angle);
-    }
-
-    private Command createResetPidControllerCommand(double goalAngle) {
-        return runOnce(() -> {
-            m_armGoalAngle = goalAngle;
-            resetPidController();
-        });
     }
 
     public Command createResetEncoderCommand() {
@@ -245,7 +244,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createPivotToTunableAngleCommand() {
-        return defer(() -> createMovePivotToAngleCommand(PIVOT_TUNABLE_ANGLE.getValue())).withName("pivot to tunable angle ");
+        return runEnd(this::moveArmToTunableAngle, this::stop).withName("pivot to tunable angle ");
     }
 
 

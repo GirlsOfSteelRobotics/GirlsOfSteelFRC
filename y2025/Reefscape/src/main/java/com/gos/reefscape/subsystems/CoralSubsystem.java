@@ -1,6 +1,7 @@
 package com.gos.reefscape.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.reefscape.Constants;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -16,6 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralSubsystem extends SubsystemBase {
+    private static final GosDoubleProperty CORAL_OUT_SPEED = new GosDoubleProperty(false, "CoralOutSpeed", -0.05);
+    private static final GosDoubleProperty CORAL_IN_SPEED = new GosDoubleProperty(false, "CoralInSpeed", 0.05);
+
     private final SparkFlex m_coralMotor;
     private final DigitalInput m_coralSensor;
     private final LoggingUtil m_networkTableEntries;
@@ -53,11 +57,11 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public void coralOut() {
-        m_coralMotor.set(-0.2);
+        m_coralMotor.set(CORAL_OUT_SPEED.getValue());
     }
 
     public void coralIn() {
-        m_coralMotor.set(0.5);
+        m_coralMotor.set(CORAL_IN_SPEED.getValue());
     }
 
     public boolean hasCoral() {
@@ -82,7 +86,7 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     public Command createIntakeUntilCoralCommand() {
-        return createMoveCoralInCommand().until(this::hasCoral).withName("Intake Till Coral");
+        return createMoveCoralOutCommand().until(this::hasCoral).withName("Intake Till Coral");
     }
 
 
