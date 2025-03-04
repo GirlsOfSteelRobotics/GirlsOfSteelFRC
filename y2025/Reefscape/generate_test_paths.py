@@ -6,7 +6,7 @@ import jinja2
 from y2025.Reefscape.choreo_utils import run_choreo_cli
 
 
-def load_template(template_str) ->g jinja2.Template:
+def load_template(template_str) -> jinja2.Template:
     env = jinja2.Environment()
     env.filters["to_radians"] = lambda x: math.radians(x)
     return env.from_string(template_str)
