@@ -64,7 +64,9 @@ public class DriveToPositionDebugTab {
 def main():
     choreo_file = "y2025/Reefscape/src/main/deploy/choreo/ChoreoAutos.chor"
     poses_file = "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/ChoreoPoses.java"
-    debug_tab_file = "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/DriveToPositionDebugTab.java"
+    debug_tab_file = (
+        "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/DriveToPositionDebugTab.java"
+    )
 
     choreo_data = json.load(open(choreo_file))
 
