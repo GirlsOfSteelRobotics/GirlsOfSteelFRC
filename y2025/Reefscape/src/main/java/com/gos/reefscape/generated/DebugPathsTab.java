@@ -1,5 +1,6 @@
-package com.gos.reefscape;
+package com.gos.reefscape.generated;
 
+import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;

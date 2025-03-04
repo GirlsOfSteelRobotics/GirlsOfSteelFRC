@@ -9,8 +9,9 @@ def camel_case_to_snake_case(name):
 
 
 def write_variables_file(choreo_data, output_file):
-    output_contents = """package com.gos.reefscape;
+    output_contents = """package com.gos.reefscape.generated;
 
+import com.gos.reefscape.MaybeFlippedPose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class ChoreoPoses {
@@ -30,16 +31,16 @@ public class ChoreoPoses {
 
 
 def write_drive_to_variables_file(choreo_data, output_file):
-    output_contents = """package com.gos.reefscape;
+    output_contents = """package com.gos.reefscape.generated;
 
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
-public class DriveToPositionDebug {
+public class DriveToPositionDebugTab {
     private final ChassisSubsystem m_chassisSubsystem;
 
-    public DriveToPositionDebug(ChassisSubsystem chassis) {
+    public DriveToPositionDebugTab(ChassisSubsystem chassis) {
         m_chassisSubsystem = chassis;
     }
 
@@ -62,8 +63,10 @@ public class DriveToPositionDebug {
 
 def main():
     choreo_file = "y2025/Reefscape/src/main/deploy/choreo/ChoreoAutos.chor"
-    poses_file = "y2025/Reefscape/src/main/java/com/gos/reefscape/ChoreoPoses.java"
-    debug_tab_file = "y2025/Reefscape/src/main/java/com/gos/reefscape/DriveToPositionDebug.java"
+    poses_file = "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/ChoreoPoses.java"
+    debug_tab_file = (
+        "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/DriveToPositionDebugTab.java"
+    )
 
     choreo_data = json.load(open(choreo_file))
 

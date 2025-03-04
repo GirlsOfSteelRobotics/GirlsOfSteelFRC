@@ -29,11 +29,14 @@ import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
+import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
-import com.gos.reefscape.subsystems.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.generated.TunerConstantsCompetition;
+import frc.robot.generated.TunerConstantsPrototype;
+import frc.robot.generated.TunerConstantsPrototype.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -65,8 +68,11 @@ import org.photonvision.EstimatedRobotPose;
  * Subsystem so it can easily be used in command-based projects.
  */
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
-    public static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    public static final double MAX_TRANSLATION_SPEED;
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
+
+    private static final SlotConfigs DEFAULT_STEER_CONFIG;
+    private static final SlotConfigs DEFAULT_DRIVE_CONFIG;
 
     private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
     private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
@@ -78,6 +84,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         60,
         360,
         360);
+
+    static {
+        if (Constants.IS_COMPETITION_ROBOT) {
+            MAX_TRANSLATION_SPEED = TunerConstantsCompetition.kSpeedAt12Volts.in(MetersPerSecond);
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsCompetition.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsCompetition.driveGains);
+        } else  {
+            MAX_TRANSLATION_SPEED = TunerConstantsPrototype.kSpeedAt12Volts.in(MetersPerSecond);
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsPrototype.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsPrototype.driveGains);
+        }
+    }
 
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
     private Notifier m_simNotifier;
@@ -131,10 +149,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         for (int i = 0; i < 4; ++i) {
             SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", false, module.getSteerMotor(), 0)
-                .fromDefaults(SlotConfigs.from(TunerConstants.steerGains))
+                .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
-                .fromDefaults(SlotConfigs.from(TunerConstants.driveGains))
+                .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
             m_alerts.add(new TalonFxAlerts(module.getDriveMotor(), "Swerve Drive[" + i + "]"));

@@ -1,6 +1,6 @@
 package com.gos.reefscape.enums;
 
-import com.gos.reefscape.ChoreoPoses;
+import com.gos.reefscape.generated.ChoreoPoses;
 import com.gos.reefscape.MaybeFlippedPose2d;
 
 public enum StartingPositions {

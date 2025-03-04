@@ -97,8 +97,9 @@ def generate_rotation_paths(choreo_dir):
 
 
 def write_debug_tab_file(output_file, choreo_dir, all_paths):
-    contents = """package com.gos.reefscape;
+    contents = """package com.gos.reefscape.generated;
 
+import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -145,7 +146,7 @@ def main():
     root_dir = pathlib.Path(".")
     choreo_dir = root_dir / r"y2025\Reefscape\src\main\deploy\choreo"
     debug_paths_file = (
-        root_dir / "y2025/Reefscape/src/main/java/com/gos/reefscape/DebugPathsTab.java"
+        root_dir / "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/DebugPathsTab.java"
     )
     run_cli = True
 
