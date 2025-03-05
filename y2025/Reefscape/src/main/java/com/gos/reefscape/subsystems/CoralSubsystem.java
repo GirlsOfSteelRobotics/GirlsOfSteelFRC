@@ -60,7 +60,9 @@ public class CoralSubsystem extends SubsystemBase {
         m_coralMotor.set(CORAL_OUT_SPEED.getValue());
     }
 
-    public void coralIn() {
+    public void
+
+    coralIn() {
         m_coralMotor.set(CORAL_IN_SPEED.getValue());
     }
 
