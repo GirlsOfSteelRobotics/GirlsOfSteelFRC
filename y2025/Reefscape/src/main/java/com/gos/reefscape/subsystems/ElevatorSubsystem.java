@@ -75,13 +75,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         SparkMaxConfig elevatorConfig = new SparkMaxConfig();
         elevatorConfig.idleMode(IdleMode.kBrake);
         elevatorConfig.smartCurrentLimit(60);
-        elevatorConfig.inverted(true);
+        elevatorConfig.inverted(false);
 
         // At bottom - 18.5
         // Top - 33.4 rotations, 62.5 inches
 
-        elevatorConfig.encoder.positionConversionFactor(Units.inchesToMeters(44) / 33.4);
-        elevatorConfig.encoder.velocityConversionFactor(Units.inchesToMeters(44) / 33.4 / 60);
+        double conversionFactor = Units.inchesToMeters(34) / 25.98;
+        elevatorConfig.encoder.positionConversionFactor(conversionFactor);
+        elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
 
 
 

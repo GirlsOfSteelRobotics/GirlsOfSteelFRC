@@ -44,9 +44,10 @@ public final class Constants {
 
     // DIO
     public static final int CORAL_SENSOR_ID = 0;
-    public static final int ALGAE_SENSOR_ID = 1;
+    public static final int ALGAE_SENSOR_ID = 4;
     public static final int BOTLIMITSWICTH_ID = 2;
     public static final int TOPLIMITSWITCH_ID = 3;
+    public static final int PIVOT_ABSOLUTE_ENCODER = 1;
 
     // Joysticks
     public static final int DRIVER_CONTROLLER_PORT = 0;

@@ -6,7 +6,6 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.reefscape.Constants;
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -17,6 +16,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -38,7 +39,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
-    private final AbsoluteEncoder m_absoluteEncoder;
+    private final DutyCycleEncoder m_absoluteEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
@@ -53,7 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
-        m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder();
+        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 38-180);
 
 
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
@@ -119,8 +120,10 @@ public class PivotSubsystem extends SubsystemBase {
         m_armGoalAngle = goal;
 
         // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
-        m_armPidController.goToAngle(goal, getRelativeAngle());
+        m_armPidController.goToAngle(goal, getAbsoluteAngle());
     }
+
+
 
     public void moveArmToTunableAngle() {
         moveArmToAngle(PIVOT_TUNABLE_ANGLE.getValue());
@@ -128,7 +131,7 @@ public class PivotSubsystem extends SubsystemBase {
 
 
     private void syncRelativeEncoder() {
-        m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
+        m_relativeEncoder.setPosition(getAbsoluteAngle());
     }
 
     @Override
@@ -143,6 +146,9 @@ public class PivotSubsystem extends SubsystemBase {
         m_checkAlerts.checkAlerts();
 
         m_armPidController.updateIfChanged();
+        if(DriverStation.isDisabled()) {
+            syncRelativeEncoder();
+        }
     }
 
 
@@ -177,7 +183,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public double getAbsoluteAngle() {
-        return m_absoluteEncoder.getPosition();
+        return -m_absoluteEncoder.get();
     }
 
     private void resetPidController() {
