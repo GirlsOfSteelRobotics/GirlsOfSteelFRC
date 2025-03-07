@@ -41,7 +41,7 @@ public final class Autos {
             CoralPositions.C,
             CoralPositions.B)
         );
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L3, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
             CoralPositions.B,
             CoralPositions.C));

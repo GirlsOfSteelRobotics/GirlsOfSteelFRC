@@ -6,7 +6,7 @@ public enum PIECoral {
     HUMAN_PLAYER_STATION(Units.inchesToMeters(0), -22),
     L1(0, -90),
     L2(0.23, -48),
-    L3(0.69, -48.95),
+    L3(0.67, -48.95),
     L4(1.17, -90);
 
 

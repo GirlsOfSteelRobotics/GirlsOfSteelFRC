@@ -20,6 +20,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
+import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.PigeonAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
@@ -157,6 +158,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
             m_alerts.add(new TalonFxAlerts(module.getDriveMotor(), "Swerve Drive[" + i + "]"));
             m_alerts.add(new TalonFxAlerts(module.getSteerMotor(), "Swerve Steer[" + i + "]"));
+            m_alerts.add(new CancoderAlerts(module.getEncoder()));
         }
         m_alerts.add(new PigeonAlerts(getPigeon2()));
 
@@ -176,9 +178,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void clearStickyFaults() {
+        getPigeon2().clearStickyFaults();
         for (int i = 0; i < 4; i++) {
             getModule(i).getSteerMotor().clearStickyFaults();
             getModule(i).getDriveMotor().clearStickyFaults();
+            getModule(i).getEncoder().clearStickyFaults();
         }
     }
 
@@ -214,6 +218,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public void addChassisDebugCommands() {
         ShuffleboardTab debugTabChassis = Shuffleboard.getTab("chassis");
         debugTabChassis.add(createChassisToCoastModeCommand().withName("chassis to coast"));
+        debugTabChassis.add(createCheckAlertsCommand().withName("Check Chassis Alerts"));
 
 
     }
@@ -284,10 +289,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             property.updateIfChanged();
         }
 
-        // for (BasePhoenix6Alerts alert : m_alerts) {
-        //     alert.checkAlerts();
-        // }
-
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
 
@@ -351,6 +352,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             getModule(i).getDriveMotor().setNeutralMode(neutralModeValue);
         }
 
+    }
+
+    public Command createCheckAlertsCommand() {
+        return run(() -> {
+             for (BasePhoenix6Alerts alert : m_alerts) {
+                 alert.checkAlerts();
+             }
+        }).ignoringDisable(true);
     }
 
 
