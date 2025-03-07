@@ -3,7 +3,6 @@ package com.gos.reefscape.commands;
 import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.enums.PIESetpoint;
-import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
@@ -13,13 +12,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class CombinedCommands {
     private final CoralSubsystem m_coralSubsystem;
-    private final AlgaeSubsystem m_algaeSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
 
-    public CombinedCommands(AlgaeSubsystem algae, CoralSubsystem coral, ElevatorSubsystem elevator, PivotSubsystem pivot) {
+    public CombinedCommands(CoralSubsystem coral, ElevatorSubsystem elevator, PivotSubsystem pivot) {
         m_coralSubsystem = coral;
-        m_algaeSubsystem = algae;
         m_elevatorSubsystem = elevator;
         m_pivotSubsystem = pivot;
     }
@@ -47,18 +44,18 @@ public class CombinedCommands {
     }
 
     public Command scoreAlgaeCommand(PIEAlgae combo) {
-        return pieCommand(combo.m_setpoint).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return pieCommand(combo.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
     public Command scoreAlgaeInProcessorCommand() {
-        return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
 
 
     //
     public Command scoreAlgaeInNet() {
-        return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_algaeSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
     //
 
@@ -77,8 +74,8 @@ public class CombinedCommands {
 
     public Command fetchAlgae(PIEAlgae algaePosition) {
         return pieCommand(algaePosition.m_setpoint)
-            .andThen(m_algaeSubsystem.createMoveAlgaeInCommand()
-                .withTimeout(2));
+            .alongWith(m_coralSubsystem.createMoveAlgaeInCommand()
+                .withTimeout(20));
     }
 
     public Command moveElevatorAndPivotToTunablePosition() {
@@ -93,7 +90,7 @@ public class CombinedCommands {
     }
 
     public Command goHome() {
-        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0)
+        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0).until(m_elevatorSubsystem::isAtGoalHeight)
             .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE));
     }
 

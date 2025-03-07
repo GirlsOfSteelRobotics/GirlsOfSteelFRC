@@ -11,9 +11,9 @@ import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
+import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.generated.DebugPathsTab;
-import com.gos.reefscape.subsystems.AlgaeSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.LEDSubsystem;
@@ -55,8 +55,7 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
-    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
+    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
 
     private final ElevatorSysId m_elevatorSysId;
     private final SwerveDriveSysId m_swerveSysId;
@@ -93,7 +92,6 @@ public class RobotContainer {
         m_coralSubsystem.addCoralDebugCommands();
         m_pivotSubsystem.addPivotDebugCommands();
         m_elevatorSubsystem.addElevatorDebugCommands();
-        m_algaeSubsystem.addAlgaeDebugCommands();
         m_chassisSubsystem.addChassisDebugCommands();
         m_combinedCommand.createCombinedCommand();
         addSysIdDebugDebugTab();
@@ -106,7 +104,7 @@ public class RobotContainer {
 
 
 
-        m_leds = new LEDSubsystem(m_algaeSubsystem, m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
+        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
 
 
         if (RobotBase.isReal()) {
@@ -147,11 +145,18 @@ public class RobotContainer {
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
 
-        // PIE setpoints
+        // PIE setpoints\[]
+
         m_driverController.leftBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L1));
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L2));
         m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L3));
         m_driverController.rightTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L4));
+
+        m_driverController.povUp().whileTrue(m_combinedCommand.fetchPieceFromHPStation());
+//
+//        m_driverController.leftBumper().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2));
+//        m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3));
+//        m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
@@ -206,7 +211,6 @@ public class RobotContainer {
     private void resetStickyFaults() {
         m_elevatorSubsystem.clearStickyFaults();
         m_pivotSubsystem.clearStickyFaults();
-        m_algaeSubsystem.clearStickyFaults();
         m_chassisSubsystem.clearStickyFaults();
         m_coralSubsystem.clearStickyFaults();
     }

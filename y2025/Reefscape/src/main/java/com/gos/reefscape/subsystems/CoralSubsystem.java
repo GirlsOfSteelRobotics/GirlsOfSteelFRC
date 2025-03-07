@@ -20,50 +20,51 @@ public class CoralSubsystem extends SubsystemBase {
     private static final GosDoubleProperty CORAL_OUT_SPEED = new GosDoubleProperty(false, "CoralOutSpeed", -0.05);
     private static final GosDoubleProperty CORAL_IN_SPEED = new GosDoubleProperty(false, "CoralInSpeed", 0.05);
 
-    private final SparkFlex m_coralMotor;
+    private final SparkFlex m_motor;
     private final DigitalInput m_coralSensor;
+    private final DigitalInput m_algaeSensor;
     private final LoggingUtil m_networkTableEntries;
-    private final SparkMaxAlerts m_coralAlert;
+    private final SparkMaxAlerts m_motorAlert;
 
     public CoralSubsystem() {
-        m_coralMotor = new SparkFlex(Constants.CORAL_MOTOR_ID, MotorType.kBrushless);
+        m_motor = new SparkFlex(Constants.CORAL_MOTOR_ID, MotorType.kBrushless);
         m_coralSensor = new DigitalInput(Constants.CORAL_SENSOR_ID);
+        m_algaeSensor = new DigitalInput(Constants.ALGAE_SENSOR_ID);
         m_networkTableEntries = new LoggingUtil("Coral Subsystem");
-        m_coralAlert = new SparkMaxAlerts(m_coralMotor, "Coral Motor");
+        m_motorAlert = new SparkMaxAlerts(m_motor, "Coral Motor");
 
         SparkMaxConfig coralConfig = new SparkMaxConfig();
         coralConfig.idleMode(IdleMode.kBrake);
         coralConfig.smartCurrentLimit(60);
         coralConfig.inverted(false);
 
-        m_coralMotor.configure(coralConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_motor.configure(coralConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+        m_networkTableEntries.addBoolean("Has Algae", this::hasAlgae);
         m_networkTableEntries.addBoolean("Has Coral", this::hasCoral);
     }
 
     public void clearStickyFaults() {
-        m_coralMotor.clearFaults();
+        m_motor.clearFaults();
     }
 
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();
-        m_coralAlert.checkAlerts();
+        m_motorAlert.checkAlerts();
 
     }
 
     public void coralStop() {
-        m_coralMotor.set(0);
+        m_motor.set(0);
     }
 
     public void coralOut() {
-        m_coralMotor.set(CORAL_OUT_SPEED.getValue());
+        m_motor.set(CORAL_OUT_SPEED.getValue());
     }
 
-    public void
-
-    coralIn() {
-        m_coralMotor.set(CORAL_IN_SPEED.getValue());
+    public void coralIn() {
+        m_motor.set(CORAL_IN_SPEED.getValue());
     }
 
     public boolean hasCoral() {
@@ -72,11 +73,32 @@ public class CoralSubsystem extends SubsystemBase {
 
 
 
+    public void algaeIntakeStop() {
+        m_motor.set(0);
+    }
+
+    public void algaeIntakeOut() {
+        m_motor.set(-1);
+    }
+
+    public void algaeIntakeIn() {
+        m_motor.set(1);
+    }
+
+    public boolean hasAlgae() {
+        return !m_algaeSensor.get();
+    }
+
     public void addCoralDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
+
         debugTab.add(createMoveCoralInCommand());
         debugTab.add(createMoveCoralOutCommand());
         debugTab.add(createIntakeUntilCoralCommand());
+
+        debugTab.add(createMoveAlgaeInCommand());
+        debugTab.add(createMoveAlgaeOutCommand());
+        debugTab.add(createIntakeUntilAlgaeCommand());
     }
 
     public Command createMoveCoralOutCommand() {
@@ -89,6 +111,18 @@ public class CoralSubsystem extends SubsystemBase {
 
     public Command createIntakeUntilCoralCommand() {
         return createMoveCoralOutCommand().until(this::hasCoral).withName("Intake Till Coral");
+    }
+
+    public Command createMoveAlgaeOutCommand() {
+        return this.runEnd(this::algaeIntakeOut, this::algaeIntakeStop).withName("Algae Out");
+    }
+
+    public Command createIntakeUntilAlgaeCommand() {
+        return createMoveAlgaeInCommand().until(this::hasAlgae).withName("Intake Till Piece");
+    }
+
+    public Command createMoveAlgaeInCommand() {
+        return this.runEnd(this::algaeIntakeIn, this::algaeIntakeStop).withName("Algae In");
     }
 
 

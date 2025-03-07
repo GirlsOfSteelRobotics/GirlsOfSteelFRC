@@ -62,7 +62,7 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(true);
 
-        pivotConfig.closedLoop.positionWrappingEnabled(true);
+        pivotConfig.closedLoop.positionWrappingEnabled(false);
         pivotConfig.closedLoop.positionWrappingMinInput(0);
         pivotConfig.closedLoop.positionWrappingMaxInput(360);
 

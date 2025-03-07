@@ -193,9 +193,6 @@ public class AprilTagCamera {
         if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 3.2) {
             estStdDevs = VecBuilder.fill(1000, 1000, 1000);
         }
-        else if (m_numTargetsSeen == 2 && m_avgDistanceToTag > 4) {
-            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
-        }
         else {
             estStdDevs = estStdDevs.times(1 + (m_avgDistanceToTag * m_avgDistanceToTag / 30));
         }
