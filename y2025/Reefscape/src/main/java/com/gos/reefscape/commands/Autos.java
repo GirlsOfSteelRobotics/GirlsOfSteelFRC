@@ -22,7 +22,7 @@ import java.util.List;
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class Autos {
 
-    private static final String DEFAULT_MODE = "RIGHT.EL4.BL4.CL4";
+    private static final String DEFAULT_MODE = "LEFT.multiCoral.IL3.LL3";
 
     private final SendableChooser<GosAuto> m_autoModes;
 
@@ -33,7 +33,8 @@ public final class Autos {
         ///////////////////////////////
         /// Right Side
         ///////////////////////////////
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2
+            , StartingPositions.RIGHT, List.of(
             CoralPositions.G,
             CoralPositions.F,
             CoralPositions.E,
@@ -41,7 +42,7 @@ public final class Autos {
             CoralPositions.C,
             CoralPositions.B)
         );
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L3, StartingPositions.RIGHT, List.of(
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
             CoralPositions.B,
             CoralPositions.C));

@@ -17,8 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty CORAL_OUT_SPEED = new GosDoubleProperty(false, "CoralOutSpeed", -0.05);
-    private static final GosDoubleProperty CORAL_IN_SPEED = new GosDoubleProperty(false, "CoralInSpeed", 0.05);
+    private static final GosDoubleProperty CORAL_SCORE_SPEED = new GosDoubleProperty(false, "CoralScoreSpeed", -0.05);
+    private static final GosDoubleProperty CORAL_REVERSE_SPEED = new GosDoubleProperty(false, "CoralReverseSpeed", 0.05);
+    private static final GosDoubleProperty CORAL_FETCH_SPEED = new GosDoubleProperty(false, "CoralFetchSpeed", -0.15);
 
     private final SparkFlex m_motor;
     private final DigitalInput m_coralSensor;
@@ -59,12 +60,16 @@ public class CoralSubsystem extends SubsystemBase {
         m_motor.set(0);
     }
 
-    public void coralOut() {
-        m_motor.set(CORAL_OUT_SPEED.getValue());
+    public void coralScore() {
+        m_motor.set(CORAL_SCORE_SPEED.getValue());
     }
 
-    public void coralIn() {
-        m_motor.set(CORAL_IN_SPEED.getValue());
+    public void coralReverse() {
+        m_motor.set(CORAL_REVERSE_SPEED.getValue());
+    }
+
+    public void fetchCoral(){
+        m_motor.set(CORAL_FETCH_SPEED.getValue());
     }
 
     public boolean hasCoral() {
@@ -92,25 +97,30 @@ public class CoralSubsystem extends SubsystemBase {
     public void addCoralDebugCommands() {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
 
-        debugTab.add(createMoveCoralInCommand());
-        debugTab.add(createMoveCoralOutCommand());
+        debugTab.add(createReverseIntakeCommand());
+        debugTab.add(createScoreCoralCommand());
         debugTab.add(createIntakeUntilCoralCommand());
+        debugTab.add(createFetchCoralCommand());
 
         debugTab.add(createMoveAlgaeInCommand());
         debugTab.add(createMoveAlgaeOutCommand());
         debugTab.add(createIntakeUntilAlgaeCommand());
     }
 
-    public Command createMoveCoralOutCommand() {
-        return this.runEnd(this::coralOut, this::coralStop).withName("Coral Out");
+    public Command createScoreCoralCommand() {
+        return this.runEnd(this::coralScore, this::coralStop).withName("Coral Score");
     }
 
-    public Command createMoveCoralInCommand() {
-        return this.runEnd(this::coralIn, this::coralStop).withName("Coral In");
+    public Command createReverseIntakeCommand() {
+        return this.runEnd(this::coralReverse, this::coralStop).withName("Coral Reverse");
+    }
+
+    public Command createFetchCoralCommand() {
+        return this.runEnd(this::fetchCoral, this::coralStop).withName("Fetch Coral");
     }
 
     public Command createIntakeUntilCoralCommand() {
-        return createMoveCoralOutCommand().until(this::hasCoral).withName("Intake Till Coral");
+        return createFetchCoralCommand().until(this::hasCoral).withName("Intake Till Coral");
     }
 
     public Command createMoveAlgaeOutCommand() {

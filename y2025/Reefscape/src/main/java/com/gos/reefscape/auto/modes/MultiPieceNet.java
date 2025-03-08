@@ -28,18 +28,18 @@ public class MultiPieceNet extends GosAuto {
         for (int i = 0; i < algaePositions.size() - 1; i++) {
             AlgaePositions currentAlgae = algaePositions.get(i);
             PIEAlgae height = currentAlgae.m_algaeHeight;
-            addCommands(combinedCommands.fetchAlgae(height));
+            addCommands(combinedCommands.autoFetchAlgae(height));
             addCommands((followChoreoPath(algaePositions.get(i) + "ToBlueNet")));
-            addCommands(combinedCommands.scoreAlgaeInNet());
+            addCommands(combinedCommands.autoScoreAlgaeInNet());
             addCommands(followChoreoPath("BlueNetTo" + algaePositions.get(i + 1)));
             autoName.append('.').append(algaePositions.get(i)).append(combo);
         }
 
         //
         AlgaePositions currentAlgae = algaePositions.get(algaePositions.size() - 1);
-        addCommands(combinedCommands.fetchAlgae(currentAlgae.m_algaeHeight));
+        addCommands(combinedCommands.autoFetchAlgae(currentAlgae.m_algaeHeight));
         addCommands((followChoreoPath(currentAlgae + "ToBlueNet")));
-        addCommands(combinedCommands.scoreAlgaeInNet());
+        addCommands(combinedCommands.autoScoreAlgaeInNet());
 
         autoName.append('.').append(currentAlgae).append(combo);
         setName(autoName.toString());

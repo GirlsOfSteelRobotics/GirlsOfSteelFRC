@@ -28,6 +28,7 @@ import java.util.Optional;
  * A class for doing april tag work for a single photon vision camera. Reads the results and does basic STDDEV calculations.
  */
 public class AprilTagCamera {
+    public static final double DEFAULT_SINGLE_TAG_MAX_DISTANCE = 3.2;
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
     public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
@@ -62,7 +63,11 @@ public class AprilTagCamera {
      * @param transform3d The transform used to set the extrinsic location of the camera on the robot
      */
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
-        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+    }
+
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, singleTagStddev, multiTagStddev);
     }
 
 
@@ -76,7 +81,7 @@ public class AprilTagCamera {
      * @param singleTagStddev The base STDDEV to use if only a single april tag is seen
      * @param multiTagStddev The base STDDEV to use if multiple april tags are seen
      */
-    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
