@@ -54,7 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
-        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 38-180);
+        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 38 - 180);
 
 
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
@@ -123,8 +123,6 @@ public class PivotSubsystem extends SubsystemBase {
         m_armPidController.goToAngle(goal, getAbsoluteAngle());
     }
 
-
-
     public void moveArmToTunableAngle() {
         moveArmToAngle(PIVOT_TUNABLE_ANGLE.getValue());
     }
@@ -146,7 +144,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_checkAlerts.checkAlerts();
 
         m_armPidController.updateIfChanged();
-        if(DriverStation.isDisabled()) {
+        if (DriverStation.isDisabled()) {
             syncRelativeEncoder();
         }
     }
@@ -182,7 +180,7 @@ public class PivotSubsystem extends SubsystemBase {
         return m_relativeEncoder.getVelocity();
     }
 
-    public double getAbsoluteAngle() {
+    public final double getAbsoluteAngle() {
         return -m_absoluteEncoder.get();
     }
 

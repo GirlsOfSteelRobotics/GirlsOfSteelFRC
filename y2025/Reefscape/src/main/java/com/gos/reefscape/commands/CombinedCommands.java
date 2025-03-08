@@ -75,7 +75,7 @@ public class CombinedCommands {
     public Command fetchAlgae(PIEAlgae algaePosition) {
         return pieCommand(algaePosition.m_setpoint)
             .alongWith(m_coralSubsystem.createMoveAlgaeInCommand()
-                .withTimeout(20));
+                .withTimeout(2));
     }
 
     public Command moveElevatorAndPivotToTunablePosition() {

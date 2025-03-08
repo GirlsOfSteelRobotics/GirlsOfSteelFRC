@@ -11,7 +11,6 @@ import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
-import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.generated.DebugPathsTab;
 import com.gos.reefscape.subsystems.CoralSubsystem;
@@ -145,18 +144,17 @@ public class RobotContainer {
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral());
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral());
 
-        // PIE setpoints\[]
-
+        // PIE setpoints
         m_driverController.leftBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L1));
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L2));
         m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L3));
         m_driverController.rightTrigger().whileTrue(m_combinedCommand.scoreCoralCommand(PIECoral.L4));
 
         m_driverController.povUp().whileTrue(m_combinedCommand.fetchPieceFromHPStation());
-//
-//        m_driverController.leftBumper().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2));
-//        m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3));
-//        m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR));
+
+        // m_driverController.leftBumper().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2));
+        // m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3));
+        // m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createMoveCoralInCommand());
@@ -170,7 +168,6 @@ public class RobotContainer {
         m_operatorController.y().whileTrue(m_coralSubsystem.createMoveCoralOutCommand());
 
         m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
-
 
     }
 

@@ -356,9 +356,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createCheckAlertsCommand() {
         return run(() -> {
-             for (BasePhoenix6Alerts alert : m_alerts) {
-                 alert.checkAlerts();
-             }
+            for (BasePhoenix6Alerts alert : m_alerts) {
+                alert.checkAlerts();
+            }
         }).ignoringDisable(true);
     }
 
