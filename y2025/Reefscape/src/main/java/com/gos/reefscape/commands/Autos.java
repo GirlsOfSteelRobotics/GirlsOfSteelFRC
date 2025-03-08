@@ -33,8 +33,7 @@ public final class Autos {
         ///////////////////////////////
         /// Right Side
         ///////////////////////////////
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2
-            , StartingPositions.RIGHT, List.of(
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
             CoralPositions.G,
             CoralPositions.F,
             CoralPositions.E,

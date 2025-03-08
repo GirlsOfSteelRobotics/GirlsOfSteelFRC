@@ -51,6 +51,7 @@ public class AprilTagCamera {
     private int m_numTargetsSeen;
     private double m_avgDistanceToTag;
     private double m_avgAmbiguity;
+    private double m_singleTagMaxDistance;
 
     private final LoggingUtil m_logger;
 
@@ -85,8 +86,10 @@ public class AprilTagCamera {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
+        m_singleTagMaxDistance = singleTagMaxDistance;
         m_singleTagStddev = singleTagStddev;
         m_multiTagStddev = multiTagStddev;
+
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_robotToCamera.getTransform());
@@ -195,7 +198,7 @@ public class AprilTagCamera {
             estStdDevs = m_multiTagStddev;
         }
         // Increase std devs based on (average) distance
-        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 3.2) {
+        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > m_singleTagMaxDistance) {
             estStdDevs = VecBuilder.fill(1000, 1000, 1000);
         }
         else {

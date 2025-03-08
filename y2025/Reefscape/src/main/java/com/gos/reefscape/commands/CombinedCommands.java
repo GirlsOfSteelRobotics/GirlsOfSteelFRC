@@ -78,10 +78,10 @@ public class CombinedCommands {
     public Command autoScoreAlgaeInNet() {
         return autoPieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
+
     public Command scoreAlgaeInNet() {
         return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand());
     }
-    //
 
     public boolean isAtGoalHeightAngle() {
         return m_elevatorSubsystem.isAtGoalHeight() && m_pivotSubsystem.isAtGoalAngle();

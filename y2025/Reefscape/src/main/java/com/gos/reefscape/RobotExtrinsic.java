@@ -18,19 +18,19 @@ public class RobotExtrinsic {
             .235),
         new Rotation3d(
             Math.toRadians(0),
-            Math.toRadians(-19.0),
-            Math.toRadians(11.0))
+            Math.toRadians(-22),
+            Math.toRadians(11))
     ));
 
     public static final TunableTransform3d BACK_CAMERA = new TunableTransform3d(false, "CameraExtrinsics/Back", new Transform3d(
         new Translation3d(
-            Units.inchesToMeters(-14.0),
-            Units.inchesToMeters(-4.0),
-            .235),
+            Units.inchesToMeters(-8),
+            Units.inchesToMeters(5.5),
+            Units.inchesToMeters(10.0)),
         new Rotation3d(
             Math.toRadians(0),
-            Math.toRadians(0.0),
-            Math.toRadians(178.0))
+            Math.toRadians(-24.0),
+            Math.toRadians(175.0))
     ));
 
 

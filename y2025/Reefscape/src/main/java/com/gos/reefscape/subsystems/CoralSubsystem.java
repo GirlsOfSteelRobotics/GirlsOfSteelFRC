@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty CORAL_SCORE_SPEED = new GosDoubleProperty(false, "CoralScoreSpeed", -0.05);
+    private static final GosDoubleProperty CORAL_SCORE_SPEED = new GosDoubleProperty(false, "CoralScoreSpeed", -1);
     private static final GosDoubleProperty CORAL_REVERSE_SPEED = new GosDoubleProperty(false, "CoralReverseSpeed", 0.05);
-    private static final GosDoubleProperty CORAL_FETCH_SPEED = new GosDoubleProperty(false, "CoralFetchSpeed", -0.15);
+    private static final GosDoubleProperty CORAL_FETCH_SPEED = new GosDoubleProperty(false, "CoralFetchSpeed", -0.25);
 
     private final SparkFlex m_motor;
     private final DigitalInput m_coralSensor;
@@ -68,7 +68,7 @@ public class CoralSubsystem extends SubsystemBase {
         m_motor.set(CORAL_REVERSE_SPEED.getValue());
     }
 
-    public void fetchCoral(){
+    public void fetchCoral() {
         m_motor.set(CORAL_FETCH_SPEED.getValue());
     }
 

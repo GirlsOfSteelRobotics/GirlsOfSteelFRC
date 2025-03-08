@@ -1,7 +1,9 @@
 package com.gos.reefscape.subsystems;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +128,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
-    private final SwerveRequest.RobotCentric m_RobotRelativedriveRequest = new SwerveRequest.RobotCentric()
+    private final SwerveRequest.RobotCentric m_robotRelativeDriveRequest = new SwerveRequest.RobotCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
         .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
@@ -381,6 +383,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(new Rotation2d(angleJoystick)));
     }
+
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
@@ -390,16 +393,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         );
     }
 
-    public void RobotdriveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
+    public void robotDriveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
-            m_RobotRelativedriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+            m_robotRelativeDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
         );
-
-
     }
+
     @Override
     public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds) {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds));
