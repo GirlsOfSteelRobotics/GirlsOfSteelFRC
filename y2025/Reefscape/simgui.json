@@ -169,6 +169,7 @@
       "/Shuffleboard/arm pivot/Pivot to tunable angle": "Command",
       "/Shuffleboard/arm pivot/Reset pivot": "Command",
       "/Shuffleboard/chassis/Check Chassis Alerts": "Command",
+      "/Shuffleboard/chassis/Sync Odometry": "Command",
       "/Shuffleboard/chassis/chassis to coast": "Command",
       "/Shuffleboard/coral position/L1": "Command",
       "/Shuffleboard/coral position/L2": "Command",

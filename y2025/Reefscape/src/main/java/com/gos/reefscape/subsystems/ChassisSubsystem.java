@@ -35,6 +35,7 @@ import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -125,6 +126,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
+    private final SwerveRequest.RobotCentric m_RobotRelativedriveRequest = new SwerveRequest.RobotCentric()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
         .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
@@ -198,7 +204,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             new Pose2d());
 
 
-        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(1.5, 1.5, Units.degreesToRadians(180));
+        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(0.75, 0.75, Units.degreesToRadians(180));
         Matrix<N3, N1> multiTagStddev = VecBuilder.fill(0.25, 0.25, Units.degreesToRadians(30));
 
         AprilTagCameraBuilder cameraBuilder = new AprilTagCameraBuilder()
@@ -208,9 +214,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withMultiTagStddev(multiTagStddev)
             .withSingleTagMaxDistanceMeters(5.6);
 
+
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
-            cameraBuilder.withCamera("Front Camera").withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
-            cameraBuilder.withCamera("Back Camera").withTransform(RobotExtrinsic.BACK_CAMERA).build()));
+            cameraBuilder
+                .withCamera("Front Camera")
+                .withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Back Camera")
+                .withSingleTagStddev(singleTagStddev.times(0.9))
+                .withTransform(RobotExtrinsic.BACK_CAMERA).build()));
+
+        PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
+        PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
     }
 
     public void clearStickyFaults() {
@@ -366,7 +381,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(new Rotation2d(angleJoystick)));
     }
-
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
@@ -374,10 +388,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
         );
+    }
+
+    public void RobotdriveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_RobotRelativedriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
+
+        );
 
 
     }
-
     @Override
     public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds) {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds));

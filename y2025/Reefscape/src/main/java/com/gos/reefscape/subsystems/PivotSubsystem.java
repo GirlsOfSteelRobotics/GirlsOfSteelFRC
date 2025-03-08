@@ -177,7 +177,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public final double getAbsoluteAngle() {
-        return -m_absoluteEncoder.get();
+        double angle = -m_absoluteEncoder.get();
+        if (angle < -300) {
+            angle += 360;
+        }
+        return angle;
     }
 
     private void resetPidController() {
