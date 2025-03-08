@@ -41,7 +41,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.0);
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
-    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0);
+    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0.69);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
 
 
@@ -75,13 +75,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         SparkMaxConfig elevatorConfig = new SparkMaxConfig();
         elevatorConfig.idleMode(IdleMode.kBrake);
         elevatorConfig.smartCurrentLimit(60);
-        elevatorConfig.inverted(true);
+        elevatorConfig.inverted(false);
 
         // At bottom - 18.5
         // Top - 33.4 rotations, 62.5 inches
 
-        elevatorConfig.encoder.positionConversionFactor(Units.inchesToMeters(44) / 33.4);
-        elevatorConfig.encoder.velocityConversionFactor(Units.inchesToMeters(44) / 33.4 / 60);
+        double conversionFactor = Units.inchesToMeters(34) / 25.98;
+        elevatorConfig.encoder.positionConversionFactor(conversionFactor);
+        elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
 
 
 

@@ -19,26 +19,26 @@ public class MultiPieceProcessor extends GosAuto {
         autoname.append(start.toString()).append(".processor");
 
         addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
-        addCommands(combinedCommands.scoreCoralCommand(combo));
+        addCommands(combinedCommands.autoScoreCoralCommand(combo));
         addCommands(followChoreoPath(coral + "To" + algaePositions.get(0)));
 
 
         for (int i = 0; i < algaePositions.size() - 1; i++) {
             AlgaePositions currentAlgae = algaePositions.get(i);
             PIEAlgae height = currentAlgae.m_algaeHeight;
-            addCommands(combinedCommands.fetchAlgae(height));
+            addCommands(combinedCommands.autoFetchAlgae(height));
             addCommands((followChoreoPath(algaePositions.get(i) + "ToProcessor"))
-                .alongWith(combinedCommands.pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
-            addCommands(combinedCommands.scoreAlgaeInProcessorCommand());
+                .alongWith(combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
+            addCommands(combinedCommands.autoScoreAlgaeInProcessorCommand());
             addCommands(followChoreoPath("ProcessorTo" + algaePositions.get(i + 1)));
             autoname.append('.').append(algaePositions.get(i)).append(combo);
         }
 
         AlgaePositions currentAlgae = algaePositions.get(algaePositions.size() - 1);
-        addCommands(combinedCommands.fetchAlgae(currentAlgae.m_algaeHeight));
+        addCommands(combinedCommands.autoFetchAlgae(currentAlgae.m_algaeHeight));
         addCommands((followChoreoPath(currentAlgae + "ToProcessor"))
-            .alongWith(combinedCommands.pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
-        addCommands(combinedCommands.scoreAlgaeInProcessorCommand());
+            .alongWith(combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
+        addCommands(combinedCommands.autoScoreAlgaeInProcessorCommand());
 
         autoname.append('.').append(currentAlgae).append(combo);
         setName(autoname.toString());

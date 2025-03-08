@@ -21,12 +21,12 @@ public class MultiPieceCoral extends GosAuto {
 
         for (int i = 0; i < coralPositions.size() - 1; i++) {
             autoName.append('.').append(coralPositions.get(i)).append(combo);
-            addCommands(combinedCommands.scoreCoralCommand(combo));
+            addCommands(combinedCommands.autoScoreCoralCommand(combo));
             addCommands(followChoreoPath(coralPositions.get(i) + "ToHumanPlayer" + side.variableName())
-                .alongWith(combinedCommands.fetchPieceFromHPStation()));
+                .alongWith(combinedCommands.autoFetchPieceFromHPStation()));
             addCommands(followChoreoPath("HumanPlayer" + side.variableName() + "To" + coralPositions.get(i + 1)));
         }
-        addCommands(combinedCommands.scoreCoralCommand(combo));
+        addCommands(combinedCommands.autoScoreCoralCommand(combo));
         autoName.append('.').append(coralPositions.get(coralPositions.size() - 1)).append(combo);
         setName(autoName.toString());
 

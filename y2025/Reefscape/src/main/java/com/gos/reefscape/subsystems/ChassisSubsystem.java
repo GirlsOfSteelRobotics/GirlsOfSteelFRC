@@ -1,7 +1,9 @@
 package com.gos.reefscape.subsystems;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +22,12 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
+import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.PigeonAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
-import com.gos.lib.photonvision.AprilTagCamera;
+import com.gos.lib.photonvision.AprilTagCameraBuilder;
 import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
@@ -34,6 +37,13 @@ import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
+import com.pathplanner.lib.util.PathPlannerLogging;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.util.Units;
 import frc.robot.generated.TunerConstantsCompetition;
 import frc.robot.generated.TunerConstantsPrototype;
 import frc.robot.generated.TunerConstantsPrototype.TunerSwerveDrivetrain;
@@ -97,6 +107,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
     }
 
+    private static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
+        new Translation2d(TunerConstantsPrototype.kFrontLeftXPos, TunerConstantsPrototype.kFrontLeftYPos),
+        new Translation2d(TunerConstantsPrototype.kFrontRightXPos, TunerConstantsPrototype.kFrontRightYPos),
+        new Translation2d(TunerConstantsPrototype.kBackLeftXPos, TunerConstantsPrototype.kBackLeftYPos),
+        new Translation2d(TunerConstantsPrototype.kBackRightXPos, TunerConstantsPrototype.kBackRightYPos)
+    );
+
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
     private Notifier m_simNotifier;
     private final PidProperty m_pidControllerProperty;
@@ -106,8 +123,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private double m_lastSimTime;
     private final GosField m_field;
     private final AprilTagCameraManager m_aprilTagCameras;
+    private final SwerveDriveOdometry m_odometryOnly;
+    private final SwerveDrivePoseEstimator m_oldPoseEstimator;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
+
+    private final SwerveRequest.RobotCentric m_robotRelativeDriveRequest = new SwerveRequest.RobotCentric()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
@@ -157,6 +181,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
             m_alerts.add(new TalonFxAlerts(module.getDriveMotor(), "Swerve Drive[" + i + "]"));
             m_alerts.add(new TalonFxAlerts(module.getSteerMotor(), "Swerve Steer[" + i + "]"));
+            m_alerts.add(new CancoderAlerts(module.getEncoder()));
         }
         m_alerts.add(new PigeonAlerts(getPigeon2()));
 
@@ -170,15 +195,47 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .build();
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 
+        m_odometryOnly = new SwerveDriveOdometry(
+            KINEMATICS,
+            getPigeon2().getRotation2d(),
+            getState().ModulePositions);
+        m_oldPoseEstimator = new SwerveDrivePoseEstimator(
+            KINEMATICS,
+            getPigeon2().getRotation2d(),
+            getState().ModulePositions,
+            new Pose2d());
+
+
+        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(0.75, 0.75, Units.degreesToRadians(180));
+        Matrix<N3, N1> multiTagStddev = VecBuilder.fill(0.25, 0.25, Units.degreesToRadians(30));
+
+        AprilTagCameraBuilder cameraBuilder = new AprilTagCameraBuilder()
+            .withLayout(FieldConstants.TAG_LAYOUT)
+            .withField(m_field)
+            .withSingleTagStddev(singleTagStddev)
+            .withMultiTagStddev(multiTagStddev)
+            .withSingleTagMaxDistanceMeters(5.6);
+
+
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
-            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Front Camera", RobotExtrinsic.FRONT_CAMERA),
-            new AprilTagCamera(FieldConstants.TAG_LAYOUT, m_field, "Back Camera", RobotExtrinsic.BACK_CAMERA)));
+            cameraBuilder
+                .withCamera("Front Camera")
+                .withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Back Camera")
+                .withSingleTagStddev(singleTagStddev.times(0.9))
+                .withTransform(RobotExtrinsic.BACK_CAMERA).build()));
+
+        PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
+        PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
     }
 
     public void clearStickyFaults() {
+        getPigeon2().clearStickyFaults();
         for (int i = 0; i < 4; i++) {
             getModule(i).getSteerMotor().clearStickyFaults();
             getModule(i).getDriveMotor().clearStickyFaults();
+            getModule(i).getEncoder().clearStickyFaults();
         }
     }
 
@@ -214,7 +271,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public void addChassisDebugCommands() {
         ShuffleboardTab debugTabChassis = Shuffleboard.getTab("chassis");
         debugTabChassis.add(createChassisToCoastModeCommand().withName("chassis to coast"));
-
+        debugTabChassis.add(createCheckAlertsCommand().withName("Check Chassis Alerts"));
+        debugTabChassis.add(createSyncOdometryCommand().withName("Sync Odometry"));
 
     }
     /**
@@ -275,7 +333,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
 
         SwerveDriveState state = getState();
-        m_field.setOdometry(state.Pose);
+
+        m_odometryOnly.update(getPigeon2().getRotation2d(), state.ModulePositions);
+        m_oldPoseEstimator.update(getPigeon2().getRotation2d(), state.ModulePositions);
+
+        m_field.setPoseEstimate(state.Pose);
+        m_field.setOdometry(m_odometryOnly.getPoseMeters());
+        m_field.setOldPoseEstimator(m_oldPoseEstimator.getEstimatedPosition());
         m_swerveDrivePublisher.setMeasuredStates(state.ModuleStates);
         m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
         m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
@@ -283,10 +347,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         for (PidProperty property : m_moduleProperties) {
             property.updateIfChanged();
         }
-
-        // for (BasePhoenix6Alerts alert : m_alerts) {
-        //     alert.checkAlerts();
-        // }
 
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
@@ -331,8 +391,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
         );
+    }
 
+    public void robotDriveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_robotRelativeDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
+        );
     }
 
     @Override
@@ -343,6 +410,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     @Override
     public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds, Matrix<N3, N1> stds) {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), stds);
+        m_oldPoseEstimator.addVisionMeasurement(visionRobotPoseMeters, timestampSeconds, stds);
+    }
+
+    @Override
+    public void resetPose(Pose2d pose) {
+        super.resetPose(pose);
+        m_odometryOnly.resetPose(pose);
+        m_oldPoseEstimator.resetPose(pose);
+    }
+
+    public void syncOdometryWithPoseEstimator() {
+        m_odometryOnly.resetPose(getState().Pose);
     }
 
     public void setIdleMode(NeutralModeValue neutralModeValue) {
@@ -353,6 +432,17 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     }
 
+    public Command createCheckAlertsCommand() {
+        return run(() -> {
+            for (BasePhoenix6Alerts alert : m_alerts) {
+                alert.checkAlerts();
+            }
+        }).ignoringDisable(true);
+    }
+
+    public Command createSyncOdometryCommand() {
+        return run(this::syncOdometryWithPoseEstimator).ignoringDisable(true);
+    }
 
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetPose(pose));

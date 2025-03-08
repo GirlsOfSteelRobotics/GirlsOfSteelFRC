@@ -28,6 +28,7 @@ import java.util.Optional;
  * A class for doing april tag work for a single photon vision camera. Reads the results and does basic STDDEV calculations.
  */
 public class AprilTagCamera {
+    public static final double DEFAULT_SINGLE_TAG_MAX_DISTANCE = 3.2;
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
     public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
@@ -50,6 +51,7 @@ public class AprilTagCamera {
     private int m_numTargetsSeen;
     private double m_avgDistanceToTag;
     private double m_avgAmbiguity;
+    private double m_singleTagMaxDistance;
 
     private final LoggingUtil m_logger;
 
@@ -62,7 +64,11 @@ public class AprilTagCamera {
      * @param transform3d The transform used to set the extrinsic location of the camera on the robot
      */
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
-        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+    }
+
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, singleTagStddev, multiTagStddev);
     }
 
 
@@ -76,12 +82,14 @@ public class AprilTagCamera {
      * @param singleTagStddev The base STDDEV to use if only a single april tag is seen
      * @param multiTagStddev The base STDDEV to use if multiple april tags are seen
      */
-    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
+        m_singleTagMaxDistance = singleTagMaxDistance;
         m_singleTagStddev = singleTagStddev;
         m_multiTagStddev = multiTagStddev;
+
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_robotToCamera.getTransform());
@@ -190,10 +198,7 @@ public class AprilTagCamera {
             estStdDevs = m_multiTagStddev;
         }
         // Increase std devs based on (average) distance
-        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > 3.2) {
-            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
-        }
-        else if (m_numTargetsSeen == 2 && m_avgDistanceToTag > 4) {
+        if (m_numTargetsSeen == 1 && m_avgDistanceToTag > m_singleTagMaxDistance) {
             estStdDevs = VecBuilder.fill(1000, 1000, 1000);
         }
         else {

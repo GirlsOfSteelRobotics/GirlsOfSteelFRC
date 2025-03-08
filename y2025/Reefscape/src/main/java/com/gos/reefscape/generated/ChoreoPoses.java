@@ -27,7 +27,8 @@ public class ChoreoPoses {
     public static final MaybeFlippedPose2d L = new MaybeFlippedPose2d(3.7158595142381294, 5.0370222492294, Rotation2d.fromRadians(-1.0471975511965976));
     public static final MaybeFlippedPose2d PROCESSOR = new MaybeFlippedPose2d(6.35289192199707, 0.45048725605010986, Rotation2d.fromRadians(-1.5707963267948966));
     public static final MaybeFlippedPose2d STARTING_POS_CENTER = new MaybeFlippedPose2d(7.832268238067627, 4.001668930053711, Rotation2d.fromRadians(3.141592653589793));
-    public static final MaybeFlippedPose2d STARTING_POS_LEFT = new MaybeFlippedPose2d(7.84056282043457, 6.1349568367004395, Rotation2d.fromRadians(3.141592653589793));
-    public static final MaybeFlippedPose2d STARTING_POS_RIGHT = new MaybeFlippedPose2d(7.901095867156982, 1.8680174350738523, Rotation2d.fromRadians(3.141592653589793));
+    public static final MaybeFlippedPose2d STARTING_POS_LEFT = new MaybeFlippedPose2d(8.26, 7.49, Rotation2d.fromRadians(-2.4085543677521746));
+    public static final MaybeFlippedPose2d STARTING_POS_RIGHT = new MaybeFlippedPose2d(8.14, 1.8680174350738523, Rotation2d.fromRadians(3.141592653589793));
 
 }
+
