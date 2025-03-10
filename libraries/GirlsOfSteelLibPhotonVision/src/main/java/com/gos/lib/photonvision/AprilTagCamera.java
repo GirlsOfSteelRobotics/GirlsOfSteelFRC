@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
@@ -29,6 +30,7 @@ import java.util.Optional;
  */
 public class AprilTagCamera {
     public static final double DEFAULT_SINGLE_TAG_MAX_DISTANCE = 3.2;
+    public static final double DEFAULT_SINGLE_TAG_MAX_AMBIGUITY = 3.2;
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
     public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
@@ -37,6 +39,8 @@ public class AprilTagCamera {
     private final String m_cameraName;
     private final Matrix<N3, N1> m_singleTagStddev;
     private final Matrix<N3, N1> m_multiTagStddev;
+    private final double m_singleTagMaxDistance;
+    private final double m_singleTagMaxAmbiguity;
 
 
     private final PhotonCamera m_photonCamera;
@@ -51,7 +55,7 @@ public class AprilTagCamera {
     private int m_numTargetsSeen;
     private double m_avgDistanceToTag;
     private double m_avgAmbiguity;
-    private double m_singleTagMaxDistance;
+    private boolean m_goodStddev;
 
     private final LoggingUtil m_logger;
 
@@ -64,11 +68,11 @@ public class AprilTagCamera {
      * @param transform3d The transform used to set the extrinsic location of the camera on the robot
      */
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
-        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_MAX_AMBIGUITY, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
     }
 
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
-        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, singleTagStddev, multiTagStddev);
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_MAX_AMBIGUITY, singleTagStddev, multiTagStddev);
     }
 
 
@@ -82,11 +86,12 @@ public class AprilTagCamera {
      * @param singleTagStddev The base STDDEV to use if only a single april tag is seen
      * @param multiTagStddev The base STDDEV to use if multiple april tags are seen
      */
-    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, double singleTagMaxAmbiguity, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
         m_singleTagMaxDistance = singleTagMaxDistance;
+        m_singleTagMaxAmbiguity = singleTagMaxAmbiguity;
         m_singleTagStddev = singleTagStddev;
         m_multiTagStddev = multiTagStddev;
 
@@ -112,6 +117,7 @@ public class AprilTagCamera {
         m_logger.addDouble("Targets Seen", () -> m_numTargetsSeen);
         m_logger.addDouble("Average Distance To Target", () -> m_avgDistanceToTag);
         m_logger.addDouble("Average Ambiguity", () -> m_avgAmbiguity);
+        m_logger.addBoolean("Good Stddev", () -> m_goodStddev);
     }
 
     /**
@@ -165,11 +171,12 @@ public class AprilTagCamera {
     /**
      * Calculates the STDDEV for the measurement. This is based on how many tags are seen, the ambiguity of the tags, and how far away they are.
      *
-     * @param estimatedPose The estimated pose
+     * @param estimatedPose3d The estimated pose
      * @return A corrected estimate of the cameras STDDEV measurement
      */
     @SuppressWarnings("PMD.CyclomaticComplexity")
-    public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
+    public Matrix<N3, N1> getEstimationStdDevs(Pose3d estimatedPose3d) {
+        Pose2d estimatedPose = estimatedPose3d.toPose2d();
         Matrix<N3, N1> estStdDevs = m_singleTagStddev;
         if (m_lastPipelineResult.isEmpty()) {
             return estStdDevs;
@@ -191,6 +198,7 @@ public class AprilTagCamera {
         if (m_numTargetsSeen == 0) {
             return estStdDevs;
         }
+        m_goodStddev = true;
         m_avgDistanceToTag = sumDist / m_numTargetsSeen;
         m_avgAmbiguity = sumAmbiguity / m_numTargetsSeen;
         // Decrease std devs if multiple targets are visible
@@ -200,6 +208,15 @@ public class AprilTagCamera {
         // Increase std devs based on (average) distance
         if (m_numTargetsSeen == 1 && m_avgDistanceToTag > m_singleTagMaxDistance) {
             estStdDevs = VecBuilder.fill(1000, 1000, 1000);
+            m_goodStddev = false;
+        }
+        else if (m_numTargetsSeen == 1 && m_avgAmbiguity > m_singleTagMaxAmbiguity) {
+            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
+            m_goodStddev = false;
+        }
+        else if (m_numTargetsSeen == 1 && estimatedPose3d.getZ() > Units.inchesToMeters(10)) {
+            estStdDevs = VecBuilder.fill(1000, 1000, 1000);
+            m_goodStddev = false;
         }
         else {
             estStdDevs = estStdDevs.times(1 + (m_avgDistanceToTag * m_avgDistanceToTag / 30));

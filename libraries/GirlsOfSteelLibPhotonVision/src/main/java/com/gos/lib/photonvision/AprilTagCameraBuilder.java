@@ -13,6 +13,7 @@ public class AprilTagCameraBuilder {
     private Matrix<N3, N1> m_multiTagStddev = AprilTagCamera.DEFAULT_MULTI_TAG_STDDEV;
     private AprilTagFieldLayout m_tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
     private double m_singleTagMaxDistanceMeters = AprilTagCamera.DEFAULT_SINGLE_TAG_MAX_DISTANCE;
+    private double m_singleTagMaxAmbiguityMeters = AprilTagCamera.DEFAULT_SINGLE_TAG_MAX_AMBIGUITY;
     private String m_cameraName;
     private TunableTransform3d m_transform;
     private BaseGosField m_field;
@@ -24,6 +25,11 @@ public class AprilTagCameraBuilder {
 
     public AprilTagCameraBuilder withSingleTagMaxDistanceMeters(double maxDistance) {
         m_singleTagMaxDistanceMeters = maxDistance;
+        return this;
+    }
+
+    public AprilTagCameraBuilder withSingleTagMaxAmbiguity(double max) {
+        m_singleTagMaxAmbiguityMeters = max;
         return this;
     }
 
@@ -53,7 +59,7 @@ public class AprilTagCameraBuilder {
     }
 
     public AprilTagCamera build() {
-        return new AprilTagCamera(m_tagLayout, m_field, m_cameraName, m_transform, m_singleTagMaxDistanceMeters, m_singleTagStddev, m_multiTagStddev);
+        return new AprilTagCamera(m_tagLayout, m_field, m_cameraName, m_transform, m_singleTagMaxDistanceMeters, m_singleTagMaxAmbiguityMeters, m_singleTagStddev, m_multiTagStddev);
     }
 
 }

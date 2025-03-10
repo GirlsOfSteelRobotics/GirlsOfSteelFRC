@@ -57,8 +57,7 @@ public class AprilTagCameraManager {
 
             if (maybeResult.isPresent()) {
                 EstimatedRobotPose camPose = maybeResult.get();
-                Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-                validEstimates.add(new Pair<>(camPose, camera.getEstimationStdDevs(camEstPose)));
+                validEstimates.add(new Pair<>(camPose, camera.getEstimationStdDevs(camPose.estimatedPose)));
             }
         }
 
