@@ -116,7 +116,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_armGoalAngle = goal;
 
         // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
-        m_armPidController.goToAngle(goal, getRelativeAngle());
+        m_armPidController.goToAngle(goal, getAbsoluteAngle());
     }
 
     public void moveArmToTunableAngle() {

@@ -176,7 +176,6 @@ public class AprilTagCamera {
      */
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public Matrix<N3, N1> getEstimationStdDevs(Pose3d estimatedPose3d) {
-        Pose2d estimatedPose = estimatedPose3d.toPose2d();
         Matrix<N3, N1> estStdDevs = m_singleTagStddev;
         if (m_lastPipelineResult.isEmpty()) {
             return estStdDevs;
@@ -185,6 +184,7 @@ public class AprilTagCamera {
         m_numTargetsSeen = 0;
         double sumDist = 0;
         double sumAmbiguity = 0;
+        Pose2d estimatedPose = estimatedPose3d.toPose2d();
         for (PhotonTrackedTarget tgt : targets) {
             Optional<Pose3d> tagPose = m_photonPoseEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
             if (tagPose.isEmpty()) {

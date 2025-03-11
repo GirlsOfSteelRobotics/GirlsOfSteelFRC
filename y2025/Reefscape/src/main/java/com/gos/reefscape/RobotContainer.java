@@ -15,7 +15,6 @@ import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.commands.RobotRelativeDriveCommand;
-import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.generated.DebugPathsTab;
 import com.gos.reefscape.subsystems.CoralSubsystem;
@@ -149,14 +148,10 @@ public class RobotContainer {
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
 
         // Drive to position
-//        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-//        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-//        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
         m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
-
-        // m_driverController.leftBumper().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2));
-        // m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3));
-        // m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
