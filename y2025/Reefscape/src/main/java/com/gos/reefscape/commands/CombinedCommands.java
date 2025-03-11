@@ -59,7 +59,7 @@ public class CombinedCommands {
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
         }
 
-        return autoPieCommand(combo.m_setpoint);
+        return pieCommand(combo.m_setpoint);
     }
 
 
@@ -96,8 +96,8 @@ public class CombinedCommands {
     }
 
     public Command fetchPieceFromHPStation() {
-        return pieCommand(PIECoral.HUMAN_PLAYER_STATION.m_setpoint)
-            .alongWith(m_coralSubsystem.createIntakeUntilCoralCommand());
+        return m_coralSubsystem.createIntakeUntilCoralCommand()
+            .raceWith(pieCommand(PIECoral.HUMAN_PLAYER_STATION.m_setpoint));
     }
 
 

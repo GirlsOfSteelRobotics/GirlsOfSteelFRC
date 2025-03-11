@@ -116,7 +116,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_armGoalAngle = goal;
 
         // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
-        m_armPidController.goToAngle(goal, getAbsoluteAngle());
+        m_armPidController.goToAngle(goal, getRelativeAngle());
     }
 
     public void moveArmToTunableAngle() {
@@ -141,6 +141,11 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_armPidController.updateIfChanged();
         if (DriverStation.isDisabled()) {
+            syncRelativeEncoder();
+        }
+
+        double encoderDelta = Math.abs(getRelativeAngle() - getAbsoluteAngle());
+        if (encoderDelta > 5 && getRelativeVelocity() < 5) {
             syncRelativeEncoder();
         }
     }
