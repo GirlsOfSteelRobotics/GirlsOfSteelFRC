@@ -214,7 +214,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
-            .withSingleTagMaxDistanceMeters(5.6);
+            .withSingleTagMaxDistanceMeters(5)
+            .withSingleTagMaxAmbiguity(0.5);
 
 
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
@@ -224,7 +225,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             cameraBuilder
                 .withCamera("Back Camera")
                 .withSingleTagStddev(singleTagStddev.times(0.9))
-                .withTransform(RobotExtrinsic.BACK_CAMERA).build()));
+                .withTransform(RobotExtrinsic.BACK_CAMERA).build()
+        ));
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);

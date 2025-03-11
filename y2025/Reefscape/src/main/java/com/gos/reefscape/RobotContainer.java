@@ -5,6 +5,8 @@
 
 package com.gos.reefscape;
 
+import com.gos.lib.joysticks.VibrateControllerTimedCommand;
+import com.gos.lib.joysticks.VibrateControllerWhileTrueCommand;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.reefscape.auto.modes.GosAuto;
 import com.gos.reefscape.commands.Autos;
@@ -146,23 +148,21 @@ public class RobotContainer {
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
 
         // Drive to position
-        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-
-        // m_driverController.leftBumper().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_2));
-        // m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.FETCH_ALGAE_3));
-        // m_driverController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR));
+        //        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
         m_driverController.b().whileTrue(m_combinedCommand.goHome());
 
-        m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchPieceFromHPStation());
+        m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchPieceFromHPStation()
+            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
         m_driverController.rightTrigger().whileTrue(m_coralSubsystem.createScoreCoralCommand());
         m_driverController.rightBumper().whileTrue(new DeferredCommand(() -> {
             PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
-            return m_combinedCommand.scoreCoralCommand(setpoint);
+            return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
         ///////////////////////////

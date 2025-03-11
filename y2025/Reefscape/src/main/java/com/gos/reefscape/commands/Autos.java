@@ -43,8 +43,8 @@ public final class Autos {
         );
         createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
-            CoralPositions.B,
-            CoralPositions.C));
+            CoralPositions.C,
+            CoralPositions.B));
 
         createScoreNetAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.G, StartingPositions.RIGHT, List.of(AlgaePositions.IJ));
 
@@ -72,9 +72,11 @@ public final class Autos {
             CoralPositions.K,
             CoralPositions.L,
             CoralPositions.A));
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L3, StartingPositions.LEFT, List.of(
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.LEFT, List.of(
             CoralPositions.I,
-            CoralPositions.L
+            CoralPositions.L,
+            CoralPositions.J,
+            CoralPositions.K
         ));
     }
 

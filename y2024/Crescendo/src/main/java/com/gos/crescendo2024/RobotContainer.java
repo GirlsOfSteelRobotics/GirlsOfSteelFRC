@@ -14,7 +14,7 @@ import com.gos.crescendo2024.commands.FeedPiecesWithVision;
 import com.gos.crescendo2024.commands.SpeakerAimAndShootCommand;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
-import com.gos.crescendo2024.commands.VibrateControllerTimedCommand;
+import com.gos.lib.joysticks.VibrateControllerTimedCommand;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.HangerSubsystem;

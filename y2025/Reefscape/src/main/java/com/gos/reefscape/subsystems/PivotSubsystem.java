@@ -34,7 +34,7 @@ public class PivotSubsystem extends SubsystemBase {
     private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
     private static final double PIVOT_ERROR = 3;
     private static final double GEAR_RATIO = 45.0; // reduction
-    public static final double DEFAULT_ANGLE = -24;
+    public static final double DEFAULT_ANGLE = -7;
     public static final double NO_GOAL_ANGLE = -360;
 
     private final SparkFlex m_pivotMotor;
@@ -141,6 +141,11 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_armPidController.updateIfChanged();
         if (DriverStation.isDisabled()) {
+            syncRelativeEncoder();
+        }
+
+        double encoderDelta = Math.abs(getRelativeAngle() - getAbsoluteAngle());
+        if (encoderDelta > 5 && getRelativeVelocity() < 5) {
             syncRelativeEncoder();
         }
     }

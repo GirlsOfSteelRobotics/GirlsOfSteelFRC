@@ -43,12 +43,12 @@ public class CombinedCommands {
                 .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint))
                     .andThen(m_coralSubsystem.createScoreCoralCommand()
-                        .withTimeout(2));
+                        .withTimeout(.75));
         }
 
         return autoPieCommand(combo.m_setpoint)
             .andThen(m_coralSubsystem.createScoreCoralCommand()
-                .withTimeout(2));
+                .withTimeout(.75));
     }
 
     public Command scoreCoralCommand(PIECoral combo) {
@@ -59,7 +59,7 @@ public class CombinedCommands {
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
         }
 
-        return autoPieCommand(combo.m_setpoint);
+        return pieCommand(combo.m_setpoint);
     }
 
 
@@ -91,13 +91,13 @@ public class CombinedCommands {
 
     public Command autoFetchPieceFromHPStation() {
         return autoPieCommand(PIECoral.HUMAN_PLAYER_STATION.m_setpoint)
-            .andThen(m_coralSubsystem.createFetchCoralCommand()
-                .withTimeout(2));
+            .andThen(m_coralSubsystem.createIntakeUntilCoralCommand()
+                .withTimeout(6));
     }
 
     public Command fetchPieceFromHPStation() {
-        return pieCommand(PIECoral.HUMAN_PLAYER_STATION.m_setpoint)
-            .alongWith(m_coralSubsystem.createIntakeUntilCoralCommand());
+        return m_coralSubsystem.createIntakeUntilCoralCommand()
+            .raceWith(pieCommand(PIECoral.HUMAN_PLAYER_STATION.m_setpoint));
     }
 
 
@@ -126,7 +126,8 @@ public class CombinedCommands {
 
     public Command goHome() {
         return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0).until(m_elevatorSubsystem::isAtGoalHeight)
-            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE));
+            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE))
+            .until(m_pivotSubsystem::isAtGoalAngle);
     }
 
     public void createCombinedCommand() {

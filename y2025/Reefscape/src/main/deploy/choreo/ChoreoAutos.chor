@@ -7,8 +7,43 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"5 ft / s",
-     "val":1.524
+     "exp":"6.5 ft / s",
+     "val":1.9812
+    }
+   },
+   "FieldWidth":{
+    "dimension":"Length",
+    "var":{
+     "exp":"317 in",
+     "val":8.0518
+    }
+   },
+   "HalfRobotSize":{
+    "dimension":"Length",
+    "var":{
+     "exp":"16 in",
+     "val":0.4064
+    }
+   },
+   "OppMiddleCageY":{
+    "dimension":"Length",
+    "var":{
+     "exp":"FieldWidth - OurMiddleCageY",
+     "val":1.8832830000000005
+    }
+   },
+   "OurMiddleCageY":{
+    "dimension":"Length",
+    "var":{
+     "exp":"242.855 in",
+     "val":6.168517
+    }
+   },
+   "StartingLineX":{
+    "dimension":"Length",
+    "var":{
+     "exp":"299.438 in",
+     "val":7.605725199999999
     }
    }
   },
@@ -197,12 +232,12 @@
    },
    "HumanPlayerLeft":{
     "x":{
-     "exp":"1.3718515634536743 m",
-     "val":1.3718515634536743
+     "exp":"1.886817216873169 m",
+     "val":1.886817216873169
     },
     "y":{
-     "exp":"7.273766994476318 m",
-     "val":7.273766994476318
+     "exp":"6.71476936340332 m",
+     "val":6.71476936340332
     },
     "heading":{
      "exp":"180 deg + 126 deg",
@@ -211,12 +246,12 @@
    },
    "HumanPlayerRight":{
     "x":{
-     "exp":"1.5276724100112915 m",
-     "val":1.5276724100112915
+     "exp":"2.096719980239868 m",
+     "val":2.096719980239868
     },
     "y":{
-     "exp":"0.642888605594635 m",
-     "val":0.642888605594635
+     "exp":"1.449889063835144 m",
+     "val":1.449889063835144
     },
     "heading":{
      "exp":"54 deg",
@@ -323,12 +358,12 @@
    },
    "StartingPosCenter":{
     "x":{
-     "exp":"7.832268238067627 m",
-     "val":7.832268238067627
+     "exp":"StartingLineX - HalfRobotSize",
+     "val":7.1993252
     },
     "y":{
-     "exp":"4.001668930053711 m",
-     "val":4.001668930053711
+     "exp":"FieldWidth / 2",
+     "val":4.0259
     },
     "heading":{
      "exp":"180 deg",
@@ -337,26 +372,26 @@
    },
    "StartingPosLeft":{
     "x":{
-     "exp":"8.26 m",
-     "val":8.26
+     "exp":"StartingLineX - HalfRobotSize",
+     "val":7.1993252
     },
     "y":{
-     "exp":"7.49 m",
-     "val":7.49
+     "exp":"OurMiddleCageY",
+     "val":6.168517
     },
     "heading":{
-     "exp":"-138 deg",
-     "val":-2.4085543677521746
+     "exp":"180 deg",
+     "val":3.141592653589793
     }
    },
    "StartingPosRight":{
     "x":{
-     "exp":"8.14 m",
-     "val":8.14
+     "exp":"StartingLineX - HalfRobotSize",
+     "val":7.1993252
     },
     "y":{
-     "exp":"1.8680174350738525 m",
-     "val":1.8680174350738523
+     "exp":"OppMiddleCageY",
+     "val":1.8832830000000005
     },
     "heading":{
      "exp":"180 deg",

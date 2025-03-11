@@ -1,4 +1,4 @@
-package com.gos.crescendo2024.commands;
+package com.gos.lib.joysticks;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;

@@ -9,6 +9,8 @@ import com.gos.crescendo2024.subsystems.HangerSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.joysticks.VibrateControllerTimedCommand;
+import com.gos.lib.joysticks.VibrateControllerWhileTrueCommand;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
