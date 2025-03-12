@@ -78,6 +78,10 @@ import org.photonvision.EstimatedRobotPose;
  * Subsystem so it can easily be used in command-based projects.
  */
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
+    private static final boolean DEBUG_ODOMETRY = false;
+    private static final boolean DEBUG_POSE_ESTIMATION = false;
+    private static final boolean DEBUG_SWERVE_STATE = false;
+
     public static final double MAX_TRANSLATION_SPEED;
     public static final double MAX_ROTATION_SPEED = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
@@ -214,8 +218,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
-            .withSingleTagMaxDistanceMeters(5)
-            .withSingleTagMaxAmbiguity(0.5);
+            .withSingleTagMaxDistanceMeters(4)
+            .withSingleTagMaxAmbiguity(.5)
+            ;
 
 
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
@@ -270,11 +275,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
     }
 
-    public void addChassisDebugCommands() {
+    public void addChassisDebugCommands(boolean isComp) {
         ShuffleboardTab debugTabChassis = Shuffleboard.getTab("chassis");
+        if (!isComp) {
+            debugTabChassis.add(createSyncOdometryCommand().withName("Sync Odometry"));
+        }
+
         debugTabChassis.add(createChassisToCoastModeCommand().withName("chassis to coast"));
         debugTabChassis.add(createCheckAlertsCommand().withName("Check Chassis Alerts"));
-        debugTabChassis.add(createSyncOdometryCommand().withName("Sync Odometry"));
 
     }
     /**
@@ -336,15 +344,22 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         SwerveDriveState state = getState();
 
-        m_odometryOnly.update(getPigeon2().getRotation2d(), state.ModulePositions);
-        m_oldPoseEstimator.update(getPigeon2().getRotation2d(), state.ModulePositions);
+        if (DEBUG_ODOMETRY) {
+            m_odometryOnly.update(getPigeon2().getRotation2d(), state.ModulePositions);
+            m_field.setOdometry(m_odometryOnly.getPoseMeters());
+        }
+        if (DEBUG_POSE_ESTIMATION) {
+            m_oldPoseEstimator.update(getPigeon2().getRotation2d(), state.ModulePositions);
+            m_field.setOldPoseEstimator(m_oldPoseEstimator.getEstimatedPosition());
+        }
 
         m_field.setPoseEstimate(state.Pose);
-        m_field.setOdometry(m_odometryOnly.getPoseMeters());
-        m_field.setOldPoseEstimator(m_oldPoseEstimator.getEstimatedPosition());
-        m_swerveDrivePublisher.setMeasuredStates(state.ModuleStates);
-        m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
-        m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
+
+        if (DEBUG_SWERVE_STATE) {
+            m_swerveDrivePublisher.setMeasuredStates(state.ModuleStates);
+            m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
+            m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
+        }
         m_pidControllerProperty.updateIfChanged();
         for (PidProperty property : m_moduleProperties) {
             property.updateIfChanged();

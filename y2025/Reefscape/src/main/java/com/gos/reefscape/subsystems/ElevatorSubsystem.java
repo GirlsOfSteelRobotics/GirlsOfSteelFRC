@@ -235,17 +235,19 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_followMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
-    public void addElevatorDebugCommands() {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
-        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
-        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
-        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
-        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
-        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
-        debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
-        debugTab.add(createELevatorToTunableHeightCommand().withName("elevator to tunable height"));
-        //l3 15.5
+    public void addElevatorDebugCommands(boolean inComp) {
 
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
+        if (!inComp) {
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
+            debugTab.add(createELevatorToTunableHeightCommand().withName("elevator to tunable height"));
+            //l3 15.5
+        }
 
 
 
