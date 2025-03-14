@@ -16,8 +16,11 @@ def delete_pathplanner_autos(project_dir):
     for auto in pathplanner_dir.glob("*.auto"):
         auto.unlink()
 
+
 def delete_generated_java(project_dir, package_name):
-    generated_java_dir = project_dir / "src/main/java" / package_name.replace(".", "/") / "generated"
+    generated_java_dir = (
+        project_dir / "src/main/java" / package_name.replace(".", "/") / "generated"
+    )
     for f in generated_java_dir.glob("*.java"):
         f.unlink()
 
@@ -57,7 +60,6 @@ def main():
     package_name = "com.gos.reefscape"
 
     generate_all(project_dir, choreo_file, package_name, delete_existing_files, run_cli)
-
 
 
 if __name__ == "__main__":

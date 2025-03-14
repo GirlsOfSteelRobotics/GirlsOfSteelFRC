@@ -1,13 +1,17 @@
-
 import json
 import math
 import jinja2
 import pathlib
 import itertools
 from typing import List
-from .choreo_utils import max_velocity_constraint, max_acceleration_constraint, max_angular_velocity_constraint
+from .choreo_utils import (
+    max_velocity_constraint,
+    max_acceleration_constraint,
+    max_angular_velocity_constraint,
+)
 
 TEMPLATE_DIR = "y2025/Reefscape/pathing_generation_utils/templates"
+
 
 def format_waypoint(waypoint):
     template_str = '{"x":{"exp":"{{ waypoint.x }} m", "val":{{ waypoint.x }}}, "y":{"exp":"{{ waypoint.y }} m", "val":{{ waypoint.y }}}, "heading":{"exp":"{{ waypoint.heading }} deg", "val":{{ waypoint.heading | to_radians }}}, "intervals":495, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}'
@@ -16,9 +20,10 @@ def format_waypoint(waypoint):
     template_env.filters["to_radians"] = math.radians
     return template_env.from_string(template_str).render(waypoint=waypoint)
 
-def generate_straight_paths(output_dir, accelerations: List[float], velocities: List[float], start_waypoint, stop_waypoint) -> List[pathlib.Path]:
 
-
+def generate_straight_paths(
+    output_dir, accelerations: List[float], velocities: List[float], start_waypoint, stop_waypoint
+) -> List[pathlib.Path]:
     all_paths = []
     waypoints = [format_waypoint(waypoint) for waypoint in [start_waypoint, stop_waypoint]]
     print(waypoints)
@@ -45,9 +50,7 @@ def generate_straight_paths(output_dir, accelerations: List[float], velocities: 
         if v is not None:
             constraints.append(max_velocity_constraint(v))
 
-        contents = template.render(
-            name=traj_name, constraints=constraints, waypoints=waypoints
-        )
+        contents = template.render(name=traj_name, constraints=constraints, waypoints=waypoints)
         output_file.write_text(contents)
         all_paths.append(traj_name)
 
@@ -77,9 +80,7 @@ def generate_rotation_paths(output_dir, angular_velocities: List[float]) -> List
             traj_name = f"TestRotation_{omega:03}DegPerSec"
             constraints.append(max_angular_velocity_constraint(omega))
 
-        contents = template.render(
-            name=traj_name, constraints=constraints, waypoints=waypoints
-        )
+        contents = template.render(name=traj_name, constraints=constraints, waypoints=waypoints)
 
         output_file = output_dir / (traj_name + ".traj")
         output_file.write_text(contents)

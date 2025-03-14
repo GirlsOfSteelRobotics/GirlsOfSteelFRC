@@ -27,8 +27,6 @@ def generate_multi_processor_auto(pathplanner_dir, side, coral, algae_positions)
         paths.append(f"{this_algae}ToProcessor")
         paths.append(f"ProcessorTo{next_algae}")
 
-
-
     name = f"{side}" + "_".join(algae_positions) + ".auto"
     write_pathplanner_auto(paths, pathplanner_dir / name, "Autos")
 

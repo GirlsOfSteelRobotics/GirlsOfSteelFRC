@@ -180,6 +180,7 @@
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Clear Sticky Faults": "Command",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/SuperStructureMech": "Mechanism2d",
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d",
       "/SmartDashboard/drive to starting position": "Command"

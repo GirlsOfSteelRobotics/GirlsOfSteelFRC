@@ -20,6 +20,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
@@ -218,6 +219,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
+            .withFieldDebugConfig(new DebugConfig(false, true, false))
             .withSingleTagMaxDistanceMeters(4)
             .withSingleTagMaxAmbiguity(.5)
             ;
@@ -329,8 +331,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        findClosestAlgae();
-
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(

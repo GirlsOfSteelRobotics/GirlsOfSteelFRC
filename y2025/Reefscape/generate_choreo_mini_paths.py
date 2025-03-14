@@ -1,7 +1,10 @@
 import pathlib
 from .pathing_generation_utils.choreo_utils import run_choreo_cli
 from .pathing_generation_utils.pathplanner_utils import write_pathplanner_auto
-from .pathing_generation_utils.mini_paths_utils import create_path_between_variables, load_choreo_variables
+from .pathing_generation_utils.mini_paths_utils import (
+    create_path_between_variables,
+    load_choreo_variables,
+)
 
 create_path = create_path_between_variables
 
@@ -13,7 +16,9 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, variables):
         reef_to_human_player_left.append(
             create_path(choreo_dir, variables, reef_position, "HumanPlayerLeft")
         )
-        human_player_left_to_reef.append(create_path(choreo_dir, variables, "HumanPlayerLeft", reef_position))
+        human_player_left_to_reef.append(
+            create_path(choreo_dir, variables, "HumanPlayerLeft", reef_position)
+        )
     write_pathplanner_auto(
         reef_to_human_player_left, pathplanner_dir / "ToLeftHumanPlayer.auto", "Mini Paths"
     )
@@ -24,12 +29,19 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, variables):
         reef_to_human_player_right.append(
             create_path(choreo_dir, variables, reef_position, "HumanPlayerRight")
         )
-        human_player_right_to_reef.append(create_path(choreo_dir, variables, "HumanPlayerRight", reef_position))
+        human_player_right_to_reef.append(
+            create_path(choreo_dir, variables, "HumanPlayerRight", reef_position)
+        )
     write_pathplanner_auto(
         reef_to_human_player_right, pathplanner_dir / "ToRightHumanPlayer.auto", "Mini Paths"
     )
 
-    return reef_to_human_player_left + reef_to_human_player_right + human_player_right_to_reef + human_player_left_to_reef
+    return (
+        reef_to_human_player_left
+        + reef_to_human_player_right
+        + human_player_right_to_reef
+        + human_player_left_to_reef
+    )
 
 
 def generate_from_starting_positions(choreo_dir, pathplanner_dir, variables):
@@ -107,6 +119,7 @@ def main():
     run_cli = True
 
     generate_choreo_mini_paths(choreo_file, choreo_dir, pathplanner_dir, run_cli)
+
 
 if __name__ == "__main__":
     # py -m y2025.Reefscape.generate_choreo_mini_paths
