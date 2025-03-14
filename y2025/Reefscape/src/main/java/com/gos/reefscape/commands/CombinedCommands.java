@@ -130,20 +130,23 @@ public class CombinedCommands {
             .until(m_pivotSubsystem::isAtGoalAngle);
     }
 
-    public void createCombinedCommand() {
+    public void createCombinedCommand(boolean inComp) {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
-        debugTab.add(autoScoreCoralCommand(PIECoral.L1).withName("Level One"));
-        debugTab.add(autoScoreCoralCommand(PIECoral.L2).withName("Level Two"));
-        debugTab.add(autoScoreCoralCommand(PIECoral.L3).withName("Level Three"));
-        debugTab.add(autoScoreCoralCommand(PIECoral.L4).withName("Level Four"));
-        debugTab.add(autoScoreAlgaeCommand(PIEAlgae.SCORE_INTO_NET).withName("Score Into net"));
-        debugTab.add(autoScoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR).withName("Score into processor"));
-        debugTab.add(autoFetchPieceFromHPStation().withName("human player station"));
-        debugTab.add(autoFetchAlgae(PIEAlgae.FETCH_ALGAE_2).withName("fetch algae two! :)"));
-        debugTab.add(autoFetchAlgae(PIEAlgae.FETCH_ALGAE_3).withName("fetch algae three! :)"));
+        if (!inComp) {
+            debugTab.add(autoScoreCoralCommand(PIECoral.L1).withName("Level One"));
+            debugTab.add(autoScoreCoralCommand(PIECoral.L2).withName("Level Two"));
+            debugTab.add(autoScoreCoralCommand(PIECoral.L3).withName("Level Three"));
+            debugTab.add(autoScoreCoralCommand(PIECoral.L4).withName("Level Four"));
+            debugTab.add(autoScoreAlgaeCommand(PIEAlgae.SCORE_INTO_NET).withName("Score Into net"));
+            debugTab.add(autoScoreAlgaeCommand(PIEAlgae.SCORE_INTO_PROCESSOR).withName("Score into processor"));
+            debugTab.add(autoFetchPieceFromHPStation().withName("human player station"));
+            debugTab.add(autoFetchAlgae(PIEAlgae.FETCH_ALGAE_2).withName("fetch algae two! :)"));
+            debugTab.add(autoFetchAlgae(PIEAlgae.FETCH_ALGAE_3).withName("fetch algae three! :)"));
+            debugTab.add(goHome().withName("go home"));
+        }
+
         debugTab.add(moveElevatorAndPivotToTunablePosition().withName("elevator and pivot to tunable position"));
         debugTab.add(elevatorPivotToCoast().withName("pivot & elevator to coast"));
-        debugTab.add(goHome().withName("go home"));
 
     }
 }

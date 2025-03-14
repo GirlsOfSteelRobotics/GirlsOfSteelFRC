@@ -95,16 +95,17 @@ public class RobotContainer {
         m_swerveSysId = new SwerveDriveSysId(m_chassisSubsystem);
         m_pivotSysId = new PivotSysId(m_pivotSubsystem);
 
-        m_coralSubsystem.addCoralDebugCommands();
-        m_pivotSubsystem.addPivotDebugCommands();
-        m_elevatorSubsystem.addElevatorDebugCommands();
-        m_chassisSubsystem.addChassisDebugCommands();
-        m_combinedCommand.createCombinedCommand();
+        boolean inComp = false;
+        m_coralSubsystem.addCoralDebugCommands(inComp);
+        m_pivotSubsystem.addPivotDebugCommands(inComp);
+        m_elevatorSubsystem.addElevatorDebugCommands(inComp);
+        m_chassisSubsystem.addChassisDebugCommands(inComp);
+        m_combinedCommand.createCombinedCommand(inComp);
         m_operatorCoralCommand.tellCoralPosition();
-        addSysIdDebugDebugTab();
-
-        // new DriveToPositionDebugTab(m_chassisSubsystem).createMoveRobotToPositionCommand();
-        new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
+        if (!inComp) {
+            addSysIdDebugDebugTab();
+            new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
+        }
 
         SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         SmartDashboard.putData("drive to starting position", createDriveChassisToStartingPoseCommand().withName("drive chassis to start position"));
@@ -148,10 +149,10 @@ public class RobotContainer {
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createResetGyroCommand());
 
         // Drive to position
-        //        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        //        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        //        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        // m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // intake stuff
         m_driverController.a().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
@@ -178,11 +179,6 @@ public class RobotContainer {
         m_operatorController.povDown().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L1));
         m_operatorController.povLeft().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L2));
         m_operatorController.povRight().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L3));
-
-
-
-
-
     }
 
 

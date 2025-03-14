@@ -94,17 +94,19 @@ public class CoralSubsystem extends SubsystemBase {
         return !m_algaeSensor.get();
     }
 
-    public void addCoralDebugCommands() {
+    public void addCoralDebugCommands(boolean isCompetition) {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Coral Debug");
 
-        debugTab.add(createReverseIntakeCommand());
-        debugTab.add(createScoreCoralCommand());
-        debugTab.add(createIntakeUntilCoralCommand());
-        debugTab.add(createFetchCoralCommand());
+        if (!isCompetition) {
+            debugTab.add(createReverseIntakeCommand());
+            debugTab.add(createScoreCoralCommand());
+            debugTab.add(createIntakeUntilCoralCommand());
+            debugTab.add(createFetchCoralCommand());
 
-        debugTab.add(createMoveAlgaeInCommand());
-        debugTab.add(createMoveAlgaeOutCommand());
-        debugTab.add(createIntakeUntilAlgaeCommand());
+            debugTab.add(createMoveAlgaeInCommand());
+            debugTab.add(createMoveAlgaeOutCommand());
+            debugTab.add(createIntakeUntilAlgaeCommand());
+        }
     }
 
     public Command createScoreCoralCommand() {

@@ -7,8 +7,8 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"6.5 ft / s",
-     "val":1.9812
+     "exp":"5 ft / s",
+     "val":1.524
     }
    },
    "FieldWidth":{

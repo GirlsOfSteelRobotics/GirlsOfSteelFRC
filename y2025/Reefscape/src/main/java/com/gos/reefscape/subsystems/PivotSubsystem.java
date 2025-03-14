@@ -144,10 +144,10 @@ public class PivotSubsystem extends SubsystemBase {
             syncRelativeEncoder();
         }
 
-        double encoderDelta = Math.abs(getRelativeAngle() - getAbsoluteAngle());
-        if (encoderDelta > 5 && getRelativeVelocity() < 5) {
-            syncRelativeEncoder();
-        }
+        //        double encoderDelta = Math.abs(getRelativeAngle() - getAbsoluteAngle());
+        //        if (encoderDelta > 5 && getRelativeVelocity() < 5) {
+        //            syncRelativeEncoder();
+        //        }
     }
 
 
@@ -218,15 +218,17 @@ public class PivotSubsystem extends SubsystemBase {
         m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
-    public void addPivotDebugCommands() {
+    public void addPivotDebugCommands(boolean isComp) {
         ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
-        debugTabPivot.add(createMovePivotToAngleCommand(0.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(-15.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(-30.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(-45.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(-90.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(-135.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(-180.0));
+        if (!isComp) {
+            debugTabPivot.add(createMovePivotToAngleCommand(0.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(-15.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(-30.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(-45.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(-90.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(-135.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(-180.0));
+        }
         debugTabPivot.add(createPivotoCoastModeCommand());
         debugTabPivot.add(createResetEncoderCommand().withName("Reset pivot"));
         debugTabPivot.add(createPivotToTunableAngleCommand().withName("Pivot to tunable angle"));
