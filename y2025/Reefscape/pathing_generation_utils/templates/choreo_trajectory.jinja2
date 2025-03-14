@@ -1,0 +1,34 @@
+{
+ "name":"{{ name }}",
+ "version":1,
+ "snapshot":{
+  "waypoints":[],
+  "constraints":[],
+  "targetDt":0.05
+ },
+ "params":{
+  "waypoints":[
+{%- for waypoint in waypoints %}
+    {{ waypoint }}{% if not loop.last %},{% endif %}
+{%- endfor %}
+],
+  "constraints":[
+    {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
+    {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true}{% for constraint in constraints %},
+{{ constraint }}
+{%- endfor %}
+],
+  "targetDt":{
+   "exp":"0.05 s",
+   "val":0.05
+  }
+ },
+ "trajectory":{
+  "sampleType":null,
+  "waypoints":[],
+  "samples":[],
+  "splits":[]
+ },
+ "events":[]
+}
+

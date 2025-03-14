@@ -29,5 +29,4 @@ public class ChoreoPoses {
     public static final MaybeFlippedPose2d STARTING_POS_CENTER = new MaybeFlippedPose2d(7.1993252, 4.0259, Rotation2d.fromRadians(3.141592653589793));
     public static final MaybeFlippedPose2d STARTING_POS_LEFT = new MaybeFlippedPose2d(7.1993252, 6.168517, Rotation2d.fromRadians(3.141592653589793));
     public static final MaybeFlippedPose2d STARTING_POS_RIGHT = new MaybeFlippedPose2d(7.1993252, 1.8832830000000005, Rotation2d.fromRadians(3.141592653589793));
-
 }
