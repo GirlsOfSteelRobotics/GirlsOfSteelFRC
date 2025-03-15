@@ -15,6 +15,7 @@ import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.commands.RobotRelativeDriveCommand;
+import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.generated.DebugPathsTab;
 import com.gos.reefscape.subsystems.CoralSubsystem;
@@ -165,6 +166,16 @@ public class RobotContainer {
             PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
             return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        m_driverController.leftBumper().whileTrue(new DeferredCommand(() -> {
+            PIEAlgae mAlgaeHeight = m_chassisSubsystem.findClosestAlgae().m_algaeHeight;
+            return m_combinedCommand.fetchAlgae(mAlgaeHeight).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        m_driverController.rightBumper().whileTrue(new DeferredCommand(() -> {
+            PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
+            return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        m_driverController.x().whileTrue(m_combinedCommand.scoreAlgaeInNet());
+        m_driverController.y().whileTrue(m_combinedCommand.scoreAlgaeInProcessorCommand());
 
         ///////////////////////////
         // Operator controller

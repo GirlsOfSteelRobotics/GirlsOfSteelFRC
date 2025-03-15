@@ -39,7 +39,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(120);
     public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getNeoVortex(2);
     public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.0);
-    public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * Math.PI);
+    public static final double ELEVATOR_STAGES = 2;
+    public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * K_ELEVATOR_DRUM_RADIUS * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
     public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0.69);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
@@ -75,12 +76,15 @@ public class ElevatorSubsystem extends SubsystemBase {
         SparkMaxConfig elevatorConfig = new SparkMaxConfig();
         elevatorConfig.idleMode(IdleMode.kBrake);
         elevatorConfig.smartCurrentLimit(60);
-        elevatorConfig.inverted(false);
+        elevatorConfig.inverted(true);
 
-        // At bottom - 18.5
-        // Top - 33.4 rotations, 62.5 inches
 
-        double conversionFactor = Units.inchesToMeters(34) / 25.98;
+//        (57 - 16.5) inches 1745
+ //0.023
+//        double conversionFactor = (57 - 16.5) / 1745;
+        double conversionFactor = 1 / (K_ELEVATOR_GEARING * ELEVATOR_GEAR_CIRCUMFERENCE * ELEVATOR_STAGES);
+//        double conversionFactor = ELEVATOR_GEAR_CIRCUMFERENCE;
+//        double conversionFactor = Units.inchesToMeters(34) / 25.98;
         elevatorConfig.encoder.positionConversionFactor(conversionFactor);
         elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
 

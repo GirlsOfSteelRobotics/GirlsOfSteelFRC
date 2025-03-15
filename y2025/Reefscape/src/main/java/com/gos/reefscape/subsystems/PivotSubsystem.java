@@ -54,7 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
-        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 38 - 180);
+        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 248 - 14);
 
 
         SparkMaxConfig pivotConfig = new SparkMaxConfig();

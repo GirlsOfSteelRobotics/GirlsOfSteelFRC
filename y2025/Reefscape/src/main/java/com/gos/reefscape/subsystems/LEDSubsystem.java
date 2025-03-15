@@ -12,7 +12,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class LEDSubsystem extends SubsystemBase {
-    private static final int MAX_INDEX_LED = 70;
+    // 25 x2 Across the funnel
+    // 10 x2 Down the funnel
+    // ?     in the spiral
+    private static final int MAX_INDEX_LED = 90 + 22 + 2;
+
+    public static final int SWIRL_START = 38;
+    public static final int SWIRL_COUNT = 20 + 22 + 2;
 
     // Led core
     protected final AddressableLEDBuffer m_buffer;
