@@ -36,6 +36,13 @@ public class CombinedCommands {
 
     }
 
+    public Command pieAlgae(PIESetpoint combo) {
+        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
+            .until(m_elevatorSubsystem::isAtGoalHeight)
+            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)).andThen(pieCommand(combo));
+
+    }
+
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
@@ -109,7 +116,7 @@ public class CombinedCommands {
     }
 
     public Command fetchAlgae(PIEAlgae algaePosition) {
-        return autoPieCommand(algaePosition.m_setpoint)
+        return pieAlgae(algaePosition.m_setpoint)
             .alongWith(m_coralSubsystem.createMoveAlgaeInCommand());
     }
 

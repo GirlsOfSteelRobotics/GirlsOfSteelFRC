@@ -67,6 +67,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
+import frc.robot.generated.TunerConstantsCompetition.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2025.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
 
@@ -76,7 +77,7 @@ import org.photonvision.EstimatedRobotPose;
  * Subsystem so it can easily be used in command-based projects.
  */
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
-    private static final boolean DEBUG_ODOMETRY = false;
+    private static final boolean DEBUG_ODOMETRY = true;
     private static final boolean DEBUG_POSE_ESTIMATION = false;
     private static final boolean DEBUG_SWERVE_STATE = false;
 
@@ -98,22 +99,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         360);
 
     static {
-        if (Constants.IS_COMPETITION_ROBOT) {
-            MAX_TRANSLATION_SPEED = TunerConstantsCompetition.kSpeedAt12Volts.in(MetersPerSecond);
-            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsCompetition.steerGains);
-            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsCompetition.driveGains);
-        } else  {
-            MAX_TRANSLATION_SPEED = TunerConstantsPrototype.kSpeedAt12Volts.in(MetersPerSecond);
-            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsPrototype.steerGains);
-            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsPrototype.driveGains);
-        }
+        MAX_TRANSLATION_SPEED = TunerConstantsCompetition.kSpeedAt12Volts.in(MetersPerSecond);
+        DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsCompetition.steerGains);
+        DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsCompetition.driveGains);
     }
 
     private static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
-        new Translation2d(TunerConstantsPrototype.kFrontLeftXPos, TunerConstantsPrototype.kFrontLeftYPos),
-        new Translation2d(TunerConstantsPrototype.kFrontRightXPos, TunerConstantsPrototype.kFrontRightYPos),
-        new Translation2d(TunerConstantsPrototype.kBackLeftXPos, TunerConstantsPrototype.kBackLeftYPos),
-        new Translation2d(TunerConstantsPrototype.kBackRightXPos, TunerConstantsPrototype.kBackRightYPos)
+        new Translation2d(TunerConstantsCompetition.kFrontLeftXPos, TunerConstantsCompetition.kFrontLeftYPos),
+        new Translation2d(TunerConstantsCompetition.kFrontRightXPos, TunerConstantsCompetition.kFrontRightYPos),
+        new Translation2d(TunerConstantsCompetition.kBackLeftXPos, TunerConstantsCompetition.kBackLeftYPos),
+        new Translation2d(TunerConstantsCompetition.kBackRightXPos, TunerConstantsCompetition.kBackRightYPos)
     );
 
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
