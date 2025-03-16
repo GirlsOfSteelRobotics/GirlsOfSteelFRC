@@ -27,7 +27,6 @@ import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.generated.TunerConstantsCompetition;
-import frc.robot.generated.TunerConstantsPrototype;
 import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
 import com.gos.reefscape.subsystems.sysid.PivotSysId;
 import com.gos.reefscape.subsystems.sysid.SwerveDriveSysId;
@@ -56,8 +55,7 @@ import java.util.Set;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ChassisSubsystem m_chassisSubsystem = Constants.IS_COMPETITION_ROBOT
-        ? TunerConstantsCompetition.createDrivetrain() : TunerConstantsPrototype.createDrivetrain();
+    private final ChassisSubsystem m_chassisSubsystem = TunerConstantsCompetition.createDrivetrain();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();

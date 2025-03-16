@@ -45,8 +45,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import frc.robot.generated.TunerConstantsCompetition;
-import frc.robot.generated.TunerConstantsPrototype;
-import frc.robot.generated.TunerConstantsPrototype.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -69,7 +67,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
-import frc.robot.generated.TunerConstantsPrototype;
 import org.littletonrobotics.frc2025.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
 
