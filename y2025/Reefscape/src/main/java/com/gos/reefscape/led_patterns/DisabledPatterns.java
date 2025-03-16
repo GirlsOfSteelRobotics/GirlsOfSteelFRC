@@ -3,8 +3,6 @@ package com.gos.reefscape.led_patterns;
 import com.gos.lib.led.mirrored.MirroredLEDAlertPattern;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.reefscape.Constants;
-import com.gos.lib.led.LEDAlertPatterns;
-import com.gos.lib.led.LEDBoolean;
 import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.led_patterns.sub_patterns.AutoModePattern;
@@ -24,7 +22,7 @@ public class DisabledPatterns {
     private final AutoModePattern m_autoModePattern;
 
 
-    public DisabledPatterns(AddressableLEDBuffer buffer, int numberOfLEDs, Autos autoModeFactory, ElevatorSubsystem elevatorSubsystem) {
+    public DisabledPatterns(AddressableLEDBuffer buffer, Autos autoModeFactory, ElevatorSubsystem elevatorSubsystem) {
         m_elevator = elevatorSubsystem;
         m_autoModeFactory = autoModeFactory;
 

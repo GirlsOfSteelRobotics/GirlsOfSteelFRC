@@ -1,7 +1,6 @@
 package com.gos.reefscape.led_patterns;
 
 import com.gos.lib.led.LEDBoolean;
-import com.gos.lib.led.LEDRainbow;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.subsystems.CoralSubsystem;
@@ -19,7 +18,7 @@ public class EnabledPatterns {
     private final MirroredLEDBoolean m_hasAlgae;
     private final LEDBoolean m_heightAngleAtGoal;
 
-    public EnabledPatterns(AddressableLEDBuffer buffer, int numberOfLeds, CoralSubsystem coral, CombinedCommands combinedCommands) {
+    public EnabledPatterns(AddressableLEDBuffer buffer, CoralSubsystem coral, CombinedCommands combinedCommands) {
         m_coralSubsystem = coral;
         m_combinedCommands = combinedCommands;
 

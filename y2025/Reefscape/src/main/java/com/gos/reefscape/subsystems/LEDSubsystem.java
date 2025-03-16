@@ -34,8 +34,8 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.setData((m_buffer));
         m_led.start();
 
-        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, coral, combinedCommands);
-        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory, elevator);
+        m_enabledPatterns = new EnabledPatterns(m_buffer, coral, combinedCommands);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, autoModeFactory, elevator);
     }
 
     @Override
