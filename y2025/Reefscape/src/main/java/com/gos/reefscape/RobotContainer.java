@@ -122,7 +122,7 @@ public class RobotContainer {
             PropertyManager.printDynamicProperties(true);
         }
 
-        // PropertyManager.purgeExtraKeys();
+         PropertyManager.purgeExtraKeys();
 
         keepOutConsumer.accept(KeepOutZoneEnum.NOT_RUNNING);
 

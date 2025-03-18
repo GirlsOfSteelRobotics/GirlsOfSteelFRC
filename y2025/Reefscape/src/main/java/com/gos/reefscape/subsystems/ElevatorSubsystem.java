@@ -42,7 +42,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double ELEVATOR_STAGES = 2;
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * K_ELEVATOR_DRUM_RADIUS * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
-    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0.69);
+    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
 
 
@@ -92,15 +92,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", false, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
-            .addMaxVelocity(1.0)
-            .addMaxAcceleration(2.0)
+            .addMaxVelocity(0.5)
+            .addMaxAcceleration(0.5)
             // Elevator FF
             .addKs(0)
-            .addKv(3.5)
-            .addKg(0.3)
+            .addKv(5)
+            .addKg(0.45)
             .addKa(0)
             // REV Position controller
-            .addKp(2)
+            .addKp(4)
             .build();
 
         m_elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
