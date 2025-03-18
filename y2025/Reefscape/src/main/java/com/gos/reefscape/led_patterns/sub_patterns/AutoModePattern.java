@@ -1,4 +1,4 @@
-package com.gos.reefscape.led_patterns;
+package com.gos.reefscape.led_patterns.sub_patterns;
 
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.LEDPatternLookup;

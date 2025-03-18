@@ -11,10 +11,12 @@ import com.gos.lib.properties.PropertyManager;
 import com.gos.reefscape.auto.modes.GosAuto;
 import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.CombinedCommands;
-import com.gos.reefscape.commands.DavidDriveCommand;
+import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.commands.RobotRelativeDriveCommand;
+import com.gos.reefscape.enums.KeepOutZoneEnum;
+import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.generated.DebugPathsTab;
 import com.gos.reefscape.subsystems.CoralSubsystem;
@@ -24,9 +26,9 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.generated.TunerConstantsCompetition;
-import frc.robot.generated.TunerConstantsPrototype;
 import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
 import com.gos.reefscape.subsystems.sysid.PivotSysId;
 import com.gos.reefscape.subsystems.sysid.SwerveDriveSysId;
@@ -45,6 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 
 /**
@@ -55,12 +58,11 @@ import java.util.Set;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ChassisSubsystem m_chassisSubsystem = Constants.IS_COMPETITION_ROBOT
-        ? TunerConstantsCompetition.createDrivetrain() : TunerConstantsPrototype.createDrivetrain();
+    private final ChassisSubsystem m_chassisSubsystem = TunerConstantsCompetition.createDrivetrain();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
+    private final CombinedCommands m_combinedCommand;
     private final OperatorCoralCommand m_operatorCoralCommand = new OperatorCoralCommand();
 
     private final ElevatorSysId m_elevatorSysId;
@@ -80,6 +82,9 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        Consumer<KeepOutZoneEnum> keepOutConsumer = this::handleKeepOutZoneState;
+        m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer);
+
         // Configure the trigger bindings
         configureBindings();
 
@@ -89,6 +94,8 @@ public class RobotContainer {
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
             DriverStation.silenceJoystickConnectionWarning(true);
+
+            new DIOSim(Constants.CORAL_SENSOR_ID).setValue(false);
         }
         m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
         m_elevatorSysId = new ElevatorSysId(m_elevatorSubsystem);
@@ -112,17 +119,21 @@ public class RobotContainer {
 
 
 
-        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
-
+        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos); // NOPMD(UnusedPrivateField)
 
         if (RobotBase.isReal()) {
-            PropertyManager.printDynamicProperties(true);
+            PropertyManager.printDynamicProperties(false);
         }
 
         // PropertyManager.purgeExtraKeys();
 
+        keepOutConsumer.accept(KeepOutZoneEnum.NOT_RUNNING);
+
     }
 
+    private void handleKeepOutZoneState(KeepOutZoneEnum state) {
+        m_leds.setKeepOutZoneState(state);
+    }
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -137,8 +148,8 @@ public class RobotContainer {
         ///////////////////////////
         // Default Commands
         ///////////////////////////
-        // m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
-        m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
+        m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
+        // m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
 
@@ -165,12 +176,23 @@ public class RobotContainer {
             PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
             return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        m_driverController.leftBumper().whileTrue(new DeferredCommand(() -> {
+            PIEAlgae mAlgaeHeight = m_chassisSubsystem.findClosestAlgae().m_algaeHeight;
+            return m_combinedCommand.fetchAlgae(mAlgaeHeight).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        m_driverController.rightBumper().whileTrue(new DeferredCommand(() -> {
+            PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
+            return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        m_driverController.x().whileTrue(m_combinedCommand.scoreAlgaeInNet());
+        m_driverController.y().whileTrue(m_combinedCommand.scoreAlgaeInProcessorCommand());
 
         ///////////////////////////
         // Operator controller
         ///////////////////////////
         m_operatorController.a().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
         m_operatorController.y().whileTrue(m_coralSubsystem.createScoreCoralCommand());
+        m_operatorController.x().whileTrue(m_coralSubsystem.createScoreCoralCommand());
 
         m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
 

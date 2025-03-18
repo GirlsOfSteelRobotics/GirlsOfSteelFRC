@@ -25,8 +25,13 @@ public class LEDPatternLookup<KeyT> extends LEDBase {
 
     @Override
     public void writeLeds() {
+        if (m_key == null) {
+            System.out.println("No pattern in lookup table because the key is null");
+            return;
+        }
         LEDPattern pattern = m_lookup.get(m_key);
         if (pattern == null) {
+            System.out.println("No pattern in lookup table for " + m_key);
             return;
         }
 

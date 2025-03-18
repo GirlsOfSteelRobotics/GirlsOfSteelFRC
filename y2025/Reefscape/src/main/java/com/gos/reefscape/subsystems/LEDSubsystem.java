@@ -2,7 +2,7 @@ package com.gos.reefscape.subsystems;
 
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.commands.Autos;
-import com.gos.reefscape.commands.CombinedCommands;
+import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.led_patterns.DisabledPatterns;
 import com.gos.reefscape.led_patterns.EnabledPatterns;
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -12,7 +12,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class LEDSubsystem extends SubsystemBase {
-    private static final int MAX_INDEX_LED = 70;
+    // 25 x2 Across the funnel
+    // 10 x2 Down the funnel
+    // ?     in the spiral
+    private static final int MAX_INDEX_LED = 90 + 22 + 2;
+
+    public static final int SWIRL_START = 38;
+    public static final int SWIRL_COUNT = 20 + 22 + 2;
 
     // Led core
     protected final AddressableLEDBuffer m_buffer;
@@ -21,15 +27,15 @@ public class LEDSubsystem extends SubsystemBase {
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
 
-    public LEDSubsystem(CoralSubsystem coral, ElevatorSubsystem elevator, CombinedCommands combinedCommands, Autos autoModeFactory) {
+    public LEDSubsystem(CoralSubsystem coral, ElevatorSubsystem elevator, Autos autoModeFactory) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT_ID);
         m_led.setLength(m_buffer.getLength());
         m_led.setData((m_buffer));
         m_led.start();
 
-        m_enabledPatterns = new EnabledPatterns(m_buffer, MAX_INDEX_LED, coral, combinedCommands);
-        m_disabledPatterns = new DisabledPatterns(m_buffer, MAX_INDEX_LED, autoModeFactory, elevator);
+        m_enabledPatterns = new EnabledPatterns(m_buffer, coral);
+        m_disabledPatterns = new DisabledPatterns(m_buffer, autoModeFactory, elevator);
     }
 
     @Override
@@ -53,6 +59,9 @@ public class LEDSubsystem extends SubsystemBase {
 
     }
 
+    public void setKeepOutZoneState(KeepOutZoneEnum state) {
+        m_enabledPatterns.setKeepOutZoneState(state);
+    }
 }
 
 

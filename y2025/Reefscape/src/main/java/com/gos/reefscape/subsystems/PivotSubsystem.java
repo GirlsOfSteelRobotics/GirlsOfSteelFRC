@@ -34,7 +34,7 @@ public class PivotSubsystem extends SubsystemBase {
     private static final double ALLOWABLE_ERROR = .5; //TODO change allowable error to make it more accurate or to make scoring faster
     private static final double PIVOT_ERROR = 3;
     private static final double GEAR_RATIO = 45.0; // reduction
-    public static final double DEFAULT_ANGLE = -7;
+    public static final double DEFAULT_ANGLE = -26;
     public static final double NO_GOAL_ANGLE = -360;
 
     private final SparkFlex m_pivotMotor;
@@ -44,7 +44,7 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
-    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(false, "tunablePivot", -48);
+    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tunablePivot", -21);
 
 
     private final RevProfiledSingleJointedArmController m_armPidController;
@@ -54,7 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
-        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 38 - 180);
+        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 248 - 14 - 6);
 
 
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
@@ -194,7 +194,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public boolean isAtGoalAngle() {
-        return (Math.abs(getRelativeAngle() - getArmGoalAngle()) <= PIVOT_ERROR);
+        return isAtGoalAngle(getArmGoalAngle());
+    }
+
+    public boolean isAtGoalAngle(double goal) {
+        return (Math.abs(getRelativeAngle() - goal) <= PIVOT_ERROR);
     }
 
 

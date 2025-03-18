@@ -1,0 +1,11 @@
+package com.gos.reefscape.enums;
+
+public enum KeepOutZoneEnum {
+    NOT_RUNNING,
+    IS_AT_POSITION,
+    ONLY_MOVE_ELEVATOR,
+    ONLY_MOVE_PIVOT,
+    CAN_MOVE_BOTH,
+    CAN_MOVE_BOTH_WITH_MODIFIED_PIVOT_GOAL,
+    CAN_MOVE_BOTH_WITH_MODIFIED_ELEVATOR_GOAL;
+}

@@ -45,8 +45,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import frc.robot.generated.TunerConstantsCompetition;
-import frc.robot.generated.TunerConstantsPrototype;
-import frc.robot.generated.TunerConstantsPrototype.TunerSwerveDrivetrain;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -69,6 +67,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
+import frc.robot.generated.TunerConstantsCompetition.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2025.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
 
@@ -78,7 +77,7 @@ import org.photonvision.EstimatedRobotPose;
  * Subsystem so it can easily be used in command-based projects.
  */
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
-    private static final boolean DEBUG_ODOMETRY = false;
+    private static final boolean DEBUG_ODOMETRY = true;
     private static final boolean DEBUG_POSE_ESTIMATION = false;
     private static final boolean DEBUG_SWERVE_STATE = false;
 
@@ -92,7 +91,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
-        false,
+        Constants.DEFAULT_CONSTANT_PROPERTIES,
         "Tunable path constraints",
         60,
         60,
@@ -100,22 +99,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         360);
 
     static {
-        if (Constants.IS_COMPETITION_ROBOT) {
-            MAX_TRANSLATION_SPEED = TunerConstantsCompetition.kSpeedAt12Volts.in(MetersPerSecond);
-            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsCompetition.steerGains);
-            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsCompetition.driveGains);
-        } else  {
-            MAX_TRANSLATION_SPEED = TunerConstantsPrototype.kSpeedAt12Volts.in(MetersPerSecond);
-            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsPrototype.steerGains);
-            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsPrototype.driveGains);
-        }
+        MAX_TRANSLATION_SPEED = TunerConstantsCompetition.kSpeedAt12Volts.in(MetersPerSecond);
+        DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstantsCompetition.steerGains);
+        DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstantsCompetition.driveGains);
     }
 
     private static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
-        new Translation2d(TunerConstantsPrototype.kFrontLeftXPos, TunerConstantsPrototype.kFrontLeftYPos),
-        new Translation2d(TunerConstantsPrototype.kFrontRightXPos, TunerConstantsPrototype.kFrontRightYPos),
-        new Translation2d(TunerConstantsPrototype.kBackLeftXPos, TunerConstantsPrototype.kBackLeftYPos),
-        new Translation2d(TunerConstantsPrototype.kBackRightXPos, TunerConstantsPrototype.kBackRightYPos)
+        new Translation2d(TunerConstantsCompetition.kFrontLeftXPos, TunerConstantsCompetition.kFrontLeftYPos),
+        new Translation2d(TunerConstantsCompetition.kFrontRightXPos, TunerConstantsCompetition.kFrontRightYPos),
+        new Translation2d(TunerConstantsCompetition.kBackLeftXPos, TunerConstantsCompetition.kBackLeftYPos),
+        new Translation2d(TunerConstantsCompetition.kBackRightXPos, TunerConstantsCompetition.kBackRightYPos)
     );
 
     private static final double SIM_LOOP_PERIOD = 0.005; // 5 ms
@@ -176,10 +169,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         for (int i = 0; i < 4; ++i) {
             SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", false, module.getSteerMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
                 .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
                 .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
@@ -193,7 +186,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
-        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
+        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", Constants.DEFAULT_CONSTANT_PROPERTIES, m_davidDriveRequest.HeadingController)
             .addP(10.0)
             .addD(0.1)
             .build();

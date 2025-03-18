@@ -1,41 +1,41 @@
 package com.gos.reefscape.led_patterns;
 
-import com.gos.lib.led.LEDBoolean;
-import com.gos.lib.led.LEDRainbow;
-import com.gos.reefscape.commands.CombinedCommands;
+import com.gos.lib.led.mirrored.MirroredLEDBoolean;
+import com.gos.reefscape.enums.KeepOutZoneEnum;
+import com.gos.reefscape.led_patterns.sub_patterns.KeepOutZoneStatePattern;
 import com.gos.reefscape.subsystems.CoralSubsystem;
+import com.gos.reefscape.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class EnabledPatterns {
 
     private final CoralSubsystem m_coralSubsystem;
-    private final CombinedCommands m_combinedCommands;
-    private final LEDRainbow m_rainbow;
 
-    private final LEDBoolean m_hasCoral;
-    private final LEDBoolean m_hasAlgae;
-    private final LEDBoolean m_heightAngleAtGoal;
 
-    public EnabledPatterns(AddressableLEDBuffer buffer, int numberOfLeds, CoralSubsystem coral, CombinedCommands combinedCommands) {
+    private final MirroredLEDBoolean m_hasCoral;
+    private final MirroredLEDBoolean m_hasAlgae;
+    private final KeepOutZoneStatePattern m_keepOutPattern;
+
+    public EnabledPatterns(AddressableLEDBuffer buffer, CoralSubsystem coral) {
         m_coralSubsystem = coral;
-        m_combinedCommands = combinedCommands;
 
 
         //change this
-        m_hasAlgae = new LEDBoolean(buffer, 0, numberOfLeds / 2, Color.kGreen, Color.kRed);
+        m_hasAlgae = new MirroredLEDBoolean(buffer, 0, LEDSubsystem.SWIRL_START / 2, Color.kPink, Color.kRed);
 
-        m_rainbow = new LEDRainbow(buffer, 0, numberOfLeds);
-        m_hasCoral = new LEDBoolean(buffer, 0, numberOfLeds / 2, Color.kGreen, Color.kRed);
-        m_heightAngleAtGoal = new LEDBoolean(buffer, numberOfLeds / 2, numberOfLeds, Color.kGreen, Color.kRed);
-
+        m_hasCoral = new MirroredLEDBoolean(buffer, LEDSubsystem.SWIRL_START / 2, LEDSubsystem.SWIRL_START / 2, Color.kGreen, Color.kRed);
+        m_keepOutPattern = new KeepOutZoneStatePattern(buffer, LEDSubsystem.SWIRL_START, LEDSubsystem.SWIRL_COUNT);
     }
 
     public void ledUpdates() {
-        m_rainbow.writeLeds();
         m_hasAlgae.setStateAndWrite(m_coralSubsystem.hasAlgae());
         m_hasCoral.setStateAndWrite(m_coralSubsystem.hasCoral());
-        m_heightAngleAtGoal.setStateAndWrite(m_combinedCommands.isAtGoalHeightAngle());
+        m_keepOutPattern.writeLeds();
+    }
+
+    public void setKeepOutZoneState(KeepOutZoneEnum state) {
+        m_keepOutPattern.setState(state);
     }
 }
 
