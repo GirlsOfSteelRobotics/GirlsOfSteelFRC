@@ -218,7 +218,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean isAtGoalHeight() {
-        return Math.abs(getHeight() - m_goalHeight) <= ELEVATOR_ERROR;
+        return isAtGoalHeight(m_goalHeight);
+    }
+
+    public boolean isAtGoalHeight(double goal) {
+        return Math.abs(getHeight() - goal) <= ELEVATOR_ERROR;
     }
 
     public void setVoltage(double outputVolts) {

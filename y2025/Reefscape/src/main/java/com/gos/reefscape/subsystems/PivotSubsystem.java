@@ -194,7 +194,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public boolean isAtGoalAngle() {
-        return (Math.abs(getRelativeAngle() - getArmGoalAngle()) <= PIVOT_ERROR);
+        return isAtGoalAngle(getArmGoalAngle());
+    }
+
+    public boolean isAtGoalAngle(double goal) {
+        return (Math.abs(getRelativeAngle() - goal) <= PIVOT_ERROR);
     }
 
 

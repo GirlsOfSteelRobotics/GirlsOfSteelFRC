@@ -32,7 +32,6 @@ import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
-import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;

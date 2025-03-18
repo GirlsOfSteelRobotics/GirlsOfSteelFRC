@@ -2,7 +2,7 @@ package com.gos.reefscape.subsystems;
 
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.commands.Autos;
-import com.gos.reefscape.commands.CombinedCommands;
+import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.led_patterns.DisabledPatterns;
 import com.gos.reefscape.led_patterns.EnabledPatterns;
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -27,14 +27,14 @@ public class LEDSubsystem extends SubsystemBase {
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
 
-    public LEDSubsystem(CoralSubsystem coral, ElevatorSubsystem elevator, CombinedCommands combinedCommands, Autos autoModeFactory) {
+    public LEDSubsystem(CoralSubsystem coral, ElevatorSubsystem elevator, Autos autoModeFactory) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT_ID);
         m_led.setLength(m_buffer.getLength());
         m_led.setData((m_buffer));
         m_led.start();
 
-        m_enabledPatterns = new EnabledPatterns(m_buffer, coral, combinedCommands);
+        m_enabledPatterns = new EnabledPatterns(m_buffer, coral);
         m_disabledPatterns = new DisabledPatterns(m_buffer, autoModeFactory, elevator);
     }
 
@@ -59,6 +59,9 @@ public class LEDSubsystem extends SubsystemBase {
 
     }
 
+    public void setKeepOutZoneState(KeepOutZoneEnum state) {
+        m_enabledPatterns.setKeepOutZoneState(state);
+    }
 }
 
 

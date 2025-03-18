@@ -11,11 +11,11 @@ import com.gos.lib.properties.PropertyManager;
 import com.gos.reefscape.auto.modes.GosAuto;
 import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.CombinedCommands;
-import com.gos.reefscape.commands.DavidDriveCommand;
+import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
 import com.gos.reefscape.commands.RobotRelativeDriveCommand;
-import com.gos.reefscape.commands.SwerveWithJoystickCommand;
+import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.generated.DebugPathsTab;
@@ -46,6 +46,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 
 /**
@@ -60,7 +61,7 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
     private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-    private final CombinedCommands m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem);
+    private final CombinedCommands m_combinedCommand;
     private final OperatorCoralCommand m_operatorCoralCommand = new OperatorCoralCommand();
 
     private final ElevatorSysId m_elevatorSysId;
@@ -80,6 +81,9 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        Consumer<KeepOutZoneEnum> keepOutConsumer = this::handleKeepOutZoneState;
+        m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer);
+
         // Configure the trigger bindings
         configureBindings();
 
@@ -112,8 +116,7 @@ public class RobotContainer {
 
 
 
-        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_combinedCommand, m_autos); // NOPMD(UnusedPrivateField)
-
+        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos); // NOPMD(UnusedPrivateField)
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties(true);
@@ -121,8 +124,13 @@ public class RobotContainer {
 
         // PropertyManager.purgeExtraKeys();
 
+        keepOutConsumer.accept(KeepOutZoneEnum.NOT_RUNNING);
+
     }
 
+    private void handleKeepOutZoneState(KeepOutZoneEnum state) {
+        m_leds.setKeepOutZoneState(state);
+    }
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -137,8 +145,8 @@ public class RobotContainer {
         ///////////////////////////
         // Default Commands
         ///////////////////////////
-//         m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
-        m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
+        m_chassisSubsystem.setDefaultCommand(new SwerveWithJoystickCommand(m_chassisSubsystem, m_driverController));
+        // m_chassisSubsystem.setDefaultCommand(new DavidDriveCommand(m_chassisSubsystem, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorController));
         m_pivotSubsystem.setDefaultCommand(new MovePivotWithJoystickCommand(m_pivotSubsystem, m_operatorController));
 

@@ -1,5 +1,6 @@
 package com.gos.reefscape.commands;
 
+import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.enums.PIESetpoint;
@@ -9,45 +10,51 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+
+import java.util.function.Consumer;
 
 public class CombinedCommands {
     private final CoralSubsystem m_coralSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
+    private final Consumer<KeepOutZoneEnum> m_keepoutConsumer;
 
-    public CombinedCommands(CoralSubsystem coral, ElevatorSubsystem elevator, PivotSubsystem pivot) {
+    public CombinedCommands(CoralSubsystem coral, ElevatorSubsystem elevator, PivotSubsystem pivot, Consumer<KeepOutZoneEnum> consumer) {
         m_coralSubsystem = coral;
         m_elevatorSubsystem = elevator;
         m_pivotSubsystem = pivot;
+        m_keepoutConsumer = consumer;
     }
 
     public Command autoPieCommand(PIESetpoint combo) {
-        return m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)
-            .until(m_pivotSubsystem::isAtGoalAngle)
-            .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height))
-            .until(m_elevatorSubsystem::isAtGoalHeight);
+//        return m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)
+//            .until(m_pivotSubsystem::isAtGoalAngle)
+//            .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height))
+//            .until(m_elevatorSubsystem::isAtGoalHeight);
+
+        return new KeepoutZonesCommand(m_elevatorSubsystem, m_pivotSubsystem, m_keepoutConsumer, combo, false);
     }
 
     public Command pieCommand(PIESetpoint combo) {
-        return m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)
-            .alongWith(new WaitUntilCommand(m_pivotSubsystem::isAtGoalAngle)
-                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)));
+//        return m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)
+//            .alongWith(new WaitUntilCommand(m_pivotSubsystem::isAtGoalAngle)
+//                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)));
+        return new KeepoutZonesCommand(m_elevatorSubsystem, m_pivotSubsystem, m_keepoutConsumer, combo, true);
 
     }
 
-    public Command pieAlgae(PIESetpoint combo) {
-        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
-            .until(m_elevatorSubsystem::isAtGoalHeight)
-            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)).andThen(pieCommand(combo));
-
-    }
+//    public Command pieAlgae(PIESetpoint combo) {
+//        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
+//            .until(m_elevatorSubsystem::isAtGoalHeight)
+//            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)).andThen(pieCommand(combo));
+//
+//    }
 
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
             return autoPieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
-                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
+//                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint))
                     .andThen(m_coralSubsystem.createScoreCoralCommand()
                         .withTimeout(.75));
@@ -62,7 +69,7 @@ public class CombinedCommands {
 
         if (combo == PIECoral.L4) {
             return autoPieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
-                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
+                //.andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
         }
 
@@ -116,7 +123,7 @@ public class CombinedCommands {
     }
 
     public Command fetchAlgae(PIEAlgae algaePosition) {
-        return pieAlgae(algaePosition.m_setpoint)
+        return pieCommand(algaePosition.m_setpoint)
             .alongWith(m_coralSubsystem.createMoveAlgaeInCommand());
     }
 
@@ -132,9 +139,10 @@ public class CombinedCommands {
     }
 
     public Command goHome() {
-        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0).until(m_elevatorSubsystem::isAtGoalHeight)
-            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE))
-            .until(m_pivotSubsystem::isAtGoalAngle);
+//        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0).until(m_elevatorSubsystem::isAtGoalHeight)
+//            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE))
+//            .until(m_pivotSubsystem::isAtGoalAngle);
+        return autoPieCommand(new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE));
     }
 
     public void createCombinedCommand(boolean inComp) {
