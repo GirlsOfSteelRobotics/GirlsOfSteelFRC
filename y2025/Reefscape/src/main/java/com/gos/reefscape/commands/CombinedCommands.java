@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Consumer;
 
 public class CombinedCommands {
+    private static final PIESetpoint GO_HOME_SETPOINT = new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE);
+    private static final PIESetpoint L4_PRE_DUNK_SETPOINT = new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle);
+
     private final CoralSubsystem m_coralSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
@@ -38,10 +41,11 @@ public class CombinedCommands {
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
-            return autoPieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
+            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint))
-                    .andThen(m_coralSubsystem.createScoreCoralCommand()
-                        .withTimeout(.75));
+                .andThen(m_coralSubsystem.createScoreCoralCommand()
+                    .withTimeout(.75))
+                .andThen(autoPieCommand(L4_PRE_DUNK_SETPOINT));
         }
 
         return autoPieCommand(combo.m_setpoint)
@@ -52,7 +56,7 @@ public class CombinedCommands {
     public Command scoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
-            return autoPieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
+            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
         }
 
@@ -122,7 +126,7 @@ public class CombinedCommands {
     }
 
     public Command goHome() {
-        return autoPieCommand(new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE));
+        return autoPieCommand(GO_HOME_SETPOINT);
     }
 
     public void createCombinedCommand(boolean inComp) {

@@ -90,7 +90,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         elevatorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
 
-        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", Constants.DEFAULT_CONSTANT_PROPERTIES, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
+
+        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", true, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(0.5)
             .addMaxAcceleration(0.5)
@@ -102,7 +103,6 @@ public class ElevatorSubsystem extends SubsystemBase {
             // REV Position controller
             .addKp(4)
             .build();
-
         m_elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_elevatorFollowerErrorAlerts = new SparkMaxAlerts(m_followMotor, "elevator follower");
         m_followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

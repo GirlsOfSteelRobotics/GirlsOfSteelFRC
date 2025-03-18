@@ -62,7 +62,7 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(true);
 
-        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
+        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", true, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(180)
             .addMaxAcceleration(360)

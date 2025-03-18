@@ -26,6 +26,7 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.generated.TunerConstantsCompetition;
 import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
@@ -93,6 +94,8 @@ public class RobotContainer {
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
             DriverStation.silenceJoystickConnectionWarning(true);
+
+            new DIOSim(Constants.CORAL_SENSOR_ID).setValue(false);
         }
         m_autos = new Autos(m_chassisSubsystem, m_combinedCommand);
         m_elevatorSysId = new ElevatorSysId(m_elevatorSubsystem);
