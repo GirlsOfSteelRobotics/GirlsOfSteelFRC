@@ -40,37 +40,32 @@ public class KeepoutZonesCommand extends Command {
 
     }
 
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.NPathComplexity"})
     @Override
     public void execute() {
         String reason = "No reason";
 
 
         double pivotAngle = RobotBase.isSimulation() ? m_pivotSubsystem.getRelativeAngle() : m_pivotSubsystem.getAbsoluteAngle();
+        double elevatorHeight = m_elevatorSubsystem.getHeight();
 
-        double elevatorError = m_setpoint.m_height - m_elevatorSubsystem.getHeight();
+        double elevatorError = m_setpoint.m_height - elevatorHeight;
         boolean goingDown = elevatorError < 0;
 
         SmartDashboard.putBoolean("Elevator going down ", goingDown);
 
-        if (m_elevatorSubsystem.getHeight() > 0.16 && m_elevatorSubsystem.getHeight() < .71) {
+        if (elevatorHeight > 0.16 && elevatorHeight < .71) {
 
             // If we are going down, and the pivot wants to go home, don't let it.
-            if(goingDown && pivotAngle > -45) {
+            if (goingDown && pivotAngle > -45) {
                 reason = "Were in the middle zone, but the pivot is trying to go too far in";
                 m_keepOutZoneState = KeepOutZoneEnum.ONLY_MOVE_ELEVATOR;
             } else {
                 reason = "Were in the super safe zone";
                 m_keepOutZoneState = KeepOutZoneEnum.CAN_MOVE_BOTH;
             }
-
-//            if(pivotAngle > -37) {
-//
-//            }
-
-            // .14 - sTART OF MIDDLE
-        } else if (m_elevatorSubsystem.getHeight() < 0.16) {
-            if(pivotAngle > -160) {
+        } else if (elevatorHeight < 0.16) {
+            if (pivotAngle > -160) {
                 m_keepOutZoneState = KeepOutZoneEnum.CAN_MOVE_BOTH;
                 reason = "Were low but the pivot is cool";
             }
@@ -78,11 +73,8 @@ public class KeepoutZonesCommand extends Command {
                 m_keepOutZoneState = KeepOutZoneEnum.ONLY_MOVE_ELEVATOR;
                 reason = "Too low";
             }
-
-
-
-        } else if (m_elevatorSubsystem.getHeight() > 0.71) {
-            if(pivotAngle > -45) {
+        } else if (elevatorHeight > 0.71) {
+            if (pivotAngle > -45) {
                 m_keepOutZoneState = KeepOutZoneEnum.ONLY_MOVE_PIVOT;
                 reason = "too high but the pivot is good";
             }
@@ -103,18 +95,18 @@ public class KeepoutZonesCommand extends Command {
 
         switch (m_keepOutZoneState) {
         case ONLY_MOVE_ELEVATOR: {
-//            m_elevatorSubsystem.goToHeight(m_setpoint.m_height);
+            // m_elevatorSubsystem.goToHeight(m_setpoint.m_height);
             m_pivotSubsystem.stop();
             break;
         }
         case ONLY_MOVE_PIVOT: {
             m_elevatorSubsystem.stop();
-//            m_pivotSubsystem.moveArmToAngle(m_setpoint.m_angle);
+            // m_pivotSubsystem.moveArmToAngle(m_setpoint.m_angle);
             break;
         }
         case CAN_MOVE_BOTH: {
-//            m_elevatorSubsystem.goToHeight(m_setpoint.m_height);
-//            m_pivotSubsystem.moveArmToAngle(m_setpoint.m_angle);
+            // m_elevatorSubsystem.goToHeight(m_setpoint.m_height);
+            // m_pivotSubsystem.moveArmToAngle(m_setpoint.m_angle);
             break;
         }
         default:
@@ -122,8 +114,8 @@ public class KeepoutZonesCommand extends Command {
             break;
         }
 
-        if (m_elevatorSubsystem.isAtGoalHeight(m_setpoint.m_height) &&
-            m_pivotSubsystem.isAtGoalAngle(m_setpoint.m_angle)) {
+        if (m_elevatorSubsystem.isAtGoalHeight(m_setpoint.m_height)
+            && m_pivotSubsystem.isAtGoalAngle(m_setpoint.m_angle)) {
             m_keepOutZoneState = KeepOutZoneEnum.IS_AT_POSITION;
         }
 

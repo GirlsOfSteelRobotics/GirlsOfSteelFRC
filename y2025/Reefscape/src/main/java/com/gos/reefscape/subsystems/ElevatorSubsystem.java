@@ -79,16 +79,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.inverted(true);
 
 
-//        (57 - 16.5) inches 1745
- //0.023
         double conversionFactor = Units.inchesToMeters(44 - 16.5) / 30.45;
-//        double conversionFactor = 1 / (K_ELEVATOR_GEARING * ELEVATOR_GEAR_CIRCUMFERENCE * ELEVATOR_STAGES);
-//        double conversionFactor = ELEVATOR_GEAR_CIRCUMFERENCE;
-//        double conversionFactor = Units.inchesToMeters(34) / 25.98;
         elevatorConfig.encoder.positionConversionFactor(conversionFactor);
         elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
-//44in 30.45
-
 
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
         followMotorConfig.follow(m_elevatorMotor, true);

@@ -27,34 +27,18 @@ public class CombinedCommands {
     }
 
     public Command autoPieCommand(PIESetpoint combo) {
-//        return m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)
-//            .until(m_pivotSubsystem::isAtGoalAngle)
-//            .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height))
-//            .until(m_elevatorSubsystem::isAtGoalHeight);
-
         return new KeepoutZonesCommand(m_elevatorSubsystem, m_pivotSubsystem, m_keepoutConsumer, combo, false);
     }
 
     public Command pieCommand(PIESetpoint combo) {
-//        return m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)
-//            .alongWith(new WaitUntilCommand(m_pivotSubsystem::isAtGoalAngle)
-//                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)));
         return new KeepoutZonesCommand(m_elevatorSubsystem, m_pivotSubsystem, m_keepoutConsumer, combo, true);
 
     }
-
-//    public Command pieAlgae(PIESetpoint combo) {
-//        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(combo.m_height)
-//            .until(m_elevatorSubsystem::isAtGoalHeight)
-//            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(combo.m_angle)).andThen(pieCommand(combo));
-//
-//    }
 
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
             return autoPieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
-//                .andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint))
                     .andThen(m_coralSubsystem.createScoreCoralCommand()
                         .withTimeout(.75));
@@ -69,7 +53,6 @@ public class CombinedCommands {
 
         if (combo == PIECoral.L4) {
             return autoPieCommand(new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle))
-                //.andThen(m_elevatorSubsystem.createMoveElevatorToHeightCommand(PIECoral.L4.m_setpoint.m_height).until(m_elevatorSubsystem::isAtGoalHeight))
                 .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
         }
 
@@ -139,9 +122,6 @@ public class CombinedCommands {
     }
 
     public Command goHome() {
-//        return m_elevatorSubsystem.createMoveElevatorToHeightCommand(0).until(m_elevatorSubsystem::isAtGoalHeight)
-//            .andThen(m_pivotSubsystem.createMovePivotToAngleCommand(PivotSubsystem.DEFAULT_ANGLE))
-//            .until(m_pivotSubsystem::isAtGoalAngle);
         return autoPieCommand(new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE));
     }
 
