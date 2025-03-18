@@ -34,7 +34,7 @@
   {
     "name": "/Preferences/Elevator.mm.max_velocity",
     "type": "double",
-    "value": 1.0,
+    "value": 0.75,
     "properties": {
       "persistent": true
     }
@@ -330,7 +330,7 @@
   {
     "name": "/Preferences/tunableElevator",
     "type": "double",
-    "value": 0.0,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
@@ -338,7 +338,7 @@
   {
     "name": "/Preferences/tunablePivot",
     "type": "double",
-    "value": -20.0,
+    "value": -45.0,
     "properties": {
       "persistent": true
     }
@@ -371,6 +371,14 @@
     "name": "/Preferences/ChassisRobotRelativeDamper",
     "type": "double",
     "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkD",
+    "type": "double",
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
