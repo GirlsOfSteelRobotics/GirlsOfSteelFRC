@@ -47,10 +47,6 @@ public class KeepoutZonesCommand extends Command {
     @Override
     public void initialize() {
 
-        // TODO temp
-        m_elevatorSubsystem.setIdleMode(IdleMode.kCoast);
-        m_pivotSubsystem.setIdleMode(IdleMode.kCoast);
-
     }
 
     @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.NPathComplexity"})

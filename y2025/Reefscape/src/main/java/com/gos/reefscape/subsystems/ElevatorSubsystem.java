@@ -91,7 +91,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
 
 
-        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", true, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
+        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", false, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(0.5)
             .addMaxAcceleration(0.5)
