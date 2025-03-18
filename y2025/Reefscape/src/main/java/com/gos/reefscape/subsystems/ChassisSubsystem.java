@@ -32,6 +32,7 @@ import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
+import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;
@@ -90,7 +91,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
-        false,
+        Constants.DEFAULT_CONSTANT_PROPERTIES,
         "Tunable path constraints",
         60,
         60,
@@ -168,10 +169,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         for (int i = 0; i < 4; ++i) {
             SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", false, module.getSteerMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
                 .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
                 .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
@@ -185,7 +186,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
-        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", false, m_davidDriveRequest.HeadingController)
+        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", Constants.DEFAULT_CONSTANT_PROPERTIES, m_davidDriveRequest.HeadingController)
             .addP(10.0)
             .addD(0.1)
             .build();

@@ -119,7 +119,7 @@ public class RobotContainer {
         m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos); // NOPMD(UnusedPrivateField)
 
         if (RobotBase.isReal()) {
-            PropertyManager.printDynamicProperties(true);
+            PropertyManager.printDynamicProperties(false);
         }
 
          PropertyManager.purgeExtraKeys();

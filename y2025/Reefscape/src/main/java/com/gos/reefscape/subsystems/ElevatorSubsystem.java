@@ -42,7 +42,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double ELEVATOR_STAGES = 2;
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * K_ELEVATOR_DRUM_RADIUS * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
-    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0);
+    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tunableElevator", 0);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
 
 
@@ -90,7 +90,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         elevatorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
 
-        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", false, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
+        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", Constants.DEFAULT_CONSTANT_PROPERTIES, m_elevatorMotor, elevatorConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(0.5)
             .addMaxAcceleration(0.5)
