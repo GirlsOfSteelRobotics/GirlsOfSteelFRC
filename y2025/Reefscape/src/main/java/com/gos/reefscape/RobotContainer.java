@@ -11,7 +11,6 @@ import com.gos.lib.properties.PropertyManager;
 import com.gos.reefscape.auto.modes.GosAuto;
 import com.gos.reefscape.commands.Autos;
 import com.gos.reefscape.commands.CombinedCommands;
-import com.gos.reefscape.commands.DavidDriveCommand;
 import com.gos.reefscape.commands.SwerveWithJoystickCommand;
 import com.gos.reefscape.commands.MovePivotWithJoystickCommand;
 import com.gos.reefscape.commands.MoveElevatorWithJoystickCommand;
@@ -176,9 +175,9 @@ public class RobotContainer {
 
 
         // Buttons
+        // .a() is used for scoring game pieces above
         m_driverController.y().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
         m_driverController.b().whileTrue(m_combinedCommand.goHome());
-//        m_driverController.y().whileTrue(m_coralSubsystem.createScoreCoralCommand());
         m_driverController.x().whileTrue(m_combinedCommand.scoreAlgaeInNet());
 
 
@@ -188,7 +187,8 @@ public class RobotContainer {
 
         fetchAlgaeTrigger.whileTrue(new DeferredCommand(() -> {
             PIEAlgae mAlgaeHeight = m_chassisSubsystem.findClosestAlgae().m_algaeHeight;
-            return m_combinedCommand.fetchAlgae(mAlgaeHeight).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
+            return m_combinedCommand.fetchAlgae(mAlgaeHeight)
+                .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
         prepAlgaeTrigger.whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
@@ -197,7 +197,8 @@ public class RobotContainer {
 
         prepCoralTrigger.whileTrue(new DeferredCommand(() -> {
             PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
-            return m_combinedCommand.prepScoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
+            return m_combinedCommand.prepScoreCoralCommand(setpoint)
+                .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
         scoreCoralTrigger.whileTrue(m_coralSubsystem.createScoreCoralCommand());
