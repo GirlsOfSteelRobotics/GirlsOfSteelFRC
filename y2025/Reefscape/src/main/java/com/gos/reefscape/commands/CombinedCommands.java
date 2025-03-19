@@ -57,7 +57,7 @@ public class CombinedCommands {
                 .withTimeout(.75));
     }
 
-    public Command scoreCoralCommand(PIECoral combo) {
+    public Command prepScoreCoralCommand(PIECoral combo) {
 
 //        if (combo == PIECoral.L4) {
 //            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
@@ -76,6 +76,9 @@ public class CombinedCommands {
         return autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
+    public Command prepAlgaeInProcessorCommand() {
+        return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).alongWith(m_coralSubsystem.createMoveAlgaeInCommand());
+    }
     public Command scoreAlgaeInProcessorCommand() {
         return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand());
     }

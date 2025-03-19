@@ -1,15 +1,17 @@
 package com.gos.reefscape.commands;
 
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.reefscape.Constants;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class DavidDriveCommand extends Command {
-    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.75);
+    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(false, "ChassisTranslationDamper", 0.75);
 
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
@@ -25,7 +27,11 @@ public class DavidDriveCommand extends Command {
 
     @Override
     public void initialize() {
-        m_lastAngle = m_chassis.getState().Pose.getRotation().getRadians();
+        if (GetAllianceUtil.isBlueAlliance()) {
+            m_lastAngle = m_chassis.getState().Pose.getRotation().getRadians();
+        } else {
+            m_lastAngle = -m_chassis.getState().Pose.getRotation().getRadians();
+        }
     }
 
     @Override
