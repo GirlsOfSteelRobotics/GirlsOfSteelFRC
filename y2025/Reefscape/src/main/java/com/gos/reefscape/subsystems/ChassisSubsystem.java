@@ -222,7 +222,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
             cameraBuilder
                 .withCamera("Back Camera")
-                .withSingleTagStddev(singleTagStddev.times(0.9))
+                .withSingleTagStddev(singleTagStddev.times(1.5))
                 .withTransform(RobotExtrinsic.BACK_CAMERA).build()
         ));
 

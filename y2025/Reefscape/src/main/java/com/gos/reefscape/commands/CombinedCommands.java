@@ -29,6 +29,10 @@ public class CombinedCommands {
         m_keepoutConsumer = consumer;
     }
 
+    public Command startLoweringElevatorForAWhile() {
+        return goHome().until(() -> m_elevatorSubsystem.getHeight() < 0.6);
+    }
+
     public Command autoPieCommand(PIESetpoint combo) {
         return new KeepoutZonesCommand(m_elevatorSubsystem, m_pivotSubsystem, m_keepoutConsumer, combo, false);
     }
@@ -41,11 +45,11 @@ public class CombinedCommands {
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
-            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
-                .andThen(autoPieCommand(PIECoral.L4.m_setpoint))
+            return autoPieCommand(PIECoral.L4.m_setpoint)
                 .andThen(m_coralSubsystem.createScoreCoralCommand()
                     .withTimeout(.75))
-                .andThen(autoPieCommand(L4_PRE_DUNK_SETPOINT));
+                .andThen(autoPieCommand(new PIESetpoint(1.41, -50))
+                    .raceWith(m_coralSubsystem.createScoreCoralCommand()));
         }
 
         return autoPieCommand(combo.m_setpoint)
@@ -55,10 +59,10 @@ public class CombinedCommands {
 
     public Command scoreCoralCommand(PIECoral combo) {
 
-        if (combo == PIECoral.L4) {
-            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
-                .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
-        }
+//        if (combo == PIECoral.L4) {
+//            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
+//                .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
+//        }
 
         return pieCommand(combo.m_setpoint);
     }

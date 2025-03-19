@@ -33,15 +33,15 @@ public final class Autos {
         ///////////////////////////////
         /// Right Side
         ///////////////////////////////
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
-            CoralPositions.G,
-            CoralPositions.F,
-            CoralPositions.E,
-            CoralPositions.D,
-            CoralPositions.C,
-            CoralPositions.B)
-        );
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
+        // createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
+        //     CoralPositions.G,
+        //     CoralPositions.F,
+        //     CoralPositions.E,
+        //     CoralPositions.D,
+        //     CoralPositions.C,
+        //     CoralPositions.B)
+        // );
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
             CoralPositions.C,
             CoralPositions.B));
@@ -52,27 +52,28 @@ public final class Autos {
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L1, StartingPositions.CENTER, List.of(CoralPositions.G));
+        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.G));
 
-        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L1, CoralPositions.H, StartingPositions.CENTER, List.of(
+        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
             AlgaePositions.EF,
             AlgaePositions.IJ));
 
-        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L3, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
+        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
 
 
         ///////////////////////////////
         /// Left Side
         ///////////////////////////////
+
+        // createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
+        //     CoralPositions.H,
+        //     CoralPositions.I,
+        //     CoralPositions.J,
+        //     CoralPositions.K,
+        //     CoralPositions.L,
+        //     CoralPositions.A));
         createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
-            CoralPositions.H,
-            CoralPositions.I,
-            CoralPositions.J,
-            CoralPositions.K,
-            CoralPositions.L,
-            CoralPositions.A));
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L2, StartingPositions.LEFT, List.of(
             CoralPositions.I,
             CoralPositions.L,
             CoralPositions.J,
