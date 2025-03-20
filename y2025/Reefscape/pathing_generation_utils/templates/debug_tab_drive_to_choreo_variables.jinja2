@@ -1,0 +1,22 @@
+package {{ package_name }}.generated;
+
+import {{ package_name }}.subsystems.ChassisSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
+public class DriveToPositionDebugTab {
+    private final ChassisSubsystem m_chassisSubsystem;
+
+    public DriveToPositionDebugTab(ChassisSubsystem chassis) {
+        m_chassisSubsystem = chassis;
+    }
+
+
+    public void createMoveRobotToPositionCommand() {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Move Robot To Position");
+{%- for pose_name in poses %}
+        debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.{{ pose_name | sanitize_name }}).withName("{{ pose_name | sanitize_name }}"));
+{%- endfor %}
+    }
+}
+

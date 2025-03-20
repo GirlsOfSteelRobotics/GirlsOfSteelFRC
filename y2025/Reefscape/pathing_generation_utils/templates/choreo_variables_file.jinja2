@@ -1,0 +1,12 @@
+package {{ package_name }}.generated;
+
+import {{ package_name }}.MaybeFlippedPose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
+public class ChoreoPoses {
+{%- for pose_name in poses %}
+{%- set pose = poses[pose_name] %}
+    public static final MaybeFlippedPose2d {{ pose_name | sanitize_name }} = new MaybeFlippedPose2d({{ pose['x']['val'] }}, {{ pose['y']['val'] }}, Rotation2d.fromRadians({{ pose['heading']['val'] }}));
+{%- endfor %}
+}
+

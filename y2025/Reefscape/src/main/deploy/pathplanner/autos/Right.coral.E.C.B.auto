@@ -19,19 +19,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HumanPlayerRightToB"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BToHumanPlayerRight"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "HumanPlayerRightToC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CToHumanPlayerRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerRightToB"
           }
         }
       ]

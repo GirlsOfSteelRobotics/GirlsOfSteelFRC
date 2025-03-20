@@ -16,17 +16,51 @@ public class AprilTagCameraObject {
     private final FieldObject3d m_estimatedPose3d;
     private final FieldObject3d m_aprilTags3d;
 
+    public static class DebugConfig {
+        private final boolean m_enable2d;
+        private final boolean m_enable3d;
+        private final boolean m_enableDetectedTags;
+
+        public DebugConfig() {
+            this(true, true, true);
+        }
+
+        public DebugConfig(boolean enable2d, boolean enable3d, boolean enableDetectedTags) {
+            m_enable2d = enable2d;
+            m_enable3d = enable3d;
+            m_enableDetectedTags = enableDetectedTags;
+        }
+    }
+
     /**
      * Constructor.
      * @param field The GOS field used to draw objects on
      * @param cameraName The name of the camera, used for prefixing the object names
      */
-    public AprilTagCameraObject(BaseGosField field, String cameraName) {
-        m_aprilTags2d = field.m_field2d.getObject(cameraName + " detected tags");
-        m_estimatedPose2d = field.m_field2d.getObject(cameraName + " estimated pose");
+    public AprilTagCameraObject(BaseGosField field, String cameraName, DebugConfig debugConfig) {
+        if (debugConfig.m_enable2d) {
+            m_estimatedPose2d = field.m_field2d.getObject(cameraName + " estimated pose");
+            if (debugConfig.m_enableDetectedTags) {
+                m_aprilTags2d = field.m_field2d.getObject(cameraName + " detected tags");
+            } else {
+                m_aprilTags2d = null;
+            }
+        } else {
+            m_aprilTags2d = null;
+            m_estimatedPose2d = null;
+        }
 
-        m_aprilTags3d = field.m_field3d.getObject(cameraName + " detected tags");
-        m_estimatedPose3d = field.m_field3d.getObject(cameraName + " estimated pose");
+        if (debugConfig.m_enable3d) {
+            m_estimatedPose3d = field.m_field3d.getObject(cameraName + " estimated pose");
+            if (debugConfig.m_enableDetectedTags) {
+                m_aprilTags3d = field.m_field3d.getObject(cameraName + " detected tags");
+            } else {
+                m_aprilTags3d = null;
+            }
+        } else {
+            m_aprilTags3d = null;
+            m_estimatedPose3d = null;
+        }
     }
 
     /**
@@ -35,21 +69,37 @@ public class AprilTagCameraObject {
      * @param aprilTags The estimated poses of the april tags used to formulate this estimate
      */
     public void setCameraResult(Pose3d estimatedPose, List<Pose3d> aprilTags) {
-        m_estimatedPose2d.setPose(estimatedPose.toPose2d());
-        m_estimatedPose3d.setPose(estimatedPose);
+        if (m_estimatedPose2d != null) {
+            m_estimatedPose2d.setPose(estimatedPose.toPose2d());
+        }
+        if (m_estimatedPose3d != null) {
+            m_estimatedPose3d.setPose(estimatedPose);
+        }
 
-        m_aprilTags2d.setPoses(BaseGosField.pose3dTo2d(aprilTags));
-        m_aprilTags3d.setPoses(aprilTags);
+        if (m_aprilTags2d != null) {
+            m_aprilTags2d.setPoses(BaseGosField.pose3dTo2d(aprilTags));
+        }
+        if (m_aprilTags3d != null) {
+            m_aprilTags3d.setPoses(aprilTags);
+        }
     }
 
     /**
      * Clears the list of april tag and pose estimate objects.
      */
     public void clearCameraResult() {
-        m_estimatedPose2d.setPoses();
-        m_estimatedPose3d.setPoses();
+        if (m_estimatedPose2d != null) {
+            m_estimatedPose2d.setPoses();
+        }
+        if (m_estimatedPose3d != null) {
+            m_estimatedPose3d.setPoses();
+        }
 
-        m_aprilTags2d.setPoses();
-        m_aprilTags3d.setPoses();
+        if (m_aprilTags2d != null) {
+            m_aprilTags2d.setPoses();
+        }
+        if (m_aprilTags3d != null) {
+            m_aprilTags3d.setPoses();
+        }
     }
 }
