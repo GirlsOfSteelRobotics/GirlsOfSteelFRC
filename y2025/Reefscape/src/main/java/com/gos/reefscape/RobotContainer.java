@@ -216,6 +216,8 @@ public class RobotContainer {
         m_operatorController.leftBumper().whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
         m_operatorController.leftTrigger().whileTrue(m_coralSubsystem.createMoveAlgaeOutCommand());
 
+        m_operatorController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeInNet());
+
         m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
 
         //operator coral commands

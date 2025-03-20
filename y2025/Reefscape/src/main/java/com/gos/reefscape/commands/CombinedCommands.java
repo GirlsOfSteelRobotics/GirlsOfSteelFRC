@@ -82,8 +82,9 @@ public class CombinedCommands {
     }
 
     public Command scoreAlgaeInNet() {
-        return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
-            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand());
+        return pieCommand(new PIESetpoint(PIEAlgae.SCORE_INTO_NET.m_setpoint.m_height, -134))
+            .andThen(pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
+                .alongWith(m_coralSubsystem.createMoveAlgaeOutCommand()));
     }
 
     public boolean isAtGoalHeightAngle() {
