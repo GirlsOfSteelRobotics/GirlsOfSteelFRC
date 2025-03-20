@@ -26,6 +26,7 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.generated.TunerConstantsCompetition;
@@ -119,7 +120,7 @@ public class RobotContainer {
 
 
 
-        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos); // NOPMD(UnusedPrivateField)
+        m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos, m_chassisSubsystem); // NOPMD(UnusedPrivateField)
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties(false);
@@ -128,6 +129,8 @@ public class RobotContainer {
         // PropertyManager.purgeExtraKeys();
 
         keepOutConsumer.accept(KeepOutZoneEnum.NOT_RUNNING);
+
+        DataLogManager.start();
 
     }
 
@@ -166,12 +169,12 @@ public class RobotContainer {
         // m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
 
         Trigger fetchAlgaeTrigger = m_driverController.rightBumper();
-        Trigger prepAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.a().negate());
-        Trigger scoreAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.a());
+//        Trigger prepAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.rightTrigger().negate());
+//        Trigger scoreAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.rightTrigger());
 
         Trigger fetchCoralTrigger = m_driverController.leftBumper();
-        Trigger prepCoralTrigger = m_driverController.leftTrigger().and(m_driverController.a().negate());
-        Trigger scoreCoralTrigger = m_driverController.leftTrigger().and(m_driverController.a());
+        Trigger prepCoralTrigger = m_driverController.leftTrigger().and(m_driverController.rightTrigger().negate());
+        Trigger scoreCoralTrigger = m_driverController.leftTrigger().and(m_driverController.rightTrigger());
 
 
         // Buttons
@@ -191,8 +194,8 @@ public class RobotContainer {
                 .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
-        prepAlgaeTrigger.whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
-        scoreAlgaeTrigger.whileTrue(m_coralSubsystem.createMoveAlgaeOutCommand());
+        // prepAlgaeTrigger.whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
+//        scoreAlgaeTrigger.whileTrue(m_coralSubsystem.createMoveAlgaeOutCommand());
 
 
         prepCoralTrigger.whileTrue(new DeferredCommand(() -> {
@@ -209,6 +212,9 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
         m_operatorController.y().whileTrue(m_coralSubsystem.createScoreCoralCommand());
         m_operatorController.x().whileTrue(m_coralSubsystem.createScoreCoralCommand());
+
+        m_operatorController.leftBumper().whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
+        m_operatorController.leftTrigger().whileTrue(m_coralSubsystem.createMoveAlgaeOutCommand());
 
         m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
 

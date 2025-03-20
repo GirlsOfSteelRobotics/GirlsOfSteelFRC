@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class CoralSubsystem extends SubsystemBase {
     private static final GosDoubleProperty CORAL_SCORE_SPEED = new GosDoubleProperty(false, "CoralScoreSpeed", -1);
     private static final GosDoubleProperty CORAL_REVERSE_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "CoralReverseSpeed", 0.05);
-    private static final GosDoubleProperty CORAL_FETCH_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "CoralFetchSpeed", -0.25);
+    private static final GosDoubleProperty CORAL_FETCH_SPEED = new GosDoubleProperty(false, "CoralFetchSpeed", -0.25);
 
     private final SparkFlex m_motor;
     private final DigitalInput m_coralSensor;
@@ -76,6 +76,10 @@ public class CoralSubsystem extends SubsystemBase {
         return !m_coralSensor.get();
     }
 
+    public boolean noCoral() {
+        return m_coralSensor.get();
+    }
+
 
 
     public void algaeIntakeStop() {
@@ -106,6 +110,7 @@ public class CoralSubsystem extends SubsystemBase {
             debugTab.add(createMoveAlgaeInCommand());
             debugTab.add(createMoveAlgaeOutCommand());
             debugTab.add(createIntakeUntilAlgaeCommand());
+
         }
     }
 
@@ -136,6 +141,11 @@ public class CoralSubsystem extends SubsystemBase {
     public Command createMoveAlgaeInCommand() {
         return this.runEnd(this::algaeIntakeIn, this::algaeIntakeStop).withName("Algae In");
     }
+
+//    public Command createIntakeUntilCoralThenReverse() {
+//        return createFetchCoralCommand().until(this::hasCoral)
+//            .andThen(createReverseIntakeCommand().until(this::noCoral)).withName("Intake until coral but reverse");
+//    }
 
 
 }

@@ -124,6 +124,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final SwerveDriveOdometry m_odometryOnly;
     private final SwerveDrivePoseEstimator m_oldPoseEstimator;
 
+    private boolean isDriveToPose = false;
+    private boolean isRobotRelative = false;
+
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
     private final SwerveRequest.RobotCentric m_robotRelativeDriveRequest = new SwerveRequest.RobotCentric()
@@ -235,6 +238,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
+    }
+
+    public boolean getRelative() {
+        return isRobotRelative;
+    }
+
+    public boolean getDriveToPose(){
+        return isDriveToPose;
     }
 
     public void clearStickyFaults() {
@@ -393,6 +404,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
+        isRobotRelative = false;
         setControl(
             m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
@@ -400,6 +412,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
+        isRobotRelative = false;
         setControl(
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
@@ -409,6 +422,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void robotDriveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
+        isRobotRelative = true;
         setControl(
             m_robotRelativeDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
@@ -484,8 +498,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d pose) {
-        return defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0));
+        return runOnce(() -> isDriveToPose = true)
+            .andThen(defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0)))
+            .finallyDo(() -> isDriveToPose = false);
     }
+
 
     public Command createResetGyroCommand() {
         return run(this::resetGyro)
