@@ -1,6 +1,7 @@
 package com.gos.lib.photonvision;
 
 import com.gos.lib.field.AprilTagCameraObject;
+import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
 import com.gos.lib.field.BaseGosField;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.TunableTransform3d;
@@ -31,6 +32,7 @@ import java.util.Optional;
 public class AprilTagCamera {
     public static final double DEFAULT_SINGLE_TAG_MAX_DISTANCE = 3.2;
     public static final double DEFAULT_SINGLE_TAG_MAX_AMBIGUITY = 1;
+    public static final DebugConfig DEFAULT_DEBUG_CONFIG = new DebugConfig();
     public static final Matrix<N3, N1> DEFAULT_SINGLE_TAG_STDDEV = VecBuilder.fill(1.5, 1.5, 16); // (4, 4, 8)
     public static final Matrix<N3, N1> DEFAULT_MULTI_TAG_STDDEV = VecBuilder.fill(0.25, 0.25, 4); // (0.5, 0.5, 1)
 
@@ -67,12 +69,14 @@ public class AprilTagCamera {
      * @param name The name of the camera. Should match camera name in photonvision gui
      * @param transform3d The transform used to set the extrinsic location of the camera on the robot
      */
+    @Deprecated
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
-        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_MAX_AMBIGUITY, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
     }
 
+    @Deprecated
     public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
-        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_MAX_AMBIGUITY, singleTagStddev, multiTagStddev);
+        this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_MAX_AMBIGUITY, singleTagStddev, multiTagStddev, DEFAULT_DEBUG_CONFIG, true, true, true);
     }
 
 
@@ -86,7 +90,8 @@ public class AprilTagCamera {
      * @param singleTagStddev The base STDDEV to use if only a single april tag is seen
      * @param multiTagStddev The base STDDEV to use if multiple april tags are seen
      */
-    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, double singleTagMaxAmbiguity, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    @SuppressWarnings("PMD.ExcessiveParameterList")
+    /* default */ AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, double singleTagMaxAmbiguity, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev, DebugConfig fieldDebugSettings, boolean simEnableRawStream, boolean simEnableProcessedStream, boolean simEnableDrawWireframe) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
@@ -95,7 +100,7 @@ public class AprilTagCamera {
         m_singleTagStddev = singleTagStddev;
         m_multiTagStddev = multiTagStddev;
 
-        m_field = new AprilTagCameraObject(field, m_cameraName);
+        m_field = new AprilTagCameraObject(field, m_cameraName, fieldDebugSettings);
 
         m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_robotToCamera.getTransform());
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
@@ -103,10 +108,9 @@ public class AprilTagCamera {
         if (RobotBase.isSimulation()) {
             m_cameraSim = new PhotonCameraSim(m_photonCamera);
 
-            boolean enableFancySim = true;
-            m_cameraSim.enableRawStream(enableFancySim);
-            m_cameraSim.enableProcessedStream(enableFancySim);
-            m_cameraSim.enableDrawWireframe(enableFancySim);
+            m_cameraSim.enableRawStream(simEnableRawStream);
+            m_cameraSim.enableProcessedStream(simEnableProcessedStream);
+            m_cameraSim.enableDrawWireframe(simEnableDrawWireframe);
         } else {
             m_cameraSim = null;
         }

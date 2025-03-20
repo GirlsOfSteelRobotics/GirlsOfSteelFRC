@@ -19,25 +19,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "GHToProcessor"
+            "pathName": "GHToBlueNet"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "ProcessorToEF"
+            "pathName": "BlueNetToEF"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "EFToProcessor"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ProcessorToIJ"
+            "pathName": "EFToBlueNet"
           }
         }
       ]

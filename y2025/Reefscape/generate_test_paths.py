@@ -1,200 +1,51 @@
-import math
-import json
 import pathlib
-import itertools
-import jinja2
-from y2025.Reefscape.choreo_utils import run_choreo_cli
+from .pathing_generation_utils.choreo_utils import run_choreo_cli
+from .pathing_generation_utils.test_paths_utils import (
+    generate_straight_paths,
+    generate_rotation_paths,
+    write_debug_tab_file,
+)
 
 
-def load_template(template_str) -> jinja2.Template:
-    env = jinja2.Environment()
-    env.filters["to_radians"] = lambda x: math.radians(x)
-    return env.from_string(template_str)
+def generate_test_paths(project_dir, package_name, output_trajectory_dir, run_cli):
+    start_waypoint = dict(x=0.4172362983226776, y=1.748888373374939, heading=0)
+    end_waypoint = dict(x=7.863987445831299, y=1.748888373374939, heading=0)
 
+    all_paths = []
 
-def max_velocity_constraint(max_velocity_fps):
-    template = """    {"from":"first", "to":"last", "data":{"type":"MaxVelocity", "props":{"max":{"exp":"{{ max_velocity_fps }} ft / s", "val":{{ max_velocity_fps * 0.3048 }}}}}, "enabled":true}"""
-    return load_template(template).render(max_velocity_fps=max_velocity_fps)
-
-
-def max_acceleration_constraint(max_acceleration):
-    template = """    {"from":"first", "to":"last", "data":{"type":"MaxAcceleration", "props":{"max":{"exp":"{{ max_accel }} m / s ^ 2", "val":{{ max_accel|float }}}}}, "enabled":true}"""
-    return load_template(template).render(max_accel=max_acceleration)
-
-
-def max_angular_velocity_constrain(max_omega):
-    template = """    {"from":"first", "to":"last", "data":{"type":"MaxAngularVelocity", "props":{"max":{"exp":"{{max_omega_dps}} deg / s", "val":{{max_omega_rps}}}}}, "enabled":true}"""
-    return load_template(template).render(
-        max_omega_dps=max_omega, max_omega_rps=math.radians(max_omega)
+    straight_accelerations = [1, 4, 9, None]
+    straight_velocities = [1, 5, 10, 13, None]
+    all_paths.extend(
+        generate_straight_paths(
+            output_trajectory_dir,
+            straight_accelerations,
+            straight_velocities,
+            start_waypoint,
+            end_waypoint,
+        )
     )
 
-
-def generate_straight_paths(choreo_dir):
-    accelerations = [1, 4, 9, None]
-    velocities = [1, 5, 10, 13, None]
-
-    paths_to_do = []
-
-    waypoints = [
-        dict(x=0.4172362983226776, y=1.748888373374939, heading=0.0),
-        dict(x=7.863987445831299, y=1.748888373374939, heading=0.0),
-    ]
-
-    for a, v in itertools.product(accelerations, velocities):
-        if a is None and v is None:
-            traj_name = f"TestPath_Maxmpss_Maxfps"
-        elif a is None:
-            traj_name = f"TestPath_Maxmpss_{v:02}fps"
-        elif v is None:
-            traj_name = f"TestPath_{a}mpss_Maxfps"
-        else:
-            traj_name = f"TestPath_{a}mpss_{v:02}fps"
-        output_file = choreo_dir / (traj_name + ".traj")
-
-        constraints = []
-        if a is not None:
-            constraints.append(max_acceleration_constraint(a))
-        if v is not None:
-            constraints.append(max_velocity_constraint(v))
-
-        contents = load_template(TRAJECTORY_TEMPLATE).render(
-            name=traj_name, constraints=constraints, waypoints=waypoints
-        )
-        output_file.write_text(contents)
-        paths_to_do.append(traj_name)
-
-    return paths_to_do
-
-
-def generate_rotation_paths(choreo_dir):
     angular_velocities = [20, 45, 90, 180, 270, 360, None]
+    all_paths.extend(generate_rotation_paths(output_trajectory_dir, angular_velocities))
 
-    paths_to_do = []
+    if run_cli:
+        run_choreo_cli(all_paths)
 
-    waypoints = [
-        dict(x=0.4172362983226776, y=1.748888373374939, heading=0.0),
-        dict(x=4.14061187208, y=1.748888373374939, heading=180.0),
-        dict(x=7.863987445831299, y=1.748888373374939, heading=0.0),
-    ]
-
-    for omega in angular_velocities:
-        constraints = []
-        if omega is None:
-            traj_name = f"TestRotation_MaxDegPerSec"
-        else:
-            traj_name = f"TestRotation_{omega:03}DegPerSec"
-            constraints.append(max_angular_velocity_constrain(omega))
-
-        contents = load_template(TRAJECTORY_TEMPLATE).render(
-            name=traj_name, constraints=constraints, waypoints=waypoints
-        )
-
-        output_file = choreo_dir / (traj_name + ".traj")
-        output_file.write_text(contents)
-        paths_to_do.append(traj_name)
-
-    return paths_to_do
-
-
-def write_debug_tab_file(output_file, choreo_dir, all_paths):
-    contents = """package com.gos.reefscape.generated;
-
-import com.gos.reefscape.ChoreoUtils;
-import com.gos.reefscape.subsystems.ChassisSubsystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-
-import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
-
-public class DebugPathsTab {
-    private final ChassisSubsystem m_chassisSubsystem;
-
-    public DebugPathsTab(ChassisSubsystem chassis) {
-        m_chassisSubsystem = chassis;
-    }
-
-    public void addDebugPathsToShuffleBoard() {
-        ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
-"""
-
-    for path in all_paths:
-        with open(choreo_dir / (path + ".traj")) as f:
-            json_contents = json.load(f)
-        if json_contents["trajectory"]["waypoints"]:
-            contents += f'        debugPathsTab.add(createDebugPathCommand("{path}"));\n'
-        else:
-            contents += f'        // debugPathsTab.add(createDebugPathCommand("{path}"));\n'
-
-    contents += """    }
-
-    private Command createDebugPathCommand(String name) {
-        return Commands.sequence(
-            Commands.runOnce(() -> m_chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose(name).getPose())),
-            followChoreoPath(name)
-        ).withName(name);
-    }
-
-}
-"""
-
-    output_file.write_text(contents)
+    write_debug_tab_file(project_dir, output_trajectory_dir, package_name, all_paths)
 
 
 def main():
-    root_dir = pathlib.Path(".")
-    choreo_dir = root_dir / r"y2025\Reefscape\src\main\deploy\choreo"
-    debug_paths_file = (
-        root_dir / "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/DebugPathsTab.java"
-    )
+    project_dir = pathlib.Path("y2025/Reefscape")
+    choreo_dir = project_dir / r"src\main\deploy\choreo"
+
+    package_name = "com.gos.reefscape"
+    # debug_paths_file = (
+    #         root_dir / "y2025/Reefscape/src/main/java/com/gos/reefscape/generated/DebugPathsTab.java"
+    # )
     run_cli = True
 
-    all_test_paths = []
-    all_test_paths.extend(generate_straight_paths(choreo_dir))
-    all_test_paths.extend(generate_rotation_paths(choreo_dir))
+    generate_test_paths(project_dir, package_name, choreo_dir, run_cli)
 
-    if run_cli:
-        run_choreo_cli(all_test_paths)
-
-    write_debug_tab_file(debug_paths_file, choreo_dir, all_test_paths)
-
-
-TRAJECTORY_TEMPLATE = """{
- "name":"{{ name }}",
- "version":1,
- "snapshot":{
-  "waypoints":[],
-  "constraints":[],
-  "targetDt":0.05
- },
- "params":{
-  "waypoints":[
-{%- for waypoint in waypoints %}
-    {"x":{"exp":"{{ waypoint.x }} m", "val":{{ waypoint.x }}}, "y":{"exp":"{{ waypoint.y }} m", "val":{{ waypoint.y }}}, "heading":{"exp":"{{ waypoint.heading }} deg", "val":{{ waypoint.heading | to_radians }}}, "intervals":495, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}{% if not loop.last %},{% endif %}
-{%- endfor %}
-],
-  "constraints":[
-    {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
-    {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true}{% for constraint in constraints %},
-{{ constraint }}
-{%- endfor %}
-],
-  "targetDt":{
-   "exp":"0.05 s",
-   "val":0.05
-  }
- },
- "trajectory":{
-  "sampleType":null,
-  "waypoints":[],
-  "samples":[],
-  "splits":[]
- },
- "events":[]
-}
-
-"""
 
 if __name__ == "__main__":
     # py -m y2025.Reefscape.generate_test_paths
