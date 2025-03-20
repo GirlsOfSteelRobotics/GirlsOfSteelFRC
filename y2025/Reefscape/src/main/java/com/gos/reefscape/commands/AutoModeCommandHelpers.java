@@ -64,7 +64,8 @@ public class AutoModeCommandHelpers {
 
         group.addCommands(m_combinedCommands.autoFetchAlgae(algaePosition.m_algaeHeight));
         group.addCommands((followChoreoPath(algaePosition + "ToProcessor"))
-            .deadlineFor(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
+            .deadlineFor(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint))
+            .deadlineFor(m_combinedCommands.holdAlgaeWhileDriving()));
         group.addCommands(m_combinedCommands.autoScoreAlgaeInProcessorCommand());
 
         return group;
@@ -78,7 +79,8 @@ public class AutoModeCommandHelpers {
     public Command fetchAlgaeThenDriveToNetAndScore(AlgaePositions algaePosition) {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(m_combinedCommands.autoFetchAlgae(algaePosition.m_algaeHeight));
-        group.addCommands((followChoreoPath(algaePosition + "ToBlueNet")));
+        group.addCommands((followChoreoPath(algaePosition + "ToBlueNet"))
+            .deadlineFor(m_combinedCommands.holdAlgaeWhileDriving()));
         group.addCommands(m_combinedCommands.autoScoreAlgaeInNet());
         return group;
     }

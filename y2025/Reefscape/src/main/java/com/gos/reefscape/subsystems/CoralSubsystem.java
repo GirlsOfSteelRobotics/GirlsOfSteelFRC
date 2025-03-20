@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty CORAL_SCORE_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "CoralScoreSpeed", -1);
+    private static final GosDoubleProperty CORAL_SCORE_SPEED = new GosDoubleProperty(false, "CoralScoreSpeed", -1);
     private static final GosDoubleProperty CORAL_REVERSE_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "CoralReverseSpeed", 0.05);
     private static final GosDoubleProperty CORAL_FETCH_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "CoralFetchSpeed", -0.25);
 

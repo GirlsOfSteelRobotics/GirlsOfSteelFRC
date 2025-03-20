@@ -95,7 +95,7 @@ public class CombinedCommands {
     public Command autoFetchPieceFromHPStation() {
         return autoPieCommand(PIECoral.HUMAN_PLAYER_STATION.m_setpoint)
             .andThen(m_coralSubsystem.createIntakeUntilCoralCommand()
-                .withTimeout(6));
+                );
     }
 
     public Command fetchPieceFromHPStation() {
@@ -129,6 +129,10 @@ public class CombinedCommands {
 
     public Command goHome() {
         return autoPieCommand(GO_HOME_SETPOINT);
+    }
+
+    public Command holdAlgaeWhileDriving() {
+        return m_coralSubsystem.createMoveAlgaeInCommand();
     }
 
     public void createCombinedCommand(boolean inComp) {

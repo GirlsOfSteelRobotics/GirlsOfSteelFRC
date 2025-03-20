@@ -102,7 +102,7 @@ public class RobotContainer {
         m_swerveSysId = new SwerveDriveSysId(m_chassisSubsystem);
         m_pivotSysId = new PivotSysId(m_pivotSubsystem);
 
-        boolean inComp = false;
+        boolean inComp = true;
         m_coralSubsystem.addCoralDebugCommands(inComp);
         m_pivotSubsystem.addPivotDebugCommands(inComp);
         m_elevatorSubsystem.addElevatorDebugCommands(inComp);

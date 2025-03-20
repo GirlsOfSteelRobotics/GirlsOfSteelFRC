@@ -45,7 +45,8 @@ public final class Autos {
         // );
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
-            CoralPositions.B));
+            CoralPositions.F));
+
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
             CoralPositions.C,
@@ -59,28 +60,26 @@ public final class Autos {
 
         createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
-            AlgaePositions.EF,
-            AlgaePositions.IJ));
+            AlgaePositions.EF
+        ));
 
-        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
-            AlgaePositions.GH,
-            AlgaePositions.EF,
-            AlgaePositions.IJ));
+
+
+//        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
+//            AlgaePositions.GH,
+//            AlgaePositions.EF,
+//            AlgaePositions.IJ));
+
+
 
         ///////////////////////////////
         /// Left Side
         ///////////////////////////////
 
-        // createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
-        //     CoralPositions.H,
-        //     CoralPositions.I,
-        //     CoralPositions.J,
-        //     CoralPositions.K,
-        //     CoralPositions.L,
-        //     CoralPositions.A));
+
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L2, StartingPositions.LEFT, List.of(
             CoralPositions.I,
-            CoralPositions.A
+            CoralPositions.J
         ));
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
             CoralPositions.I,
