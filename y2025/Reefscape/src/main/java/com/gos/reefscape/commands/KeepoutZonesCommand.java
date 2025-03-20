@@ -2,7 +2,6 @@ package com.gos.reefscape.commands;
 
 import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.enums.PIESetpoint;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;

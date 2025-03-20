@@ -165,27 +165,43 @@ public class RobotContainer {
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
         // m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
 
-        // intake stuff
-        m_driverController.a().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
-        m_driverController.b().whileTrue(m_combinedCommand.goHome());
+        Trigger fetchAlgaeTrigger = m_driverController.rightBumper();
+        Trigger prepAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.a().negate());
+        Trigger scoreAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.a());
 
-        m_driverController.leftTrigger().whileTrue(m_combinedCommand.fetchPieceFromHPStation()
-            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
-        m_driverController.rightTrigger().whileTrue(m_coralSubsystem.createScoreCoralCommand());
-        m_driverController.rightBumper().whileTrue(new DeferredCommand(() -> {
-            PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
-            return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
-        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
-        m_driverController.leftBumper().whileTrue(new DeferredCommand(() -> {
-            PIEAlgae mAlgaeHeight = m_chassisSubsystem.findClosestAlgae().m_algaeHeight;
-            return m_combinedCommand.fetchAlgae(mAlgaeHeight).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
-        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
-        m_driverController.rightBumper().whileTrue(new DeferredCommand(() -> {
-            PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
-            return m_combinedCommand.scoreCoralCommand(setpoint).alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
-        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+        Trigger fetchCoralTrigger = m_driverController.leftBumper();
+        Trigger prepCoralTrigger = m_driverController.leftTrigger().and(m_driverController.a().negate());
+        Trigger scoreCoralTrigger = m_driverController.leftTrigger().and(m_driverController.a());
+
+
+        // Buttons
+        // .a() is used for scoring game pieces above
+        m_driverController.y().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
+        m_driverController.b().whileTrue(m_combinedCommand.goHome());
         m_driverController.x().whileTrue(m_combinedCommand.scoreAlgaeInNet());
-        m_driverController.y().whileTrue(m_combinedCommand.scoreAlgaeInProcessorCommand());
+
+
+        fetchCoralTrigger.whileTrue(m_combinedCommand.fetchPieceFromHPStation()
+            .andThen(new VibrateControllerTimedCommand(m_driverController, 2)));
+
+
+        fetchAlgaeTrigger.whileTrue(new DeferredCommand(() -> {
+            PIEAlgae mAlgaeHeight = m_chassisSubsystem.findClosestAlgae().m_algaeHeight;
+            return m_combinedCommand.fetchAlgae(mAlgaeHeight)
+                .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+
+        prepAlgaeTrigger.whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
+        scoreAlgaeTrigger.whileTrue(m_coralSubsystem.createMoveAlgaeOutCommand());
+
+
+        prepCoralTrigger.whileTrue(new DeferredCommand(() -> {
+            PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
+            return m_combinedCommand.prepScoreCoralCommand(setpoint)
+                .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
+
+        scoreCoralTrigger.whileTrue(m_coralSubsystem.createScoreCoralCommand());
 
         ///////////////////////////
         // Operator controller

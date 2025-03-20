@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 
 public class CombinedCommands {
     private static final PIESetpoint GO_HOME_SETPOINT = new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE);
-    private static final PIESetpoint L4_PRE_DUNK_SETPOINT = new PIESetpoint(PIECoral.L4.m_setpoint.m_height, PIECoral.L2.m_setpoint.m_angle);
 
     private final CoralSubsystem m_coralSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
@@ -27,6 +26,10 @@ public class CombinedCommands {
         m_elevatorSubsystem = elevator;
         m_pivotSubsystem = pivot;
         m_keepoutConsumer = consumer;
+    }
+
+    public Command startLoweringElevatorForAWhile() {
+        return goHome().until(() -> m_elevatorSubsystem.getHeight() < 0.6);
     }
 
     public Command autoPieCommand(PIESetpoint combo) {
@@ -41,11 +44,11 @@ public class CombinedCommands {
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
-            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
-                .andThen(autoPieCommand(PIECoral.L4.m_setpoint))
+            return autoPieCommand(PIECoral.L4.m_setpoint)
                 .andThen(m_coralSubsystem.createScoreCoralCommand()
                     .withTimeout(.75))
-                .andThen(autoPieCommand(L4_PRE_DUNK_SETPOINT));
+                .andThen(autoPieCommand(new PIESetpoint(1.41, -50))
+                    .raceWith(m_coralSubsystem.createScoreCoralCommand()));
         }
 
         return autoPieCommand(combo.m_setpoint)
@@ -53,35 +56,34 @@ public class CombinedCommands {
                 .withTimeout(.75));
     }
 
-    public Command scoreCoralCommand(PIECoral combo) {
-
-        if (combo == PIECoral.L4) {
-            return autoPieCommand(L4_PRE_DUNK_SETPOINT)
-                .andThen(autoPieCommand(PIECoral.L4.m_setpoint));
-        }
-
+    public Command prepScoreCoralCommand(PIECoral combo) {
         return pieCommand(combo.m_setpoint);
     }
 
 
     public Command autoScoreAlgaeCommand(PIEAlgae combo) {
-        return autoPieCommand(combo.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return autoPieCommand(combo.m_setpoint)
+            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
     public Command autoScoreAlgaeInProcessorCommand() {
-        return autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)
+            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
-    public Command scoreAlgaeInProcessorCommand() {
-        return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand());
+    public Command prepAlgaeInProcessorCommand() {
+        return pieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)
+            .alongWith(m_coralSubsystem.createMoveAlgaeInCommand());
     }
 
     public Command autoScoreAlgaeInNet() {
-        return autoPieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return autoPieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
+            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
     }
 
     public Command scoreAlgaeInNet() {
-        return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint).andThen(m_coralSubsystem.createMoveAlgaeOutCommand());
+        return pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
+            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand());
     }
 
     public boolean isAtGoalHeightAngle() {

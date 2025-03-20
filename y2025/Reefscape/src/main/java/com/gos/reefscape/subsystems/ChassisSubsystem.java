@@ -91,7 +91,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
-        Constants.DEFAULT_CONSTANT_PROPERTIES,
+        false,
         "Tunable path constraints",
         60,
         60,
@@ -222,7 +222,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
             cameraBuilder
                 .withCamera("Back Camera")
-                .withSingleTagStddev(singleTagStddev.times(0.9))
+                .withSingleTagStddev(singleTagStddev.times(1.5))
                 .withTransform(RobotExtrinsic.BACK_CAMERA).build()
         ));
 
