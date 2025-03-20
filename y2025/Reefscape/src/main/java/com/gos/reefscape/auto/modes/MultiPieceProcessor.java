@@ -1,46 +1,41 @@
 package com.gos.reefscape.auto.modes;
 
+import com.gos.reefscape.commands.AutoModeCommandHelpers;
+import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
-import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
-import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.enums.StartingPositions;
-import com.gos.reefscape.subsystems.ChassisSubsystem;
 
 import java.util.List;
 
-import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
-
 public class MultiPieceProcessor extends GosAuto {
-    public MultiPieceProcessor(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
-        super(StartingPositions.CENTER, List.of(CoralPositions.H), algaePositions);
-        StringBuilder autoname = new StringBuilder();
-        autoname.append(start.toString()).append(".processor");
+    public MultiPieceProcessor(AutoModeCommandHelpers autoHelper, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
+        super(start, List.of(coral), algaePositions);
+        StringBuilder autoName = new StringBuilder();
+        autoName.append(start.toString()).append(".processor.").append(coral).append(combo);
 
-        addCommands(chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
-        addCommands(combinedCommands.autoScoreCoralCommand(combo));
-        addCommands(followChoreoPath(coral + "To" + algaePositions.get(0)));
+        // Score the preload
+        addCommands(autoHelper.startingPositionToCoralAndScore(start, coral, combo));
 
+        // Drive from the preload score to the first algae
+        addCommands(autoHelper.driveCoralToAlgae(coral, algaePositions.get(0)));
 
         for (int i = 0; i < algaePositions.size() - 1; i++) {
-            AlgaePositions currentAlgae = algaePositions.get(i);
-            PIEAlgae height = currentAlgae.m_algaeHeight;
-            addCommands(combinedCommands.autoFetchAlgae(height));
-            addCommands((followChoreoPath(algaePositions.get(i) + "ToProcessor"))
-                .alongWith(combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
-            addCommands(combinedCommands.autoScoreAlgaeInProcessorCommand());
-            addCommands(followChoreoPath("ProcessorTo" + algaePositions.get(i + 1)));
-            autoname.append('.').append(algaePositions.get(i)).append(combo);
+            // Fetch the algae we are in front of, then drive to the processor and score
+            addCommands(autoHelper.fetchAlgaeThenDriveToProcessorAndScore(algaePositions.get(i)));
+
+            // Drive from the processor to the next algae
+            addCommands(autoHelper.driveFromProcessorToAlgae(algaePositions.get(i + 1)));
+
+            autoName.append('.').append(algaePositions.get(i));
         }
 
-        AlgaePositions currentAlgae = algaePositions.get(algaePositions.size() - 1);
-        addCommands(combinedCommands.autoFetchAlgae(currentAlgae.m_algaeHeight));
-        addCommands((followChoreoPath(currentAlgae + "ToProcessor"))
-            .alongWith(combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)));
-        addCommands(combinedCommands.autoScoreAlgaeInProcessorCommand());
+        AlgaePositions lastAlgae = algaePositions.get(algaePositions.size() - 1);
+        addCommands(autoHelper.fetchAlgaeThenDriveToProcessorAndScore(lastAlgae));
+        addCommands(combinedCommands.goHome());
 
-        autoname.append('.').append(currentAlgae).append(combo);
-        setName(autoname.toString());
+        autoName.append('.').append(lastAlgae);
+        setName(autoName.toString());
     }
 }
