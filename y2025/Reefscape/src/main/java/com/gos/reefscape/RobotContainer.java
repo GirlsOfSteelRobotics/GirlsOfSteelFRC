@@ -204,7 +204,12 @@ public class RobotContainer {
                 .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
-        scoreCoralTrigger.whileTrue(m_coralSubsystem.createScoreCoralCommand());
+//        scoreCoralTrigger.whileTrue(][\
+//        );
+        scoreCoralTrigger.whileTrue(new DeferredCommand(() -> {
+            PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
+            return m_combinedCommand.createScoreCoralCommand(setpoint);
+        }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
         ///////////////////////////
         // Operator controller

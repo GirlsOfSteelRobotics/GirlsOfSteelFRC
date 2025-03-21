@@ -41,19 +41,31 @@ public class CombinedCommands {
 
     }
 
+    private static final PIESetpoint POST_L4_HEIGHT = new PIESetpoint(1.41, -50);
+
     public Command autoScoreCoralCommand(PIECoral combo) {
 
         if (combo == PIECoral.L4) {
             return autoPieCommand(PIECoral.L4.m_setpoint)
                 .andThen(m_coralSubsystem.createScoreCoralCommand()
                     .withTimeout(.75))
-                .andThen(autoPieCommand(new PIESetpoint(1.41, -50))
+                .andThen(autoPieCommand(POST_L4_HEIGHT)
                     .raceWith(m_coralSubsystem.createScoreCoralCommand()));
         }
 
         return autoPieCommand(combo.m_setpoint)
             .andThen(m_coralSubsystem.createScoreCoralCommand()
                 .withTimeout(.75));
+    }
+
+
+    public Command createScoreCoralCommand(PIECoral setpoint) {
+        if (setpoint == PIECoral.L4) {
+            return m_coralSubsystem.createScoreCoralCommand().withTimeout(1.5)
+                .andThen(pieCommand(POST_L4_HEIGHT).alongWith(m_coralSubsystem.createScoreCoralCommand()));
+
+        }
+        return m_coralSubsystem.createScoreCoralCommand();
     }
 
     public Command prepScoreCoralCommand(PIECoral combo) {
