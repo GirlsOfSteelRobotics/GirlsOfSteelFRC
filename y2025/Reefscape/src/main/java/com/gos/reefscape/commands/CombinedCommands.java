@@ -121,7 +121,7 @@ public class CombinedCommands {
     public Command autoFetchAlgae(PIEAlgae algaePosition) {
         return autoPieCommand(algaePosition.m_setpoint)
             .alongWith(m_coralSubsystem.createMoveAlgaeInCommand()
-                .withTimeout(2));
+                .withTimeout(0.75));
     }
 
     public Command fetchAlgae(PIEAlgae algaePosition) {

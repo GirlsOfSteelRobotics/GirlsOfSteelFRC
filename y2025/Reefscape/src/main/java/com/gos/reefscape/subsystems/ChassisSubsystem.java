@@ -38,6 +38,9 @@ import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -497,11 +500,35 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
     }
 
-    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d pose) {
-        return runOnce(() -> isDriveToPose = true)
-            .andThen(defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0)))
-            .finallyDo(() -> isDriveToPose = false);
+//    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d pose) {
+//        return runOnce(() -> isDriveToPose = true)
+//            .andThen(defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0)))
+//            .finallyDo(() -> isDriveToPose = false);
+//    }
+public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+    List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
+    PathPlannerPath path = new PathPlannerPath(
+        bezierPoints,
+        TUNABLE_PATH_CONSTRAINTS.getConstraints(),
+        null,
+        new GoalEndState(0.0, endAngle)
+    );
+    path.preventFlipping = true;
+    return AutoBuilder.followPath(path);
+}
+
+    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d end) {
+        return createDriveToPointNoFlipCommand(end.getPose(), end.getPose().getRotation(), getState().Pose);
     }
+//        return defer(() -> AutoBuilder.pathfindToPose(
+//            pose.getPose(),
+//            ON_THE_FLY_PATH_CONSTRAINTS.getConstraints(),
+//            0.0 // Goal end velocity in meters/sec
+//        ));
+//
+//    }
+
+
 
 
     public Command createResetGyroCommand() {
