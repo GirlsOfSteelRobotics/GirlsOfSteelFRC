@@ -61,7 +61,7 @@ public class CombinedCommands {
 
     public Command createScoreCoralCommand(PIECoral setpoint) {
         if (setpoint == PIECoral.L4) {
-            return m_coralSubsystem.createScoreCoralCommand().withTimeout(1.5)
+            return m_coralSubsystem.createScoreCoralCommand().withTimeout(0.75)
                 .andThen(pieCommand(POST_L4_HEIGHT).alongWith(m_coralSubsystem.createScoreCoralCommand()));
 
         }
