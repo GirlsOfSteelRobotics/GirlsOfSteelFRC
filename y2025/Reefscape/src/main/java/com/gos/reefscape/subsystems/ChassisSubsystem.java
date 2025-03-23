@@ -80,6 +80,7 @@ import org.photonvision.EstimatedRobotPose;
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
  */
+@SuppressWarnings("PMD.GodClass")
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
     private static final boolean DEBUG_ODOMETRY = true;
     private static final boolean DEBUG_POSE_ESTIMATION = false;
@@ -127,8 +128,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final SwerveDriveOdometry m_odometryOnly;
     private final SwerveDrivePoseEstimator m_oldPoseEstimator;
 
-    private boolean isDriveToPose = false;
-    private boolean isRobotRelative = false;
+    private boolean m_isDrivingToPose;
+    private boolean m_isDrivingRobotRelative;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
 
@@ -243,12 +244,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
     }
 
-    public boolean getRelative() {
-        return isRobotRelative;
+    public boolean isDrivingRobotRelative() {
+        return m_isDrivingRobotRelative;
     }
 
-    public boolean getDriveToPose(){
-        return isDriveToPose;
+    public boolean isDrivingToPose() {
+        return m_isDrivingToPose;
     }
 
     public void clearStickyFaults() {
@@ -407,7 +408,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
-        isRobotRelative = false;
+        m_isDrivingRobotRelative = false;
         setControl(
             m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
@@ -415,7 +416,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void driveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
-        isRobotRelative = false;
+        m_isDrivingRobotRelative = false;
         setControl(
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
@@ -425,7 +426,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void robotDriveWithJoystick(double xJoystick, double yJoystick, double rotationalJoystick) {
-        isRobotRelative = true;
+        m_isDrivingRobotRelative = true;
         setControl(
             m_robotRelativeDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
@@ -500,36 +501,29 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return AutoBuilder.pathfindToPose(pose, TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0);
     }
 
-//    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d pose) {
-//        return runOnce(() -> isDriveToPose = true)
-//            .andThen(defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0)))
-//            .finallyDo(() -> isDriveToPose = false);
-//    }
-public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
-    List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
-    PathPlannerPath path = new PathPlannerPath(
-        bezierPoints,
-        TUNABLE_PATH_CONSTRAINTS.getConstraints(),
-        null,
-        new GoalEndState(0.0, endAngle)
-    );
-    path.preventFlipping = true;
-    return AutoBuilder.followPath(path);
-}
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
+        PathPlannerPath path = new PathPlannerPath(
+            bezierPoints,
+            TUNABLE_PATH_CONSTRAINTS.getConstraints(),
+            null,
+            new GoalEndState(0.0, endAngle)
+        );
+        path.preventFlipping = true;
+        return runOnce(() -> m_isDrivingToPose = true)
+            .andThen(AutoBuilder.followPath(path))
+            .andThen(() -> m_isDrivingToPose = false);
+    }
 
     public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d end) {
         return createDriveToPointNoFlipCommand(end.getPose(), end.getPose().getRotation(), getState().Pose);
     }
-//        return defer(() -> AutoBuilder.pathfindToPose(
-//            pose.getPose(),
-//            ON_THE_FLY_PATH_CONSTRAINTS.getConstraints(),
-//            0.0 // Goal end velocity in meters/sec
-//        ));
-//
-//    }
 
-
-
+    public Command createPathfindToMaybeFlippedPose(MaybeFlippedPose2d pose) {
+        return runOnce(() -> m_isDrivingToPose = true)
+            .andThen(defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0)
+            .andThen(() -> m_isDrivingToPose = false)));
+    }
 
     public Command createResetGyroCommand() {
         return run(this::resetGyro)

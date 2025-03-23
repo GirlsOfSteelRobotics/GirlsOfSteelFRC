@@ -63,14 +63,10 @@ public final class Autos {
             AlgaePositions.EF
         ));
 
-
-
-//        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
-//            AlgaePositions.GH,
-//            AlgaePositions.EF,
-//            AlgaePositions.IJ));
-
-
+        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
+            AlgaePositions.GH,
+            AlgaePositions.EF,
+            AlgaePositions.IJ));
 
         ///////////////////////////////
         /// Left Side

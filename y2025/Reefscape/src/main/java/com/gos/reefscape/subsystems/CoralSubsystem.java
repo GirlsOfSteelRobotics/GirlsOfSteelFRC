@@ -76,10 +76,6 @@ public class CoralSubsystem extends SubsystemBase {
         return !m_coralSensor.get();
     }
 
-    public boolean noCoral() {
-        return m_coralSensor.get();
-    }
-
 
 
     public void algaeIntakeStop() {
@@ -110,7 +106,6 @@ public class CoralSubsystem extends SubsystemBase {
             debugTab.add(createMoveAlgaeInCommand());
             debugTab.add(createMoveAlgaeOutCommand());
             debugTab.add(createIntakeUntilAlgaeCommand());
-
         }
     }
 
@@ -141,11 +136,6 @@ public class CoralSubsystem extends SubsystemBase {
     public Command createMoveAlgaeInCommand() {
         return this.runEnd(this::algaeIntakeIn, this::algaeIntakeStop).withName("Algae In");
     }
-
-//    public Command createIntakeUntilCoralThenReverse() {
-//        return createFetchCoralCommand().until(this::hasCoral)
-//            .andThen(createReverseIntakeCommand().until(this::noCoral)).withName("Intake until coral but reverse");
-//    }
 
 
 }

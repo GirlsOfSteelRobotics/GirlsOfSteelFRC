@@ -49,7 +49,7 @@ public class KeepoutZonesCommand extends Command {
 
     }
 
-    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.NPathComplexity"})
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.NPathComplexity", "PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     @Override
     public void execute() {
         String reason = "No reason";

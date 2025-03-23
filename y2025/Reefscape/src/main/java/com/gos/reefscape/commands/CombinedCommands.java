@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Consumer;
 
 public class CombinedCommands {
+    private static final PIESetpoint POST_L4_HEIGHT = new PIESetpoint(1.41, -50);
     private static final PIESetpoint GO_HOME_SETPOINT = new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE);
 
     private final CoralSubsystem m_coralSubsystem;
@@ -40,8 +41,6 @@ public class CombinedCommands {
         return new KeepoutZonesCommand(m_elevatorSubsystem, m_pivotSubsystem, m_keepoutConsumer, combo, true);
 
     }
-
-    private static final PIESetpoint POST_L4_HEIGHT = new PIESetpoint(1.41, -50);
 
     public Command autoScoreCoralCommand(PIECoral combo) {
 

@@ -10,7 +10,6 @@ import com.gos.reefscape.led_patterns.sub_patterns.KeepOutZoneStatePattern;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.LEDSubsystem;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -45,9 +44,9 @@ public class EnabledPatterns {
     }
 
     public void ledUpdates() {
-        if(m_chassis.getRelative()) {
+        if (m_chassis.isDrivingRobotRelative()) {
             m_relative.writeLeds();
-        } else if (m_chassis.getDriveToPose()){
+        } else if (m_chassis.isDrivingToPose()) {
             m_driveToPose.writeLeds();
         } else {
             MaybeFlippedPose2d closestAlgae = m_chassis.findClosestAlgae().m_pose;

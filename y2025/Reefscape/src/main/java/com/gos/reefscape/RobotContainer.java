@@ -26,7 +26,6 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.generated.TunerConstantsCompetition;
@@ -35,7 +34,6 @@ import com.gos.reefscape.subsystems.sysid.PivotSysId;
 import com.gos.reefscape.subsystems.sysid.SwerveDriveSysId;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -130,8 +128,6 @@ public class RobotContainer {
 
         keepOutConsumer.accept(KeepOutZoneEnum.NOT_RUNNING);
 
-        DataLogManager.start();
-
     }
 
     private void handleKeepOutZoneState(KeepOutZoneEnum state) {
@@ -169,8 +165,6 @@ public class RobotContainer {
         // m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
 
         Trigger fetchAlgaeTrigger = m_driverController.rightBumper();
-//        Trigger prepAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.rightTrigger().negate());
-//        Trigger scoreAlgaeTrigger = m_driverController.rightTrigger().and(m_driverController.rightTrigger());
 
         Trigger fetchCoralTrigger = m_driverController.leftBumper();
         Trigger prepCoralTrigger = m_driverController.leftTrigger().and(m_driverController.rightTrigger().negate());
@@ -194,18 +188,12 @@ public class RobotContainer {
                 .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_coralSubsystem::hasAlgae));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
-        // prepAlgaeTrigger.whileTrue(m_combinedCommand.prepAlgaeInProcessorCommand());
-//        scoreAlgaeTrigger.whileTrue(m_coralSubsystem.createMoveAlgaeOutCommand());
-
-
         prepCoralTrigger.whileTrue(new DeferredCommand(() -> {
             PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
             return m_combinedCommand.prepScoreCoralCommand(setpoint)
                 .alongWith(new VibrateControllerWhileTrueCommand(m_driverController, m_combinedCommand::isAtGoalHeightAngle));
         }, Set.of(m_elevatorSubsystem, m_pivotSubsystem)));
 
-//        scoreCoralTrigger.whileTrue(][\
-//        );
         scoreCoralTrigger.whileTrue(new DeferredCommand(() -> {
             PIECoral setpoint = m_operatorCoralCommand.getSetpoint();
             return m_combinedCommand.createScoreCoralCommand(setpoint);
@@ -252,8 +240,8 @@ public class RobotContainer {
 
     private Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
-            Pose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose.getPose();
-            return m_chassisSubsystem.createDriveToPose(startingLocation);
+            MaybeFlippedPose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose;
+            return m_chassisSubsystem.createPathfindToMaybeFlippedPose(startingLocation);
         }, Set.of(m_chassisSubsystem));
     }
 
