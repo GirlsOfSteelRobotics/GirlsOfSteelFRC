@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
@@ -48,7 +49,7 @@ public class KeepoutZonesCommand extends Command {
 
     }
 
-    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.NPathComplexity"})
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity", "PMD.NPathComplexity", "PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     @Override
     public void execute() {
         String reason = "No reason";
@@ -59,6 +60,11 @@ public class KeepoutZonesCommand extends Command {
 
         double elevatorError = m_setpoint.m_height - elevatorHeight;
         boolean goingDown = elevatorError < 0;
+
+        double pivotError = m_setpoint.m_angle - pivotAngle;
+        boolean retracting = pivotError > 0;
+
+        SmartDashboard.putBoolean("KOZ: Retracting", retracting);
 
         double pivotGoal = m_setpoint.m_angle;
         double elevatorGoal = m_setpoint.m_height;
@@ -82,6 +88,10 @@ public class KeepoutZonesCommand extends Command {
             if (pivotAngle > -160) {
                 m_keepOutZoneState = KeepOutZoneEnum.CAN_MOVE_BOTH;
                 reason = "Were low but the pivot is cool";
+            } else if (retracting) {
+                m_keepOutZoneState = KeepOutZoneEnum.CAN_MOVE_BOTH_WITH_MODIFIED_ELEVATOR_GOAL;
+                elevatorGoal = 0.16;
+                reason = "We're low but are retracting the pivot and need to hack the elevator";
             }
             else {
                 m_keepOutZoneState = KeepOutZoneEnum.ONLY_MOVE_ELEVATOR;
@@ -119,7 +129,9 @@ public class KeepoutZonesCommand extends Command {
             m_pivotSubsystem.moveArmToAngle(pivotGoal);
             break;
         }
-        case CAN_MOVE_BOTH: {
+        case CAN_MOVE_BOTH:
+        case CAN_MOVE_BOTH_WITH_MODIFIED_ELEVATOR_GOAL:
+        case CAN_MOVE_BOTH_WITH_MODIFIED_PIVOT_GOAL: {
             m_elevatorSubsystem.goToHeight(elevatorGoal);
             m_pivotSubsystem.moveArmToAngle(pivotGoal);
             break;

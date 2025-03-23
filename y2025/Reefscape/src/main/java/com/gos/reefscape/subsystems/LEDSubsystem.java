@@ -27,14 +27,14 @@ public class LEDSubsystem extends SubsystemBase {
     private final EnabledPatterns m_enabledPatterns;
     private final DisabledPatterns m_disabledPatterns;
 
-    public LEDSubsystem(CoralSubsystem coral, ElevatorSubsystem elevator, Autos autoModeFactory) {
+    public LEDSubsystem(CoralSubsystem coral, ElevatorSubsystem elevator, Autos autoModeFactory, ChassisSubsystem chassis) {
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT_ID);
         m_led.setLength(m_buffer.getLength());
         m_led.setData((m_buffer));
         m_led.start();
 
-        m_enabledPatterns = new EnabledPatterns(m_buffer, coral);
+        m_enabledPatterns = new EnabledPatterns(m_buffer, coral, chassis);
         m_disabledPatterns = new DisabledPatterns(m_buffer, autoModeFactory, elevator);
     }
 

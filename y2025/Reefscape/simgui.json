@@ -196,6 +196,10 @@
         "Front Camera detected tags": {
           "image": "../../libraries/shared_images/tag-green.png"
         },
+        "Trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
         "bottom": 1638,
         "builtin": "2025 Reefscape",
         "height": 8.051901817321777,

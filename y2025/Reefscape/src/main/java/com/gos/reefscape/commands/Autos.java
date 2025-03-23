@@ -30,6 +30,8 @@ public final class Autos {
         m_autoModes = new SendableChooser<>();
         SmartDashboard.putData("Auto Modes", m_autoModes);
 
+        AutoModeCommandHelpers autoHelpers = new AutoModeCommandHelpers(swerveDrive, combinedCommands);
+
         ///////////////////////////////
         /// Right Side
         ///////////////////////////////
@@ -41,39 +43,41 @@ public final class Autos {
         //     CoralPositions.C,
         //     CoralPositions.B)
         // );
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L2, StartingPositions.RIGHT, List.of(
+            CoralPositions.E,
+            CoralPositions.F));
+
+        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
             CoralPositions.E,
             CoralPositions.C,
             CoralPositions.B));
-
-        createScoreNetAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.G, StartingPositions.RIGHT, List.of(AlgaePositions.IJ));
 
 
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.G));
+        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.G));
 
-        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
+        createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
+            AlgaePositions.GH,
+            AlgaePositions.EF
+        ));
+
+        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
             AlgaePositions.EF,
             AlgaePositions.IJ));
-
-        createMultiAlgaeAuto(swerveDrive, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(AlgaePositions.GH, AlgaePositions.EF, AlgaePositions.IJ));
-
 
         ///////////////////////////////
         /// Left Side
         ///////////////////////////////
 
-        // createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
-        //     CoralPositions.H,
-        //     CoralPositions.I,
-        //     CoralPositions.J,
-        //     CoralPositions.K,
-        //     CoralPositions.L,
-        //     CoralPositions.A));
-        createMultiCoralAuto(swerveDrive, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
+
+        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L2, StartingPositions.LEFT, List.of(
+            CoralPositions.I,
+            CoralPositions.J
+        ));
+        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
             CoralPositions.I,
             CoralPositions.L,
             CoralPositions.J,
@@ -81,13 +85,13 @@ public final class Autos {
         ));
     }
 
-    private void createMultiCoralAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
-        GosAuto example = new MultiPieceCoral(chassis, combinedCommands, height, starting, positions);
+    private void createMultiCoralAuto(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
+        GosAuto example = new MultiPieceCoral(helpers, combinedCommands, height, starting, positions);
         addAutoMode(example);
     }
 
-    private void createMultiAlgaeAuto(ChassisSubsystem swerveDrive, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
-        GosAuto multiPieceAlgae = new MultiPieceProcessor(swerveDrive, combinedCommands, height, coralPosition, start, algaelist);
+    private void createMultiProcessorAuto(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
+        GosAuto multiPieceAlgae = new MultiPieceProcessor(helpers, combinedCommands, height, coralPosition, start, algaelist);
         addAutoMode(multiPieceAlgae);
     }
 
@@ -101,9 +105,9 @@ public final class Autos {
         }
     }
 
-    private void createScoreNetAuto(ChassisSubsystem chassis, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
-        GosAuto scoreIntoNetAuto = new MultiPieceNet(chassis, combinedCommands, combo, coral, start, algaePositions);
-        m_autoModes.addOption(scoreIntoNetAuto.getName(), scoreIntoNetAuto);
+    private void createScoreNetAuto(CombinedCommands combinedCommands, AutoModeCommandHelpers helpers, PIECoral combo, CoralPositions coral, StartingPositions start, List<AlgaePositions> algaePositions) {
+        GosAuto scoreIntoNetAuto = new MultiPieceNet(combinedCommands, helpers, combo, coral, start, algaePositions);
+        addAutoMode(scoreIntoNetAuto);
     }
 
     public GosAuto getSelectedAuto() {

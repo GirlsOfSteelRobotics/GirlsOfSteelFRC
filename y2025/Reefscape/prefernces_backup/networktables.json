@@ -1,93 +1,5 @@
 [
   {
-    "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
-    "type": "double",
-    "value": 60.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Max Acceleration (inches)",
-    "type": "double",
-    "value": 60.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Angular Velocity (degrees)",
-    "type": "double",
-    "value": 360.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Angular Acceleration (degrees)",
-    "type": "double",
-    "value": 360.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.Steerkp",
-    "type": "double",
-    "value": 50.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkV",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkA",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.Drivekp",
-    "type": "double",
-    "value": 0.05,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.DrivekV",
-    "type": "double",
-    "value": 0.124,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/chassis Pid.mm.kp",
-    "type": "double",
-    "value": 10.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/chassis Pid.mm.kd",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/CameraExtrinsics/Front.x(in)",
     "type": "double",
     "value": 0.5,
@@ -138,7 +50,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.x(in)",
     "type": "double",
-    "value": -8.0,
+    "value": -13.0,
     "properties": {
       "persistent": true
     }
@@ -154,7 +66,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.z(in)",
     "type": "double",
-    "value": 10.0,
+    "value": 7.0,
     "properties": {
       "persistent": true
     }
@@ -162,7 +74,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.yaw(deg)",
     "type": "double",
-    "value": 175.0,
+    "value": 180.0,
     "properties": {
       "persistent": true
     }
@@ -170,7 +82,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Back.pitch(deg)",
     "type": "double",
-    "value": -24.000000000000004,
+    "value": -34.0,
     "properties": {
       "persistent": true
     }
@@ -184,17 +96,9 @@
     }
   },
   {
-    "name": "/Preferences/tunableElevator",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Elevator.mm.max_velocity",
     "type": "double",
-    "value": 0.5,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -202,7 +106,7 @@
   {
     "name": "/Preferences/Elevator.mm.max_acceleration",
     "type": "double",
-    "value": 0.5,
+    "value": 2.0,
     "properties": {
       "persistent": true
     }
@@ -243,38 +147,6 @@
     "name": "/Preferences/Elevator.mm.kp",
     "type": "double",
     "value": 4.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CoralScoreSpeed",
-    "type": "double",
-    "value": -0.25,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CoralReverseSpeed",
-    "type": "double",
-    "value": 0.05,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CoralFetchSpeed",
-    "type": "double",
-    "value": -0.25,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/tunablePivot",
-    "type": "double",
-    "value": -21.0,
     "properties": {
       "persistent": true
     }
@@ -328,9 +200,145 @@
     }
   },
   {
+    "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
+    "type": "double",
+    "value": 84.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Max Acceleration (inches)",
+    "type": "double",
+    "value": 120.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Angular Velocity (degrees)",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Angular Acceleration (degrees)",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Steerkp",
+    "type": "double",
+    "value": 100.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkD",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkS",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkV",
+    "type": "double",
+    "value": 2.33,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Drivekp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.DrivekV",
+    "type": "double",
+    "value": 0.124,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/chassis Pid.mm.kp",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/chassis Pid.mm.kd",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tunableElevator",
+    "type": "double",
+    "value": 0.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CoralScoreSpeed",
+    "type": "double",
+    "value": -0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CoralReverseSpeed",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CoralFetchSpeed",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tunablePivot",
+    "type": "double",
+    "value": -167.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/ChassisTranslationDamper",
     "type": "double",
-    "value": 0.3,
+    "value": 0.4,
     "properties": {
       "persistent": true
     }
@@ -354,7 +362,7 @@
   {
     "name": "/Preferences/ChassisRobotRelativeDamper",
     "type": "double",
-    "value": 0.1,
+    "value": 0.15,
     "properties": {
       "persistent": true
     }
@@ -362,23 +370,7 @@
   {
     "name": "/Preferences/Led: Always Run Disabled Pattern",
     "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkD",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkS",
-    "type": "double",
-    "value": 0.0,
+    "value": true,
     "properties": {
       "persistent": true
     }

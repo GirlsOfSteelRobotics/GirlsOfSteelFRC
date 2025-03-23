@@ -4,6 +4,13 @@
  "type":"Swerve",
  "variables":{
   "expressions":{
+   "DefaultCoralToAlgaeVelocity":{
+    "dimension":"LinVel",
+    "var":{
+     "exp":"2.5 ft / s",
+     "val":0.762
+    }
+   },
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
@@ -344,8 +351,8 @@
    },
    "Processor":{
     "x":{
-     "exp":"6.35289192199707 m",
-     "val":6.35289192199707
+     "exp":"235.726 in",
+     "val":5.9874404
     },
     "y":{
      "exp":"0.45048725605010986 m",
