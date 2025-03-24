@@ -56,7 +56,7 @@ import java.util.function.Consumer;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-    private static boolean CLEANUP_PROPERTIES = true;
+    private static final boolean CLEANUP_PROPERTIES = true;
 
     // The robot's subsystems and commands are defined here...
     private final ChassisSubsystem m_chassisSubsystem;

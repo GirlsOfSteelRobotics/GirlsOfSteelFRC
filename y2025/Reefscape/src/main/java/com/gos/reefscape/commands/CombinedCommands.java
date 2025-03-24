@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Consumer;
 
 public class CombinedCommands {
+    private static final PIESetpoint PRE_NET_FLING_SETPOINT = new PIESetpoint(PIEAlgae.SCORE_INTO_NET.m_setpoint.m_height, -134);
     private static final PIESetpoint POST_L4_HEIGHT = new PIESetpoint(1.41, -50);
     private static final PIESetpoint GO_HOME_SETPOINT = new PIESetpoint(0, PivotSubsystem.DEFAULT_ANGLE);
 
@@ -88,14 +89,14 @@ public class CombinedCommands {
     }
 
     public Command autoScoreAlgaeInNet() {
-        return autoPieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
-            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+        return pieCommand(PRE_NET_FLING_SETPOINT)
+            .andThen(pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
+                .alongWith(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1.5)));
     }
 
     public Command scoreAlgaeInNet() {
-        return pieCommand(new PIESetpoint(PIEAlgae.SCORE_INTO_NET.m_setpoint.m_height, -134))
-            .andThen(pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
-                .alongWith(m_coralSubsystem.createMoveAlgaeOutCommand()));
+        // Due to how we score in the net, we can always run with the timeout.
+        return autoScoreAlgaeInNet();
     }
 
     public boolean isAtGoalHeightAngle() {
