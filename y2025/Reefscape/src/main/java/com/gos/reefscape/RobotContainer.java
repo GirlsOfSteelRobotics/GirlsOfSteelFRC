@@ -56,19 +56,21 @@ import java.util.function.Consumer;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+    private static boolean CLEANUP_PROPERTIES = true;
+
     // The robot's subsystems and commands are defined here...
-    private final ChassisSubsystem m_chassisSubsystem = TunerConstantsCompetition.createDrivetrain();
-    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
-    private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
-    private final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+    private final ChassisSubsystem m_chassisSubsystem;
+    private final ElevatorSubsystem m_elevatorSubsystem;
+    private final CoralSubsystem m_coralSubsystem;
+    private final PivotSubsystem m_pivotSubsystem;
     private final CombinedCommands m_combinedCommand;
-    private final OperatorCoralCommand m_operatorCoralCommand = new OperatorCoralCommand();
+    private final OperatorCoralCommand m_operatorCoralCommand;
 
     private final ElevatorSysId m_elevatorSysId;
     private final SwerveDriveSysId m_swerveSysId;
     private final PivotSysId m_pivotSysId;
 
-    private final SuperStructureViz m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem); // NOPMD(UnusedPrivateField)
+    private final SuperStructureViz m_superStructureViz; // NOPMD(UnusedPrivateField)
     private final LEDSubsystem m_leds; //NOPMD
     private final Autos m_autos;
 
@@ -81,6 +83,17 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        PropertyManager.setPurgeConstantPreferenceKeys(CLEANUP_PROPERTIES);
+
+
+        m_chassisSubsystem = TunerConstantsCompetition.createDrivetrain();
+        m_elevatorSubsystem = new ElevatorSubsystem();
+        m_coralSubsystem = new CoralSubsystem();
+        m_pivotSubsystem = new PivotSubsystem();
+        m_operatorCoralCommand = new OperatorCoralCommand();
+
+        m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem);
+
         Consumer<KeepOutZoneEnum> keepOutConsumer = this::handleKeepOutZoneState;
         m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer);
 
@@ -124,7 +137,9 @@ public class RobotContainer {
             PropertyManager.printDynamicProperties(false);
         }
 
-        // PropertyManager.purgeExtraKeys();
+        if (CLEANUP_PROPERTIES) {
+            PropertyManager.purgeExtraKeys();
+        }
 
         keepOutConsumer.accept(KeepOutZoneEnum.NOT_RUNNING);
 
