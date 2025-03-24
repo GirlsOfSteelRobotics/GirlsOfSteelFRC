@@ -44,7 +44,7 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
-    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(false, "tunablePivot", -21);
+    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tunablePivot", -167);
 
 
     private final RevProfiledSingleJointedArmController m_armPidController;
@@ -62,7 +62,7 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(true);
 
-        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
+        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(180)
             .addMaxAcceleration(360)
