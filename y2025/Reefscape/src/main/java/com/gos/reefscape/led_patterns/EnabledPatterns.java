@@ -1,5 +1,6 @@
 package com.gos.reefscape.led_patterns;
 
+import com.gos.lib.led.LEDAngleToTargetOverAndUnder;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
@@ -24,9 +25,11 @@ public class EnabledPatterns {
     private final ChassisSubsystem m_chassis;
     private final MirroredLEDRainbow m_relative;
     private final MirroredLEDMovingPixel m_driveToPose;
+    private final LEDAngleToTargetOverAndUnder m_reefPositionCameraYaw;
 
     public EnabledPatterns(AddressableLEDBuffer buffer, CoralSubsystem coral, ChassisSubsystem driveToPose) {
         m_coralSubsystem = coral;
+        m_reefPositionCameraYaw = new LEDAngleToTargetOverAndUnder(buffer, LEDSubsystem.SWIRL_START, LEDSubsystem.SWIRL_COUNT + LEDSubsystem.SWIRL_START, Color.kViolet, Color.kOrange, 6);
 
 
         //change this
@@ -46,9 +49,11 @@ public class EnabledPatterns {
     public void ledUpdates() {
         if (m_chassis.isDrivingRobotRelative()) {
             m_relative.writeLeds();
+            m_reefPositionCameraYaw.setAngleAndWrite(m_chassis.getReefCameraYaw());
         } else if (m_chassis.isDrivingToPose()) {
             m_driveToPose.writeLeds();
-        } else {
+        }
+        else {
             MaybeFlippedPose2d closestAlgae = m_chassis.findClosestAlgae().m_pose;
             double distance = closestAlgae.getPose().getTranslation().getDistance(m_chassis.getState().Pose.getTranslation());
             if (distance > 0.5) {
@@ -56,7 +61,10 @@ public class EnabledPatterns {
             }
             m_hasCoral.setStateAndWrite(m_coralSubsystem.hasCoral());
         }
-        m_keepOutPattern.writeLeds();
+
+        if (!m_chassis.isDrivingRobotRelative()) {
+            m_keepOutPattern.writeLeds();
+        }
     }
 
     public void setKeepOutZoneState(KeepOutZoneEnum state) {

@@ -36,6 +36,7 @@ import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
+import com.gos.reefscape.ReefDetection;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.pathplanner.lib.path.GoalEndState;
@@ -74,6 +75,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstantsCompetition.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2025.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
+import org.photonvision.targeting.PhotonPipelineResult;
 
 
 /**
@@ -125,6 +127,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private double m_lastSimTime;
     private final GosField m_field;
     private final AprilTagCameraManager m_aprilTagCameras;
+    private final ReefDetection m_reefDetection;
     private final SwerveDriveOdometry m_odometryOnly;
     private final SwerveDrivePoseEstimator m_oldPoseEstimator;
 
@@ -210,6 +213,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             getState().ModulePositions,
             new Pose2d());
 
+        m_reefDetection = new ReefDetection();
 
         Matrix<N3, N1> singleTagStddev = VecBuilder.fill(0.75, 0.75, Units.degreesToRadians(180));
         Matrix<N3, N1> multiTagStddev = VecBuilder.fill(0.25, 0.25, Units.degreesToRadians(30));
@@ -463,6 +467,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             getModule(i).getDriveMotor().setNeutralMode(neutralModeValue);
         }
 
+    }
+
+    public double getReefCameraYaw() {
+        return m_reefDetection.getYaw();
     }
 
     public Command createCheckAlertsCommand() {

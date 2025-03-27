@@ -16,6 +16,8 @@ public class MultiPieceCoral extends GosAuto {
         StringBuilder autoName = new StringBuilder();
         autoName.append(side.toString()).append(".multiCoral.").append(coralPositions.get(0)).append(combo);
         addCommands(autoHelper.startingPositionToCoralAndScore(side, coralPositions.get(0), combo));
+        addCommands(combinedCommands.startLoweringElevatorForAWhile());
+
 
         for (int i = 1; i < coralPositions.size(); i++) {
             CoralPositions currentCoral = coralPositions.get(i - 1);

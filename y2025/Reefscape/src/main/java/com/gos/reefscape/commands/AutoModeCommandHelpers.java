@@ -26,7 +26,6 @@ public class AutoModeCommandHelpers {
 
         group.addCommands(m_chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
         group.addCommands(m_combinedCommands.autoScoreCoralCommand(coralHeight));
-        group.addCommands(m_combinedCommands.startLoweringElevatorForAWhile());
 
         return group;
     }
@@ -50,7 +49,8 @@ public class AutoModeCommandHelpers {
         String pathBase = coral + "To" + algae;
 
         SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(followChoreoPath(pathBase + ".0"));
+        group.addCommands(followChoreoPath(pathBase + ".0")
+            .deadlineFor(m_combinedCommands.autoPieCommand(algae.m_algaeHeight.m_setpoint)));
         group.addCommands(new InstantCommand(() -> m_chassis.driveWithJoystick(0, 0, 0)));
         group.addCommands(m_combinedCommands.autoPieCommand(algae.m_algaeHeight.m_setpoint));
         group.addCommands(followChoreoPath(pathBase + ".1")

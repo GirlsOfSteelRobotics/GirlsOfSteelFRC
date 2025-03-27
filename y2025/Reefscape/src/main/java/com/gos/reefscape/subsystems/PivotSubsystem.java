@@ -62,7 +62,7 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(true);
 
-        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
+        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(180)
             .addMaxAcceleration(360)
@@ -90,6 +90,8 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Rel Encoder Velocity", m_relativeEncoder::getVelocity);
         m_networkTableEntries.addBoolean("Is at goal", this::isPivotAtGoal);
         m_checkAlerts = new SparkMaxAlerts(m_pivotMotor, "Pivot Alert");
+        m_networkTableEntries.addDouble("Percent Output", m_pivotMotor::getAppliedOutput);
+
 
         m_pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         if (RobotBase.isSimulation()) {

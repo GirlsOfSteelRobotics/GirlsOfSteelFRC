@@ -10,6 +10,7 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import java.util.function.Consumer;
 
@@ -61,7 +62,7 @@ public class CombinedCommands {
 
     public Command createScoreCoralCommand(PIECoral setpoint) {
         if (setpoint == PIECoral.L4) {
-            return m_coralSubsystem.createScoreCoralCommand().withTimeout(0.75)
+            return m_coralSubsystem.createScoreCoralCommand().withTimeout(0.2)
                 .andThen(pieCommand(POST_L4_HEIGHT).alongWith(m_coralSubsystem.createScoreCoralCommand()));
 
         }
@@ -89,9 +90,11 @@ public class CombinedCommands {
     }
 
     public Command autoScoreAlgaeInNet() {
-        return pieCommand(PRE_NET_FLING_SETPOINT)
-            .andThen(pieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
-                .alongWith(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1.5)));
+        return autoPieCommand(PRE_NET_FLING_SETPOINT)
+            .andThen(autoPieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
+                .alongWith(
+                    new WaitUntilCommand(() -> m_pivotSubsystem.getRelativeAngle() > -115)
+                        .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1.5))));
     }
 
     public Command scoreAlgaeInNet() {
