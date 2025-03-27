@@ -75,7 +75,6 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstantsCompetition.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2025.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
-import org.photonvision.targeting.PhotonPipelineResult;
 
 
 /**
@@ -236,8 +235,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
             cameraBuilder
-                .withCamera("Front Camera")
-                .withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
+                .withCamera("Left Camera")
+                .withTransform(RobotExtrinsic.LEFT_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Right Camera")
+                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build(),
             cameraBuilder
                 .withCamera("Back Camera")
                 .withSingleTagStddev(singleTagStddev.times(1.5))

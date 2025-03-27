@@ -123,8 +123,8 @@ public class RobotContainer {
         m_operatorCoralCommand.tellCoralPosition();
         if (!inComp) {
             addSysIdDebugDebugTab();
-            new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
         }
+        new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
 
         SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
         SmartDashboard.putData("drive to starting position", createDriveChassisToStartingPoseCommand().withName("drive chassis to start position"));
