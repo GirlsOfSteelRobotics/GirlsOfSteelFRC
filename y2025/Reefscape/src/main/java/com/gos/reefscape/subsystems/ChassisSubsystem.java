@@ -214,8 +214,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_reefDetection = new ReefDetection();
 
-        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(0.75, 0.75, Units.degreesToRadians(180));
-        Matrix<N3, N1> multiTagStddev = VecBuilder.fill(0.25, 0.25, Units.degreesToRadians(30));
+        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(1.5, 1.5, Units.degreesToRadians(180));
+        Matrix<N3, N1> multiTagStddev = VecBuilder.fill(.5, 0.5, Units.degreesToRadians(30));
 
         boolean enableFancyCameraSim = false;
 
@@ -239,11 +239,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withTransform(RobotExtrinsic.LEFT_CAMERA).build(),
             cameraBuilder
                 .withCamera("Right Camera")
-                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build(),
-            cameraBuilder
-                .withCamera("Back Camera")
-                .withSingleTagStddev(singleTagStddev.times(1.5))
-                .withTransform(RobotExtrinsic.BACK_CAMERA).build()
+                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build()
+//            cameraBuilder
+//                .withCamera("Back Camera")
+//                .withSingleTagStddev(singleTagStddev.times(3))
+//                .withTransform(RobotExtrinsic.BACK_CAMERA).build()
         ));
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
@@ -568,6 +568,19 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 () -> setIdleMode(NeutralModeValue.Coast),
                 () -> setIdleMode(NeutralModeValue.Brake))
             .ignoringDisable(true).withName("Chassis to Coast");
+    }
+
+    public Command createShakeChassisCommand() {
+        return defer(() -> {
+            Pose2d currentPose = getState().Pose;
+            Pose2d forwardOffset = new Pose2d(
+                currentPose.getX() + Units.inchesToMeters(2),
+                currentPose.getY() + Units.inchesToMeters(2),
+                currentPose.getRotation());
+
+            return createDriveToPointNoFlipCommand(forwardOffset, forwardOffset.getRotation(), getState().Pose)
+                .andThen(createDriveToPointNoFlipCommand(currentPose, currentPose.getRotation(), forwardOffset));
+        });
     }
 
 

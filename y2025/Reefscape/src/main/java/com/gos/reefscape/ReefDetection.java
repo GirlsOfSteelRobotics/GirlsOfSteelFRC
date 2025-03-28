@@ -1,37 +1,25 @@
 package com.gos.reefscape;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;
-import org.photonvision.simulation.PhotonCameraSim;
-import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReefDetection {
     private final PhotonCamera m_photonCamera;
 
 
-    public ReefDetection(){
+    public ReefDetection() {
         m_photonCamera = new PhotonCamera("DriverCam");
-
-
     }
+
     public double getYaw() {
         List<PhotonPipelineResult> results = m_photonCamera.getAllUnreadResults();
-        if(results.isEmpty()) {
+        if (results.isEmpty()) {
             return -1;
         }
         PhotonPipelineResult lastOne = results.get(results.size() - 1);
-        if(lastOne.getBestTarget() == null) {
+        if (lastOne.getBestTarget() == null) {
             return -1;
 
         }

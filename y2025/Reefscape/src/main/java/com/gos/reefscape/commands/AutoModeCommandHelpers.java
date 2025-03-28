@@ -34,13 +34,15 @@ public class AutoModeCommandHelpers {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(followChoreoPath(coralPosition + "ToHumanPlayer" + hpSide.variableName())
             .alongWith(m_combinedCommands.goHome()));
-        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation());
+        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation().withTimeout(6));
         return group;
     }
 
     public Command driveFromHpToCoralAndScore(CoralPositions goalCoralPosition, StartingPositions hpSide, PIECoral coralHeight) {
         SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(followChoreoPath("HumanPlayer" + hpSide.variableName() + "To" + goalCoralPosition));
+        group.addCommands(followChoreoPath("HumanPlayer" + hpSide.variableName() + "To" + goalCoralPosition)
+            .alongWith(m_combinedCommands.fetchPieceFromHPStation()));
+        // new ConditionalCommand(hasPiece, do nothing, new shimmyCommand)
         group.addCommands(m_combinedCommands.autoScoreCoralCommand(coralHeight));
         return group;
     }

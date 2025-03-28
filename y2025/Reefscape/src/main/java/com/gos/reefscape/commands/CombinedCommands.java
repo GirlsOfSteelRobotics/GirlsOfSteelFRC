@@ -90,7 +90,7 @@ public class CombinedCommands {
     }
 
     public Command autoScoreAlgaeInNet() {
-        return autoPieCommand(PRE_NET_FLING_SETPOINT)
+        return autoPieCommand(PRE_NET_FLING_SETPOINT).deadlineFor(holdAlgaeWhileDriving())
             .andThen(autoPieCommand(PIEAlgae.SCORE_INTO_NET.m_setpoint)
                 .alongWith(
                     new WaitUntilCommand(() -> m_pivotSubsystem.getRelativeAngle() > -115)
