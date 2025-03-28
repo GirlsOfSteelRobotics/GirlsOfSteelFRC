@@ -28,6 +28,7 @@ import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.generated.TunerConstantsCompetition;
 import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
 import com.gos.reefscape.subsystems.sysid.PivotSysId;
@@ -122,8 +123,8 @@ public class RobotContainer {
         m_combinedCommand.createCombinedCommand(inComp);
         m_operatorCoralCommand.tellCoralPosition();
         if (!inComp) {
-            addSysIdDebugDebugTab();
             new DebugPathsTab(m_chassisSubsystem).addDebugPathsToShuffleBoard();
+            addSysIdDebugDebugTab();
         }
 
         SmartDashboard.putData("Clear Sticky Faults", Commands.run(this::resetStickyFaults).ignoringDisable(true).withName("Clear Sticky Faults"));
@@ -177,7 +178,7 @@ public class RobotContainer {
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
         m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
         m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        // m_driverController.povRight().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.povUp().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
 
         Trigger fetchAlgaeTrigger = m_driverController.rightBumper();
 
@@ -255,6 +256,9 @@ public class RobotContainer {
 
     private Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
+            if (m_autos.getSelectedAuto() == null) {
+                return new PrintCommand("no auto selected");
+            }
             MaybeFlippedPose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose;
             return m_chassisSubsystem.createPathfindToMaybeFlippedPose(startingLocation);
         }, Set.of(m_chassisSubsystem));

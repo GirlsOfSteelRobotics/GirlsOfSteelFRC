@@ -14,6 +14,13 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
+     "exp":"7 ft / s",
+     "val":2.1336
+    }
+   },
+   "DefaultPreloadSpeed":{
+    "dimension":"LinVel",
+    "var":{
      "exp":"5 ft / s",
      "val":1.524
     }
@@ -99,12 +106,12 @@
    },
    "BlueNet":{
     "x":{
-     "exp":"7.7807393074035645 m",
-     "val":7.7807393074035645
+     "exp":"8.1867 m",
+     "val":8.1867
     },
     "y":{
-     "exp":"4.803314685821533 m",
-     "val":4.803314685821533
+     "exp":"4.968 m",
+     "val":4.968
     },
     "heading":{
      "exp":"180 deg",
@@ -445,12 +452,12 @@
    "val":0.0508
   },
   "vmax":{
-   "exp":"5800 RPM",
-   "val":607.3745796940267
+   "exp":"4300 RPM",
+   "val":450.294947014537
   },
   "tmax":{
-   "exp":"1.2 N * m",
-   "val":1.2
+   "exp":"0.7 N * m",
+   "val":0.7
   },
   "cof":{
    "exp":"1.5",

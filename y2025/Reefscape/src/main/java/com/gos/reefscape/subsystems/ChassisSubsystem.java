@@ -36,6 +36,7 @@ import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.MaybeFlippedPose2d;
+import com.gos.reefscape.ReefDetection;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.pathplanner.lib.path.GoalEndState;
@@ -125,6 +126,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private double m_lastSimTime;
     private final GosField m_field;
     private final AprilTagCameraManager m_aprilTagCameras;
+    private final ReefDetection m_reefDetection;
     private final SwerveDriveOdometry m_odometryOnly;
     private final SwerveDrivePoseEstimator m_oldPoseEstimator;
 
@@ -144,7 +146,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
         .withRotationalDeadband(MAX_ROTATION_SPEED * 0.05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
@@ -180,7 +181,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
                 .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
                 .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
@@ -210,9 +211,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             getState().ModulePositions,
             new Pose2d());
 
+        m_reefDetection = new ReefDetection();
 
-        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(0.75, 0.75, Units.degreesToRadians(180));
-        Matrix<N3, N1> multiTagStddev = VecBuilder.fill(0.25, 0.25, Units.degreesToRadians(30));
+        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(1.5, 1.5, Units.degreesToRadians(180));
+        Matrix<N3, N1> multiTagStddev = VecBuilder.fill(.5, 0.5, Units.degreesToRadians(30));
 
         boolean enableFancyCameraSim = false;
 
@@ -232,11 +234,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_aprilTagCameras = new AprilTagCameraManager(FieldConstants.TAG_LAYOUT, List.of(
             cameraBuilder
-                .withCamera("Front Camera")
-                .withTransform(RobotExtrinsic.FRONT_CAMERA).build(),
+                .withCamera("Left Camera")
+                .withTransform(RobotExtrinsic.LEFT_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Right Camera")
+                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build(),
             cameraBuilder
                 .withCamera("Back Camera")
-                .withSingleTagStddev(singleTagStddev.times(1.5))
+                .withSingleTagStddev(singleTagStddev.times(3))
                 .withTransform(RobotExtrinsic.BACK_CAMERA).build()
         ));
 
@@ -465,6 +470,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     }
 
+    public double getReefCameraYaw() {
+        return m_reefDetection.getYaw();
+    }
+
     public Command createCheckAlertsCommand() {
         return run(() -> {
             for (BasePhoenix6Alerts alert : m_alerts) {
@@ -558,6 +567,19 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 () -> setIdleMode(NeutralModeValue.Coast),
                 () -> setIdleMode(NeutralModeValue.Brake))
             .ignoringDisable(true).withName("Chassis to Coast");
+    }
+
+    public Command createShakeChassisCommand() {
+        return defer(() -> {
+            Pose2d currentPose = getState().Pose;
+            Pose2d forwardOffset = new Pose2d(
+                currentPose.getX() + Units.inchesToMeters(2),
+                currentPose.getY() + Units.inchesToMeters(2),
+                currentPose.getRotation());
+
+            return createDriveToPointNoFlipCommand(forwardOffset, forwardOffset.getRotation(), getState().Pose)
+                .andThen(createDriveToPointNoFlipCommand(currentPose, currentPose.getRotation(), forwardOffset));
+        });
     }
 
 

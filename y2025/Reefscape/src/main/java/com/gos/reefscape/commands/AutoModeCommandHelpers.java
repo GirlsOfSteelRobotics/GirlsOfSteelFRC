@@ -26,7 +26,6 @@ public class AutoModeCommandHelpers {
 
         group.addCommands(m_chassis.createResetAndFollowChoreoPathCommand("StartingPos" + start.variableName() + "To" + coral));
         group.addCommands(m_combinedCommands.autoScoreCoralCommand(coralHeight));
-        group.addCommands(m_combinedCommands.startLoweringElevatorForAWhile());
 
         return group;
     }
@@ -35,13 +34,15 @@ public class AutoModeCommandHelpers {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(followChoreoPath(coralPosition + "ToHumanPlayer" + hpSide.variableName())
             .alongWith(m_combinedCommands.goHome()));
-        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation());
+        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation().withTimeout(6));
         return group;
     }
 
     public Command driveFromHpToCoralAndScore(CoralPositions goalCoralPosition, StartingPositions hpSide, PIECoral coralHeight) {
         SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(followChoreoPath("HumanPlayer" + hpSide.variableName() + "To" + goalCoralPosition));
+        group.addCommands(followChoreoPath("HumanPlayer" + hpSide.variableName() + "To" + goalCoralPosition)
+            .alongWith(m_combinedCommands.fetchPieceFromHPStation()));
+        // new ConditionalCommand(hasPiece, do nothing, new shimmyCommand)
         group.addCommands(m_combinedCommands.autoScoreCoralCommand(coralHeight));
         return group;
     }
@@ -50,7 +51,8 @@ public class AutoModeCommandHelpers {
         String pathBase = coral + "To" + algae;
 
         SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(followChoreoPath(pathBase + ".0"));
+        group.addCommands(followChoreoPath(pathBase + ".0")
+            .deadlineFor(m_combinedCommands.autoPieCommand(algae.m_algaeHeight.m_setpoint)));
         group.addCommands(new InstantCommand(() -> m_chassis.driveWithJoystick(0, 0, 0)));
         group.addCommands(m_combinedCommands.autoPieCommand(algae.m_algaeHeight.m_setpoint));
         group.addCommands(followChoreoPath(pathBase + ".1")
