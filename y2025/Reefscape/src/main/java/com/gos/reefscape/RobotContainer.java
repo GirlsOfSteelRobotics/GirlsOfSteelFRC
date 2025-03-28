@@ -28,6 +28,7 @@ import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.generated.TunerConstantsCompetition;
 import com.gos.reefscape.subsystems.sysid.ElevatorSysId;
 import com.gos.reefscape.subsystems.sysid.PivotSysId;
@@ -255,6 +256,9 @@ public class RobotContainer {
 
     private Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
+            if(m_autos.getSelectedAuto() == null) {
+                return new PrintCommand("no auto selected");
+            }
             MaybeFlippedPose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose;
             return m_chassisSubsystem.createPathfindToMaybeFlippedPose(startingLocation);
         }, Set.of(m_chassisSubsystem));

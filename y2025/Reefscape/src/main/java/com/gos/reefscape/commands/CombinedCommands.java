@@ -49,7 +49,7 @@ public class CombinedCommands {
         if (combo == PIECoral.L4) {
             return autoPieCommand(PIECoral.L4.m_setpoint)
                 .andThen(m_coralSubsystem.createScoreCoralCommand()
-                    .withTimeout(.75))
+                    .withTimeout(.25))
                 .andThen(autoPieCommand(POST_L4_HEIGHT)
                     .raceWith(m_coralSubsystem.createScoreCoralCommand()));
         }

@@ -146,7 +146,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
-        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
         .withRotationalDeadband(MAX_ROTATION_SPEED * 0.05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
@@ -182,7 +181,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
                 .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
                 .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
@@ -239,11 +238,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withTransform(RobotExtrinsic.LEFT_CAMERA).build(),
             cameraBuilder
                 .withCamera("Right Camera")
-                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build()
-//            cameraBuilder
-//                .withCamera("Back Camera")
-//                .withSingleTagStddev(singleTagStddev.times(3))
-//                .withTransform(RobotExtrinsic.BACK_CAMERA).build()
+                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Back Camera")
+                .withSingleTagStddev(singleTagStddev.times(3))
+                .withTransform(RobotExtrinsic.BACK_CAMERA).build()
         ));
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
