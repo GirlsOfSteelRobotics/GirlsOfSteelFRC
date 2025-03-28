@@ -256,7 +256,7 @@ public class RobotContainer {
 
     private Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
-            if(m_autos.getSelectedAuto() == null) {
+            if (m_autos.getSelectedAuto() == null) {
                 return new PrintCommand("no auto selected");
             }
             MaybeFlippedPose2d startingLocation = m_autos.getSelectedAuto().getStartingLocation().m_pose;
