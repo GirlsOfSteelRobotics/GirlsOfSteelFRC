@@ -83,6 +83,11 @@ def create_stop_point_constraint(index):
     )
 
 
+def create_event_marker(index, offset, named_command):
+    # return "Hello"
+    return '{"name":"Marker", "from":{"target":' + str(index) + ', "targetTimestamp":1.8064, "offset":{"exp":"' + str(offset) + ' s", "val":' + str(offset) + '}}, "event":{"type":"named", "data":{"name":"' + str(named_command) + '"}}}'
+
+
 def create_path_between_variables(
     choreo_dir, variables, first_variable, second_variable, constraints=None, events=None
 ):
@@ -114,6 +119,15 @@ def create_path_between_waypoints(choreo_dir, filename, waypoints, constraints, 
     template = template_env.get_template("choreo_trajectory.jinja2")
 
     path_to_write = choreo_dir / f"{filename}.traj"
+
+    events = events or []
+
+    if constraints and events:
+        print("Stuff")
+        print(type(constraints[0]))
+        print(type(events[0]))
+        print(constraints)
+        print(events)
 
     path_to_write.write_text(template.render(constraints=constraints, waypoints=waypoints, events=events))
 

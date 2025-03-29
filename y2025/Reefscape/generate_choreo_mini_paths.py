@@ -13,6 +13,7 @@ from .pathing_generation_utils.mini_paths_utils import (
     create_path_between_waypoints,
     create_keep_in_lane_constraint,
     create_stop_point_constraint,
+    create_event_marker,
 )
 
 
@@ -65,8 +66,7 @@ def starting_position_helper(
         first_variable,
         second_variable):
     constraints = [velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 2)]
-    events = ['{"name":"Marker", "from":{"target":1, "targetTimestamp":1.16091, "offset":{"exp":"-0.25 s", "val":-0.25}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]']
-
+    events = [create_event_marker(1, -0.25, "RaiseElevator")]
     filename = f"{first_variable}To{second_variable}"
 
 
@@ -151,7 +151,7 @@ def to_and_from_reef_helper(
         events = []
     else:
         reef_var = pose_variables[second_variable]
-        events = ['{"name":"Marker", "from":{"target":1, "targetTimestamp":1.16091, "offset":{"exp":"0 s", "val":0}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]']
+        events = [create_event_marker(1, 0, "RaiseElevator")]
 
     backup_x = reef_var["x"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.cos(
         reef_var["heading"]
