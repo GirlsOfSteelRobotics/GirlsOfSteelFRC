@@ -7,8 +7,8 @@
    "AlgaeBackupDistance":{
     "dimension":"Length",
     "var":{
-     "exp":"3 ft",
-     "val":0.9144
+     "exp":"2 ft",
+     "val":0.6096
     }
    },
    "CoralBackupDistance":{
