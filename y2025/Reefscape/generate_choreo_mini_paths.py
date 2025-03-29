@@ -17,16 +17,14 @@ from .pathing_generation_utils.mini_paths_utils import (
 
 
 def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables):
-    events = ['{"name":"Marker", "from":{"target":1, "targetTimestamp":1.16091, "offset":{"exp":"-0.25 s", "val":-0.25}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]']
-
     reef_to_human_player_left = []
     human_player_left_to_reef = []
     for reef_position in ["A", "B", "L", "K", "J", "I"]:
         reef_to_human_player_left.append(
-            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, reef_position, "HumanPlayerLeft", events=events)
+            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, reef_position, "HumanPlayerLeft")
         )
         human_player_left_to_reef.append(
-            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables,"HumanPlayerLeft", reef_position, events=events)
+            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables,"HumanPlayerLeft", reef_position)
         )
     write_pathplanner_auto(
         reef_to_human_player_left, pathplanner_dir / "ToLeftHumanPlayer.auto", "Mini Paths"
@@ -39,10 +37,10 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables, vel_variabl
     human_player_right_to_reef = []
     for reef_position in ["A", "B", "C", "D", "E", "F"]:
         reef_to_human_player_right.append(
-            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, reef_position, "HumanPlayerRight", events=events)
+            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, reef_position, "HumanPlayerRight")
         )
         human_player_right_to_reef.append(
-            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, "HumanPlayerRight", reef_position, events=events)
+            to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, "HumanPlayerRight", reef_position)
         )
     write_pathplanner_auto(
         reef_to_human_player_right, pathplanner_dir / "ToRightHumanPlayer.auto", "Mini Paths"
@@ -139,8 +137,7 @@ def to_and_from_reef_helper(
         vel_variables,
         distance_variables,
         first_variable,
-        second_variable,
-        events):
+        second_variable):
 
     constraints = [velocity_variable_to_constraint(vel_variables, "DefaultMaxVelocity", 0, 1)]
 
@@ -151,10 +148,10 @@ def to_and_from_reef_helper(
 
     if len(first_variable) == 1:
         reef_var = pose_variables[first_variable]
+        events = []
     else:
         reef_var = pose_variables[second_variable]
-
-    print(reef_var)
+        events = ['{"name":"Marker", "from":{"target":1, "targetTimestamp":1.16091, "offset":{"exp":"0 s", "val":0}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]']
 
     backup_x = reef_var["x"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.cos(
         reef_var["heading"]
