@@ -15,7 +15,7 @@
  "params":{
   "waypoints":[
     {"x":{"exp":"StartingPosLeft.x", "val":7.1993252}, "y":{"exp":"StartingPosLeft.y", "val":6.168517}, "heading":{"exp":"StartingPosLeft.heading", "val":3.141592653589793}, "intervals":30, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"H.x - AlgaeBackupDistance * cos(H.heading)", "val":6.0565283999999995}, "y":{"exp":"H.y - AlgaeBackupDistance * sin(H.heading)", "val":4.190238}, "heading":{"exp":"H.heading", "val":3.141592653589793}, "intervals":11, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"H.x - CoralBackupDistance * cos(H.heading)", "val":6.0565283999999995}, "y":{"exp":"H.y - CoralBackupDistance * sin(H.heading)", "val":4.190238}, "heading":{"exp":"H.heading", "val":3.141592653589793}, "intervals":11, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"H.x", "val":5.751728399999999}, "y":{"exp":"H.y", "val":4.190238}, "heading":{"exp":"H.heading", "val":3.141592653589793}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},

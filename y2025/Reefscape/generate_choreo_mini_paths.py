@@ -74,10 +74,10 @@ def starting_position_helper(
     end_waypoint = variable_to_waypoint(pose_variables, second_variable)
     reef_var = pose_variables[second_variable]
 
-    backup_x = reef_var["x"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.cos(
+    backup_x = reef_var["x"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.cos(
         reef_var["heading"]
     )
-    backup_y = reef_var["y"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.sin(
+    backup_y = reef_var["y"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.sin(
         reef_var["heading"]
     )
 
@@ -85,11 +85,11 @@ def starting_position_helper(
         json.dumps(
             {
                 "x": {
-                    "exp": f"{ reef_var['name'] }.x - AlgaeBackupDistance * cos({ reef_var['name'] }.heading)",
+                    "exp": f"{ reef_var['name'] }.x - CoralBackupDistance * cos({ reef_var['name'] }.heading)",
                     "val": backup_x,
                 },
                 "y": {
-                    "exp": f"{ reef_var['name'] }.y - AlgaeBackupDistance * sin({ reef_var['name'] }.heading)",
+                    "exp": f"{ reef_var['name'] }.y - CoralBackupDistance * sin({ reef_var['name'] }.heading)",
                     "val": backup_y,
                 },
                 "heading": {"exp": f"{ reef_var['name'] }.heading", "val": reef_var["heading"]},
@@ -153,21 +153,21 @@ def to_and_from_reef_helper(
         reef_var = pose_variables[second_variable]
         events = [create_event_marker(1, 0, "RaiseElevator")]
 
-    backup_x = reef_var["x"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.cos(
+    backup_x = reef_var["x"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.cos(
         reef_var["heading"]
     )
-    backup_y = reef_var["y"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.sin(
+    backup_y = reef_var["y"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.sin(
         reef_var["heading"]
     )
     intermediate_waypoints = [
         json.dumps(
             {
                 "x": {
-                    "exp": f"{ reef_var['name'] }.x - AlgaeBackupDistance * cos({ reef_var['name'] }.heading)",
+                    "exp": f"{ reef_var['name'] }.x - CoralBackupDistance * cos({ reef_var['name'] }.heading)",
                     "val": backup_x,
                 },
                 "y": {
-                    "exp": f"{ reef_var['name'] }.y - AlgaeBackupDistance * sin({ reef_var['name'] }.heading)",
+                    "exp": f"{ reef_var['name'] }.y - CoralBackupDistance * sin({ reef_var['name'] }.heading)",
                     "val": backup_y,
                 },
                 "heading": {"exp": f"{ reef_var['name'] }.heading", "val": reef_var["heading"]},
