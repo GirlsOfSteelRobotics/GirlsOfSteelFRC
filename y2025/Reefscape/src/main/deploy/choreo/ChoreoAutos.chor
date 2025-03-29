@@ -42,8 +42,8 @@
    "DefaultPreloadSpeed":{
     "dimension":"LinVel",
     "var":{
-     "exp":"8 ft / s",
-     "val":2.4384
+     "exp":"5 ft / s",
+     "val":1.524
     }
    },
    "ElevatorPrepTime":{

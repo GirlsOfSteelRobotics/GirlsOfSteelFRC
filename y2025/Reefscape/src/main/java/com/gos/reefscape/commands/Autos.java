@@ -52,12 +52,15 @@ public final class Autos {
             CoralPositions.D,
             CoralPositions.C));
 
+        createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, List.of(
+            AlgaePositions.EF
+        ));
+
 
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.G));
-
         createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
             AlgaePositions.EF
@@ -81,6 +84,11 @@ public final class Autos {
             CoralPositions.I,
             CoralPositions.L,
             CoralPositions.K
+        ));
+
+        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.J,
+            StartingPositions.LEFT, List.of(
+            AlgaePositions.IJ
         ));
     }
 

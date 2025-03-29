@@ -34,7 +34,7 @@ public class AutoModeCommandHelpers {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(followChoreoPath(coralPosition + "ToHumanPlayer" + hpSide.variableName())
             .alongWith(m_combinedCommands.goHome()));
-        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation().withTimeout(6));
+        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation().withTimeout(1.5));
         return group;
     }
 

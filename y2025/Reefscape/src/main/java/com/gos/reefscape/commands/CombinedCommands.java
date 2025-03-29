@@ -4,6 +4,7 @@ import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.enums.PIESetpoint;
+import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.CoralSubsystem;
 import com.gos.reefscape.subsystems.ElevatorSubsystem;
 import com.gos.reefscape.subsystems.PivotSubsystem;
@@ -22,13 +23,15 @@ public class CombinedCommands {
     private final CoralSubsystem m_coralSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
+    private final ChassisSubsystem m_chassisSubsystem;
     private final Consumer<KeepOutZoneEnum> m_keepoutConsumer;
 
-    public CombinedCommands(CoralSubsystem coral, ElevatorSubsystem elevator, PivotSubsystem pivot, Consumer<KeepOutZoneEnum> consumer) {
+    public CombinedCommands(CoralSubsystem coral, ElevatorSubsystem elevator, PivotSubsystem pivot, Consumer<KeepOutZoneEnum> consumer, ChassisSubsystem chassis) {
         m_coralSubsystem = coral;
         m_elevatorSubsystem = elevator;
         m_pivotSubsystem = pivot;
         m_keepoutConsumer = consumer;
+        m_chassisSubsystem = chassis;
     }
 
     public Command startLoweringElevatorForAWhile() {
@@ -49,7 +52,7 @@ public class CombinedCommands {
         if (combo == PIECoral.L4) {
             return autoPieCommand(PIECoral.L4.m_setpoint)
                 .andThen(m_coralSubsystem.createScoreCoralCommand()
-                    .withTimeout(.25))
+                    .withTimeout(.1))
                 .andThen(autoPieCommand(POST_L4_HEIGHT)
                     .raceWith(m_coralSubsystem.createScoreCoralCommand()));
         }
@@ -169,5 +172,10 @@ public class CombinedCommands {
         debugTab.add(moveElevatorAndPivotToTunablePosition().withName("elevator and pivot to tunable position"));
         debugTab.add(elevatorPivotToCoast().withName("pivot & elevator to coast"));
 
+    }
+
+    public Command createShimmyAndIntakeCommand() {
+        return m_chassisSubsystem.createShakeChassisCommand()
+            .alongWith(m_coralSubsystem.createIntakeUntilCoralCommand());
     }
 }
