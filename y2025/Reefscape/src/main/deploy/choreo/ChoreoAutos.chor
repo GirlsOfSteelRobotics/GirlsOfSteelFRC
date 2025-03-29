@@ -46,6 +46,13 @@
      "val":2.4384
     }
    },
+   "ElevatorPrepTime":{
+    "dimension":"Time",
+    "var":{
+     "exp":"-0.1 s",
+     "val":-0.1
+    }
+   },
    "FieldWidth":{
     "dimension":"Length",
     "var":{
