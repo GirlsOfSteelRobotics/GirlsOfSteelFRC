@@ -1,7 +1,6 @@
 package com.gos.reefscape.auto.modes;
 
 import com.gos.reefscape.commands.AutoModeCommandHelpers;
-import com.gos.reefscape.commands.CombinedCommands;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
 import com.gos.reefscape.enums.PIECoral;
@@ -10,9 +9,9 @@ import com.gos.reefscape.enums.StartingPositions;
 import java.util.List;
 
 public class MultiIceCreamProcessor extends GosAuto {
-    public MultiIceCreamProcessor(AutoModeCommandHelpers autoHelper, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
+    public MultiIceCreamProcessor(AutoModeCommandHelpers autoHelper, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
         super(start, List.of(coral), List.of(algaePositions));
-        StringBuilder autoName = new StringBuilder();
+        StringBuilder autoName = new StringBuilder(30);
         autoName.append(start.toString()).append(".processor.icecream.").append(coral).append(combo);
 
         // Score the preload

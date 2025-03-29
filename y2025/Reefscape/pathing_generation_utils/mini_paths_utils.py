@@ -85,7 +85,17 @@ def create_stop_point_constraint(index):
 
 def create_event_marker(index, offset, named_command, variable_name=None):
     variable_name = variable_name or f"{offset} s"
-    return '{"name":"Marker", "from":{"target":' + str(index) + ', "targetTimestamp":null, "offset":{"exp":"' + variable_name + '", "val":' + str(offset) + '}}, "event":{"type":"named", "data":{"name":"' + str(named_command) + '"}}}'
+    return (
+        '{"name":"Marker", "from":{"target":'
+        + str(index)
+        + ', "targetTimestamp":null, "offset":{"exp":"'
+        + variable_name
+        + '", "val":'
+        + str(offset)
+        + '}}, "event":{"type":"named", "data":{"name":"'
+        + str(named_command)
+        + '"}}}'
+    )
 
 
 def create_path_between_variables(
@@ -129,6 +139,8 @@ def create_path_between_waypoints(choreo_dir, filename, waypoints, constraints, 
         print(constraints)
         print(events)
 
-    path_to_write.write_text(template.render(constraints=constraints, waypoints=waypoints, events=events))
+    path_to_write.write_text(
+        template.render(constraints=constraints, waypoints=waypoints, events=events)
+    )
 
     return filename

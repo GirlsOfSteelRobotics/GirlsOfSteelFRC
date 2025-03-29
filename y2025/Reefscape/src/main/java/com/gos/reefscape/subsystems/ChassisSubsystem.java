@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import choreo.Choreo;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
