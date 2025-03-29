@@ -99,20 +99,32 @@ def algae_backup_helper(
         reef_variable_name = second_variable
     reef_var = pose_variables[reef_variable_name]
 
-    backup_x = reef_var["x"] - distance_variables['AlgaeBackupDistance']["value"]["val"] * math.cos(reef_var["heading"])
-    backup_y = reef_var["y"] - distance_variables['AlgaeBackupDistance']["value"]["val"] * math.sin(reef_var["heading"])
-    intermediate_waypoints = [json.dumps(
-        {
-            "x": {"exp": f"{ reef_var['name'] }.x - AlgaeBackupDistance * cos({ reef_var['name'] }.heading)", "val": backup_x},
-            "y": {"exp": f"{ reef_var['name'] }.y - AlgaeBackupDistance * sin({ reef_var['name'] }.heading)", "val": backup_y},
-            "heading": {"exp": f"{ reef_var['name'] }.heading", "val": reef_var["heading"]},
-            "intervals": 40,
-            "split": False,
-            "fixTranslation": True,
-            "fixHeading": True,
-            "overrideIntervals": False,
-        }
-    )]
+    backup_x = reef_var["x"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.cos(
+        reef_var["heading"]
+    )
+    backup_y = reef_var["y"] - distance_variables["AlgaeBackupDistance"]["value"]["val"] * math.sin(
+        reef_var["heading"]
+    )
+    intermediate_waypoints = [
+        json.dumps(
+            {
+                "x": {
+                    "exp": f"{ reef_var['name'] }.x - AlgaeBackupDistance * cos({ reef_var['name'] }.heading)",
+                    "val": backup_x,
+                },
+                "y": {
+                    "exp": f"{ reef_var['name'] }.y - AlgaeBackupDistance * sin({ reef_var['name'] }.heading)",
+                    "val": backup_y,
+                },
+                "heading": {"exp": f"{ reef_var['name'] }.heading", "val": reef_var["heading"]},
+                "intervals": 40,
+                "split": False,
+                "fixTranslation": True,
+                "fixHeading": True,
+                "overrideIntervals": False,
+            }
+        )
+    ]
 
     waypoints = [start_waypoint] + intermediate_waypoints + [end_waypoint]
     return create_path_between_waypoints(choreo_dir, filename, waypoints, constraints)
@@ -139,26 +151,40 @@ def coral_to_algae_helper(
         reef_variable_name = second_variable
     reef_var = pose_variables[reef_variable_name]
 
-    backup_x = reef_var["x"] - distance_variables['CoralToAlgaeBackup']["value"]["val"] * math.cos(reef_var["heading"])
-    backup_y = reef_var["y"] - distance_variables['CoralToAlgaeBackup']["value"]["val"] * math.sin(reef_var["heading"])
-    intermediate_waypoints = [json.dumps(
-        {
-            "x": {"exp": f"{ reef_var['name'] }.x - CoralToAlgaeBackup * cos({ reef_var['name'] }.heading)", "val": backup_x},
-            "y": {"exp": f"{ reef_var['name'] }.y - CoralToAlgaeBackup * sin({ reef_var['name'] }.heading)", "val": backup_y},
-            "heading": {"exp": "0 deg", "val": 0},
-            "intervals": 40,
-            "split": True,
-            "fixTranslation": True,
-            "fixHeading": False,
-            "overrideIntervals": False,
-        }
-    )]
+    backup_x = reef_var["x"] - distance_variables["CoralToAlgaeBackup"]["value"]["val"] * math.cos(
+        reef_var["heading"]
+    )
+    backup_y = reef_var["y"] - distance_variables["CoralToAlgaeBackup"]["value"]["val"] * math.sin(
+        reef_var["heading"]
+    )
+    intermediate_waypoints = [
+        json.dumps(
+            {
+                "x": {
+                    "exp": f"{ reef_var['name'] }.x - CoralToAlgaeBackup * cos({ reef_var['name'] }.heading)",
+                    "val": backup_x,
+                },
+                "y": {
+                    "exp": f"{ reef_var['name'] }.y - CoralToAlgaeBackup * sin({ reef_var['name'] }.heading)",
+                    "val": backup_y,
+                },
+                "heading": {"exp": "0 deg", "val": 0},
+                "intervals": 40,
+                "split": True,
+                "fixTranslation": True,
+                "fixHeading": False,
+                "overrideIntervals": False,
+            }
+        )
+    ]
 
     waypoints = [start_waypoint] + intermediate_waypoints + [end_waypoint]
     return create_path_between_waypoints(choreo_dir, filename, waypoints, constraints)
 
 
-def generate_algae_to_processor(choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables):
+def generate_algae_to_processor(
+    choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+):
     constraints = [
         velocity_variable_to_constraint(vel_variables, "DefaultMaxVelocity", 0, 2),
     ]
@@ -166,8 +192,26 @@ def generate_algae_to_processor(choreo_dir, pathplanner_dir, pose_variables, vel
     algae_to_processor = []
     processor_to_algae = []
     for algae_position in ["AB", "CD", "EF", "GH", "EF", "IJ"]:
-        algae_to_processor.append(algae_backup_helper(choreo_dir, pose_variables, distance_variables, algae_position, "Processor", constraints))
-        processor_to_algae.append(algae_backup_helper(choreo_dir, pose_variables, distance_variables, "Processor", algae_position, constraints))
+        algae_to_processor.append(
+            algae_backup_helper(
+                choreo_dir,
+                pose_variables,
+                distance_variables,
+                algae_position,
+                "Processor",
+                constraints,
+            )
+        )
+        processor_to_algae.append(
+            algae_backup_helper(
+                choreo_dir,
+                pose_variables,
+                distance_variables,
+                "Processor",
+                algae_position,
+                constraints,
+            )
+        )
 
     write_pathplanner_auto(
         algae_to_processor, pathplanner_dir / "AlgaeToProcessor.auto", "Mini Paths"
@@ -179,7 +223,9 @@ def generate_algae_to_processor(choreo_dir, pathplanner_dir, pose_variables, vel
     return algae_to_processor + processor_to_algae
 
 
-def generate_algae_to_net(choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables):
+def generate_algae_to_net(
+    choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+):
     constraints = [
         velocity_variable_to_constraint(vel_variables, "DefaultMaxVelocity", 0, 2),
     ]
@@ -187,8 +233,26 @@ def generate_algae_to_net(choreo_dir, pathplanner_dir, pose_variables, vel_varia
     algae_to_net = []
     net_to_algae = []
     for algae_position in ["GH", "EF", "IJ"]:
-        algae_to_net.append(algae_backup_helper(choreo_dir, pose_variables, distance_variables, algae_position, "BlueNet", constraints))
-        net_to_algae.append(algae_backup_helper(choreo_dir, pose_variables, distance_variables, "BlueNet", algae_position, constraints))
+        algae_to_net.append(
+            algae_backup_helper(
+                choreo_dir,
+                pose_variables,
+                distance_variables,
+                algae_position,
+                "BlueNet",
+                constraints,
+            )
+        )
+        net_to_algae.append(
+            algae_backup_helper(
+                choreo_dir,
+                pose_variables,
+                distance_variables,
+                "BlueNet",
+                algae_position,
+                constraints,
+            )
+        )
 
     write_pathplanner_auto(net_to_algae, pathplanner_dir / "NetToAlgae.auto", "Mini Paths")
     write_pathplanner_auto(algae_to_net, pathplanner_dir / "AlgaeToNet.auto", "Mini Paths")
@@ -196,7 +260,9 @@ def generate_algae_to_net(choreo_dir, pathplanner_dir, pose_variables, vel_varia
     return algae_to_net + net_to_algae
 
 
-def generate_reef_to_algae(choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables):
+def generate_reef_to_algae(
+    choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+):
     constraints = [
         velocity_variable_to_constraint(vel_variables, "DefaultCoralToAlgaeVelocity", 0, 2),
         create_stop_point_constraint(1),
@@ -204,8 +270,16 @@ def generate_reef_to_algae(choreo_dir, pathplanner_dir, pose_variables, vel_vari
 
     paths = []
     for algae_pos in ["EF", "GH", "IJ"]:
-        paths.append(coral_to_algae_helper(choreo_dir, pose_variables, distance_variables, algae_pos[0], algae_pos, constraints))
-        paths.append(coral_to_algae_helper(choreo_dir, pose_variables, distance_variables, algae_pos[1], algae_pos, constraints))
+        paths.append(
+            coral_to_algae_helper(
+                choreo_dir, pose_variables, distance_variables, algae_pos[0], algae_pos, constraints
+            )
+        )
+        paths.append(
+            coral_to_algae_helper(
+                choreo_dir, pose_variables, distance_variables, algae_pos[1], algae_pos, constraints
+            )
+        )
 
     write_pathplanner_auto(paths, pathplanner_dir / "CoralToAlgae.auto", "Mini Paths")
     return paths
@@ -218,11 +292,27 @@ def generate_choreo_mini_paths(choreo_file, traj_output_dir, pathplanner_dir, ru
 
     all_paths = []
 
-    all_paths.extend(generate_from_starting_positions(traj_output_dir, pathplanner_dir, pose_variables, vel_variables))
+    all_paths.extend(
+        generate_from_starting_positions(
+            traj_output_dir, pathplanner_dir, pose_variables, vel_variables
+        )
+    )
     all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables))
-    all_paths.extend(generate_algae_to_processor(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
-    all_paths.extend(generate_algae_to_net(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
-    all_paths.extend(generate_reef_to_algae(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
+    all_paths.extend(
+        generate_algae_to_processor(
+            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+        )
+    )
+    all_paths.extend(
+        generate_algae_to_net(
+            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+        )
+    )
+    all_paths.extend(
+        generate_reef_to_algae(
+            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+        )
+    )
 
     if run_cli:
         run_choreo_cli(all_paths)
