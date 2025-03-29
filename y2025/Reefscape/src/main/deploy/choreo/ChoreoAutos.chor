@@ -14,8 +14,8 @@
    "CoralBackupDistance":{
     "dimension":"Length",
     "var":{
-     "exp":"1 ft",
-     "val":0.3048
+     "exp":"3 ft",
+     "val":0.9144
     }
    },
    "CoralToAlgaeBackup":{

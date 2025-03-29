@@ -5,7 +5,7 @@ public enum PIEAlgae {
     FETCH_ALGAE_3(0.8, -167),
     SCORE_INTO_NET(1.56, -68),
     SCORE_INTO_PROCESSOR(0.13, -210),
-    ALGAE_LOLLIPOP(0.5, -150);//change and test
+    ALGAE_LOLLIPOP(0.25, -220);//change and test
 
     public PIESetpoint m_setpoint;
 
