@@ -39,18 +39,6 @@
           "data": {
             "pathName": "HumanPlayerRightToF"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HumanPlayerRightToG"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HumanPlayerRightToH"
-          }
         }
       ]
     }

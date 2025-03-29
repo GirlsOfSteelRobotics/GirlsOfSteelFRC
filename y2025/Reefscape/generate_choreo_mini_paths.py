@@ -22,7 +22,7 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables, vel_variabl
 
     reef_to_human_player_left = []
     human_player_left_to_reef = []
-    for reef_position in ["A", "B", "L", "K", "J", "I", "G", "H"]:
+    for reef_position in ["A", "B", "L", "K", "J", "I"]:
         reef_to_human_player_left.append(
             to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, reef_position, "HumanPlayerLeft", events=events)
         )
@@ -38,7 +38,7 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables, vel_variabl
 
     reef_to_human_player_right = []
     human_player_right_to_reef = []
-    for reef_position in ["A", "B", "C", "D", "E", "F", "G", "H"]:
+    for reef_position in ["A", "B", "C", "D", "E", "F"]:
         reef_to_human_player_right.append(
             to_and_from_reef_helper(choreo_dir, pose_variables, vel_variables, distance_variables, reef_position, "HumanPlayerRight", events=events)
         )
