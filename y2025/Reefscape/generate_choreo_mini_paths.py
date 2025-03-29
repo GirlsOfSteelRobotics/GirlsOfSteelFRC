@@ -66,7 +66,7 @@ def starting_position_helper(
         first_variable,
         second_variable):
     constraints = [velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 2)]
-    events = [create_event_marker(1, -0.25, "RaiseElevator")]
+    events = [create_event_marker(1, 0, "RaiseElevator")]
     filename = f"{first_variable}To{second_variable}"
 
 
