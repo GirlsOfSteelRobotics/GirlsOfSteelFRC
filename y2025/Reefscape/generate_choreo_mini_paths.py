@@ -56,21 +56,22 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables):
 
 def generate_from_starting_positions(choreo_dir, pathplanner_dir, pose_variables, vel_variables):
     constraints = [velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 1)]
+    events = ['{"name":"Marker", "from":{"target":1, "targetTimestamp":1.16091, "offset":{"exp":"-0.25 s", "val":-0.25}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]']
 
     start_to_reef = []
     for reef_position in ["D", "E", "F", "G"]:
         start_to_reef.append(
-            create_path(choreo_dir, pose_variables, "StartingPosRight", reef_position, constraints)
+            create_path(choreo_dir, pose_variables, "StartingPosRight", reef_position, constraints, events)
         )
 
     for reef_position in ["H", "I", "J", "K"]:
         start_to_reef.append(
-            create_path(choreo_dir, pose_variables, "StartingPosLeft", reef_position, constraints)
+            create_path(choreo_dir, pose_variables, "StartingPosLeft", reef_position, constraints, events)
         )
 
     for reef_position in ["H", "G"]:
         start_to_reef.append(
-            create_path(choreo_dir, pose_variables, "StartingPosCenter", reef_position, constraints)
+            create_path(choreo_dir, pose_variables, "StartingPosCenter", reef_position, constraints, events)
         )
 
     write_pathplanner_auto(start_to_reef, pathplanner_dir / "StartToReef.auto", "Mini Paths")
@@ -292,27 +293,27 @@ def generate_choreo_mini_paths(choreo_file, traj_output_dir, pathplanner_dir, ru
 
     all_paths = []
 
+    all_paths.extend(
+        generate_from_starting_positions(
+            traj_output_dir, pathplanner_dir, pose_variables, vel_variables
+        )
+    )
+    # all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables))
     # all_paths.extend(
-    #     generate_from_starting_positions(
-    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables
+    #     generate_algae_to_processor(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
     #     )
     # )
-    all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables))
-    all_paths.extend(
-        generate_algae_to_processor(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
-    all_paths.extend(
-        generate_algae_to_net(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
-    all_paths.extend(
-        generate_reef_to_algae(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
+    # all_paths.extend(
+    #     generate_algae_to_net(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
+    # all_paths.extend(
+    #     generate_reef_to_algae(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
 
     if run_cli:
         run_choreo_cli(all_paths)
