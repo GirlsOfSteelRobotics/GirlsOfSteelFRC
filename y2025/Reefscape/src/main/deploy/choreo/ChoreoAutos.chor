@@ -4,6 +4,20 @@
  "type":"Swerve",
  "variables":{
   "expressions":{
+   "AlgaeBackupDistance":{
+    "dimension":"Length",
+    "var":{
+     "exp":"1 ft",
+     "val":0.3048
+    }
+   },
+   "CoralToAlgaeBackup":{
+    "dimension":"Length",
+    "var":{
+     "exp":"20 in",
+     "val":0.508
+    }
+   },
    "DefaultCoralToAlgaeVelocity":{
     "dimension":"LinVel",
     "var":{
@@ -14,15 +28,15 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"7 ft / s",
-     "val":2.1336
+     "exp":"8 ft / s",
+     "val":2.4384
     }
    },
    "DefaultPreloadSpeed":{
     "dimension":"LinVel",
     "var":{
-     "exp":"5 ft / s",
-     "val":1.524
+     "exp":"8 ft / s",
+     "val":2.4384
     }
    },
    "FieldWidth":{
