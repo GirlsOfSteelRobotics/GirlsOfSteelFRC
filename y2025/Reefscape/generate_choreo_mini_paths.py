@@ -65,8 +65,11 @@ def starting_position_helper(
         distance_variables,
         first_variable,
         second_variable):
-    constraints = [velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 2)]
-    events = [create_event_marker(1, 0, "RaiseElevator")]
+    constraints = [
+        velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 2),
+        create_keep_in_lane_constraint(1, 2)
+    ]
+    events = [create_event_marker(1, -0.5, "RaiseElevator", variable_name="ElevatorPrepTime")]
     filename = f"{first_variable}To{second_variable}"
 
 
@@ -139,7 +142,7 @@ def to_and_from_reef_helper(
         first_variable,
         second_variable):
 
-    constraints = [velocity_variable_to_constraint(vel_variables, "DefaultMaxVelocity", 0, 1)]
+    base_constraints = [velocity_variable_to_constraint(vel_variables, "DefaultMaxVelocity", 0, 1)]
 
     filename = f"{first_variable}To{second_variable}"
 
@@ -148,9 +151,11 @@ def to_and_from_reef_helper(
 
     if len(first_variable) == 1:
         reef_var = pose_variables[first_variable]
+        constraints = base_constraints
         events = []
     else:
         reef_var = pose_variables[second_variable]
+        constraints = base_constraints + [create_keep_in_lane_constraint(1, 2)]
         events = [create_event_marker(1, 0, "RaiseElevator")]
 
     backup_x = reef_var["x"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.cos(
@@ -399,27 +404,27 @@ def generate_choreo_mini_paths(choreo_file, traj_output_dir, pathplanner_dir, ru
 
     all_paths = []
 
-    all_paths.extend(
-        generate_from_starting_positions(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
+    # all_paths.extend(
+    #     generate_from_starting_positions(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
     all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
-    all_paths.extend(
-        generate_algae_to_processor(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
-    all_paths.extend(
-        generate_algae_to_net(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
-    all_paths.extend(
-        generate_reef_to_algae(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
+    # all_paths.extend(
+    #     generate_algae_to_processor(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
+    # all_paths.extend(
+    #     generate_algae_to_net(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
+    # all_paths.extend(
+    #     generate_reef_to_algae(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
 
     if run_cli:
         run_choreo_cli(all_paths)

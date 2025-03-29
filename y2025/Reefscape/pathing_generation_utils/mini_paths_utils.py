@@ -83,9 +83,9 @@ def create_stop_point_constraint(index):
     )
 
 
-def create_event_marker(index, offset, named_command):
-    # return "Hello"
-    return '{"name":"Marker", "from":{"target":' + str(index) + ', "targetTimestamp":null, "offset":{"exp":"' + str(offset) + ' s", "val":' + str(offset) + '}}, "event":{"type":"named", "data":{"name":"' + str(named_command) + '"}}}'
+def create_event_marker(index, offset, named_command, variable_name=None):
+    variable_name = variable_name or f"{offset} s"
+    return '{"name":"Marker", "from":{"target":' + str(index) + ', "targetTimestamp":null, "offset":{"exp":"' + variable_name + '", "val":' + str(offset) + '}}, "event":{"type":"named", "data":{"name":"' + str(named_command) + '"}}}'
 
 
 def create_path_between_variables(
