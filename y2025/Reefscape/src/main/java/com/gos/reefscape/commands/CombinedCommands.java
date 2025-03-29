@@ -84,7 +84,7 @@ public class CombinedCommands {
 
     public Command autoScoreAlgaeInProcessorCommand() {
         return autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)
-            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(1));
+            .andThen(m_coralSubsystem.createMoveAlgaeOutCommand().withTimeout(0.5));
     }
 
     public Command prepAlgaeInProcessorCommand() {

@@ -9,6 +9,7 @@ import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
@@ -66,7 +67,9 @@ public class AutoModeCommandHelpers {
 
         group.addCommands(m_combinedCommands.autoFetchAlgae(algaePosition.m_algaeHeight));
         group.addCommands((followChoreoPath(algaePosition + "ToProcessor"))
-            .deadlineFor(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint))
+            .deadlineFor(new WaitCommand(1)
+                .andThen(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)))
+
             .deadlineFor(m_combinedCommands.holdAlgaeWhileDriving()));
         group.addCommands(m_combinedCommands.autoScoreAlgaeInProcessorCommand());
 
@@ -94,7 +97,7 @@ public class AutoModeCommandHelpers {
 
     public Command driveProcessorToIceCream(CoralPositions coral, AlgaePositions algaePositions) {
         return followChoreoPath("ProcessorToRightIceCream")
-            .deadlineFor(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP));
+            .deadlineFor(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP)).andThen(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP).withTimeout(1));
     }
 
     public Command driveIceCreamToProcessor() {

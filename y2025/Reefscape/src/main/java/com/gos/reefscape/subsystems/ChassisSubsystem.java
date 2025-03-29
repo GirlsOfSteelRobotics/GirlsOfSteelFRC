@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import choreo.Choreo;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -39,6 +40,7 @@ import com.gos.reefscape.MaybeFlippedPose2d;
 import com.gos.reefscape.ReefDetection;
 import com.gos.reefscape.RobotExtrinsic;
 import com.gos.reefscape.enums.AlgaePositions;
+import com.gos.reefscape.generated.ChoreoPoses;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
@@ -545,6 +547,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             AlgaePositions closestAlgae = findClosestAlgae();
             return createDriveToMaybeFlippedPose(closestAlgae.m_pose);
         });
+    }
+
+    public Command createDriveToNet() {
+        return defer(() -> createDriveToMaybeFlippedPose(ChoreoPoses.BLUE_NET));
     }
 
     public Command createDriveToRightCoral() {

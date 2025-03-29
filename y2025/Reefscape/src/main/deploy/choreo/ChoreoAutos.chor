@@ -7,8 +7,8 @@
    "AlgaeBackupDistance":{
     "dimension":"Length",
     "var":{
-     "exp":"1 ft",
-     "val":0.3048
+     "exp":"3 ft",
+     "val":0.9144
     }
    },
    "CoralBackupDistance":{
@@ -35,8 +35,8 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"8 ft / s",
-     "val":2.4384
+     "exp":"7.5 ft / s",
+     "val":2.286
     }
    },
    "DefaultPreloadSpeed":{
@@ -44,6 +44,13 @@
     "var":{
      "exp":"5 ft / s",
      "val":1.524
+    }
+   },
+   "DrivingWithAlgaeVelocity":{
+    "dimension":"LinVel",
+    "var":{
+     "exp":"4 ft / s",
+     "val":1.2192
     }
    },
    "ElevatorPrepTime":{
@@ -400,12 +407,12 @@
    },
    "RightIceCream":{
     "x":{
-     "exp":"1.769077181816101 m",
-     "val":1.769077181816101
+     "exp":"1.769077181816101 m - 0.5 ft",
+     "val":1.616677181816101
     },
     "y":{
-     "exp":"1.8801802396774292 m",
-     "val":1.8801802396774292
+     "exp":"1.8801802396774292 m + 0.5 ft",
+     "val":2.0325802396774293
     },
     "heading":{
      "exp":"2.5161071356029656 rad",

@@ -404,12 +404,12 @@ def generate_choreo_mini_paths(choreo_file, traj_output_dir, pathplanner_dir, ru
 
     all_paths = []
 
-    # all_paths.extend(
-    #     generate_from_starting_positions(
-    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-    #     )
-    # )
-    all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
+    all_paths.extend(
+        generate_from_starting_positions(
+            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+        )
+    )
+    # all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
     # all_paths.extend(
     #     generate_algae_to_processor(
     #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
