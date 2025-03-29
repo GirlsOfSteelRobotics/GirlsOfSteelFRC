@@ -49,8 +49,8 @@
    "ElevatorPrepTime":{
     "dimension":"Time",
     "var":{
-     "exp":"-0.1 s",
-     "val":-0.1
+     "exp":"-0.5 s",
+     "val":-0.5
     }
    },
    "FieldWidth":{

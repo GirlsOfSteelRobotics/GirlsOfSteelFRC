@@ -48,9 +48,9 @@ public final class Autos {
             CoralPositions.F));
 
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
-            CoralPositions.F,
+            CoralPositions.E,
             CoralPositions.D,
-            CoralPositions.B));
+            CoralPositions.C));
 
 
         ///////////////////////////////
@@ -78,9 +78,9 @@ public final class Autos {
             CoralPositions.J
         ));
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
-            CoralPositions.J,
+            CoralPositions.I,
             CoralPositions.L,
-            CoralPositions.B
+            CoralPositions.K
         ));
     }
 
