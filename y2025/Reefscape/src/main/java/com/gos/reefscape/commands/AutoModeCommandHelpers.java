@@ -9,6 +9,7 @@ import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
@@ -34,7 +35,7 @@ public class AutoModeCommandHelpers {
         SequentialCommandGroup group = new SequentialCommandGroup();
         group.addCommands(followChoreoPath(coralPosition + "ToHumanPlayer" + hpSide.variableName())
             .alongWith(m_combinedCommands.goHome()));
-        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation().withTimeout(6));
+        group.addCommands(m_combinedCommands.autoFetchPieceFromHPStation().withTimeout(1.5));
         return group;
     }
 
@@ -66,7 +67,9 @@ public class AutoModeCommandHelpers {
 
         group.addCommands(m_combinedCommands.autoFetchAlgae(algaePosition.m_algaeHeight));
         group.addCommands((followChoreoPath(algaePosition + "ToProcessor"))
-            .deadlineFor(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint))
+            .deadlineFor(new WaitCommand(1)
+                .andThen(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint)))
+
             .deadlineFor(m_combinedCommands.holdAlgaeWhileDriving()));
         group.addCommands(m_combinedCommands.autoScoreAlgaeInProcessorCommand());
 
@@ -90,5 +93,20 @@ public class AutoModeCommandHelpers {
     public Command driveFromNetToAlgae(AlgaePositions algae) {
         return followChoreoPath("BlueNetTo" + algae)
             .deadlineFor(m_combinedCommands.fetchAlgae(algae.m_algaeHeight));
+    }
+
+    public Command driveProcessorToIceCream(CoralPositions coral, AlgaePositions algaePositions) {
+        return followChoreoPath("ProcessorToRightIceCream")
+            .deadlineFor(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP)).andThen(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP).withTimeout(1));
+    }
+
+    public Command driveIceCreamToProcessor() {
+        SequentialCommandGroup group = new SequentialCommandGroup();
+        group.addCommands((followChoreoPath("RightIceCreamToProcessor"))
+            .deadlineFor(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint))
+            .deadlineFor(m_combinedCommands.holdAlgaeWhileDriving()));
+        group.addCommands(m_combinedCommands.autoScoreAlgaeInProcessorCommand());
+
+        return group;
     }
 }

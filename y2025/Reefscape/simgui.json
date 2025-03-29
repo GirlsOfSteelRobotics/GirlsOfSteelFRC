@@ -176,6 +176,7 @@
       "/SmartDashboard/Clear Sticky Faults": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/PhotonAlerts": "Alerts",
       "/SmartDashboard/SuperStructureMech": "Mechanism2d",
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d",
       "/SmartDashboard/drive to starting position": "Command"
@@ -201,7 +202,6 @@
           "style": "Line"
         },
         "bottom": 1638,
-        "builtin": "2025 Reefscape",
         "height": 8.051901817321777,
         "left": 534,
         "right": 3466,

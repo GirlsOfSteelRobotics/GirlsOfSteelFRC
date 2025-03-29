@@ -7,37 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AToHumanPlayerRight"
+            "pathName": "EToEF"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BToHumanPlayerRight"
+            "pathName": "FToEF"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "CToHumanPlayerRight"
+            "pathName": "GToGH"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "DToHumanPlayerRight"
+            "pathName": "HToGH"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "EToHumanPlayerRight"
+            "pathName": "IToIJ"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FToHumanPlayerRight"
+            "pathName": "JToIJ"
           }
         }
       ]

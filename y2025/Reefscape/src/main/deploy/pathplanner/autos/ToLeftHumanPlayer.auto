@@ -39,18 +39,6 @@
           "data": {
             "pathName": "IToHumanPlayerLeft"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GToHumanPlayerLeft"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HToHumanPlayerLeft"
-          }
         }
       ]
     }

@@ -83,8 +83,23 @@ def create_stop_point_constraint(index):
     )
 
 
+def create_event_marker(index, offset, named_command, variable_name=None):
+    variable_name = variable_name or f"{offset} s"
+    return (
+        '{"name":"Marker", "from":{"target":'
+        + str(index)
+        + ', "targetTimestamp":null, "offset":{"exp":"'
+        + variable_name
+        + '", "val":'
+        + str(offset)
+        + '}}, "event":{"type":"named", "data":{"name":"'
+        + str(named_command)
+        + '"}}}'
+    )
+
+
 def create_path_between_variables(
-    choreo_dir, variables, first_variable, second_variable, constraints=None
+    choreo_dir, variables, first_variable, second_variable, constraints=None, events=None
 ):
     filename = f"{first_variable}To{second_variable}"
 
@@ -105,16 +120,27 @@ def create_path_between_variables(
     if constraints is None:
         constraints = []
 
-    return create_path_between_waypoints(choreo_dir, filename, waypoints, constraints)
+    return create_path_between_waypoints(choreo_dir, filename, waypoints, constraints, events)
 
 
-def create_path_between_waypoints(choreo_dir, filename, waypoints, constraints):
+def create_path_between_waypoints(choreo_dir, filename, waypoints, constraints, events=None):
     template_loader = jinja2.FileSystemLoader(TEMPLATE_DIR)
     template_env = jinja2.Environment(loader=template_loader)
     template = template_env.get_template("choreo_trajectory.jinja2")
 
     path_to_write = choreo_dir / f"{filename}.traj"
 
-    path_to_write.write_text(template.render(constraints=constraints, waypoints=waypoints))
+    events = events or []
+
+    if constraints and events:
+        print("Stuff")
+        print(type(constraints[0]))
+        print(type(events[0]))
+        print(constraints)
+        print(events)
+
+    path_to_write.write_text(
+        template.render(constraints=constraints, waypoints=waypoints, events=events)
+    )
 
     return filename

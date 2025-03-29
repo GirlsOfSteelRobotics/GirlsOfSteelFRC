@@ -29,6 +29,6 @@
   "samples":[],
   "splits":[]
  },
- "events":[]
+ "events": [{% for event in events%} {{ event }}{% if not loop.last %}, {%endif%} {% endfor %}]
 }
 

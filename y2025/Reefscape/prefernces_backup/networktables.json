@@ -74,7 +74,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.max_acceleration",
     "type": "double",
-    "value": 1440.0,
+    "value": 540.0,
     "properties": {
       "persistent": true
     }
@@ -114,7 +114,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Right.x(in)",
     "type": "double",
-    "value": 0.5,
+    "value": 10.5,
     "properties": {
       "persistent": true
     }
@@ -122,7 +122,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Right.y(in)",
     "type": "double",
-    "value": 0.0,
+    "value": -10.5,
     "properties": {
       "persistent": true
     }
@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Right.z(in)",
     "type": "double",
-    "value": 6.25,
+    "value": 9.0,
     "properties": {
       "persistent": true
     }
@@ -138,7 +138,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Right.yaw(deg)",
     "type": "double",
-    "value": 0.0,
+    "value": 5.0,
     "properties": {
       "persistent": true
     }
@@ -146,7 +146,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Right.pitch(deg)",
     "type": "double",
-    "value": -13.0,
+    "value": -14.0,
     "properties": {
       "persistent": true
     }
@@ -154,7 +154,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Right.roll(deg)",
     "type": "double",
-    "value": 0.0,
+    "value": -5.0,
     "properties": {
       "persistent": true
     }
@@ -170,7 +170,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/Left.y(in)",
     "type": "double",
-    "value": 11.5,
+    "value": 12.5,
     "properties": {
       "persistent": true
     }
@@ -203,6 +203,30 @@
     "name": "/Preferences/CameraExtrinsics/Left.roll(deg)",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Drivekp",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.DrivekS",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.DrivekV",
+    "type": "double",
+    "value": 0.124,
     "properties": {
       "persistent": true
     }

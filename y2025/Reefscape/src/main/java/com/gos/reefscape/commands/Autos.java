@@ -6,6 +6,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.GosAuto;
+import com.gos.reefscape.auto.modes.MultiIceCreamProcessor;
 import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
@@ -48,16 +49,21 @@ public final class Autos {
             CoralPositions.F));
 
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
-            CoralPositions.F,
+            CoralPositions.E,
             CoralPositions.D,
-            CoralPositions.B));
+            CoralPositions.C));
+
+        createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, List.of(
+            AlgaePositions.EF
+        ));
+
+        createMultiIceCreamProcessor(autoHelpers, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, AlgaePositions.EF);
 
 
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.G));
-
         createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
             AlgaePositions.EF
@@ -78,9 +84,14 @@ public final class Autos {
             CoralPositions.J
         ));
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
-            CoralPositions.J,
+            CoralPositions.I,
             CoralPositions.L,
-            CoralPositions.B
+            CoralPositions.K
+        ));
+
+        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.J,
+            StartingPositions.LEFT, List.of(
+            AlgaePositions.IJ
         ));
     }
 
@@ -92,6 +103,11 @@ public final class Autos {
     private void createMultiProcessorAuto(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
         GosAuto multiPieceAlgae = new MultiPieceProcessor(helpers, combinedCommands, height, coralPosition, start, algaelist);
         addAutoMode(multiPieceAlgae);
+    }
+
+    private void createMultiIceCreamProcessor(AutoModeCommandHelpers helpers, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
+        GosAuto iceCreamAuto = new MultiIceCreamProcessor(helpers, combo, coral, start, algaePositions);
+        addAutoMode(iceCreamAuto);
     }
 
     private void addAutoMode(GosAuto auto) {

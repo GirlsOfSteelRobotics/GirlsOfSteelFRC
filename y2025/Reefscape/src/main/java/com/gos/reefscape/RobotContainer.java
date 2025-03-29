@@ -93,11 +93,14 @@ public class RobotContainer {
         m_pivotSubsystem = new PivotSubsystem();
         m_operatorCoralCommand = new OperatorCoralCommand();
 
+
+
         m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_pivotSubsystem);
 
         Consumer<KeepOutZoneEnum> keepOutConsumer = this::handleKeepOutZoneState;
-        m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer);
+        m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer, m_chassisSubsystem);
 
+        // NamedCommands.registerCommand("RaiseElevator", m_combinedCommand.autoPieCommand(PIECoral.L4.m_setpoint));
         // Configure the trigger bindings
         configureBindings();
 
@@ -188,10 +191,10 @@ public class RobotContainer {
 
 
         // Buttons
-        // .a() is used for scoring game pieces above
         m_driverController.y().whileTrue(m_coralSubsystem.createReverseIntakeCommand());
         m_driverController.b().whileTrue(m_combinedCommand.goHome());
         m_driverController.x().whileTrue(m_combinedCommand.scoreAlgaeInNet());
+        m_driverController.a().whileTrue(m_combinedCommand.createShimmyAndIntakeCommand());
 
 
         fetchCoralTrigger.whileTrue(m_combinedCommand.fetchPieceFromHPStation()
@@ -227,13 +230,15 @@ public class RobotContainer {
 
         m_operatorController.rightBumper().whileTrue(m_combinedCommand.scoreAlgaeInNet());
 
-        m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
+        //m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
 
         //operator coral commands
         m_operatorController.povUp().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L4));
         m_operatorController.povDown().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L1));
         m_operatorController.povLeft().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L2));
         m_operatorController.povRight().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L3));
+        m_operatorController.b().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP));
+        m_operatorController.povDown().whileTrue(m_chassisSubsystem.createDriveToNet());
     }
 
 

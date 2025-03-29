@@ -5,7 +5,6 @@ import pathlib
 from .pathing_generation_utils.choreo_utils import run_choreo_cli
 from .pathing_generation_utils.pathplanner_utils import write_pathplanner_auto
 from .pathing_generation_utils.mini_paths_utils import (
-    create_path_between_variables,
     load_choreo_pose_variables,
     load_choreo_velocity_variables,
     load_choreo_distance_variables,
@@ -14,36 +13,71 @@ from .pathing_generation_utils.mini_paths_utils import (
     create_path_between_waypoints,
     create_keep_in_lane_constraint,
     create_stop_point_constraint,
+    create_event_marker,
 )
 
-create_path = create_path_between_variables
 
-
-def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables):
+def generate_reef_to_hp(
+    choreo_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+):
     reef_to_human_player_left = []
     human_player_left_to_reef = []
-    for reef_position in ["A", "B", "L", "K", "J", "I", "G", "H"]:
+    for reef_position in ["A", "B", "L", "K", "J", "I"]:
         reef_to_human_player_left.append(
-            create_path(choreo_dir, pose_variables, reef_position, "HumanPlayerLeft")
+            to_and_from_reef_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                distance_variables,
+                reef_position,
+                "HumanPlayerLeft",
+            )
         )
         human_player_left_to_reef.append(
-            create_path(choreo_dir, pose_variables, "HumanPlayerLeft", reef_position)
+            to_and_from_reef_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                distance_variables,
+                "HumanPlayerLeft",
+                reef_position,
+            )
         )
     write_pathplanner_auto(
         reef_to_human_player_left, pathplanner_dir / "ToLeftHumanPlayer.auto", "Mini Paths"
     )
+    write_pathplanner_auto(
+        human_player_left_to_reef, pathplanner_dir / "LeftHumanPlayerToReef.auto", "Mini Paths"
+    )
 
     reef_to_human_player_right = []
     human_player_right_to_reef = []
-    for reef_position in ["A", "B", "C", "D", "E", "F", "G", "H"]:
+    for reef_position in ["A", "B", "C", "D", "E", "F"]:
         reef_to_human_player_right.append(
-            create_path(choreo_dir, pose_variables, reef_position, "HumanPlayerRight")
+            to_and_from_reef_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                distance_variables,
+                reef_position,
+                "HumanPlayerRight",
+            )
         )
         human_player_right_to_reef.append(
-            create_path(choreo_dir, pose_variables, "HumanPlayerRight", reef_position)
+            to_and_from_reef_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                distance_variables,
+                "HumanPlayerRight",
+                reef_position,
+            )
         )
     write_pathplanner_auto(
         reef_to_human_player_right, pathplanner_dir / "ToRightHumanPlayer.auto", "Mini Paths"
+    )
+    write_pathplanner_auto(
+        human_player_right_to_reef, pathplanner_dir / "RightHumanPlayerToReef.auto", "Mini Paths"
     )
 
     return (
@@ -54,28 +88,146 @@ def generate_reef_to_hp(choreo_dir, pathplanner_dir, pose_variables):
     )
 
 
-def generate_from_starting_positions(choreo_dir, pathplanner_dir, pose_variables, vel_variables):
-    constraints = [velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 1)]
+def starting_position_helper(
+    choreo_dir, pose_variables, vel_variables, distance_variables, first_variable, second_variable
+):
+    constraints = [
+        velocity_variable_to_constraint(vel_variables, "DefaultPreloadSpeed", 0, 2),
+        create_keep_in_lane_constraint(1, 2),
+    ]
+    events = [create_event_marker(1, -0.5, "RaiseElevator", variable_name="ElevatorPrepTime")]
+    filename = f"{first_variable}To{second_variable}"
 
+    start_waypoint = variable_to_waypoint(pose_variables, first_variable)
+    end_waypoint = variable_to_waypoint(pose_variables, second_variable)
+    reef_var = pose_variables[second_variable]
+
+    backup_x = reef_var["x"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.cos(
+        reef_var["heading"]
+    )
+    backup_y = reef_var["y"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.sin(
+        reef_var["heading"]
+    )
+
+    intermediate_waypoints = [
+        json.dumps(
+            {
+                "x": {
+                    "exp": f"{ reef_var['name'] }.x - CoralBackupDistance * cos({ reef_var['name'] }.heading)",
+                    "val": backup_x,
+                },
+                "y": {
+                    "exp": f"{ reef_var['name'] }.y - CoralBackupDistance * sin({ reef_var['name'] }.heading)",
+                    "val": backup_y,
+                },
+                "heading": {"exp": f"{ reef_var['name'] }.heading", "val": reef_var["heading"]},
+                "intervals": 40,
+                "split": False,
+                "fixTranslation": True,
+                "fixHeading": True,
+                "overrideIntervals": False,
+            }
+        )
+    ]
+
+    waypoints = [start_waypoint] + intermediate_waypoints + [end_waypoint]
+    return create_path_between_waypoints(choreo_dir, filename, waypoints, constraints, events)
+
+
+def generate_from_starting_positions(
+    choreo_dir, pathplanner_dir, pose_variables, vel_variables, dist_variables
+):
     start_to_reef = []
     for reef_position in ["D", "E", "F", "G"]:
         start_to_reef.append(
-            create_path(choreo_dir, pose_variables, "StartingPosRight", reef_position, constraints)
+            starting_position_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                dist_variables,
+                "StartingPosRight",
+                reef_position,
+            )
         )
 
     for reef_position in ["H", "I", "J", "K"]:
         start_to_reef.append(
-            create_path(choreo_dir, pose_variables, "StartingPosLeft", reef_position, constraints)
+            starting_position_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                dist_variables,
+                "StartingPosLeft",
+                reef_position,
+            )
         )
 
     for reef_position in ["H", "G"]:
         start_to_reef.append(
-            create_path(choreo_dir, pose_variables, "StartingPosCenter", reef_position, constraints)
+            starting_position_helper(
+                choreo_dir,
+                pose_variables,
+                vel_variables,
+                dist_variables,
+                "StartingPosCenter",
+                reef_position,
+            )
         )
 
     write_pathplanner_auto(start_to_reef, pathplanner_dir / "StartToReef.auto", "Mini Paths")
 
     return start_to_reef
+
+
+def to_and_from_reef_helper(
+    choreo_dir, pose_variables, vel_variables, distance_variables, first_variable, second_variable
+):
+
+    base_constraints = [velocity_variable_to_constraint(vel_variables, "DefaultMaxVelocity", 0, 1)]
+
+    filename = f"{first_variable}To{second_variable}"
+
+    start_waypoint = variable_to_waypoint(pose_variables, first_variable)
+    end_waypoint = variable_to_waypoint(pose_variables, second_variable)
+
+    if len(first_variable) == 1:
+        reef_var = pose_variables[first_variable]
+        constraints = base_constraints
+        events = []
+    else:
+        reef_var = pose_variables[second_variable]
+        constraints = base_constraints + [create_keep_in_lane_constraint(1, 2)]
+        events = [create_event_marker(1, 0, "RaiseElevator")]
+
+    backup_x = reef_var["x"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.cos(
+        reef_var["heading"]
+    )
+    backup_y = reef_var["y"] - distance_variables["CoralBackupDistance"]["value"]["val"] * math.sin(
+        reef_var["heading"]
+    )
+    intermediate_waypoints = [
+        json.dumps(
+            {
+                "x": {
+                    "exp": f"{ reef_var['name'] }.x - CoralBackupDistance * cos({ reef_var['name'] }.heading)",
+                    "val": backup_x,
+                },
+                "y": {
+                    "exp": f"{ reef_var['name'] }.y - CoralBackupDistance * sin({ reef_var['name'] }.heading)",
+                    "val": backup_y,
+                },
+                "heading": {"exp": f"{ reef_var['name'] }.heading", "val": reef_var["heading"]},
+                "intervals": 40,
+                "split": False,
+                "fixTranslation": True,
+                "fixHeading": True,
+                "overrideIntervals": False,
+            }
+        )
+    ]
+
+    waypoints = [start_waypoint] + intermediate_waypoints + [end_waypoint]
+    return create_path_between_waypoints(choreo_dir, filename, waypoints, constraints, events)
 
 
 def algae_backup_helper(
@@ -294,25 +446,25 @@ def generate_choreo_mini_paths(choreo_file, traj_output_dir, pathplanner_dir, ru
 
     all_paths.extend(
         generate_from_starting_positions(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables
-        )
-    )
-    all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables))
-    all_paths.extend(
-        generate_algae_to_processor(
             traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
         )
     )
-    all_paths.extend(
-        generate_algae_to_net(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
-    all_paths.extend(
-        generate_reef_to_algae(
-            traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
-        )
-    )
+    # all_paths.extend(generate_reef_to_hp(traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables))
+    # all_paths.extend(
+    #     generate_algae_to_processor(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
+    # all_paths.extend(
+    #     generate_algae_to_net(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
+    # all_paths.extend(
+    #     generate_reef_to_algae(
+    #         traj_output_dir, pathplanner_dir, pose_variables, vel_variables, distance_variables
+    #     )
+    # )
 
     if run_cli:
         run_choreo_cli(all_paths)
