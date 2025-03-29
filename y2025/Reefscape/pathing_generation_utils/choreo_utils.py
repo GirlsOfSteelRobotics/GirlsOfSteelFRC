@@ -10,11 +10,16 @@ TEMPLATE_DIR = "y2025/Reefscape/pathing_generation_utils/templates"
 
 
 def run_choreo_cli(pathnames: Union[List, str]):
+    use_local_version = True
     cmd = []
-    cmd.append("bazel")
-    cmd.append("run")
-    cmd.append("@bzlmodrio-choreolib//libraries/tools/choreo-cli:choreo-cli")
-    cmd.append("--")
+    if use_local_version:
+        home = pathlib.Path.home()
+        cmd.append(home / r"Downloads/choreo-cli.exe")
+    else:
+        cmd.append("bazel")
+        cmd.append("run")
+        cmd.append("@bzlmodrio-choreolib//libraries/tools/choreo-cli:choreo-cli")
+        cmd.append("--")
     cmd.append("--chor")
     cmd.append("y2025/Reefscape/src/main/deploy/choreo/ChoreoAutos.chor")
     cmd.append("--generate")
