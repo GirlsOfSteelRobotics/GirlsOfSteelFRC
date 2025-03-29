@@ -102,7 +102,7 @@ public class RobotContainer {
         Consumer<KeepOutZoneEnum> keepOutConsumer = this::handleKeepOutZoneState;
         m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer, m_chassisSubsystem);
 
-//        NamedCommands.registerCommand("RaiseElevator", m_combinedCommand.autoPieCommand(PIECoral.L4.m_setpoint));
+        // NamedCommands.registerCommand("RaiseElevator", m_combinedCommand.autoPieCommand(PIECoral.L4.m_setpoint));
         // Configure the trigger bindings
         configureBindings();
 

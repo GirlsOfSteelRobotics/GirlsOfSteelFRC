@@ -91,4 +91,19 @@ public class AutoModeCommandHelpers {
         return followChoreoPath("BlueNetTo" + algae)
             .deadlineFor(m_combinedCommands.fetchAlgae(algae.m_algaeHeight));
     }
+
+    public Command driveProcessorToIceCream(CoralPositions coral, AlgaePositions algaePositions) {
+        return followChoreoPath("ProcessorToRightIceCream")
+            .deadlineFor(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP));
+    }
+
+    public Command driveIceCreamToProcessor() {
+        SequentialCommandGroup group = new SequentialCommandGroup();
+        group.addCommands((followChoreoPath("RightIceCreamToProcessor"))
+            .deadlineFor(m_combinedCommands.autoPieCommand(PIEAlgae.SCORE_INTO_PROCESSOR.m_setpoint))
+            .deadlineFor(m_combinedCommands.holdAlgaeWhileDriving()));
+        group.addCommands(m_combinedCommands.autoScoreAlgaeInProcessorCommand());
+
+        return group;
+    }
 }

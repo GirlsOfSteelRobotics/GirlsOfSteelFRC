@@ -104,5 +104,5 @@
   "splits":[0]
  },
  "events":[
-   {"name":"Marker", "from":{"target":1, "targetTimestamp":2.14385, "offset":{"exp":"ElevatorPrepTime", "val":-0.5}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]
+   {"name":"Marker", "from":{"target":1, "targetTimestamp":2.14385, "offset":{"exp":"ElevatorPrepTime", "val":-0.1}}, "event":{"type":"named", "data":{"name":"RaiseElevator"}}}]
 }

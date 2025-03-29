@@ -6,9 +6,11 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.GosAuto;
+import com.gos.reefscape.auto.modes.MultiIceCreamProcessor;
 import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
+import com.gos.reefscape.enums.PIEAlgae;
 import com.gos.reefscape.enums.PIECoral;
 import com.gos.reefscape.auto.modes.MultiPieceProcessor;
 import com.gos.reefscape.auto.modes.MultiPieceCoral;
@@ -18,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.List;
+import java.util.concurrent.Flow.Processor;
 
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class Autos {
@@ -55,6 +58,8 @@ public final class Autos {
         createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, List.of(
             AlgaePositions.EF
         ));
+
+        createMultiIceCreamProcessor(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, AlgaePositions.EF);
 
 
         ///////////////////////////////
@@ -100,6 +105,10 @@ public final class Autos {
     private void createMultiProcessorAuto(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, CoralPositions coralPosition, StartingPositions start, List<AlgaePositions> algaelist) {
         GosAuto multiPieceAlgae = new MultiPieceProcessor(helpers, combinedCommands, height, coralPosition, start, algaelist);
         addAutoMode(multiPieceAlgae);
+    }
+    private void createMultiIceCreamProcessor(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
+        GosAuto iceCreamAuto = new MultiIceCreamProcessor(helpers, combinedCommands, combo, coral, start, algaePositions);
+        addAutoMode(iceCreamAuto);
     }
 
     private void addAutoMode(GosAuto auto) {
