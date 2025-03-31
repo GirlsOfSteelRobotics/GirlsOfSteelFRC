@@ -4,28 +4,20 @@ import jinja2
 import pathlib
 import itertools
 from typing import List
-from .choreo_utils import (
-    max_velocity_constraint,
-    max_acceleration_constraint,
-    max_angular_velocity_constraint,
+
+from .choreo_utils import TEMPLATE_DIR
+
+from .choreo_constraints import (
+    create_max_angular_velocity_constraint_dps,
+    create_velocity_constraint_fps,
 )
-
-TEMPLATE_DIR = "y2025/Reefscape/pathing_generation_utils/templates"
-
-
-def format_waypoint(waypoint):
-    template_str = '{"x":{"exp":"{{ waypoint.x }} m", "val":{{ waypoint.x }}}, "y":{"exp":"{{ waypoint.y }} m", "val":{{ waypoint.y }}}, "heading":{"exp":"{{ waypoint.heading }} deg", "val":{{ waypoint.heading | to_radians }}}, "intervals":495, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}'
-
-    template_env = jinja2.Environment()
-    template_env.filters["to_radians"] = math.radians
-    return template_env.from_string(template_str).render(waypoint=waypoint)
 
 
 def generate_straight_paths(
     output_dir, accelerations: List[float], velocities: List[float], start_waypoint, stop_waypoint
 ) -> List[pathlib.Path]:
     all_paths = []
-    waypoints = [format_waypoint(waypoint) for waypoint in [start_waypoint, stop_waypoint]]
+    waypoints = [start_waypoint, stop_waypoint]
     print(waypoints)
 
     template_loader = jinja2.FileSystemLoader(TEMPLATE_DIR)
@@ -46,9 +38,10 @@ def generate_straight_paths(
 
         constraints = []
         if a is not None:
-            constraints.append(max_acceleration_constraint(a))
+            pass
+            # constraints.append(max_acceleration_constraint(a))
         if v is not None:
-            constraints.append(max_velocity_constraint(v))
+            constraints.append(create_velocity_constraint_fps(v, "first", "last"))
 
         contents = template.render(name=traj_name, constraints=constraints, waypoints=waypoints)
         output_file.write_text(contents)
@@ -57,15 +50,10 @@ def generate_straight_paths(
     return all_paths
 
 
-def generate_rotation_paths(output_dir, angular_velocities: List[float]) -> List[pathlib.Path]:
+def generate_rotation_paths(
+    output_dir, angular_velocities: List[float], waypoints
+) -> List[pathlib.Path]:
     all_paths = []
-
-    waypoints = [
-        dict(x=0.4172362983226776, y=1.748888373374939, heading=0),
-        dict(x=4.14061187208, y=1.748888373374939, heading=180),
-        dict(x=7.863987445831299, y=1.748888373374939, heading=0),
-    ]
-    waypoints = [format_waypoint(waypoint) for waypoint in waypoints]
 
     template_loader = jinja2.FileSystemLoader(TEMPLATE_DIR)
     template_env = jinja2.Environment(loader=template_loader)
@@ -78,7 +66,7 @@ def generate_rotation_paths(output_dir, angular_velocities: List[float]) -> List
             traj_name = f"TestRotation_MaxDegPerSec"
         else:
             traj_name = f"TestRotation_{omega:03}DegPerSec"
-            constraints.append(max_angular_velocity_constraint(omega))
+            constraints.append(create_max_angular_velocity_constraint_dps(omega, "first", "last"))
 
         contents = template.render(name=traj_name, constraints=constraints, waypoints=waypoints)
 
