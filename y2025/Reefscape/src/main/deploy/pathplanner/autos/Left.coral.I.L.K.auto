@@ -7,31 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartingPosCenterToH"
+            "pathName": "StartingPosLeftToI"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HToGH"
+            "pathName": "IToHumanPlayerLeft"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GHToBlueNet"
+            "pathName": "HumanPlayerLeftToL"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BlueNetToEF"
+            "pathName": "LToHumanPlayerLeft"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "EFToBlueNet"
+            "pathName": "HumanPlayerLeftToK"
           }
         }
       ]

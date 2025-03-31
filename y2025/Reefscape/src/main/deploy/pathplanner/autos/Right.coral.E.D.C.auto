@@ -7,43 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartingPosCenterToH"
+            "pathName": "StartingPosRightToE"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HToGH"
+            "pathName": "EToHumanPlayerRight"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GHToProcessor"
+            "pathName": "HumanPlayerRightToD"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "ProcessorToEF"
+            "pathName": "DToHumanPlayerRight"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "EFToProcessor"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ProcessorToIJ"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "IJToProcessor"
+            "pathName": "HumanPlayerRightToC"
           }
         }
       ]
