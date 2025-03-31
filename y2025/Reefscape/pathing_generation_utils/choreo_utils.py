@@ -3,7 +3,6 @@ from typing import Union, List
 import re
 import jinja2
 import pathlib
-import math
 
 
 TEMPLATE_DIR = "y2025/Reefscape/pathing_generation_utils/templates"
@@ -13,8 +12,9 @@ def run_choreo_cli(pathnames: Union[List, str]):
     use_local_version = True
     cmd = []
     if use_local_version:
-        home = pathlib.Path.home()
-        cmd.append(home / r"Downloads/choreo-cli.exe")
+        # home = pathlib.Path.home()
+        # cmd.append(home / r"Downloads/choreo-cli.exe")
+        cmd.append(r"C:\Users\PJ\git\frc-utils\Choreo\target\debug\choreo-cli.exe")
     else:
         cmd.append("bazel")
         cmd.append("run")
@@ -83,20 +83,3 @@ def generate_drive_to_pose_variable_file(choreo_data, project_dir: pathlib.Path,
             poses=choreo_data["variables"]["poses"],
         )
     )
-
-
-def max_velocity_constraint(max_velocity_fps: float):
-    template = """    {"from":"first", "to":"last", "data":{"type":"MaxVelocity", "props":{"max":{"exp":"{{ max_velocity_fps }} ft / s", "val":{{ max_velocity_fps * 0.3048 }}}}}, "enabled":true}"""
-    return jinja2.Environment().from_string(template).render(max_velocity_fps=max_velocity_fps)
-
-
-def max_acceleration_constraint(max_acceleration: float):
-    template = """    {"from":"first", "to":"last", "data":{"type":"MaxAcceleration", "props":{"max":{"exp":"{{ max_accel }} m / s ^ 2", "val":{{ max_accel }}}}}, "enabled":true}"""
-    return jinja2.Environment().from_string(template).render(max_accel=max_acceleration)
-
-
-def max_angular_velocity_constraint(max_omega_dps: float):
-    template = """    {"from":"first", "to":"last", "data":{"type":"MaxAngularVelocity", "props":{"max":{"exp":"{{max_omega_dps}} deg / s", "val":{{max_omega_dps | to_radians}}}}}, "enabled":true}"""
-    env = jinja2.Environment()
-    env.filters["to_radians"] = math.radians
-    return env.from_string(template).render(max_omega_dps=max_omega_dps)
