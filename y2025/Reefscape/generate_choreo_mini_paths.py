@@ -120,7 +120,7 @@ def generate_from_starting_pos(
             start_variable_name,
             end_variable_name,
             backoff_from_variable_name=end_variable_name,
-            backoff_distance_variable_name="CoralBackupDistance",
+            backoff_distance_variable_name="CoralApproachDistance",
             velocity_variable_name="DefaultPreloadSpeed",
             events=events,
         )

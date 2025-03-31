@@ -17,7 +17,7 @@
  "params":{
   "waypoints":[
     {"x":{"exp":"StartingPosRight.x", "val":7.1993252}, "y":{"exp":"StartingPosRight.y", "val":1.8832830000000005}, "heading":{"exp":"StartingPosRight.heading", "val":3.141592653589793}, "intervals":34, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"G.x - CoralBackupDistance * cos(G.heading)", "val":6.6661284}, "y":{"exp":"G.y - CoralBackupDistance * sin(G.heading)", "val":3.8616128}, "heading":{"exp":"G.heading", "val":3.141592653589793}, "intervals":20, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"G.x - CoralApproachDistance * cos(G.heading)", "val":6.6661284}, "y":{"exp":"G.y - CoralApproachDistance * sin(G.heading)", "val":3.8616128}, "heading":{"exp":"G.heading", "val":3.141592653589793}, "intervals":20, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"G.x", "val":5.751728399999999}, "y":{"exp":"G.y", "val":3.8616128}, "heading":{"exp":"G.heading", "val":3.141592653589793}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
