@@ -22,7 +22,7 @@
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
-    {"from":0, "to":2, "data":{"type":"MaxVelocity", "props":{"max":{"exp":"DefaultPreloadSpeed", "val":1.2192}}}, "enabled":true},
+    {"from":0, "to":2, "data":{"type":"MaxVelocity", "props":{"max":{"exp":"DefaultPreloadSpeed", "val":1.524}}}, "enabled":true},
     {"from":1, "to":2, "data":{"type":"KeepInLane", "props":{"tolerance":{"exp":"0.01 m", "val":0.01}}}, "enabled":true},
     {"from":1, "to":1, "data":{"type":"MaxAngularVelocity", "props":{"max":{"exp":"0 rad / s", "val":0.0}}}, "enabled":true}],
   "targetDt":{

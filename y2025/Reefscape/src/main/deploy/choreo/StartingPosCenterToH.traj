@@ -4,25 +4,27 @@
  "snapshot":{
   "waypoints":[
     {"x":7.1993252, "y":4.0259, "heading":3.141592653589793, "intervals":15, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":6.6661284, "y":4.190238, "heading":3.141592653589793, "intervals":20, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":6.666128399999999, "y":4.190238, "heading":3.141592653589793, "intervals":20, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":5.751728399999999, "y":4.190238, "heading":3.141592653589793, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":0, "to":2, "data":{"type":"MaxVelocity", "props":{"max":1.524}}, "enabled":true},
-    {"from":1, "to":2, "data":{"type":"KeepInLane", "props":{"tolerance":0.01}}, "enabled":true}],
+    {"from":1, "to":2, "data":{"type":"KeepInLane", "props":{"tolerance":0.01}}, "enabled":true},
+    {"from":1, "to":1, "data":{"type":"MaxAngularVelocity", "props":{"max":0.0}}, "enabled":true}],
   "targetDt":0.05
  },
  "params":{
   "waypoints":[
     {"x":{"exp":"StartingPosCenter.x", "val":7.1993252}, "y":{"exp":"StartingPosCenter.y", "val":4.0259}, "heading":{"exp":"StartingPosCenter.heading", "val":3.141592653589793}, "intervals":15, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"H.x - CoralBackupDistance * cos(H.heading)", "val":6.6661284}, "y":{"exp":"H.y - CoralBackupDistance * sin(H.heading)", "val":4.190238}, "heading":{"exp":"H.heading", "val":3.141592653589793}, "intervals":20, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"H.x - CoralBackupDistance * cos(H.heading)", "val":6.666128399999999}, "y":{"exp":"H.y - CoralBackupDistance * sin(H.heading)", "val":4.190238}, "heading":{"exp":"H.heading", "val":3.141592653589793}, "intervals":20, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"H.x", "val":5.751728399999999}, "y":{"exp":"H.y", "val":4.190238}, "heading":{"exp":"H.heading", "val":3.141592653589793}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
-    {"from":0, "to":2, "data":{"type":"MaxVelocity", "props":{"max":{"exp":"DefaultPreloadSpeed", "val":1.2192}}}, "enabled":true},
-    {"from":1, "to":2, "data":{"type":"KeepInLane", "props":{"tolerance":{"exp":"0.01 m", "val":0.01}}}, "enabled":true}],
+    {"from":0, "to":2, "data":{"type":"MaxVelocity", "props":{"max":{"exp":"DefaultPreloadSpeed", "val":1.524}}}, "enabled":true},
+    {"from":1, "to":2, "data":{"type":"KeepInLane", "props":{"tolerance":{"exp":"0.01 m", "val":0.01}}}, "enabled":true},
+    {"from":1, "to":1, "data":{"type":"MaxAngularVelocity", "props":{"max":{"exp":"0 rad / s", "val":0.0}}}, "enabled":true}],
   "targetDt":{
    "exp":"0.05 s",
    "val":0.05
