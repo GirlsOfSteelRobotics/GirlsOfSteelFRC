@@ -44,7 +44,7 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
-    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tunablePivot", -167);
+    public static final GosDoubleProperty PIVOT_TUNABLE_ANGLE = new GosDoubleProperty(false, "tunablePivot", -167);
 
 
     private final RevProfiledSingleJointedArmController m_armPidController;

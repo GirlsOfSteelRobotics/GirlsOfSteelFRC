@@ -35,8 +35,8 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"7.5 ft / s",
-     "val":2.286
+     "exp":"7 ft / s",
+     "val":2.1336
     }
    },
    "DefaultPreloadSpeed":{

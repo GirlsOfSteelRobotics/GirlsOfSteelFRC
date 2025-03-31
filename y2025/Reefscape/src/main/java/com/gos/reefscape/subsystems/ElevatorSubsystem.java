@@ -42,7 +42,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double ELEVATOR_STAGES = 2;
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * K_ELEVATOR_DRUM_RADIUS * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
-    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tunableElevator", 0.8);
+    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(false, "tunableElevator", 0.8);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
 
 
