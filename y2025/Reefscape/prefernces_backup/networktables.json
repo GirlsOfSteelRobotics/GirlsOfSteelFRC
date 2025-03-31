@@ -230,5 +230,77 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/Back.x(in)",
+    "type": "double",
+    "value": -11.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/Back.y(in)",
+    "type": "double",
+    "value": 7.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/Back.z(in)",
+    "type": "double",
+    "value": 7.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/Back.yaw(deg)",
+    "type": "double",
+    "value": 176.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/Back.pitch(deg)",
+    "type": "double",
+    "value": -33.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/Back.roll(deg)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CoralFetchSpeed",
+    "type": "double",
+    "value": -0.15,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tunableElevator",
+    "type": "double",
+    "value": 0.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tunablePivot",
+    "type": "double",
+    "value": -220.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

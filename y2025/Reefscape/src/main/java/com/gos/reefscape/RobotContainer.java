@@ -57,7 +57,7 @@ import java.util.function.Consumer;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-    private static final boolean CLEANUP_PROPERTIES = false;
+    private static final boolean CLEANUP_PROPERTIES = true;
 
     // The robot's subsystems and commands are defined here...
     private final ChassisSubsystem m_chassisSubsystem;
@@ -138,7 +138,7 @@ public class RobotContainer {
         m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos, m_chassisSubsystem); // NOPMD(UnusedPrivateField)
 
         if (RobotBase.isReal()) {
-            PropertyManager.printDynamicProperties(CLEANUP_PROPERTIES);
+            PropertyManager.printDynamicProperties(!CLEANUP_PROPERTIES);
         }
 
         if (CLEANUP_PROPERTIES) {

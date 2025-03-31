@@ -182,7 +182,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
                 .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
                 .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
