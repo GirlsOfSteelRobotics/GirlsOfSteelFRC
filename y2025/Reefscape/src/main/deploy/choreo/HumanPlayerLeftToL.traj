@@ -17,7 +17,7 @@
  "params":{
   "waypoints":[
     {"x":{"exp":"HumanPlayerLeft.x", "val":1.3718515634536743}, "y":{"exp":"HumanPlayerLeft.y", "val":7.273766994476318}, "heading":{"exp":"HumanPlayerLeft.heading", "val":5.340707511102648}, "intervals":37, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"L.x - CoralBackupDistance * cos(L.heading)", "val":3.258659514238129}, "y":{"exp":"L.y - CoralBackupDistance * sin(L.heading)", "val":5.828915878449891}, "heading":{"exp":"L.heading", "val":-1.0471975511965976}, "intervals":19, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"L.x - CoralApproachDistance * cos(L.heading)", "val":3.258659514238129}, "y":{"exp":"L.y - CoralApproachDistance * sin(L.heading)", "val":5.828915878449891}, "heading":{"exp":"L.heading", "val":-1.0471975511965976}, "intervals":19, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"L.x", "val":3.7158595142381294}, "y":{"exp":"L.y", "val":5.0370222492294}, "heading":{"exp":"L.heading", "val":-1.0471975511965976}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},

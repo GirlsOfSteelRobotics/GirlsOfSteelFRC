@@ -33,7 +33,9 @@ def generate_reef_to_hp(
         events = []
         if len(start_variable_name) == 1:
             backoff_variable_name = start_variable_name
+            distance_variable = "CoralBackupDistance"
         else:
+            distance_variable = "CoralApproachDistance"
             backoff_variable_name = end_variable_name
             events.append(create_event_marker(1, -0.1, "RaiseElevator", "ElevatorPrepTime"))
         return create_path_from_waypoints_with_straight_backoff(
@@ -42,7 +44,7 @@ def generate_reef_to_hp(
             start_variable_name,
             end_variable_name,
             backoff_from_variable_name=backoff_variable_name,
-            backoff_distance_variable_name="CoralBackupDistance",
+            backoff_distance_variable_name=distance_variable,
             velocity_variable_name="DefaultMaxVelocity",
             events=events,
         )
