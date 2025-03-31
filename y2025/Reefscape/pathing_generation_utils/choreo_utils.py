@@ -12,9 +12,9 @@ def run_choreo_cli(pathnames: Union[List, str]):
     use_local_version = True
     cmd = []
     if use_local_version:
-        # home = pathlib.Path.home()
-        # cmd.append(home / r"Downloads/choreo-cli.exe")
-        cmd.append(r"C:\Users\PJ\git\frc-utils\Choreo\target\debug\choreo-cli.exe")
+        home = pathlib.Path.home()
+        cmd.append(home / r"Downloads/choreo-cli.exe")
+        # cmd.append(r"C:\Users\PJ\git\frc-utils\Choreo\target\debug\choreo-cli.exe")
     else:
         cmd.append("bazel")
         cmd.append("run")

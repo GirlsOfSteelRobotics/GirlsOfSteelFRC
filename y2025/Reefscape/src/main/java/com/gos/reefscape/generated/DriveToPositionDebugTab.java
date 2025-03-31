@@ -35,7 +35,9 @@ public class DriveToPositionDebugTab {
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.K).withName("K"));
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.KL).withName("KL"));
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.L).withName("L"));
+        debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.LEFT_ICE_CREAM).withName("LEFT_ICE_CREAM"));
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.PROCESSOR).withName("PROCESSOR"));
+        debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.RIGHT_ICE_CREAM).withName("RIGHT_ICE_CREAM"));
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.STARTING_POS_CENTER).withName("STARTING_POS_CENTER"));
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.STARTING_POS_LEFT).withName("STARTING_POS_LEFT"));
         debugTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(ChoreoPoses.STARTING_POS_RIGHT).withName("STARTING_POS_RIGHT"));
