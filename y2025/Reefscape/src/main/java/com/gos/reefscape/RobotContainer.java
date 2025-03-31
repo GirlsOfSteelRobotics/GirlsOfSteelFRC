@@ -26,6 +26,7 @@ import com.gos.reefscape.subsystems.PivotSubsystem;
 import com.gos.reefscape.subsystems.SuperStructureViz;
 import com.gos.reefscape.subsystems.ChassisSubsystem;
 import com.gos.reefscape.subsystems.OperatorCoralCommand;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -100,7 +101,8 @@ public class RobotContainer {
         Consumer<KeepOutZoneEnum> keepOutConsumer = this::handleKeepOutZoneState;
         m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer, m_chassisSubsystem);
 
-        // NamedCommands.registerCommand("RaiseElevator", m_combinedCommand.autoPieCommand(PIECoral.L4.m_setpoint));
+        NamedCommands.registerCommand("RaiseElevator", m_combinedCommand.autoPieCommand(PIECoral.L4.m_setpoint));
+
         // Configure the trigger bindings
         configureBindings();
 

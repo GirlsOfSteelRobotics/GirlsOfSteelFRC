@@ -6,7 +6,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.GosAuto;
-import com.gos.reefscape.auto.modes.MultiIceCreamProcessor;
+import com.gos.reefscape.auto.modes.IceCreamCoral;
 import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
@@ -49,7 +49,7 @@ public final class Autos {
             CoralPositions.F));
 
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
-            CoralPositions.E,
+            CoralPositions.F,
             CoralPositions.D,
             CoralPositions.C));
 
@@ -99,7 +99,7 @@ public final class Autos {
     }
 
     private void createMultiIceCreamProcessor(AutoModeCommandHelpers helpers, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
-        GosAuto iceCreamAuto = new MultiIceCreamProcessor(helpers, combo, coral, start, algaePositions);
+        GosAuto iceCreamAuto = new IceCreamCoral(helpers, combo, coral, start, algaePositions);
         addAutoMode(iceCreamAuto);
     }
 
