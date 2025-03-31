@@ -30,8 +30,8 @@ public class RobotRelativeDriveCommand extends Command {
     @Override
     public void execute() {
         m_chassis.robotDriveWithJoystick(
-            MathUtil.applyDeadband(-m_joystick.getRightY() * TRANSLATION_DAMPER.getValue(), .05),
-            MathUtil.applyDeadband(-m_joystick.getRightX() * TRANSLATION_DAMPER.getValue(), .05),
+            MathUtil.applyDeadband(-m_joystick.getRightY() * TRANSLATION_DAMPER.getValue(), .01),
+            MathUtil.applyDeadband(-m_joystick.getRightX() * TRANSLATION_DAMPER.getValue(), .01),
             0);
 
 

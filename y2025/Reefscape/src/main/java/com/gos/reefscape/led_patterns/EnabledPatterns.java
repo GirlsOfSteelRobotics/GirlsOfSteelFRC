@@ -14,6 +14,8 @@ import com.gos.reefscape.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
+import java.util.Optional;
+
 public class EnabledPatterns {
 
     private final CoralSubsystem m_coralSubsystem;
@@ -49,7 +51,6 @@ public class EnabledPatterns {
     public void ledUpdates() {
         if (m_chassis.isDrivingRobotRelative()) {
             m_relative.writeLeds();
-            m_reefPositionCameraYaw.setAngleAndWrite(m_chassis.getReefCameraYaw());
         } else if (m_chassis.isDrivingToPose()) {
             m_driveToPose.writeLeds();
         }
@@ -62,9 +63,11 @@ public class EnabledPatterns {
             m_hasCoral.setStateAndWrite(m_coralSubsystem.hasCoral());
         }
 
-        if (!m_chassis.isDrivingRobotRelative()) {
-            m_keepOutPattern.writeLeds();
-        }
+//        if (!m_chassis.isDrivingRobotRelative()) {
+//            m_keepOutPattern.writeLeds();
+//        }
+        Optional<Double> maybeYaw = m_chassis.getReefCameraYaw();
+        maybeYaw.ifPresent(m_reefPositionCameraYaw::setAngleAndWrite);
     }
 
     public void setKeepOutZoneState(KeepOutZoneEnum state) {

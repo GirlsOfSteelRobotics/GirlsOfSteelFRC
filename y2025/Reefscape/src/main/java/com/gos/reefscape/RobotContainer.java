@@ -179,9 +179,16 @@ public class RobotContainer {
 
         // Drive to position
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //LEFT CORAL
+        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral()
+            .andThen(m_chassisSubsystem.createDriveToPosePartTwoCommand())
+            .andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //RIGHT CORAL
+        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral()
+            .andThen(m_chassisSubsystem.createDriveToPosePartTwoCommand())
+            .andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
         m_driverController.povUp().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
+
 
         Trigger fetchAlgaeTrigger = m_driverController.rightBumper();
 
