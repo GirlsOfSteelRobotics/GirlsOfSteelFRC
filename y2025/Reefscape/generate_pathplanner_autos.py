@@ -53,15 +53,19 @@ def generate_multi_net_auto(pathplanner_dir, side, coral, algae_positions):
 
 def generate_pathplanner_autos(pathplanner_dir):
     # Right
-    generate_multi_coral_auto(pathplanner_dir, "Right", ["E", "C", "B"])
+    generate_multi_coral_auto(pathplanner_dir, "Right", ["E", "F"])
+    generate_multi_coral_auto(pathplanner_dir, "Right", ["E", "D", "C"])
+    generate_multi_processor_auto(pathplanner_dir, "Right", "E", ["EF"])
 
     # Center
     generate_multi_coral_auto(pathplanner_dir, "Center", ["G"])
-    generate_multi_processor_auto(pathplanner_dir, "Center", "H", ["GH", "EF", "IJ"])
-    generate_multi_net_auto(pathplanner_dir, "Center", "H", ["GH", "EF"])
+    generate_multi_processor_auto(pathplanner_dir, "Center", "H", ["GH", "EF"])
+    generate_multi_net_auto(pathplanner_dir, "Center", "H", ["GH", "IJ", "EF"])
 
     # Left
-    generate_multi_coral_auto(pathplanner_dir, "Left", ["I", "L", "J", "K"])
+    generate_multi_coral_auto(pathplanner_dir, "Left", ["I", "J"])
+    generate_multi_coral_auto(pathplanner_dir, "Left", ["I", "L", "K"])
+    generate_multi_net_auto(pathplanner_dir, "Left", "J", ["IJ"])
 
 
 def delete_existing_auto_modes(pathplanner_dir):

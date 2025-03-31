@@ -9,13 +9,13 @@
  "params":{
   "waypoints":[
 {%- for waypoint in waypoints %}
-    {{ waypoint }}{% if not loop.last %},{% endif %}
+    {{ waypoint.to_waypoint() }}{% if not loop.last %},{% endif %}
 {%- endfor %}
 ],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true}{% for constraint in constraints %},
-{{ constraint }}
+    {{ constraint.to_constraint_json() }}
 {%- endfor %}
 ],
   "targetDt":{
