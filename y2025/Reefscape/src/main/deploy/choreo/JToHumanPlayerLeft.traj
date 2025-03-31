@@ -4,7 +4,7 @@
  "snapshot":{
   "waypoints":[
     {"x":4.97823951423813, "y":5.201334849229399, "heading":-2.0943951023931953, "intervals":19, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":5.435439514238129, "y":5.99322847844989, "heading":-2.0943951023931953, "intervals":64, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":5.43543951423813, "y":5.99322847844989, "heading":-2.0943951023931953, "intervals":64, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":1.3718515634536743, "y":7.273766994476318, "heading":5.340707511102648, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
@@ -15,7 +15,7 @@
  "params":{
   "waypoints":[
     {"x":{"exp":"J.x", "val":4.97823951423813}, "y":{"exp":"J.y", "val":5.201334849229399}, "heading":{"exp":"J.heading", "val":-2.0943951023931953}, "intervals":19, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"J.x - CoralBackupDistance * cos(J.heading)", "val":5.435439514238129}, "y":{"exp":"J.y - CoralBackupDistance * sin(J.heading)", "val":5.99322847844989}, "heading":{"exp":"J.heading", "val":-2.0943951023931953}, "intervals":64, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"J.x - CoralBackupDistance * cos(J.heading)", "val":5.43543951423813}, "y":{"exp":"J.y - CoralBackupDistance * sin(J.heading)", "val":5.99322847844989}, "heading":{"exp":"J.heading", "val":-2.0943951023931953}, "intervals":64, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"HumanPlayerLeft.x", "val":1.3718515634536743}, "y":{"exp":"HumanPlayerLeft.y", "val":7.273766994476318}, "heading":{"exp":"HumanPlayerLeft.heading", "val":5.340707511102648}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
@@ -90,7 +90,7 @@
     {"t":2.17315, "x":2.90445, "y":7.05566, "heading":-1.33353, "vx":-2.11175, "vy":0.30053, "omega":1.19947, "ax":0.0, "ay":0.0, "alpha":-0.89874, "fx":[-1.70058,2.78536,1.70058,-2.78536], "fy":[-2.78535,-1.70057,2.78537,1.70059]},
     {"t":2.21053, "x":2.82549, "y":7.06689, "heading":-1.28869, "vx":-2.11175, "vy":0.30053, "omega":1.16587, "ax":0.0, "ay":0.0, "alpha":-1.10363, "fx":[-1.93283,3.51052,1.93284,-3.51052], "fy":[-3.51051,-1.93282,3.51053,1.93285]},
     {"t":2.24792, "x":2.74654, "y":7.07813, "heading":-1.2451, "vx":-2.11175, "vy":0.30053, "omega":1.12461, "ax":0.0, "ay":0.0, "alpha":-1.31939, "fx":[-2.12564,4.29354,2.12564,-4.29354], "fy":[-4.29352,-2.12563,4.29355,2.12565]},
-    {"t":2.28531, "x":2.66759, "y":7.08936, "heading":-1.20306, "vx":-2.11175, "vy":0.30053, "omega":1.07528, "ax":0.0, "ay":0.0, "alpha":-1.54792, "fx":[-2.27989,5.1376,2.27989,-5.1376], "fy":[-5.13759,-2.27988,5.13762,2.2799]},
+    {"t":2.28531, "x":2.66759, "y":7.08936, "heading":-1.20306, "vx":-2.11175, "vy":0.30053, "omega":1.07528, "ax":0.0, "ay":0.0, "alpha":-1.54792, "fx":[-2.27989,5.1376,2.27989,-5.1376], "fy":[-5.13759,-2.27988,5.13761,2.2799]},
     {"t":2.32269, "x":2.58864, "y":7.1006, "heading":-1.16285, "vx":-2.11175, "vy":0.30053, "omega":1.01741, "ax":0.0, "ay":0.0, "alpha":-1.79111, "fx":[-2.39701,6.04596,2.39701,-6.04596], "fy":[-6.04595,-2.397,6.04597,2.39702]},
     {"t":2.36008, "x":2.50969, "y":7.11184, "heading":-1.12482, "vx":-2.11175, "vy":0.30053, "omega":0.95045, "ax":0.0, "ay":0.0, "alpha":-2.05078, "fx":[-2.47929,7.02185,2.47929,-7.02185], "fy":[-7.02185,-2.47928,7.02186,2.4793]},
     {"t":2.39747, "x":2.43073, "y":7.12307, "heading":-1.08928, "vx":-2.11175, "vy":0.30053, "omega":0.87377, "ax":0.0, "ay":0.0, "alpha":-2.3287, "fx":[-2.53023,8.06844,2.53023,-8.06844], "fy":[-8.06843,-2.53023,8.06845,2.53024]},
