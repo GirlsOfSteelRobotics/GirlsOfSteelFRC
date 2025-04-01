@@ -45,7 +45,9 @@ def generate_all(project_dir, choreo_file, package_name, delete_existing_files, 
         traj_output_dir = choreo_file.parent
 
     generate_choreo_variables_files(choreo_data, project_dir, package_name)
-    generate_test_paths(ChoreoFile(choreo_file), project_dir, package_name, traj_output_dir, run_cli)
+    generate_test_paths(
+        ChoreoFile(choreo_file), project_dir, package_name, traj_output_dir, run_cli
+    )
     generate_pathplanner_autos(pathplanner_dir)
     generate_choreo_mini_paths(ChoreoFile(choreo_file), traj_output_dir, pathplanner_dir, run_cli)
 
