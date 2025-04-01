@@ -57,7 +57,7 @@ import java.util.function.Consumer;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-    private static final boolean CLEANUP_PROPERTIES = false;
+    private static final boolean CLEANUP_PROPERTIES = true;
 
     // The robot's subsystems and commands are defined here...
     private final ChassisSubsystem m_chassisSubsystem;
@@ -101,6 +101,7 @@ public class RobotContainer {
         m_combinedCommand = new CombinedCommands(m_coralSubsystem, m_elevatorSubsystem, m_pivotSubsystem, keepOutConsumer, m_chassisSubsystem);
 
         // NamedCommands.registerCommand("RaiseElevator", m_combinedCommand.autoPieCommand(PIECoral.L4.m_setpoint));
+
         // Configure the trigger bindings
         configureBindings();
 
@@ -138,7 +139,7 @@ public class RobotContainer {
         m_leds = new LEDSubsystem(m_coralSubsystem, m_elevatorSubsystem, m_autos, m_chassisSubsystem); // NOPMD(UnusedPrivateField)
 
         if (RobotBase.isReal()) {
-            PropertyManager.printDynamicProperties(CLEANUP_PROPERTIES);
+            PropertyManager.printDynamicProperties(!CLEANUP_PROPERTIES);
         }
 
         if (CLEANUP_PROPERTIES) {
@@ -179,9 +180,16 @@ public class RobotContainer {
 
         // Drive to position
         m_driverController.povDown().whileTrue(m_chassisSubsystem.createDriveToClosestAlgaeCommand().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
-        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral().andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //LEFT CORAL
+        m_driverController.povLeft().whileTrue(m_chassisSubsystem.createDriveToLeftCoral()
+            .andThen(m_chassisSubsystem.createDriveToPosePartTwoCommand())
+            .andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
+        //RIGHT CORAL
+        m_driverController.povRight().whileTrue(m_chassisSubsystem.createDriveToRightCoral()
+            .andThen(m_chassisSubsystem.createDriveToPosePartTwoCommand())
+            .andThen(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController)));
         m_driverController.povUp().whileTrue(new RobotRelativeDriveCommand(m_chassisSubsystem, m_driverController));
+
 
         Trigger fetchAlgaeTrigger = m_driverController.rightBumper();
 

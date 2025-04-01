@@ -109,4 +109,12 @@ public class AutoModeCommandHelpers {
 
         return group;
     }
+
+    public Command driveCoralToIceCream(StartingPositions side, CoralPositions lastCoral) {
+        SequentialCommandGroup group = new SequentialCommandGroup();
+        group.addCommands(followChoreoPath(lastCoral + "To" + side.variableName() + "IceCream")
+            .deadlineFor(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP)).andThen(m_combinedCommands.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP).withTimeout(1)));
+        return group;
+
+    }
 }

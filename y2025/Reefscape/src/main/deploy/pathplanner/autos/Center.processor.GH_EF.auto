@@ -7,31 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartingPosRightToE"
+            "pathName": "StartingPosCenterToH"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "EToHumanPlayerRight"
+            "pathName": "HToGH"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HumanPlayerRightToC"
+            "pathName": "GHToProcessor"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "CToHumanPlayerRight"
+            "pathName": "ProcessorToEF"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HumanPlayerRightToB"
+            "pathName": "EFToProcessor"
           }
         }
       ]

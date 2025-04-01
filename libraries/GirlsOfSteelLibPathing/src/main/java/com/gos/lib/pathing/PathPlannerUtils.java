@@ -58,6 +58,7 @@ public final class PathPlannerUtils {
      */
     public static Command followChoreoPath(String trajectoryName) {
         try {
+            System.out.println("Loading " + trajectoryName);
             return AutoBuilder.followPath(PathPlannerPath.fromChoreoTrajectory(trajectoryName));
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);

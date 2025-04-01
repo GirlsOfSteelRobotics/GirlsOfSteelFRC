@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingPosCenterToH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HToGH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GHToBlueNet"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueNetToIJ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "IJToBlueNet"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueNetToEF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EFToBlueNet"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Autos",
+  "choreoAuto": true
+}

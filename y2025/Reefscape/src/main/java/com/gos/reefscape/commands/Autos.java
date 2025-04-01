@@ -6,7 +6,7 @@
 package com.gos.reefscape.commands;
 
 import com.gos.reefscape.auto.modes.GosAuto;
-import com.gos.reefscape.auto.modes.MultiIceCreamProcessor;
+import com.gos.reefscape.auto.modes.IceCreamCoral;
 import com.gos.reefscape.auto.modes.MultiPieceNet;
 import com.gos.reefscape.enums.AlgaePositions;
 import com.gos.reefscape.enums.CoralPositions;
@@ -49,21 +49,22 @@ public final class Autos {
             CoralPositions.F));
 
         createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
-            CoralPositions.E,
+            CoralPositions.F,
             CoralPositions.D,
             CoralPositions.C));
 
-        createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, List.of(
-            AlgaePositions.EF
-        ));
 
-        createMultiIceCreamProcessor(autoHelpers, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, AlgaePositions.EF);
+
+        createCoralWithDessert(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+            CoralPositions.F,
+            CoralPositions.D));
 
 
         ///////////////////////////////
         /// Center Side
         ///////////////////////////////
-        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.G));
+        createMultiCoralAuto(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.CENTER, List.of(CoralPositions.H));
+
         createMultiProcessorAuto(autoHelpers, combinedCommands, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
             AlgaePositions.EF
@@ -71,8 +72,7 @@ public final class Autos {
 
         createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.H, StartingPositions.CENTER, List.of(
             AlgaePositions.GH,
-            AlgaePositions.IJ,
-            AlgaePositions.EF));
+            AlgaePositions.IJ));
 
         ///////////////////////////////
         /// Left Side
@@ -89,10 +89,9 @@ public final class Autos {
             CoralPositions.K
         ));
 
-        createScoreNetAuto(combinedCommands, autoHelpers, PIECoral.L4, CoralPositions.J,
-            StartingPositions.LEFT, List.of(
-            AlgaePositions.IJ
-        ));
+        createCoralWithDessert(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
+            CoralPositions.I,
+            CoralPositions.L));
     }
 
     private void createMultiCoralAuto(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
@@ -105,8 +104,8 @@ public final class Autos {
         addAutoMode(multiPieceAlgae);
     }
 
-    private void createMultiIceCreamProcessor(AutoModeCommandHelpers helpers, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
-        GosAuto iceCreamAuto = new MultiIceCreamProcessor(helpers, combo, coral, start, algaePositions);
+    private void createCoralWithDessert(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
+        GosAuto iceCreamAuto = new IceCreamCoral(helpers, combinedCommands, height, starting, positions);
         addAutoMode(iceCreamAuto);
     }
 

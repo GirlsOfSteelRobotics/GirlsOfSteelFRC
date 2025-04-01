@@ -7,6 +7,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
@@ -31,6 +32,7 @@ import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.photonvision.AprilTagCameraBuilder;
 import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
+import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.Constants;
@@ -45,6 +47,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -131,6 +134,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final SwerveDriveOdometry m_odometryOnly;
     private final SwerveDrivePoseEstimator m_oldPoseEstimator;
 
+    private final PIDController m_dtp2Controller = new PIDController(0, 0, 0);
+    private final PidProperty m_dtp2Properties;
+
     private boolean m_isDrivingToPose;
     private boolean m_isDrivingRobotRelative;
 
@@ -177,12 +183,17 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_moduleProperties = new ArrayList<>();
         m_alerts = new ArrayList<>();
 
+        m_dtp2Properties = new WpiPidPropertyBuilder("DTP2", false, m_dtp2Controller)
+            .addP(.02)
+            .addD(0)
+            .build();
+
         for (int i = 0; i < 4; ++i) {
             SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
             m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
                 .fromDefaults(DEFAULT_STEER_CONFIG)
                 .build());
-            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", false, module.getDriveMotor(), 0)
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
                 .fromDefaults(DEFAULT_DRIVE_CONFIG)
                 .build());
 
@@ -380,6 +391,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
         m_pidControllerProperty.updateIfChanged();
+        m_dtp2Properties.updateIfChanged();
         for (PidProperty property : m_moduleProperties) {
             property.updateIfChanged();
         }
@@ -391,6 +403,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
         }
+
+        m_reefDetection.periodic();
     }
 
     private void startSimThread() {
@@ -471,8 +485,19 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     }
 
-    public double getReefCameraYaw() {
+    public Optional<Double> getReefCameraYaw() {
         return m_reefDetection.getYaw();
+    }
+
+    public void robotDTP2() {
+        Optional<Double> maybeError = m_reefDetection.getYaw();
+        if (maybeError.isEmpty()) {
+            robotDriveWithJoystick(0, 0, 0);
+            return;
+        }
+
+        double output = m_dtp2Controller.calculate(maybeError.get());
+        robotDriveWithJoystick(0, output, 0);
     }
 
     public Command createCheckAlertsCommand() {
@@ -587,6 +612,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         });
     }
 
-
+    public Command createDriveToPosePartTwoCommand() {
+        return run(this::robotDTP2);
+    }
 }
 

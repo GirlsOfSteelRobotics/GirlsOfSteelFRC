@@ -21,8 +21,8 @@
    "CoralBackupDistance":{
     "dimension":"Length",
     "var":{
-     "exp":"3 ft",
-     "val":0.9144
+     "exp":"1 ft",
+     "val":0.3048
     }
    },
    "CoralToAlgaeBackup":{
@@ -42,8 +42,8 @@
    "DefaultMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"7.5 ft / s",
-     "val":2.286
+     "exp":"7 ft / s",
+     "val":2.1336
     }
    },
    "DefaultPreloadSpeed":{
@@ -56,15 +56,15 @@
    "DrivingWithAlgaeVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"4 ft / s",
-     "val":1.2192
+     "exp":"5 ft / s",
+     "val":1.524
     }
    },
    "ElevatorPrepTime":{
     "dimension":"Time",
     "var":{
-     "exp":"-0.1 s",
-     "val":-0.1
+     "exp":"0 s",
+     "val":0.0
     }
    },
    "FieldWidth":{

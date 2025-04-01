@@ -19,31 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HumanPlayerLeftToL"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LToHumanPlayerLeft"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "HumanPlayerLeftToJ"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "JToHumanPlayerLeft"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HumanPlayerLeftToK"
           }
         }
       ]
