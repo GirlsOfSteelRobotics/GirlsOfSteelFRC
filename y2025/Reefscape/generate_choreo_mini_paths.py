@@ -325,6 +325,7 @@ def generate_ice_creams(
 
     all_paths.append(ice_cream_helper("J", "LeftIceCream"))
     all_paths.append(ice_cream_helper("K", "LeftIceCream"))
+    all_paths.append(ice_cream_helper("L", "LeftIceCream"))
     all_paths.append(ice_cream_helper("LeftIceCream", "BlueNet"))
 
     return all_paths
