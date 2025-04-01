@@ -55,7 +55,9 @@ public final class Autos {
 
 
 
-        createMultiIceCreamProcessor(autoHelpers, PIECoral.L4, CoralPositions.E, StartingPositions.RIGHT, AlgaePositions.EF);
+        createCoralWithDessert(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.RIGHT, List.of(
+            CoralPositions.F,
+            CoralPositions.D));
 
 
         ///////////////////////////////
@@ -86,6 +88,10 @@ public final class Autos {
             CoralPositions.L,
             CoralPositions.K
         ));
+
+        createCoralWithDessert(autoHelpers, combinedCommands, PIECoral.L4, StartingPositions.LEFT, List.of(
+            CoralPositions.I,
+            CoralPositions.L));
     }
 
     private void createMultiCoralAuto(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
@@ -98,8 +104,8 @@ public final class Autos {
         addAutoMode(multiPieceAlgae);
     }
 
-    private void createMultiIceCreamProcessor(AutoModeCommandHelpers helpers, PIECoral combo, CoralPositions coral, StartingPositions start, AlgaePositions algaePositions) {
-        GosAuto iceCreamAuto = new IceCreamCoral(helpers, combo, coral, start, algaePositions);
+    private void createCoralWithDessert(AutoModeCommandHelpers helpers, CombinedCommands combinedCommands, PIECoral height, StartingPositions starting, List<CoralPositions> positions) {
+        GosAuto iceCreamAuto = new IceCreamCoral(helpers, combinedCommands, height, starting, positions);
         addAutoMode(iceCreamAuto);
     }
 

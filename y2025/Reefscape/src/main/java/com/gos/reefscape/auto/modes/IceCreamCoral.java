@@ -13,7 +13,7 @@ public class IceCreamCoral extends GosAuto {
     public IceCreamCoral(AutoModeCommandHelpers autoHelper, CombinedCommands combinedCommands, PIECoral combo, StartingPositions side, List<CoralPositions> coralPositions) {
         super(side, coralPositions, List.of());
         StringBuilder autoName = new StringBuilder();
-        autoName.append(side.toString()).append(".multiCoral.").append(coralPositions.get(0)).append(combo);
+        autoName.append(side.toString()).append(".coral_with_dessert.").append(coralPositions.get(0)).append(combo);
         addCommands(autoHelper.startingPositionToCoralAndScore(side, coralPositions.get(0), combo));
         addCommands(combinedCommands.startLoweringElevatorForAWhile());
 
@@ -29,6 +29,7 @@ public class IceCreamCoral extends GosAuto {
         }
 
         CoralPositions lastCoral = coralPositions.get(coralPositions.size() -1 );
+        addCommands(autoHelper.driveCoralToIceCream(side, lastCoral));
         setName(autoName.toString());
 
 

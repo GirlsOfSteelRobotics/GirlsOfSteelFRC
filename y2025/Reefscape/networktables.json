@@ -46,5 +46,29 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/p controller for dtp2",
+    "type": "double",
+    "value": 0.0088,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/DTP2.mm.kp",
+    "type": "double",
+    "value": 0.02,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/DTP2.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
