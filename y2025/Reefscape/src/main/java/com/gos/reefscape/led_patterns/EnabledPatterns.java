@@ -63,9 +63,6 @@ public class EnabledPatterns {
             m_hasCoral.setStateAndWrite(m_coralSubsystem.hasCoral());
         }
 
-//        if (!m_chassis.isDrivingRobotRelative()) {
-//            m_keepOutPattern.writeLeds();
-//        }
         Optional<Double> maybeYaw = m_chassis.getReefCameraYaw();
         maybeYaw.ifPresent(m_reefPositionCameraYaw::setAngleAndWrite);
     }

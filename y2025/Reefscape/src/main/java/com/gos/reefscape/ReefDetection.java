@@ -6,7 +6,6 @@ import org.photonvision.targeting.PhotonPipelineResult;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalDouble;
 
 public class ReefDetection {
     private static final double OFFSET =  - 1.35;
@@ -14,14 +13,14 @@ public class ReefDetection {
 
     private Optional<Double> m_bestYaw;
 
-    private LoggingUtil m_logging;
+    private final LoggingUtil m_logging;
 
 
     public ReefDetection() {
         m_photonCamera = new PhotonCamera("USB_Camera");
 
         m_logging = new LoggingUtil("Reef Camera");
-        m_logging.addDouble("Best Yaw", ()-> m_bestYaw.orElse(999.0));
+        m_logging.addDouble("Best Yaw", () -> m_bestYaw.orElse(999.0));
     }
 
     public Optional<Double> getYaw() {
