@@ -241,10 +241,10 @@ public class RobotContainer {
         //m_operatorController.b().whileTrue(m_coralSubsystem.createIntakeUntilCoralCommand());
 
         //operator coral commands
-        m_operatorController.povUp().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L4));
-        m_operatorController.povDown().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L1));
-        m_operatorController.povLeft().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L2));
-        m_operatorController.povRight().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L3));
+//        m_operatorController.povUp().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L4));
+////        m_operatorController.povDown().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L1));
+//        m_operatorController.povLeft().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L2));
+//        m_operatorController.povRight().whileTrue(m_operatorCoralCommand.changeCoralPosition(PIECoral.L3));
         m_operatorController.b().whileTrue(m_combinedCommand.fetchAlgae(PIEAlgae.ALGAE_LOLLIPOP));
         m_operatorController.povDown().whileTrue(m_chassisSubsystem.createDriveToNet());
     }
