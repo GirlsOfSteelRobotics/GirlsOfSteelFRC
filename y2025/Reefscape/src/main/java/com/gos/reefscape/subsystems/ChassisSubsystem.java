@@ -22,6 +22,7 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
@@ -141,6 +142,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private boolean m_isDrivingRobotRelative;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
+    private final LoggingUtil m_loggingUtil;
 
     private final SwerveRequest.RobotCentric m_robotRelativeDriveRequest = new SwerveRequest.RobotCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
@@ -256,6 +258,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withSingleTagStddev(singleTagStddev.times(3))
                 .withTransform(RobotExtrinsic.BACK_CAMERA).build()
         ));
+
+        m_loggingUtil = new LoggingUtil("ChassisLogs");
+        m_loggingUtil.addBoolean("AlignedWithReef", this::isAlignedWithReef);
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
@@ -405,6 +410,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
 
         m_reefDetection.periodic();
+        m_loggingUtil.updateLogs();
     }
 
     private void startSimThread() {
@@ -613,7 +619,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createDriveToPosePartTwoCommand() {
-        return run(this::robotDTP2);
+        return run(this::robotDTP2).until(this::isAlignedWithReef);
+    }
+
+    public Boolean isAlignedWithReef() {
+        Optional<Double> maybeError = m_reefDetection.getYaw();
+        if (maybeError.isEmpty()) {
+            return false;
+        } else {
+            return Math.abs(maybeError.get()) < 0.75;
+        }
     }
 }
 
