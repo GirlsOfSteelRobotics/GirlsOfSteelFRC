@@ -16,6 +16,7 @@ import com.gos.codelabs.gitflow.subsystems.KatherineCodeLabe2022Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PJCodelab2020Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PJCodelab2020Part2Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PJCodelab2021Part1Subsystem;
+import com.gos.codelabs.gitflow.subsystems.PrimCodelab2027;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +47,7 @@ public class RobotContainer {
     private JustinaCodelab2021Part1Subsystem m_justinaCodeLab2021Part1;
     private JaniseCodelab2021Pt1Subsystem m_janiseCodelab2021Pt1;
     private EllieSubsystem m_ellieSubsystem;
+    private PrimCodelab2027 m_prim;
 
     private AshleyCodelab2022Part1Subsystem m_ashleyCodelab2022Part1;
 
