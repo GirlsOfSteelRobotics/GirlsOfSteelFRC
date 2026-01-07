@@ -48,14 +48,6 @@
     }
   },
   {
-    "name": "/Preferences/p controller for dtp2",
-    "type": "double",
-    "value": 0.0088,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/DTP2.mm.kp",
     "type": "double",
     "value": 0.02,
