@@ -39,7 +39,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
     private final RelativeEncoder m_relativeEncoder;
-    private final DutyCycleEncoder m_absoluteEncoder;
+//    private final DutyCycleEncoder m_absoluteEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_checkAlerts;
     private SingleJointedArmSimWrapper m_pivotSimulator;
@@ -54,7 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR_ID, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
-        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 248 - 14 - 6);
+//        m_absoluteEncoder = new DutyCycleEncoder(Constants. PIVOT_ABSOLUTE_ENCODER, 360, 248 - 14 - 6);
 
 
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
@@ -83,7 +83,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("Pivot");
         m_networkTableEntries.addDouble("Speed", this::getSpeed);
         m_networkTableEntries.addDouble("Relative Angle", this::getRelativeAngle);
-        m_networkTableEntries.addDouble("Absolute Angle", this::getAbsoluteAngle);
+//        m_networkTableEntries.addDouble("Absolute Angle", this::getAbsoluteAngle);
         m_networkTableEntries.addDouble("Goal angle", this::getArmGoalAngle);
         m_networkTableEntries.addDouble("Setpoint angle", m_armPidController::getPositionSetpoint);
         m_networkTableEntries.addDouble("Setpoint Velocity", m_armPidController::getVelocitySetpoint);
@@ -102,7 +102,7 @@ public class PivotSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
 
-        syncRelativeEncoder();
+//        syncRelativeEncoder();
         m_relativeEncoder.setPosition(DEFAULT_ANGLE);
     }
 
@@ -118,7 +118,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_armGoalAngle = goal;
 
         // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
-        m_armPidController.goToAngle(goal, getAbsoluteAngle());
+        m_armPidController.goToAngle(goal, getRelativeAngle());
     }
 
     public void moveArmToTunableAngle() {
@@ -126,9 +126,9 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
 
-    private void syncRelativeEncoder() {
-        m_relativeEncoder.setPosition(getAbsoluteAngle());
-    }
+//    private void syncRelativeEncoder() {
+//        m_relativeEncoder.setPosition(getAbsoluteAngle());
+//    }
 
     @Override
     public void simulationPeriodic() {
@@ -142,9 +142,9 @@ public class PivotSubsystem extends SubsystemBase {
         m_checkAlerts.checkAlerts();
 
         m_armPidController.updateIfChanged();
-        if (DriverStation.isDisabled()) {
-            syncRelativeEncoder();
-        }
+//        if (DriverStation.isDisabled()) {
+//            syncRelativeEncoder();
+//        }
 
         //        double encoderDelta = Math.abs(getRelativeAngle() - getAbsoluteAngle());
         //        if (encoderDelta > 5 && getRelativeVelocity() < 5) {
@@ -183,13 +183,13 @@ public class PivotSubsystem extends SubsystemBase {
         return m_relativeEncoder.getVelocity();
     }
 
-    public final double getAbsoluteAngle() {
-        double angle = -m_absoluteEncoder.get();
-        if (angle < -300) {
-            angle += 360;
-        }
-        return angle;
-    }
+//    public final double getAbsoluteAngle() {
+//        double angle = -m_absoluteEncoder.get();
+//        if (angle < -300) {
+//            angle += 360;
+//        }
+//        return angle;
+//    }
 
     private void resetPidController() {
         m_armPidController.resetPidController(getRelativeAngle(), getRelativeVelocity());
