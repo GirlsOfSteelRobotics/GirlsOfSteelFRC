@@ -1,0 +1,81 @@
+From 795aae14b004a50e76b2187add2bc231ddf83a86 Mon Sep 17 00:00:00 2001
+From: PJ Reiniger <pj.reiniger@gmail.com>
+Date: Sun, 11 Jan 2026 00:26:13 -0500
+Subject: [PATCH 2/2] Pretend that last years pathplanner is for 2026
+
+---
+ evergreen_robots/SwerveChassis/vendordeps/PathplannerLib.json   | 2 +-
+ libraries/GirlsOfSteelLibPathing/vendordeps/PathplannerLib.json | 2 +-
+ old_robots/y2022/MEPI/vendordeps/PathplannerLib.json            | 2 +-
+ y2024/Crescendo/vendordeps/PathplannerLib.json                  | 2 +-
+ y2025/Reefscape/vendordeps/PathplannerLib.json                  | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/evergreen_robots/SwerveChassis/vendordeps/PathplannerLib.json b/evergreen_robots/SwerveChassis/vendordeps/PathplannerLib.json
+index c4963794..191f22f3 100644
+--- a/evergreen_robots/SwerveChassis/vendordeps/PathplannerLib.json
++++ b/evergreen_robots/SwerveChassis/vendordeps/PathplannerLib.json
+@@ -3,7 +3,7 @@
+     "name": "PathplannerLib",
+     "version": "2025.2.7",
+     "uuid": "1b42324f-17c6-4875-8e77-1c312bc8c786",
+-    "frcYear": "2025",
++    "frcYear": "2026",
+     "mavenUrls": [
+         "https://3015rangerrobotics.github.io/pathplannerlib/repo"
+     ],
+diff --git a/libraries/GirlsOfSteelLibPathing/vendordeps/PathplannerLib.json b/libraries/GirlsOfSteelLibPathing/vendordeps/PathplannerLib.json
+index c4963794..191f22f3 100644
+--- a/libraries/GirlsOfSteelLibPathing/vendordeps/PathplannerLib.json
++++ b/libraries/GirlsOfSteelLibPathing/vendordeps/PathplannerLib.json
+@@ -3,7 +3,7 @@
+     "name": "PathplannerLib",
+     "version": "2025.2.7",
+     "uuid": "1b42324f-17c6-4875-8e77-1c312bc8c786",
+-    "frcYear": "2025",
++    "frcYear": "2026",
+     "mavenUrls": [
+         "https://3015rangerrobotics.github.io/pathplannerlib/repo"
+     ],
+diff --git a/old_robots/y2022/MEPI/vendordeps/PathplannerLib.json b/old_robots/y2022/MEPI/vendordeps/PathplannerLib.json
+index c4963794..191f22f3 100644
+--- a/old_robots/y2022/MEPI/vendordeps/PathplannerLib.json
++++ b/old_robots/y2022/MEPI/vendordeps/PathplannerLib.json
+@@ -3,7 +3,7 @@
+     "name": "PathplannerLib",
+     "version": "2025.2.7",
+     "uuid": "1b42324f-17c6-4875-8e77-1c312bc8c786",
+-    "frcYear": "2025",
++    "frcYear": "2026",
+     "mavenUrls": [
+         "https://3015rangerrobotics.github.io/pathplannerlib/repo"
+     ],
+diff --git a/y2024/Crescendo/vendordeps/PathplannerLib.json b/y2024/Crescendo/vendordeps/PathplannerLib.json
+index c4963794..191f22f3 100644
+--- a/y2024/Crescendo/vendordeps/PathplannerLib.json
++++ b/y2024/Crescendo/vendordeps/PathplannerLib.json
+@@ -3,7 +3,7 @@
+     "name": "PathplannerLib",
+     "version": "2025.2.7",
+     "uuid": "1b42324f-17c6-4875-8e77-1c312bc8c786",
+-    "frcYear": "2025",
++    "frcYear": "2026",
+     "mavenUrls": [
+         "https://3015rangerrobotics.github.io/pathplannerlib/repo"
+     ],
+diff --git a/y2025/Reefscape/vendordeps/PathplannerLib.json b/y2025/Reefscape/vendordeps/PathplannerLib.json
+index c4963794..191f22f3 100644
+--- a/y2025/Reefscape/vendordeps/PathplannerLib.json
++++ b/y2025/Reefscape/vendordeps/PathplannerLib.json
+@@ -3,7 +3,7 @@
+     "name": "PathplannerLib",
+     "version": "2025.2.7",
+     "uuid": "1b42324f-17c6-4875-8e77-1c312bc8c786",
+-    "frcYear": "2025",
++    "frcYear": "2026",
+     "mavenUrls": [
+         "https://3015rangerrobotics.github.io/pathplannerlib/repo"
+     ],
+-- 
+2.34.1
+

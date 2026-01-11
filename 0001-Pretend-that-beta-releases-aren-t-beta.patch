@@ -1,0 +1,262 @@
+From 0281e1c0eae2913a8f4804bdd30231e8a0fb5731 Mon Sep 17 00:00:00 2001
+From: PJ Reiniger <pj.reiniger@gmail.com>
+Date: Sun, 11 Jan 2026 00:25:14 -0500
+Subject: [PATCH 1/2] Pretend that beta releases aren't beta
+
+---
+ .wpilib/wpilib_preferences.json                                 | 2 +-
+ codelabs/basic_simulator/vendordeps/SnobotSim.json              | 2 +-
+ codelabs/first_robot_code/vendordeps/SnobotSim.json             | 2 +-
+ codelabs/pid/vendordeps/SnobotSim.json                          | 2 +-
+ evergreen_robots/SCRAWestCoastDrive/vendordeps/SnobotSim.json   | 2 +-
+ evergreen_robots/SCRAWestCoastDrive/vendordeps/navx_frc.json    | 2 +-
+ evergreen_robots/SwerveChassis/vendordeps/SnobotSim.json        | 2 +-
+ libraries/GirlsOfSteelLibPathing/vendordeps/ChoreoLib.json      | 2 +-
+ .../vendordeps/PhotonLib-json-1.0.json                          | 2 +-
+ libraries/GirlsOfSteelLibRev/vendordeps/SnobotSim.json          | 2 +-
+ old_robots/y2022/MEPI/vendordeps/SnobotSim.json                 | 2 +-
+ old_robots/y2022/MEPI/vendordeps/navx_frc.json                  | 2 +-
+ y2024/Crescendo/vendordeps/ChoreoLib.json                       | 2 +-
+ y2024/Crescendo/vendordeps/PhotonLib-json-1.0.json              | 2 +-
+ y2024/Crescendo/vendordeps/SnobotSim.json                       | 2 +-
+ y2025/Reefscape/vendordeps/ChoreoLib.json                       | 2 +-
+ y2025/Reefscape/vendordeps/PhotonLib-json-1.0.json              | 2 +-
+ y2025/Reefscape/vendordeps/SnobotSim.json                       | 2 +-
+ 18 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/.wpilib/wpilib_preferences.json b/.wpilib/wpilib_preferences.json
+index 154cb307..b9434e0b 100644
+--- a/.wpilib/wpilib_preferences.json
++++ b/.wpilib/wpilib_preferences.json
+@@ -1,6 +1,6 @@
+ {
+     "enableCppIntellisense": false,
+     "currentLanguage": "java",
+-    "projectYear": "2025",
++    "projectYear": "2026",
+     "teamNumber": 3504
+ }
+diff --git a/codelabs/basic_simulator/vendordeps/SnobotSim.json b/codelabs/basic_simulator/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/codelabs/basic_simulator/vendordeps/SnobotSim.json
++++ b/codelabs/basic_simulator/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/codelabs/first_robot_code/vendordeps/SnobotSim.json b/codelabs/first_robot_code/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/codelabs/first_robot_code/vendordeps/SnobotSim.json
++++ b/codelabs/first_robot_code/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/codelabs/pid/vendordeps/SnobotSim.json b/codelabs/pid/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/codelabs/pid/vendordeps/SnobotSim.json
++++ b/codelabs/pid/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/evergreen_robots/SCRAWestCoastDrive/vendordeps/SnobotSim.json b/evergreen_robots/SCRAWestCoastDrive/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/evergreen_robots/SCRAWestCoastDrive/vendordeps/SnobotSim.json
++++ b/evergreen_robots/SCRAWestCoastDrive/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/evergreen_robots/SCRAWestCoastDrive/vendordeps/navx_frc.json b/evergreen_robots/SCRAWestCoastDrive/vendordeps/navx_frc.json
+index db17aa73..ddf47a94 100644
+--- a/evergreen_robots/SCRAWestCoastDrive/vendordeps/navx_frc.json
++++ b/evergreen_robots/SCRAWestCoastDrive/vendordeps/navx_frc.json
+@@ -2,7 +2,7 @@
+     "fileName": "Studica.json",
+     "name": "Studica",
+     "version": "2026.0.0-beta",
+-    "frcYear": "2026beta",
++    "frcYear": "2026",
+     "uuid": "cb311d09-36e9-4143-a032-55bb2b94443b",
+     "mavenUrls": [
+         "https://dev.studica.com/maven/release/2026/"
+diff --git a/evergreen_robots/SwerveChassis/vendordeps/SnobotSim.json b/evergreen_robots/SwerveChassis/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/evergreen_robots/SwerveChassis/vendordeps/SnobotSim.json
++++ b/evergreen_robots/SwerveChassis/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/libraries/GirlsOfSteelLibPathing/vendordeps/ChoreoLib.json b/libraries/GirlsOfSteelLibPathing/vendordeps/ChoreoLib.json
+index e534f4dd..54f97779 100644
+--- a/libraries/GirlsOfSteelLibPathing/vendordeps/ChoreoLib.json
++++ b/libraries/GirlsOfSteelLibPathing/vendordeps/ChoreoLib.json
+@@ -3,7 +3,7 @@
+   "name": "ChoreoLib",
+   "version": "2026.0.0-beta-1",
+   "uuid": "b5e23f0a-dac9-4ad2-8dd6-02767c520aca",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": [
+     "https://frcmaven.wpi.edu/artifactory/sleipnirgroup-mvn-release/"
+   ],
+diff --git a/libraries/GirlsOfSteelLibPhotonVision/vendordeps/PhotonLib-json-1.0.json b/libraries/GirlsOfSteelLibPhotonVision/vendordeps/PhotonLib-json-1.0.json
+index dfbe6edc..8b1d42b8 100644
+--- a/libraries/GirlsOfSteelLibPhotonVision/vendordeps/PhotonLib-json-1.0.json
++++ b/libraries/GirlsOfSteelLibPhotonVision/vendordeps/PhotonLib-json-1.0.json
+@@ -3,7 +3,7 @@
+   "name": "photonlib",
+   "version": "v2026.0.1-beta",
+   "uuid": "515fe07e-bfc6-11fa-b3de-0242ac130004",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": [
+     "https://maven.photonvision.org/repository/internal",
+     "https://maven.photonvision.org/repository/snapshots"
+diff --git a/libraries/GirlsOfSteelLibRev/vendordeps/SnobotSim.json b/libraries/GirlsOfSteelLibRev/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/libraries/GirlsOfSteelLibRev/vendordeps/SnobotSim.json
++++ b/libraries/GirlsOfSteelLibRev/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/old_robots/y2022/MEPI/vendordeps/SnobotSim.json b/old_robots/y2022/MEPI/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/old_robots/y2022/MEPI/vendordeps/SnobotSim.json
++++ b/old_robots/y2022/MEPI/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/old_robots/y2022/MEPI/vendordeps/navx_frc.json b/old_robots/y2022/MEPI/vendordeps/navx_frc.json
+index db17aa73..ddf47a94 100644
+--- a/old_robots/y2022/MEPI/vendordeps/navx_frc.json
++++ b/old_robots/y2022/MEPI/vendordeps/navx_frc.json
+@@ -2,7 +2,7 @@
+     "fileName": "Studica.json",
+     "name": "Studica",
+     "version": "2026.0.0-beta",
+-    "frcYear": "2026beta",
++    "frcYear": "2026",
+     "uuid": "cb311d09-36e9-4143-a032-55bb2b94443b",
+     "mavenUrls": [
+         "https://dev.studica.com/maven/release/2026/"
+diff --git a/y2024/Crescendo/vendordeps/ChoreoLib.json b/y2024/Crescendo/vendordeps/ChoreoLib.json
+index e534f4dd..54f97779 100644
+--- a/y2024/Crescendo/vendordeps/ChoreoLib.json
++++ b/y2024/Crescendo/vendordeps/ChoreoLib.json
+@@ -3,7 +3,7 @@
+   "name": "ChoreoLib",
+   "version": "2026.0.0-beta-1",
+   "uuid": "b5e23f0a-dac9-4ad2-8dd6-02767c520aca",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": [
+     "https://frcmaven.wpi.edu/artifactory/sleipnirgroup-mvn-release/"
+   ],
+diff --git a/y2024/Crescendo/vendordeps/PhotonLib-json-1.0.json b/y2024/Crescendo/vendordeps/PhotonLib-json-1.0.json
+index dfbe6edc..8b1d42b8 100644
+--- a/y2024/Crescendo/vendordeps/PhotonLib-json-1.0.json
++++ b/y2024/Crescendo/vendordeps/PhotonLib-json-1.0.json
+@@ -3,7 +3,7 @@
+   "name": "photonlib",
+   "version": "v2026.0.1-beta",
+   "uuid": "515fe07e-bfc6-11fa-b3de-0242ac130004",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": [
+     "https://maven.photonvision.org/repository/internal",
+     "https://maven.photonvision.org/repository/snapshots"
+diff --git a/y2024/Crescendo/vendordeps/SnobotSim.json b/y2024/Crescendo/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/y2024/Crescendo/vendordeps/SnobotSim.json
++++ b/y2024/Crescendo/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+diff --git a/y2025/Reefscape/vendordeps/ChoreoLib.json b/y2025/Reefscape/vendordeps/ChoreoLib.json
+index e534f4dd..54f97779 100644
+--- a/y2025/Reefscape/vendordeps/ChoreoLib.json
++++ b/y2025/Reefscape/vendordeps/ChoreoLib.json
+@@ -3,7 +3,7 @@
+   "name": "ChoreoLib",
+   "version": "2026.0.0-beta-1",
+   "uuid": "b5e23f0a-dac9-4ad2-8dd6-02767c520aca",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": [
+     "https://frcmaven.wpi.edu/artifactory/sleipnirgroup-mvn-release/"
+   ],
+diff --git a/y2025/Reefscape/vendordeps/PhotonLib-json-1.0.json b/y2025/Reefscape/vendordeps/PhotonLib-json-1.0.json
+index dfbe6edc..8b1d42b8 100644
+--- a/y2025/Reefscape/vendordeps/PhotonLib-json-1.0.json
++++ b/y2025/Reefscape/vendordeps/PhotonLib-json-1.0.json
+@@ -3,7 +3,7 @@
+   "name": "photonlib",
+   "version": "v2026.0.1-beta",
+   "uuid": "515fe07e-bfc6-11fa-b3de-0242ac130004",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": [
+     "https://maven.photonvision.org/repository/internal",
+     "https://maven.photonvision.org/repository/snapshots"
+diff --git a/y2025/Reefscape/vendordeps/SnobotSim.json b/y2025/Reefscape/vendordeps/SnobotSim.json
+index c45c3667..e6d84bf6 100644
+--- a/y2025/Reefscape/vendordeps/SnobotSim.json
++++ b/y2025/Reefscape/vendordeps/SnobotSim.json
+@@ -3,7 +3,7 @@
+   "name": "SnobotSim",
+   "version": "2025.12.05-03",
+   "uuid": "3ee970a0-d18f-11f0-9009-376231151dda",
+-  "frcYear": "2026beta",
++  "frcYear": "2026",
+   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json",
+   "javaDependencies": [
+-- 
+2.34.1
+

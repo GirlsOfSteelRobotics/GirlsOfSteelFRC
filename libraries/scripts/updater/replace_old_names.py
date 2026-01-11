@@ -53,6 +53,18 @@ def run_our_additional_replacements(auto_commit):
 
     # Put our smarter-than-wpilib replacements here
     # fmt: off
+    replacements.append(("import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;", "import com.revrobotics.spark.FeedbackSensor;"))
+    replacements.append((r"velocityFF\(", "feedForward.kV("))
+    replacements.append(("maxMotion.maxVelocity", "maxMotion.cruiseVelocity"))
+    replacements.append(("import com.revrobotics.spark.SparkBase.PersistMode;", "import com.revrobotics.PersistMode;"))
+    replacements.append(("import com.revrobotics.spark.SparkBase.ResetMode;", "import com.revrobotics.ResetMode;"))
+    replacements.append(("import com.revrobotics.spark.SparkBase.ControlType;", "import com.revrobotics.ControlType;"))
+    replacements.append(("import com.revrobotics.ControlType;", "import com.revrobotics.spark.SparkBase.ControlType;"))
+    replacements.append((r".setReference\(", ".setSetpoint("))
+    replacements.append((r"m_autonomousCommand.schedule\(\);", "CommandScheduler.getInstance().schedule(m_autonomousCommand);"))
+    replacements.append(("maxMotion.allowedClosedLoopError", "maxMotion.allowedProfileError"))
+    replacements.append((r"new NavxWrapper\(\)", "new NavxWrapper(m_gyro)"))
+    
     # fmt: on
 
     # Run these on all the files

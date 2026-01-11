@@ -14,6 +14,20 @@ from libraries.scripts.updater.update_bazelrio import update_bazelrio
 from libraries.scripts.gradle.run_spotless import run_smart_spotless
 
 
+def hack_betas():
+    from libraries.scripts.updater.utils import walk_for_extension
+    vendordeps = walk_for_extension(".", ".json")
+
+    for vd in vendordeps:
+        with open(vd, 'r') as f:
+            contents = f.read()
+
+        contents = contents.replace("2026beta", "2026")
+
+        with open(vd, 'w') as f:
+            f.write(contents)
+
+
 def update_everything():
     if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
         os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
@@ -22,6 +36,7 @@ def update_everything():
     run_replacements_in_batch = True
 
     update_vendor_deps(ignore_cache=ignore_download_cache)
+    hack_betas()
     replace_gradlerio_files(run_custom_updates=True)
     if run_replacements_in_batch:
         # run_standard_replacement(auto_commit=False)
@@ -29,7 +44,7 @@ def update_everything():
         run_smart_spotless(commands=["spotlessGroovyGradleApply"])
     else:
         run_all_replacements()
-    update_bazelrio(ignore_cache=ignore_download_cache)
+    # update_bazelrio(ignore_cache=ignore_download_cache)
     run_smart_spotless(
         commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
     )
