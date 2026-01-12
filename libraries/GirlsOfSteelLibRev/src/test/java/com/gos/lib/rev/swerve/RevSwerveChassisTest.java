@@ -7,7 +7,7 @@ import com.gos.lib.rev.swerve.config.RevSwerveChassisConstantsBuilder;
 import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.DrivingClosedLoopParameters;
 import com.gos.lib.rev.swerve.config.RevSwerveModuleConstants.TurningClosedLoopParameters;
 import com.gos.lib.rev.swerve.config.SwerveGearingKit;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkBaseConfigAccessor;
 import edu.wpi.first.math.util.Units;

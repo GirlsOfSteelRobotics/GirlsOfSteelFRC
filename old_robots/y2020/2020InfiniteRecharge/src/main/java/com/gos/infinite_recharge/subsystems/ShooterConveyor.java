@@ -6,8 +6,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -78,7 +78,7 @@ public class ShooterConveyor extends SubsystemBase {
 
     public void advanceBall() {
         m_goalPosition = m_encoder.getPosition() + UNIT_HEIGHT;
-        m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, ControlType.kPosition);
+        m_pidController.setSetpoint(m_encoder.getPosition() + UNIT_HEIGHT, ControlType.kPosition);
     }
 
     public boolean isAdvanced() {

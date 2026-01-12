@@ -12,8 +12,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.numbers.N1;
@@ -150,8 +150,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterGoalRpm = rpm;
         m_backspinGoalRpm = rpm * ROLLER_SHOOTER_RPM_PROPORTION;
 
-        m_shooterPidController.setReference(rpm, ControlType.kVelocity);
-        m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, ControlType.kVelocity);
+        m_shooterPidController.setSetpoint(rpm, ControlType.kVelocity);
+        m_rollerPidController.setSetpoint(ROLLER_SHOOTER_RPM_PROPORTION * rpm, ControlType.kVelocity);
 
     }
 

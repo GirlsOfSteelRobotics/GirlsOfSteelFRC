@@ -29,7 +29,7 @@ public class AutonomousChooser {
 
     public void start() {
         m_autonomousCommand = m_chooser.getSelected();
-        m_autonomousCommand.schedule();
+        CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
 
     public void end() {

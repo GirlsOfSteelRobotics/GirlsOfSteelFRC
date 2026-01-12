@@ -13,8 +13,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.scra.mepi.rapid_react.Constants;
@@ -107,7 +107,7 @@ public class ShooterSubsytem extends SubsystemBase {
     }
 
     public void setPidRpm(double rpm) {
-        m_pidController.setReference(rpm, ControlType.kVelocity);
+        m_pidController.setSetpoint(rpm, ControlType.kVelocity);
     }
 
     public boolean checkAtSpeed(double goal) {

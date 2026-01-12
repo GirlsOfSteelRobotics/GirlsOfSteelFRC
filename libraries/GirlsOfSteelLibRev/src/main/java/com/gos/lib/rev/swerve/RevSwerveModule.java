@@ -18,8 +18,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfigAccessor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -236,8 +236,8 @@ public class RevSwerveModule implements AutoCloseable {
         m_desiredState.optimize(new Rotation2d(getTurningEncoderAngle()));
 
         // Command driving and turning SPARKS MAX towards their respective setpoints.
-        m_drivingPIDController.setReference(m_desiredState.speedMetersPerSecond, ControlType.kVelocity);
-        m_turningPIDController.setReference(m_desiredState.angle.getRadians(), ControlType.kPosition);
+        m_drivingPIDController.setSetpoint(m_desiredState.speedMetersPerSecond, ControlType.kVelocity);
+        m_turningPIDController.setSetpoint(m_desiredState.angle.getRadians(), ControlType.kPosition);
 
     }
 
@@ -289,7 +289,7 @@ public class RevSwerveModule implements AutoCloseable {
 
     public void characterizeDriveMotor(Voltage volts) {
         m_drivingSparkMax.setVoltage(volts.in(Volts));
-        m_turningPIDController.setReference(0, ControlType.kPosition);
+        m_turningPIDController.setSetpoint(0, ControlType.kPosition);
     }
 
     public void characterizeSteerMotor(Voltage volts) {

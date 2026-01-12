@@ -16,8 +16,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.controller.PIDController;
@@ -282,8 +282,8 @@ public class ChassisSubsystem extends SubsystemBase {
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
         double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAcceleration);
         double accelerationRight = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(rightAcceleration);
-        m_leftPidController.setReference(leftVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0, staticFrictionLeft + accelerationLeft);
-        m_rightPidController.setReference(rightVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0, staticFrictionRight + accelerationRight);
+        m_leftPidController.setSetpoint(leftVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0, staticFrictionLeft + accelerationLeft);
+        m_rightPidController.setSetpoint(rightVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0, staticFrictionRight + accelerationRight);
         m_drive.feed();
     }
 
@@ -292,8 +292,8 @@ public class ChassisSubsystem extends SubsystemBase {
         double rightError = rightDistance - getRightEncoderDistance();
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftError);
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightError);
-        m_leftPidController.setReference(leftDistance, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, staticFrictionLeft);
-        m_rightPidController.setReference(rightDistance, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, staticFrictionRight);
+        m_leftPidController.setSetpoint(leftDistance, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, staticFrictionLeft);
+        m_rightPidController.setSetpoint(rightDistance, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, staticFrictionRight);
         m_drive.feed();
     }
 

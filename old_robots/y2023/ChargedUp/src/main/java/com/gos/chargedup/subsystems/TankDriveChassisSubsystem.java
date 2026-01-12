@@ -19,8 +19,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.RelativeEncoder;
@@ -278,8 +278,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        m_leftPIDcontroller.setReference(leftVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
-        m_rightPIDcontroller.setReference(rightVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
+        m_leftPIDcontroller.setSetpoint(leftVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
+        m_rightPIDcontroller.setSetpoint(rightVelocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
     }
 
     @Override

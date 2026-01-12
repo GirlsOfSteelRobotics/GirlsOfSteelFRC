@@ -64,7 +64,7 @@ public class RevProfiledElevatorController {
             currentVelocityMps,
             setpoint.velocity);
 
-        m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
+        m_sparkPidController.setSetpoint(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
     }
 
     public void resetPidController(double currentHeightMeters, double currentVelocityMps) {

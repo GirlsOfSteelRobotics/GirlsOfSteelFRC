@@ -4,8 +4,8 @@ import com.gos.lib.properties.pid.IPidPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig;
@@ -57,7 +57,7 @@ public final class RevPidPropertyBuilder extends PidProperty.Builder implements 
     @Override
     public IPidPropertyBuilder addFF(double defaultValue) {
         addFF(defaultValue, (double gain) -> {
-            m_closedLoopConfig.velocityFF(gain, m_slot);
+            m_closedLoopConfig.feedForward.kV(gain, m_slot);
             configureMotor();
         });
         return this;
@@ -66,7 +66,7 @@ public final class RevPidPropertyBuilder extends PidProperty.Builder implements 
     @Override
     public IPidPropertyBuilder addMaxVelocity(double defaultValue) {
         addMaxVelocity(defaultValue, (double gain) -> {
-            m_closedLoopConfig.maxMotion.maxVelocity(gain, m_slot);
+            m_closedLoopConfig.maxMotion.cruiseVelocity(gain, m_slot);
             configureMotor();
         });
         return this;
