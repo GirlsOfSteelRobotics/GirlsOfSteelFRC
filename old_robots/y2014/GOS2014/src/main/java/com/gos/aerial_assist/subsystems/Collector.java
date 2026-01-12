@@ -4,7 +4,7 @@
 
 package com.gos.aerial_assist.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
@@ -29,7 +29,7 @@ public class Collector extends SubsystemBase {
      *
      * @author Sonia, Sophia
      */
-    private final Jaguar m_collectorJag;
+    private final PWMSparkMax m_collectorJag;
 
 
     /**
@@ -39,7 +39,7 @@ public class Collector extends SubsystemBase {
      */
     public Collector() {
         m_collectorWheelSpike = new Relay(RobotMap.COLLECTOR_WHEEL_SPIKE);
-        m_collectorJag = new Jaguar(RobotMap.COLLECTOR_JAG);
+        m_collectorJag = new PWMSparkMax(RobotMap.COLLECTOR_JAG);
     }
 
 

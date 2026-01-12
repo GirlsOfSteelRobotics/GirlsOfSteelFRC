@@ -13,7 +13,7 @@ package com.gos.aerial_assist.subsystems;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.RobotMap;
@@ -28,7 +28,7 @@ public class Kicker extends SubsystemBase {
     private static final double PULSE_PER_REVOLUTION = 360;  //correct
     private static final double DISTANCE_PER_PULSE = 1.0 / PULSE_PER_REVOLUTION; //No gear ratio.
 
-    private final Jaguar m_kickerJag;
+    private final PWMSparkMax m_kickerJag;
     private final Talon m_kickerTalon;
 
     private final Encoder m_kickerEncoder;
@@ -42,7 +42,7 @@ public class Kicker extends SubsystemBase {
         // Pright = Configuration.rightPositionP; //TODO
         // Pleft = Configuration.leftPositionP;
 
-        m_kickerJag = new Jaguar(RobotMap.KICKER_MOTOR);
+        m_kickerJag = new PWMSparkMax(RobotMap.KICKER_MOTOR);
         m_kickerTalon = new Talon(7);
 
         m_kickerEncoder = new Encoder(RobotMap.KICKER_ENCODER_A, RobotMap.KICKER_ENCODER_B, true, CounterBase.EncodingType.k2X);

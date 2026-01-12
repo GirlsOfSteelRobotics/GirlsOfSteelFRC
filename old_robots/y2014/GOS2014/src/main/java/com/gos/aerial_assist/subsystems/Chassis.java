@@ -10,7 +10,7 @@ package com.gos.aerial_assist.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
@@ -23,8 +23,8 @@ import com.gos.aerial_assist.objects.LspbPidPlanner;
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods"})
 public class Chassis extends SubsystemBase {
 
-    private final Jaguar m_rightJag;
-    private final Jaguar m_leftJag;
+    private final PWMSparkMax m_rightJag;
+    private final PWMSparkMax m_leftJag;
 
     //DifferentialDrive drive = new DifferentialDrive(rightJag, leftJag); USE THIS IF DRIVING CODE DOESN'T WORK
     private static final double DEAD_ZONE_SCALE = 0.3;
@@ -66,8 +66,8 @@ public class Chassis extends SubsystemBase {
         m_kPRight = Configuration.RIGHT_POSITION_P;
         m_kPpLeft = Configuration.LEFT_POSITION_P;
 
-        m_rightJag = new Jaguar(RobotMap.RIGHT_JAG_PORT);
-        m_leftJag = new Jaguar(RobotMap.LEFT_JAG_PORT);
+        m_rightJag = new PWMSparkMax(RobotMap.RIGHT_JAG_PORT);
+        m_leftJag = new PWMSparkMax(RobotMap.LEFT_JAG_PORT);
 
         //2nd Robot encoder stuff
         m_rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, Configuration.RIGHT_ENCODER_REVERSE, CounterBase.EncodingType.k4X);

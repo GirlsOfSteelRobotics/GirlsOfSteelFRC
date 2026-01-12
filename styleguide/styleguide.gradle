@@ -4,7 +4,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.14"
 }
 //jacocoTestReport {
 //    dependsOn test
