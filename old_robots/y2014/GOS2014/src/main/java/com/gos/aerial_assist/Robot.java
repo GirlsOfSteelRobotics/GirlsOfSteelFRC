@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
         //new AutonomousMobility().start();
         // new AutonomousLowGoalHot().start();
         //auto.start();
-        m_autonomousCommand.schedule();
+        CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
 
     /**

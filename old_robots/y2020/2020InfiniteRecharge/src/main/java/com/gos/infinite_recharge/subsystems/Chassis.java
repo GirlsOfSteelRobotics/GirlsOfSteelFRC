@@ -11,8 +11,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -170,8 +170,8 @@ public class Chassis extends SubsystemBase {
 
         masterLeftConfig.closedLoop.outputRange(kMinOutput, kMaxOutput);
         masterRightConfig.closedLoop.outputRange(kMinOutput, kMaxOutput);
-        masterLeftConfig.closedLoop.maxMotion.allowedClosedLoopError(allowedErr, smartMotionSlot);
-        masterRightConfig.closedLoop.maxMotion.allowedClosedLoopError(allowedErr, smartMotionSlot);
+        masterLeftConfig.closedLoop.maxMotion.allowedProfileError(allowedErr, smartMotionSlot);
+        masterRightConfig.closedLoop.maxMotion.allowedProfileError(allowedErr, smartMotionSlot);
 
         m_leftProperties.updateIfChanged(true);
         m_rightProperties.updateIfChanged(true);
@@ -213,7 +213,7 @@ public class Chassis extends SubsystemBase {
                     new RevMotorControllerSimWrapper(m_masterRight, kDriveGearbox),
                     RevEncoderSimWrapper.create(m_masterLeft),
                     RevEncoderSimWrapper.create(m_masterRight),
-                    new NavxWrapper().getYawGyro());
+                    new NavxWrapper(m_gyro).getYawGyro());
             m_simulator.setRightInverted(false);
             m_cameraSimulator = new CameraSimulator();
         }
@@ -331,15 +331,15 @@ public class Chassis extends SubsystemBase {
     }
 
     public void driveDistance(double leftPosition, double rightPosition) {
-        m_leftPidController.setReference(leftPosition, ControlType.kMAXMotionPositionControl);
-        m_rightPidController.setReference(rightPosition, ControlType.kMAXMotionPositionControl);
+        m_leftPidController.setSetpoint(leftPosition, ControlType.kMAXMotionPositionControl);
+        m_rightPidController.setSetpoint(rightPosition, ControlType.kMAXMotionPositionControl);
         m_drive.feed();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
-        m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
+        m_leftPidController.setSetpoint(leftVelocity, ControlType.kVelocity);
+        m_rightPidController.setSetpoint(rightVelocity, ControlType.kVelocity);
         m_drive.feed();
 
         //System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);

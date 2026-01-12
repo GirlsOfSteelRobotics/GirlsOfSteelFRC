@@ -7,8 +7,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.numbers.N1;
@@ -78,7 +78,7 @@ public class Shooter extends SubsystemBase {
         followerConfig.follow(m_master, true);
 
         masterConfig.closedLoop.p(SHOOTER_KP);
-        masterConfig.closedLoop.velocityFF(SHOOTER_KFF);
+        masterConfig.closedLoop.feedForward.kV(SHOOTER_KFF);
         masterConfig.closedLoop.d(SHOOTER_KD);
 
         m_master.configure(masterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -107,7 +107,7 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(final double rpm) {
         m_goalRPM = rpm;
-        m_pidController.setReference(rpm, ControlType.kVelocity);
+        m_pidController.setSetpoint(rpm, ControlType.kVelocity);
         //double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
         //m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
         m_limelight.turnLimelightOn();
@@ -127,7 +127,7 @@ public class Shooter extends SubsystemBase {
 
         SparkMaxConfig config = new SparkMaxConfig();
         config.closedLoop.p(m_dashboardKp.getValue());
-        config.closedLoop.velocityFF(m_dashboardKff.getValue());
+        config.closedLoop.feedForward.kV(m_dashboardKff.getValue());
         m_master.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
         // System.out.println("kp: " + m_dashboardKp.getValue() + ", " + m_dashboardKff.getValue() + " goal: " + m_goalRPM + "== " + rpm);
 
@@ -143,7 +143,7 @@ public class Shooter extends SubsystemBase {
     public void stop() {
         m_master.set(0);
         m_limelight.turnLimelightOff();
-        //m_pidController.setReference(0, ControlType.kVelocity);
+        //m_pidController.setSetpoint(0, ControlType.kVelocity);
     }
 
     @Override

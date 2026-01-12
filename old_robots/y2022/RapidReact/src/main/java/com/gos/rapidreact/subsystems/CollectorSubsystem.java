@@ -11,8 +11,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -266,8 +266,8 @@ public class CollectorSubsystem extends SubsystemBase {
             double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
             double arbFeedforwardLeft = gravityOffsetLeft + staticFrictionLeft;
             double arbFeedforwardRight = gravityOffsetRight + staticFrictionRight;
-            m_pidControllerLeft.setReference(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, arbFeedforwardLeft);
-            m_pidControllerRight.setReference(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, arbFeedforwardRight);
+            m_pidControllerLeft.setSetpoint(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, arbFeedforwardLeft);
+            m_pidControllerRight.setSetpoint(pivotAngleDegreesGoal, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0, arbFeedforwardRight);
 
             m_leftGravityOffsetVoltage.setNumber(gravityOffsetLeft);
             m_rightGravityOffsetVoltage.setNumber(gravityOffsetRight);

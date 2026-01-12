@@ -13,13 +13,13 @@ import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -211,7 +211,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
                 getEncoderVel(),
                 setpoint.velocity);
 
-            m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
+            m_sparkPidController.setSetpoint(setpoint.position, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedForwardVolts);
             SmartDashboard.putNumber("feedForwardVolts", feedForwardVolts);
         }
         else {
@@ -275,7 +275,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
             m_pivotMotor.set(speed);
         }
         else {
-            m_sparkPidController.setReference(ARM_MAX_ANGLE, ControlType.kPosition);
+            m_sparkPidController.setSetpoint(ARM_MAX_ANGLE, ControlType.kPosition);
         }
     }
 

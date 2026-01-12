@@ -14,8 +14,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -120,7 +120,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 new RevMotorControllerSimWrapper(m_rightLeader, DCMotor.getNEO(2)),
                 RevEncoderSimWrapper.create(m_leftLeader),
                 RevEncoderSimWrapper.create(m_rightLeader),
-                new NavxWrapper().getYawGyro());
+                new NavxWrapper(m_gyro).getYawGyro());
             m_simulator.setRightInverted(false);
         }
     }
@@ -138,8 +138,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        m_leftController.setReference(leftVelocity, ControlType.kVelocity);
-        m_rightController.setReference(rightVelocity, ControlType.kVelocity);
+        m_leftController.setSetpoint(leftVelocity, ControlType.kVelocity);
+        m_rightController.setSetpoint(rightVelocity, ControlType.kVelocity);
     }
 
     public void applyChassisSpeed(ChassisSpeeds speeds) {
@@ -148,8 +148,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void applyWheelSpeed(DifferentialDriveWheelSpeeds speeds) {
-        m_leftController.setReference(speeds.leftMetersPerSecond, ControlType.kVelocity);
-        m_rightController.setReference(speeds.rightMetersPerSecond, ControlType.kVelocity);
+        m_leftController.setSetpoint(speeds.leftMetersPerSecond, ControlType.kVelocity);
+        m_rightController.setSetpoint(speeds.rightMetersPerSecond, ControlType.kVelocity);
     }
 
     public Pose2d getPose() {
