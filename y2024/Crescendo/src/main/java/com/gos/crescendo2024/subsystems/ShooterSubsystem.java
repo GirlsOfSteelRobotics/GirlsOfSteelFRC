@@ -7,8 +7,8 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -128,7 +128,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setPidRpm(double rpm) {
-        this.m_pidController.setReference(rpm, ControlType.kVelocity);
+        this.m_pidController.setSetpoint(rpm, ControlType.kVelocity);
         m_shooterGoalRPM = rpm;
     }
 

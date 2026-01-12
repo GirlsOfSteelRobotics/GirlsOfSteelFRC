@@ -12,8 +12,8 @@ import com.gos.codelabs.pid.Constants.FlywheelSimConstants;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
@@ -62,7 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void spinAtRpm(double rpm) {
         m_desiredRpm = rpm;
-        m_pidController.setReference(rpm, ControlType.kVelocity);
+        m_pidController.setSetpoint(rpm, ControlType.kVelocity);
     }
 
     public double getRpm() {

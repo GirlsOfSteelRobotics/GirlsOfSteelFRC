@@ -8,8 +8,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -210,8 +210,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistancePositionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, ControlType.kPosition, PID_SLOT_POSITION);
-        m_rightPid.setReference(rightDistance, ControlType.kPosition, PID_SLOT_POSITION);
+        m_leftPid.setSetpoint(leftDistance, ControlType.kPosition, PID_SLOT_POSITION);
+        m_rightPid.setSetpoint(rightDistance, ControlType.kPosition, PID_SLOT_POSITION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Position Goal", leftDistance);
@@ -219,8 +219,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistanceSmartMotionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION);
-        m_rightPid.setReference(rightDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION);
+        m_leftPid.setSetpoint(leftDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION);
+        m_rightPid.setSetpoint(rightDistance, ControlType.kMAXMotionPositionControl, PID_SLOT_SMART_MOTION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left SM Goal", leftDistance);
@@ -243,8 +243,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
         ArbFFUnits arbUnit = ArbFFUnits.kVoltage;
 
-        m_leftPid.setReference(leftVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
-        m_rightPid.setReference(rightVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
+        m_leftPid.setSetpoint(leftVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
+        m_rightPid.setSetpoint(rightVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Velocity Goal", leftVelocity);

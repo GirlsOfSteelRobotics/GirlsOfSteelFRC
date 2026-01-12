@@ -13,8 +13,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -94,8 +94,8 @@ public class HangerSubsystem extends SubsystemBase {
     }
 
     public void moveHangerToPosition(double position) {
-        m_leftPidController.setReference(position, ControlType.kPosition);
-        m_rightPidController.setReference(position, ControlType.kPosition);
+        m_leftPidController.setSetpoint(position, ControlType.kPosition);
+        m_rightPidController.setSetpoint(position, ControlType.kPosition);
     }
 
 

@@ -63,7 +63,7 @@ public class RevProfiledSingleJointedArmController {
         TrapezoidProfile.State setpoint = m_profilePid.getSetpoint();
 
         double feedForwardVolts = m_wpiFeedForward.calculate(Math.toRadians(currentAngleDegrees), Math.toRadians(setpoint.velocity));
-        m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
+        m_sparkPidController.setSetpoint(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
     }
 
     public void goToAngleWithVelocities(double goalDegrees, double currentAngleDegrees, double currentVelocityDps) {
@@ -71,7 +71,7 @@ public class RevProfiledSingleJointedArmController {
         TrapezoidProfile.State setpoint = m_profilePid.getSetpoint();
 
         double feedForwardVolts = m_wpiFeedForward.calculateWithVelocities(currentAngleDegrees, currentVelocityDps, setpoint.velocity);
-        m_sparkPidController.setReference(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
+        m_sparkPidController.setSetpoint(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
     }
 
     public void resetPidController(double currentAngleDegrees, double currentVelocityDegrees) {
