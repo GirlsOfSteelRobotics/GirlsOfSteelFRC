@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.RobotMap;
@@ -22,7 +22,7 @@ public class Turret extends SubsystemBase {
     private static final double KD = 0.0;
 
     private double m_offsetAngle = 0.34;
-    private final Jaguar m_turretJag = new Jaguar(RobotMap.TURRET_JAG);
+    private final PWMSparkMax m_turretJag = new PWMSparkMax(RobotMap.TURRET_JAG);
     private final Encoder m_encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
         RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
     private final PIDController m_pid = new PIDController(KP, KI, KD);

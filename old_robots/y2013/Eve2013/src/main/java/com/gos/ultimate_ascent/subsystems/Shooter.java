@@ -11,7 +11,7 @@ package com.gos.ultimate_ascent.subsystems;
 
 //import edu.wpi.first.wpilibj.*;
 
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class Shooter extends SubsystemBase {
 
-    private final Jaguar m_shooterJag;
+    private final PWMSparkMax m_shooterJag;
     //Makes the special speed control sensor
     private final MagneticSpeedSensor m_magSpeed;
     //angle between the shooter and the slot
@@ -45,7 +45,7 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
         //Shooter Jag
-        m_shooterJag = new Jaguar(RobotMap.SHOOTER_JAG);
+        m_shooterJag = new PWMSparkMax(RobotMap.SHOOTER_JAG);
 
         //This is the special shooter speed controller.
         m_magSpeed = new MagneticSpeedSensor(RobotMap.DIGITAL_INTPUT_CHANNEL);
