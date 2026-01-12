@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.subsystems;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.EncoderGoSPidController;
@@ -52,8 +52,8 @@ public class Chassis extends SubsystemBase {
     private static final double MAX_ACCELERATION = 0.5; //TODO find the max acceleration of the chassis
 
     //create Jags
-    private final Jaguar m_rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
-    private final Jaguar m_leftJags = new Jaguar(RobotMap.LEFT_JAGS);
+    private final PWMSparkMax m_rightJags = new PWMSparkMax(RobotMap.RIGHT_JAGS);
+    private final PWMSparkMax m_leftJags = new PWMSparkMax(RobotMap.LEFT_JAGS);
     //create gyro
     private final AnalogGyro m_gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
     //create stuff for encoders

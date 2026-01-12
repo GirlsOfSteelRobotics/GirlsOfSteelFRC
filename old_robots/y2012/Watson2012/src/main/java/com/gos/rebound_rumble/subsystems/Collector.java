@@ -1,7 +1,7 @@
 package com.gos.rebound_rumble.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
@@ -11,7 +11,7 @@ public class Collector extends SubsystemBase {
 
     private final DigitalInput m_collectorLimitSwitch = new DigitalInput(RobotMap.COLLECTOR_LIMIT_SWITCH);
 
-    private final Jaguar m_brushJag = new Jaguar(RobotMap.BRUSH_JAG);
+    private final PWMSparkMax m_brushJag = new PWMSparkMax(RobotMap.BRUSH_JAG);
     //    Relay brushSpike = new Relay(RobotMap.BRUSH_SPIKE);
     private final Relay m_middleConveyorSpike = new Relay(RobotMap.MIDDLE_COLLECTOR_SPIKE);
 

@@ -7,7 +7,7 @@ package com.gos.aerial_assist.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,7 +30,7 @@ public class Manipulator extends SubsystemBase {
     private static final double DISTANCE_PER_PULSE = (PULSE_PER_ROTATION * GEAR_RATIO) / PULSE_PER_ROTATION; //360 is the number of degrees in a circle
 
     private double m_angle; //starting angle
-    private final Jaguar m_manipulatorJag;
+    private final PWMSparkMax m_manipulatorJag;
     private final Encoder m_bobTheArmEncoder;
     private final Relay m_dasBootLights;
     private final EncoderGoSPidController m_manipulatorPID;
@@ -60,7 +60,7 @@ public class Manipulator extends SubsystemBase {
 
     public Manipulator() {
 
-        m_manipulatorJag = new Jaguar(RobotMap.MANIPULATOR_JAG);
+        m_manipulatorJag = new PWMSparkMax(RobotMap.MANIPULATOR_JAG);
         m_bobTheArmEncoder = new Encoder(RobotMap.MANIPULATOR_ENCODER_A, RobotMap.MANIPULATOR_ENCODER_B, true, CounterBase.EncodingType.k2X); //reverse boolean is true on the 2nd robot
         m_bobTheArmEncoder.setDistancePerPulse(DISTANCE_PER_PULSE); //assuming there's 360 pulses per revoluation
 

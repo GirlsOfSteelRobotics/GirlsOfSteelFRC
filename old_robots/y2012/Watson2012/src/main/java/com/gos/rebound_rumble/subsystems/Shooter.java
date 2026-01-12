@@ -2,7 +2,7 @@ package com.gos.rebound_rumble.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
@@ -49,7 +49,7 @@ public class Shooter extends SubsystemBase {
     private double m_angle;
     private double m_hangTime;
     private double m_newXDistance;
-    private final Jaguar m_jags = new Jaguar(RobotMap.SHOOTER_JAGS);
+    private final PWMSparkMax m_jags = new PWMSparkMax(RobotMap.SHOOTER_JAGS);
     //    CHANGE FOR REAL WATSON:
     //    public Encoder encoder = new Encoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
     //            RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,

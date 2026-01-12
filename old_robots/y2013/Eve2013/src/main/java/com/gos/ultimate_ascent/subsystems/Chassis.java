@@ -3,7 +3,7 @@ package com.gos.ultimate_ascent.subsystems;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 import com.gos.ultimate_ascent.objects.GosPidController;
@@ -74,9 +74,9 @@ public class Chassis extends SubsystemBase {
     public static final boolean REVERSE_DIRECTION = true;
 
     //create jags
-    private final Jaguar m_rightJag;
-    private final Jaguar m_backJag;
-    private final Jaguar m_leftJag;
+    private final PWMSparkMax m_rightJag;
+    private final PWMSparkMax m_backJag;
+    private final PWMSparkMax m_leftJag;
     //create encoders
     private final Encoder m_rightEncoder;
     private final Encoder m_backEncoder;
@@ -135,9 +135,9 @@ public class Chassis extends SubsystemBase {
         m_wheelRadii[LEFT_WHEEL] = LEFT_WHEEL_ROBOT_RADIUS;
 
         //jags
-        m_rightJag = new Jaguar(RobotMap.RIGHT_WHEEL_JAG);
-        m_backJag = new Jaguar(RobotMap.BACK_WHEEL_JAG);
-        m_leftJag = new Jaguar(RobotMap.LEFT_WHEEL_JAG);
+        m_rightJag = new PWMSparkMax(RobotMap.RIGHT_WHEEL_JAG);
+        m_backJag = new PWMSparkMax(RobotMap.BACK_WHEEL_JAG);
+        m_leftJag = new PWMSparkMax(RobotMap.LEFT_WHEEL_JAG);
 
         //normal encoders
         //        rightEncoder = new Encoder(RobotMap.RIGHT_WHEEL_CHANNEL_A,

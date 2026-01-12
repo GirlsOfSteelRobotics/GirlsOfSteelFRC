@@ -62,8 +62,8 @@ public class Watson2012 extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        m_turretTracking.schedule();
-        m_collect.schedule();
+        CommandScheduler.getInstance().schedule(m_turretTracking);
+        CommandScheduler.getInstance().schedule(m_collect);
         m_auto.start();
     }
 
@@ -80,7 +80,7 @@ public class Watson2012 extends TimedRobot {
         //start if you just start with teleop (like to test)
         m_collect.cancel();
         m_auto.cancel();
-        m_driveJagsLinear.schedule();
+        CommandScheduler.getInstance().schedule(m_driveJagsLinear);
         //        buttons.start();
     }
 

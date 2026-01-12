@@ -1,7 +1,7 @@
 package com.gos.rebound_rumble.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
@@ -9,7 +9,7 @@ import com.gos.rebound_rumble.RobotMap;
 public class Bridge extends SubsystemBase {
     private static final double JAG_SPEED = 1.0;
 
-    private final Jaguar m_bridgeArmJag = new Jaguar(RobotMap.BRIDGE_ARM_JAG);
+    private final PWMSparkMax m_bridgeArmJag = new PWMSparkMax(RobotMap.BRIDGE_ARM_JAG);
     //    public Relay bridgeArmSpike = new Relay(RobotMap.BRIDGE_ARM_SPIKE);
     private final DigitalInput m_upLimitSwitch = new DigitalInput(RobotMap.BRIDGE_UP_LIMIT_SWITCH);
     private final DigitalInput m_downLimitSwitch = new DigitalInput(RobotMap.BRIDGE_DOWN_LIMIT_SWITCH);

@@ -8,30 +8,14 @@ def download_external_archives():
     Downloads the necessary rules from external repositories
     """
 
-    # Download Extra java rules
-    http_archive(
-        name = "rules_jvm_external",
-        sha256 = "d31e369b854322ca5098ea12c69d7175ded971435e55c18dd9dd5f29cc5249ac",
-        strip_prefix = "rules_jvm_external-5.3",
-        url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/5.3/rules_jvm_external-5.3.tar.gz",
-    )
-
     # Download bzlmodrio <3
-    BZLMODRIO_COMMITISH = "05d4fe3a29210c009c4a6ff9384952c2c774bb98"
-    BZLMODRIO_SHA256 = "f157e74bac16a1f48affb6fd5732afcfdb3838f5366df4a5b559ca1bb6190032"
+    BZLMODRIO_COMMITISH = "5ed429c982d6858700340f03232da44ee9387878"
+    BZLMODRIO_SHA256 = "6f6b0cc5c2922d33987730df8f4ad5987a0d9225a217326929ed400b79349679"
     http_archive(
         name = "bzlmodrio",
         url = "https://github.com/bzlmodRio/bzlmodRio/archive/{}.tar.gz".format(BZLMODRIO_COMMITISH),
         sha256 = BZLMODRIO_SHA256,
         strip_prefix = "bzlmodRio-{}".format(BZLMODRIO_COMMITISH),
-    )
-
-    # Download Setup python
-    http_archive(
-        name = "rules_python",
-        sha256 = "3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
-        strip_prefix = "rules_python-0.30.0",
-        url = "https://github.com/bazelbuild/rules_python/releases/download/0.30.0/rules_python-0.30.0.tar.gz",
     )
 
     # Junit helper

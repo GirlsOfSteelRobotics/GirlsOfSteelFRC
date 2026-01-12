@@ -9,10 +9,10 @@ import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
-import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
@@ -60,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotorLeaderConfig.inverted(true);
         m_shooterEncoder = m_shooterMotorLeader.getEncoder();
         m_pidController = m_shooterMotorLeader.getClosedLoopController();
-        shooterMotorLeaderConfig.closedLoop.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kPrimaryEncoder);
+        shooterMotorLeaderConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
         m_pidProperties = new RevPidPropertyBuilder("Shooter", Constants.DEFAULT_CONSTANT_PROPERTIES, m_shooterMotorLeader, shooterMotorLeaderConfig, ClosedLoopSlot.kSlot0)
             .addP(1.5e-4)
             .addI(0.0)
