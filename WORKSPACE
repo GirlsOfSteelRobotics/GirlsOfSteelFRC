@@ -1,8 +1,6 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("//build_scripts/bazel/deps:download_external_archives.bzl", "download_external_archives")
-
-
-load("//build_scripts/bazel/deps:versions.bzl", "SNOBOTSIM_VERSION", "CHOREOLIB_VERSION", "NAVX_FRC_VERSION", "PATHPLANNERLIB_VERSION", "PHOENIX6_VERSION", "PHOENIX_VERSION", "PHOTONLIB_JSON_1_0_VERSION", "REVLIB_VERSION", "WPILIB_VERSION")
+load("//build_scripts/bazel/deps:versions.bzl", "CHOREOLIB_VERSION", "NAVX_FRC_VERSION", "PATHPLANNERLIB_VERSION", "PHOENIX6_VERSION", "PHOENIX_VERSION", "PHOTONLIB_JSON_1_0_VERSION", "REVLIB_VERSION", "SNOBOTSIM_VERSION", "WPILIB_VERSION")
 
 download_external_archives()
 
@@ -10,18 +8,18 @@ load("@bzlmodrio//private/non_bzlmod:download_dependencies.bzl", "download_depen
 
 download_dependencies(
     allwpilib_version = WPILIB_VERSION,
+    choreolib_version = CHOREOLIB_VERSION,
+    pathplannerlib_version = PATHPLANNERLIB_VERSION,
+    phoenix6_version = PHOENIX6_VERSION,
+    phoenix_version = PHOENIX_VERSION,
+    photonlib_version = PHOTONLIB_JSON_1_0_VERSION,
+    revlib_version = REVLIB_VERSION,
+    rules_pmd_version = "6.43.0",
+    rules_wpi_styleguide_version = "1.0.0",
     # apriltaglib_version = None,
     # imgui_version = None,
     # libssh_version = None,
     studica_version = NAVX_FRC_VERSION,
-    phoenix_version = PHOENIX_VERSION,
-    phoenix6_version = PHOENIX6_VERSION,
-    revlib_version = REVLIB_VERSION,
-    rules_pmd_version = "6.43.0",
-    rules_wpi_styleguide_version = "1.0.0",
-    photonlib_version = PHOTONLIB_JSON_1_0_VERSION,
-    pathplannerlib_version = PATHPLANNERLIB_VERSION,
-    choreolib_version = CHOREOLIB_VERSION,
 
     # Always the default version of these libraries
     # rules_spotless_version = None,
@@ -52,7 +50,7 @@ load("@rules_java//java:repositories.bzl", "rules_java_toolchains")
 
 rules_java_toolchains()
 
-load("@rules_python//python:repositories.bzl", "py_repositories")
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
 
 py_repositories()
 
@@ -100,9 +98,12 @@ maven_install(
         "org.snobotv2:snobot_sim_java_revlib:{v}".format(v = SNOBOTSIM_VERSION),
         "org.snobotv2:snobot_swerve_sim:{v}".format(v = SNOBOTSIM_VERSION),
     ],
-    # version_conflict_policy = "pinned",
-    repositories = maven_repositories + ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release", "https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
     maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
+    # version_conflict_policy = "pinned",
+    repositories = maven_repositories + [
+        "https://raw.githubusercontent.com/snobotsim/maven_repo/master/release",
+        "https://raw.githubusercontent.com/snobotsim/maven_repo/master/development",
+    ],
 )
 
 # Separate this because the maven_install_json doesn't download other OS native files
@@ -122,8 +123,6 @@ maven_install(
         "https://repo.maven.apache.org/maven2/",
     ],
 )
-
-load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 
 python_register_toolchains(
     name = "python_3_10",
@@ -146,7 +145,6 @@ pinned_maven_install()
 load("@gos_pip_deps//:requirements.bzl", "install_deps")
 
 install_deps()
-
 
 #####################
 # Styleguide
