@@ -35,19 +35,40 @@ def update_everything():
     ignore_download_cache = True
     run_replacements_in_batch = True
 
-    update_vendor_deps(ignore_cache=ignore_download_cache)
-    hack_betas()
-    replace_gradlerio_files(run_custom_updates=True)
-    if run_replacements_in_batch:
-        # run_standard_replacement(auto_commit=False)
-        run_our_additional_replacements(auto_commit=False)
-        run_smart_spotless(commands=["spotlessGroovyGradleApply"])
-    else:
-        run_all_replacements()
-    # update_bazelrio(ignore_cache=ignore_download_cache)
-    run_smart_spotless(
-        commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
-    )
+    import subprocess
+    cmd = []
+    cmd.append("bazel")
+    cmd.append("run")
+    cmd.append("@bzlmodrio-choreolib//libraries/tools/choreo-cli:choreo-cli")
+    cmd.append("--")
+    cmd.append("--chor=y2024/Crescendo/src/main/deploy/choreo/ChoreoAutos.chor")
+    cmd.append("--generate")
+    cmd.append("--all-trajectory")
+    subprocess.check_call(cmd)
+    
+    cmd = []
+    cmd.append("bazel")
+    cmd.append("run")
+    cmd.append("@bzlmodrio-choreolib//libraries/tools/choreo-cli:choreo-cli")
+    cmd.append("--")
+    cmd.append("--chor=y2025/Reefscape/src/main/deploy/choreo/ChoreoAutos.chor")
+    cmd.append("--generate")
+    cmd.append("--all-trajectory")
+    subprocess.check_call(cmd)
+
+    # update_vendor_deps(ignore_cache=ignore_download_cache)
+    # hack_betas()
+    # replace_gradlerio_files(run_custom_updates=True)
+    # if run_replacements_in_batch:
+    #     # run_standard_replacement(auto_commit=False)
+    #     run_our_additional_replacements(auto_commit=False)
+    #     run_smart_spotless(commands=["spotlessGroovyGradleApply"])
+    # else:
+    #     run_all_replacements()
+    # # update_bazelrio(ignore_cache=ignore_download_cache)
+    # run_smart_spotless(
+    #     commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
+    # )
 
 
 if __name__ == "__main__":
