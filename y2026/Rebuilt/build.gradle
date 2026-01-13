@@ -77,6 +77,12 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api"
     testImplementation "org.junit.jupiter:junit-jupiter-params"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+    implementation project(":libraries:GirlsOfSteelLib")
+    implementation project(":libraries:GirlsOfSteelLibRev")
+    implementation project(":libraries:GirlsOfSteelLibPhoenix6")
+    implementation project(":libraries:GirlsOfSteelLibPathing")
+    implementation project(":libraries:GirlsOfSteelLibPhotonVision")
 }
 
 test{
