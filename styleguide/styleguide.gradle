@@ -32,4 +32,8 @@ pmd {
     ruleSets = []
 }
 
+tasks.withType(Pmd) {
+    excludes.add('**/choreo_gen/**.java')
+}
+
 // apply from: "${rootDir}/styleguide/spotless.gradle"

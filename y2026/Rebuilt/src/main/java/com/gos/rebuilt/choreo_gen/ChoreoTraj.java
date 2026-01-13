@@ -1,5 +1,5 @@
 
-package com.gos.rebuilt.choreo;
+package com.gos.rebuilt.choreo_gen;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
