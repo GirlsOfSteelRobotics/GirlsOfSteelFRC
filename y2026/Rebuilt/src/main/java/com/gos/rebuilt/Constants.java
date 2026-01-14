@@ -14,4 +14,10 @@ package com.gos.rebuilt;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+
+    //motors
+
+    public static final int INTAKE_MOTOR = 0;
+    public static final int SHOOTER_MOTOR = 1;
 }
