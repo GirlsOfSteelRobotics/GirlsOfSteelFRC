@@ -1,5 +1,6 @@
 package com.gos.rebuilt.subsystems;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
@@ -10,7 +11,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final SparkFlex m_shooterMotor;
     private final RelativeEncoder m_motorEncoder;
-    private final double SHOOTER_SPEED = 5;
+    private final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
 
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
@@ -18,7 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void spinMotorForward() {
-        m_shooterMotor.set(SHOOTER_SPEED);
+        m_shooterMotor.set(SHOOTER_SPEED.getValue());
     }
 
     public void spinMotorForward(double pow) {
@@ -26,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void spinMotorBackward() {
-        m_shooterMotor.set(-SHOOTER_SPEED);
+        m_shooterMotor.set(-SHOOTER_SPEED.getValue());
     }
 
     public void stop() {

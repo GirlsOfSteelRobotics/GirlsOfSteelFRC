@@ -11,6 +11,7 @@ import com.gos.rebuilt.subsystems.ExampleSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -62,8 +63,8 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-//    public Command getAutonomousCommand() {
-//        // An example command will be run in autonomous
-//        return Autos.exampleAuto(m_exampleSubsystem);
-//    }
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        return Commands.none();
+    }
 }
