@@ -7,6 +7,7 @@ package com.gos.rebuilt;
 
 import com.gos.rebuilt.commands.Autos;
 import com.gos.rebuilt.commands.ExampleCommand;
+import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -25,7 +26,7 @@ public class RobotContainer {
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController;
-
+    private final ClimberSubsystem m_climberSubsystem;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -33,7 +34,8 @@ public class RobotContainer {
     public RobotContainer() {
         m_exampleSubsystem = new ExampleSubsystem();
         m_driverController = new CommandXboxController(0);
-
+        m_climberSubsystem = new ClimberSubsystem();
+        m_climberSubsystem.addClimberDebugCommands();
         // Configure the trigger bindings
         configureBindings();
     }
