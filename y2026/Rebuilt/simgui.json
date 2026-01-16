@@ -1,6 +1,16 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "SPARK Flex [10]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [11]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [12]": {
         "header": {
           "open": true
@@ -23,10 +33,24 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
+      "/Shuffleboard/Intake/Intake In! :)": "Command",
+      "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/SmartDashboard/Alerts": "Alerts"
     },
     "windows": {
       "/Shuffleboard/Climber/Climb Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Intake/Intake In! :)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter/Shooter Forward! :)": {
         "window": {
           "visible": true
         }
@@ -36,6 +60,9 @@
   "NetworkTables": {
     "transitory": {
       "ClimberSubsystem": {
+        "open": true
+      },
+      "Shooter Subsystem": {
         "open": true
       }
     }
