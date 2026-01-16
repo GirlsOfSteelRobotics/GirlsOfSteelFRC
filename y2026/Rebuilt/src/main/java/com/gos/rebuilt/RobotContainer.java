@@ -5,6 +5,8 @@
 
 package com.gos.rebuilt;
 
+
+import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,6 +25,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
+    private final ClimberSubsystem m_climberSubsystem;
     private final CommandXboxController m_driverController; //NOPMD
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
@@ -33,6 +36,8 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
+        m_climberSubsystem = new ClimberSubsystem();
+        m_climberSubsystem.addClimberDebugCommands();
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
 

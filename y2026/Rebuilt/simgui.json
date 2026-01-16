@@ -10,13 +10,29 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK Flex [12]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [2] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/Intake/FunctionalCommand": "Command",
+      "/Shuffleboard/Climber/Climb Down": "Command",
+      "/Shuffleboard/Climber/Climb Up": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
@@ -24,12 +40,12 @@
       "/SmartDashboard/Alerts": "Alerts"
     },
     "windows": {
-      "/Shuffleboard/Intake/Intake Out! :(": {
+      "/Shuffleboard/Climber/Climb Up": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter/Shooter Backward! :(": {
+      "/Shuffleboard/Intake/Intake In! :)": {
         "window": {
           "visible": true
         }
@@ -42,13 +58,11 @@
     }
   },
   "NetworkTables": {
-    "persistent": {
-      "Preferences": {
-        "open": true
-      }
-    },
     "transitory": {
-      "SmartDashboard": {
+      "ClimberSubsystem": {
+        "open": true
+      },
+      "Shooter Subsystem": {
         "open": true
       }
     }
