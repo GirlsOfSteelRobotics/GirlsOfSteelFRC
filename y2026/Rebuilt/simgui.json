@@ -1,0 +1,59 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK Flex [10]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [11]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Intake/FunctionalCommand": "Command",
+      "/Shuffleboard/Intake/Intake In! :)": "Command",
+      "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
+      "/SmartDashboard/Alerts": "Alerts"
+    },
+    "windows": {
+      "/Shuffleboard/Intake/Intake Out! :(": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter/Shooter Backward! :(": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter/Shooter Forward! :)": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
