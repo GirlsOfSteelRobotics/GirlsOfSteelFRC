@@ -45,9 +45,6 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberMotor.stopMotor();
     }
 
-    public void climbToHeight(double height) {
-
-    }
 
     public Command createClimbingUpCommand() {
         return this.runEnd(this::climbUp, this::stop).withName("Climb Up");
