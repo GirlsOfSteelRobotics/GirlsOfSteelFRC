@@ -41,6 +41,8 @@ public class RobotContainer {
 
         // Configure the trigger bindings
         configureBindings();
+        m_intakeSubsystem.addIntakeDebugCommands();
+        m_shooterSubsystem.addShooterDebugCommands();
     }
 
 

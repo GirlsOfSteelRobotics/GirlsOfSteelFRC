@@ -1,0 +1,18 @@
+[
+  {
+    "name": "/Preferences/intakeSpeed",
+    "type": "double",
+    "value": 0.67,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/shooterSpeed",
+    "type": "double",
+    "value": 0.41,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

@@ -5,6 +5,9 @@ import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -32,6 +35,21 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void stop() {
         m_shooterMotor.stopMotor();
+    }
+
+    public void addShooterDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+        tab.add(createShooterSpinMotorForwardCommand());
+        tab.add(createShooterSpinMotorBackwardCommand());
+
+    }
+
+    public Command createShooterSpinMotorForwardCommand() {
+        return runEnd(this::spinMotorForward, this::stop).withName("Shooter Forward! :)");
+    }
+
+    public Command createShooterSpinMotorBackwardCommand() {
+        return runEnd(this::spinMotorBackward, this::stop).withName("Shooter Backward! :(");
     }
 
 
