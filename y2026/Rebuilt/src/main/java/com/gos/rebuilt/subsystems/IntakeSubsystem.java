@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
     private final SparkFlex m_intakeMotor;
-    private final GosDoubleProperty INTAKE_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeSpeed", 1);
-
+    private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeSpeed", 1);
 
 
     public IntakeSubsystem() {
@@ -25,12 +24,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public void intake() {
-        m_intakeMotor.set(INTAKE_SPEED.getValue());
+        m_intakeMotor.set(m_intakeSpeed.getValue());
     }
-    public void outtake(){
-        m_intakeMotor.set(-INTAKE_SPEED.getValue());
+
+    public void outtake() {
+        m_intakeMotor.set(-m_intakeSpeed.getValue());
     }
-    public void stop(){
+
+    public void stop() {
         m_intakeMotor.stopMotor();
     }
 

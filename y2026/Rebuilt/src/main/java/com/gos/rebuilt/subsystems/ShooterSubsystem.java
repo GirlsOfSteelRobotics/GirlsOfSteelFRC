@@ -1,5 +1,6 @@
 package com.gos.rebuilt.subsystems;
 
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
@@ -14,27 +15,43 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final SparkFlex m_shooterMotor;
     private final RelativeEncoder m_motorEncoder;
-    private final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
+    private final LoggingUtil m_networkTableEntries;
+    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
 
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_shooterMotor.getEncoder();
+        m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
+
+
+        m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
     }
 
     public void spinMotorForward() {
-        m_shooterMotor.set(SHOOTER_SPEED.getValue());
+        m_shooterMotor.set(m_shooterSpeed.getValue());
     }
+
 
     public void spinMotorForward(double pow) {
         m_shooterMotor.set(pow);
     }
 
+    public double getRPM() {
+        return m_motorEncoder.getVelocity();
+    }
+
+
     public void spinMotorBackward() {
-        m_shooterMotor.set(-SHOOTER_SPEED.getValue());
+        m_shooterMotor.set(-m_shooterSpeed.getValue());
     }
 
     public void stop() {
         m_shooterMotor.stopMotor();
+    }
+
+    @Override
+    public void periodic() {
+        m_networkTableEntries.updateLogs();
     }
 
     public void addShooterDebugCommands() {

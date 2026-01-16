@@ -46,6 +46,11 @@
       "Preferences": {
         "open": true
       }
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {
