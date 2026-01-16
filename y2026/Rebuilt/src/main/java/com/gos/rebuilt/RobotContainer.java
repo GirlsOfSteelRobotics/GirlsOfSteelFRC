@@ -7,6 +7,7 @@ package com.gos.rebuilt;
 
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
+import com.gos.rebuilt.subsystems.SuperStructureViz;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,6 +28,8 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
 
+    private final SuperStructureViz m_superStructureViz;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -35,6 +38,8 @@ public class RobotContainer {
         m_driverController = new CommandXboxController(0);
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
+
+        m_superStructureViz = new SuperStructureViz();
 
         // Configure the trigger bindings
         configureBindings();
