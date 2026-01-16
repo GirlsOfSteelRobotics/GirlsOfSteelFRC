@@ -15,4 +15,5 @@ package com.gos.rebuilt;
  */
 public final class Constants {
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
+    public static final int CLIMBER_MOTOR = 12;
 }

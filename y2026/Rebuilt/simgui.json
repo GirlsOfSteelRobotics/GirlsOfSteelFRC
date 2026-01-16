@@ -1,6 +1,11 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "SPARK Flex [12]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [2]": {
         "header": {
           "open": true
@@ -25,6 +30,13 @@
         "window": {
           "visible": true
         }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "ClimberSubsystem": {
+        "open": true
       }
     }
   },

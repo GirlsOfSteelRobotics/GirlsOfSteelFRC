@@ -18,7 +18,7 @@ public class ClimberSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
     public ClimberSubsystem() {
-        m_climberMotor = new SparkFlex(2, MotorType.kBrushless);
+        m_climberMotor = new SparkFlex(Constants.CLIMBER_MOTOR, MotorType.kBrushless);
         m_climberEncoder = m_climberMotor.getEncoder();
         m_networkTableEntries = new LoggingUtil("ClimberSubsystem");
         m_networkTableEntries.addDouble("Climber rpm", this::getRPM);
