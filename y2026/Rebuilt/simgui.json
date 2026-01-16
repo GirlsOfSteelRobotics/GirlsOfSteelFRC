@@ -10,6 +10,16 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK Flex [11] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [12]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -19,12 +29,24 @@
       "/Shuffleboard/Intake/FunctionalCommand": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/SmartDashboard/Alerts": "Alerts"
     },
     "windows": {
       "/Shuffleboard/Intake/Intake Out! :(": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Feed the hungry 🍕😎": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Reverse the pizza 😱": {
         "window": {
           "visible": true
         }
