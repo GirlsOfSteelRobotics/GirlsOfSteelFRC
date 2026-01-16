@@ -1,0 +1,34 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK Flex [2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [2] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Climber/Climb Down": "Command",
+      "/Shuffleboard/Climber/Climb Up": "Command",
+      "/SmartDashboard/Alerts": "Alerts"
+    },
+    "windows": {
+      "/Shuffleboard/Climber/Climb Up": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
