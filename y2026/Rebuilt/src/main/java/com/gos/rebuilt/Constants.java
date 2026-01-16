@@ -14,6 +14,12 @@ package com.gos.rebuilt;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
     public static final int CLIMBER_MOTOR = 12;
+
+
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
+    //motors
+
+    public static final int INTAKE_MOTOR = 10;
+    public static final int SHOOTER_MOTOR = 11;
 }
