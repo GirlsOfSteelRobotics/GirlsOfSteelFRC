@@ -48,6 +48,7 @@ public class PizzaSubsystem extends SubsystemBase {
     public double getRPM() {
         return m_pizzaEncoder.getVelocity();
     }
+
     public double getAngle() {
         return m_pizzaEncoder.getPosition();
     }

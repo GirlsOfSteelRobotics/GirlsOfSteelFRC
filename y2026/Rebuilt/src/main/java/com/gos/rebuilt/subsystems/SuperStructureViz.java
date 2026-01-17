@@ -5,7 +5,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SuperStructureViz extends SubsystemBase {
@@ -16,15 +15,13 @@ public class SuperStructureViz extends SubsystemBase {
 
     public SuperStructureViz(PivotSubsystem pivotSubsystem, PizzaSubsystem pizzaSubsystem) {
         m_superStructurePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz", Pose3d.struct).publish();
-        this.m_pivotSubsystem=pivotSubsystem;
-        this.m_pizzaSubsystem=pizzaSubsystem;
+        this.m_pivotSubsystem = pivotSubsystem;
+        this.m_pizzaSubsystem = pizzaSubsystem;
     }
 
     @Override
     public void periodic() {
 
-        // TODO grab these from subsystems
-        double hackyTimestamp = Timer.getFPGATimestamp();
         double shooterPitch = 45;
         double turretYaw = 0;
         double pivotAngle = m_pivotSubsystem.getAngle();

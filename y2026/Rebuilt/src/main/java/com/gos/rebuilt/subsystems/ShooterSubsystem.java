@@ -10,19 +10,16 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
-import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -30,9 +27,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-
-
-    private static final double GEAR_RATIO = 45.0;
 
 
     private ISimWrapper m_shooterSimulator;

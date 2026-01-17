@@ -25,7 +25,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
-        m_encoder=m_pivotMotor.getEncoder();
+        m_encoder = m_pivotMotor.getEncoder();
 
 
         if (RobotBase.isSimulation()) {
@@ -45,11 +45,11 @@ public class PivotSubsystem extends SubsystemBase {
         m_pivotMotor.stopMotor();
     }
 
-    public double getAngle () {
+    public double getAngle() {
         return m_encoder.getPosition();
     }
 
-   @Override
+    @Override
     public void simulationPeriodic() {
         m_pivotSimulator.update();
     }

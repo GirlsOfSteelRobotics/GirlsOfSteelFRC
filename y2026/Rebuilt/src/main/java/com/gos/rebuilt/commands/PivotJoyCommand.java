@@ -27,7 +27,7 @@ public class PivotJoyCommand extends Command {
         if (Math.abs(m_joystick.getRightY()) > 0.1) {
             m_pivotSubsystem.setSpeed(-m_joystick.getRightY());
         }
-        else{
+        else {
             m_pivotSubsystem.setSpeed(0);
         }
     }
