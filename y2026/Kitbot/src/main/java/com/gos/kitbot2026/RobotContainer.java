@@ -5,6 +5,8 @@
 
 package com.gos.kitbot2026;
 
+import com.gos.kitbot2026.subsystems.IntakeSubsystem;
+import com.gos.kitbot2026.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,7 +24,8 @@ public class RobotContainer {
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController; //NOPMD
-
+    private final IntakeSubsystem m_intakeSubsystem;
+    private final ShooterSubsystem m_shooterSubsystem;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -30,8 +33,12 @@ public class RobotContainer {
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
 
+        m_intakeSubsystem = new IntakeSubsystem();
+        m_shooterSubsystem = new ShooterSubsystem();
         // Configure the trigger bindings
         configureBindings();
+        m_intakeSubsystem.addIntakeDebugCommands();
+        m_shooterSubsystem.addShooterDebugCommands();
     }
 
 
