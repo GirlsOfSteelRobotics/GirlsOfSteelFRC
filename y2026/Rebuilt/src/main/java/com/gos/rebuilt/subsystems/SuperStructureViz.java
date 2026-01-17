@@ -25,7 +25,7 @@ public class SuperStructureViz extends SubsystemBase {
 
         // TODO grab these from subsystems
         double hackyTimestamp = Timer.getFPGATimestamp();
-        double shooterPitch = 5 * hackyTimestamp;
+        double shooterPitch = 45;
         double turretYaw = 0;
         double pivotAngle = m_pivotSubsystem.getAngle();
         double pizzaAngle = m_pizzaSubsystem.getAngle();
