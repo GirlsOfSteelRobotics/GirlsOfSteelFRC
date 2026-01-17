@@ -14,6 +14,7 @@ import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import com.gos.rebuilt.subsystems.SuperStructureViz;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -37,6 +38,8 @@ public class RobotContainer {
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
 
+    private final SuperStructureViz m_superStructureViz;  // NOPMD
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -57,6 +60,8 @@ public class RobotContainer {
             DriverStation.silenceJoystickConnectionWarning(true);
 
         }
+
+        m_superStructureViz = new SuperStructureViz();
 
         // Configure the trigger bindings
         configureBindings();
