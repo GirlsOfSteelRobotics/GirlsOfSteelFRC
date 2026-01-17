@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SuperStructureViz extends SubsystemBase {
 
-    private final StructArrayPublisher<Pose3d> mSuperStructurePublisher;
+    private final StructArrayPublisher<Pose3d> m_superStructurePublisher;
 
     public SuperStructureViz() {
-        mSuperStructurePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz", Pose3d.struct).publish();
+        m_superStructurePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz", Pose3d.struct).publish();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SuperStructureViz extends SubsystemBase {
             Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(9),
             new Rotation3d(Math.toRadians(0), Math.toRadians(-intakeAngle), Math.toRadians(0)));
 
-        mSuperStructurePublisher.set(new Pose3d[]{
+        m_superStructurePublisher.set(new Pose3d[]{
             pizzaPose,
             turretPose,
             intakePose,

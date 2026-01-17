@@ -38,7 +38,7 @@ public class RobotContainer {
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
 
-    private final SuperStructureViz m_superStructureViz;
+    private final SuperStructureViz m_superStructureViz;  // NOPMD
 
 
     /**
