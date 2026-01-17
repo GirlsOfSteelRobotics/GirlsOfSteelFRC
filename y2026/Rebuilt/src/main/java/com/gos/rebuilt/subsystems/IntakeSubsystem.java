@@ -15,10 +15,8 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkFlex m_intakeMotor;
     private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeSpeed", 1);
 
-
     public IntakeSubsystem() {
         m_intakeMotor = new SparkFlex(Constants.INTAKE_MOTOR, MotorType.kBrushless);
-
 
     }
 
@@ -48,5 +46,9 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command createIntakeOutCommand() {
         return runEnd(this::outtake, this::stop).withName("Intake Out! :(");
     }
+
+
+
+
 }
 

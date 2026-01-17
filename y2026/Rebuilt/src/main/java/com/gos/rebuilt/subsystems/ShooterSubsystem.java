@@ -6,10 +6,20 @@ import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -18,6 +28,9 @@ public class ShooterSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
 
+
+    private ISimWrapper m_shooterSimulator;
+
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_shooterMotor.getEncoder();
@@ -25,6 +38,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
+
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            LinearSystem<N1, N1, N1> plant =
+                LinearSystemId.createFlywheelSystem(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
+            this.m_shooterSimulator = new FlywheelSimWrapper(
+                shooterFlywheelSim,
+                new RevMotorControllerSimWrapper(this.m_shooterMotor, gearbox),
+                RevEncoderSimWrapper.create(this.m_shooterMotor));
+        }
+
     }
 
     public void spinMotorForward() {
@@ -67,6 +92,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createShooterSpinMotorBackwardCommand() {
         return runEnd(this::spinMotorBackward, this::stop).withName("Shooter Backward! :(");
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_shooterSimulator.update();
     }
 
 
