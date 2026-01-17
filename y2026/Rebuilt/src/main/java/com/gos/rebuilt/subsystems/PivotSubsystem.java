@@ -2,6 +2,7 @@ package com.gos.rebuilt.subsystems;
 
 
 import com.gos.rebuilt.Constants;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -17,12 +18,14 @@ public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
     private static final double GEAR_RATIO = 45.0;
+    private final RelativeEncoder m_encoder;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
 
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
+        m_encoder=m_pivotMotor.getEncoder();
 
 
         if (RobotBase.isSimulation()) {
@@ -40,6 +43,10 @@ public class PivotSubsystem extends SubsystemBase {
 
     public void stop() {
         m_pivotMotor.stopMotor();
+    }
+
+    public double getAngle () {
+        return m_encoder.getPosition();
     }
 
    @Override

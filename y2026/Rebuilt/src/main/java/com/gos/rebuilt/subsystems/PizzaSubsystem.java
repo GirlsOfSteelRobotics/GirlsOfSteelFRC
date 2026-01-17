@@ -3,6 +3,7 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.numbers.N1;
@@ -27,6 +28,7 @@ public class PizzaSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pizzaMotor;
     private final GosDoubleProperty m_pizzaSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeed", 1);
+    private final RelativeEncoder m_encoder;
 
     private static final double GEAR_RATIO = 45.0;
     private ISimWrapper m_pizzaSimulator;
@@ -35,6 +37,7 @@ public class PizzaSubsystem extends SubsystemBase {
     public PizzaSubsystem() {
 
         m_pizzaMotor = new SparkFlex(Constants.PIZZA_MOTOR, MotorType.kBrushless);
+        m_encoder = m_pizzaMotor.getEncoder();
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(2);
             LinearSystem<N1, N1, N1> plant =
@@ -71,6 +74,9 @@ public class PizzaSubsystem extends SubsystemBase {
 
     public Command createPizzaReverseCommand() {
         return runEnd(this::reverse, this::stop).withName("Reverse the pizza 😱");
+    }
+    public double getAngle() {
+        return m_encoder.getPosition();
     }
 
 
