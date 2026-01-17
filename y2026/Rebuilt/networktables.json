@@ -22,5 +22,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/pivotSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

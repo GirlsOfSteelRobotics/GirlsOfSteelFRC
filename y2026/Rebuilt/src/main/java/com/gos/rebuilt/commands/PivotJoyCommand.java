@@ -1,6 +1,5 @@
 package com.gos.rebuilt.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -25,7 +24,7 @@ public class PivotJoyCommand extends Command {
 
     @Override
     public void execute() {
-        m_pivotSubsystem.setSpeed(m_joystick.getRightY());
+        m_pivotSubsystem.setSpeed(-m_joystick.getRightY());
     }
 
     @Override
