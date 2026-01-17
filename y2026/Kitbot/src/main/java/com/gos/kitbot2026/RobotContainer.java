@@ -24,7 +24,6 @@ public class RobotContainer {
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController; //NOPMD
-    private final CommandXboxController m_operatorController;
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
 
@@ -33,7 +32,6 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
-        m_operatorController = new CommandXboxController(1);
 
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
