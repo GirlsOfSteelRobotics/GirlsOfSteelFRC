@@ -3,7 +3,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package com.gos.rebuilt;
+package com.gos.kitbot2026;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -14,13 +14,5 @@ package com.gos.rebuilt;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
-    //motors
-
-    public static final int INTAKE_MOTOR = 10;
-    public static final int SHOOTER_MOTOR = 11;
-    public static final int PIZZA_MOTOR = 12;
-    public static final int PIVOT_MOTOR = 13;
 }
