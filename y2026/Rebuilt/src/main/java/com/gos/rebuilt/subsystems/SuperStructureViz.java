@@ -26,8 +26,6 @@ public class SuperStructureViz extends SubsystemBase {
         double intakeAngle = 10 * hackyTimestamp;
         double pizzaAngle = 360 * hackyTimestamp;
 
-        System.out.println(shooterPitch + ", " + turretYaw + " " + intakeAngle);
-
         Pose3d pizzaPose = new Pose3d(
             Units.inchesToMeters(0), Units.inchesToMeters(0), Units.inchesToMeters(0),
             new Rotation3d(Math.toRadians(0), Math.toRadians(0), Math.toRadians(pizzaAngle)));
