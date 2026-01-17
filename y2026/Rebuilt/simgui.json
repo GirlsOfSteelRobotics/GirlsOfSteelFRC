@@ -41,6 +41,11 @@
       "/SmartDashboard/Alerts": "Alerts"
     },
     "windows": {
+      "/Shuffleboard/Intake/Intake In! :)": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Intake/Intake Out! :(": {
         "window": {
           "visible": true
@@ -79,8 +84,5 @@
         "open": true
       }
     }
-  },
-  "NetworkTables Info": {
-    "visible": true
   }
 }
