@@ -24,7 +24,9 @@ public class PivotJoyCommand extends Command {
 
     @Override
     public void execute() {
-        m_pivotSubsystem.setSpeed(-m_joystick.getRightY());
+        if (Math.abs(m_joystick.getRightY()) > 0.1) {
+            m_pivotSubsystem.setSpeed(-m_joystick.getRightY());
+        }
     }
 
     @Override
