@@ -6,6 +6,7 @@
 package com.gos.rebuilt;
 
 import com.gos.rebuilt.commands.PivotJoyCommand;
+import com.gos.rebuilt.subsystems.CommandSwerveDrivetrain;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.generated.TunerConstants;
 
 
 /**
@@ -33,6 +35,8 @@ public class RobotContainer {
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController; //NOPMD
     private final CommandXboxController m_operatorController;
+
+    private final CommandSwerveDrivetrain m_chassis;
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final PizzaSubsystem m_pizzaSubsystem;
@@ -46,8 +50,9 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
-
         m_operatorController = new CommandXboxController(1);
+
+        m_chassis = TunerConstants.createDrivetrain();
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
