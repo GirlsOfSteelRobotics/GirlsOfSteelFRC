@@ -1,16 +1,30 @@
 package com.gos.rebuilt.subsystems;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Volts;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.swerve.SwerveModule;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
+import com.gos.lib.phoenix6.alerts.CancoderAlerts;
+import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
+import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
+import com.gos.lib.properties.pid.PidProperty;
+import com.gos.rebuilt.Constants;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -22,6 +36,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -30,6 +45,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
+
+import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 /**
@@ -40,6 +57,9 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
  * https://v6.docs.ctr-electronics.com/en/stable/docs/tuner/tuner-swerve/index.html
  */
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+    public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(5);
+    public static final double MAX_ROTATION_SPEED = Math.toRadians(360);
+
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;  // NOPMD
     private double m_lastSimTime;
@@ -59,6 +79,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
+    private final List<PidProperty> m_moduleProperties;
+    private final List<BasePhoenix6Alerts> m_alerts;
+
+    private static final SlotConfigs DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
+    private static final SlotConfigs DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
+
+
+
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
         new SysIdRoutine.Config(
@@ -74,6 +102,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             this
         )
     );
+
 
     /* SysId routine for characterizing steer. This is used to find PID gains for the steer motors. */
     private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(// NOPMD(UnusedPrivateField)
@@ -121,6 +150,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     /* The SysId routine to test */
     private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation; // NOPMD(ImmutableField)
 
+
+    private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
      * <p>
@@ -140,64 +175,23 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
         configureAutoBuilder();
-    }
 
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants     Drivetrain-wide constants for the swerve drive
-     * @param odometryUpdateFrequency The frequency to run the odometry loop. If
-     *                                unspecified or set to 0 Hz, this is 250 Hz on
-     *                                CAN FD, and 100 Hz on CAN 2.0.
-     * @param modules                 Constants for each specific module
-     */
-    public CommandSwerveDrivetrain(
-        SwerveDrivetrainConstants drivetrainConstants,
-        double odometryUpdateFrequency,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, odometryUpdateFrequency, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-        configureAutoBuilder();
-    }
+        m_alerts = new ArrayList<>();
+        m_moduleProperties = new ArrayList<>();
+        for (int i = 0; i < 4; ++i) {
+            SwerveModule<TalonFX, TalonFX, CANcoder> module = getModule(i);
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Steer", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getSteerMotor(), 0)
+                .fromDefaults(DEFAULT_STEER_CONFIG)
+                .build());
+            m_moduleProperties.add(new Phoenix6TalonPidPropertyBuilder("SdsModule.Drive", Constants.DEFAULT_CONSTANT_PROPERTIES, module.getDriveMotor(), 0)
+                .fromDefaults(DEFAULT_DRIVE_CONFIG)
+                .build());
 
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants       Drivetrain-wide constants for the swerve drive
-     * @param odometryUpdateFrequency   The frequency to run the odometry loop. If
-     *                                  unspecified or set to 0 Hz, this is 250 Hz on
-     *                                  CAN FD, and 100 Hz on CAN 2.0.
-     * @param odometryStandardDeviation The standard deviation for odometry calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in meters
-     *                                  and radians
-     * @param visionStandardDeviation   The standard deviation for vision calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in meters
-     *                                  and radians
-     * @param modules                   Constants for each specific module
-     */
-    public CommandSwerveDrivetrain(
-        SwerveDrivetrainConstants drivetrainConstants,
-        double odometryUpdateFrequency,
-        Matrix<N3, N1> odometryStandardDeviation,
-        Matrix<N3, N1> visionStandardDeviation,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
+            m_alerts.add(new TalonFxAlerts(module.getDriveMotor(), "Swerve Drive[" + i + "]"));
+            m_alerts.add(new TalonFxAlerts(module.getSteerMotor(), "Swerve Steer[" + i + "]"));
+            m_alerts.add(new CancoderAlerts(module.getEncoder()));
         }
-        configureAutoBuilder();
+
     }
 
     private void configureAutoBuilder() {
@@ -280,6 +274,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 m_hasAppliedOperatorPerspective = true;
             });
         }
+
+        for (PidProperty property : m_moduleProperties) {
+            property.updateIfChanged();
+        }
     }
 
     private void startSimThread() {
@@ -340,5 +338,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
+    }
+
+    public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
+
+        );
     }
 }

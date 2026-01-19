@@ -5,6 +5,7 @@
 
 package com.gos.rebuilt;
 
+import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.CommandSwerveDrivetrain;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
@@ -33,7 +34,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController m_driverController; //NOPMD
+    private final CommandXboxController m_driverController;
     private final CommandXboxController m_operatorController;
 
     private final CommandSwerveDrivetrain m_chassis;
@@ -86,6 +87,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
     }
 
