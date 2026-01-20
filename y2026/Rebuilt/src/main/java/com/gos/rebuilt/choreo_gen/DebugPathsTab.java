@@ -19,7 +19,7 @@ public class DebugPathsTab {
 
     public void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
-        debugPathsTab.add(createDebugPathCommand("NormalPath_MaxAccelMaxSpeed"));
+        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_MaxSpeed"));
         debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_01fps"));
         debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_05fps"));
         debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_10fps"));

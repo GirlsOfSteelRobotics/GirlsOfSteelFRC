@@ -69,9 +69,11 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel1fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel5fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccelMaxSpeed": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_01fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
       "/Shuffleboard/Intake/FunctionalCommand": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
@@ -87,12 +89,7 @@
       "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
-      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel5rps": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel10fps": {
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
         "window": {
           "visible": true
         }
