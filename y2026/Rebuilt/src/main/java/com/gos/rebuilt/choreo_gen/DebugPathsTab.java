@@ -20,22 +20,22 @@ public class DebugPathsTab {
     public void addDebugPathsToShuffleBoard() {
         ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
         debugPathsTab.add(createDebugPathCommand("NormalPath_MaxAccelMaxSpeed"));
-        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel1fps"));
-        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel10fps"));
-        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel5fps"));
-        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel1rps"));
-        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel2rps"));
-        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel4rps"));
-        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel8rps"));
-        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel12rps"));
-        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel1rps"));
-        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel5rps"));
-        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel10rps"));
-        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel15rps"));
-        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel5fps"));
-        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel1fps"));
-        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel10fps"));
-        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel15fps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_01fps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_05fps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPath_MaxAccel_10fps"));
+        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel_01rps"));
+        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel_02rps"));
+        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel_04rps"));
+        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel_08rps"));
+        debugPathsTab.add(createDebugPathCommand("RotatedPath_MaxAccel_12rps"));
+        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel_01rps"));
+        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel_05rps"));
+        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel_10rps"));
+        debugPathsTab.add(createDebugPathCommand("RotStrPath_MaxAccel_15rps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_01fps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_05fps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_10fps"));
+        debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_15fps"));
     }
 
     private Command createDebugPathCommand(String name) {

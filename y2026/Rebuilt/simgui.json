@@ -44,18 +44,34 @@
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel15rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel1rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel5rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_15rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel12rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel1rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel2rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel4rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel8rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_02rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_04rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_08rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_12rps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel15fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel1fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel5fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_15fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel1fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel5fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Intake/FunctionalCommand": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
@@ -132,7 +148,8 @@
   "NetworkTables Info": {
     "Connections": {
       "open": true
-    }
+    },
+    "visible": true
   },
   "Plot": {
     "Plot <0>": {

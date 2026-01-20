@@ -76,7 +76,7 @@
  },
  "generationFeatures":[],
  "codegen":{
-  "root":"..\\java\\com\\gos\\rebuilt\\choreo_gen",
+  "root":"..\\..\\java\\com\\gos\\rebuilt\\choreo_gen",
   "genVars":true,
   "genTrajData":true,
   "useChoreoLib":true
