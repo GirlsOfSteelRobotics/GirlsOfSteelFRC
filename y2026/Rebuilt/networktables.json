@@ -46,5 +46,61 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/SdsModule.Steerkp",
+    "type": "double",
+    "value": 67.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkD",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkV",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Drivekp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.DrivekV",
+    "type": "double",
+    "value": 0.124,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ChassisTranslationDamper",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

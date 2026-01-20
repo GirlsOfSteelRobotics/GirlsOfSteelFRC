@@ -5,9 +5,10 @@
 
 package com.gos.rebuilt;
 
+import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
-import com.gos.rebuilt.subsystems.CommandSwerveDrivetrain;
+import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
@@ -37,11 +38,13 @@ public class RobotContainer {
     private final CommandXboxController m_driverController;
     private final CommandXboxController m_operatorController;
 
-    private final CommandSwerveDrivetrain m_chassis;
+    private final ChassisSubsystem m_chassis;
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
+
+    private final DebugPathsTab m_debugPathsTab;
 
     private final SuperStructureViz m_superStructureViz;  // NOPMD
 
@@ -74,6 +77,9 @@ public class RobotContainer {
         m_intakeSubsystem.addIntakeDebugCommands();
         m_shooterSubsystem.addShooterDebugCommands();
         m_pizzaSubsystem.addPizzaDebugCommands();
+
+        m_debugPathsTab = new DebugPathsTab(m_chassis);
+        m_debugPathsTab.addDebugPathsToShuffleBoard();
     }
 
 
