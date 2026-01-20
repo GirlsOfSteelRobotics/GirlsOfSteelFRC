@@ -6,6 +6,7 @@
 <suppressions>
     <suppress files="choreo_gen[\\/]ChoreoTraj.java" checks="[a-zA-Z0-9]*" />
     <suppress files="frc[\\/]robot[\\/]generated[\\/]TunerConstants.*.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="org[\\/]littletonrobotics[\\/].*FieldConstants.java" checks="[a-zA-Z0-9]*" />
     <suppress files="choreo_gen[\\/]ChoreoVars.java" checks="[a-zA-Z0-9]*" />
     <suppress files="Pipeline.java" checks="[a-zA-Z0-9]*" />
     <suppress files="PipelineListener.java" checks="[a-zA-Z0-9]*" />
