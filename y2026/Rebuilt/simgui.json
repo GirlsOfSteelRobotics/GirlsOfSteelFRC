@@ -101,7 +101,7 @@
       },
       "/SmartDashboard/Field": {
         "AprilTags": {
-          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+          "image": "/Users/ylaoworakiat27/IdeaProjects/GirlsOfSteelFRC/libraries/shared_images/tag-pink.png"
         },
         "Trajectory": {
           "arrows": false,
