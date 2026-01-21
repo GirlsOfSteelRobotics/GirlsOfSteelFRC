@@ -23,6 +23,7 @@ import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
+import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.rebuilt.Constants;
@@ -66,6 +67,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;  // NOPMD
+    private final PidProperty m_pidControllerProperty;
     private double m_lastSimTime;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
@@ -167,6 +169,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
+    private final SwerveRequest.FieldCentricFacingAngle m_angleFace = new SwerveRequest.FieldCentricFacingAngle()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
+        .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
      * <p>
@@ -190,6 +197,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_field = new GosField();
         SmartDashboard.putData("Field", m_field.getField2d());
         SmartDashboard.putData("Field3d", m_field.getField3d());
+
+        m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", Constants.DEFAULT_CONSTANT_PROPERTIES, m_angleFace.HeadingController)
+            .addP(10.0)
+            .addD(0.1)
+            .build();
 
         m_alerts = new ArrayList<>();
         m_moduleProperties = new ArrayList<>();
@@ -305,6 +317,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
+        m_pidControllerProperty.updateIfChanged();
     }
 
     private void startSimThread() {
@@ -373,6 +386,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
 
+        );
+    }
+
+    public void staringDrive(double xJoystick, double yJoystick, double goalAngleRad) {
+        setControl(
+            m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withTargetDirection(Rotation2d.fromRadians(goalAngleRad))
         );
     }
 }

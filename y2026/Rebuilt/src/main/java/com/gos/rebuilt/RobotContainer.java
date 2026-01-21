@@ -6,8 +6,8 @@
 package com.gos.rebuilt;
 
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
-import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
+import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
@@ -93,7 +93,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
+        m_chassis.setDefaultCommand(new StaringCommand(m_chassis, m_driverController));
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
     }
 
