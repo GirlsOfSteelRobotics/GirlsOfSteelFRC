@@ -28,16 +28,10 @@ public class StaringCommand extends Command {
     @Override
     public void execute() {
 
-        Pose2d robotPose = m_chassis.getState().Pose;
-        Translation2d hubPose = Hub.topCenterPoint.toTranslation2d();
-
-        double goalAngle = Math.atan2(robotPose.getY() - hubPose.getY(),
-            robotPose.getX() - hubPose.getX());
-
         m_chassis.staringDrive(
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
-            goalAngle
+            m_chassis.getFaceAngle(Hub.innerCenterPoint.toTranslation2d())
         );
 
 
