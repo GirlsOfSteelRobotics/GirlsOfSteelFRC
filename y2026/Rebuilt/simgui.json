@@ -39,6 +39,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Debug Paths/NormalPath_MaxAccelMaxSpeed": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel10rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel15rps": "Command",
@@ -89,6 +90,11 @@
       "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
+      "/Shuffleboard/Chassis/Face Hub": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
         "window": {
           "visible": true

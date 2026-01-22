@@ -37,6 +37,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -45,6 +46,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -53,6 +56,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -389,11 +393,35 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         );
     }
 
-    public void staringDrive(double xJoystick, double yJoystick, double goalAngleRad) {
+    public void staringDrive(double xJoystick, double yJoystick, Rotation2d goalAngleRad) {
         setControl(
             m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
-                .withTargetDirection(Rotation2d.fromRadians(goalAngleRad))
+                .withTargetDirection(goalAngleRad)
         );
     }
+
+    public Rotation2d getFaceAngle(Translation2d point) {
+
+        Pose2d robotPose = getState().Pose;
+
+        double goalAngle = Math.atan2(robotPose.getY() - point.getY(),
+            robotPose.getX() - point.getX());
+
+        return Rotation2d.fromRadians(goalAngle);
+    }
+
+    public void stop() {
+        driveFieldCentric(0, 0, 0);
+    }
+
+    public void addChassisDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        tab.add(createFaceHub());
+    }
+
+    public Command createFaceHub() {
+        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
+    }
+
 }

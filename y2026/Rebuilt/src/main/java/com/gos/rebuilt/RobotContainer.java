@@ -77,6 +77,7 @@ public class RobotContainer {
         m_intakeSubsystem.addIntakeDebugCommands();
         m_shooterSubsystem.addShooterDebugCommands();
         m_pizzaSubsystem.addPizzaDebugCommands();
+        m_chassis.addChassisDebugCommands();
 
         m_debugPathsTab = new DebugPathsTab(m_chassis);
         m_debugPathsTab.addDebugPathsToShuffleBoard();
