@@ -5,7 +5,10 @@
 
 package com.gos.rebuilt;
 
+import com.gos.rebuilt.choreo_gen.DebugPathsTab;
+import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
+import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
@@ -19,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.generated.TunerConstants;
 
 
 /**
@@ -31,12 +35,16 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController m_driverController; //NOPMD
+    private final CommandXboxController m_driverController;
     private final CommandXboxController m_operatorController;
+
+    private final ChassisSubsystem m_chassis;
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
+
+    private final DebugPathsTab m_debugPathsTab;
 
     private final SuperStructureViz m_superStructureViz;  // NOPMD
 
@@ -46,8 +54,9 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
-
         m_operatorController = new CommandXboxController(1);
+
+        m_chassis = TunerConstants.createDrivetrain();
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
@@ -68,6 +77,10 @@ public class RobotContainer {
         m_intakeSubsystem.addIntakeDebugCommands();
         m_shooterSubsystem.addShooterDebugCommands();
         m_pizzaSubsystem.addPizzaDebugCommands();
+        m_chassis.addChassisDebugCommands();
+
+        m_debugPathsTab = new DebugPathsTab(m_chassis);
+        m_debugPathsTab.addDebugPathsToShuffleBoard();
     }
 
 
@@ -81,6 +94,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
     }
 

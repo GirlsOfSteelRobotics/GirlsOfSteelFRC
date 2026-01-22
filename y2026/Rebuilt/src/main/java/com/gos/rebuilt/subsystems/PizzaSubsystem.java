@@ -10,34 +10,29 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
-import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class PizzaSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pizzaMotor;
     private final GosDoubleProperty m_pizzaSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeed", 1);
-    private final RelativeEncoder m_encoder;
+    private final RelativeEncoder m_pizzaEncoder;
 
-    private static final double GEAR_RATIO = 45.0;
     private ISimWrapper m_pizzaSimulator;
-
 
     public PizzaSubsystem() {
 
         m_pizzaMotor = new SparkFlex(Constants.PIZZA_MOTOR, MotorType.kBrushless);
-        m_encoder = m_pizzaMotor.getEncoder();
+        m_pizzaEncoder = m_pizzaMotor.getEncoder();
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(2);
             LinearSystem<N1, N1, N1> plant =
@@ -48,6 +43,14 @@ public class PizzaSubsystem extends SubsystemBase {
                 new RevMotorControllerSimWrapper(this.m_pizzaMotor, gearbox),
                 RevEncoderSimWrapper.create(this.m_pizzaMotor));
         }
+    }
+
+    public double getRPM() {
+        return m_pizzaEncoder.getVelocity();
+    }
+
+    public double getAngle() {
+        return m_pizzaEncoder.getPosition();
     }
 
     public void feed() {
@@ -62,6 +65,8 @@ public class PizzaSubsystem extends SubsystemBase {
         m_pizzaMotor.stopMotor();
     }
 
+
+
     public void addPizzaDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
         tab.add(createPizzaFeedCommand());
@@ -75,14 +80,11 @@ public class PizzaSubsystem extends SubsystemBase {
     public Command createPizzaReverseCommand() {
         return runEnd(this::reverse, this::stop).withName("Reverse the pizza 😱");
     }
-    public double getAngle() {
-        return m_encoder.getPosition();
-    }
-
 
     @Override
     public void simulationPeriodic() {
         m_pizzaSimulator.update();
     }
+
 }
 

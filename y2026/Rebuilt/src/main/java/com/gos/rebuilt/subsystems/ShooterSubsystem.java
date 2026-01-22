@@ -28,12 +28,15 @@ public class ShooterSubsystem extends SubsystemBase {
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
+    private final GosDoubleProperty m_feedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKf", 1);
+    private final GosDoubleProperty m_kp = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKp", 1);
+
+
+    private ISimWrapper m_shooterSimulator;
     private final shooterSimBalls m_shooterSimBalls;
 
     private static final double GEAR_RATIO = 45.0;
 
-
-    private ISimWrapper m_shooterSimulator;
 
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
@@ -70,6 +73,13 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_motorEncoder.getVelocity();
     }
 
+    public void setRPM(double goal) {
+
+        double error = goal - getRPM();
+        m_shooterMotor.set(m_feedForward.getValue() * goal + m_kp.getValue() * error);
+
+    }
+
 
     public void spinMotorBackward() {
         m_shooterMotor.set(-m_shooterSpeed.getValue());
@@ -89,6 +99,8 @@ public class ShooterSubsystem extends SubsystemBase {
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
         tab.add(createShooterSpinMotorForwardCommand());
         tab.add(createShooterSpinMotorBackwardCommand());
+        tab.add(createShooterSpin2000());
+        tab.add(createShooterSpin1500());
 
     }
 
@@ -98,6 +110,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createShooterSpinMotorBackwardCommand() {
         return runEnd(this::spinMotorBackward, this::stop).withName("Shooter Backward! :(");
+    }
+
+    public Command createShooterSpin1500() {
+        return runEnd(() -> setRPM(1500), this::stop).withName("Shooter spins to 1500!!");
+    }
+
+    public Command createShooterSpin2000() {
+        return runEnd(() -> setRPM(2000), this::stop).withName("Shooter spins to 2000!!");
     }
 
     @Override
