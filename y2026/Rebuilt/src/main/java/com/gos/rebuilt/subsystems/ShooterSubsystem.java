@@ -10,6 +10,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -32,6 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     private ISimWrapper m_shooterSimulator;
+
 
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
@@ -65,6 +67,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getRPM() {
         return m_motorEncoder.getVelocity();
+    }
+
+    public double getLaunchSpeed() {
+        return m_motorEncoder.getVelocity() * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .75;
     }
 
     public void setRPM(double goal) {
