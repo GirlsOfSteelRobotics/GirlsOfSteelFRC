@@ -46,8 +46,8 @@ public class ShooterSimBalls {
         m_robotPosition = robotPosition;
         m_fuelInitVZ = launchSpeed * Math.sin(m_theta.getRadians());
         double horizComp = launchSpeed * Math.cos(m_theta.getRadians());
-        m_fuelInitVY = Math.sin(robotPosition.getRotation().getRadians()) * horizComp + robotVel.vyMetersPerSecond;
-        m_fuelInitVX = Math.cos(robotPosition.getRotation().getRadians()) * horizComp + robotVel.vxMetersPerSecond;
+        m_fuelInitVY = -Math.sin(robotPosition.getRotation().getRadians()) * horizComp + robotVel.vyMetersPerSecond;
+        m_fuelInitVX = -Math.cos(robotPosition.getRotation().getRadians()) * horizComp + robotVel.vxMetersPerSecond;
 
 
         ArrayList<Translation3d> listOfTrans = new ArrayList<>(10);
