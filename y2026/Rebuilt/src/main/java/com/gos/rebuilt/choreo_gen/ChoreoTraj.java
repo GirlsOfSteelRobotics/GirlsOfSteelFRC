@@ -24,14 +24,7 @@ public record ChoreoTraj(
     Pose2d initialPoseBlue,
     Pose2d endPoseBlue
 ) {
-    public static final ChoreoTraj StraightPath_MaxAccelMaxSpeed = new ChoreoTraj(
-	    "StraightPath_MaxAccelMaxSpeed",
-	    OptionalInt.empty(),
-	    1.81238,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotatedPath_MaxAccel_01rps = new ChoreoTraj(
+    public static final ChoreoTraj RotatedPath_MaxAccel_01rps = new ChoreoTraj(
 	    "RotatedPath_MaxAccel_01rps",
 	    OptionalInt.empty(),
 	    6.31111,
@@ -143,14 +136,20 @@ public record ChoreoTraj(
 	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
 	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
 	);
+	public static final ChoreoTraj StraightPath_MaxAccel_MaxSpeed = new ChoreoTraj(
+	    "StraightPath_MaxAccel_MaxSpeed",
+	    OptionalInt.empty(),
+	    1.81238,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
 
     /**
      * A map between trajectory names and their corresponding data.
      * This allows for trajectory data to be looked up with strings during runtime.
      */
     public static final Map<String, ChoreoTraj> ALL_TRAJECTORIES = Map.ofEntries(
-    	Map.entry("StraightPath_MaxAccelMaxSpeed", StraightPath_MaxAccelMaxSpeed),
-		Map.entry("RotatedPath_MaxAccel_01rps", RotatedPath_MaxAccel_01rps),
+    	Map.entry("RotatedPath_MaxAccel_01rps", RotatedPath_MaxAccel_01rps),
 		Map.entry("RotatedPath_MaxAccel_02rps", RotatedPath_MaxAccel_02rps),
 		Map.entry("RotatedPath_MaxAccel_04rps", RotatedPath_MaxAccel_04rps),
 		Map.entry("RotatedPath_MaxAccel_08rps", RotatedPath_MaxAccel_08rps),
@@ -165,7 +164,8 @@ public record ChoreoTraj(
 		Map.entry("StraightPathNAV_MaxAccel_15fps", StraightPathNAV_MaxAccel_15fps),
 		Map.entry("StraightPath_MaxAccel_01fps", StraightPath_MaxAccel_01fps),
 		Map.entry("StraightPath_MaxAccel_05fps", StraightPath_MaxAccel_05fps),
-		Map.entry("StraightPath_MaxAccel_10fps", StraightPath_MaxAccel_10fps)
+		Map.entry("StraightPath_MaxAccel_10fps", StraightPath_MaxAccel_10fps),
+		Map.entry("StraightPath_MaxAccel_MaxSpeed", StraightPath_MaxAccel_MaxSpeed)
     );
 
     /**
