@@ -70,7 +70,7 @@ public class RobotContainer {
 
         }
 
-        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem);
+        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem);
 
         // Configure the trigger bindings
         configureBindings();

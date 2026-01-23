@@ -5,17 +5,10 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -53,8 +46,6 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command createIntakeOutCommand() {
         return runEnd(this::outtake, this::stop).withName("Intake Out! :(");
     }
-
-
 
 
 }
