@@ -118,5 +118,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ShooterKr",
+    "type": "double",
+    "value": 1500.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tuneRPM",
+    "type": "double",
+    "value": 1750.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

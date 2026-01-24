@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
     private final GosDoubleProperty m_feedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKf", 1);
     private final GosDoubleProperty m_kp = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKp", 1);
-
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
 
     private ISimWrapper m_shooterSimulator;
 
@@ -100,6 +100,7 @@ public class ShooterSubsystem extends SubsystemBase {
         tab.add(createShooterSpinMotorBackwardCommand());
         tab.add(createShooterSpin2000());
         tab.add(createShooterSpin1500());
+        tab.add(createtuneRPM());
 
     }
 
@@ -118,6 +119,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createShooterSpin2000() {
         return runEnd(() -> setRPM(2000), this::stop).withName("Shooter spins to 2000!!");
     }
+    public Command createtuneRPM() {
+        return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
+    }
+
 
     @Override
     public void simulationPeriodic() {

@@ -327,6 +327,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
         m_pidControllerProperty.updateIfChanged();
+        m_networkTableEntries.updateLogs();
     }
 
     private void startSimThread() {

@@ -84,6 +84,7 @@
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
+      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
@@ -100,15 +101,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter/Shooter spins to 2000!!": {
+      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
-        "AprilTags": {
-          "image": "/Users/ylaoworakiat27/IdeaProjects/GirlsOfSteelFRC/libraries/shared_images/tag-pink.png"
-        },
         "Trajectory": {
           "arrows": false,
           "style": "Line"
@@ -140,6 +138,9 @@
       }
     },
     "transitory": {
+      "Chassis Subsystem": {
+        "open": true
+      },
       "Pose3d[]##v_SuperStructureViz": {
         "Pose3d##v_[0]": {
           "Translation3d##v_translation": {
