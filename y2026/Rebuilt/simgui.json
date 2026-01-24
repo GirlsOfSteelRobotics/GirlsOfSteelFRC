@@ -1,27 +1,140 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK Flex [2]": {
+      "SPARK Flex [10]": {
         "header": {
           "open": true
         }
       },
-      "SPARK Flex [2] RELATIVE ENCODER": {
+      "SPARK Flex [11]": {
         "header": {
           "open": true
         }
+      },
+      "SPARK Flex [11] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [12]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK Flex [13]": {
+        "header": {
+          "open": true
+        }
+      },
+      "window": {
+        "visible": false
+      }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/Climber/Climb Down": "Command",
-      "/Shuffleboard/Climber/Climb Up": "Command",
-      "/SmartDashboard/Alerts": "Alerts"
+      "/Shuffleboard/Chassis/Face Hub": "Command",
+      "/Shuffleboard/Debug Paths/NormalPath_MaxAccelMaxSpeed": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel10rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel15rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel1rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel5rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_15rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel12rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel1rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel2rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel4rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel8rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_02rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_04rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_08rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_12rps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel15fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel1fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel5fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_15fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel1fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel5fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccelMaxSpeed": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Intake/FunctionalCommand": "Command",
+      "/Shuffleboard/Intake/Intake In! :)": "Command",
+      "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
+      "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
+      "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
+      "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
+      "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Autos": "String Chooser",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
-      "/Shuffleboard/Climber/Climb Up": {
+      "/Shuffleboard/Chassis/Face Hub": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter/Shooter spins to 2000!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Autos": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "Trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
+        "TrajectoryTargetPose": {
+          "color": [
+            32.278507232666016,
+            255.0,
+            0.0,
+            255.0
+          ]
+        },
+        "bottom": 1914,
+        "height": 8.069275856018066,
+        "left": 245,
+        "right": 3942,
+        "top": 118,
+        "width": 16.54119300842285,
         "window": {
           "visible": true
         }
@@ -29,13 +142,53 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
+      "Shooter Subsystem": {
+        "open": true
+      },
       "SmartDashboard": {
         "open": true
       }
     }
   },
   "NetworkTables Info": {
+    "Connections": {
+      "open": true
+    },
     "visible": true
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shooter Subsystem/Shooter rpm"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    }
   }
 }
