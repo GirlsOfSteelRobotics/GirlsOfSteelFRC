@@ -5,12 +5,15 @@
 
 package com.gos.kitbot2026;
 
+import com.gos.kitbot2026.commands.JoystickFieldRelativeDriveCommand;
+import com.gos.kitbot2026.subsystems.ChassisSubsystem;
 import com.gos.kitbot2026.subsystems.IntakeSubsystem;
 import com.gos.kitbot2026.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.generated.TunerConstants;
 
 
 /**
@@ -26,6 +29,7 @@ public class RobotContainer {
     private final CommandXboxController m_driverController; //NOPMD
     private final IntakeSubsystem m_intakeSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
+    private final ChassisSubsystem m_chassisSubsystem;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -33,8 +37,10 @@ public class RobotContainer {
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
 
+        m_chassisSubsystem = TunerConstants.createDrivetrain();
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
+
         // Configure the trigger bindings
         configureBindings();
         m_intakeSubsystem.addIntakeDebugCommands();
@@ -52,7 +58,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-
+        m_chassisSubsystem.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassisSubsystem, m_driverController));
     }
 
 
