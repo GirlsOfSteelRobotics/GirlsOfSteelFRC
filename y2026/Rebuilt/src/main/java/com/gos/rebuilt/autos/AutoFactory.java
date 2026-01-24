@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoFactory {
-    private SendableChooser<Command> m_chooser;
+    private final SendableChooser<Command> m_chooser;
 
     public AutoFactory(ChassisSubsystem chassisSubsystem) {
         m_chooser = new SendableChooser<>();

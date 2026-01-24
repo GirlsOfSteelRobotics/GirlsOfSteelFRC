@@ -2,7 +2,6 @@ package com.gos.rebuilt.autos;
 
 import com.gos.rebuilt.ChoreoUtils;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -12,10 +11,6 @@ public class StartLeftPreload extends SequentialCommandGroup {
     public StartLeftPreload(ChassisSubsystem chassisSubsystem) {
         addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartLeftPreload").getPose())));
         addCommands(followChoreoPath("StartLeftPreload"));
-//
-//        addCommands(followChoreoPath("Path.1"));
-//        // intake
-//
-//        addCommands(followChoreoPath("Path.2"));
+
     }
 }
