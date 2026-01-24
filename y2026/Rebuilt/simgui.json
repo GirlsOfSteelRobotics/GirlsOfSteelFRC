@@ -140,10 +140,22 @@
       }
     },
     "transitory": {
+      "Pose3d[]##v_SuperStructureViz": {
+        "Pose3d##v_[0]": {
+          "Translation3d##v_translation": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      },
       "Shooter Subsystem": {
         "open": true
       },
       "SmartDashboard": {
+        "open": true
+      },
+      "SwerveDrive": {
         "open": true
       }
     }

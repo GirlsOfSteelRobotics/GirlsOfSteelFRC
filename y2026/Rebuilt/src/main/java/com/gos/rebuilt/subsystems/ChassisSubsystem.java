@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+import com.gos.lib.logging.LoggingUtil;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
@@ -73,6 +74,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private Notifier m_simNotifier;  // NOPMD
     private final PidProperty m_pidControllerProperty;
     private double m_lastSimTime;
+    private final LoggingUtil m_networkTableEntries;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
@@ -225,6 +227,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
         m_swerveDrivePublisher = new SwerveDrivePublisher();
+
+        m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
+        m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
 
     }
 
@@ -409,6 +414,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             robotPose.getX() - point.getX());
 
         return Rotation2d.fromRadians(goalAngle);
+    }
+
+    public double getDistanceToObject(Translation2d point) {
+
+        Pose2d robotPose = getState().Pose;
+        double distanceX = robotPose.getX() - point.getX();
+        double distanceY = robotPose.getY() - point.getY();
+
+        return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     }
 
     public void stop() {
