@@ -5,6 +5,7 @@
 
 package com.gos.rebuilt;
 
+import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
@@ -48,6 +49,8 @@ public class RobotContainer {
 
     private final SuperStructureViz m_superStructureViz;  // NOPMD
 
+    private final AutoFactory m_autoFactory;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -61,6 +64,8 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
+
+        m_autoFactory = new AutoFactory(m_chassis);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
@@ -106,6 +111,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Commands.none();
+        return m_autoFactory.getSelectedAuto();
     }
 }

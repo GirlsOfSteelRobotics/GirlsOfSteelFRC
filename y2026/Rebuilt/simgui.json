@@ -85,6 +85,7 @@
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
       "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts"
@@ -100,15 +101,22 @@
           "visible": true
         }
       },
+      "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": {
         "window": {
           "visible": true
         }
       },
+      "/SmartDashboard/Autos": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
-        "AprilTags": {
-          "image": "/Users/ylaoworakiat27/IdeaProjects/GirlsOfSteelFRC/libraries/shared_images/tag-pink.png"
-        },
         "Trajectory": {
           "arrows": false,
           "style": "Line"
