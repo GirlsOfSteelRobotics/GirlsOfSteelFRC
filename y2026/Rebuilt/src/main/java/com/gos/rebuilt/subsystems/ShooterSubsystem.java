@@ -6,6 +6,7 @@ import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -22,6 +23,8 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
+import java.util.function.DoubleSupplier;
+
 public class ShooterSubsystem extends SubsystemBase {
 
     private final SparkFlex m_shooterMotor;
@@ -33,12 +36,18 @@ public class ShooterSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
 
     private ISimWrapper m_shooterSimulator;
+    private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
 
 
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_shooterMotor.getEncoder();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
+
+        m_table.put(6.14, 1550.0);
+        m_table.put(2.85, 165.0);
+        m_table.put(3.55, 1750.0);
+
 
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
@@ -78,6 +87,11 @@ public class ShooterSubsystem extends SubsystemBase {
         double error = goal - getRPM();
         m_shooterMotor.set(m_feedForward.getValue() * goal + m_kp.getValue() * error);
 
+    }
+
+    public void shootFromDistance(double distance){
+        double rpm = m_table.get(distance);
+        setRPM(rpm);
     }
 
 
@@ -121,6 +135,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
     public Command createtuneRPM() {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
+    }
+    public Command createShootFromDistanceCommand(DoubleSupplier distanceGetter) {
+        return runEnd(() -> shootFromDistance(distanceGetter.getAsDouble()), this::stop).withName("Shoot from distance");
     }
 
 

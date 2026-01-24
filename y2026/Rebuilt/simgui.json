@@ -80,6 +80,7 @@
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
+      "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
@@ -96,7 +97,7 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
+      "/Shuffleboard/Shooter RPM/Shoot from distance": {
         "window": {
           "visible": true
         }

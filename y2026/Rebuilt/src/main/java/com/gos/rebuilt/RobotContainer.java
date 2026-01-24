@@ -16,6 +16,8 @@ import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -78,6 +80,8 @@ public class RobotContainer {
         m_shooterSubsystem.addShooterDebugCommands();
         m_pizzaSubsystem.addPizzaDebugCommands();
         m_chassis.addChassisDebugCommands();
+        ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
+        tab.add(m_shooterSubsystem.createShootFromDistanceCommand(m_chassis::getDistanceFromHub));
 
         m_debugPathsTab = new DebugPathsTab(m_chassis);
         m_debugPathsTab.addDebugPathsToShuffleBoard();

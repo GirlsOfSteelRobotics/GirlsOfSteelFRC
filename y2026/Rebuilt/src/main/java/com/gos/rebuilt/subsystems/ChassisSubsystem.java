@@ -426,6 +426,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     }
 
+    public double getDistanceFromHub() {
+        return getDistanceToObject(Hub.innerCenterPoint.toTranslation2d());
+    }
+
     public void stop() {
         driveFieldCentric(0, 0, 0);
     }
