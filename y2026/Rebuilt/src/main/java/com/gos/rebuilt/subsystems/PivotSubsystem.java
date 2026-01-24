@@ -3,6 +3,7 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -19,6 +20,7 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkFlex m_pivotMotor;
     private static final double GEAR_RATIO = 45.0;
     private final RelativeEncoder m_encoder;
+    private final SparkClosedLoopController m_pidController;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
@@ -26,6 +28,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem() {
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
         m_encoder = m_pivotMotor.getEncoder();
+        m_pidController=m_pivotMotor.getClosedLoopController();
 
 
         if (RobotBase.isSimulation()) {
@@ -35,6 +38,10 @@ public class PivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+    }
+
+    public void setAngle(double angle) {
+        m_pidController.
     }
 
     public void setSpeed(double pow) {
