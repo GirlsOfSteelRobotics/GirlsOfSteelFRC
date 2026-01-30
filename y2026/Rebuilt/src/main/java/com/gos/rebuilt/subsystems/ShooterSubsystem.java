@@ -44,9 +44,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_motorEncoder = m_shooterMotor.getEncoder();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-        m_table.put(6.14, 1550.0);
-        m_table.put(2.85, 165.0);
+        m_table.put(2.85, 1650.0);
         m_table.put(3.55, 1750.0);
+        m_table.put(6.14, 1550.0);
+        m_table.put(1.99, 1550.0);
+        m_table.put(4.85, 2000.0);
+
 
 
 
