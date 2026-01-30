@@ -18,7 +18,7 @@ def download_latest_vendordeps(ignore_cache):
     year = "2026"
     # fmt: off
     vendor_dep_urls = {}
-    vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/maven/release/2026/json/Studica-2026.0.0-beta.json"
+    vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/maven/release/{year}/json/Studica-{year}.0.0.json"
     vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc{year}-latest.json"
     vendor_dep_urls["Phoenix6.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc{year}-latest.json"
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
