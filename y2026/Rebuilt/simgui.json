@@ -25,6 +25,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     },
     "Timing": {
@@ -78,7 +81,9 @@
       "/Shuffleboard/Intake/FunctionalCommand": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Pizza/Feed the hungry": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Reverse the pizza": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
       "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
@@ -98,27 +103,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
+      "/Shuffleboard/Pizza/Feed the hungry": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Feeder/Feed🍕😎": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Feeder/Reverse the Feeder 😱": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Shooter/Shooter spins to 2000!!": {
+      "/Shuffleboard/Shooter RPM/Shoot from distance": {
         "window": {
           "visible": true
         }

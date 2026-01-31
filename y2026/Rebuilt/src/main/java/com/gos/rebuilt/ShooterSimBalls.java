@@ -3,6 +3,7 @@ package com.gos.rebuilt;
 
 //imports
 
+import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -20,13 +21,12 @@ public class ShooterSimBalls {
     private double m_fuelInitVZ;
     private Pose2d m_robotPosition;
     private final double m_height;
-    private final Rotation2d m_theta;
+    private final Rotation2d m_theta = ShooterSubsystem.SHOT_ANGLE;
     private final StructArrayPublisher<Translation3d> m_publisher;
 
     //constructor
     public ShooterSimBalls() {
         m_height = Units.inchesToMeters(20);
-        m_theta = Rotation2d.fromDegrees(60);
         m_publisher = NetworkTableInstance.getDefault().getStructArrayTopic("ShotPreview", Translation3d.struct).publish();
     }
 
@@ -35,7 +35,7 @@ public class ShooterSimBalls {
     }
 
     public double calculatePosZ(double time) {
-        return m_fuelInitVZ * time + 0.5 * (-9.8) * Math.pow(time, 2) + m_height;
+        return m_fuelInitVZ * time + 0.5 * (-9.8) * time * time + m_height;
     }
 
     public double calculatePosY(double time) {

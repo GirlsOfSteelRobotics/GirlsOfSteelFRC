@@ -6,6 +6,7 @@ import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
@@ -26,6 +27,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
+    public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
 
     private final SparkFlex m_shooterMotor;
     private final RelativeEncoder m_motorEncoder;
@@ -117,7 +119,7 @@ public class ShooterSubsystem extends SubsystemBase {
         tab.add(createShooterSpinMotorBackwardCommand());
         tab.add(createShooterSpin2000());
         tab.add(createShooterSpin1500());
-        tab.add(createtuneRPM());
+        tab.add(createTuneRPM());
 
     }
 
@@ -137,7 +139,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return runEnd(() -> setRPM(2000), this::stop).withName("Shooter spins to 2000!!");
     }
 
-    public Command createtuneRPM() {
+    public Command createTuneRPM() {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
     }
 
