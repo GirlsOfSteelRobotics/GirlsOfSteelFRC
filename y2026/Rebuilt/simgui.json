@@ -80,13 +80,12 @@
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
-      "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
-      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
       "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts"
@@ -97,12 +96,22 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter RPM/Shoot from distance": {
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": {
+      "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter/Shooter spins to 2000!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Autos": {
         "window": {
           "visible": true
         }
@@ -139,25 +148,10 @@
       }
     },
     "transitory": {
-      "Chassis Subsystem": {
-        "open": true
-      },
-      "Pose3d[]##v_SuperStructureViz": {
-        "Pose3d##v_[0]": {
-          "Translation3d##v_translation": {
-            "open": true
-          },
-          "open": true
-        },
-        "open": true
-      },
       "Shooter Subsystem": {
         "open": true
       },
       "SmartDashboard": {
-        "open": true
-      },
-      "SwerveDrive": {
         "open": true
       }
     }

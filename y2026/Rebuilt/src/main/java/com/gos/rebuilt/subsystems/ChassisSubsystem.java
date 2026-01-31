@@ -437,10 +437,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public void addChassisDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         tab.add(createFaceHub());
+        tab.add(createResetPose(new Pose2d()));
     }
 
     public Command createFaceHub() {
         return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
+    }
+
+    public Command createResetPose(Pose2d pose) {
+        return runEnd(() -> resetPose(pose), this::stop).withName("Reset Robot Pose!!" + pose);
     }
 
 }

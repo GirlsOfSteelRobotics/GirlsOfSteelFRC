@@ -5,6 +5,7 @@
 
 package com.gos.rebuilt;
 
+import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
@@ -21,7 +22,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
@@ -50,6 +50,8 @@ public class RobotContainer {
 
     private final SuperStructureViz m_superStructureViz;  // NOPMD
 
+    private final AutoFactory m_autoFactory;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -63,6 +65,8 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
+
+        m_autoFactory = new AutoFactory(m_chassis);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
@@ -110,6 +114,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Commands.none();
+        return m_autoFactory.getSelectedAuto();
     }
 }
