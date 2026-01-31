@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/tuneRPM",
     "type": "double",
-    "value": 2000.0,
+    "value": 2190.0,
     "properties": {
       "persistent": true
     }
