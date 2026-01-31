@@ -92,7 +92,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
 
-    public void shootFromDistance(double distance){
+    public void shootFromDistance(double distance) {
         double rpm = m_table.get(distance);
         setRPM(rpm);
     }
@@ -136,9 +136,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createShooterSpin2000() {
         return runEnd(() -> setRPM(2000), this::stop).withName("Shooter spins to 2000!!");
     }
+
     public Command createtuneRPM() {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
     }
+
     public Command createShootFromDistanceCommand(DoubleSupplier distanceGetter) {
         return runEnd(() -> shootFromDistance(distanceGetter.getAsDouble()), this::stop).withName("Shoot from distance");
     }
