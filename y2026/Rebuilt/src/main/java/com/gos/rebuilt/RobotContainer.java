@@ -10,6 +10,7 @@ import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
+import com.gos.rebuilt.subsystems.FeederSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
@@ -45,6 +46,8 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
+    private final FeederSubsystem m_feederSubsystem;
+
 
     private final DebugPathsTab m_debugPathsTab;
 
@@ -65,6 +68,7 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
+        m_feederSubsystem = new FeederSubsystem();
 
         m_autoFactory = new AutoFactory(m_chassis);
 
@@ -84,6 +88,7 @@ public class RobotContainer {
         m_shooterSubsystem.addShooterDebugCommands();
         m_pizzaSubsystem.addPizzaDebugCommands();
         m_chassis.addChassisDebugCommands();
+        m_feederSubsystem.addFeederDebugCommands();
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
         tab.add(m_shooterSubsystem.createShootFromDistanceCommand(m_chassis::getDistanceFromHub));
 

@@ -1,11 +1,6 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK Flex [10]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK Flex [11]": {
         "header": {
           "open": true
@@ -26,8 +21,10 @@
           "open": true
         }
       },
-      "window": {
-        "visible": false
+      "SPARK Flex [14]": {
+        "header": {
+          "open": true
+        }
       }
     },
     "Timing": {
@@ -40,6 +37,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Chassis/Face Hub": "Command",
+      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Debug Paths/NormalPath_MaxAccelMaxSpeed": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel10rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel15rps": "Command",
@@ -75,15 +73,19 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Feeder/Feed🍕😎": "Command",
+      "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/FunctionalCommand": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
+      "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
+      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
@@ -97,6 +99,16 @@
         }
       },
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Feeder/Feed🍕😎": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Feeder/Reverse the Feeder 😱": {
         "window": {
           "visible": true
         }
