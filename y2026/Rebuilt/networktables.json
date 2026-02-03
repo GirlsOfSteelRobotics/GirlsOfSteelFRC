@@ -1,0 +1,146 @@
+[
+  {
+    "name": "/Preferences/intakeSpeed",
+    "type": "double",
+    "value": 0.67,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/shooterSpeed",
+    "type": "double",
+    "value": 0.41,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/pizzaSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/pivotSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ShooterKf",
+    "type": "double",
+    "value": 9e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ShooterKp",
+    "type": "double",
+    "value": 0.009,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Steerkp",
+    "type": "double",
+    "value": 67.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkD",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkV",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Drivekp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.DrivekV",
+    "type": "double",
+    "value": 0.124,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ChassisTranslationDamper",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/chassis Pid.mm.kp",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/chassis Pid.mm.kd",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ShooterKr",
+    "type": "double",
+    "value": 1500.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/tuneRPM",
+    "type": "double",
+    "value": 2190.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/FeederSpeed",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

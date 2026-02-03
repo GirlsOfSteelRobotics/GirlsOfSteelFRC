@@ -23,4 +23,5 @@ include 'y2024:Crescendo'
 include 'y2024:CrescendoDashboard'
 include 'y2025:Reefscape'
 include 'y2026:Rebuilt'
+include 'y2026:Kitbot'
 

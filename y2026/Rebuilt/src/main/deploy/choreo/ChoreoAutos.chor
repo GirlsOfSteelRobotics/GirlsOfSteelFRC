@@ -1,0 +1,155 @@
+{
+ "name":"ChoreoAutos",
+ "version":2,
+ "type":"Swerve",
+ "variables":{
+  "expressions":{},
+  "poses":{
+   "RightStartPoint":{
+    "x":{
+     "exp":"3.5836076736450195 m",
+     "val":3.5836076736450195
+    },
+    "y":{
+     "exp":"0.3923019766807556 m",
+     "val":0.3923019766807556
+    },
+    "heading":{
+     "exp":"3.141592653589793 rad",
+     "val":3.141592653589793
+    }
+   },
+   "centerStartPoint":{
+    "x":{
+     "exp":"3.5836079120635986 m",
+     "val":3.583607912063598
+    },
+    "y":{
+     "exp":"3.980612277984619 m",
+     "val":3.980612277984619
+    },
+    "heading":{
+     "exp":"3.141592653589793 rad",
+     "val":3.141592653589793
+    }
+   },
+   "leftShootPoint":{
+    "x":{
+     "exp":"2.958677053451538 m",
+     "val":2.958677053451538
+    },
+    "y":{
+     "exp":"4.847451686859131 m",
+     "val":4.847451686859131
+    },
+    "heading":{
+     "exp":"2.6905227111088004 rad",
+     "val":2.6905227111088004
+    }
+   },
+   "leftStartPoint":{
+    "x":{
+     "exp":"3.564448595046997 m",
+     "val":3.564448595046997
+    },
+    "y":{
+     "exp":"7.664979934692383 m",
+     "val":7.664979934692383
+    },
+    "heading":{
+     "exp":"3.138256905339462 rad",
+     "val":3.138256905339462
+    }
+   },
+   "rightShootPoint":{
+    "x":{
+     "exp":"3.1199495792388916 m",
+     "val":3.1199495792388916
+    },
+    "y":{
+     "exp":"3.27504563331604 m",
+     "val":3.27504563331604
+    },
+    "heading":{
+     "exp":"-2.411692886266878 rad",
+     "val":-2.411692886266878
+    }
+   }
+  }
+ },
+ "config":{
+  "frontLeft":{
+   "x":{
+    "exp":"11 in",
+    "val":0.2794
+   },
+   "y":{
+    "exp":"11 in",
+    "val":0.2794
+   }
+  },
+  "backLeft":{
+   "x":{
+    "exp":"-11 in",
+    "val":-0.2794
+   },
+   "y":{
+    "exp":"11 in",
+    "val":0.2794
+   }
+  },
+  "mass":{
+   "exp":"150 lbs",
+   "val":68.0388555
+  },
+  "inertia":{
+   "exp":"6 kg m ^ 2",
+   "val":6.0
+  },
+  "gearing":{
+   "exp":"6.5",
+   "val":6.5
+  },
+  "radius":{
+   "exp":"2 in",
+   "val":0.0508
+  },
+  "vmax":{
+   "exp":"5800 RPM",
+   "val":607.3745796940267
+  },
+  "tmax":{
+   "exp":"1.2 N * m",
+   "val":1.2
+  },
+  "cof":{
+   "exp":"1.5",
+   "val":1.5
+  },
+  "bumper":{
+   "front":{
+    "exp":"16 in",
+    "val":0.4064
+   },
+   "side":{
+    "exp":"16 in",
+    "val":0.4064
+   },
+   "back":{
+    "exp":"16 in",
+    "val":0.4064
+   }
+  },
+  "differentialTrackWidth":{
+   "exp":"22 in",
+   "val":0.5588
+  }
+ },
+ "generationFeatures":[],
+ "codegen":{
+  "root":"..\\..\\java\\com\\gos\\rebuilt\\choreo_gen",
+  "genVars":true,
+  "genTrajData":true,
+  "useChoreoLib":true
+ }
+}
