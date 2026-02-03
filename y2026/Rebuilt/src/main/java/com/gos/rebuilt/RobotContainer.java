@@ -13,6 +13,8 @@ import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.FeederSubsystem;
+
+import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
@@ -40,7 +42,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController m_driverController;
+    private final ClimberSubsystem m_climberSubsystem;
+    private final CommandXboxController m_driverController; //NOPMD
     private final CommandXboxController m_operatorController;
 
     private final ChassisSubsystem m_chassis;
@@ -57,7 +60,6 @@ public class RobotContainer {
 
     private final AutoFactory m_autoFactory;
 
-    private final ClimberSubsystem m_climberSubsystem;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -69,6 +71,7 @@ public class RobotContainer {
         m_operatorController = new CommandXboxController(1);
 
         m_chassis = TunerConstants.createDrivetrain();
+        m_climberSubsystem.addClimberDebugCommands();
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
