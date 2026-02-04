@@ -18,6 +18,7 @@ public class FeederSubsystem extends SubsystemBase {
     private final SparkFlex m_feederMotor;
     private final GosDoubleProperty m_feederSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FeederSpeed", 1);
     private final SparkMaxAlerts m_feederMotorAlerts;
+
     public FeederSubsystem() {
         m_feederMotor = new SparkFlex(Constants.FEEDER_MOTOR, MotorType.kBrushless);
 
@@ -48,7 +49,7 @@ public class FeederSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         m_feederMotorAlerts.checkAlerts();
     }
 

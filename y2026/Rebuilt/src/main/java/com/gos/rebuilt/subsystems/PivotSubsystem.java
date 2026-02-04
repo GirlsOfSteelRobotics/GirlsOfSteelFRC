@@ -51,7 +51,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         m_pivotMotorAlerts.checkAlerts();
     }
 

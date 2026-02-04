@@ -88,7 +88,7 @@ public class PizzaSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         m_pizzaAlert.checkAlerts();
     }
 
