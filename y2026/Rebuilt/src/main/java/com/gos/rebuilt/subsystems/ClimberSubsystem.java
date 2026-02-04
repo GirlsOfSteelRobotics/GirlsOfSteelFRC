@@ -2,6 +2,7 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
@@ -18,6 +19,8 @@ public class ClimberSubsystem extends SubsystemBase {
     private final SparkFlex m_climberRightMotor;
     private final RelativeEncoder m_climberLeftEncoder;
     private final RelativeEncoder m_climberRightEncoder;
+    private final SparkMaxAlerts m_climberLeftMotorAlerts;
+    private final SparkMaxAlerts m_climberRightMotorAlerts;
 
     private final GosDoubleProperty m_climbingSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "climbingSpeed", 1);
     private final LoggingUtil m_networkTableEntries;
@@ -27,6 +30,10 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberLeftEncoder = m_climberLeftMotor.getEncoder();
         m_climberRightMotor = new SparkFlex(Constants.CLIMBER_RIGHT_MOTOR, MotorType.kBrushless);
         m_climberRightEncoder = m_climberRightMotor.getEncoder();
+        m_climberLeftMotorAlerts = new SparkMaxAlerts(m_climberLeftMotor, "Climber Left Motor");
+        m_climberRightMotorAlerts = new SparkMaxAlerts(m_climberRightMotor, "Climber Right Motor");
+
+
         m_networkTableEntries = new LoggingUtil("ClimberSubsystem");
         m_networkTableEntries.addDouble("Climber Left RPM", this::getLeftRPM);
         m_networkTableEntries.addDouble("Climber Right RPM", this::getRightRPM);
@@ -81,6 +88,8 @@ public class ClimberSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();
+        m_climberLeftMotorAlerts.checkAlerts();
+        m_climberRightMotorAlerts.checkAlerts();
     }
 
     public void stop() {
