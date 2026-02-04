@@ -13,8 +13,6 @@ import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.FeederSubsystem;
-
-import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
@@ -67,11 +65,9 @@ public class RobotContainer {
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
         m_climberSubsystem = new ClimberSubsystem();
-        m_climberSubsystem.addClimberDebugCommands();
         m_operatorController = new CommandXboxController(1);
 
         m_chassis = TunerConstants.createDrivetrain();
-        m_climberSubsystem.addClimberDebugCommands();
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
@@ -97,6 +93,8 @@ public class RobotContainer {
         m_pizzaSubsystem.addPizzaDebugCommands();
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands();
+        m_climberSubsystem.addClimberDebugCommands();
+
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
         tab.add(m_shooterSubsystem.createShootFromDistanceCommand(m_chassis::getDistanceFromHub));
 

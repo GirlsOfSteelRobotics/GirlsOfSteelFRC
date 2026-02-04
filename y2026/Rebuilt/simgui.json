@@ -16,6 +16,11 @@
           "open": true
         }
       },
+      "SPARK Flex [15]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [2]": {
         "header": {
           "open": true
@@ -31,16 +36,65 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Chassis/Face Hub": "Command",
+      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
+      "/Shuffleboard/Climber/Left Climb Down": "Command",
+      "/Shuffleboard/Climber/Left Climb Up": "Command",
+      "/Shuffleboard/Climber/Right Climb Down": "Command",
+      "/Shuffleboard/Climber/Right Climb Up": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
+      "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_15rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_02rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_04rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_08rps": "Command",
+      "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_12rps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_15fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Feeder/Feed🍕😎": "Command",
+      "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
+      "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
-      "/SmartDashboard/Alerts": "Alerts"
+      "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
+      "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
+      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
+      "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Autos": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
+      "/Shuffleboard/Climber/Climb Down": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Climber/Climb Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Climber/Left Climb Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Climber/Right Climb Up": {
         "window": {
           "visible": true
         }
