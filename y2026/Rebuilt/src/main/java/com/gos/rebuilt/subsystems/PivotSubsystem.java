@@ -1,10 +1,13 @@
 package com.gos.rebuilt.subsystems;
 
 
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -19,14 +22,24 @@ public class PivotSubsystem extends SubsystemBase {
     private final SparkFlex m_pivotMotor;
     private static final double GEAR_RATIO = 45.0;
     private final RelativeEncoder m_encoder;
+    private final SparkMaxAlerts m_pivotMotorAlerts;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
 
     public PivotSubsystem() {
+
+
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
         m_encoder = m_pivotMotor.getEncoder();
 
+        m_pivotMotorAlerts = new SparkMaxAlerts(m_pivotMotor, "pivotMotor");
+
+
+        SparkMaxConfig pivotConfig = new SparkMaxConfig();
+        pivotConfig.idleMode(IdleMode.kBrake);
+        pivotConfig.smartCurrentLimit(60);
+        pivotConfig.inverted(false);
 
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeoVortex(1);
@@ -35,6 +48,11 @@ public class PivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+    }
+
+    @Override
+    public void periodic() {
+        m_pivotMotorAlerts.checkAlerts();
     }
 
     public void setSpeed(double pow) {
