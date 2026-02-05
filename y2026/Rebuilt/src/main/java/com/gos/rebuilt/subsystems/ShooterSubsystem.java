@@ -2,11 +2,14 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Rotation2d;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
@@ -36,6 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_feedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKf", 1);
     private final GosDoubleProperty m_kp = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKp", 1);
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+    private final SparkMaxAlerts m_shooterAlert;
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
@@ -52,7 +56,13 @@ public class ShooterSubsystem extends SubsystemBase {
         m_table.put(4.85, 2000.0);
         m_table.put(6.14, 2190.0);
 
+        m_shooterAlert = new SparkMaxAlerts(m_shooterMotor, "shooterAlert");
 
+
+        SparkMaxConfig shooterConfig = new SparkMaxConfig();
+        shooterConfig.idleMode(IdleMode.kCoast);
+        shooterConfig.smartCurrentLimit(60);
+        shooterConfig.inverted(false);
 
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
@@ -111,6 +121,7 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();
+        m_shooterAlert.checkAlerts();
     }
 
     public void addShooterDebugCommands() {
