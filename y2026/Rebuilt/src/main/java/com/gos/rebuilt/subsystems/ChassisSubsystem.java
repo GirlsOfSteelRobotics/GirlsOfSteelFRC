@@ -38,7 +38,6 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
@@ -101,7 +100,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
-    private final double m_chassisDeadband = 2;
+    private static final double DEADBAN = 2;
 
     private final GosField m_field;
 
@@ -412,7 +411,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public boolean facingHub() {
-        return (m_goalAngle.getRadians()-getState().Pose.getRotation().getRadians()<m_chassisDeadband);
+        return (m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians() < DEADBAN);
     }
 
     public Rotation2d getFaceAngle(Translation2d point) {

@@ -48,7 +48,7 @@ public class RobotContainer {
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
     private final FeederSubsystem m_feederSubsystem;
-    private final LEDSubsystem m_ledSUbsystem;
+    private final LEDSubsystem m_ledSUbsystem; //NOPMD
 
 
     private final DebugPathsTab m_debugPathsTab;
@@ -71,7 +71,7 @@ public class RobotContainer {
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
-        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pivotSubsystem);
+        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis);
 
         m_autoFactory = new AutoFactory(m_chassis);
 
