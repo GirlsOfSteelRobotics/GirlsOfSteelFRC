@@ -100,7 +100,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
-    private static final double DEADBAN = 2;
+    private static final double DEADBAN = Math.toRadians(2);
 
     private final GosField m_field;
 
@@ -232,6 +232,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
+
+        this.m_goalAngle = new Rotation2d(0);
 
     }
 
@@ -411,7 +413,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public boolean facingHub() {
-        return (m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians() < DEADBAN);
+        return Math.abs(m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians()) < DEADBAN;
     }
 
     public Rotation2d getFaceAngle(Translation2d point) {

@@ -20,9 +20,9 @@ public class EnabledPatties {
         this.m_chassis = chassis;
         this.m_shooter = shooter;
         this.m_shooterReady = new LEDBoolean(addressme, 0,  10, Color.kLawnGreen, Color.kIndianRed);
-        this.m_chassisFacing = new LEDBoolean(addressme, 0, 20, Color.kMediumSeaGreen, Color.kOrangeRed);
-        this.m_distanceGood = new LEDBoolean(addressme, 0, 20, Color.kAliceBlue, Color.kGhostWhite);
-        this.m_everythingReady = new LEDBoolean(addressme, 0, 20, Color.kBrown, Color.kWhiteSmoke);
+        this.m_chassisFacing = new LEDBoolean(addressme, 10, 20, Color.kMediumSeaGreen, Color.kOrangeRed);
+        this.m_distanceGood = new LEDBoolean(addressme, 20, 30, Color.kAliceBlue, Color.kGhostWhite);
+        this.m_everythingReady = new LEDBoolean(addressme, 30, 40, Color.kBrown, Color.kWhiteSmoke);
 
     }
 
