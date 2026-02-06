@@ -38,6 +38,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
@@ -100,10 +101,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
+    private final double m_chassisDeadband = 2;
 
     private final GosField m_field;
 
-
+    private Rotation2d m_goalAngle;
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
@@ -119,6 +121,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             null,
             this
         )
+
 
     );
 
@@ -405,6 +408,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(goalAngleRad)
         );
+        m_goalAngle = goalAngleRad;
+    }
+
+    public boolean facingHub() {
+        return (m_goalAngle.getRadians()-getState().Pose.getRotation().getRadians()<m_chassisDeadband);
     }
 
     public Rotation2d getFaceAngle(Translation2d point) {

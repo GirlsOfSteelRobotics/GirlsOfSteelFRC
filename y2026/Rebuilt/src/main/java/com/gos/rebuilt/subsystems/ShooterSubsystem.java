@@ -37,6 +37,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
+    private double m_goal;
+    private final double m_deadbandDegrees = 2;
+    private double m_min;
 
 
     public ShooterSubsystem() {
@@ -49,6 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_table.put(3.55, 1750.0);
         m_table.put(4.85, 2000.0);
         m_table.put(6.14, 2190.0);
+        this.m_min = m_table.get(0.0);
 
 
 
@@ -72,6 +76,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotor.set(m_shooterSpeed.getValue());
     }
 
+    public double getMin() {
+        return this.m_min;
+    }
+
 
     public void spinMotorForward(double pow) {
         m_shooterMotor.set(pow);
@@ -86,10 +94,14 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setRPM(double goal) {
-
+        m_goal = goal;
         double error = goal - getRPM();
         m_shooterMotor.set(m_feedForward.getValue() * goal + m_kp.getValue() * error);
 
+    }
+
+    public boolean isAtGoalRPM() {
+        return Math.abs(m_goal-getRPM())<m_deadbandDegrees;
     }
 
     public void shootFromDistance(double distance) {
