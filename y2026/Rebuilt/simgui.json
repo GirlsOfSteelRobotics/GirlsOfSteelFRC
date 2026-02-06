@@ -94,6 +94,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/Shooter RPM/Shoot from distance": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
         "window": {
           "visible": true
@@ -113,6 +118,11 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
       "ClimberSubsystem": {
         "open": true

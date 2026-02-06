@@ -114,7 +114,7 @@
   {
     "name": "/Preferences/chassis Pid.mm.kp",
     "type": "double",
-    "value": 10.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -147,6 +147,30 @@
     "name": "/Preferences/FeederSpeed",
     "type": "double",
     "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP ROBOT X",
+    "type": "double",
+    "value": 6.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP ROBOT Y",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP ROBOT OMEGA",
+    "type": "double",
+    "value": 0.0,
     "properties": {
       "persistent": true
     }

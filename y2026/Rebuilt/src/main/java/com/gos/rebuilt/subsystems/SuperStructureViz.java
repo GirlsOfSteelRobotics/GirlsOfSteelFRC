@@ -1,5 +1,6 @@
 package com.gos.rebuilt.subsystems;
 
+import com.gos.rebuilt.FireOnTheRun;
 import com.gos.rebuilt.ShooterSimBalls;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -16,6 +17,7 @@ public class SuperStructureViz extends SubsystemBase {
     private final ShooterSimBalls m_shooterSimBalls;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
+    private final FireOnTheRun m_fireOnTheRun;
 
     public SuperStructureViz(PivotSubsystem pivotSubsystem, PizzaSubsystem pizzaSubsystem, ChassisSubsystem chassisSubsystem, ShooterSubsystem shooterSubsystem) {
         m_superStructurePublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz", Pose3d.struct).publish();
@@ -23,7 +25,8 @@ public class SuperStructureViz extends SubsystemBase {
         this.m_pizzaSubsystem = pizzaSubsystem;
         m_chassisSubsystem = chassisSubsystem;
         m_shooterSubsystem = shooterSubsystem;
-        m_shooterSimBalls = new ShooterSimBalls();
+        m_shooterSimBalls = new ShooterSimBalls("ShotPreview");
+        m_fireOnTheRun = new FireOnTheRun(m_chassisSubsystem, m_shooterSubsystem);
     }
 
     @Override
@@ -53,6 +56,7 @@ public class SuperStructureViz extends SubsystemBase {
         });
 
         m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), m_chassisSubsystem.getState().Speeds, m_chassisSubsystem.getState().Pose);
+        m_fireOnTheRun.glue();
     }
 
 }
