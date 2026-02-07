@@ -12,6 +12,7 @@ import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.FeederSubsystem;
 import com.gos.rebuilt.subsystems.IntakeSubsystem;
+import com.gos.rebuilt.subsystems.LEDSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
@@ -47,6 +48,7 @@ public class RobotContainer {
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
     private final FeederSubsystem m_feederSubsystem;
+    private final LEDSubsystem m_ledSUbsystem; //NOPMD
 
 
     private final DebugPathsTab m_debugPathsTab;
@@ -69,6 +71,7 @@ public class RobotContainer {
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
+        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis);
 
         m_autoFactory = new AutoFactory(m_chassis);
 
