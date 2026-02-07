@@ -18,10 +18,15 @@ public final class Constants {
 
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
     //motors
-
     public static final int INTAKE_MOTOR = 10;
     public static final int SHOOTER_MOTOR = 11;
     public static final int PIZZA_MOTOR = 12;
     public static final int PIVOT_MOTOR = 13;
     public static final int FEEDER_MOTOR = 14;
+    public static final int CLIMBER_LEFT_MOTOR = 15;
+    public static final int CLIMBER_RIGHT_MOTOR = 16;
+
+
+    //PWM
+    public static final int LED_PORT = 0;
 }

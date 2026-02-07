@@ -1,8 +1,16 @@
 [
   {
+    "name": "/Preferences/climbingSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/intakeSpeed",
     "type": "double",
-    "value": 0.67,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -10,7 +18,7 @@
   {
     "name": "/Preferences/shooterSpeed",
     "type": "double",
-    "value": 0.41,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
