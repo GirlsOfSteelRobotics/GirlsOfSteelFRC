@@ -26,12 +26,22 @@
           "open": true
         }
       },
+      "SPARK Flex [16]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [2]": {
         "header": {
           "open": true
         }
       },
       "SPARK Flex [2] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[5]": {
         "header": {
           "open": true
         }
@@ -49,6 +59,7 @@
       "/Shuffleboard/Climber/Left Climb Up": "Command",
       "/Shuffleboard/Climber/Right Climb Down": "Command",
       "/Shuffleboard/Climber/Right Climb Up": "Command",
+      "/Shuffleboard/Combined Commands/Shoot": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",

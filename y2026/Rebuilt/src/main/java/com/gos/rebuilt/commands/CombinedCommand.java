@@ -16,11 +16,11 @@ public class CombinedCommand {
     private final ChassisSubsystem m_chassisSubsystem;
     private final FeederSubsystem m_feederSubsystem;
     private final PizzaSubsystem m_pizzaSubsystem;
-    private final IntakeSubsystem m_intakeSubsystem;
+    private final IntakeSubsystem m_intakeSubsystem; //NOPMD
     private final ShooterSubsystem m_shooterSubsystem;
-    private final PivotSubsystem m_pivotSubsystem;
+    private final PivotSubsystem m_pivotSubsystem; //NOPMD
 
-    public CombinedCommand(ChassisSubsystem chassis,FeederSubsystem feeder,PizzaSubsystem pizza, IntakeSubsystem intake, ShooterSubsystem shooter, PivotSubsystem pivot){
+    public CombinedCommand(ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, IntakeSubsystem intake, ShooterSubsystem shooter, PivotSubsystem pivot) {
         m_chassisSubsystem = chassis;
         m_pizzaSubsystem = pizza;
         m_intakeSubsystem = intake;
@@ -29,14 +29,15 @@ public class CombinedCommand {
         m_feederSubsystem = feeder;
     }
 
-    public Command shootBall(){
+    public Command shootBall() {
         return m_chassisSubsystem.createFaceHub()
             .alongWith((m_shooterSubsystem.createShootFromDistanceCommand(m_chassisSubsystem::getDistanceFromHub)))
             .alongWith(new WaitUntilCommand(this::readyToShoot)
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
-    public boolean readyToShoot(){
-        return m_chassisSubsystem.facingHub()&& m_shooterSubsystem.isAtGoalRPM();
+
+    public boolean readyToShoot() {
+        return m_chassisSubsystem.facingHub() &&  m_shooterSubsystem.isAtGoalRPM();
     }
 
     public void createCombinedCommand(boolean inComp) {
