@@ -6,9 +6,11 @@
 package com.gos.rebuilt;
 
 
+import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
+import com.gos.rebuilt.commands.CombinedCommand;
 import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
@@ -52,6 +54,7 @@ public class RobotContainer {
     private final PivotSubsystem m_pivotSubsystem;
     private final FeederSubsystem m_feederSubsystem;
     private final LEDSubsystem m_ledSUbsystem; //NOPMD
+    private final CombinedCommand m_combinedCommand;
 
 
     private final DebugPathsTab m_debugPathsTab;
@@ -76,6 +79,7 @@ public class RobotContainer {
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
         m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis);
+        m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
 
         m_autoFactory = new AutoFactory(m_chassis);
 
@@ -96,6 +100,7 @@ public class RobotContainer {
         m_pizzaSubsystem.addPizzaDebugCommands();
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands();
+        m_combinedCommand.createCombinedCommand(false);
         m_climberSubsystem.addClimberDebugCommands();
 
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
@@ -118,6 +123,18 @@ public class RobotContainer {
     private void configureBindings() {
         m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
+        m_driverController.a().whileTrue(m_combinedCommand.shootBall());
+
+        m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
+
+
+        m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
+        m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
+        //pivot intake,= left trigger
+        //shoot on the move = right trigger
+        //feed/pass balls = b button\; retract = left bumper
+
+
     }
 
 
