@@ -43,6 +43,7 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
+      "/Shuffleboard/Combined Commands/Shoot": "Command",
       "/Shuffleboard/Debug Paths/NormalPath_MaxAccelMaxSpeed": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel10rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel15rps": "Command",
@@ -99,6 +100,11 @@
     },
     "windows": {
       "/Shuffleboard/Chassis/Face Hub": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Combined Commands/Shoot": {
         "window": {
           "visible": true
         }
