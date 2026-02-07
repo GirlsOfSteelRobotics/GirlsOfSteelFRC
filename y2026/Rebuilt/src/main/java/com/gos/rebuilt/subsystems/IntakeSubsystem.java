@@ -4,6 +4,8 @@ package com.gos.rebuilt.subsystems;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -30,6 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeConfig.smartCurrentLimit(60);
         intakeConfig.inverted(false);
 
+        m_intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 
