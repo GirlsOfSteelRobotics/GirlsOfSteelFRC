@@ -5,6 +5,8 @@
 
 package com.gos.rebuilt;
 
+
+import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.CombinedCommand;
@@ -40,7 +42,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController m_driverController;
+    private final ClimberSubsystem m_climberSubsystem;
+    private final CommandXboxController m_driverController; //NOPMD
     private final CommandXboxController m_operatorController;
 
     private final ChassisSubsystem m_chassis;
@@ -65,6 +68,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         m_driverController = new CommandXboxController(0);
+        m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
 
         m_chassis = TunerConstants.createDrivetrain();
@@ -96,6 +100,8 @@ public class RobotContainer {
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands();
         m_combinedCommand.createCombinedCommand(false);
+        m_climberSubsystem.addClimberDebugCommands();
+
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
         tab.add(m_shooterSubsystem.createShootFromDistanceCommand(m_chassis::getDistanceFromHub));
 
