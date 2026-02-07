@@ -4,9 +4,12 @@ package com.gos.rebuilt.subsystems;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -22,7 +25,7 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class PizzaSubsystem extends SubsystemBase {
 
-    private final SparkFlex m_pizzaMotor;
+    private final SparkMax m_pizzaMotor;
     private final GosDoubleProperty m_pizzaSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeed", 1);
     private final RelativeEncoder m_pizzaEncoder;
     private final SparkMaxAlerts m_pizzaAlert;
@@ -39,7 +42,7 @@ public class PizzaSubsystem extends SubsystemBase {
 
 
 
-        m_pizzaMotor = new SparkFlex(Constants.PIZZA_MOTOR, MotorType.kBrushless);
+        m_pizzaMotor = new SparkMax(Constants.PIZZA_MOTOR, MotorType.kBrushless);
 
         m_pizzaAlert = new SparkMaxAlerts(m_pizzaMotor, "pizzaAlert");
         m_pizzaEncoder = m_pizzaMotor.getEncoder();
@@ -50,6 +53,8 @@ public class PizzaSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(this.m_pizzaMotor),
                 360);
         }
+
+        m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public double getRPM() {

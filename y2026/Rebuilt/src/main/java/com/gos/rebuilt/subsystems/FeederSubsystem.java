@@ -4,6 +4,8 @@ package com.gos.rebuilt.subsystems;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -27,9 +29,10 @@ public class FeederSubsystem extends SubsystemBase {
         SparkMaxConfig feederConfig = new SparkMaxConfig();
         feederConfig.idleMode(IdleMode.kCoast);
         feederConfig.smartCurrentLimit(60);
-        feederConfig.inverted(false);
+        feederConfig.inverted(true);
 
 
+        m_feederMotor.configure(feederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 
