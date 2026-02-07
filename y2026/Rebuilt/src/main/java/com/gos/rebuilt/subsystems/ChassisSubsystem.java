@@ -35,6 +35,8 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -100,7 +102,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
-    private static final double DEADBAN = Math.toRadians(2);
+    private static final double DEADBAN = Math.toRadians(10);
 
     private final GosField m_field;
 
@@ -234,6 +236,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
 
         this.m_goalAngle = new Rotation2d(0);
+
+
+        m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
+
 
     }
 

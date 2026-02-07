@@ -21,8 +21,8 @@ public class EnabledPatties {
         this.m_shooter = shooter;
         this.m_shooterReady = new LEDBoolean(addressme, 0,  10, Color.kLawnGreen, Color.kIndianRed);
         this.m_chassisFacing = new LEDBoolean(addressme, 10, 20, Color.kMediumSeaGreen, Color.kOrangeRed);
-        this.m_distanceGood = new LEDBoolean(addressme, 20, 30, Color.kAliceBlue, Color.kGhostWhite);
-        this.m_everythingReady = new LEDBoolean(addressme, 30, 40, Color.kBrown, Color.kWhiteSmoke);
+        this.m_distanceGood = new LEDBoolean(addressme, 20, 30, Color.kDarkGoldenrod, Color.kGhostWhite);
+        this.m_everythingReady = new LEDBoolean(addressme, 30, 40, Color.kBrown, Color.kLimeGreen);
 
     }
 
@@ -30,6 +30,7 @@ public class EnabledPatties {
         m_chassisFacing.setStateAndWrite(m_chassis.facingHub());
         m_shooterReady.setStateAndWrite(m_shooter.isAtGoalRPM());
         m_distanceGood.setStateAndWrite(m_chassis.getDistanceFromHub() < m_shooter.getMin());
+        System.out.println("min " + m_shooter.getMin());
         m_everythingReady.setStateAndWrite(checkAll());
 
 

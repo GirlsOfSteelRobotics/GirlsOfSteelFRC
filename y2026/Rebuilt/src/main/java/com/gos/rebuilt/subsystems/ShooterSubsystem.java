@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
     private static final double DEADBAND = 2;
-    private final double m_min;
+    private static final double m_min = 1.99;
 
 
     public ShooterSubsystem() {
@@ -47,17 +47,18 @@ public class ShooterSubsystem extends SubsystemBase {
         m_motorEncoder = m_shooterMotor.getEncoder();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-        m_table.put(1.99, 1550.0);
+
+        m_table.put(m_min, 1550.0);
         m_table.put(2.85, 1650.0);
         m_table.put(3.55, 1750.0);
         m_table.put(4.85, 2000.0);
         m_table.put(6.14, 2190.0);
-        this.m_min = m_table.get(0.0);
-
 
 
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
+
+        m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(2);
