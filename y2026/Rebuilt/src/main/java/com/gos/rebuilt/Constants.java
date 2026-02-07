@@ -25,5 +25,7 @@ public final class Constants {
     public static final int PIVOT_MOTOR = 13;
     public static final int FEEDER_MOTOR = 14;
 
+
+    //PWM
     public static final int LED_PORT = 0;
 }

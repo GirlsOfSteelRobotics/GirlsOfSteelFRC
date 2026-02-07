@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
     private static final double DEADBAND = 2;
-    private static final double MINN = 1.99;
+    private static final double MIN_DISTANCE = 1.99;
 
 
     public ShooterSubsystem() {
@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
 
-        m_table.put(MINN, 1550.0);
+        m_table.put(MIN_DISTANCE, 1550.0);
         m_table.put(2.85, 1650.0);
         m_table.put(3.55, 1750.0);
         m_table.put(4.85, 2000.0);
@@ -82,8 +82,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotor.set(pow);
     }
 
-    public double getMin() {
-        return this.MINN;
+    public double getMinDistance() {
+        return this.MIN_DISTANCE;
     }
 
 

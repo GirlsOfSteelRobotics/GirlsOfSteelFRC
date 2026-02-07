@@ -29,8 +29,7 @@ public class EnabledPatties {
     public void writeLED() {
         m_chassisFacing.setStateAndWrite(m_chassis.facingHub());
         m_shooterReady.setStateAndWrite(m_shooter.isAtGoalRPM());
-        m_distanceGood.setStateAndWrite(m_chassis.getDistanceFromHub() < m_shooter.getMin());
-        System.out.println("min " + m_shooter.getMin());
+        m_distanceGood.setStateAndWrite(m_chassis.getDistanceFromHub() < m_shooter.getMinDistance());
         m_everythingReady.setStateAndWrite(checkAll());
 
 
@@ -39,7 +38,7 @@ public class EnabledPatties {
     public boolean checkAll() {
 
         if (m_chassis.facingHub()) {
-            return (m_shooter.isAtGoalRPM() && m_chassis.getDistanceFromHub() < m_shooter.getMin());
+            return (m_shooter.isAtGoalRPM() && m_chassis.getDistanceFromHub() < m_shooter.getMinDistance());
         }
         return false;
     }
