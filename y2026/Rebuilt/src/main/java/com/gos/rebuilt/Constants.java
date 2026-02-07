@@ -25,4 +25,8 @@ public final class Constants {
     public static final int FEEDER_MOTOR = 14;
     public static final int CLIMBER_LEFT_MOTOR = 15;
     public static final int CLIMBER_RIGHT_MOTOR = 16;
+
+
+    //PWM
+    public static final int LED_PORT = 0;
 }
