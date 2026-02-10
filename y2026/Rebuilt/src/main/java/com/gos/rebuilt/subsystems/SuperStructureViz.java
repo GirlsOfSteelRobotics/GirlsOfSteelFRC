@@ -33,7 +33,7 @@ public class SuperStructureViz extends SubsystemBase {
     @Override
     public void periodic() {
 
-        double shooterPitch = 45;
+        double shooterPitch = ShooterSubsystem.SHOT_ANGLE.getRadians();
         double turretYaw = 0;
         double pivotAngle = m_pivotSubsystem.getAngle();
         double pizzaAngle = m_pizzaSubsystem.getAngle();
@@ -44,7 +44,7 @@ public class SuperStructureViz extends SubsystemBase {
 
         Pose3d turretPose = new Pose3d(
             Units.inchesToMeters(-3), Units.inchesToMeters(0), Units.inchesToMeters(14),
-            new Rotation3d(Math.toRadians(0), Math.toRadians(-shooterPitch), Math.toRadians(turretYaw)));
+            new Rotation3d(Math.toRadians(0), -shooterPitch, Math.toRadians(turretYaw)));
 
         Pose3d intakePose = new Pose3d(
             Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(9),

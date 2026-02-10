@@ -1,7 +1,12 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Intake/Intake In! :)": "Command",
+      "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
+      "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
+      "/SmartDashboard/Alerts": "Alerts"
     }
   },
   "NetworkTables Info": {

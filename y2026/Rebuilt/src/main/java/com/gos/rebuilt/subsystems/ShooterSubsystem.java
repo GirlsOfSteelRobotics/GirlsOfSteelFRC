@@ -2,10 +2,14 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.geometry.Rotation2d;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
@@ -26,6 +30,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
+    public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
 
     private final SparkFlex m_shooterMotor;
     private final RelativeEncoder m_motorEncoder;
@@ -34,9 +39,13 @@ public class ShooterSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_feedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKf", 1);
     private final GosDoubleProperty m_kp = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKp", 1);
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+    private final SparkMaxAlerts m_shooterAlert;
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
+    private double m_goal;
+    private static final double DEADBAND = 2;
+    private static final double MIN_DISTANCE = 1.99;
 
 
     public ShooterSubsystem() {
@@ -44,16 +53,24 @@ public class ShooterSubsystem extends SubsystemBase {
         m_motorEncoder = m_shooterMotor.getEncoder();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-        m_table.put(1.99, 1550.0);
+
+        m_table.put(MIN_DISTANCE, 1550.0);
         m_table.put(2.85, 1650.0);
         m_table.put(3.55, 1750.0);
         m_table.put(4.85, 2000.0);
         m_table.put(6.14, 2190.0);
 
+        m_shooterAlert = new SparkMaxAlerts(m_shooterMotor, "shooterAlert");
 
 
+        SparkMaxConfig shooterConfig = new SparkMaxConfig();
+        shooterConfig.idleMode(IdleMode.kCoast);
+        shooterConfig.smartCurrentLimit(60);
+        shooterConfig.inverted(false);
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
+
+        m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(2);
@@ -77,6 +94,11 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotor.set(pow);
     }
 
+    public double getMinDistance() {
+        return this.MIN_DISTANCE;
+    }
+
+
     public double getRPM() {
         return m_motorEncoder.getVelocity();
     }
@@ -90,10 +112,14 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setRPM(double goal) {
-
+        m_goal = goal;
         double error = goal - getRPM();
         m_shooterMotor.set(m_feedForward.getValue() * goal + m_kp.getValue() * error);
 
+    }
+
+    public boolean isAtGoalRPM() {
+        return Math.abs(m_goal - getRPM()) < DEADBAND;
     }
 
     public void shootFromDistance(double distance) {
@@ -118,6 +144,7 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();
+        m_shooterAlert.checkAlerts();
     }
 
     public void addShooterDebugCommands() {
@@ -126,7 +153,7 @@ public class ShooterSubsystem extends SubsystemBase {
         tab.add(createShooterSpinMotorBackwardCommand());
         tab.add(createShooterSpin2000());
         tab.add(createShooterSpin1500());
-        tab.add(createtuneRPM());
+        tab.add(createTuneRPM());
 
     }
 
@@ -146,7 +173,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return runEnd(() -> setRPM(2000), this::stop).withName("Shooter spins to 2000!!");
     }
 
-    public Command createtuneRPM() {
+    public Command createTuneRPM() {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
     }
 

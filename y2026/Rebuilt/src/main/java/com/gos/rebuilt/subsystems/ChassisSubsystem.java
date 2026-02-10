@@ -100,10 +100,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
+    private static final double DEADBAN = Math.toRadians(10);
 
     private final GosField m_field;
 
-
+    private Rotation2d m_goalAngle;
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
@@ -119,6 +120,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             null,
             this
         )
+
 
     );
 
@@ -230,6 +232,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
+
+        this.m_goalAngle = new Rotation2d(0);
+
+
+        m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
+
 
     }
 
@@ -405,6 +413,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(goalAngleRad)
         );
+        m_goalAngle = goalAngleRad;
+    }
+
+    public boolean facingHub() {
+        return Math.abs(m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians()) < DEADBAN;
     }
 
     public Rotation2d getFaceAngle(Translation2d point) {
@@ -442,7 +455,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createFaceHub() {
-        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
+        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).until(this::facingHub).withName("Face Hub");
     }
 
     public Command createResetPose(Pose2d pose) {
