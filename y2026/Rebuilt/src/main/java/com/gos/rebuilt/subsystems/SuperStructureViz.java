@@ -4,6 +4,7 @@ import com.gos.rebuilt.FireOnTheRun;
 import com.gos.rebuilt.ShooterSimBalls;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -55,7 +56,8 @@ public class SuperStructureViz extends SubsystemBase {
             intakePose,
         });
 
-        m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), m_chassisSubsystem.getState().Speeds, m_chassisSubsystem.getState().Pose);
+        m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), ChassisSpeeds.fromRobotRelativeSpeeds
+            (m_chassisSubsystem.getState().Speeds, m_chassisSubsystem.getState().Pose.getRotation()), m_chassisSubsystem.getState().Pose);
         m_fireOnTheRun.glue();
     }
 

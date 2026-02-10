@@ -38,7 +38,8 @@ public class FireOnTheRun {
     }
 
     public double fuelAirTime(Translation3d point) {
-        return getDistance(point) / getFuelVelocity(point);
+        return getDistance(point) / (getFuelVelocity(point) *
+            Math.cos());
     }
 
     public Translation3d imaginaryHub(double time, ChassisSpeeds chassisSpeed) {
@@ -70,7 +71,7 @@ public class FireOnTheRun {
             m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d()));
 
         m_publisherPose.accept(robotPose);
-        m_shooterSimBalls.calculatePosition(getFuelVelocity(imaginaryPoint), new ChassisSpeeds(), robotPose);
+        m_shooterSimBalls.calculatePosition(getFuelVelocity(imaginaryPoint), robotVelField, robotPose);
 
         return robotPose;
     }

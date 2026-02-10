@@ -438,6 +438,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         tab.add(createFaceHub());
         tab.add(createResetPose(new Pose2d()));
+        tab.add(createResetPose(new Pose2d(Hub.innerCenterPoint.getX() - 3, Hub.innerCenterPoint.getY(), Rotation2d.fromDegrees(0))));
     }
 
     public Command createFaceHub() {
