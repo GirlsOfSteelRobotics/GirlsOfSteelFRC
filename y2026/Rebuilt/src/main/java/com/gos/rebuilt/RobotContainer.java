@@ -6,6 +6,7 @@
 package com.gos.rebuilt;
 
 
+import com.gos.rebuilt.commands.FireOnTheRunCommand;
 import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ClimberSubsystem;
 
@@ -133,6 +134,8 @@ public class RobotContainer {
 
         m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
         m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
+
+        m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper

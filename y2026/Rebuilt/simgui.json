@@ -38,12 +38,14 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
+      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
       "/Shuffleboard/Climber/Left Climb Down": "Command",
       "/Shuffleboard/Climber/Left Climb Up": "Command",
       "/Shuffleboard/Climber/Right Climb Down": "Command",
       "/Shuffleboard/Climber/Right Climb Up": "Command",
+      "/Shuffleboard/Combined Commands/Shoot": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
@@ -65,7 +67,9 @@
       "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Pizza/Feed the hungry": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Reverse the pizza": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
       "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
@@ -80,6 +84,11 @@
     },
     "windows": {
       "/Shuffleboard/Chassis/Face Hub": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": {
         "window": {
           "visible": true
         }
@@ -110,10 +119,7 @@
         "left": 245,
         "right": 3942,
         "top": 118,
-        "width": 16.54119300842285,
-        "window": {
-          "visible": true
-        }
+        "width": 16.54119300842285
       }
     }
   },

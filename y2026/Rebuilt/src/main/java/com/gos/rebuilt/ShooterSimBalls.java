@@ -27,7 +27,6 @@ public class ShooterSimBalls {
     //constructor
     public ShooterSimBalls(String name) {
         m_height = Units.inchesToMeters(20);
-        m_theta = Rotation2d.fromDegrees(60);
         m_publisher = NetworkTableInstance.getDefault().getStructArrayTopic(name, Translation3d.struct).publish();
     }
 
