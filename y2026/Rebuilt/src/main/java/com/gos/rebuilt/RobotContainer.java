@@ -10,7 +10,6 @@ import com.gos.rebuilt.commands.FireOnTheRunCommand;
 import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ClimberSubsystem;
 
-import com.gos.rebuilt.subsystems.ClimberSubsystem;
 import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.CombinedCommand;

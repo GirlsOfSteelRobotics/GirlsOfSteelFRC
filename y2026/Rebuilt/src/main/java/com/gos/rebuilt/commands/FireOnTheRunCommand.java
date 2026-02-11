@@ -5,15 +5,12 @@ import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.FireOnTheRun;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.FeederSubsystem;
-import com.gos.rebuilt.subsystems.IntakeSubsystem;
-import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 public class FireOnTheRunCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.5);
@@ -23,7 +20,7 @@ public class FireOnTheRunCommand extends Command {
     private final ShooterSubsystem m_shooter;
     private final PizzaSubsystem m_pizza;
     private final FeederSubsystem m_feeder;
-    private final FireOnTheRun m_FOTR;
+    private final FireOnTheRun m_fOTR;
 
     public FireOnTheRunCommand(CommandXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
         m_joystick = joystick;
@@ -31,7 +28,7 @@ public class FireOnTheRunCommand extends Command {
         m_pizza = pizza;
         m_shooter = shooter;
         m_feeder = feeder;
-        m_FOTR = new FireOnTheRun(chassis, shooter);
+        m_fOTR = new FireOnTheRun(chassis, shooter);
 
         addRequirements(m_chassis);
         addRequirements(m_pizza);
@@ -41,14 +38,18 @@ public class FireOnTheRunCommand extends Command {
 
     @Override
     public void execute() {
-        Translation3d imaginaryPoint = m_FOTR.glue();
-        m_chassis.staringDrive(
-            MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
-            MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
-            m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d())
-        );
-        m_shooter.shootFromDistance(m_FOTR.getDistance(imaginaryPoint));
+        Translation3d imaginaryPoint = m_fOTR.glue();
+        m_chassis.staringDrive(MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05), MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05), m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d()));
+        m_shooter.shootFromDistance(m_fOTR.getDistance(imaginaryPoint));
         m_pizza.feed();
         m_feeder.feed();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_chassis.stop();
+        m_shooter.stop();
+        m_pizza.stop();
+        m_feeder.stop();
     }
 }

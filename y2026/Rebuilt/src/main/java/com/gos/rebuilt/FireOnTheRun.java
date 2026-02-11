@@ -1,12 +1,10 @@
 package com.gos.rebuilt;
 
-import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -46,14 +44,14 @@ public class FireOnTheRun {
     }
 
     public double getFuelVelocity(Translation3d point) {
-        return m_shooter.RPMtoVelocity(
-            m_shooter.RPMFromDistance(getDistance(point))
+        return m_shooter.rpmToVelocity(
+            m_shooter.rpmFromDistance(getDistance(point))
         );
     }
 
     public double fuelAirTime(Translation3d point) {
-        return getDistance(point) / (getFuelVelocity(point) *
-            Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
+        return getDistance(point) / (getFuelVelocity(point)
+            * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
     }
 
     public Translation3d imaginaryHub(double time, ChassisSpeeds chassisSpeed) {
@@ -68,7 +66,7 @@ public class FireOnTheRun {
     }
 
     public Translation3d glue() {
-        ChassisSpeeds robotVel =  ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
+        ChassisSpeeds robotVel = ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
         ChassisSpeeds robotVelRob = ChassisSpeeds.fromFieldRelativeSpeeds(robotVel, m_chassis.getState().Pose.getRotation());
 
 
@@ -79,7 +77,7 @@ public class FireOnTheRun {
 
             m_publisherTranslation.accept(imaginaryPoint);
             imaginaryPoint = imaginaryHub(fuelAirTime(imaginaryPoint), robotVel);
-            m_hubList.get(i).accept(new Pose3d(imaginaryPoint,new Rotation3d()));
+            m_hubList.get(i).accept(new Pose3d(imaginaryPoint, new Rotation3d()));
             robotPose = new Pose2d(
                 m_chassis.getState().Pose.getX(),
                 m_chassis.getState().Pose.getY(),
@@ -87,7 +85,6 @@ public class FireOnTheRun {
             m_publisherPose.accept(robotPose);
             m_shooterSimBallsList.get(i).calculatePosition(getFuelVelocity(imaginaryPoint), robotVel, robotPose);
         }
-
 
 
         return imaginaryPoint;

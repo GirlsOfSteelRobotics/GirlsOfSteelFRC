@@ -104,10 +104,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getLaunchSpeed() {
-        return RPMtoVelocity(m_motorEncoder.getVelocity());
+        return rpmToVelocity(m_motorEncoder.getVelocity());
     }
 
-    public double RPMtoVelocity(double rpm){
+    public double rpmToVelocity(double rpm) {
         return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .75;
     }
 
@@ -127,7 +127,7 @@ public class ShooterSubsystem extends SubsystemBase {
         setRPM(rpm);
     }
 
-    public double RPMFromDistance(double distance) {
+    public double rpmFromDistance(double distance) {
         double rpm = m_table.get(distance);
         return rpm;
     }
