@@ -2,9 +2,16 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,26 +38,28 @@ import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
+    private static final double DEADBAND = 2;
+    private static final double MIN_DISTANCE = 1.99;
 
     private final SparkFlex m_shooterMotor;
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-    private final GosDoubleProperty m_feedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKf", 1);
-    private final GosDoubleProperty m_kp = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ShooterKp", 1);
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
     private final SparkMaxAlerts m_shooterAlert;
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
-    private static final double DEADBAND = 2;
-    private static final double MIN_DISTANCE = 1.99;
+
+    private final SparkClosedLoopController m_pidController;
+    private final PidProperty m_pidProperties;
 
 
     public ShooterSubsystem() {
         m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_shooterMotor.getEncoder();
+        m_pidController = m_shooterMotor.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
 
@@ -66,7 +75,14 @@ public class ShooterSubsystem extends SubsystemBase {
         SparkMaxConfig shooterConfig = new SparkMaxConfig();
         shooterConfig.idleMode(IdleMode.kCoast);
         shooterConfig.smartCurrentLimit(60);
-        shooterConfig.inverted(false);
+        shooterConfig.inverted(true);
+        shooterConfig.encoder.positionConversionFactor(1);
+        shooterConfig.encoder.velocityConversionFactor(1);
+
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_shooterMotor, shooterConfig, ClosedLoopSlot.kSlot0)
+            .addFF(0)
+            .addP(0)
+            .build();
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
 
@@ -83,6 +99,9 @@ public class ShooterSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(this.m_shooterMotor));
         }
 
+
+        m_shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
     }
 
     public void spinMotorForward() {
@@ -95,7 +114,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getMinDistance() {
-        return this.MIN_DISTANCE;
+        return MIN_DISTANCE;
     }
 
 
@@ -109,8 +128,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setRPM(double goal) {
         m_goal = goal;
-        double error = goal - getRPM();
-        m_shooterMotor.set(m_feedForward.getValue() * goal + m_kp.getValue() * error);
+        m_pidController.setSetpoint(goal, ControlType.kVelocity);
 
     }
 
@@ -136,6 +154,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void periodic() {
         m_networkTableEntries.updateLogs();
         m_shooterAlert.checkAlerts();
+        m_pidProperties.updateIfChanged();
     }
 
     public void addShooterDebugCommands() {
