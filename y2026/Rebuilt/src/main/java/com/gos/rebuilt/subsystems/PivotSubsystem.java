@@ -1,6 +1,7 @@
 package com.gos.rebuilt.subsystems;
 
 
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.RelativeEncoder;
@@ -23,6 +24,8 @@ public class PivotSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 45.0;
     private final RelativeEncoder m_encoder;
     private final SparkMaxAlerts m_pivotMotorAlerts;
+    private final LoggingUtil m_networkTableEntries;
+
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
@@ -48,6 +51,22 @@ public class PivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+
+        m_networkTableEntries = new LoggingUtil("Pivot Subsystem");
+
+        m_networkTableEntries.addDouble("Pivot Position", this::getPosition);
+        m_networkTableEntries.addDouble("Pivot Velocity", this::getVelocity);
+        m_networkTableEntries.addDouble("Applied Output", m_pivotMotor::getAppliedOutput);
+
+
+    }
+
+    public double getPosition() {
+        return m_encoder.getPosition();
+    }
+
+    public double getVelocity() {
+        return m_encoder.getVelocity();
     }
 
     @Override

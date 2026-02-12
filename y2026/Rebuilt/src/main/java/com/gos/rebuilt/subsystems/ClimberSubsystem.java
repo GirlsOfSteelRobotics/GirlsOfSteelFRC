@@ -37,6 +37,8 @@ public class ClimberSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("ClimberSubsystem");
         m_networkTableEntries.addDouble("Climber Left RPM", this::getLeftRPM);
         m_networkTableEntries.addDouble("Climber Right RPM", this::getRightRPM);
+        m_networkTableEntries.addDouble("Climber Left Height", this::getLeftHeight);
+        m_networkTableEntries.addDouble("Climber Right Height", this::getRightHeight);
 
         SparkMaxConfig climberLeftMotorConfig = new SparkMaxConfig();
         climberLeftMotorConfig.idleMode(IdleMode.kBrake);
@@ -50,6 +52,13 @@ public class ClimberSubsystem extends SubsystemBase {
 
     }
 
+    public double getLeftHeight() {
+        return m_climberLeftEncoder.getPosition();
+    }
+
+    public double getRightHeight() {
+        return m_climberRightEncoder.getPosition();
+    }
 
     public void climbUp() {
         m_climberLeftMotor.set(m_climbingSpeed.getValue());

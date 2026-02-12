@@ -38,26 +38,16 @@ public class SuperStructureViz extends SubsystemBase {
         double pivotAngle = m_pivotSubsystem.getAngle();
         double pizzaAngle = m_pizzaSubsystem.getAngle();
 
-        Pose3d pizzaPose = new Pose3d(
-            Units.inchesToMeters(0), Units.inchesToMeters(0), Units.inchesToMeters(0),
-            new Rotation3d(Math.toRadians(0), Math.toRadians(0), Math.toRadians(pizzaAngle)));
+        Pose3d pizzaPose = new Pose3d(Units.inchesToMeters(0), Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation3d(Math.toRadians(0), Math.toRadians(0), Math.toRadians(pizzaAngle)));
 
-        Pose3d turretPose = new Pose3d(
-            Units.inchesToMeters(-3), Units.inchesToMeters(0), Units.inchesToMeters(14),
-            new Rotation3d(Math.toRadians(0), -shooterPitch, Math.toRadians(turretYaw)));
+        Pose3d turretPose = new Pose3d(Units.inchesToMeters(-3), Units.inchesToMeters(0), Units.inchesToMeters(14), new Rotation3d(Math.toRadians(0), -shooterPitch, Math.toRadians(turretYaw)));
 
-        Pose3d intakePose = new Pose3d(
-            Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(9),
-            new Rotation3d(Math.toRadians(0), Math.toRadians(-pivotAngle), Math.toRadians(0)));
+        Pose3d intakePose = new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(9), new Rotation3d(Math.toRadians(0), Math.toRadians(-pivotAngle), Math.toRadians(0)));
 
-        m_superStructurePublisher.set(new Pose3d[] {
-            pizzaPose,
-            turretPose,
-            intakePose,
-        });
+        m_superStructurePublisher.set(new Pose3d[] {pizzaPose, turretPose, intakePose});
 
         m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), ChassisSpeeds.fromRobotRelativeSpeeds(m_chassisSubsystem.getState().Speeds, m_chassisSubsystem.getState().Pose.getRotation()), m_chassisSubsystem.getState().Pose);
-        m_fireOnTheRun.glue();
+        m_fireOnTheRun.findImaginary();
     }
 
 }

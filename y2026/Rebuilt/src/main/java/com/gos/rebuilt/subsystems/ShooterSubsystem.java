@@ -72,6 +72,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
+        m_networkTableEntries.addDouble("Applied Output", m_shooterMotor::getAppliedOutput);
+
+        m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
+
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeo550(2);
             LinearSystem<N1, N1, N1> plant =
@@ -103,6 +107,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_motorEncoder.getVelocity();
     }
 
+    public double getGoal() {
+        return m_goal;
+    }
+
     public double getLaunchSpeed() {
         return rpmToVelocity(m_motorEncoder.getVelocity());
     }
@@ -128,8 +136,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double rpmFromDistance(double distance) {
-        double rpm = m_table.get(distance);
-        return rpm;
+        return m_table.get(distance);
     }
 
 
