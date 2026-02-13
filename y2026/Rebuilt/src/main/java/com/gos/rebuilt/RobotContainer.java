@@ -83,7 +83,7 @@ public class RobotContainer {
         m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis);
         m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
 
-        m_autoFactory = new AutoFactory(m_chassis);
+        m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
