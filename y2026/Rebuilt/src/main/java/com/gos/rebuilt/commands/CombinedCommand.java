@@ -36,12 +36,10 @@ public class CombinedCommand {
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
-
     public Command shootBallNoAiming() {
-            return m_shooterSubsystem.createTuneRPM()
-                .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM)
-                    .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
-
+        return m_shooterSubsystem.createTuneRPM()
+            .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM)
+                .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
     public boolean readyToShoot() {
