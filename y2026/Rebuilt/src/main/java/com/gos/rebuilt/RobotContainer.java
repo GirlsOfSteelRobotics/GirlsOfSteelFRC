@@ -126,8 +126,8 @@ public class RobotContainer {
     private void configureBindings() {
         m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
-        m_driverController.a().whileTrue(m_combinedCommand.shootBall());
-
+        //m_driverController.a().whileTrue(m_combinedCommand.shootBall());
+        m_driverController.a().whileTrue(m_combinedCommand.shootBallNoAiming());
         m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
 
 

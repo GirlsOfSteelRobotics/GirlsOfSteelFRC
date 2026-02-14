@@ -36,6 +36,14 @@ public class CombinedCommand {
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
+
+    public Command shootBallNoAiming() {
+            return m_shooterSubsystem.createTuneRPM()
+                .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM)
+                    .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
+
+    }
+
     public boolean readyToShoot() {
         return m_chassisSubsystem.facingHub() &&  m_shooterSubsystem.isAtGoalRPM();
     }
@@ -44,6 +52,8 @@ public class CombinedCommand {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
         if (!inComp) {
             debugTab.add(shootBall().withName("Shoot"));
+            debugTab.add(shootBallNoAiming().withName("Shooting Easier"));
+
         }
     }
 }
