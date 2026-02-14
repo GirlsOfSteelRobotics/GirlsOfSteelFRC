@@ -32,30 +32,6 @@
     }
   },
   {
-    "name": "/Preferences/pivotSpeed",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ShooterKf",
-    "type": "double",
-    "value": 9e-05,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ShooterKp",
-    "type": "double",
-    "value": 0.009,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/SdsModule.Steerkp",
     "type": "double",
     "value": 67.0,
@@ -128,14 +104,6 @@
     }
   },
   {
-    "name": "/Preferences/ShooterKr",
-    "type": "double",
-    "value": 1500.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/tuneRPM",
     "type": "double",
     "value": 2190.0,
@@ -152,23 +120,15 @@
     }
   },
   {
-    "name": "/Preferences/TEMP ROBOT X",
+    "name": "/Preferences/Fire On The Run Throttling",
     "type": "double",
-    "value": 2.0,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/TEMP ROBOT Y",
-    "type": "double",
-    "value": 3.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/TEMP ROBOT OMEGA",
+    "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -176,9 +136,113 @@
     }
   },
   {
-    "name": "/Preferences/Fire On The Run Throttling",
+    "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.5,
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.max_velocity",
+    "type": "double",
+    "value": 45.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
+    "type": "double",
+    "value": 45.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.aff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.aff.kff",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.aff.kg",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.mm.max_velocity",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.mm.max_acceleration",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.eff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.eff.kff",
+    "type": "double",
+    "value": 4.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.eff.kg",
+    "type": "double",
+    "value": 0.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.eff.ka",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Climber.mm.kp",
+    "type": "double",
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
