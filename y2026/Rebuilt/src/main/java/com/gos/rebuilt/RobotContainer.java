@@ -6,6 +6,7 @@
 package com.gos.rebuilt;
 
 
+import com.gos.lib.properties.PropertyManager;
 import com.gos.rebuilt.commands.FireOnTheRunCommand;
 import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ClimberSubsystem;
@@ -70,6 +71,8 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+
+        PropertyManager.setPurgeConstantPreferenceKeys(true);
         m_driverController = new CommandXboxController(0);
         m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
@@ -103,6 +106,7 @@ public class RobotContainer {
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands();
         m_climberSubsystem.addClimberDebugCommands();
+        m_pivotSubsystem.addPivotDebugCommands();
 
         m_combinedCommand.createCombinedCommand(false);
 
@@ -111,6 +115,9 @@ public class RobotContainer {
 
         m_debugPathsTab = new DebugPathsTab(m_chassis);
         m_debugPathsTab.addDebugPathsToShuffleBoard();
+
+
+        PropertyManager.purgeExtraKeys();
     }
 
 
