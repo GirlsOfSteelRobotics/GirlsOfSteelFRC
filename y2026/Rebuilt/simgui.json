@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK Flex [10]": {
         "header": {
@@ -26,22 +21,12 @@
           "open": true
         }
       },
-      "SPARK Flex [16]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK Flex [2]": {
         "header": {
           "open": true
         }
       },
       "SPARK Flex [2] RELATIVE ENCODER": {
-        "header": {
-          "open": true
-        }
-      },
-      "Talon FX (v6)[5]": {
         "header": {
           "open": true
         }
@@ -53,6 +38,7 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
+      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
       "/Shuffleboard/Climber/Left Climb Down": "Command",
@@ -81,7 +67,9 @@
       "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
+      "/Shuffleboard/Pizza/Feed the hungry": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Reverse the pizza": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
       "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
@@ -100,12 +88,22 @@
           "visible": true
         }
       },
+      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Climber/Left Climb Up": {
         "window": {
           "visible": true
         }
       },
       "/Shuffleboard/Climber/Right Climb Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter RPM/Shoot from distance": {
         "window": {
           "visible": true
         }
@@ -129,6 +127,11 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
       "ClimberSubsystem": {
         "open": true

@@ -1,6 +1,7 @@
 package com.gos.rebuilt.subsystems;
 
 
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
@@ -20,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkFlex m_intakeMotor;
     private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeSpeed", 1);
 
+    private final LoggingUtil m_loggingUtil;
     private final SparkMaxAlerts m_intakeMotorAlert;
 
 
@@ -34,10 +36,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+        m_loggingUtil = new LoggingUtil("Intake");
+        m_loggingUtil.addDouble("Current", m_intakeMotor::getOutputCurrent);
     }
 
     @Override
     public void periodic() {
+        m_loggingUtil.updateLogs();
         m_intakeMotorAlert.checkAlerts();
     }
 

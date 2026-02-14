@@ -6,8 +6,10 @@
 package com.gos.rebuilt;
 
 
+import com.gos.rebuilt.commands.FireOnTheRunCommand;
 import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ClimberSubsystem;
+
 import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.CombinedCommand;
@@ -81,7 +83,7 @@ public class RobotContainer {
         m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis);
         m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
 
-        m_autoFactory = new AutoFactory(m_chassis);
+        m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
@@ -100,8 +102,9 @@ public class RobotContainer {
         m_pizzaSubsystem.addPizzaDebugCommands();
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands();
-        m_combinedCommand.createCombinedCommand(false);
         m_climberSubsystem.addClimberDebugCommands();
+
+        m_combinedCommand.createCombinedCommand(false);
 
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
         tab.add(m_shooterSubsystem.createShootFromDistanceCommand(m_chassis::getDistanceFromHub));
@@ -130,6 +133,8 @@ public class RobotContainer {
 
         m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
         m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
+
+        m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper

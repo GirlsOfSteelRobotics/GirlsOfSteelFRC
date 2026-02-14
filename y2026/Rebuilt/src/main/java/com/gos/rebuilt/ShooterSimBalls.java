@@ -25,9 +25,9 @@ public class ShooterSimBalls {
     private final StructArrayPublisher<Translation3d> m_publisher;
 
     //constructor
-    public ShooterSimBalls() {
+    public ShooterSimBalls(String name) {
         m_height = Units.inchesToMeters(20);
-        m_publisher = NetworkTableInstance.getDefault().getStructArrayTopic("ShotPreview", Translation3d.struct).publish();
+        m_publisher = NetworkTableInstance.getDefault().getStructArrayTopic(name, Translation3d.struct).publish();
     }
 
     public double calculatePosX(double time) {
@@ -42,12 +42,12 @@ public class ShooterSimBalls {
         return m_fuelInitVY * time + m_robotPosition.getY();
     }
 
-    public void calculatePosition(double launchSpeed, ChassisSpeeds robotVel, Pose2d robotPosition) {
+    public void calculatePosition(double launchSpeed, ChassisSpeeds fieldVelocity, Pose2d robotPosition) {
         m_robotPosition = robotPosition;
         m_fuelInitVZ = launchSpeed * Math.sin(m_theta.getRadians());
         double horizComp = launchSpeed * Math.cos(m_theta.getRadians());
-        m_fuelInitVY = -Math.sin(robotPosition.getRotation().getRadians()) * horizComp + robotVel.vyMetersPerSecond;
-        m_fuelInitVX = -Math.cos(robotPosition.getRotation().getRadians()) * horizComp + robotVel.vxMetersPerSecond;
+        m_fuelInitVY = -Math.sin(robotPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vyMetersPerSecond;
+        m_fuelInitVX = -Math.cos(robotPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vxMetersPerSecond;
 
 
         ArrayList<Translation3d> listOfTrans = new ArrayList<>(10);

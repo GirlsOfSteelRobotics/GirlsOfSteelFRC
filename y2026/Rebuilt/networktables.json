@@ -122,7 +122,7 @@
   {
     "name": "/Preferences/chassis Pid.mm.kd",
     "type": "double",
-    "value": 0.1,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -145,6 +145,38 @@
   },
   {
     "name": "/Preferences/FeederSpeed",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP ROBOT X",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP ROBOT Y",
+    "type": "double",
+    "value": 3.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP ROBOT OMEGA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Fire On The Run Throttling",
     "type": "double",
     "value": 0.5,
     "properties": {

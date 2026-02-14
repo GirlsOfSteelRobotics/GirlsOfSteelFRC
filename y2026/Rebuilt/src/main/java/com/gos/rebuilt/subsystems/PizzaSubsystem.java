@@ -1,6 +1,7 @@
 package com.gos.rebuilt.subsystems;
 
 
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
@@ -28,11 +29,14 @@ public class PizzaSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_pizzaSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeed", 1);
     private final RelativeEncoder m_pizzaEncoder;
     private final SparkMaxAlerts m_pizzaAlert;
+    private final LoggingUtil m_networkTableEntries;
+
 
     private ISimWrapper m_pizzaSimulator;
 
     public PizzaSubsystem() {
 
+        m_networkTableEntries = new LoggingUtil("Pizza Subsystem");
 
         SparkMaxConfig pizzaConfig = new SparkMaxConfig();
         pizzaConfig.idleMode(IdleMode.kCoast);
@@ -54,9 +58,13 @@ public class PizzaSubsystem extends SubsystemBase {
         }
 
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        m_networkTableEntries.addDouble("Pizza Velocity", this::getVelocity);
+        m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
+
     }
 
-    public double getRPM() {
+    public double getVelocity() {
         return m_pizzaEncoder.getVelocity();
     }
 
@@ -86,6 +94,7 @@ public class PizzaSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        m_networkTableEntries.updateLogs();
         m_pizzaAlert.checkAlerts();
     }
 
