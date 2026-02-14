@@ -75,6 +75,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        m_networkTableEntries.updateLogs();
         m_pivotMotorAlerts.checkAlerts();
     }
 
