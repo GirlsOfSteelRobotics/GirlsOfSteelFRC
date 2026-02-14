@@ -4,7 +4,9 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -48,6 +50,11 @@ public class ClimberSubsystem extends SubsystemBase {
         SparkMaxConfig climberRightMotorConfig = new SparkMaxConfig();
         climberRightMotorConfig.idleMode(IdleMode.kBrake);
         climberRightMotorConfig.smartCurrentLimit(60);
+        climberLeftMotorConfig.inverted(false);
+
+
+        m_climberLeftMotor.configure(climberLeftMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_climberRightMotor.configure(climberRightMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
     }
