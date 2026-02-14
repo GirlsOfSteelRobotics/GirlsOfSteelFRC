@@ -71,13 +71,12 @@ public class PizzaSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(this.m_pizzaMotor),
                 360);
         }
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
+        m_pidProperties = new RevPidPropertyBuilder("Pizza", false, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)
             .addP(0)
             .build();
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        m_networkTableEntries.addDouble("Pizza Velocity", this::getVelocity);
         m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
 
         m_networkTableEntries.addDouble("Pizza rpm", this::getRPM);
@@ -88,9 +87,6 @@ public class PizzaSubsystem extends SubsystemBase {
 
     }
 
-    public double getVelocity() {
-        return m_pizzaEncoder.getVelocity();
-    }
 
     public double getGoal() {
         return m_goal;
