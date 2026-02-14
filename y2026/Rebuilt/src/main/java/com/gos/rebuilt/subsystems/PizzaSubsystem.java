@@ -3,11 +3,16 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rebuilt.Constants;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -30,6 +35,13 @@ public class PizzaSubsystem extends SubsystemBase {
     private final RelativeEncoder m_pizzaEncoder;
     private final SparkMaxAlerts m_pizzaAlert;
     private final LoggingUtil m_networkTableEntries;
+    private double m_goal;
+    private static final double DEADBAND = 2;
+    private static final GosDoubleProperty MIN_SPIN = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "min_Spin", 100);
+    private static final GosDoubleProperty BASE_CURRENTS = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "base_Currents", 100);
+
+    private final SparkClosedLoopController m_pidController;
+    private final PidProperty m_pidProperties;
 
 
     private ISimWrapper m_pizzaSimulator;
@@ -45,7 +57,10 @@ public class PizzaSubsystem extends SubsystemBase {
 
 
 
+
         m_pizzaMotor = new SparkMax(Constants.PIZZA_MOTOR, MotorType.kBrushless);
+
+        m_pidController = m_pizzaMotor.getClosedLoopController();
 
         m_pizzaAlert = new SparkMaxAlerts(m_pizzaMotor, "pizzaAlert");
         m_pizzaEncoder = m_pizzaMotor.getEncoder();
@@ -56,16 +71,29 @@ public class PizzaSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(this.m_pizzaMotor),
                 360);
         }
-
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
+            .addFF(0)
+            .addP(0)
+            .build();
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_networkTableEntries.addDouble("Pizza Velocity", this::getVelocity);
         m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
 
+        m_networkTableEntries.addDouble("Pizza rpm", this::getRPM);
+
+        m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
+
+        m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
+
     }
 
     public double getVelocity() {
         return m_pizzaEncoder.getVelocity();
+    }
+
+    public double getGoal() {
+        return m_goal;
     }
 
     public double getAngle() {
@@ -80,8 +108,26 @@ public class PizzaSubsystem extends SubsystemBase {
         m_pizzaMotor.set(-m_pizzaSpeed.getValue());
     }
 
+    public boolean checkJam() {
+        return (getRPM() < MIN_SPIN.getValue() && m_pizzaMotor.getOutputCurrent() > BASE_CURRENTS.getValue());
+    }
+
     public void stop() {
         m_pizzaMotor.stopMotor();
+    }
+
+    public void setRPM(double goal) {
+        m_goal = goal;
+        m_pidController.setSetpoint(goal, ControlType.kVelocity);
+
+    }
+
+    public boolean isAtGoalRPM() {
+        return Math.abs(m_goal - getRPM()) < DEADBAND;
+    }
+
+    public double getRPM() {
+        return m_pizzaEncoder.getVelocity();
     }
 
 
@@ -90,12 +136,16 @@ public class PizzaSubsystem extends SubsystemBase {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
         tab.add(createPizzaFeedCommand());
         tab.add(createPizzaReverseCommand());
+        tab.add(createPizzaSpin500());
+        tab.add(createPizzaSpin1000());
+        tab.add(createRunUntilStall());
     }
 
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();
         m_pizzaAlert.checkAlerts();
+        m_pidProperties.updateIfChanged();
     }
 
     public Command createPizzaFeedCommand() {
@@ -104,6 +154,19 @@ public class PizzaSubsystem extends SubsystemBase {
 
     public Command createPizzaReverseCommand() {
         return runEnd(this::reverse, this::stop).withName("Reverse the pizza");
+    }
+
+    public Command createPizzaSpin1000() {
+        return runEnd(() -> setRPM(1000), this::stop).withName("Go pizza go 1000!!");
+    }
+
+    public Command createPizzaSpin500() {
+        return runEnd(() -> setRPM(500), this::stop).withName("Go pizza go 500!!");
+    }
+
+    public Command createRunUntilStall() {
+        return runEnd(() -> setRPM(500), this::stop).until(this::checkJam).andThen(createPizzaReverseCommand().withTimeout(.5));
+
     }
 
     @Override
