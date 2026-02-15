@@ -33,7 +33,7 @@ public class CombinedCommand {
         return m_chassisSubsystem.createFaceHub()
             .alongWith((m_shooterSubsystem.createShootFromDistanceCommand(m_chassisSubsystem::getDistanceFromHub)))
             .alongWith(new WaitUntilCommand(this::readyToShoot)
-                .andThen(m_pizzaSubsystem.createPizzaSpin500().alongWith(m_feederSubsystem.createFeederSpin500())));
+                .andThen(m_pizzaSubsystem.createPizzaSpin60().alongWith(m_feederSubsystem.createFeederSpin500())));
     }
 
     public boolean readyToShoot() {

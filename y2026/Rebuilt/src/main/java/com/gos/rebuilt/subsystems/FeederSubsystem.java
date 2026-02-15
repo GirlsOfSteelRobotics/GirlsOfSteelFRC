@@ -17,10 +17,20 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class FeederSubsystem extends SubsystemBase {
 
@@ -33,6 +43,8 @@ public class FeederSubsystem extends SubsystemBase {
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
+    private ISimWrapper m_feederSimulator;
+
 
 
     public FeederSubsystem() {
@@ -58,6 +70,18 @@ public class FeederSubsystem extends SubsystemBase {
             .addFF(0)
             .addP(0)
             .build();
+
+
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            LinearSystem<N1, N1, N1> plant =
+                LinearSystemId.createFlywheelSystem(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
+            this.m_feederSimulator = new FlywheelSimWrapper(
+                shooterFlywheelSim,
+                new RevMotorControllerSimWrapper(this.m_feederMotor, gearbox),
+                RevEncoderSimWrapper.create(this.m_feederMotor));
+        }
 
 
         m_networkTableEntries.addDouble("Current", m_feederMotor::getOutputCurrent);
@@ -115,6 +139,11 @@ public class FeederSubsystem extends SubsystemBase {
         tab.add(createFeederReverseCommand());
         tab.add(createFeederSpin1000());
         tab.add(createFeederSpin500());
+    }
+
+    @Override
+    public void simulationPeriodic(){
+        m_feederSimulator.update();
     }
 
     public Command createFeederCommand() {

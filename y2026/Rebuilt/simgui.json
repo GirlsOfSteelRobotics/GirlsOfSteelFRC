@@ -63,14 +63,21 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Feeder/Feed 1000 burgers!": "Command",
+      "/Shuffleboard/Feeder/Feed 500 donuts!": "Command",
       "/Shuffleboard/Feeder/Feed🍕😎": "Command",
       "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
       "/Shuffleboard/Pizza/Feed the hungry": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 1000!!": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 180!!": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 500!!": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 60!!": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
+      "/Shuffleboard/Pizza/SequentialCommandGroup": "Command",
       "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
@@ -99,6 +106,26 @@
         }
       },
       "/Shuffleboard/Climber/Right Climb Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Feeder/Feed 1000 burgers!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Feeder/Feed 500 donuts!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Go pizza go 180!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Go pizza go 60!!": {
         "window": {
           "visible": true
         }
@@ -136,6 +163,12 @@
       "ClimberSubsystem": {
         "open": true
       },
+      "Feeder Subsystem": {
+        "open": true
+      },
+      "Pizza Subsystem": {
+        "open": true
+      },
       "Shooter Subsystem": {
         "open": true
       }
@@ -143,5 +176,108 @@
   },
   "NetworkTables Info": {
     "visible": true
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 151,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shooter Subsystem/Goal velocity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Shooter Subsystem/Shooter rpm"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/Pizza Subsystem/Pizza rpm"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Pizza Subsystem/Goal velocity"
+            }
+          ]
+        },
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 151
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Feeder Subsystem/Goal velocity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Feeder Subsystem/Pizza rpm"
+            }
+          ]
+        }
+      ]
+    }
   }
 }

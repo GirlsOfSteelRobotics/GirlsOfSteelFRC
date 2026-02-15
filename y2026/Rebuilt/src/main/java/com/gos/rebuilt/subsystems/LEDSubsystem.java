@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LEDSubsystem extends SubsystemBase {
 
 
-    private static final int MAX_INDEX_LED = 40;
+    private static final int MAX_INDEX_LED = 50;
 
 
     private final AddressableLEDBuffer m_addressMe;

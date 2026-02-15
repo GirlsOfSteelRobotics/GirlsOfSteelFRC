@@ -132,8 +132,8 @@ public class PizzaSubsystem extends SubsystemBase {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
         tab.add(createPizzaFeedCommand());
         tab.add(createPizzaReverseCommand());
-        tab.add(createPizzaSpin500());
-        tab.add(createPizzaSpin1000());
+        tab.add(createPizzaSpin60());
+        tab.add(createPizzaSpin180());
         tab.add(createRunUntilStall());
     }
 
@@ -152,12 +152,12 @@ public class PizzaSubsystem extends SubsystemBase {
         return runEnd(this::reverse, this::stop).withName("Reverse the pizza");
     }
 
-    public Command createPizzaSpin1000() {
-        return runEnd(() -> setRPM(1000), this::stop).withName("Go pizza go 1000!!");
+    public Command createPizzaSpin180() {
+        return runEnd(() -> setRPM(180), this::stop).withName("Go pizza go 180!!");
     }
 
-    public Command createPizzaSpin500() {
-        return runEnd(() -> setRPM(500), this::stop).withName("Go pizza go 500!!");
+    public Command createPizzaSpin60() {
+        return runEnd(() -> setRPM(60), this::stop).withName("Go pizza go 60!!");
     }
 
     public Command createRunUntilStall() {
