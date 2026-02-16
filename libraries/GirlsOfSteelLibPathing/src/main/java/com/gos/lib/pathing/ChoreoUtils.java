@@ -1,8 +1,7 @@
-package com.gos.rebuilt;
+package com.gos.lib.pathing;
 
 import choreo.Choreo;
 import choreo.trajectory.Trajectory;
-import com.gos.lib.pathing.MaybeFlippedPose2d;
 
 public class ChoreoUtils {
 

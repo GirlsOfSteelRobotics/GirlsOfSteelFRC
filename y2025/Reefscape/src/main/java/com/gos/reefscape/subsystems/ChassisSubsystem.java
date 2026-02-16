@@ -23,6 +23,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.pathing.ChoreoUtils;
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
@@ -36,7 +37,6 @@ import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiPidPropertyBuilder;
 import com.gos.lib.swerve.SwerveDrivePublisher;
-import com.gos.reefscape.ChoreoUtils;
 import com.gos.reefscape.Constants;
 import com.gos.reefscape.GosField;
 import com.gos.reefscape.ReefDetection;
