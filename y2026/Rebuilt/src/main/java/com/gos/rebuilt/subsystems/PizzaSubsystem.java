@@ -60,6 +60,7 @@ public class PizzaSubsystem extends SubsystemBase {
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_networkTableEntries.addDouble("Pizza Velocity", this::getVelocity);
+        m_networkTableEntries.addDouble("Pizza Position", m_pizzaEncoder::getPosition);
         m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
 
     }

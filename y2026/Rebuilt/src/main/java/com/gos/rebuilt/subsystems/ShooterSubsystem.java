@@ -38,7 +38,7 @@ import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
-    private static final double DEADBAND = 2;
+    private static final double DEADBAND = 50;
     private static final double MIN_DISTANCE = 1.99;
 
     private final SparkFlex m_shooterMotor;
@@ -64,10 +64,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
         m_table.put(MIN_DISTANCE, 1550.0);
-        m_table.put(2.85, 1650.0);
-        m_table.put(3.55, 1750.0);
-        m_table.put(4.85, 2000.0);
-        m_table.put(6.14, 2190.0);
+        m_table.put(Units.inchesToMeters(82+37.25), 4250.0);
+        m_table.put(Units.inchesToMeters(64+37.25), 4300.0);
+        m_table.put(Units.inchesToMeters(142+37.25), 5100.0);
+        m_table.put(Units.inchesToMeters(108+37.25), 4600.0);
 
         m_shooterAlert = new SparkMaxAlerts(m_shooterMotor, "shooterAlert");
 
