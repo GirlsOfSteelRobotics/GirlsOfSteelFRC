@@ -402,7 +402,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
         );
-        m_goalAngle = null;
+        m_goalAngle = null; // NOPMD(NullAssignment)
     }
 
     public void staringDrive(double xJoystick, double yJoystick, Rotation2d goalAngleRad) {

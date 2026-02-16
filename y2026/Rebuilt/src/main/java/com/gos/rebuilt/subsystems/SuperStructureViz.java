@@ -1,7 +1,6 @@
 package com.gos.rebuilt.subsystems;
 
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
-import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.ShooterSimBalls;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
