@@ -1,4 +1,4 @@
-package com.gos.rebuilt;
+package com.gos.lib.pathing;
 
 import choreo.Choreo;
 import choreo.trajectory.Trajectory;

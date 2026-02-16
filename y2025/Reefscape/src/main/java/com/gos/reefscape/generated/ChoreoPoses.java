@@ -1,6 +1,6 @@
 package com.gos.reefscape.generated;
 
-import com.gos.reefscape.MaybeFlippedPose2d;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class ChoreoPoses {

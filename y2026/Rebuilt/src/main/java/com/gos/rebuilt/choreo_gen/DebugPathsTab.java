@@ -1,6 +1,6 @@
 package com.gos.rebuilt.choreo_gen;
 
-import com.gos.rebuilt.ChoreoUtils;
+import com.gos.lib.pathing.ChoreoUtils;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;

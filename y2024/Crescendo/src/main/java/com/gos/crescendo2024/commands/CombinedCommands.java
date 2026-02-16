@@ -1,7 +1,6 @@
 package com.gos.crescendo2024.commands;
 
 import com.gos.crescendo2024.FieldConstants;
-import com.gos.crescendo2024.MaybeFlippedPose2d;
 import com.gos.crescendo2024.RobotExtrinsics;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
@@ -11,6 +10,7 @@ import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.joysticks.VibrateControllerTimedCommand;
 import com.gos.lib.joysticks.VibrateControllerWhileTrueCommand;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;

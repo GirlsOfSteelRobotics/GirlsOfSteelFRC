@@ -1,5 +1,6 @@
 package com.gos.crescendo2024;
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation2d;
