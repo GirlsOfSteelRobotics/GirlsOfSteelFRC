@@ -17,6 +17,8 @@ public final class Constants {
 
 
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
+    public static final boolean CLEANUP_PROPERTIES = false;
+
     //motors
     public static final int INTAKE_MOTOR = 10;
     public static final int SHOOTER_MOTOR = 11;

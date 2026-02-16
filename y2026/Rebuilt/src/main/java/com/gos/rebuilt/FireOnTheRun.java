@@ -26,14 +26,14 @@ public class FireOnTheRun {
     public FireOnTheRun(ChassisSubsystem chassis, ShooterSubsystem shooter) {
         m_chassis = chassis;
         m_shooter = shooter;
-        m_publisherPose = NetworkTableInstance.getDefault().getStructTopic("robot pose", Pose2d.struct).publish();
+        m_publisherPose = NetworkTableInstance.getDefault().getStructTopic("FOTR/robot pose", Pose2d.struct).publish();
         m_hubList = new ArrayList<>();
         for (int i = 0; i < ITERATIONS; i++) {
-            m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("hub pose " + i, Pose3d.struct).publish());
+            m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("FOTR/hub pose " + i, Pose3d.struct).publish());
         }
         m_shooterSimBallsList = new ArrayList<>();
         for (int i = 0; i < ITERATIONS; i++) {
-            m_shooterSimBallsList.add(new ShooterSimBalls("hypothetical Shoot On The Move " + i));
+            m_shooterSimBallsList.add(new ShooterSimBalls("FOTR/hypothetical Shoot On The Move " + i));
         }
     }
 
@@ -61,15 +61,15 @@ public class FireOnTheRun {
 
 
         Translation3d imaginaryPoint = Hub.innerCenterPoint;
-        Pose2d robotPose;
+        Pose2d robotPose = new Pose2d();
 
         for (int i = 0; i < ITERATIONS; i++) {
             imaginaryPoint = imaginaryHub(fuelAirTime(imaginaryPoint), robotVel);
             m_hubList.get(i).accept(new Pose3d(imaginaryPoint, new Rotation3d()));
             robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d()));
-            m_publisherPose.accept(robotPose);
             m_shooterSimBallsList.get(i).calculatePosition(getFuelVelocity(imaginaryPoint), robotVel, robotPose);
         }
+        m_publisherPose.accept(robotPose);
 
 
         return imaginaryPoint;

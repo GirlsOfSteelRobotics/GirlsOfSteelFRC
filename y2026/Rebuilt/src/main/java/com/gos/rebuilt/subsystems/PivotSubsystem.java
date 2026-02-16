@@ -68,7 +68,7 @@ public class PivotSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             DCMotor gearbox = DCMotor.getNeoVortex(1);
             SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
-                0.381, Units.degreesToRadians(0), Units.degreesToRadians(90), true, 0);
+                0.381, Units.degreesToRadians(-5), Units.degreesToRadians(90), true, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
@@ -129,6 +129,7 @@ public class PivotSubsystem extends SubsystemBase {
         return m_armGoalAngle;
     }
 
+    @SuppressWarnings("removal")
     public void moveArmToAngle(double goal) {
         if (Math.abs(m_armGoalAngle - goal) > 2) {
             System.out.println("Resetting controller" + m_armGoalAngle + ", " + goal);
@@ -136,8 +137,8 @@ public class PivotSubsystem extends SubsystemBase {
         }
         m_armGoalAngle = goal;
 
-        // m_armPidController.goToAngleWithVelocities(goal, getRelativeAngle(), getRelativeVelocity());
-        m_armPidController.goToAngleWithVelocities(getAbsoluteAngle(), goal, getVelocity());
+        m_armPidController.goToAngle(goal, getAbsoluteAngle());
+        // m_armPidController.goToAngleWithVelocities(goal, getAngle(), getVelocity());
     }
 
 
