@@ -54,7 +54,7 @@ public class PizzaSubsystem extends SubsystemBase {
             this.m_pizzaSimulator = new InstantaneousMotorSim(
                 new RevMotorControllerSimWrapper(this.m_pizzaMotor, gearbox),
                 RevEncoderSimWrapper.create(this.m_pizzaMotor),
-                360);
+                -360);
         }
 
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

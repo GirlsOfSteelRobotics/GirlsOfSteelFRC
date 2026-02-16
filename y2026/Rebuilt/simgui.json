@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK Flex [10]": {
         "header": {
@@ -16,12 +21,12 @@
           "open": true
         }
       },
-      "SPARK Flex [13]": {
+      "SPARK Flex [15]": {
         "header": {
           "open": true
         }
       },
-      "SPARK Flex [15]": {
+      "SPARK Flex [16]": {
         "header": {
           "open": true
         }
@@ -32,6 +37,11 @@
         }
       },
       "SPARK Flex [2] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[5]": {
         "header": {
           "open": true
         }
@@ -49,13 +59,12 @@
       "/Shuffleboard/Climber/Climber go to height 0.0": "Command",
       "/Shuffleboard/Climber/Climber go to height 0.254": "Command",
       "/Shuffleboard/Climber/Climber go to height 0.508": "Command",
-      "/Shuffleboard/Climber/Climber go to height 100.0": "Command",
-      "/Shuffleboard/Climber/Climber go to height 50.0": "Command",
       "/Shuffleboard/Climber/Left Climb Down": "Command",
       "/Shuffleboard/Climber/Left Climb Up": "Command",
       "/Shuffleboard/Climber/Right Climb Down": "Command",
       "/Shuffleboard/Climber/Right Climb Up": "Command",
       "/Shuffleboard/Combined Commands/Shoot": "Command",
+      "/Shuffleboard/Combined Commands/Shooting Easier": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
@@ -89,9 +98,7 @@
       "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
       "/Shuffleboard/arm pivot/Go down": "Command",
       "/Shuffleboard/arm pivot/Go to angle0.0": "Command",
-      "/Shuffleboard/arm pivot/Go to angle135.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle15.0": "Command",
-      "/Shuffleboard/arm pivot/Go to angle180.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle30.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
@@ -107,31 +114,6 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Climb Up": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Climber go to height 0.0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Climber go to height 0.254": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Climber go to height 0.508": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/Climber/Left Climb Up": {
         "window": {
           "visible": true
@@ -142,7 +124,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter RPM/Shoot from distance": {
+      "/Shuffleboard/Combined Commands/Shoot": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Feed the hungry": {
         "window": {
           "visible": true
         }
@@ -152,32 +139,10 @@
           "visible": true
         }
       },
-      "/Shuffleboard/arm pivot/Go down": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/arm pivot/Go to angle180.0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/arm pivot/Go to angle45.0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/arm pivot/Go to angle90.0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/arm pivot/Go up": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "../../libraries/shared_images/tag-blue.png"
+        },
         "bottom": 1914,
         "height": 8.069275856018066,
         "left": 245,
@@ -200,9 +165,6 @@
       "ClimberSubsystem": {
         "open": true
       },
-      "Pivot Subsystem": {
-        "open": true
-      },
       "Shooter Subsystem": {
         "open": true
       }
@@ -210,164 +172,5 @@
   },
   "NetworkTables Info": {
     "visible": true
-  },
-  "Plot": {
-    "Plot <0>": {
-      "plots": [
-        {
-          "axis": [
-            {
-              "autoFit": true
-            }
-          ],
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 186,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/Pivot Subsystem/Pivot Position"
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/Pivot Subsystem/Pivot goal"
-            },
-            {
-              "color": [
-                0.3333333432674408,
-                0.658823549747467,
-                0.4078431725502014,
-                1.0
-              ],
-              "id": "NT:/Pivot Subsystem/Setpoint angle"
-            }
-          ]
-        },
-        {
-          "axis": [
-            {
-              "autoFit": true
-            }
-          ],
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 186,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/Pivot Subsystem/Pivot Velocity"
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/Pivot Subsystem/Setpoint Velocity"
-            }
-          ]
-        }
-      ]
-    },
-    "Plot <1>": {
-      "plots": [
-        {
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 155,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/ClimberSubsystem/Climber Right Height"
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/ClimberSubsystem/Climber Goal Height"
-            },
-            {
-              "color": [
-                0.3333333432674408,
-                0.658823549747467,
-                0.4078431725502014,
-                1.0
-              ],
-              "id": "NT:/ClimberSubsystem/Setpoint Right Position"
-            }
-          ]
-        },
-        {
-          "axis": [
-            {
-              "autoFit": true
-            }
-          ],
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 155,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/ClimberSubsystem/Setpoint Right Velocity"
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/ClimberSubsystem/Climber Right RPM"
-            }
-          ]
-        }
-      ]
-    }
   }
 }
