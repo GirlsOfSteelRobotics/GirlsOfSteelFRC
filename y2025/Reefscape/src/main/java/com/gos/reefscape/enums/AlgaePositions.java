@@ -1,7 +1,7 @@
 package com.gos.reefscape.enums;
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.reefscape.generated.ChoreoPoses;
-import com.gos.reefscape.MaybeFlippedPose2d;
 
 public enum AlgaePositions {
     AB(ChoreoPoses.AB, PIEAlgae.FETCH_ALGAE_3, CoralPositions.A, CoralPositions.B),

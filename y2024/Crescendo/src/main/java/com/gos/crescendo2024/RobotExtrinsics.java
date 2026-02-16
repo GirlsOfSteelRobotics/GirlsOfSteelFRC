@@ -1,5 +1,6 @@
 package com.gos.crescendo2024;
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.TunableTransform3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;

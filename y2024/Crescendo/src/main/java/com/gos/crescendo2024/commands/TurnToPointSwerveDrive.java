@@ -1,7 +1,7 @@
 package com.gos.crescendo2024.commands;
 
-import com.gos.crescendo2024.MaybeFlippedPose2d;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 

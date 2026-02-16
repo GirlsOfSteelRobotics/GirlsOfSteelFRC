@@ -2,6 +2,7 @@ package com.gos.reefscape;
 
 import choreo.Choreo;
 import choreo.trajectory.Trajectory;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 
 public class ChoreoUtils {
 
