@@ -105,6 +105,7 @@
       "/Shuffleboard/arm pivot/Go up": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts"
     },
@@ -135,6 +136,11 @@
         }
       },
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Autos": {
         "window": {
           "visible": true
         }

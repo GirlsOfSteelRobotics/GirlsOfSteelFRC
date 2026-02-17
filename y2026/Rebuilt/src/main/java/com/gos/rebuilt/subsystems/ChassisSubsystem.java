@@ -20,6 +20,8 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
+import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
@@ -231,7 +233,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
-        m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
+        m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
@@ -425,6 +427,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return m_goalAngle;
     }
 
+
+    public Rotation2d getFaceAngle(MaybeFlippedTranslation3d point) {
+        return getFaceAngle(point.getTranslation().toTranslation2d());
+    }
+
     public Rotation2d getFaceAngle(Translation2d point) {
 
         Pose2d robotPose = getState().Pose;
@@ -433,6 +440,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             robotPose.getX() - point.getX());
 
         return Rotation2d.fromRadians(goalAngle);
+    }
+
+    public double getDistanceToObject(MaybeFlippedTranslation3d point) {
+        return getDistanceToObject(point.getTranslation().toTranslation2d());
     }
 
     public double getDistanceToObject(Translation2d point) {
@@ -445,22 +456,31 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public double getDistanceFromHub() {
-        return getDistanceToObject(Hub.innerCenterPoint.toTranslation2d());
+        return getDistanceToObject(Hub.innerCenterPoint);
     }
 
     public void stop() {
         driveFieldCentric(0, 0, 0);
     }
 
+    private void resetPose(MaybeFlippedPose2d maybeFlippedPose) {
+        resetPose(maybeFlippedPose.getPose());
+    }
+
+
     public void addChassisDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         tab.add(createFaceHub());
         tab.add(createResetPose(new Pose2d()));
-        tab.add(createResetPose(new Pose2d(Hub.innerCenterPoint.getX() - 3, Hub.innerCenterPoint.getY(), Rotation2d.fromDegrees(0))));
+        // tab.add(createResetPose(new Pose2d(Hub.innerCenterPoint.getX() - 3, Hub.innerCenterPoint.getY(), Rotation2d.fromDegrees(0))));
     }
 
     public Command createFaceHub() {
-        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
+        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint)), this::stop).withName("Face Hub");
+    }
+
+    public Command createResetPose(MaybeFlippedPose2d pose) {
+        return runEnd(() -> resetPose(pose), this::stop).withName("Reset Robot Pose!!" + pose);
     }
 
     public Command createResetPose(Pose2d pose) {

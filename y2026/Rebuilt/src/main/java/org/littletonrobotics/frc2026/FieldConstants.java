@@ -7,6 +7,7 @@
 
 package org.littletonrobotics.frc2026;
 
+import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -90,8 +91,8 @@ public class FieldConstants {
             AprilTagLayoutType.OFFICIAL.getLayout().getTagPose(26).get().getX() + width / 2.0,
             fieldWidth / 2.0,
             height);
-    public static final Translation3d innerCenterPoint =
-        new Translation3d(
+    public static final MaybeFlippedTranslation3d innerCenterPoint =
+        new MaybeFlippedTranslation3d(
             AprilTagLayoutType.OFFICIAL.getLayout().getTagPose(26).get().getX() + width / 2.0,
             fieldWidth / 2.0,
             innerHeight);
