@@ -59,7 +59,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_leader = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
-        m_follower = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
+        m_follower = new SparkFlex(Constants.SHOOTER_FOLLOWER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_leader.getEncoder();
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
@@ -84,7 +84,7 @@ public class ShooterSubsystem extends SubsystemBase {
         SparkMaxConfig followerConfig = new SparkMaxConfig();
         followerConfig.idleMode(IdleMode.kCoast);
         followerConfig.smartCurrentLimit(60);
-        followerConfig.follow(m_leader);
+        followerConfig.follow(m_leader, true);
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)

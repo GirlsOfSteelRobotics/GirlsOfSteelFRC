@@ -51,6 +51,8 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Chassis/3m From Blue": "Command",
+      "/Shuffleboard/Chassis/3m From Red": "Command",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",

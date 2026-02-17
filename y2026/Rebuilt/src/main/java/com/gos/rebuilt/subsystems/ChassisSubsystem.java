@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import choreo.util.ChoreoAllianceFlipUtil;
+import com.ctre.phoenix6.swerve.SwerveRequest.ForwardPerspectiveValue;
 import com.gos.lib.logging.LoggingUtil;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -41,6 +44,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -412,6 +416,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(goalAngleRad)
+                .withForwardPerspective(ForwardPerspectiveValue.BlueAlliance)
         );
         m_goalAngle = goalAngleRad;
     }
@@ -472,7 +477,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         tab.add(createFaceHub());
         tab.add(createResetPose(new Pose2d()));
-        // tab.add(createResetPose(new Pose2d(Hub.innerCenterPoint.getX() - 3, Hub.innerCenterPoint.getY(), Rotation2d.fromDegrees(0))));
+
+        Translation3d blueHub = Hub.innerCenterPoint.getTranslation();
+        Translation3d redHub = ChoreoAllianceFlipUtil.flip(blueHub);
+        tab.add(createResetPose(new MaybeFlippedPose2d(blueHub.getX() - 3, blueHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Blue"));
+        tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
     }
 
     public Command createFaceHub() {
@@ -480,10 +489,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createResetPose(MaybeFlippedPose2d pose) {
-        return runEnd(() -> resetPose(pose), this::stop).withName("Reset Robot Pose!!" + pose);
+        return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
     }
 
     public Command createResetPose(Pose2d pose) {
-        return runEnd(() -> resetPose(pose), this::stop).withName("Reset Robot Pose!!" + pose);
+        return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
     }
 }
