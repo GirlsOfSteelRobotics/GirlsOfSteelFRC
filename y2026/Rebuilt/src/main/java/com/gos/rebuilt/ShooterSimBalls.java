@@ -6,6 +6,7 @@ package com.gos.rebuilt;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
@@ -20,6 +21,7 @@ public class ShooterSimBalls {
     private double m_fuelInitVY;
     private double m_fuelInitVZ;
     private Pose2d m_robotPosition;
+    private Pose2d m_shooterPosition;
     private final double m_height;
     private final Rotation2d m_theta = ShooterSubsystem.SHOT_ANGLE;
     private final StructArrayPublisher<Translation3d> m_publisher;
@@ -31,7 +33,7 @@ public class ShooterSimBalls {
     }
 
     public double calculatePosX(double time) {
-        return m_fuelInitVX * time + m_robotPosition.getX();
+        return m_fuelInitVX * time + m_shooterPosition.getX();
     }
 
     public double calculatePosZ(double time) {
@@ -39,15 +41,16 @@ public class ShooterSimBalls {
     }
 
     public double calculatePosY(double time) {
-        return m_fuelInitVY * time + m_robotPosition.getY();
+        return m_fuelInitVY * time + m_shooterPosition.getY();
     }
 
     public void calculatePosition(double launchSpeed, ChassisSpeeds fieldVelocity, Pose2d robotPosition) {
         m_robotPosition = robotPosition;
+        m_shooterPosition = new Pose2d(new Translation2d(m_robotPosition.getX()-Units.inchesToMeters(7.72),robotPosition.getY()-Units.inchesToMeters(8.5)),m_robotPosition.getRotation());
         m_fuelInitVZ = launchSpeed * Math.sin(m_theta.getRadians());
         double horizComp = launchSpeed * Math.cos(m_theta.getRadians());
-        m_fuelInitVY = -Math.sin(robotPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vyMetersPerSecond;
-        m_fuelInitVX = -Math.cos(robotPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vxMetersPerSecond;
+        m_fuelInitVY = -Math.sin(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vyMetersPerSecond;
+        m_fuelInitVX = -Math.cos(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vxMetersPerSecond;
 
 
         ArrayList<Translation3d> listOfTrans = new ArrayList<>(10);

@@ -5,8 +5,10 @@ import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
@@ -38,7 +40,12 @@ public class FireOnTheRun {
     }
 
     public double getDistance(Translation3d point) {
-        return m_chassis.getDistanceToObject(point.toTranslation2d());
+        Pose2d robotPosition = m_chassis.getState().Pose;
+        Pose2d shooterPose = new Pose2d(new Translation2d(robotPosition.getX()- Units.inchesToMeters(7.72),robotPosition.getY()-Units.inchesToMeters(8.5)),robotPosition.getRotation());
+        double distanceX = shooterPose.getX() - point.getX();
+        double distanceY = shooterPose.getY() - point.getY();
+
+        return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     }
 
     public double getFuelVelocity(Translation3d point) {

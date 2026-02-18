@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.0,
+    "value": 0.0001,
     "properties": {
       "persistent": true
     }

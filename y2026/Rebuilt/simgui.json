@@ -139,6 +139,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "AprilTags": {
           "image": "../../libraries/shared_images/tag-blue.png"
