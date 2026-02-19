@@ -41,27 +41,8 @@ public class RobotExtrinsic {
             Math.toRadians(160.67))
     ));
 
-    public static final TunableTransform3d LEFT_CAMERA = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/Left", new Transform3d(
-        new Translation3d(
-            Units.inchesToMeters(10.5),
-            Units.inchesToMeters(12.5),
-            Units.inchesToMeters(7)),
-        new Rotation3d(
-            Math.toRadians(0),
-            Math.toRadians(-14),
-            Math.toRadians(-4))
-    ));
 
-    public static final TunableTransform3d BACK_CAMERA = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/Back", new Transform3d(
-        new Translation3d(
-            Units.inchesToMeters(-11.5),
-            Units.inchesToMeters(7.5),
-            Units.inchesToMeters(7)),
-        new Rotation3d(
-            Math.toRadians(0),
-            Math.toRadians(-33),
-            Math.toRadians(176))
-    ));
+
 
 
 
