@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
+
 import choreo.util.ChoreoAllianceFlipUtil;
 import com.ctre.phoenix6.swerve.SwerveRequest.ForwardPerspectiveValue;
 import com.gos.lib.logging.LoggingUtil;
+
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
@@ -30,17 +33,24 @@ import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
+import com.gos.lib.photonvision.AprilTagCameraBuilder;
+import com.gos.lib.photonvision.AprilTagCameraManager;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.GosField;
+import com.gos.rebuilt.RobotExtrinsic;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.Pair;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -64,6 +74,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
+import org.photonvision.EstimatedRobotPose;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -109,7 +120,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final double DEADBAN = Math.toRadians(10);
 
     private final GosField m_field;
-
+    private final AprilTagCameraManager m_aprilTagCameras;
     private Rotation2d m_goalAngle;
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
@@ -236,6 +247,36 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 
+
+
+        Matrix<N3, N1> singleTagStddev = VecBuilder.fill(1.5, 1.5, Units.degreesToRadians(180));
+        Matrix<N3, N1> multiTagStddev = VecBuilder.fill(.5, 0.5, Units.degreesToRadians(30));
+
+
+        boolean enableFancyCameraSim = false;
+
+        AprilTagCameraBuilder cameraBuilder = new AprilTagCameraBuilder()
+            .withLayout(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded))
+            .withField(m_field)
+            .withSingleTagStddev(singleTagStddev)
+            .withMultiTagStddev(multiTagStddev)
+            .withFieldDebugConfig(new DebugConfig(false, true, true))
+            .withSingleTagMaxDistanceMeters(4)
+            .withSingleTagMaxAmbiguity(.5)
+            .withSimEnableRawStream(enableFancyCameraSim)
+            .withSimEnableProcessedStream(enableFancyCameraSim)
+            .withSimEnableDrawWireframe(enableFancyCameraSim)
+            ;
+
+
+        m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
+            cameraBuilder
+                .withCamera("Right Camera .")
+                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build()
+        ));
+
+
+
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
 
@@ -307,6 +348,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     @Override
+    public void simulationPeriodic() {
+        m_aprilTagCameras.updateSimulator(getState().Pose);
+    }
+
+
+    @Override
     public void periodic() {
         /*
          * Periodically try to apply the operator perspective.
@@ -338,6 +385,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
+
+
+        List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
+        for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
+
+            EstimatedRobotPose camPose = estimatePair.getFirst();
+            Pose2d camEstPose = camPose.estimatedPose.toPose2d();
+            addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
+        }
+
         m_pidControllerProperty.updateIfChanged();
         m_networkTableEntries.updateLogs();
     }

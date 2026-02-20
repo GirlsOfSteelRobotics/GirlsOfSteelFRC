@@ -45,8 +45,6 @@ public class PizzaSubsystem extends SubsystemBase {
         pizzaConfig.smartCurrentLimit(60);
         pizzaConfig.inverted(false);
 
-
-
         m_pizzaMotor = new SparkMax(Constants.PIZZA_MOTOR, MotorType.kBrushless);
 
         m_pizzaAlert = new SparkMaxAlerts(m_pizzaMotor, "pizzaAlert");
