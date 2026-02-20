@@ -37,21 +37,12 @@ public class FireOnTheRun {
         }
     }
 
-    public double getDistance(Translation3d point) {
-        Pose2d robotPosition = m_chassis.getState().Pose;
-        Pose2d shooterPose = new Pose2d(robotPosition.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(robotPosition.getRotation())), robotPosition.getRotation());
-        double distanceX = shooterPose.getX() - point.getX();
-        double distanceY = shooterPose.getY() - point.getY();
-
-        return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-    }
-
     public double getFuelVelocity(Translation3d point) {
-        return m_shooter.rpmToVelocity(m_shooter.rpmFromDistance(getDistance(point)));
+        return m_shooter.rpmToVelocity(m_shooter.rpmFromDistance(m_shooter.getDistance(m_chassis.getState().Pose,point)));
     }
 
     public double fuelAirTime(Translation3d point) {
-        return getDistance(point) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
+        return m_shooter.getDistance(m_chassis.getState().Pose, point) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
     }
 
     public Translation3d imaginaryHub(double time, ChassisSpeeds chassisSpeed) {
