@@ -37,16 +37,12 @@ public class FireOnTheRun {
         }
     }
 
-    public double getDistance(Translation3d point) {
-        return m_chassis.getDistanceToObject(point.toTranslation2d());
-    }
-
     public double getFuelVelocity(Translation3d point) {
-        return m_shooter.rpmToVelocity(m_shooter.rpmFromDistance(getDistance(point)));
+        return m_shooter.rpmToVelocity(m_shooter.rpmFromDistance(m_chassis.getDistanceToObject(point.toTranslation2d())));
     }
 
     public double fuelAirTime(Translation3d point) {
-        return getDistance(point) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
+        return m_chassis.getDistanceToObject(point.toTranslation2d()) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
     }
 
     public Translation3d imaginaryHub(double time, ChassisSpeeds chassisSpeed) {
@@ -66,7 +62,7 @@ public class FireOnTheRun {
         for (int i = 0; i < ITERATIONS; i++) {
             imaginaryPoint = imaginaryHub(fuelAirTime(imaginaryPoint), robotVel);
             m_hubList.get(i).accept(new Pose3d(imaginaryPoint, new Rotation3d()));
-            robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d()));
+            robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d()));
             m_shooterSimBallsList.get(i).calculatePosition(getFuelVelocity(imaginaryPoint), robotVel, robotPose);
         }
         m_publisherPose.accept(robotPose);
