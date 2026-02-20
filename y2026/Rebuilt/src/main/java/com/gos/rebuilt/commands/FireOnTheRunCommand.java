@@ -42,7 +42,7 @@ public class FireOnTheRunCommand extends Command {
         m_chassis.staringDrive(
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
-            m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d())
+            m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d())
         );
         m_shooter.shootFromDistance(m_fotr.getDistance(imaginaryPoint));
         m_pizza.feed();

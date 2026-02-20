@@ -5,10 +5,8 @@ import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
@@ -41,7 +39,7 @@ public class FireOnTheRun {
 
     public double getDistance(Translation3d point) {
         Pose2d robotPosition = m_chassis.getState().Pose;
-        Pose2d shooterPose = new Pose2d(new Translation2d(robotPosition.getX()- Units.inchesToMeters(7.72),robotPosition.getY()-Units.inchesToMeters(8.5)),robotPosition.getRotation());
+        Pose2d shooterPose = new Pose2d(robotPosition.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(robotPosition.getRotation())), robotPosition.getRotation());
         double distanceX = shooterPose.getX() - point.getX();
         double distanceY = shooterPose.getY() - point.getY();
 
@@ -73,7 +71,7 @@ public class FireOnTheRun {
         for (int i = 0; i < ITERATIONS; i++) {
             imaginaryPoint = imaginaryHub(fuelAirTime(imaginaryPoint), robotVel);
             m_hubList.get(i).accept(new Pose3d(imaginaryPoint, new Rotation3d()));
-            robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d()));
+            robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d()));
             m_shooterSimBallsList.get(i).calculatePosition(getFuelVelocity(imaginaryPoint), robotVel, robotPose);
         }
         m_publisherPose.accept(robotPose);

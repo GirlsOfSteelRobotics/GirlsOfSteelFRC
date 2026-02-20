@@ -29,7 +29,7 @@ public class StaringCommand extends Command {
         m_chassis.staringDrive(
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
-            m_chassis.getFaceAngle(Hub.innerCenterPoint.toTranslation2d())
+            m_chassis.getShooterFaceAngle(Hub.innerCenterPoint.toTranslation2d())
         );
 
 

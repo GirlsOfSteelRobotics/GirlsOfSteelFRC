@@ -26,6 +26,7 @@ public class SuperStructureViz extends SubsystemBase {
     private final ShooterSubsystem m_shooterSubsystem;
     private final ClimberSubsystem m_climberSubsystem;
 
+
     public SuperStructureViz(PivotSubsystem pivotSubsystem, PizzaSubsystem pizzaSubsystem, ChassisSubsystem chassisSubsystem, ShooterSubsystem shooterSubsystem, ClimberSubsystem climberSubsystem) {
         m_measuredPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz/Measured", Pose3d.struct).publish();
         m_goalPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz/Goal", Pose3d.struct).publish();

@@ -425,12 +425,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return m_goalAngle;
     }
 
-    public Rotation2d getFaceAngle(Translation2d point) {
+    public Rotation2d getShooterFaceAngle(Translation2d point) {
 
-        Pose2d robotPose = getState().Pose;
+        Translation2d shooterPosition = getState().Pose.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(getState().Pose.getRotation()));
 
-        double goalAngle = Math.atan2(robotPose.getY() - point.getY(),
-            robotPose.getX() - point.getX());
+        double goalAngle = Math.atan2(shooterPosition.getY() - point.getY(),
+            shooterPosition.getX() - point.getX());
 
         return Rotation2d.fromRadians(goalAngle);
     }
@@ -460,7 +460,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createFaceHub() {
-        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
+        return runEnd(() -> staringDrive(0, 0, getShooterFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
     }
 
     public Command createResetPose(Pose2d pose) {

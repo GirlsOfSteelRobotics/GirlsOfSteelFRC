@@ -6,7 +6,6 @@ package com.gos.rebuilt;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
@@ -46,7 +45,7 @@ public class ShooterSimBalls {
 
     public void calculatePosition(double launchSpeed, ChassisSpeeds fieldVelocity, Pose2d robotPosition) {
         m_robotPosition = robotPosition;
-        m_shooterPosition = new Pose2d(new Translation2d(m_robotPosition.getX()-Units.inchesToMeters(7.72),robotPosition.getY()-Units.inchesToMeters(8.5)),m_robotPosition.getRotation());
+        m_shooterPosition = new Pose2d(m_robotPosition.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(m_robotPosition.getRotation())), m_robotPosition.getRotation());
         m_fuelInitVZ = launchSpeed * Math.sin(m_theta.getRadians());
         double horizComp = launchSpeed * Math.cos(m_theta.getRadians());
         m_fuelInitVY = -Math.sin(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vyMetersPerSecond;
