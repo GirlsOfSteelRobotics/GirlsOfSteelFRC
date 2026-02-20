@@ -218,7 +218,7 @@
   {
     "name": "/Preferences/Pizza.mm.kff",
     "type": "double",
-    "value": 0.0028,
+    "value": 0.00278,
     "properties": {
       "persistent": true
     }
@@ -242,7 +242,7 @@
   {
     "name": "/Preferences/Feeder.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.01,
     "properties": {
       "persistent": true
     }

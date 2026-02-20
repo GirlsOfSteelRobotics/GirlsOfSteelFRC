@@ -86,7 +86,7 @@ public class FeederSubsystem extends SubsystemBase {
 
         m_networkTableEntries.addDouble("Current", m_feederMotor::getOutputCurrent);
 
-        m_networkTableEntries.addDouble("Pizza rpm", this::getRPM);
+        m_networkTableEntries.addDouble("Feeder rpm", this::getRPM);
 
         m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
