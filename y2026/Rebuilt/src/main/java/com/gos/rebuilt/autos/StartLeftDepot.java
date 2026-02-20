@@ -1,6 +1,6 @@
 package com.gos.rebuilt.autos;
 
-import com.gos.rebuilt.ChoreoUtils;
+import com.gos.lib.pathing.ChoreoUtils;
 import com.gos.rebuilt.commands.CombinedCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Commands;

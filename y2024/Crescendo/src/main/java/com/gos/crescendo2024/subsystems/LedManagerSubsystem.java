@@ -2,7 +2,7 @@ package com.gos.crescendo2024.subsystems;
 
 
 import com.gos.crescendo2024.Constants;
-import com.gos.crescendo2024.DriverStationLedDriver;
+import com.gos.lib.led.driverstation.DriverStationLedDriver;
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.led_patterns.DisabledPatterns;
 import com.gos.crescendo2024.led_patterns.DriverStationPatterns;

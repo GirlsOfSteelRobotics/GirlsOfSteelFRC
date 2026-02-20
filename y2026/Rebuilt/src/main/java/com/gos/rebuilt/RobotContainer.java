@@ -6,6 +6,7 @@
 package com.gos.rebuilt;
 
 
+import com.gos.lib.properties.PropertyManager;
 import com.gos.rebuilt.commands.FireOnTheRunCommand;
 import com.gos.rebuilt.commands.StaringCommand;
 import com.gos.rebuilt.subsystems.ClimberSubsystem;
@@ -25,8 +26,6 @@ import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,6 +69,8 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        PropertyManager.setPurgeConstantPreferenceKeys(Constants.CLEANUP_PROPERTIES);
+
         m_driverController = new CommandXboxController(0);
         m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
@@ -81,8 +82,9 @@ public class RobotContainer {
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
         m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis);
-        m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
 
+        m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
+        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem, m_climberSubsystem);
         m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
 
         if (RobotBase.isSimulation()) {
@@ -93,24 +95,31 @@ public class RobotContainer {
 
         }
 
-        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem);
 
         // Configure the trigger bindings
         configureBindings();
+
+        // Add debug commands
+        boolean inCompetition = false;
         m_intakeSubsystem.addIntakeDebugCommands();
         m_shooterSubsystem.addShooterDebugCommands();
         m_pizzaSubsystem.addPizzaDebugCommands();
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands();
         m_climberSubsystem.addClimberDebugCommands();
-
-        m_combinedCommand.createCombinedCommand(false);
-
-        ShuffleboardTab tab = Shuffleboard.getTab("Shooter RPM");
-        tab.add(m_shooterSubsystem.createShootFromDistanceCommand(m_chassis::getDistanceFromHub));
+        m_pivotSubsystem.addPivotDebugCommands();
+        m_combinedCommand.createCombinedCommand(inCompetition);
 
         m_debugPathsTab = new DebugPathsTab(m_chassis);
         m_debugPathsTab.addDebugPathsToShuffleBoard();
+
+        if (RobotBase.isReal()) {
+            PropertyManager.printDynamicProperties(!Constants.CLEANUP_PROPERTIES);
+        }
+
+        if (Constants.CLEANUP_PROPERTIES) {
+            PropertyManager.purgeExtraKeys();
+        }
     }
 
 
@@ -126,8 +135,8 @@ public class RobotContainer {
     private void configureBindings() {
         m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
-        m_driverController.a().whileTrue(m_combinedCommand.shootBall());
-
+        //m_driverController.a().whileTrue(m_combinedCommand.shootBall());
+        m_driverController.a().whileTrue(m_combinedCommand.shootBallNoAiming());
         m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
 
 

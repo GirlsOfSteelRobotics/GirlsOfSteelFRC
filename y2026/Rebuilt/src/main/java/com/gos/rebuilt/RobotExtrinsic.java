@@ -9,19 +9,19 @@ import edu.wpi.first.math.util.Units;
 public class RobotExtrinsic {
 
 
-//ALL INCHES
-//26.625\ on intake side
+    //ALL INCHES
+    //26.625\ on intake side
 
-//13.3125 is center -  1.625 =11.6875
+    //13.3125 is center -  1.625 =11.6875
 
-//26.5 on nonintake/nonshooter - 1.625
-//13.25 is center - 1.625 = 11.625
+    //26.5 on nonintake/nonshooter - 1.625
+    //13.25 is center - 1.625 = 11.625
 
 
- //1.625 distance from edge perpen to shooter
- //1.625 distance
+    //1.625 distance from edge perpen to shooter
+    //1.625 distance
 
-//height is 12.125
+    //height is 12.125
 
 
     //ROTATION!!

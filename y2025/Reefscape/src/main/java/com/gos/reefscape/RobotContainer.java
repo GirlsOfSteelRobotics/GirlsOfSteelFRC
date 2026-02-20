@@ -7,6 +7,7 @@ package com.gos.reefscape;
 
 import com.gos.lib.joysticks.VibrateControllerTimedCommand;
 import com.gos.lib.joysticks.VibrateControllerWhileTrueCommand;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.reefscape.auto.modes.GosAuto;
 import com.gos.reefscape.commands.Autos;

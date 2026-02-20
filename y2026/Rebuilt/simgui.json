@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK Flex [10]": {
         "header": {
@@ -21,12 +26,22 @@
           "open": true
         }
       },
+      "SPARK Flex [16]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [2]": {
         "header": {
           "open": true
         }
       },
       "SPARK Flex [2] RELATIVE ENCODER": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[5]": {
         "header": {
           "open": true
         }
@@ -41,11 +56,15 @@
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
+      "/Shuffleboard/Climber/Climber go to height 0.0": "Command",
+      "/Shuffleboard/Climber/Climber go to height 0.254": "Command",
+      "/Shuffleboard/Climber/Climber go to height 0.508": "Command",
       "/Shuffleboard/Climber/Left Climb Down": "Command",
       "/Shuffleboard/Climber/Left Climb Up": "Command",
       "/Shuffleboard/Climber/Right Climb Down": "Command",
       "/Shuffleboard/Climber/Right Climb Up": "Command",
       "/Shuffleboard/Combined Commands/Shoot": "Command",
+      "/Shuffleboard/Combined Commands/Shooting Easier": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
@@ -77,20 +96,20 @@
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
+      "/Shuffleboard/arm pivot/Go down": "Command",
+      "/Shuffleboard/arm pivot/Go to angle0.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle15.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle30.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
+      "/Shuffleboard/arm pivot/Go up": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/PathPlanner": "Alerts",
-      "/SmartDashboard/PhotonAlerts": "Alerts",
-      "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
+      "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
       "/Shuffleboard/Chassis/Face Hub": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": {
         "window": {
           "visible": true
         }
@@ -105,7 +124,12 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter RPM/Shoot from distance": {
+      "/Shuffleboard/Combined Commands/Shoot": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Feed the hungry": {
         "window": {
           "visible": true
         }
@@ -117,29 +141,7 @@
       },
       "/SmartDashboard/Field": {
         "AprilTags": {
-          "image": "C:\\Users\\sonia\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
-        },
-        "Left Camera detected tags": {
-          "arrows": false,
-          "color": [
-            255.0,
-            238.0,
-            0.0,
-            255.0
-          ],
-          "image": "C:\\Users\\sonia\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-green.png",
-          "length": 0.8999999761581421,
-          "width": 0.699999988079071
-        },
-        "Left Camera estimated pose": {
-          "color": [
-            249.33334350585938,
-            255.0,
-            0.0,
-            255.0
-          ],
-          "length": 0.8999999761581421,
-          "width": 0.699999988079071
+          "image": "../../libraries/shared_images/tag-blue.png"
         },
         "bottom": 1914,
         "height": 8.069275856018066,

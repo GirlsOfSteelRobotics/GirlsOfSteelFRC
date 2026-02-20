@@ -1,5 +1,6 @@
 package com.gos.lib.properties;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -40,6 +41,11 @@ public class TunableTransform3d {
         m_rollProperty.updateIfChanged();
 
         return m_transform;
+    }
+
+    public Pose3d toPose3d() {
+        Transform3d transform = getTransform();
+        return  new Pose3d(transform.getTranslation(), transform.getRotation());
     }
 
     private void updateX(double inches) {

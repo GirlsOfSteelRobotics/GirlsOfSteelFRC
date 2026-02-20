@@ -274,8 +274,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
 
-        this.m_goalAngle = new Rotation2d(0);
-
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
 
@@ -460,8 +458,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_driveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_SPEED)
-
         );
+        m_goalAngle = null; // NOPMD(NullAssignment)
     }
 
     public void staringDrive(double xJoystick, double yJoystick, Rotation2d goalAngleRad) {
@@ -474,7 +472,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public boolean facingHub() {
+        if (m_goalAngle == null) {
+            return true;
+        }
         return Math.abs(m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians()) < DEADBAN;
+    }
+
+    public Rotation2d getGoalAngle() {
+        return m_goalAngle;
     }
 
     public Rotation2d getFaceAngle(Translation2d point) {
@@ -512,11 +517,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createFaceHub() {
-        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).until(this::facingHub).withName("Face Hub");
+        return runEnd(() -> staringDrive(0, 0, getFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
     }
 
     public Command createResetPose(Pose2d pose) {
         return runEnd(() -> resetPose(pose), this::stop).withName("Reset Robot Pose!!" + pose);
     }
-
 }
