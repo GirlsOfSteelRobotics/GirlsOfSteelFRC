@@ -14,12 +14,10 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
@@ -160,14 +158,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double rpmFromDistance(double distance) {
         return m_table.get(distance);
-    }
-
-    public double getDistance(Pose2d robotPosition,Translation3d point) {
-        Pose2d shooterPose = new Pose2d(robotPosition.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(robotPosition.getRotation())), robotPosition.getRotation());
-        double distanceX = shooterPose.getX() - point.getX();
-        double distanceY = shooterPose.getY() - point.getY();
-
-        return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     }
 
 

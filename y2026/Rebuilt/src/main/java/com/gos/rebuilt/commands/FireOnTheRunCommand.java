@@ -44,7 +44,7 @@ public class FireOnTheRunCommand extends Command {
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d())
         );
-        m_shooter.shootFromDistance(m_shooter.getDistance(m_chassis.getState().Pose,imaginaryPoint));
+        m_shooter.shootFromDistance(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
         m_pizza.feed();
         m_feeder.feed();
     }
