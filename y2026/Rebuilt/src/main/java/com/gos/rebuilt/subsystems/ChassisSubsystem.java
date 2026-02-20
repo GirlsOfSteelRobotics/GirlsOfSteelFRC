@@ -247,14 +247,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         Matrix<N3, N1> multiTagStddev = VecBuilder.fill(.5, 0.5, Units.degreesToRadians(30));
 
 
-        boolean enableFancyCameraSim = true;
+        boolean enableFancyCameraSim = false;
 
         AprilTagCameraBuilder cameraBuilder = new AprilTagCameraBuilder()
             .withLayout(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded))
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
-            .withFieldDebugConfig(new DebugConfig(true, true, true))
+            .withFieldDebugConfig(new DebugConfig(false, true, true))
             .withSingleTagMaxDistanceMeters(4)
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
