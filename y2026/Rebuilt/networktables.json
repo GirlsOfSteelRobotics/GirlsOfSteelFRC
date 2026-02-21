@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 8e-05,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -138,7 +138,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.01,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -408,22 +408,6 @@
     }
   },
   {
-    "name": "/Preferences/Shooter.mm.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/min_Spin",
     "type": "double",
     "value": 100.0,
@@ -467,6 +451,22 @@
     "name": "/Preferences/Feeder.mm.kp",
     "type": "double",
     "value": 0.01,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/PIZZAtuneRPM",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/FEEDAtuneRPM",
+    "type": "double",
+    "value": 1.0,
     "properties": {
       "persistent": true
     }

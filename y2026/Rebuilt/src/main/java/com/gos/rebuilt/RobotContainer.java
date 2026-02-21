@@ -81,10 +81,11 @@ public class RobotContainer {
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
-        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem);
         m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
         m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem, m_climberSubsystem);
         m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
+
+        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem, m_autoFactory);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);

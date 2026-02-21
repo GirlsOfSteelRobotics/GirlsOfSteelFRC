@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebuilt.commands.CombinedCommand;
 
 public class AutoFactory {
-    private final SendableChooser<Command> m_chooser;
+    private final SendableChooser<GosAuto> m_chooser;
 
     public AutoFactory(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
         m_chooser = new SendableChooser<>();
@@ -19,7 +19,7 @@ public class AutoFactory {
         SmartDashboard.putData("Autos", m_chooser);
     }
 
-    public Command getSelectedAuto() {
+    public GosAuto getSelectedAuto() {
         return m_chooser.getSelected();
     }
 }
