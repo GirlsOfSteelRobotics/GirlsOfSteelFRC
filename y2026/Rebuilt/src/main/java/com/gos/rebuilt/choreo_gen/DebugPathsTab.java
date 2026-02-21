@@ -36,6 +36,7 @@ public class DebugPathsTab {
         debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_05fps"));
         debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_10fps"));
         debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_15fps"));
+
     }
 
     private Command createDebugPathCommand(String name) {
