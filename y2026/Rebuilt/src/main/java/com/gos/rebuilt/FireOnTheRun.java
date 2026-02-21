@@ -26,50 +26,46 @@ public class FireOnTheRun {
     public FireOnTheRun(ChassisSubsystem chassis, ShooterSubsystem shooter) {
         m_chassis = chassis;
         m_shooter = shooter;
-        m_publisherPose = NetworkTableInstance.getDefault().getStructTopic("robot pose", Pose2d.struct).publish();
+        m_publisherPose = NetworkTableInstance.getDefault().getStructTopic("FOTR/robot pose", Pose2d.struct).publish();
         m_hubList = new ArrayList<>();
         for (int i = 0; i < ITERATIONS; i++) {
-            m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("hub pose " + i, Pose3d.struct).publish());
+            m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("FOTR/hub pose " + i, Pose3d.struct).publish());
         }
         m_shooterSimBallsList = new ArrayList<>();
         for (int i = 0; i < ITERATIONS; i++) {
-            m_shooterSimBallsList.add(new ShooterSimBalls("hypothetical Shoot On The Move " + i));
+            m_shooterSimBallsList.add(new ShooterSimBalls("FOTR/hypothetical Shoot On The Move " + i));
         }
     }
 
-    public double getDistance(Translation3d point) {
-        return m_chassis.getDistanceToObject(point.toTranslation2d());
-    }
-
     public double getFuelVelocity(Translation3d point) {
-        return m_shooter.rpmToVelocity(m_shooter.rpmFromDistance(getDistance(point)));
+        return m_shooter.rpmToVelocity(m_shooter.rpmFromDistance(m_chassis.getDistanceToObject(point.toTranslation2d())));
     }
 
     public double fuelAirTime(Translation3d point) {
-        return getDistance(point) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
+        return m_chassis.getDistanceToObject(point.toTranslation2d()) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
     }
 
     public Translation3d imaginaryHub(double time, ChassisSpeeds chassisSpeed) {
         double deltaX = time * chassisSpeed.vxMetersPerSecond;
         double deltaY = time * chassisSpeed.vyMetersPerSecond;
 
-        return new Translation3d(Hub.innerCenterPoint.toTranslation2d().getX() - deltaX, Hub.innerCenterPoint.toTranslation2d().getY() - deltaY, Hub.height);
+        return new Translation3d(Hub.innerCenterPoint.getTranslation().getX() - deltaX, Hub.innerCenterPoint.getTranslation().getY() - deltaY, Hub.height);
     }
 
     public Translation3d findImaginary() {
         ChassisSpeeds robotVel = ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
 
 
-        Translation3d imaginaryPoint = Hub.innerCenterPoint;
-        Pose2d robotPose;
+        Translation3d imaginaryPoint = Hub.innerCenterPoint.getTranslation();
+        Pose2d robotPose = new Pose2d();
 
         for (int i = 0; i < ITERATIONS; i++) {
             imaginaryPoint = imaginaryHub(fuelAirTime(imaginaryPoint), robotVel);
             m_hubList.get(i).accept(new Pose3d(imaginaryPoint, new Rotation3d()));
-            robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getFaceAngle(imaginaryPoint.toTranslation2d()));
-            m_publisherPose.accept(robotPose);
+            robotPose = new Pose2d(m_chassis.getState().Pose.getX(), m_chassis.getState().Pose.getY(), m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d()));
             m_shooterSimBallsList.get(i).calculatePosition(getFuelVelocity(imaginaryPoint), robotVel, robotPose);
         }
+        m_publisherPose.accept(robotPose);
 
 
         return imaginaryPoint;

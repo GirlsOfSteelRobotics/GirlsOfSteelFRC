@@ -5,7 +5,7 @@ import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
 import com.gos.lib.led.mirrored.MirroredLEDRainbow;
-import com.gos.reefscape.MaybeFlippedPose2d;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.reefscape.enums.KeepOutZoneEnum;
 import com.gos.reefscape.led_patterns.sub_patterns.KeepOutZoneStatePattern;
 import com.gos.reefscape.subsystems.ChassisSubsystem;

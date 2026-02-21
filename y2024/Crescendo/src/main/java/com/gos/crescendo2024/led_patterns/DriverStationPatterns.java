@@ -1,6 +1,6 @@
 package com.gos.crescendo2024.led_patterns;
 
-import com.gos.crescendo2024.DriverStationLedDriver;
+import com.gos.lib.led.driverstation.DriverStationLedDriver;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;

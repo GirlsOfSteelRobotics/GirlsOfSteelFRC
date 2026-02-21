@@ -12,5 +12,15 @@ import edu.wpi.first.units.measure.*;
  */
 public final class ChoreoVars {
 
+    public static final class Poses {
+        public static final Pose2d RightStartPoint = new Pose2d(3.584, 0.392, Rotation2d.fromRadians(3.142));
+        public static final Pose2d centerStartPoint = new Pose2d(3.584, 3.981, Rotation2d.fromRadians(3.142));
+        public static final Pose2d leftShootPoint = new Pose2d(2.959, 4.847, Rotation2d.fromRadians(2.691));
+        public static final Pose2d leftStartPoint = new Pose2d(3.564, 7.665, Rotation2d.fromRadians(3.138));
+        public static final Pose2d rightShootPoint = new Pose2d(3.12, 3.275, Rotation2d.fromRadians(-2.412));
+
+        private Poses() {}
+    }
+
     private ChoreoVars() {}
 }
