@@ -138,6 +138,7 @@ public class PizzaSubsystem extends SubsystemBase {
         tab.add(createPizzaReverseCommand());
         tab.add(createPIZZASpin(60));
         tab.add(createPIZZASpin(180));
+        tab.add(createTuneRPM());
         tab.add(createRunUntilStall());
     }
 
@@ -156,13 +157,6 @@ public class PizzaSubsystem extends SubsystemBase {
         return runEnd(this::reverse, this::stop).withName("Reverse the pizza");
     }
 
-    public Command createPizzaSpin180() {
-        return runEnd(() -> setRPM(180), this::stop).withName("Go pizza go 180!!");
-    }
-
-    public Command createPizzaSpin60() {
-        return runEnd(() -> setRPM(60), this::stop).withName("Go pizza go 60!!");
-    }
 
     public Command createRunUntilStall() {
         return runEnd(() -> setRPM(500), this::stop).until(this::checkJam).andThen(createPizzaReverseCommand().withTimeout(.5));

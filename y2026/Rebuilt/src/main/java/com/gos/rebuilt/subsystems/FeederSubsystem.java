@@ -144,6 +144,7 @@ public class FeederSubsystem extends SubsystemBase {
         tab.add(createFeederReverseCommand());
         tab.add(createFeederSpin(1000));
         tab.add(createFeederSpin(500));
+        tab.add(createTuneRPM());
     }
 
     @Override
@@ -159,9 +160,6 @@ public class FeederSubsystem extends SubsystemBase {
         return runEnd(this::reverse, this::stop).withName("Reverse the Feeder 😱");
     }
 
-    public Command createFeederSpin1000() {
-        return runEnd(() -> setRPM(1000), this::stop).withName("Feed 1000 burgers!");
-    }
 
     public Command createFeederSpin(double rpm) {
         return runEnd(() -> setRPM(rpm), this::stop).withName("Feed" + rpm+" burgers!");
@@ -171,9 +169,5 @@ public class FeederSubsystem extends SubsystemBase {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("FEEDA spins to tuneRPM!!");
     }
 
-
-    public Command createFeederSpin500() {
-        return runEnd(() -> setRPM(500), this::stop).withName("Feed 500 donuts!");
-    }
 
 }
