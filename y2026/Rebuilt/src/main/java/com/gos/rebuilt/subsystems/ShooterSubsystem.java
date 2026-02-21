@@ -214,6 +214,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
     }
 
+
     public Command createShootFromDistanceCommand(DoubleSupplier distanceGetter) {
         return runEnd(() -> shootFromDistance(distanceGetter.getAsDouble()), this::stop).withName("Shoot from distance");
     }

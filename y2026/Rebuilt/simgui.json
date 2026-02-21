@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK Flex [10]": {
         "header": {
@@ -26,11 +21,6 @@
           "open": true
         }
       },
-      "SPARK Flex [16]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK Flex [2]": {
         "header": {
           "open": true
@@ -40,33 +30,22 @@
         "header": {
           "open": true
         }
-      },
-      "Talon FX (v6)[5]": {
-        "header": {
-          "open": true
-        }
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/Chassis/3m From Blue": "Command",
-      "/Shuffleboard/Chassis/3m From Red": "Command",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
-      "/Shuffleboard/Climber/Climber go to height 0.0": "Command",
-      "/Shuffleboard/Climber/Climber go to height 0.254": "Command",
-      "/Shuffleboard/Climber/Climber go to height 0.508": "Command",
       "/Shuffleboard/Climber/Left Climb Down": "Command",
       "/Shuffleboard/Climber/Left Climb Up": "Command",
       "/Shuffleboard/Climber/Right Climb Down": "Command",
       "/Shuffleboard/Climber/Right Climb Up": "Command",
       "/Shuffleboard/Combined Commands/Shoot": "Command",
-      "/Shuffleboard/Combined Commands/Shooting Easier": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
@@ -84,33 +63,31 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Feeder/Feed 1000 burgers!": "Command",
+      "/Shuffleboard/Feeder/Feed 500 donuts!": "Command",
       "/Shuffleboard/Feeder/Feed🍕😎": "Command",
       "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
       "/Shuffleboard/Intake/Intake Out! :(": "Command",
       "/Shuffleboard/Pizza/Feed the hungry": "Command",
       "/Shuffleboard/Pizza/Feed the hungry 🍕😎": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 1000!!": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 180!!": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 500!!": "Command",
+      "/Shuffleboard/Pizza/Go pizza go 60!!": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
+      "/Shuffleboard/Pizza/SequentialCommandGroup": "Command",
       "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
-      "/Shuffleboard/arm pivot/Go down": "Command",
-      "/Shuffleboard/arm pivot/Go to angle0.0": "Command",
-      "/Shuffleboard/arm pivot/Go to angle15.0": "Command",
-      "/Shuffleboard/arm pivot/Go to angle30.0": "Command",
-      "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
-      "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
-      "/Shuffleboard/arm pivot/Go up": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/PathPlanner": "Alerts",
-      "/SmartDashboard/PhotonAlerts": "Alerts",
-      "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
+      "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
       "/Shuffleboard/Chassis/Face Hub": {
@@ -133,12 +110,27 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Combined Commands/Shoot": {
+      "/Shuffleboard/Feeder/Feed 1000 burgers!": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Pizza/Feed the hungry": {
+      "/Shuffleboard/Feeder/Feed 500 donuts!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Go pizza go 180!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Pizza/Go pizza go 60!!": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Shooter RPM/Shoot from distance": {
         "window": {
           "visible": true
         }
@@ -148,15 +140,7 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
-        "AprilTags": {
-          "image": "../../libraries/shared_images/tag-blue.png"
-        },
         "bottom": 1914,
         "height": 8.069275856018066,
         "left": 245,
@@ -179,6 +163,12 @@
       "ClimberSubsystem": {
         "open": true
       },
+      "Feeder Subsystem": {
+        "open": true
+      },
+      "Pizza Subsystem": {
+        "open": true
+      },
       "Shooter Subsystem": {
         "open": true
       }
@@ -191,13 +181,18 @@
     "Plot <0>": {
       "plots": [
         {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
           "backgroundColor": [
             0.0,
             0.0,
             0.0,
             0.8500000238418579
           ],
-          "height": 34,
+          "height": 151,
           "series": [
             {
               "color": [
@@ -206,7 +201,7 @@
                 0.6901960968971252,
                 1.0
               ],
-              "id": "NT:/Shooter Subsystem/Shooter rpm"
+              "id": "NT:/Shooter Subsystem/Goal velocity"
             },
             {
               "color": [
@@ -215,7 +210,149 @@
                 0.32156863808631897,
                 1.0
               ],
-              "id": "NT:/Shooter Subsystem/Goal velocity"
+              "id": "NT:/Shooter Subsystem/Shooter rpm"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/Pizza Subsystem/Pizza rpm"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Pizza Subsystem/Goal velocity"
+            }
+          ]
+        },
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 151
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Feeder Subsystem/Goal velocity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Feeder Subsystem/Pizza rpm"
+            }
+          ]
+        }
+      ]
+    },
+    "Plot <2>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Pizza Subsystem/Pizza rpm"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Pizza Subsystem/Goal velocity"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <3>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 332,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Feeder Subsystem/Pizza rpm"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Feeder Subsystem/Goal velocity"
             }
           ]
         }

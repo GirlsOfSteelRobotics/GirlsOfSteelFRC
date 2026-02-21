@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LEDSubsystem extends SubsystemBase {
 
 
-    private static final int MAX_INDEX_LED = 40;
+    private static final int MAX_INDEX_LED = 50;
 
 
     private final AddressableLEDBuffer m_addressMe;
@@ -22,18 +22,20 @@ public class LEDSubsystem extends SubsystemBase {
 
     private final ShooterSubsystem m_shooter;
     private final ChassisSubsystem m_chassis;
+    private final PizzaSubsystem m_pizza;
 
 
-    public LEDSubsystem(ShooterSubsystem shooter, ChassisSubsystem chassis) {
+    public LEDSubsystem(ShooterSubsystem shooter, ChassisSubsystem chassis, PizzaSubsystem pizza) {
         this.m_shooter = shooter;
         this.m_chassis = chassis;
+        this.m_pizza = pizza;
 
         this.m_addressMe = new AddressableLEDBuffer(MAX_INDEX_LED);
         this.m_led = new AddressableLED(Constants.LED_PORT);
         m_led.setLength(m_addressMe.getLength());
         m_led.setData((m_addressMe));
         m_led.start();
-        this.m_enabledPatterns = new EnabledPatties(m_addressMe, m_shooter, m_chassis);
+        this.m_enabledPatterns = new EnabledPatties(m_addressMe, m_shooter, m_chassis, m_pizza);
 
 
     }

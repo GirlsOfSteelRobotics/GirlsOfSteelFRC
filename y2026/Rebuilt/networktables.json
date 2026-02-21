@@ -406,5 +406,69 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kff",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/min_Spin",
+    "type": "double",
+    "value": 100.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/base_Currents",
+    "type": "double",
+    "value": 100.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pizza.mm.kff",
+    "type": "double",
+    "value": 0.00278,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pizza.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeder.mm.kff",
+    "type": "double",
+    "value": 9e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Feeder.mm.kp",
+    "type": "double",
+    "value": 0.01,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
