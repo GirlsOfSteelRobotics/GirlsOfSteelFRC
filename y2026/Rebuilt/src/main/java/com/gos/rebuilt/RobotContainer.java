@@ -137,6 +137,7 @@ public class RobotContainer {
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
         //m_driverController.a().whileTrue(m_combinedCommand.shootBall());
         m_driverController.a().whileTrue(m_combinedCommand.shootBallNoAiming());
+        m_driverController.b().whileTrue(m_pizzaSubsystem.createPizzaReverseCommand());
         m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
 
 

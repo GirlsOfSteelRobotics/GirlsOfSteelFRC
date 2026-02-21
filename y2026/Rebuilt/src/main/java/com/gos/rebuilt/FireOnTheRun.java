@@ -49,14 +49,14 @@ public class FireOnTheRun {
         double deltaX = time * chassisSpeed.vxMetersPerSecond;
         double deltaY = time * chassisSpeed.vyMetersPerSecond;
 
-        return new Translation3d(Hub.innerCenterPoint.toTranslation2d().getX() - deltaX, Hub.innerCenterPoint.toTranslation2d().getY() - deltaY, Hub.height);
+        return new Translation3d(Hub.innerCenterPoint.getTranslation().getX() - deltaX, Hub.innerCenterPoint.getTranslation().getY() - deltaY, Hub.height);
     }
 
     public Translation3d findImaginary() {
         ChassisSpeeds robotVel = ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
 
 
-        Translation3d imaginaryPoint = Hub.innerCenterPoint;
+        Translation3d imaginaryPoint = Hub.innerCenterPoint.getTranslation();
         Pose2d robotPose = new Pose2d();
 
         for (int i = 0; i < ITERATIONS; i++) {

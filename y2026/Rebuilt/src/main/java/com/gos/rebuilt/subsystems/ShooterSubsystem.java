@@ -39,10 +39,11 @@ import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
-    private static final double DEADBAND = 2;
+    private static final double DEADBAND = 50;
     private static final double MIN_DISTANCE = 1.99;
 
-    private final SparkFlex m_shooterMotor;
+    private final SparkFlex m_leader;
+    private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
@@ -60,29 +61,35 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public ShooterSubsystem() {
-        m_shooterMotor = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
-        m_motorEncoder = m_shooterMotor.getEncoder();
-        m_pidController = m_shooterMotor.getClosedLoopController();
+        m_leader = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
+        m_follower = new SparkFlex(Constants.SHOOTER_FOLLOWER_MOTOR, MotorType.kBrushless);
+        m_motorEncoder = m_leader.getEncoder();
+        m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-
+        double halfHubPlusHalfRobot = 37.25;
         m_table.put(MIN_DISTANCE, 1550.0);
-        m_table.put(2.85, 1650.0);
-        m_table.put(3.55, 1750.0);
-        m_table.put(4.85, 2000.0);
-        m_table.put(6.14, 2190.0);
+        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 82), 4250.0);
+        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 64), 4300.0);
+        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 108), 4600.0);
+        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 142), 5100.0);
 
-        m_shooterAlert = new SparkMaxAlerts(m_shooterMotor, "shooterAlert");
+        m_shooterAlert = new SparkMaxAlerts(m_leader, "shooterAlert");
 
 
-        SparkMaxConfig shooterConfig = new SparkMaxConfig();
-        shooterConfig.idleMode(IdleMode.kCoast);
-        shooterConfig.smartCurrentLimit(60);
-        shooterConfig.inverted(true);
-        shooterConfig.encoder.positionConversionFactor(1);
-        shooterConfig.encoder.velocityConversionFactor(1);
+        SparkMaxConfig leaderConfig = new SparkMaxConfig();
+        leaderConfig.idleMode(IdleMode.kCoast);
+        leaderConfig.smartCurrentLimit(60);
+        leaderConfig.inverted(true);
+        leaderConfig.encoder.positionConversionFactor(1);
+        leaderConfig.encoder.velocityConversionFactor(1);
 
-        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_shooterMotor, shooterConfig, ClosedLoopSlot.kSlot0)
+        SparkMaxConfig followerConfig = new SparkMaxConfig();
+        followerConfig.idleMode(IdleMode.kCoast);
+        followerConfig.smartCurrentLimit(60);
+        followerConfig.follow(m_leader, true);
+
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)
             .addP(0)
             .build();
@@ -91,7 +98,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
-        m_networkTableEntries.addDouble("Applied Output", m_shooterMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Applied Output", m_leader::getAppliedOutput);
 
         m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
 
@@ -102,22 +109,23 @@ public class ShooterSubsystem extends SubsystemBase {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
             this.m_shooterSimulator = new FlywheelSimWrapper(
                 shooterFlywheelSim,
-                new RevMotorControllerSimWrapper(this.m_shooterMotor, gearbox),
-                RevEncoderSimWrapper.create(this.m_shooterMotor));
+                new RevMotorControllerSimWrapper(this.m_leader, gearbox),
+                RevEncoderSimWrapper.create(this.m_leader));
         }
 
 
-        m_shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_leader.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_follower.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 
     public void spinMotorForward() {
-        m_shooterMotor.set(m_shooterSpeed.getValue());
+        m_leader.set(m_shooterSpeed.getValue());
     }
 
 
     public void spinMotorForward(double pow) {
-        m_shooterMotor.set(pow);
+        m_leader.set(pow);
     }
 
     public double getMinDistance() {
@@ -162,11 +170,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public void spinMotorBackward() {
-        m_shooterMotor.set(-m_shooterSpeed.getValue());
+        m_leader.set(-m_shooterSpeed.getValue());
     }
 
     public void stop() {
-        m_shooterMotor.stopMotor();
+        m_leader.stopMotor();
     }
 
     @Override

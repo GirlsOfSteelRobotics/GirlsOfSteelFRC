@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
+
+import choreo.util.ChoreoAllianceFlipUtil;
+import com.ctre.phoenix6.swerve.SwerveRequest.ForwardPerspectiveValue;
 import com.gos.lib.logging.LoggingUtil;
 
 
@@ -23,6 +26,8 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
+import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
@@ -49,6 +54,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -274,7 +280,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
-        m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint.toTranslation2d()));
+        m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
@@ -469,6 +475,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(goalAngleRad)
+                .withForwardPerspective(ForwardPerspectiveValue.BlueAlliance)
         );
         m_goalAngle = goalAngleRad;
     }
@@ -484,6 +491,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return m_goalAngle;
     }
 
+    public Rotation2d getShooterFaceAngle(MaybeFlippedTranslation3d point) {
+        return getShooterFaceAngle(point.getTranslation().toTranslation2d());
+    }
+
     public Rotation2d getShooterFaceAngle(Translation2d point) {
 
         Translation2d shooterPosition = getState().Pose.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(getState().Pose.getRotation()));
@@ -492,6 +503,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             shooterPosition.getX() - point.getX());
 
         return Rotation2d.fromRadians(goalAngle);
+    }
+
+    public double getDistanceToObject(MaybeFlippedTranslation3d point) {
+        return getDistanceToObject(point.getTranslation().toTranslation2d());
     }
 
     public double getDistanceToObject(Translation2d point) {
@@ -506,25 +521,38 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
     public double getDistanceFromHub() {
-        return getDistanceToObject(Hub.innerCenterPoint.toTranslation2d());
+        return getDistanceToObject(Hub.innerCenterPoint);
     }
 
     public void stop() {
         driveFieldCentric(0, 0, 0);
     }
 
+    private void resetPose(MaybeFlippedPose2d maybeFlippedPose) {
+        resetPose(maybeFlippedPose.getPose());
+    }
+
+
     public void addChassisDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         tab.add(createFaceHub());
         tab.add(createResetPose(new Pose2d()));
-        tab.add(createResetPose(new Pose2d(Hub.innerCenterPoint.getX() - 3, Hub.innerCenterPoint.getY(), Rotation2d.fromDegrees(0))));
+
+        Translation3d blueHub = Hub.innerCenterPoint.getTranslation();
+        Translation3d redHub = ChoreoAllianceFlipUtil.flip(blueHub);
+        tab.add(createResetPose(new MaybeFlippedPose2d(blueHub.getX() - 3, blueHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Blue"));
+        tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
     }
 
     public Command createFaceHub() {
-        return runEnd(() -> staringDrive(0, 0, getShooterFaceAngle(Hub.innerCenterPoint.toTranslation2d())), this::stop).withName("Face Hub");
+        return runEnd(() -> staringDrive(0, 0, getShooterFaceAngle(Hub.innerCenterPoint)), this::stop).withName("Face Hub");
+    }
+
+    public Command createResetPose(MaybeFlippedPose2d pose) {
+        return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
     }
 
     public Command createResetPose(Pose2d pose) {
-        return runEnd(() -> resetPose(pose), this::stop).withName("Reset Robot Pose!!" + pose);
+        return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
     }
 }

@@ -26,7 +26,9 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 public class PizzaSubsystem extends SubsystemBase {
 
     private final SparkMax m_pizzaMotor;
-    private final GosDoubleProperty m_pizzaSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeed", 1);
+    private final GosDoubleProperty m_pizzaSpeedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedForward", 1);
+    private final GosDoubleProperty m_pizzaSpeedReverse = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedBack", 1);
+
     private final RelativeEncoder m_pizzaEncoder;
     private final SparkMaxAlerts m_pizzaAlert;
     private final LoggingUtil m_networkTableEntries;
@@ -58,6 +60,7 @@ public class PizzaSubsystem extends SubsystemBase {
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_networkTableEntries.addDouble("Pizza Velocity", this::getVelocity);
+        m_networkTableEntries.addDouble("Pizza Position", m_pizzaEncoder::getPosition);
         m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
 
     }
@@ -71,11 +74,11 @@ public class PizzaSubsystem extends SubsystemBase {
     }
 
     public void feed() {
-        m_pizzaMotor.set(m_pizzaSpeed.getValue());
+        m_pizzaMotor.set(m_pizzaSpeedForward.getValue());
     }
 
     public void reverse() {
-        m_pizzaMotor.set(-m_pizzaSpeed.getValue());
+        m_pizzaMotor.set(-m_pizzaSpeedReverse.getValue());
     }
 
     public void stop() {
