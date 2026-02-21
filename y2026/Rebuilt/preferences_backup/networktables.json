@@ -16,30 +16,6 @@
     }
   },
   {
-    "name": "/Preferences/ShooterKf",
-    "type": "double",
-    "value": 0.00015,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ShooterKp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/pizzaSpeed",
-    "type": "double",
-    "value": 0.67,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/ChassisTranslationDamper",
     "type": "double",
     "value": 0.67,
@@ -323,38 +299,6 @@
     "name": "/Preferences/CameraExtrinsics/Right.roll(deg)",
     "type": "double",
     "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
-    "type": "double",
-    "value": 84.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Max Acceleration (inches)",
-    "type": "double",
-    "value": 120.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Angular Velocity (degrees)",
-    "type": "double",
-    "value": 360.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Angular Acceleration (degrees)",
-    "type": "double",
-    "value": 360.0,
     "properties": {
       "persistent": true
     }

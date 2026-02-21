@@ -36,7 +36,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     private final SparkFlex m_feederMotor;
     private final RelativeEncoder m_feederEncoder;
-    private final GosDoubleProperty m_feederSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FeederSpeed", 1);
+    private final GosDoubleProperty m_feederSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FeederSpeed", 0.8);
     private final SparkMaxAlerts m_feederMotorAlerts;
     private double m_goal;
     private static final double DEADBAND = 67;

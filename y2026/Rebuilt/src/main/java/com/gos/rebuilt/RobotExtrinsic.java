@@ -32,9 +32,9 @@ public class RobotExtrinsic {
 
     public static final TunableTransform3d BACK_LEFT_CAMERA = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/BackLeft", new Transform3d(
         new Translation3d(
-            Units.inchesToMeters(10.55),
-            Units.inchesToMeters(-7),
-            Units.inchesToMeters(12.225)),
+            Units.inchesToMeters(-7.55),
+            Units.inchesToMeters(10),
+            Units.inchesToMeters(12.125)),
         new Rotation3d(
             Math.toRadians(0),
             Math.toRadians(-30),

@@ -46,8 +46,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
-    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", .01);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1000);
     private final SparkMaxAlerts m_shooterAlert;
 
     private ISimWrapper m_shooterSimulator;
@@ -90,8 +90,8 @@ public class ShooterSubsystem extends SubsystemBase {
         followerConfig.follow(m_leader, true);
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
-            .addFF(0)
-            .addP(0)
+            .addFF(1.48e-4)
+            .addP(1.2e-4)
             .build();
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
