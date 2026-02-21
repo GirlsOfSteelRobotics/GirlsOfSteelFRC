@@ -392,17 +392,17 @@
     }
   },
   {
-    "name": "/Preferences/Shooter.mm.kff",
+    "name": "/Preferences/pizzaSpeedForward",
     "type": "double",
-    "value": 0.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Shooter.mm.kp",
+    "name": "/Preferences/pizzaSpeedBack",
     "type": "double",
-    "value": 0.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
