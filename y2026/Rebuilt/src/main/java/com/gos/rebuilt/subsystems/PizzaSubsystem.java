@@ -57,7 +57,7 @@ public class PizzaSubsystem extends SubsystemBase {
         SparkMaxConfig pizzaConfig = new SparkMaxConfig();
         pizzaConfig.idleMode(IdleMode.kCoast);
         pizzaConfig.smartCurrentLimit(60);
-        pizzaConfig.inverted(false);
+        pizzaConfig.inverted(true);
 
         pizzaConfig.encoder.positionConversionFactor(9 * 4 * 3);
         pizzaConfig.encoder.velocityConversionFactor(3 * 4 * 9);

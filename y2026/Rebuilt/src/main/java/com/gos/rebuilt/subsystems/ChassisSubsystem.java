@@ -273,8 +273,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
             cameraBuilder
-                .withCamera("Right Camera .")
-                .withTransform(RobotExtrinsic.RIGHT_CAMERA).build()
+                .withCamera("Back Left")
+                .withTransform(RobotExtrinsic.BACK_LEFT_CAMERA).build()
         ));
 
 
