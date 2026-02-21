@@ -39,7 +39,7 @@ public class PizzaSubsystem extends SubsystemBase {
     private static final double DEADBAND = 2;
     private static final GosDoubleProperty MIN_SPIN = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "min_Spin", 100);
     private static final GosDoubleProperty BASE_CURRENTS = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "base_Currents", 100);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "PIZZAtuneRPM", 1);
 
 
     private final SparkClosedLoopController m_pidController;
@@ -57,8 +57,8 @@ public class PizzaSubsystem extends SubsystemBase {
         pizzaConfig.smartCurrentLimit(60);
         pizzaConfig.inverted(false);
 
-        pizzaConfig.encoder.positionConversionFactor(3*5*9);
-        pizzaConfig.encoder.velocityConversionFactor(3*5*9);
+        pizzaConfig.encoder.positionConversionFactor(9*4*3);
+        pizzaConfig.encoder.velocityConversionFactor(3*4*9);
 
 
 

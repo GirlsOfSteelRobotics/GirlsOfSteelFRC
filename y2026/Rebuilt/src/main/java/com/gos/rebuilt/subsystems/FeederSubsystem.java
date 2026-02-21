@@ -44,7 +44,7 @@ public class FeederSubsystem extends SubsystemBase {
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_feederSimulator;
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FEEDAtuneRPM", 1);
 
 
 
