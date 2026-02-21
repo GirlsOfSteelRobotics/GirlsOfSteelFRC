@@ -78,6 +78,9 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterConfig.inverted(true);
         shooterConfig.encoder.positionConversionFactor(1);
         shooterConfig.encoder.velocityConversionFactor(1);
+        //pizza 3*5*9
+        //feeder is 4*3
+
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_shooterMotor, shooterConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)
@@ -202,6 +205,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createTuneRPM() {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("Shooter spins to tuneRPM!!");
     }
+
 
     public Command createShootFromDistanceCommand(DoubleSupplier distanceGetter) {
         return runEnd(() -> shootFromDistance(distanceGetter.getAsDouble()), this::stop).withName("Shoot from distance");

@@ -39,6 +39,8 @@ public class PizzaSubsystem extends SubsystemBase {
     private static final double DEADBAND = 2;
     private static final GosDoubleProperty MIN_SPIN = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "min_Spin", 100);
     private static final GosDoubleProperty BASE_CURRENTS = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "base_Currents", 100);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+
 
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
@@ -55,6 +57,8 @@ public class PizzaSubsystem extends SubsystemBase {
         pizzaConfig.smartCurrentLimit(60);
         pizzaConfig.inverted(false);
 
+        pizzaConfig.encoder.positionConversionFactor(3*5*9);
+        pizzaConfig.encoder.velocityConversionFactor(3*5*9);
 
 
 
@@ -132,8 +136,8 @@ public class PizzaSubsystem extends SubsystemBase {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
         tab.add(createPizzaFeedCommand());
         tab.add(createPizzaReverseCommand());
-        tab.add(createPizzaSpin60());
-        tab.add(createPizzaSpin180());
+        tab.add(createPIZZASpin(60));
+        tab.add(createPIZZASpin(180));
         tab.add(createRunUntilStall());
     }
 
@@ -163,6 +167,14 @@ public class PizzaSubsystem extends SubsystemBase {
     public Command createRunUntilStall() {
         return runEnd(() -> setRPM(500), this::stop).until(this::checkJam).andThen(createPizzaReverseCommand().withTimeout(.5));
 
+    }
+
+    public Command createTuneRPM() {
+        return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("PIZZAAAA spins to tuneRPM!!");
+    }
+
+    public Command createPIZZASpin(double rpm) {
+        return runEnd(() -> setRPM(rpm), this::stop).withName("eat " + rpm+" [pizza]!");
     }
 
     @Override

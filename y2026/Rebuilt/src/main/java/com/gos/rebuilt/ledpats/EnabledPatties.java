@@ -36,7 +36,6 @@ public class EnabledPatties {
         m_shooterReady.setStateAndWrite(m_shooter.isAtGoalRPM());
         m_distanceGood.setStateAndWrite(m_chassis.getDistanceFromHub() < m_shooter.getMinDistance());
         m_everythingReady.setStateAndWrite(checkAll());
-        m_pizzaJammed.writeLeds();
         if (m_pizza.checkJam()) {
             m_pizzaJammed.writeLeds();
         }

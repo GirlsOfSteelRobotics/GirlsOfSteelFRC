@@ -39,11 +39,13 @@ public class FeederSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_feederSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FeederSpeed", 1);
     private final SparkMaxAlerts m_feederMotorAlerts;
     private double m_goal;
-    private static final double DEADBAND = 2;
+    private static final double DEADBAND = 67;
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_feederSimulator;
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+
 
 
 
@@ -59,6 +61,9 @@ public class FeederSubsystem extends SubsystemBase {
         feederConfig.idleMode(IdleMode.kCoast);
         feederConfig.smartCurrentLimit(60);
         feederConfig.inverted(true);
+
+        feederConfig.encoder.positionConversionFactor(12);
+        feederConfig.encoder.velocityConversionFactor(12);
 
 
         m_feederMotor.configure(feederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -137,8 +142,8 @@ public class FeederSubsystem extends SubsystemBase {
         ShuffleboardTab tab = Shuffleboard.getTab("Feeder");
         tab.add(createFeederCommand());
         tab.add(createFeederReverseCommand());
-        tab.add(createFeederSpin1000());
-        tab.add(createFeederSpin500());
+        tab.add(createFeederSpin(1000));
+        tab.add(createFeederSpin(500));
     }
 
     @Override
@@ -157,6 +162,15 @@ public class FeederSubsystem extends SubsystemBase {
     public Command createFeederSpin1000() {
         return runEnd(() -> setRPM(1000), this::stop).withName("Feed 1000 burgers!");
     }
+
+    public Command createFeederSpin(double rpm) {
+        return runEnd(() -> setRPM(rpm), this::stop).withName("Feed" + rpm+" burgers!");
+    }
+
+    public Command createTuneRPM() {
+        return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("FEEDA spins to tuneRPM!!");
+    }
+
 
     public Command createFeederSpin500() {
         return runEnd(() -> setRPM(500), this::stop).withName("Feed 500 donuts!");
