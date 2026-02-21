@@ -113,7 +113,7 @@ public class RobotContainer {
         m_debugPathsTab.addDebugPathsToShuffleBoard();
 
         if (RobotBase.isReal()) {
-            PropertyManager.printDynamicProperties(!Constants.CLEANUP_PROPERTIES);
+            PropertyManager.printDynamicProperties(true); //!Constants.CLEANUP_PROPERTIES);
         }
 
         if (Constants.CLEANUP_PROPERTIES) {
