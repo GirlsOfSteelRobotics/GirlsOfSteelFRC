@@ -28,6 +28,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.pathing.MaybeFlippedTranslation3d;
+import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
@@ -45,6 +46,9 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -115,6 +119,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private static final SlotConfigs DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
     private static final SlotConfigs DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
+
+    private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
+        Constants.DEFAULT_CONSTANT_PROPERTIES,
+        "Tunable path constraints",
+        84,
+        120,
+        360,
+        360);
+
 
     private static final boolean DEBUG_SWERVE_STATE = true;
 
@@ -554,5 +567,21 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createResetPose(Pose2d pose) {
         return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
+    }
+
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
+        PathPlannerPath path = new PathPlannerPath(
+            bezierPoints,
+            TUNABLE_PATH_CONSTRAINTS.getConstraints(),
+            null,
+            new GoalEndState(0.0, endAngle)
+        );
+        path.preventFlipping = true;
+        return AutoBuilder.followPath(path);
+    }
+
+    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d end) {
+        return createDriveToPointNoFlipCommand(end.getPose(), end.getPose().getRotation(), getState().Pose);
     }
 }

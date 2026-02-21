@@ -66,6 +66,9 @@
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_04rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_08rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_12rps": "Command",
+      "/Shuffleboard/Debug Paths/STARTING_POS_Centah": "Command",
+      "/Shuffleboard/Debug Paths/STARTING_POS_LEFT": "Command",
+      "/Shuffleboard/Debug Paths/STARTING_POS_RIGHT": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_01fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_10fps": "Command",
@@ -133,6 +136,16 @@
         }
       },
       "/Shuffleboard/Climber/Right Climb Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Debug Paths/STARTING_POS_Centah": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Debug Paths/STARTING_POS_LEFT": {
         "window": {
           "visible": true
         }

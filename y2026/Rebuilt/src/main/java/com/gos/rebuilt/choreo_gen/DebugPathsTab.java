@@ -1,6 +1,9 @@
 package com.gos.rebuilt.choreo_gen;
 
+import choreo.Choreo;
 import com.gos.lib.pathing.ChoreoUtils;
+import com.gos.lib.pathing.MaybeFlippedPose2d;
+import com.gos.rebuilt.choreo_gen.ChoreoVars.Poses;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -36,6 +39,12 @@ public class DebugPathsTab {
         debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_05fps"));
         debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_10fps"));
         debugPathsTab.add(createDebugPathCommand("StraightPathNAV_MaxAccel_15fps"));
+
+        //otha stuff
+        debugPathsTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(new MaybeFlippedPose2d(Poses.leftStartPoint)).withName("STARTING_POS_LEFT"));
+        debugPathsTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(new MaybeFlippedPose2d(Poses.RightStartPoint)).withName("STARTING_POS_RIGHT"));
+        debugPathsTab.add(m_chassisSubsystem.createDriveToMaybeFlippedPose(new MaybeFlippedPose2d(Poses.centerStartPoint)).withName("STARTING_POS_Centah"));
+
 
     }
 
