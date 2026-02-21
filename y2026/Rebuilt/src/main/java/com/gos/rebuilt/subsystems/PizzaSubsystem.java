@@ -59,8 +59,8 @@ public class PizzaSubsystem extends SubsystemBase {
         pizzaConfig.smartCurrentLimit(60);
         pizzaConfig.inverted(false);
 
-        pizzaConfig.encoder.positionConversionFactor(9*4*3);
-        pizzaConfig.encoder.velocityConversionFactor(3*4*9);
+        pizzaConfig.encoder.positionConversionFactor(9 * 4 * 3);
+        pizzaConfig.encoder.velocityConversionFactor(3 * 4 * 9);
 
 
 
@@ -83,7 +83,7 @@ public class PizzaSubsystem extends SubsystemBase {
             .build();
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        m_networkTableEntries.addDouble("Pizza Velocity", this::getVelocity);
+        m_networkTableEntries.addDouble("Pizza Velocity", this::getRPM);
         m_networkTableEntries.addDouble("Pizza Position", m_pizzaEncoder::getPosition);
         m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
 
@@ -140,8 +140,8 @@ public class PizzaSubsystem extends SubsystemBase {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
         tab.add(createPizzaFeedCommand());
         tab.add(createPizzaReverseCommand());
-        tab.add(createPIZZASpin(60));
-        tab.add(createPIZZASpin(180));
+        tab.add(createPIZZaSpin(60));
+        tab.add(createPIZZaSpin(180));
         tab.add(createTuneRPM());
         tab.add(createRunUntilStall());
     }
@@ -171,8 +171,8 @@ public class PizzaSubsystem extends SubsystemBase {
         return runEnd(() -> setRPM(m_tuneRpm.getValue()), this::stop).withName("PIZZAAAA spins to tuneRPM!!");
     }
 
-    public Command createPIZZASpin(double rpm) {
-        return runEnd(() -> setRPM(rpm), this::stop).withName("eat " + rpm+" [pizza]!");
+    public Command createPIZZaSpin(double rpm) {
+        return runEnd(() -> setRPM(rpm), this::stop).withName("eat " + rpm + " [pizza]!");
     }
 
     @Override

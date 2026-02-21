@@ -148,7 +148,7 @@ public class FeederSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void simulationPeriodic(){
+    public void simulationPeriodic() {
         m_feederSimulator.update();
     }
 
@@ -162,7 +162,7 @@ public class FeederSubsystem extends SubsystemBase {
 
 
     public Command createFeederSpin(double rpm) {
-        return runEnd(() -> setRPM(rpm), this::stop).withName("Feed" + rpm+" burgers!");
+        return runEnd(() -> setRPM(rpm), this::stop).withName("Feed " + rpm + " burgers!");
     }
 
     public Command createTuneRPM() {
