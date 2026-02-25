@@ -67,14 +67,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-        double halfHubPlusHalfRobot = 37.25;
         m_table.put(MIN_DISTANCE, 3200.0);
-        m_table.put(4.73, 4150.0);
-        m_table.put(4.08, 3800.0);
-        m_table.put(3.49, 3550.0);
-        m_table.put(2.88, 3400.0);
         m_table.put(2.81, 3200.0);
-        m_table.put(2.55, 3200.0);
+        m_table.put(2.88, 3400.0);
+        m_table.put(3.49, 3550.0);
+        m_table.put(4.08, 3800.0);
+        m_table.put(4.73, 4150.0);
 
 
         m_shooterAlert = new SparkMaxAlerts(m_leader, "shooterAlert");

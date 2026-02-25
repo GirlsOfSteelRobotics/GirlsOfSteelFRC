@@ -549,7 +549,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createStop() {
-        return runOnce(() -> driveFieldCentric(0,0,0));
+        return runOnce(this::stop);
     }
 
     public Command createResetPose(MaybeFlippedPose2d pose) {
