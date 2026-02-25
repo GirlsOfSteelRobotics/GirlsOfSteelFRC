@@ -548,6 +548,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return runEnd(() -> staringDrive(0, 0, getShooterFaceAngle(Hub.innerCenterPoint)), this::stop).withName("Face Hub");
     }
 
+    public Command createStop() {
+        return runOnce(() -> driveFieldCentric(0,0,0));
+    }
+
     public Command createResetPose(MaybeFlippedPose2d pose) {
         return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
     }

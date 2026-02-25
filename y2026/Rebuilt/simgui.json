@@ -36,16 +36,22 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Chassis/3m From Blue": "Command",
+      "/Shuffleboard/Chassis/3m From Red": "Command",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
+      "/Shuffleboard/Climber/Climber go to height 0.0": "Command",
+      "/Shuffleboard/Climber/Climber go to height 0.254": "Command",
+      "/Shuffleboard/Climber/Climber go to height 0.508": "Command",
       "/Shuffleboard/Climber/Left Climb Down": "Command",
       "/Shuffleboard/Climber/Left Climb Up": "Command",
       "/Shuffleboard/Climber/Right Climb Down": "Command",
       "/Shuffleboard/Climber/Right Climb Up": "Command",
       "/Shuffleboard/Combined Commands/Shoot": "Command",
+      "/Shuffleboard/Combined Commands/Shooting Easier": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_01rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_05rps": "Command",
       "/Shuffleboard/Debug Paths/RotStrPath_MaxAccel_10rps": "Command",
@@ -63,8 +69,11 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Feeder/FEEDA spins to tuneRPM!!": "Command",
       "/Shuffleboard/Feeder/Feed 1000 burgers!": "Command",
+      "/Shuffleboard/Feeder/Feed 1000.0 burgers!": "Command",
       "/Shuffleboard/Feeder/Feed 500 donuts!": "Command",
+      "/Shuffleboard/Feeder/Feed 500.0 burgers!": "Command",
       "/Shuffleboard/Feeder/Feed🍕😎": "Command",
       "/Shuffleboard/Feeder/Reverse the Feeder 😱": "Command",
       "/Shuffleboard/Intake/Intake In! :)": "Command",
@@ -75,57 +84,35 @@
       "/Shuffleboard/Pizza/Go pizza go 180!!": "Command",
       "/Shuffleboard/Pizza/Go pizza go 500!!": "Command",
       "/Shuffleboard/Pizza/Go pizza go 60!!": "Command",
+      "/Shuffleboard/Pizza/PIZZAAAA spins to tuneRPM!!": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza": "Command",
       "/Shuffleboard/Pizza/Reverse the pizza 😱": "Command",
       "/Shuffleboard/Pizza/SequentialCommandGroup": "Command",
+      "/Shuffleboard/Pizza/eat 180.0 [pizza]!": "Command",
+      "/Shuffleboard/Pizza/eat 60.0 [pizza]!": "Command",
       "/Shuffleboard/Shooter RPM/Shoot from distance": "Command",
       "/Shuffleboard/Shooter/Shooter Backward! :(": "Command",
       "/Shuffleboard/Shooter/Shooter Forward! :)": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 1500!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to 2000!!": "Command",
       "/Shuffleboard/Shooter/Shooter spins to tuneRPM!!": "Command",
+      "/Shuffleboard/arm pivot/Go down": "Command",
+      "/Shuffleboard/arm pivot/Go to angle0.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle15.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle30.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
+      "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
+      "/Shuffleboard/arm pivot/Go up": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/PathPlanner": "Alerts"
+      "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/PhotonAlerts": "Alerts",
+      "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/Chassis/Face Hub": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Left Climb Up": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/Climber/Right Climb Up": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Feeder/Feed 1000 burgers!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Feeder/Feed 500 donuts!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Pizza/Go pizza go 180!!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Pizza/Go pizza go 60!!": {
         "window": {
           "visible": true
         }
@@ -135,7 +122,7 @@
           "visible": true
         }
       },
-      "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
+      "/SmartDashboard/Autos": {
         "window": {
           "visible": true
         }
@@ -255,7 +242,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 332,
+          "height": 34,
           "series": [
             {
               "color": [
@@ -334,7 +321,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 332,
+          "height": 0,
           "series": [
             {
               "color": [
@@ -356,7 +343,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }
