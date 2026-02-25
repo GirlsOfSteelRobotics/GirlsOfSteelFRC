@@ -69,6 +69,23 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_05rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_10rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_15rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_02rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_04rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_08rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_12rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_15fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_MaxSpeed": "Command",
       "/Shuffleboard/Feeder/FEEDA spins to tuneRPM!!": "Command",
       "/Shuffleboard/Feeder/Feed 1000 burgers!": "Command",
       "/Shuffleboard/Feeder/Feed 1000.0 burgers!": "Command",
@@ -112,22 +129,15 @@
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/Climber/Right Climb Up": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Shooter RPM/Shoot from distance": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Autos": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "../..\\libraries\\shared_images\\tag-blue.png"
+        },
         "bottom": 1914,
         "height": 8.069275856018066,
         "left": 245,
@@ -264,7 +274,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     },
     "Plot <2>": {
       "plots": [
