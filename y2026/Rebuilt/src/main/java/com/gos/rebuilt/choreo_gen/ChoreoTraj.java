@@ -24,75 +24,12 @@ public record ChoreoTraj(
     Pose2d initialPoseBlue,
     Pose2d endPoseBlue
 ) {
-    public static final ChoreoTraj RotatedPath_MaxAccel_01rps = new ChoreoTraj(
-	    "RotatedPath_MaxAccel_01rps",
-	    OptionalInt.empty(),
-	    6.31111,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotatedPath_MaxAccel_02rps = new ChoreoTraj(
-	    "RotatedPath_MaxAccel_02rps",
-	    OptionalInt.empty(),
-	    3.19437,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotatedPath_MaxAccel_04rps = new ChoreoTraj(
-	    "RotatedPath_MaxAccel_04rps",
-	    OptionalInt.empty(),
-	    2.11659,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotatedPath_MaxAccel_08rps = new ChoreoTraj(
-	    "RotatedPath_MaxAccel_08rps",
-	    OptionalInt.empty(),
-	    2.07422,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotatedPath_MaxAccel_12rps = new ChoreoTraj(
-	    "RotatedPath_MaxAccel_12rps",
-	    OptionalInt.empty(),
-	    3.01396,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotStrPath_MaxAccel_01rps = new ChoreoTraj(
-	    "RotStrPath_MaxAccel_01rps",
-	    OptionalInt.empty(),
-	    6.31135,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotStrPath_MaxAccel_05rps = new ChoreoTraj(
-	    "RotStrPath_MaxAccel_05rps",
-	    OptionalInt.empty(),
-	    4.17067,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotStrPath_MaxAccel_10rps = new ChoreoTraj(
-	    "RotStrPath_MaxAccel_10rps",
-	    OptionalInt.empty(),
-	    2.33954,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj RotStrPath_MaxAccel_15rps = new ChoreoTraj(
-	    "RotStrPath_MaxAccel_15rps",
-	    OptionalInt.empty(),
-	    2.07556,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StartLeftDepot = new ChoreoTraj(
+    public static final ChoreoTraj StartLeftDepot = new ChoreoTraj(
 	    "StartLeftDepot",
 	    OptionalInt.empty(),
-	    3.92536,
+	    3.57649,
 	    new Pose2d(3.564, 7.665, Rotation2d.fromRadians(3.138)),
-	    new Pose2d(3.102, 6.127, Rotation2d.fromRadians(2.335))
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
 	);
 	public static final ChoreoTraj StartLeftDepot$0 = new ChoreoTraj(
 	    "StartLeftDepot",
@@ -104,9 +41,9 @@ public record ChoreoTraj(
 	public static final ChoreoTraj StartLeftDepot$1 = new ChoreoTraj(
 	    "StartLeftDepot",
 	    OptionalInt.of(1),
-	    1.64831,
+	    1.2994400000000002,
 	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(3.102, 6.127, Rotation2d.fromRadians(2.335))
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
 	);
 	public static final ChoreoTraj StartLeftPreload = new ChoreoTraj(
 	    "StartLeftPreload",
@@ -150,89 +87,152 @@ public record ChoreoTraj(
 	    new Pose2d(3.584, 0.392, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.275))
 	);
-	public static final ChoreoTraj StraightPathNAV_MaxAccel_01fps = new ChoreoTraj(
-	    "StraightPathNAV_MaxAccel_01fps",
-	    OptionalInt.empty(),
-	    20.05072,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPathNAV_MaxAccel_05fps = new ChoreoTraj(
-	    "StraightPathNAV_MaxAccel_05fps",
-	    OptionalInt.empty(),
-	    4.17263,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPathNAV_MaxAccel_10fps = new ChoreoTraj(
-	    "StraightPathNAV_MaxAccel_10fps",
-	    OptionalInt.empty(),
-	    4.17153,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPathNAV_MaxAccel_15fps = new ChoreoTraj(
-	    "StraightPathNAV_MaxAccel_15fps",
-	    OptionalInt.empty(),
-	    2.07418,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPath_MaxAccel_01fps = new ChoreoTraj(
-	    "StraightPath_MaxAccel_01fps",
-	    OptionalInt.empty(),
-	    20.054,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPath_MaxAccel_05fps = new ChoreoTraj(
-	    "StraightPath_MaxAccel_05fps",
-	    OptionalInt.empty(),
-	    4.17334,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPath_MaxAccel_10fps = new ChoreoTraj(
-	    "StraightPath_MaxAccel_10fps",
-	    OptionalInt.empty(),
-	    2.33971,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StraightPath_MaxAccel_MaxSpeed = new ChoreoTraj(
-	    "StraightPath_MaxAccel_MaxSpeed",
-	    OptionalInt.empty(),
-	    1.81238,
-	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
-	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj StartRIghtPreloadOutpost = new ChoreoTraj(
-	    "StartRIghtPreloadOutpost",
+	public static final ChoreoTraj StartRightPreloadOutpost = new ChoreoTraj(
+	    "StartRightPreloadOutpost",
 	    OptionalInt.empty(),
 	    4.56975,
 	    new Pose2d(3.584, 0.392, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
 	);
-	public static final ChoreoTraj StartRIghtPreloadOutpost$0 = new ChoreoTraj(
-	    "StartRIghtPreloadOutpost",
+	public static final ChoreoTraj StartRightPreloadOutpost$0 = new ChoreoTraj(
+	    "StartRightPreloadOutpost",
 	    OptionalInt.of(0),
 	    1.0514,
 	    new Pose2d(3.584, 0.392, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
 	);
-	public static final ChoreoTraj StartRIghtPreloadOutpost$1 = new ChoreoTraj(
-	    "StartRIghtPreloadOutpost",
+	public static final ChoreoTraj StartRightPreloadOutpost$1 = new ChoreoTraj(
+	    "StartRightPreloadOutpost",
 	    OptionalInt.of(1),
 	    1.75918,
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412)),
 	    new Pose2d(0.419, 0.675, Rotation2d.fromRadians(-3.142))
 	);
-	public static final ChoreoTraj StartRIghtPreloadOutpost$2 = new ChoreoTraj(
-	    "StartRIghtPreloadOutpost",
+	public static final ChoreoTraj StartRightPreloadOutpost$2 = new ChoreoTraj(
+	    "StartRightPreloadOutpost",
 	    OptionalInt.of(2),
 	    1.7591700000000001,
 	    new Pose2d(0.419, 0.675, Rotation2d.fromRadians(-3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
+	);
+	public static final ChoreoTraj TUNING_RotatedPath_MaxAccel_01rps = new ChoreoTraj(
+	    "TUNING_RotatedPath_MaxAccel_01rps",
+	    OptionalInt.empty(),
+	    6.31111,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotatedPath_MaxAccel_02rps = new ChoreoTraj(
+	    "TUNING_RotatedPath_MaxAccel_02rps",
+	    OptionalInt.empty(),
+	    3.19437,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotatedPath_MaxAccel_04rps = new ChoreoTraj(
+	    "TUNING_RotatedPath_MaxAccel_04rps",
+	    OptionalInt.empty(),
+	    2.11659,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotatedPath_MaxAccel_08rps = new ChoreoTraj(
+	    "TUNING_RotatedPath_MaxAccel_08rps",
+	    OptionalInt.empty(),
+	    2.07422,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotatedPath_MaxAccel_12rps = new ChoreoTraj(
+	    "TUNING_RotatedPath_MaxAccel_12rps",
+	    OptionalInt.empty(),
+	    3.01396,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotStrPath_MaxAccel_01rps = new ChoreoTraj(
+	    "TUNING_RotStrPath_MaxAccel_01rps",
+	    OptionalInt.empty(),
+	    6.31135,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotStrPath_MaxAccel_05rps = new ChoreoTraj(
+	    "TUNING_RotStrPath_MaxAccel_05rps",
+	    OptionalInt.empty(),
+	    4.17067,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotStrPath_MaxAccel_10rps = new ChoreoTraj(
+	    "TUNING_RotStrPath_MaxAccel_10rps",
+	    OptionalInt.empty(),
+	    2.33954,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_RotStrPath_MaxAccel_15rps = new ChoreoTraj(
+	    "TUNING_RotStrPath_MaxAccel_15rps",
+	    OptionalInt.empty(),
+	    2.07556,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPathNAV_MaxAccel_01fps = new ChoreoTraj(
+	    "TUNING_StraightPathNAV_MaxAccel_01fps",
+	    OptionalInt.empty(),
+	    20.05072,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPathNAV_MaxAccel_05fps = new ChoreoTraj(
+	    "TUNING_StraightPathNAV_MaxAccel_05fps",
+	    OptionalInt.empty(),
+	    4.17263,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPathNAV_MaxAccel_10fps = new ChoreoTraj(
+	    "TUNING_StraightPathNAV_MaxAccel_10fps",
+	    OptionalInt.empty(),
+	    4.17153,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPathNAV_MaxAccel_15fps = new ChoreoTraj(
+	    "TUNING_StraightPathNAV_MaxAccel_15fps",
+	    OptionalInt.empty(),
+	    2.07418,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPath_MaxAccel_01fps = new ChoreoTraj(
+	    "TUNING_StraightPath_MaxAccel_01fps",
+	    OptionalInt.empty(),
+	    20.054,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPath_MaxAccel_05fps = new ChoreoTraj(
+	    "TUNING_StraightPath_MaxAccel_05fps",
+	    OptionalInt.empty(),
+	    4.17334,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPath_MaxAccel_10fps = new ChoreoTraj(
+	    "TUNING_StraightPath_MaxAccel_10fps",
+	    OptionalInt.empty(),
+	    2.33971,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
+	);
+	public static final ChoreoTraj TUNING_StraightPath_MaxAccel_MaxSpeed = new ChoreoTraj(
+	    "TUNING_StraightPath_MaxAccel_MaxSpeed",
+	    OptionalInt.empty(),
+	    1.81238,
+	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
+	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
 	);
 
     /**
@@ -240,16 +240,7 @@ public record ChoreoTraj(
      * This allows for trajectory data to be looked up with strings during runtime.
      */
     public static final Map<String, ChoreoTraj> ALL_TRAJECTORIES = Map.ofEntries(
-    	Map.entry("RotatedPath_MaxAccel_01rps", RotatedPath_MaxAccel_01rps),
-		Map.entry("RotatedPath_MaxAccel_02rps", RotatedPath_MaxAccel_02rps),
-		Map.entry("RotatedPath_MaxAccel_04rps", RotatedPath_MaxAccel_04rps),
-		Map.entry("RotatedPath_MaxAccel_08rps", RotatedPath_MaxAccel_08rps),
-		Map.entry("RotatedPath_MaxAccel_12rps", RotatedPath_MaxAccel_12rps),
-		Map.entry("RotStrPath_MaxAccel_01rps", RotStrPath_MaxAccel_01rps),
-		Map.entry("RotStrPath_MaxAccel_05rps", RotStrPath_MaxAccel_05rps),
-		Map.entry("RotStrPath_MaxAccel_10rps", RotStrPath_MaxAccel_10rps),
-		Map.entry("RotStrPath_MaxAccel_15rps", RotStrPath_MaxAccel_15rps),
-		Map.entry("StartLeftDepot", StartLeftDepot),
+    	Map.entry("StartLeftDepot", StartLeftDepot),
 		Map.entry("StartLeftDepot$0", StartLeftDepot$0),
 		Map.entry("StartLeftDepot$1", StartLeftDepot$1),
 		Map.entry("StartLeftPreload", StartLeftPreload),
@@ -258,18 +249,27 @@ public record ChoreoTraj(
 		Map.entry("StartRightOutpost$0", StartRightOutpost$0),
 		Map.entry("StartRightOutpost$1", StartRightOutpost$1),
 		Map.entry("StartRightPreload", StartRightPreload),
-		Map.entry("StraightPathNAV_MaxAccel_01fps", StraightPathNAV_MaxAccel_01fps),
-		Map.entry("StraightPathNAV_MaxAccel_05fps", StraightPathNAV_MaxAccel_05fps),
-		Map.entry("StraightPathNAV_MaxAccel_10fps", StraightPathNAV_MaxAccel_10fps),
-		Map.entry("StraightPathNAV_MaxAccel_15fps", StraightPathNAV_MaxAccel_15fps),
-		Map.entry("StraightPath_MaxAccel_01fps", StraightPath_MaxAccel_01fps),
-		Map.entry("StraightPath_MaxAccel_05fps", StraightPath_MaxAccel_05fps),
-		Map.entry("StraightPath_MaxAccel_10fps", StraightPath_MaxAccel_10fps),
-		Map.entry("StraightPath_MaxAccel_MaxSpeed", StraightPath_MaxAccel_MaxSpeed),
-		Map.entry("StartRIghtPreloadOutpost", StartRIghtPreloadOutpost),
-		Map.entry("StartRIghtPreloadOutpost$0", StartRIghtPreloadOutpost$0),
-		Map.entry("StartRIghtPreloadOutpost$1", StartRIghtPreloadOutpost$1),
-		Map.entry("StartRIghtPreloadOutpost$2", StartRIghtPreloadOutpost$2)
+		Map.entry("StartRightPreloadOutpost", StartRightPreloadOutpost),
+		Map.entry("StartRightPreloadOutpost$0", StartRightPreloadOutpost$0),
+		Map.entry("StartRightPreloadOutpost$1", StartRightPreloadOutpost$1),
+		Map.entry("StartRightPreloadOutpost$2", StartRightPreloadOutpost$2),
+		Map.entry("TUNING_RotatedPath_MaxAccel_01rps", TUNING_RotatedPath_MaxAccel_01rps),
+		Map.entry("TUNING_RotatedPath_MaxAccel_02rps", TUNING_RotatedPath_MaxAccel_02rps),
+		Map.entry("TUNING_RotatedPath_MaxAccel_04rps", TUNING_RotatedPath_MaxAccel_04rps),
+		Map.entry("TUNING_RotatedPath_MaxAccel_08rps", TUNING_RotatedPath_MaxAccel_08rps),
+		Map.entry("TUNING_RotatedPath_MaxAccel_12rps", TUNING_RotatedPath_MaxAccel_12rps),
+		Map.entry("TUNING_RotStrPath_MaxAccel_01rps", TUNING_RotStrPath_MaxAccel_01rps),
+		Map.entry("TUNING_RotStrPath_MaxAccel_05rps", TUNING_RotStrPath_MaxAccel_05rps),
+		Map.entry("TUNING_RotStrPath_MaxAccel_10rps", TUNING_RotStrPath_MaxAccel_10rps),
+		Map.entry("TUNING_RotStrPath_MaxAccel_15rps", TUNING_RotStrPath_MaxAccel_15rps),
+		Map.entry("TUNING_StraightPathNAV_MaxAccel_01fps", TUNING_StraightPathNAV_MaxAccel_01fps),
+		Map.entry("TUNING_StraightPathNAV_MaxAccel_05fps", TUNING_StraightPathNAV_MaxAccel_05fps),
+		Map.entry("TUNING_StraightPathNAV_MaxAccel_10fps", TUNING_StraightPathNAV_MaxAccel_10fps),
+		Map.entry("TUNING_StraightPathNAV_MaxAccel_15fps", TUNING_StraightPathNAV_MaxAccel_15fps),
+		Map.entry("TUNING_StraightPath_MaxAccel_01fps", TUNING_StraightPath_MaxAccel_01fps),
+		Map.entry("TUNING_StraightPath_MaxAccel_05fps", TUNING_StraightPath_MaxAccel_05fps),
+		Map.entry("TUNING_StraightPath_MaxAccel_10fps", TUNING_StraightPath_MaxAccel_10fps),
+		Map.entry("TUNING_StraightPath_MaxAccel_MaxSpeed", TUNING_StraightPath_MaxAccel_MaxSpeed)
     );
 
     /**
