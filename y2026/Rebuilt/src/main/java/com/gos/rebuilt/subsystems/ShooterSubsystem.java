@@ -40,7 +40,7 @@ import java.util.function.DoubleSupplier;
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
     private static final double DEADBAND = 50;
-    private static final double MIN_DISTANCE = 1.99;
+    private static final double MIN_DISTANCE = 2.55;
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
@@ -67,12 +67,13 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-        double halfHubPlusHalfRobot = 37.25;
-        m_table.put(MIN_DISTANCE, 1550.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 82), 4250.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 64), 4300.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 108), 4600.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 142), 5100.0);
+        m_table.put(MIN_DISTANCE, 3200.0);
+        m_table.put(2.81, 3200.0);
+        m_table.put(2.88, 3400.0);
+        m_table.put(3.49, 3550.0);
+        m_table.put(4.08, 3800.0);
+        m_table.put(4.73, 4150.0);
+
 
         m_shooterAlert = new SparkMaxAlerts(m_leader, "shooterAlert");
 
