@@ -17,7 +17,7 @@ public class StartRightOutpost extends GosAuto {
         super(StartingPositions.RIGHT, GainBalls.Outpost, AutoActions.Shoot);
         addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartRightOutpost").getPose())));
         addCommands(followChoreoPath("StartRightOutpost.0"));
-        addCommands(Commands.waitSeconds(2));
+        addCommands(Commands.waitSeconds(5));
         addCommands(followChoreoPath("StartRightOutpost.1"));
         addCommands(combinedCommand.shootBall());
 

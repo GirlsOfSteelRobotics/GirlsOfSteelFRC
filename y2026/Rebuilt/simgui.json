@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK Flex [10]": {
         "header": {
@@ -66,9 +61,6 @@
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_04rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_08rps": "Command",
       "/Shuffleboard/Debug Paths/RotatedPath_MaxAccel_12rps": "Command",
-      "/Shuffleboard/Debug Paths/STARTING_POS_Centah": "Command",
-      "/Shuffleboard/Debug Paths/STARTING_POS_LEFT": "Command",
-      "/Shuffleboard/Debug Paths/STARTING_POS_RIGHT": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_01fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPathNAV_MaxAccel_10fps": "Command",
@@ -77,6 +69,23 @@
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_05fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_10fps": "Command",
       "/Shuffleboard/Debug Paths/StraightPath_MaxAccel_MaxSpeed": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_05rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_10rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotStrPath_MaxAccel_15rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_01rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_02rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_04rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_08rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_RotatedPath_MaxAccel_12rps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPathNAV_MaxAccel_15fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_01fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_05fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_10fps": "Command",
+      "/Shuffleboard/Debug Paths/TUNING_StraightPath_MaxAccel_MaxSpeed": "Command",
       "/Shuffleboard/Feeder/FEEDA spins to tuneRPM!!": "Command",
       "/Shuffleboard/Feeder/Feed 1000 burgers!": "Command",
       "/Shuffleboard/Feeder/Feed 1000.0 burgers!": "Command",
@@ -120,72 +129,15 @@
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/Chassis/Face Hub": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 1.62, Y: 4.03), Rotation2d(Rads: 0.00, Deg: 0.00))": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Left Climb Up": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Climber/Right Climb Up": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Debug Paths/STARTING_POS_Centah": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Debug Paths/STARTING_POS_LEFT": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Feeder/Feed 1000 burgers!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Feeder/Feed 500 donuts!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Pizza/Go pizza go 180!!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Pizza/Go pizza go 60!!": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Shooter RPM/Shoot from distance": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/Shooter/Shooter spins to 1500!!": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Autos": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "../..\\libraries\\shared_images\\tag-blue.png"
+        },
         "bottom": 1914,
         "height": 8.069275856018066,
         "left": 245,
@@ -322,7 +274,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     },
     "Plot <2>": {
       "plots": [
@@ -401,7 +356,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

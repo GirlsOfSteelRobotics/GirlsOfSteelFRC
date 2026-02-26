@@ -456,6 +456,54 @@
     }
   },
   {
+    "name": "/Preferences/CameraExtrinsics/BackLeft.x(in)",
+    "type": "double",
+    "value": -7.55,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/BackLeft.y(in)",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/BackLeft.z(in)",
+    "type": "double",
+    "value": 12.125,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/BackLeft.yaw(deg)",
+    "type": "double",
+    "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/BackLeft.pitch(deg)",
+    "type": "double",
+    "value": -29.999999999999996,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/CameraExtrinsics/BackLeft.roll(deg)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/PIZZAtuneRPM",
     "type": "double",
     "value": 1.0,
@@ -467,38 +515,6 @@
     "name": "/Preferences/FEEDAtuneRPM",
     "type": "double",
     "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
-    "type": "double",
-    "value": 84.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Max Acceleration (inches)",
-    "type": "double",
-    "value": 120.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Angular Velocity (degrees)",
-    "type": "double",
-    "value": 360.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Tunable path constraints.Angular Acceleration (degrees)",
-    "type": "double",
-    "value": 360.0,
     "properties": {
       "persistent": true
     }

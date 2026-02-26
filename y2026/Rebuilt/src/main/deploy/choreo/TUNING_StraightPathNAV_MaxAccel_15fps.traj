@@ -1,5 +1,5 @@
 {
- "name":"StraightPathNAV_MaxAccel_15fps",
+ "name":"TUNING_StraightPathNAV_MaxAccel_15fps",
  "version":3,
  "snapshot":{
   "waypoints":[

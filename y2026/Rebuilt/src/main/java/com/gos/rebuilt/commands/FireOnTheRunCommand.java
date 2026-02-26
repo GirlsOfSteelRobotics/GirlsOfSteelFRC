@@ -48,4 +48,11 @@ public class FireOnTheRunCommand extends Command {
         m_pizza.feed();
         m_feeder.feed();
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_shooter.stop();
+        m_pizza.stop();
+        m_feeder.stop();
+    }
 }

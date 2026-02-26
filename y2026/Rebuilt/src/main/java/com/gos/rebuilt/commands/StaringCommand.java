@@ -10,7 +10,7 @@ import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 
 public class StaringCommand extends Command {
-    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.5);
+    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.67);
 
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;

@@ -40,14 +40,14 @@ import java.util.function.DoubleSupplier;
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
     private static final double DEADBAND = 50;
-    private static final double MIN_DISTANCE = 1.99;
+    private static final double MIN_DISTANCE = 2.55;
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
-    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1);
+    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", .01);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1000);
     private final SparkMaxAlerts m_shooterAlert;
 
     private ISimWrapper m_shooterSimulator;
@@ -67,12 +67,13 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
 
-        double halfHubPlusHalfRobot = 37.25;
-        m_table.put(MIN_DISTANCE, 1550.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 82), 4250.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 64), 4300.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 108), 4600.0);
-        m_table.put(Units.inchesToMeters(halfHubPlusHalfRobot + 142), 5100.0);
+        m_table.put(MIN_DISTANCE, 3200.0);
+        m_table.put(2.81, 3200.0);
+        m_table.put(2.88, 3400.0);
+        m_table.put(3.49, 3550.0);
+        m_table.put(4.08, 3800.0);
+        m_table.put(4.73, 4150.0);
+
 
         m_shooterAlert = new SparkMaxAlerts(m_leader, "shooterAlert");
 
@@ -90,8 +91,8 @@ public class ShooterSubsystem extends SubsystemBase {
         followerConfig.follow(m_leader, true);
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
-            .addFF(0)
-            .addP(0)
+            .addFF(1.48e-4)
+            .addP(1.2e-4)
             .build();
 
         m_networkTableEntries.addDouble("Shooter rpm", this::getRPM);
