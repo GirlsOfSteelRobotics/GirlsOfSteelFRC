@@ -6,6 +6,7 @@
 package com.gos.rebuilt;
 
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.rebuilt.commands.FireOnTheRunCommand;
 import com.gos.rebuilt.commands.StaringCommand;
@@ -28,10 +29,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
+
+import java.util.Set;
 
 
 /**
@@ -81,10 +87,11 @@ public class RobotContainer {
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
-        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem);
         m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
         m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem, m_climberSubsystem);
         m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
+
+        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem, m_autoFactory);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
@@ -119,6 +126,9 @@ public class RobotContainer {
         if (Constants.CLEANUP_PROPERTIES) {
             PropertyManager.purgeExtraKeys();
         }
+
+        SmartDashboard.putData("DRIVE to START! xD ", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
+
     }
 
 
@@ -149,6 +159,17 @@ public class RobotContainer {
         //feed/pass balls = b button\; retract = left bumper
 
 
+
+    }
+
+    private Command createDriveChassisToStartingPoseCommand() {
+        return Commands.defer(() -> {
+            if (m_autoFactory.getSelectedAuto() == null) {
+                return new PrintCommand("no auto selected");
+            }
+            MaybeFlippedPose2d startingLocation = m_autoFactory.getSelectedAuto().getStartingLocation().m_pose;
+            return m_chassis.createPathfindToMaybeFlippedPose(startingLocation);
+        }, Set.of(m_chassis));
     }
 
 

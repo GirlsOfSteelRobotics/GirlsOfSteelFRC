@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK Flex [10]": {
         "header": {
@@ -123,6 +128,7 @@
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
+      "/SmartDashboard/DRIVE to START! xD ": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/PhotonAlerts": "Alerts",
@@ -130,6 +136,11 @@
     },
     "windows": {
       "/SmartDashboard/Autos": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/DRIVE to START! xD ": {
         "window": {
           "visible": true
         }
