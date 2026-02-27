@@ -7,7 +7,6 @@ import com.gos.rebuilt.enums.StartingPositions;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import java.util.List;
 
