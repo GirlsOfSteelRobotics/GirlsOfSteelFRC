@@ -550,5 +550,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Pivot Speed",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/timeLeft",
+    "type": "double",
+    "value": 4.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
