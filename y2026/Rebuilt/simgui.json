@@ -146,7 +146,11 @@
         }
       },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "../..\\libraries\\shared_images\\tag-blue.png"
+        },
         "Trajectory": {
+          "arrows": false,
           "style": "Line"
         },
         "bottom": 1914,
