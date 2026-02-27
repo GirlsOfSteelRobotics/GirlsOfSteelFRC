@@ -179,10 +179,9 @@ public class PivotSubsystem extends SubsystemBase {
         return runEnd(() -> moveArmToAngle(angle), this::stop)
             .withName("Go to angle" + angle);
     }
+
     public Command createPivotMoveToSpeed() {
         return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this:: stop).withName("move pivot to speed");
     }
-
-
 }
 
