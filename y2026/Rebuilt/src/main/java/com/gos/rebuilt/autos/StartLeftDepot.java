@@ -13,7 +13,6 @@ public class StartLeftDepot extends SequentialCommandGroup {
 
     public StartLeftDepot(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
 
-
         addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartLeftDepot").getPose())));
         addCommands(followChoreoPath("StartLeftDepot.0"));
         addCommands(chassisSubsystem.createStop());
