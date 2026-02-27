@@ -138,6 +138,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final AprilTagCameraManager m_aprilTagCameras;
     private Rotation2d m_goalAngle;
 
+
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
         new SysIdRoutine.Config(
@@ -582,10 +583,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             new GoalEndState(0.0, endAngle)
         );
         path.preventFlipping = true;
-        return AutoBuilder.followPath(path);
+        return (AutoBuilder.followPath(path));
     }
 
-    public Command createDriveToMaybeFlippedPose(MaybeFlippedPose2d end) {
-        return createDriveToPointNoFlipCommand(end.getPose(), end.getPose().getRotation(), getState().Pose);
+    public Command createPathfindToMaybeFlippedPose(MaybeFlippedPose2d pose) {
+        return defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0));
     }
 }

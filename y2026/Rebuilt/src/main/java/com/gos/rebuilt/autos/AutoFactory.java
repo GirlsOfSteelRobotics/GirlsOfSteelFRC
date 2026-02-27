@@ -3,7 +3,6 @@ package com.gos.rebuilt.autos;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebuilt.commands.CombinedCommand;
 
 public class AutoFactory {
