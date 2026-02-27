@@ -34,7 +34,7 @@ public class EnabledPatties {
     public void writeLED() {
         m_chassisFacing.setStateAndWrite(m_chassis.facingHub());
         m_shooterReady.setStateAndWrite(m_shooter.isAtGoalRPM());
-        m_distanceGood.setStateAndWrite(m_chassis.getDistanceFromHub() < m_shooter.getMinDistance());
+        m_distanceGood.setStateAndWrite(m_chassis.getDistanceFromHub() > m_shooter.getMinDistance());
         m_everythingReady.setStateAndWrite(checkAll());
         if (m_pizza.checkJam()) {
             m_pizzaJammed.writeLeds();
