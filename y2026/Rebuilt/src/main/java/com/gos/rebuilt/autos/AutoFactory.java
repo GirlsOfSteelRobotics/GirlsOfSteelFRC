@@ -3,11 +3,10 @@ package com.gos.rebuilt.autos;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebuilt.commands.CombinedCommand;
 
 public class AutoFactory {
-    private final SendableChooser<Command> m_chooser;
+    private final SendableChooser<GosAuto> m_chooser;
 
     public AutoFactory(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
         m_chooser = new SendableChooser<>();
@@ -21,7 +20,7 @@ public class AutoFactory {
 
     }
 
-    public Command getSelectedAuto() {
+    public GosAuto getSelectedAuto() {
         return m_chooser.getSelected();
     }
 }
