@@ -2,6 +2,7 @@ package com.gos.rebuilt.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.rebuilt.Constants;
@@ -35,6 +36,8 @@ public class PivotSubsystem extends SubsystemBase {
     private double m_armGoalAngle = 90;
     private final RevProfiledSingleJointedArmController m_armPidController;
 
+    private final GosDoubleProperty m_tuningPivotSpeed;
+
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
@@ -44,6 +47,7 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
         m_encoder = m_pivotMotor.getEncoder();
+        m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", 0);
 
 
         m_pivotMotorAlerts = new SparkMaxAlerts(m_pivotMotor, "pivotMotor");
@@ -155,6 +159,7 @@ public class PivotSubsystem extends SubsystemBase {
         debugTabPivot.add(createMovePivotToAngleCommand(30.0));
         debugTabPivot.add(createMovePivotToAngleCommand(45.0));
         debugTabPivot.add(createMovePivotToAngleCommand(90.0));
+        debugTabPivot.add(createPivotMoveToSpeed());
 
         debugTabPivot.add(createMovePivotUpCommand());
         debugTabPivot.add(createMovePivotDownCommand());
@@ -173,6 +178,9 @@ public class PivotSubsystem extends SubsystemBase {
     public Command createMovePivotToAngleCommand(double angle) {
         return runEnd(() -> moveArmToAngle(angle), this::stop)
             .withName("Go to angle" + angle);
+    }
+    public Command createPivotMoveToSpeed() {
+        return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this:: stop).withName("move pivot to speed");
     }
 
 

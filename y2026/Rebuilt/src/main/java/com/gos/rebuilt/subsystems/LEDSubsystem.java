@@ -1,9 +1,11 @@
 package com.gos.rebuilt.subsystems;
 
 
+import com.gos.lib.led.driverstation.DriverStationLedDriver;
 import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.ledpats.DIsabledPatties;
+import com.gos.rebuilt.ledpats.DriverStationPatterns;
 import com.gos.rebuilt.ledpats.EnabledPatties;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -22,6 +24,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     private final EnabledPatties m_enabledPatterns;
     private final DIsabledPatties m_disabledPatterns;
+    private final DriverStationPatterns m_driverStationPatterns;
 
 
     private final ShooterSubsystem m_shooter;
@@ -41,6 +44,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.start();
         this.m_enabledPatterns = new EnabledPatties(m_addressMe, m_shooter, m_chassis, m_pizza);
         this.m_disabledPatterns = new DIsabledPatties(m_addressMe, factory);
+        this.m_driverStationPatterns = new DriverStationPatterns(new DriverStationLedDriver(Constants.LED_JOSTICK), m_chassis, m_shooter);
 
 
     }
@@ -56,6 +60,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
 
         m_led.setData(m_addressMe);
+        m_driverStationPatterns.writeLeds();
     }
 
 

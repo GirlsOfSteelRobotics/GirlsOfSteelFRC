@@ -29,7 +29,8 @@ public final class Constants {
     public static final int CLIMBER_RIGHT_MOTOR = 16;
     public static final int SHOOTER_FOLLOWER_MOTOR = 17;
 
-
+    //joystivks
+    public static final int LED_JOSTICK = 2;
     //PWM
     public static final int LED_PORT = 0;
 }

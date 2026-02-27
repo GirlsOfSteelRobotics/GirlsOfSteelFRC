@@ -125,6 +125,7 @@
       "/Shuffleboard/arm pivot/Go to angle45.0": "Command",
       "/Shuffleboard/arm pivot/Go to angle90.0": "Command",
       "/Shuffleboard/arm pivot/Go up": "Command",
+      "/Shuffleboard/arm pivot/move pivot to speed": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
