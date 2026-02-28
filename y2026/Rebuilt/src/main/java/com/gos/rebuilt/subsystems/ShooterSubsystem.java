@@ -160,7 +160,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isAtGoalRPM() {
-        return m_debouncer.calculate(m_goal - getRPM() < DEADBAND);
+        return m_debouncer.calculate(Math.abs(m_goal - getRPM()) < DEADBAND);
     }
 
     public void shootFromDistance(double distance) {
