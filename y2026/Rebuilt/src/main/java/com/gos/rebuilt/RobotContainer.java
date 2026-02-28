@@ -115,7 +115,7 @@ public class RobotContainer {
         m_pizzaSubsystem.addPizzaDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_chassis.addChassisDebugCommands();
         m_feederSubsystem.addFeederDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
-        m_climberSubsystem.addClimberDebugCommands();
+        m_climberSubsystem.addClimberDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_combinedCommand.createCombinedCommand(inCompetition);
 
@@ -157,6 +157,7 @@ public class RobotContainer {
         m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
+        m_driverController.leftTrigger().whileTrue(m_intakeSubsystem.createIntakeInCommand());
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper

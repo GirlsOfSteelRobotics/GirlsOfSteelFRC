@@ -150,7 +150,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double rpmToVelocity(double rpm) {
-        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .75;
+        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .37;
     }
 
     public void setRPM(double goal) {
