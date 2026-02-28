@@ -144,9 +144,10 @@ public class FeederSubsystem extends SubsystemBase {
         if (!areweatacompetitionyesornoboolean) {
             tab.add(createFeederSpin(1000));
             tab.add(createFeederSpin(500));
+
+            tab.add(createFeederCommand());
+            tab.add(createFeederReverseCommand());
         }
-        tab.add(createFeederCommand());
-        tab.add(createFeederReverseCommand());
         tab.add(createTuneRPM());
     }
 

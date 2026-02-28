@@ -276,16 +276,19 @@ public class ClimberSubsystem extends SubsystemBase {
             .withName("Climber go to height " + height);
     }
 
-    public void addClimberDebugCommands() {
+    public void addClimberDebugCommands(boolean areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
         ShuffleboardTab tab = Shuffleboard.getTab("Climber");
-        tab.add(createClimbingUpCommand());
-        tab.add(createClimbingDownCommand());
+         if (!areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
+             tab.add(createClimbingUpCommand());
+             tab.add(createClimbingDownCommand());
+             tab.add(createClimbToHeightCommand(0));
+             tab.add(createClimbToHeightCommand(Units.inchesToMeters(10)));
+             tab.add(createClimbToHeightCommand(Units.inchesToMeters(20)));
+         }
+
         tab.add(createLeftClimbingUpCommand());
         tab.add(createLeftClimbingDownCommand());
         tab.add(createRightClimbingUpCommand());
         tab.add(createRightClimbingDownCommand());
-        tab.add(createClimbToHeightCommand(0));
-        tab.add(createClimbToHeightCommand(Units.inchesToMeters(10)));
-        tab.add(createClimbToHeightCommand(Units.inchesToMeters(20)));
     }
 }

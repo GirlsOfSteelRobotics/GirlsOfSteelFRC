@@ -143,9 +143,10 @@ public class PizzaSubsystem extends SubsystemBase {
             tab.add(createPizzaReverseCommand());
             tab.add(createPIZZaSpin(60));
             tab.add(createPIZZaSpin(180));
+
+            tab.add(createRunUntilStall());
         }
         tab.add(createTuneRPM());
-        tab.add(createRunUntilStall());
     }
 
     @Override

@@ -158,12 +158,13 @@ public class PivotSubsystem extends SubsystemBase {
 
             debugTabPivot.add(createMovePivotUpCommand());
             debugTabPivot.add(createMovePivotDownCommand());
+
+            debugTabPivot.add(createMovePivotToAngleCommand(0.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(15.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(30.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(45.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(90.0));
         }
-        debugTabPivot.add(createMovePivotToAngleCommand(0.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(15.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(30.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(45.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(90.0));
     }
 
     public Command createMovePivotDownCommand() {
