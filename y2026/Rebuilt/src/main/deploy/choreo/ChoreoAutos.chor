@@ -10,6 +10,13 @@
      "exp":"5 ft / s",
      "val":1.524
     }
+   },
+   "TrenchMaxVelocity":{
+    "dimension":"LinVel",
+    "var":{
+     "exp":"3 ft / s",
+     "val":0.9144
+    }
    }
   },
   "poses":{
@@ -55,6 +62,20 @@
      "val":2.334920878330869
     }
    },
+   "leftStartFaceOppSide":{
+    "x":{
+     "exp":"rightStartFaceOppSide.x",
+     "val":3.5836076736450195
+    },
+    "y":{
+     "exp":"(26 ft + 3 in) - 0.3923019766807556 m",
+     "val":7.608698023319244
+    },
+    "heading":{
+     "exp":"0 rad",
+     "val":0.0
+    }
+   },
    "leftStartPoint":{
     "x":{
      "exp":"3.564448595046997 m",
@@ -95,6 +116,20 @@
     "heading":{
      "exp":"-2.411692886266878 rad",
      "val":-2.411692886266878
+    }
+   },
+   "rightStartFaceOppSide":{
+    "x":{
+     "exp":"3.5836076736450195 m",
+     "val":3.5836076736450195
+    },
+    "y":{
+     "exp":"0.3923019766807556 m",
+     "val":0.3923019766807556
+    },
+    "heading":{
+     "exp":"3.141592653589793 rad + 180 degrees",
+     "val":6.283185307179586
     }
    }
   }

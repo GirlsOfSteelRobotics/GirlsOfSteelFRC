@@ -46,6 +46,11 @@ public class CombinedCommand {
         return m_chassisSubsystem.facingHub() &&  m_shooterSubsystem.isAtGoalRPM();
     }
 
+    public Command intake() {
+        return m_intakeSubsystem.createIntakeInCommand()
+            .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+    }
+
     public void createCombinedCommand(boolean inComp) {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
         if (!inComp) {

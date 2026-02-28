@@ -150,6 +150,10 @@
         "AprilTags": {
           "image": "../..\\libraries\\shared_images\\tag-blue.png"
         },
+        "Trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
         "bottom": 1914,
         "height": 8.069275856018066,
         "left": 245,
