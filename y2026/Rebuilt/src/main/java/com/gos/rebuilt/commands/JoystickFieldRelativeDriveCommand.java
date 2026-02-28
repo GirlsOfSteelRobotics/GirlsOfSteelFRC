@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class JoystickFieldRelativeDriveCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.67);
+    private static final GosDoubleProperty ROTATIONAL_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisRotationDamper", .5);
 
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
@@ -31,7 +32,7 @@ public class JoystickFieldRelativeDriveCommand extends Command {
         m_chassis.driveFieldCentric(
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
-            MathUtil.applyDeadband(-m_joystick.getRightX(), .05));
+            MathUtil.applyDeadband(-m_joystick.getRightX() * ROTATIONAL_DAMPER.getValue(), .05));
     }
 
     @Override

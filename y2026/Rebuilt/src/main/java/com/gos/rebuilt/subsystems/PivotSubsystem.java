@@ -151,18 +151,20 @@ public class PivotSubsystem extends SubsystemBase {
         m_pivotSimulator.update();
     }
 
-    public void addPivotDebugCommands() {
+    public void addPivotDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {
         ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
+        if (!areWeAtACompetitionOrNotBoolean) {
+            debugTabPivot.add(createPivotMoveToSpeed());
 
-        debugTabPivot.add(createMovePivotToAngleCommand(0.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(15.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(30.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(45.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(90.0));
-        debugTabPivot.add(createPivotMoveToSpeed());
+            debugTabPivot.add(createMovePivotUpCommand());
+            debugTabPivot.add(createMovePivotDownCommand());
 
-        debugTabPivot.add(createMovePivotUpCommand());
-        debugTabPivot.add(createMovePivotDownCommand());
+            debugTabPivot.add(createMovePivotToAngleCommand(0.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(15.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(30.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(45.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(90.0));
+        }
     }
 
     public Command createMovePivotDownCommand() {

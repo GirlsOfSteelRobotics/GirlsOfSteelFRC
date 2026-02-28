@@ -47,8 +47,9 @@ public class CombinedCommand {
     }
 
     public Command intake() {
-        return m_intakeSubsystem.createIntakeInCommand()
-            .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+        return m_intakeSubsystem.createIntakeInCommand();
+        // return m_intakeSubsystem.createIntakeInCommand()
+        //    .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
     }
 
     public void createCombinedCommand(boolean inComp) {
