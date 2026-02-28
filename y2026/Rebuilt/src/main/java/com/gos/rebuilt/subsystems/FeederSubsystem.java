@@ -138,12 +138,15 @@ public class FeederSubsystem extends SubsystemBase {
         m_networkTableEntries.updateLogs();
     }
 
-    public void addFeederDebugCommands() {
+    public void addFeederDebugCommands(boolean areweatacompetitionyesornoboolean) {
+
         ShuffleboardTab tab = Shuffleboard.getTab("Feeder");
+        if (!areweatacompetitionyesornoboolean) {
+            tab.add(createFeederSpin(1000));
+            tab.add(createFeederSpin(500));
+        }
         tab.add(createFeederCommand());
         tab.add(createFeederReverseCommand());
-        tab.add(createFeederSpin(1000));
-        tab.add(createFeederSpin(500));
         tab.add(createTuneRPM());
     }
 

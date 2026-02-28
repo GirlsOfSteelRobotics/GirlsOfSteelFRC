@@ -188,12 +188,14 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pidProperties.updateIfChanged();
     }
 
-    public void addShooterDebugCommands() {
+    public void addShooterDebugCommands(boolean atComp) {
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
-        tab.add(createShooterSpinMotorForwardCommand());
-        tab.add(createShooterSpinMotorBackwardCommand());
-        tab.add(createShooterSpin2000());
-        tab.add(createShooterSpin1500());
+        if (!atComp) {
+            tab.add(createShooterSpinMotorForwardCommand());
+            tab.add(createShooterSpinMotorBackwardCommand());
+            tab.add(createShooterSpin2000());
+            tab.add(createShooterSpin1500());
+        }
         tab.add(createTuneRPM());
 
     }
