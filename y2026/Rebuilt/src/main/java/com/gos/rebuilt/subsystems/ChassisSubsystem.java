@@ -547,15 +547,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
 
-    public void addChassisDebugCommands() {
+    public void addChassisDebugCommands(boolean inCompetition) {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
-        tab.add(createFaceHub());
-        tab.add(createResetPose(new Pose2d()));
 
-        Translation3d blueHub = Hub.innerCenterPoint.getTranslation();
-        Translation3d redHub = ChoreoAllianceFlipUtil.flip(blueHub);
-        tab.add(createResetPose(new MaybeFlippedPose2d(blueHub.getX() - 3, blueHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Blue"));
-        tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
+        if (inCompetition) {
+            tab.add(createFaceHub());
+            tab.add(createResetPose(new Pose2d()));
+
+            Translation3d blueHub = Hub.innerCenterPoint.getTranslation();
+            Translation3d redHub = ChoreoAllianceFlipUtil.flip(blueHub);
+            tab.add(createResetPose(new MaybeFlippedPose2d(blueHub.getX() - 3, blueHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Blue"));
+            tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
+        }
     }
 
     public Command createFaceHub() {

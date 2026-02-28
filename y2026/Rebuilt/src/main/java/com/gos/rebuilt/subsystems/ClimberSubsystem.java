@@ -278,13 +278,13 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public void addClimberDebugCommands(boolean areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
         ShuffleboardTab tab = Shuffleboard.getTab("Climber");
-         if (!areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
-             tab.add(createClimbingUpCommand());
-             tab.add(createClimbingDownCommand());
-             tab.add(createClimbToHeightCommand(0));
-             tab.add(createClimbToHeightCommand(Units.inchesToMeters(10)));
-             tab.add(createClimbToHeightCommand(Units.inchesToMeters(20)));
-         }
+        if (!areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
+            tab.add(createClimbingUpCommand());
+            tab.add(createClimbingDownCommand());
+            tab.add(createClimbToHeightCommand(0));
+            tab.add(createClimbToHeightCommand(Units.inchesToMeters(10)));
+            tab.add(createClimbToHeightCommand(Units.inchesToMeters(20)));
+        }
 
         tab.add(createLeftClimbingUpCommand());
         tab.add(createLeftClimbingDownCommand());

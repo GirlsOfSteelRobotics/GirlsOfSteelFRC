@@ -64,7 +64,6 @@ public class RobotContainer {
     private final CombinedCommand m_combinedCommand;
 
 
-
     private final DebugPathsTab m_debugPathsTab;
 
     private final SuperStructureViz m_superStructureViz;  // NOPMD
@@ -109,15 +108,14 @@ public class RobotContainer {
         configureBindings();
 
         // Add debug commands
-        boolean inCompetition = false;
         m_intakeSubsystem.addIntakeDebugCommands();
         m_shooterSubsystem.addShooterDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_pizzaSubsystem.addPizzaDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
-        m_chassis.addChassisDebugCommands();
+        m_chassis.addChassisDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_feederSubsystem.addFeederDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_climberSubsystem.addClimberDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
-        m_combinedCommand.createCombinedCommand(inCompetition);
+        m_combinedCommand.createCombinedCommand(AREWEATCOMPETITIONORNOTBOOLEANYAY);
 
         m_debugPathsTab = new DebugPathsTab(m_chassis);
         m_debugPathsTab.addDebugPathsToShuffleBoard();
