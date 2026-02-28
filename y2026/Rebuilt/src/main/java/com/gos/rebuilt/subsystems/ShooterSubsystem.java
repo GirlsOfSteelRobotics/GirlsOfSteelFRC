@@ -54,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
-    private Debouncer m_debouncer;
+    private final Debouncer m_debouncer;
 
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;

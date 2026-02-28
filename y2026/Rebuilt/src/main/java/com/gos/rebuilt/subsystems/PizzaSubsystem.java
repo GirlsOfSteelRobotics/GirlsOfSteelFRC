@@ -138,12 +138,12 @@ public class PizzaSubsystem extends SubsystemBase {
 
     public void addPizzaDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
-       if (!areWeAtACompetitionOrNotBoolean) {
-           tab.add(createPizzaFeedCommand());
-           tab.add(createPizzaReverseCommand());
-           tab.add(createPIZZaSpin(60));
-           tab.add(createPIZZaSpin(180));
-       }
+        if (!areWeAtACompetitionOrNotBoolean) {
+            tab.add(createPizzaFeedCommand());
+            tab.add(createPizzaReverseCommand());
+            tab.add(createPIZZaSpin(60));
+            tab.add(createPIZZaSpin(180));
+        }
         tab.add(createTuneRPM());
         tab.add(createRunUntilStall());
     }

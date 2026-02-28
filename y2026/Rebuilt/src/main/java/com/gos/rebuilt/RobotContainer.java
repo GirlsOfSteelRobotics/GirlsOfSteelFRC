@@ -71,7 +71,7 @@ public class RobotContainer {
 
     private final AutoFactory m_autoFactory;
 
-    private final static boolean m_areweatcompetitionornotboolean = true;
+    private static final boolean AREWEATCOMPETITIONORNOTBOOLEANYAY = true;
 
 
     /**
@@ -111,12 +111,12 @@ public class RobotContainer {
         // Add debug commands
         boolean inCompetition = false;
         m_intakeSubsystem.addIntakeDebugCommands();
-        m_shooterSubsystem.addShooterDebugCommands(m_areweatcompetitionornotboolean);
-        m_pizzaSubsystem.addPizzaDebugCommands(m_areweatcompetitionornotboolean);
+        m_shooterSubsystem.addShooterDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        m_pizzaSubsystem.addPizzaDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_chassis.addChassisDebugCommands();
-        m_feederSubsystem.addFeederDebugCommands(m_areweatcompetitionornotboolean);
+        m_feederSubsystem.addFeederDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_climberSubsystem.addClimberDebugCommands();
-        m_pivotSubsystem.addPivotDebugCommands(m_areweatcompetitionornotboolean);
+        m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_combinedCommand.createCombinedCommand(inCompetition);
 
         m_debugPathsTab = new DebugPathsTab(m_chassis);
