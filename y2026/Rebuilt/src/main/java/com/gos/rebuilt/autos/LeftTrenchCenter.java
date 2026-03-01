@@ -12,13 +12,15 @@ import java.util.List;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
-public class RightTrenchCenter extends GosAuto {
-    public RightTrenchCenter(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
-        super(StartingPositions.RIGHT, List.of(AutoActions.CROSSTHETRENCH, AutoActions.SHOOOT));
+public class LeftTrenchCenter extends GosAuto {
+    public LeftTrenchCenter(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
+        super(StartingPositions.LEFT, List.of(AutoActions.CROSSTHETRENCH, AutoActions.SHOOOT));
 
-        addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("RightTrenchCenter").getPose())));
-        addCommands(new ParallelDeadlineGroup(followChoreoPath("RightTrenchCenter"), combinedCommand.intake()));
+        addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("LeftTrenchCenter").getPose())));
+        addCommands(new ParallelDeadlineGroup(followChoreoPath("LeftTrenchCenter"), combinedCommand.intake()));
         addCommands(chassisSubsystem.createStop());
         addCommands(combinedCommand.shootBall().withTimeout(5));
     }
 }
+
+
