@@ -55,15 +55,15 @@ public record ChoreoTraj(
 	public static final ChoreoTraj MiddleDepotShoot = new ChoreoTraj(
 	    "MiddleDepotShoot",
 	    OptionalInt.empty(),
-	    4.01246,
-	    new Pose2d(3.584, 3.981, Rotation2d.fromRadians(3.142)),
+	    3.99464,
+	    new Pose2d(3.564, 4, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj MiddleDepotShoot$0 = new ChoreoTraj(
 	    "MiddleDepotShoot",
 	    OptionalInt.of(0),
-	    2.3775,
-	    new Pose2d(3.584, 3.981, Rotation2d.fromRadians(3.142)),
+	    2.35968,
+	    new Pose2d(3.564, 4, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj MiddleDepotShoot$1 = new ChoreoTraj(
