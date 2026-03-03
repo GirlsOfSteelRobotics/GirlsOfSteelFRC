@@ -566,5 +566,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ChassisRotationDamper",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
