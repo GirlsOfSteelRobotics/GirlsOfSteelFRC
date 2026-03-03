@@ -118,7 +118,7 @@ public record ChoreoTraj(
 	public static final ChoreoTraj RightTrenchCenter = new ChoreoTraj(
 	    "RightTrenchCenter",
 	    OptionalInt.empty(),
-	    12.71737,
+	    12.71792,
 	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(0)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
 	);
