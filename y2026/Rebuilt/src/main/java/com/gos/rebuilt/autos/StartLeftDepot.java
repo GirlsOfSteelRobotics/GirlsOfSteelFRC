@@ -21,7 +21,7 @@ public class StartLeftDepot extends GosAuto {
         addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartLeftDepot").getPose())));
         addCommands(followChoreoPath("StartLeftDepot.0"));
         addCommands(chassisSubsystem.createStop());
-        addCommands(Commands.waitSeconds(2));
+        addCommands(combinedCommand.intake().withTimeout(5));
         addCommands(followChoreoPath("StartLeftDepot.1"));
         addCommands(combinedCommand.shootBall());
     }

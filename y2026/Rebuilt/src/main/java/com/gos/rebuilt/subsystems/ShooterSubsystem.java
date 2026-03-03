@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -53,6 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
+    private final Debouncer m_debouncer;
 
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
@@ -66,6 +68,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_motorEncoder = m_leader.getEncoder();
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
+        m_debouncer = new Debouncer(.1);
 
         m_table.put(MIN_DISTANCE, 3200.0);
         m_table.put(2.81, 3200.0);
@@ -147,7 +150,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double rpmToVelocity(double rpm) {
-        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .75;
+        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .37;
     }
 
     public void setRPM(double goal) {
@@ -157,7 +160,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isAtGoalRPM() {
-        return Math.abs(m_goal - getRPM()) < DEADBAND;
+        return m_debouncer.calculate(Math.abs(m_goal - getRPM()) < DEADBAND);
     }
 
     public void shootFromDistance(double distance) {
@@ -185,12 +188,14 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pidProperties.updateIfChanged();
     }
 
-    public void addShooterDebugCommands() {
+    public void addShooterDebugCommands(boolean atComp) {
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
-        tab.add(createShooterSpinMotorForwardCommand());
-        tab.add(createShooterSpinMotorBackwardCommand());
-        tab.add(createShooterSpin2000());
-        tab.add(createShooterSpin1500());
+        if (!atComp) {
+            tab.add(createShooterSpinMotorForwardCommand());
+            tab.add(createShooterSpinMotorBackwardCommand());
+            tab.add(createShooterSpin2000());
+            tab.add(createShooterSpin1500());
+        }
         tab.add(createTuneRPM());
 
     }
