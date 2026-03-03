@@ -6,13 +6,12 @@ import com.gos.rebuilt.enums.AutoActions;
 import com.gos.rebuilt.enums.StartingPositions;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 import java.util.List;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
-public class MiddleDepotOutpostShoot extends GosAuto{
+public class MiddleDepotOutpostShoot extends GosAuto {
 
     public MiddleDepotOutpostShoot(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
         super(StartingPositions.CENTER, List.of(AutoActions.DEPOT, AutoActions.OUTPOST, AutoActions.SHOOOT));

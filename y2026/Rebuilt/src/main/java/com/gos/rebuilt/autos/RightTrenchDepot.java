@@ -14,7 +14,7 @@ public class RightTrenchDepot extends GosAuto {
     public RightTrenchDepot(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
         super(StartingPositions.RIGHT, List.of(AutoActions.CROSSTHETRENCH, AutoActions.DEPOT, AutoActions.SHOOOT));
 
-        addCommands(new RightTrenchCenter(chassisSubsystem,combinedCommand));
+        addCommands(new RightTrenchCenter(chassisSubsystem, combinedCommand));
         addCommands(followChoreoPath("RightShootToDepot.0"));
         addCommands(chassisSubsystem.createStop());
         addCommands(Commands.waitSeconds(2));
