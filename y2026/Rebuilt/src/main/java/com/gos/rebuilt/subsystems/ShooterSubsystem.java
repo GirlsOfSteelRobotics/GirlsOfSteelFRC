@@ -71,7 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_debouncer = new Debouncer(.1);
 
         m_table.put(MIN_DISTANCE, 3200.0);
-        m_table.put(2.81, 3200.0);
+        m_table.put(2.89, 3200.0);
         m_table.put(2.88, 3400.0);
         m_table.put(3.49, 3550.0);
         m_table.put(4.08, 3800.0);
@@ -84,14 +84,15 @@ public class ShooterSubsystem extends SubsystemBase {
         SparkMaxConfig leaderConfig = new SparkMaxConfig();
         leaderConfig.idleMode(IdleMode.kCoast);
         leaderConfig.smartCurrentLimit(60);
-        leaderConfig.inverted(true);
+        leaderConfig.inverted(false);
         leaderConfig.encoder.positionConversionFactor(1);
         leaderConfig.encoder.velocityConversionFactor(1);
 
         SparkMaxConfig followerConfig = new SparkMaxConfig();
         followerConfig.idleMode(IdleMode.kCoast);
         followerConfig.smartCurrentLimit(60);
-        followerConfig.follow(m_leader, true);
+        followerConfig.follow(m_leader, false
+        );
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
             .addFF(1.48e-4)
