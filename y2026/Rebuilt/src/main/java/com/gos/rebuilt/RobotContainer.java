@@ -70,7 +70,7 @@ public class RobotContainer {
 
     private final AutoFactory m_autoFactory;
 
-    private static final boolean AREWEATCOMPETITIONORNOTBOOLEANYAY = true;
+    private static final boolean AREWEATCOMPETITIONORNOTBOOLEANYAY = false;
 
 
     /**
