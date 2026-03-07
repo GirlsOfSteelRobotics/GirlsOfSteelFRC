@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
 
 import choreo.util.ChoreoAllianceFlipUtil;
@@ -485,11 +486,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public void staringDrive(double xJoystick, double yJoystick, Rotation2d goalAngleRad) {
+        if (GetAllianceUtil.isRedAlliance()) {
+            goalAngleRad = goalAngleRad.plus(Rotation2d.fromDegrees(180));
+        }
         setControl(
             m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(goalAngleRad)
-                .withForwardPerspective(ForwardPerspectiveValue.BlueAlliance)
         );
         m_goalAngle = goalAngleRad;
     }
