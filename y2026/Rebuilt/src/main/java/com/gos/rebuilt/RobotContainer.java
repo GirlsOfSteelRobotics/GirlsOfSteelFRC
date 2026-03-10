@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.generated.FinalTunerConstants;
 import frc.robot.generated.TunerConstants;
 
 import java.util.Set;
@@ -83,7 +84,11 @@ public class RobotContainer {
         m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
 
-        m_chassis = TunerConstants.createDrivetrain();
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_chassis = FinalTunerConstants.createDrivetrain();
+        } else {
+            m_chassis = TunerConstants.createDrivetrain();
+        }
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();

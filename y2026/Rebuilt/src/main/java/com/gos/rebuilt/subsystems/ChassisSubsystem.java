@@ -75,6 +75,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
+import frc.robot.generated.FinalTunerConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
@@ -117,8 +118,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final List<PidProperty> m_moduleProperties;
     private final List<BasePhoenix6Alerts> m_alerts;
 
-    private static final SlotConfigs DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
-    private static final SlotConfigs DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
+    private static final SlotConfigs DEFAULT_STEER_CONFIG;
+    private static final SlotConfigs DEFAULT_DRIVE_CONFIG;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
         Constants.DEFAULT_CONSTANT_PROPERTIES,
@@ -127,6 +128,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         120,
         360,
         360);
+
+    static {
+        if (Constants.IS_COMPETITION_ROBOT) {
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
+        } else {
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(FinalTunerConstants.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(FinalTunerConstants.driveGains);
+        }
+    }
 
 
     private static final boolean DEBUG_SWERVE_STATE = true;
