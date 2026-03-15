@@ -30,15 +30,25 @@ public class RobotExtrinsic {
     public static final double ROBOT_WIDTH = Units.inchesToMeters(28);
     public static final double ROBOT_LENGTH = Units.inchesToMeters(28);
 
-    public static final TunableTransform3d BACK_LEFT_CAMERA = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/BackLeft", new Transform3d(
+    public static final TunableTransform3d SHOOTER_CAMERA = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/ShooterCamera", new Transform3d(
         new Translation3d(
-            Units.inchesToMeters(-7.55),
+            Units.inchesToMeters(-9.75),
             Units.inchesToMeters(10),
-            Units.inchesToMeters(12.125)),
+            Units.inchesToMeters(8)),
         new Rotation3d(
             Math.toRadians(0),
             Math.toRadians(-30),
-            Math.toRadians(180))
+            Math.toRadians(-165))
+    ));
+    public static final TunableTransform3d OTHER_CAMERA = new TunableTransform3d(Constants.DEFAULT_CONSTANT_PROPERTIES, "CameraExtrinsics/OtherCamera", new Transform3d(
+        new Translation3d(
+            Units.inchesToMeters(9.25),
+            Units.inchesToMeters(10),
+            Units.inchesToMeters(8)),
+        new Rotation3d(
+            Math.toRadians(0),
+            Math.toRadians(-30),
+            Math.toRadians(165))
     ));
 
 

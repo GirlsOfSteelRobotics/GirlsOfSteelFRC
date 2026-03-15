@@ -15,7 +15,7 @@ package com.gos.rebuilt;
  */
 public final class Constants {
 
-    public static final boolean IS_COMPETITION_ROBOT = false;
+    public static final boolean IS_COMPETITION_ROBOT = true;
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
     public static final boolean CLEANUP_PROPERTIES = false;
 

@@ -7,8 +7,8 @@
    "DefaultMaxVel":{
     "dimension":"LinVel",
     "var":{
-     "exp":"5 ft / s",
-     "val":1.524
+     "exp":"8 ft / s",
+     "val":2.4384
     }
    },
    "FieldLength":{
@@ -49,8 +49,8 @@
    "TrenchMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"3 ft / s",
-     "val":0.9144
+     "exp":"4 ft / s",
+     "val":1.2192
     }
    }
   },
@@ -191,8 +191,8 @@
      "val":6.35
     },
     "heading":{
-     "exp":"0 rad",
-     "val":0.0
+     "exp":"180 deg",
+     "val":3.141592653589793
     }
    },
    "leftStartPoint":{
@@ -211,12 +211,12 @@
    },
    "middleShootPoint":{
     "x":{
-     "exp":"1.657145619392395 m",
-     "val":1.657145619392395
+     "exp":"1.857145619392395 m",
+     "val":1.857145619392395
     },
     "y":{
-     "exp":"3.9891860485076904 m",
-     "val":3.9891860485076904
+     "exp":"4.000089186048507 m",
+     "val":4.000089186048507
     },
     "heading":{
      "exp":"3.141592653589793 rad",

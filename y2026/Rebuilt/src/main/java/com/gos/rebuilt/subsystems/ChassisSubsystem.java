@@ -287,7 +287,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
-            .withFieldDebugConfig(new DebugConfig(false, true, true))
+            .withFieldDebugConfig(new DebugConfig(true, true, true))
             .withSingleTagMaxDistanceMeters(4)
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
@@ -298,8 +298,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
             cameraBuilder
-                .withCamera("Back Left")
-                .withTransform(RobotExtrinsic.BACK_LEFT_CAMERA).build()
+                .withCamera("Shooter Camera")
+                .withTransform(RobotExtrinsic.SHOOTER_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Other Camera")
+                .withTransform(RobotExtrinsic.OTHER_CAMERA).build()
         ));
 
 
@@ -507,6 +510,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_goalAngle = goalAngleRad;
     }
 
+    private void resetGyro() {
+        Pose2d currentPose = getState().Pose;
+        resetPose(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
+    }
     public boolean facingHub() {
         if (m_goalAngle == null) {
             return true;
@@ -588,6 +595,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createResetPose(Pose2d pose) {
         return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
+    }
+    public Command createResetGyroCommand() {
+        return run(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {

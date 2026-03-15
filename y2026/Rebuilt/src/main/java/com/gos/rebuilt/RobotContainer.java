@@ -156,11 +156,13 @@ public class RobotContainer {
         m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
 
 
+        m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createResetGyroCommand());
+
         m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
         m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
-        m_driverController.leftTrigger().whileTrue(m_intakeSubsystem.createIntakeInCommand());
+        m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper

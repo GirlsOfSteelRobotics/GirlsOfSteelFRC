@@ -29,10 +29,12 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
-    private static final double GEAR_RATIO = 45.0;
-    private final RelativeEncoder m_encoder;
+    private static final double GEAR_RATIO = 3 * 3 * 3;
+    private final RelativeEncoder m_relativeEncoder;
     private final SparkMaxAlerts m_pivotMotorAlerts;
     private final LoggingUtil m_networkTableEntries;
+    public static final double DEFAULT_ANGLE = 0;
+
     private double m_armGoalAngle = 90;
     private final RevProfiledSingleJointedArmController m_armPidController;
 
@@ -46,7 +48,7 @@ public class PivotSubsystem extends SubsystemBase {
 
 
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
-        m_encoder = m_pivotMotor.getEncoder();
+        m_relativeEncoder = m_pivotMotor.getEncoder();
         m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", 0);
 
 
@@ -57,6 +59,8 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(false);
+        pivotConfig.encoder.positionConversionFactor(GEAR_RATIO);
+        pivotConfig.encoder.velocityConversionFactor(GEAR_RATIO / 60);
         m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(360)
@@ -90,11 +94,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public double getPosition() {
-        return m_encoder.getPosition();
+        return m_relativeEncoder.getPosition();
     }
 
     public double getVelocity() {
-        return m_encoder.getVelocity();
+        return m_relativeEncoder.getVelocity();
     }
 
     @Override
@@ -113,7 +117,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_encoder.getPosition();
+        return m_relativeEncoder.getPosition();
     }
 
 
@@ -122,7 +126,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public final double getAbsoluteAngle() {
-        double angle = -m_encoder.getPosition();
+        double angle = -m_relativeEncoder.getPosition();
         if (angle < -300) {
             angle += 360;
         }
@@ -132,7 +136,11 @@ public class PivotSubsystem extends SubsystemBase {
     public double getGoalAngle() {
         return m_armGoalAngle;
     }
-
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
     @SuppressWarnings("removal")
     public void moveArmToAngle(double goal) {
         if (Math.abs(m_armGoalAngle - goal) > 2) {
@@ -165,6 +173,8 @@ public class PivotSubsystem extends SubsystemBase {
             debugTabPivot.add(createMovePivotToAngleCommand(45.0));
             debugTabPivot.add(createMovePivotToAngleCommand(90.0));
         }
+        debugTabPivot.add(createPivotToCoastModeCommand().withName("Move pivot with coasting"));
+        debugTabPivot.add(createResetEncoderCommand().withName("Reset pivot encoder"));
     }
 
     public Command createMovePivotDownCommand() {
@@ -184,6 +194,16 @@ public class PivotSubsystem extends SubsystemBase {
 
     public Command createPivotMoveToSpeed() {
         return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this:: stop).withName("move pivot to speed");
+    }
+
+    public Command createResetEncoderCommand() {
+        return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).ignoringDisable(true);
+    }
+    public Command createPivotToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Pivot to Coast");
     }
 }
 

@@ -60,7 +60,7 @@ public class FeederSubsystem extends SubsystemBase {
         SparkMaxConfig feederConfig = new SparkMaxConfig();
         feederConfig.idleMode(IdleMode.kCoast);
         feederConfig.smartCurrentLimit(60);
-        feederConfig.inverted(true);
+        feederConfig.inverted(false);
 
         feederConfig.encoder.positionConversionFactor(12);
         feederConfig.encoder.velocityConversionFactor(12);
