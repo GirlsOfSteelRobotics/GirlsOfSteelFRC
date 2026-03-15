@@ -47,16 +47,16 @@ public class SuperStructureViz extends SubsystemBase {
             ShooterSubsystem.SHOT_ANGLE.getRadians(),
             m_pizzaSubsystem.getAngle(),
             m_pivotSubsystem.getAngle()
-            // m_climberSubsystem.getLeftHeight(),
-            // m_climberSubsystem.getRightHeight()
+        // m_climberSubsystem.getLeftHeight(),
+        // m_climberSubsystem.getRightHeight()
         ));
 
         m_goalPublisher.set(getPoses(
             ShooterSubsystem.SHOT_ANGLE.getRadians(),
             0,
             m_pivotSubsystem.getGoalAngle()
-            // m_climberSubsystem.getGoalHeight(),
-            // m_climberSubsystem.getGoalHeight()
+        // m_climberSubsystem.getGoalHeight(),
+        // m_climberSubsystem.getGoalHeight()
         ));
 
         SwerveDriveState state = m_chassisSubsystem.getState();

@@ -136,11 +136,13 @@ public class PivotSubsystem extends SubsystemBase {
     public double getGoalAngle() {
         return m_armGoalAngle;
     }
+
     public void setIdleMode(IdleMode idleMode) {
         SparkMaxConfig config = new SparkMaxConfig();
         config.idleMode(idleMode);
         m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
+
     @SuppressWarnings("removal")
     public void moveArmToAngle(double goal) {
         if (Math.abs(m_armGoalAngle - goal) > 2) {
@@ -199,6 +201,7 @@ public class PivotSubsystem extends SubsystemBase {
     public Command createResetEncoderCommand() {
         return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).ignoringDisable(true);
     }
+
     public Command createPivotToCoastModeCommand() {
         return this.runEnd(
                 () -> setIdleMode(IdleMode.kCoast),

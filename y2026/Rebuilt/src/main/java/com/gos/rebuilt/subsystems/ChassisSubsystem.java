@@ -76,8 +76,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
 import frc.robot.generated.FinalTunerConstants;
+import frc.robot.generated.FinalTunerConstants.TunerSwerveDrivetrain;
 import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
 import org.photonvision.EstimatedRobotPose;
 
@@ -514,6 +514,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         Pose2d currentPose = getState().Pose;
         resetPose(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
     }
+
     public boolean facingHub() {
         if (m_goalAngle == null) {
             return true;
@@ -596,6 +597,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public Command createResetPose(Pose2d pose) {
         return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
     }
+
     public Command createResetGyroCommand() {
         return run(this::resetGyro)
             .ignoringDisable(true)
