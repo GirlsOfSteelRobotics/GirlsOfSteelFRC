@@ -17,7 +17,7 @@ public final class Constants {
 
     public static final boolean IS_COMPETITION_ROBOT = true;
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
-    public static final boolean CLEANUP_PROPERTIES = false;
+    public static final boolean CLEANUP_PROPERTIES = true;
 
     //motors
     public static final int INTAKE_MOTOR = 10;

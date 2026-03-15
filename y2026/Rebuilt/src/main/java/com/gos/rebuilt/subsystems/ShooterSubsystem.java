@@ -47,8 +47,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
-    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", .01);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1000);
+    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 3504);
     private final SparkMaxAlerts m_shooterAlert;
 
     private ISimWrapper m_shooterSimulator;

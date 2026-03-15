@@ -49,7 +49,7 @@ public class PivotSubsystem extends SubsystemBase {
 
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
-        m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", 0);
+        m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", -0.05);
 
 
         m_pivotMotorAlerts = new SparkMaxAlerts(m_pivotMotor, "pivotMotor");

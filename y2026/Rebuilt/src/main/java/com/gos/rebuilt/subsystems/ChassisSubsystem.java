@@ -131,11 +131,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     static {
         if (Constants.IS_COMPETITION_ROBOT) {
-            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
-            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
-        } else {
             DEFAULT_STEER_CONFIG = SlotConfigs.from(FinalTunerConstants.steerGains);
             DEFAULT_DRIVE_CONFIG = SlotConfigs.from(FinalTunerConstants.driveGains);
+        } else {
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
         }
     }
 

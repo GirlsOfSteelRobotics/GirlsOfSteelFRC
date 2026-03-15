@@ -51,7 +51,6 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final ClimberSubsystem m_climberSubsystem;
     private final CommandXboxController m_driverController; //NOPMD
     private final CommandXboxController m_operatorController;
 
@@ -61,6 +60,7 @@ public class RobotContainer {
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
     private final FeederSubsystem m_feederSubsystem;
+    // private final ClimberSubsystem m_climberSubsystem;
     private final LEDSubsystem m_ledSUbsystem; //NOPMD
     private final CombinedCommand m_combinedCommand;
 
@@ -81,7 +81,7 @@ public class RobotContainer {
         PropertyManager.setPurgeConstantPreferenceKeys(Constants.CLEANUP_PROPERTIES);
 
         m_driverController = new CommandXboxController(0);
-        m_climberSubsystem = new ClimberSubsystem();
+        // m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
 
         if (Constants.IS_COMPETITION_ROBOT) {
@@ -95,7 +95,7 @@ public class RobotContainer {
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
         m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
-        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem, m_climberSubsystem);
+        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem);
         m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
 
         m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem, m_autoFactory);
@@ -118,7 +118,7 @@ public class RobotContainer {
         m_pizzaSubsystem.addPizzaDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_chassis.addChassisDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_feederSubsystem.addFeederDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
-        m_climberSubsystem.addClimberDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        // m_climberSubsystem.addClimberDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_combinedCommand.createCombinedCommand(AREWEATCOMPETITIONORNOTBOOLEANYAY);
 
@@ -158,8 +158,8 @@ public class RobotContainer {
 
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createResetGyroCommand());
 
-        m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
-        m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
+        // m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
+        // m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
