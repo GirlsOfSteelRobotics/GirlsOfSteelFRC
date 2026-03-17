@@ -22,6 +22,7 @@ public class FireOnTheRun {
     private final List<StructPublisher<Pose3d>> m_hubList;
     private final List<ShooterSimBalls> m_shooterSimBallsList;
     private static final double ITERATIONS = 10;
+    private Translation3d m_goal;
 
     public FireOnTheRun(ChassisSubsystem chassis, ShooterSubsystem shooter) {
         m_chassis = chassis;
@@ -49,10 +50,11 @@ public class FireOnTheRun {
         double deltaX = time * chassisSpeed.vxMetersPerSecond;
         double deltaY = time * chassisSpeed.vyMetersPerSecond;
 
-        return new Translation3d(Hub.innerCenterPoint.getTranslation().getX() - deltaX, Hub.innerCenterPoint.getTranslation().getY() - deltaY, Hub.height);
+        return new Translation3d(m_goal.getX() - deltaX, m_goal.getY() - deltaY, m_goal.getZ());
     }
 
-    public Translation3d findImaginary() {
+    public Translation3d findImaginary(Translation3d goal) {
+        m_goal = goal;
         ChassisSpeeds robotVel = ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
 
 
