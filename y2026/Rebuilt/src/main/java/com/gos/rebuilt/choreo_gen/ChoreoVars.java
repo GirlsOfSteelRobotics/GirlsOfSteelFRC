@@ -11,7 +11,7 @@ import edu.wpi.first.units.measure.*;
  * in the Choreo GUI.
  */
 public final class ChoreoVars {
-    public static final LinearVelocity DefaultMaxVel = Units.MetersPerSecond.of(2.438);
+    public static final LinearVelocity DefaultMaxVel = Units.MetersPerSecond.of(1.524);
     public static final Distance FieldLength = Units.Meters.of(16.231);
     public static final Distance FieldWidth = Units.Meters.of(8.001);
     public static final Distance HalfBumperSize = Units.Meters.of(0.375);

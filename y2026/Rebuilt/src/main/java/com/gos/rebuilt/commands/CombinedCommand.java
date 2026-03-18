@@ -47,9 +47,10 @@ public class CombinedCommand {
     }
 
     public Command intake() {
-        return m_intakeSubsystem.createIntakeInCommand();
-        // return m_intakeSubsystem.createIntakeInCommand()
-        //    .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+        //return m_intakeSubsystem.createIntakeInCommand();
+        return m_intakeSubsystem.createIntakeInCommand()
+            .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+//            .alongWith(m_pivotSubsystem.createMovePivotDownCommandLowMotorPercentage());
     }
 
     public void createCombinedCommand(boolean inComp) {

@@ -6,6 +6,7 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
@@ -30,10 +31,12 @@ public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
     private static final double GEAR_RATIO = 3 * 3 * 3;
+    private final AbsoluteEncoder m_absoluteEncoder;
     private final RelativeEncoder m_relativeEncoder;
     private final SparkMaxAlerts m_pivotMotorAlerts;
     private final LoggingUtil m_networkTableEntries;
     public static final double DEFAULT_ANGLE = 0;
+
 
     private double m_armGoalAngle = 90;
     private final RevProfiledSingleJointedArmController m_armPidController;
@@ -51,6 +54,7 @@ public class PivotSubsystem extends SubsystemBase {
         m_relativeEncoder = m_pivotMotor.getEncoder();
         m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", -0.05);
 
+        m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder();
 
         m_pivotMotorAlerts = new SparkMaxAlerts(m_pivotMotor, "pivotMotor");
 
@@ -58,9 +62,10 @@ public class PivotSubsystem extends SubsystemBase {
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
-        pivotConfig.inverted(false);
+        pivotConfig.inverted(true);
         pivotConfig.encoder.positionConversionFactor(GEAR_RATIO);
         pivotConfig.encoder.velocityConversionFactor(GEAR_RATIO / 60);
+        pivotConfig.absoluteEncoder.inverted(true);
         m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(360)
@@ -91,15 +96,28 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Pivot goal", this::getGoalAngle);
         m_networkTableEntries.addDouble("Setpoint angle", m_armPidController::getPositionSetpoint);
         m_networkTableEntries.addDouble("Setpoint Velocity", m_armPidController::getVelocitySetpoint);
+        m_networkTableEntries.addDouble("Absolute Encoder Position", this::getAbsolutePosition);
+
+        syncEncoders();
     }
 
     public double getPosition() {
         return m_relativeEncoder.getPosition();
     }
 
+    public void syncEncoders() {
+        m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
+    }
+
+    public double getAbsolutePosition() {
+        return m_absoluteEncoder.getPosition();
+    }
+
     public double getVelocity() {
         return m_relativeEncoder.getVelocity();
     }
+
+
 
     @Override
     public void periodic() {
@@ -174,18 +192,29 @@ public class PivotSubsystem extends SubsystemBase {
             debugTabPivot.add(createMovePivotToAngleCommand(30.0));
             debugTabPivot.add(createMovePivotToAngleCommand(45.0));
             debugTabPivot.add(createMovePivotToAngleCommand(90.0));
+
+            debugTabPivot.add(createSyncEncoderCommand());
         }
         debugTabPivot.add(createPivotToCoastModeCommand().withName("Move pivot with coasting"));
         debugTabPivot.add(createResetEncoderCommand().withName("Reset pivot encoder"));
     }
 
+    public Command createSyncEncoderCommand() {
+        return run(this::syncEncoders).withName("Sync Encoders");
+    }
+
     public Command createMovePivotDownCommand() {
-        return runEnd(() -> moveArmToAngle(0), this::stop)
+        return runEnd(() -> moveArmToAngle(160), this::stop)
             .withName("Go down");
     }
 
+    public Command createMovePivotDownCommandLowMotorPercentage() {
+        return runEnd(() -> setSpeed(.02), this::stop)
+            .withName("Go down with set speed 2%");
+    }
+
     public Command createMovePivotUpCommand() {
-        return runEnd(() -> moveArmToAngle(90), this::stop)
+        return runEnd(() -> moveArmToAngle(0), this::stop)
             .withName("Go up");
     }
 

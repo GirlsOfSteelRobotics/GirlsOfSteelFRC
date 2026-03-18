@@ -36,6 +36,7 @@ import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.photonvision.AprilTagCameraBuilder;
 import com.gos.lib.photonvision.AprilTagCameraManager;
+import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.rebuilt.Constants;
@@ -287,7 +288,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
-            .withFieldDebugConfig(new DebugConfig(true, true, true))
+            .withFieldDebugConfig(new DebugConfig(false, true, false))
             .withSingleTagMaxDistanceMeters(4)
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
@@ -382,6 +383,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_aprilTagCameras.updateSimulator(getState().Pose);
     }
 
+    private final GosBooleanProperty TEMP_USE_APRIL_TAGS = new GosBooleanProperty(false, "TEMP USE APRILTAGS", true);
 
     @Override
     public void periodic() {
@@ -416,13 +418,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
 
-
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
 
             EstimatedRobotPose camPose = estimatePair.getFirst();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-            addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
+            if (TEMP_USE_APRIL_TAGS.getValue()) {
+                addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
+            }
         }
 
         m_pidControllerProperty.updateIfChanged();
