@@ -1,156 +1,4 @@
-[
-  {
-    "name": "/Preferences/intakeSpeed",
-    "type": "double",
-    "value": -1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/shooterSpeed",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/chassis Pid.mm.kp",
-    "type": "double",
-    "value": 10.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/chassis Pid.mm.kd",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.Steerkp",
-    "type": "double",
-    "value": 100.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkD",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkS",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkV",
-    "type": "double",
-    "value": 2.33,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.Drivekp",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.DrivekV",
-    "type": "double",
-    "value": 0.124,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/ChassisTranslationDamper",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/climbingSpeed",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.mm.max_velocity",
-    "type": "double",
-    "value": 2.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.mm.max_acceleration",
-    "type": "double",
-    "value": 2.25,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.eff.ks",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.eff.kff",
-    "type": "double",
-    "value": 5.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.eff.kg",
-    "type": "double",
-    "value": 0.45,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.eff.ka",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.mm.kp",
-    "type": "double",
-    "value": 4.0,
-    "properties": {
-      "persistent": true
-    }
-  },
+k[
   {
     "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
     "type": "double",
@@ -184,15 +32,7 @@
     }
   },
   {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.x(in)",
-    "type": "double",
-    "value": -7.55,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.y(in)",
+    "name": "/Preferences/chassis Pid.mm.kp",
     "type": "double",
     "value": 10.0,
     "properties": {
@@ -200,31 +40,23 @@
     }
   },
   {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.z(in)",
+    "name": "/Preferences/chassis Pid.mm.kd",
     "type": "double",
-    "value": 12.125,
+    "value": 0.1,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.yaw(deg)",
+    "name": "/Preferences/SdsModule.Steerkp",
     "type": "double",
-    "value": 180.0,
+    "value": 32.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.pitch(deg)",
-    "type": "double",
-    "value": -29.999999999999996,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.roll(deg)",
+    "name": "/Preferences/SdsModule.SteerkD",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -232,9 +64,57 @@
     }
   },
   {
+    "name": "/Preferences/SdsModule.SteerkS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.SteerkV",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.Drivekp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SdsModule.DrivekV",
+    "type": "double",
+    "value": 0.124,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/intakeSpeed",
+    "type": "double",
+    "value": 0.6,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/shooterSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/tuneRPM",
     "type": "double",
-    "value": 3504.0,
+    "value": 4000.0,
     "properties": {
       "persistent": true
     }
@@ -242,7 +122,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.000148,
+    "value": 0.000155,
     "properties": {
       "persistent": true
     }
@@ -314,7 +194,7 @@
   {
     "name": "/Preferences/Pivot Speed",
     "type": "double",
-    "value": -0.05,
+    "value": 0.05,
     "properties": {
       "persistent": true
     }
@@ -322,7 +202,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.max_velocity",
     "type": "double",
-    "value": 360.0,
+    "value": 10.0,
     "properties": {
       "persistent": true
     }
@@ -330,7 +210,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.max_acceleration",
     "type": "double",
-    "value": 540.0,
+    "value": 10.0,
     "properties": {
       "persistent": true
     }
@@ -346,7 +226,7 @@
   {
     "name": "/Preferences/Arm Pivot.aff.kff",
     "type": "double",
-    "value": 1.0,
+    "value": 0.01,
     "properties": {
       "persistent": true
     }
@@ -354,7 +234,7 @@
   {
     "name": "/Preferences/Arm Pivot.aff.kg",
     "type": "double",
-    "value": 0.1,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -362,7 +242,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.05,
+    "value": 0.005,
     "properties": {
       "persistent": true
     }
@@ -400,6 +280,14 @@
     }
   },
   {
+    "name": "/Preferences/ChassisTranslationDamper",
+    "type": "double",
+    "value": 0.8,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/ChassisRotationDamper",
     "type": "double",
     "value": 0.5,
@@ -416,97 +304,9 @@
     }
   },
   {
-    "name": "/Preferences/CameraExtrinsics/ShooterCamera.x(in)",
-    "type": "double",
-    "value": -9.75,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/ShooterCamera.y(in)",
-    "type": "double",
-    "value": -10.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/ShooterCamera.z(in)",
-    "type": "double",
-    "value": 8.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/ShooterCamera.yaw(deg)",
-    "type": "double",
-    "value": -157.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/ShooterCamera.pitch(deg)",
-    "type": "double",
-    "value": -30.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/ShooterCamera.roll(deg)",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/OtherCamera.x(in)",
-    "type": "double",
-    "value": -9.25,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/OtherCamera.y(in)",
-    "type": "double",
-    "value": 10.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/OtherCamera.z(in)",
-    "type": "double",
-    "value": 8.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/OtherCamera.yaw(deg)",
-    "type": "double",
-    "value": 166.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/OtherCamera.pitch(deg)",
-    "type": "double",
-    "value": -30.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/OtherCamera.roll(deg)",
-    "type": "double",
-    "value": 0.0,
+    "name": "/Preferences/TEMP USE APRILTAGS",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
