@@ -48,7 +48,7 @@ public record ChoreoTraj(
 	public static final ChoreoTraj LeftTrenchCenter = new ChoreoTraj(
 	    "LeftTrenchCenter",
 	    OptionalInt.empty(),
-	    10.49184,
+	    14.13155,
 	    new Pose2d(3.564, 6.35, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
 	);
@@ -118,8 +118,8 @@ public record ChoreoTraj(
 	public static final ChoreoTraj RightTrenchCenter = new ChoreoTraj(
 	    "RightTrenchCenter",
 	    OptionalInt.empty(),
-	    11.1558,
-	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(0)),
+	    13.30232,
+	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
 	);
 	public static final ChoreoTraj StartLeftDepot = new ChoreoTraj(
