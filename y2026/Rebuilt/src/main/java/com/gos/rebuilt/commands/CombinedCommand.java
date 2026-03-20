@@ -57,8 +57,8 @@ public class CombinedCommand {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
         if (!inComp) {
             debugTab.add(shootBall().withName("Shoot"));
-            debugTab.add(shootBallNoAiming().withName("Shooting Easier"));
 
         }
+        debugTab.add(shootBallNoAiming().withName("Shooting Easier"));
     }
 }

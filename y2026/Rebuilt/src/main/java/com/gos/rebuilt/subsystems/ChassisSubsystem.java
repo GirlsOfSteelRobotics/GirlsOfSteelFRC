@@ -145,7 +145,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
-    private static final double DEADBAN = Math.toRadians(10);
+    private static final double DEADBAN = Math.toRadians(15);
 
     private final GosField m_field;
     private final AprilTagCameraManager m_aprilTagCameras;
