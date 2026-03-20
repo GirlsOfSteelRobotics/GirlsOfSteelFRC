@@ -9,6 +9,7 @@ package com.gos.rebuilt;
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.rebuilt.commands.FireOnTheRunCommand;
+import com.gos.rebuilt.commands.JoystickFieldRelativeDriveSlowerCommand;
 import com.gos.rebuilt.commands.StaringCommand;
 
 import com.gos.rebuilt.autos.AutoFactory;
@@ -162,6 +163,7 @@ public class RobotContainer {
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
+        m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper

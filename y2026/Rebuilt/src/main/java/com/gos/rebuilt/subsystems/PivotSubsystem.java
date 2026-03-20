@@ -193,10 +193,10 @@ public class PivotSubsystem extends SubsystemBase {
             debugTabPivot.add(createMovePivotToAngleCommand(45.0));
             debugTabPivot.add(createMovePivotToAngleCommand(90.0));
 
-            debugTabPivot.add(createSyncEncoderCommand());
         }
         debugTabPivot.add(createPivotToCoastModeCommand().withName("Move pivot with coasting"));
         debugTabPivot.add(createResetEncoderCommand().withName("Reset pivot encoder"));
+        debugTabPivot.add(createSyncEncoderCommand());
     }
 
     public Command createSyncEncoderCommand() {

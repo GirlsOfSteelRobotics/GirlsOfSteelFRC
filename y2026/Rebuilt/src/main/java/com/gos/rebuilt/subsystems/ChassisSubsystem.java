@@ -41,6 +41,7 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.GosField;
+import com.gos.rebuilt.MatchTime;
 import com.gos.rebuilt.RobotExtrinsic;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -289,7 +290,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
             .withFieldDebugConfig(new DebugConfig(false, true, false))
-            .withSingleTagMaxDistanceMeters(4)
+            .withSingleTagMaxDistanceMeters(2)
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
             .withSimEnableProcessedStream(enableFancyCameraSim)
@@ -310,9 +311,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
+        m_networkTableEntries.addDouble("Timer", MatchTime::timeLeft);
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
+        m_networkTableEntries.addDouble("goalAngle", this::getGoalAngleDegrees);
 
 
     }
@@ -527,6 +530,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Rotation2d getGoalAngle() {
         return m_goalAngle;
+    }
+
+    public double getGoalAngleDegrees() {
+        if (m_goalAngle == null) {
+            return -999;
+        }
+        return m_goalAngle.getDegrees();
     }
 
     public Rotation2d getShooterFaceAngle(MaybeFlippedTranslation3d point) {
