@@ -32,7 +32,7 @@ public class CombinedCommand {
     public Command shootBall() {
         return m_chassisSubsystem.createFaceHub()
             .alongWith((m_shooterSubsystem.createShootFromDistanceCommand(m_chassisSubsystem::getDistanceFromHub)))
-            .alongWith(new WaitUntilCommand(this::readyToShoot)
+            .alongWith(new WaitUntilCommand(this::readyToShoot).withTimeout(2)
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 

@@ -204,7 +204,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createMovePivotDownCommand() {
-        return runEnd(() -> moveArmToAngle(160), this::stop)
+        return runEnd(() -> moveArmToAngle(180), this::stop)
             .withName("Go down");
     }
 
