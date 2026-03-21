@@ -36,6 +36,12 @@ public class CombinedCommand {
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
+    public Command emergencyTowerShot() {
+        return (m_shooterSubsystem.createShootFromDistanceCommand(() -> 3.01))
+            .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM).withTimeout(2)
+            .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
+    }
+
     public Command shootBallNoAiming() {
         return m_shooterSubsystem.createTuneRPM()
             .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM)

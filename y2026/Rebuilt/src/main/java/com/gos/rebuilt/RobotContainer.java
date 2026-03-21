@@ -153,7 +153,9 @@ public class RobotContainer {
         //m_driverController.a().whileTrue(m_combinedCommand.shootBall());
         m_driverController.a().whileTrue(m_combinedCommand.shootBall());
         m_driverController.b().whileTrue(m_pizzaSubsystem.createPizzaReverseCommand());
-        m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
+
+        // m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
+        m_driverController.rightBumper().whileTrue(m_combinedCommand.emergencyTowerShot());
 
 
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createResetGyroCommand());
