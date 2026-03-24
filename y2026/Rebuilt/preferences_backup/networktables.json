@@ -82,7 +82,7 @@
   {
     "name": "/Preferences/intakeSpeed",
     "type": "double",
-    "value": 0.85,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -338,7 +338,7 @@
   {
     "name": "/Preferences/ChassisTranslationSlowDamper",
     "type": "double",
-    "value": 0.5,
+    "value": 0.25,
     "properties": {
       "persistent": true
     }

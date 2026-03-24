@@ -312,6 +312,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
         m_networkTableEntries.addDouble("Timer", MatchTime::timeLeft);
+        m_networkTableEntries.addDouble("Chassis speed", this::getSpeed);
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
@@ -433,6 +434,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_pidControllerProperty.updateIfChanged();
         m_networkTableEntries.updateLogs();
+    }
+
+    private double getSpeed() {
+        double xSpeed =  getState().Speeds.vxMetersPerSecond;
+        double ySpeed =  getState().Speeds.vyMetersPerSecond;
+        double actualSpeed = Math.sqrt((xSpeed * xSpeed)+(ySpeed * ySpeed));
+
+        return Units.metersToFeet(actualSpeed);
     }
 
     private void startSimThread() {
@@ -593,6 +602,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             tab.add(createResetPose(new MaybeFlippedPose2d(blueHub.getX() - 3, blueHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Blue"));
             tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
         }
+
     }
 
     public Command createFaceHub() {
