@@ -32,8 +32,14 @@ public class CombinedCommand {
     public Command shootBall() {
         return m_chassisSubsystem.createFaceHub()
             .alongWith((m_shooterSubsystem.createShootFromDistanceCommand(m_chassisSubsystem::getDistanceFromHub)))
-            .alongWith(new WaitUntilCommand(this::readyToShoot)
+            .alongWith(new WaitUntilCommand(this::readyToShoot).withTimeout(2)
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
+    }
+
+    public Command emergencyTowerShot() {
+        return (m_shooterSubsystem.createShootFromDistanceCommand(() -> 3.01))
+            .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM).withTimeout(2)
+            .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
     public Command shootBallNoAiming() {
@@ -47,17 +53,18 @@ public class CombinedCommand {
     }
 
     public Command intake() {
-        return m_intakeSubsystem.createIntakeInCommand();
-        // return m_intakeSubsystem.createIntakeInCommand()
-        //    .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+        //return m_intakeSubsystem.createIntakeInCommand();
+        return m_intakeSubsystem.createIntakeInCommand()
+            .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+//            .alongWith(m_pivotSubsystem.createMovePivotDownCommandLowMotorPercentage());
     }
 
     public void createCombinedCommand(boolean inComp) {
         ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
         if (!inComp) {
             debugTab.add(shootBall().withName("Shoot"));
-            debugTab.add(shootBallNoAiming().withName("Shooting Easier"));
 
         }
+        debugTab.add(shootBallNoAiming().withName("Shooting Easier"));
     }
 }
