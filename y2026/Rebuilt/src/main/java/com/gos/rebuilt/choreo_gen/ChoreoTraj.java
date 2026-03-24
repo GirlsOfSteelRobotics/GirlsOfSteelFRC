@@ -48,16 +48,16 @@ public record ChoreoTraj(
 	public static final ChoreoTraj LeftTrenchCenter = new ChoreoTraj(
 	    "LeftTrenchCenter",
 	    OptionalInt.empty(),
-	    12.82209,
-	    new Pose2d(3.564, 6.35, Rotation2d.fromRadians(0)),
+	    14.13155,
+	    new Pose2d(3.564, 6.35, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
 	);
 	public static final ChoreoTraj MiddleDepotShoot = new ChoreoTraj(
 	    "MiddleDepotShoot",
 	    OptionalInt.empty(),
-	    3.99464,
+	    4.07652,
 	    new Pose2d(3.564, 4, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142))
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj MiddleDepotShoot$0 = new ChoreoTraj(
 	    "MiddleDepotShoot",
@@ -69,30 +69,30 @@ public record ChoreoTraj(
 	public static final ChoreoTraj MiddleDepotShoot$1 = new ChoreoTraj(
 	    "MiddleDepotShoot",
 	    OptionalInt.of(1),
-	    1.63496,
+	    1.7168400000000004,
 	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142))
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj MiddleShootOutpostShoot = new ChoreoTraj(
 	    "MiddleShootOutpostShoot",
 	    OptionalInt.empty(),
-	    5.54945,
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142))
+	    5.77904,
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj MiddleShootOutpostShoot$0 = new ChoreoTraj(
 	    "MiddleShootOutpostShoot",
 	    OptionalInt.of(0),
-	    2.77473,
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142)),
+	    2.88952,
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(0.419, 0.675, Rotation2d.fromRadians(1.571))
 	);
 	public static final ChoreoTraj MiddleShootOutpostShoot$1 = new ChoreoTraj(
 	    "MiddleShootOutpostShoot",
 	    OptionalInt.of(1),
-	    2.7747200000000003,
+	    2.88952,
 	    new Pose2d(0.419, 0.675, Rotation2d.fromRadians(1.571)),
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142))
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj RightShootToDepot = new ChoreoTraj(
 	    "RightShootToDepot",
@@ -118,8 +118,8 @@ public record ChoreoTraj(
 	public static final ChoreoTraj RightTrenchCenter = new ChoreoTraj(
 	    "RightTrenchCenter",
 	    OptionalInt.empty(),
-	    12.71792,
-	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(0)),
+	    13.30232,
+	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
 	);
 	public static final ChoreoTraj StartLeftDepot = new ChoreoTraj(
@@ -153,9 +153,9 @@ public record ChoreoTraj(
 	public static final ChoreoTraj StartMiddleShootMiddle = new ChoreoTraj(
 	    "StartMiddleShootMiddle",
 	    OptionalInt.empty(),
-	    1.42434,
+	    1.29304,
 	    new Pose2d(3.564, 4, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142))
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
 	);
 	public static final ChoreoTraj StartRightOutpost = new ChoreoTraj(
 	    "StartRightOutpost",

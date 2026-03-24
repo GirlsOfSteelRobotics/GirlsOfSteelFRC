@@ -17,7 +17,9 @@ public class StartRightPreloadOutpost extends GosAuto {
         addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartRightOutpost").getPose())));
         addCommands(followChoreoPath("StartRightPreloadOutpost.0"));
         addCommands(combinedCommand.shootBall().withTimeout(5));
-        addCommands(followChoreoPath("StartRightPreloadOutpost.1"));
+        addCommands(followChoreoPath("StartRightPreloadOutpost.1").alongWith(combinedCommand.intake().withTimeout(2)));
+
+
         addCommands(chassisSubsystem.createStop());
         addCommands(Commands.waitSeconds(5));
         addCommands(followChoreoPath("StartRightPreloadOutpost.2"));
