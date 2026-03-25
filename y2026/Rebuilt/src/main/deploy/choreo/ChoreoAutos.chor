@@ -7,8 +7,8 @@
    "DefaultMaxVel":{
     "dimension":"LinVel",
     "var":{
-     "exp":"5 ft / s",
-     "val":1.524
+     "exp":"8 ft / s",
+     "val":2.4384
     }
    },
    "FieldLength":{
@@ -49,8 +49,8 @@
    "TrenchMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"4 ft / s",
-     "val":1.2192
+     "exp":"6.7 ft / s",
+     "val":2.04216
     }
    }
   },

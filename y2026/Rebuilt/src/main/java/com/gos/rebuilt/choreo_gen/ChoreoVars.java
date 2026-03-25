@@ -11,13 +11,13 @@ import edu.wpi.first.units.measure.*;
  * in the Choreo GUI.
  */
 public final class ChoreoVars {
-    public static final LinearVelocity DefaultMaxVel = Units.MetersPerSecond.of(1.524);
+    public static final LinearVelocity DefaultMaxVel = Units.MetersPerSecond.of(2.438);
     public static final Distance FieldLength = Units.Meters.of(16.231);
     public static final Distance FieldWidth = Units.Meters.of(8.001);
     public static final Distance HalfBumperSize = Units.Meters.of(0.375);
     public static final Distance StartWallOffset = Units.Meters.of(1.651);
     public static final Distance StartingLine = Units.Meters.of(3.564);
-    public static final LinearVelocity TrenchMaxVelocity = Units.MetersPerSecond.of(1.219);
+    public static final LinearVelocity TrenchMaxVelocity = Units.MetersPerSecond.of(2.042);
 
     public static final class Poses {
         public static final Pose2d LeftTrenchEnterance = new Pose2d(3.48, 7.357, Rotation2d.fromRadians(3.142));
