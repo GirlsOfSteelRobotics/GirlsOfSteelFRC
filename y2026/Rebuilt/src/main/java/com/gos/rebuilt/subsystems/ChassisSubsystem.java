@@ -36,7 +36,6 @@ import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
 import com.gos.lib.photonvision.AprilTagCameraBuilder;
 import com.gos.lib.photonvision.AprilTagCameraManager;
-import com.gos.lib.properties.GosBooleanProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.rebuilt.Constants;
@@ -387,8 +386,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_aprilTagCameras.updateSimulator(getState().Pose);
     }
 
-    private final GosBooleanProperty TEMP_USE_APRIL_TAGS = new GosBooleanProperty(false, "TEMP USE APRILTAGS", true);
-
     @Override
     public void periodic() {
         /*
@@ -427,9 +424,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
             EstimatedRobotPose camPose = estimatePair.getFirst();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
-            if (TEMP_USE_APRIL_TAGS.getValue()) {
-                addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
-            }
+            addVisionMeasurement(camEstPose, camPose.timestampSeconds, estimatePair.getSecond());
         }
 
         m_pidControllerProperty.updateIfChanged();
@@ -439,7 +434,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private double getSpeed() {
         double xSpeed =  getState().Speeds.vxMetersPerSecond;
         double ySpeed =  getState().Speeds.vyMetersPerSecond;
-        double actualSpeed = Math.sqrt((xSpeed * xSpeed)+(ySpeed * ySpeed));
+        double actualSpeed = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
 
         return Units.metersToFeet(actualSpeed);
     }
