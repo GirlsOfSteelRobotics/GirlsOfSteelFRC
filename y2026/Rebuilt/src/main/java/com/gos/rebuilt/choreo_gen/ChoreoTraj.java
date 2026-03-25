@@ -48,7 +48,7 @@ public record ChoreoTraj(
 	public static final ChoreoTraj LeftTrenchCenter = new ChoreoTraj(
 	    "LeftTrenchCenter",
 	    OptionalInt.empty(),
-	    10.03385,
+	    11.12661,
 	    new Pose2d(3.564, 6.35, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
 	);
@@ -118,7 +118,7 @@ public record ChoreoTraj(
 	public static final ChoreoTraj RightTrenchCenter = new ChoreoTraj(
 	    "RightTrenchCenter",
 	    OptionalInt.empty(),
-	    9.97171,
+	    10.98948,
 	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
 	);
@@ -332,13 +332,6 @@ public record ChoreoTraj(
 	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
 	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
 	);
-	public static final ChoreoTraj RightShootTrenchCenter = new ChoreoTraj(
-	    "RightShootTrenchCenter",
-	    OptionalInt.empty(),
-	    7.43166,
-	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412)),
-	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
-	);
 
     /**
      * A map between trajectory names and their corresponding data.
@@ -388,8 +381,7 @@ public record ChoreoTraj(
 		Map.entry("TUNING_StraightPath_MaxAccel_01fps", TUNING_StraightPath_MaxAccel_01fps),
 		Map.entry("TUNING_StraightPath_MaxAccel_05fps", TUNING_StraightPath_MaxAccel_05fps),
 		Map.entry("TUNING_StraightPath_MaxAccel_10fps", TUNING_StraightPath_MaxAccel_10fps),
-		Map.entry("TUNING_StraightPath_MaxAccel_MaxSpeed", TUNING_StraightPath_MaxAccel_MaxSpeed),
-		Map.entry("RightShootTrenchCenter", RightShootTrenchCenter)
+		Map.entry("TUNING_StraightPath_MaxAccel_MaxSpeed", TUNING_StraightPath_MaxAccel_MaxSpeed)
     );
 
     /**

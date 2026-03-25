@@ -49,8 +49,8 @@
    "TrenchMaxVelocity":{
     "dimension":"LinVel",
     "var":{
-     "exp":"6.7 ft / s",
-     "val":2.04216
+     "exp":"7 ft / s",
+     "val":2.1336
     }
    }
   },

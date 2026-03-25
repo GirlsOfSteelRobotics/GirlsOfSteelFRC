@@ -105,7 +105,7 @@ public class PivotSubsystem extends SubsystemBase {
         return m_relativeEncoder.getPosition();
     }
 
-    public void syncEncoders() {
+    public final void syncEncoders() {
         m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
     }
 

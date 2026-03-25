@@ -17,7 +17,7 @@ public final class ChoreoVars {
     public static final Distance HalfBumperSize = Units.Meters.of(0.375);
     public static final Distance StartWallOffset = Units.Meters.of(1.651);
     public static final Distance StartingLine = Units.Meters.of(3.564);
-    public static final LinearVelocity TrenchMaxVelocity = Units.MetersPerSecond.of(2.042);
+    public static final LinearVelocity TrenchMaxVelocity = Units.MetersPerSecond.of(2.134);
 
     public static final class Poses {
         public static final Pose2d LeftTrenchEnterance = new Pose2d(3.48, 7.357, Rotation2d.fromRadians(3.142));
