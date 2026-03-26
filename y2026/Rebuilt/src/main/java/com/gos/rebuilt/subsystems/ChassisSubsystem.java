@@ -40,6 +40,7 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.GosField;
+import com.gos.rebuilt.MatchTime;
 import com.gos.rebuilt.RobotExtrinsic;
 import com.gos.rebuilt.enums.Regions;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -76,8 +77,9 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
+import frc.robot.generated.FinalTunerConstants;
+import frc.robot.generated.FinalTunerConstants.TunerSwerveDrivetrain;
 import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
 import org.photonvision.EstimatedRobotPose;
 
@@ -118,8 +120,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final List<PidProperty> m_moduleProperties;
     private final List<BasePhoenix6Alerts> m_alerts;
 
-    private static final SlotConfigs DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
-    private static final SlotConfigs DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
+    private static final SlotConfigs DEFAULT_STEER_CONFIG;
+    private static final SlotConfigs DEFAULT_DRIVE_CONFIG;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
         Constants.DEFAULT_CONSTANT_PROPERTIES,
@@ -129,11 +131,21 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         360,
         360);
 
+    static {
+        if (Constants.IS_COMPETITION_ROBOT) {
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(FinalTunerConstants.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(FinalTunerConstants.driveGains);
+        } else {
+            DEFAULT_STEER_CONFIG = SlotConfigs.from(TunerConstants.steerGains);
+            DEFAULT_DRIVE_CONFIG = SlotConfigs.from(TunerConstants.driveGains);
+        }
+    }
+
 
     private static final boolean DEBUG_SWERVE_STATE = true;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
-    private static final double DEADBAN = Math.toRadians(10);
+    private static final double DEADBAN = Math.toRadians(15);
 
     private final GosField m_field;
     private final AprilTagCameraManager m_aprilTagCameras;
@@ -277,8 +289,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
-            .withFieldDebugConfig(new DebugConfig(false, true, true))
-            .withSingleTagMaxDistanceMeters(4)
+            .withFieldDebugConfig(new DebugConfig(false, true, false))
+            .withSingleTagMaxDistanceMeters(2)
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
             .withSimEnableProcessedStream(enableFancyCameraSim)
@@ -288,18 +300,24 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
             cameraBuilder
-                .withCamera("Back Left")
-                .withTransform(RobotExtrinsic.BACK_LEFT_CAMERA).build()
+                .withCamera("Shooter Camera")
+                .withTransform(RobotExtrinsic.SHOOTER_CAMERA).build(),
+            cameraBuilder
+                .withCamera("Other Camera")
+                .withTransform(RobotExtrinsic.OTHER_CAMERA).build()
         ));
 
 
 
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
+        m_networkTableEntries.addDouble("Timer", MatchTime::timeLeft);
+        m_networkTableEntries.addDouble("Chassis speed", this::getSpeed);
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
         m_networkTableEntries.addString("Region of field",() -> getRegion().toString());
+        m_networkTableEntries.addDouble("goalAngle", this::getGoalAngleDegrees);
 
 
     }
@@ -370,7 +388,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_aprilTagCameras.updateSimulator(getState().Pose);
     }
 
-
     @Override
     public void periodic() {
         /*
@@ -404,7 +421,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
 
-
         List<Pair<EstimatedRobotPose, Matrix<N3, N1>>> estimates = m_aprilTagCameras.update(state.Pose);
         for (Pair<EstimatedRobotPose, Matrix<N3, N1>> estimatePair : estimates) {
 
@@ -415,6 +431,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         m_pidControllerProperty.updateIfChanged();
         m_networkTableEntries.updateLogs();
+    }
+
+    private double getSpeed() {
+        double xSpeed =  getState().Speeds.vxMetersPerSecond;
+        double ySpeed =  getState().Speeds.vyMetersPerSecond;
+        double actualSpeed = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
+
+        return Units.metersToFeet(actualSpeed);
     }
 
     private void startSimThread() {
@@ -498,6 +522,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_goalAngle = goalAngleRad;
     }
 
+    private void resetGyro() {
+        Pose2d currentPose = getState().Pose;
+        resetPose(new Pose2d(currentPose.getX(), currentPose.getY(), Rotation2d.fromDegrees(0)));
+    }
+
     public boolean facingHub() {
         if (m_goalAngle == null) {
             return true;
@@ -534,6 +563,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Rotation2d getGoalAngle() {
         return m_goalAngle;
+    }
+
+    public double getGoalAngleDegrees() {
+        if (m_goalAngle == null) {
+            return -999;
+        }
+        return m_goalAngle.getDegrees();
     }
 
     public Rotation2d getShooterFaceAngle(MaybeFlippedTranslation3d point) {
@@ -590,6 +626,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             tab.add(createResetPose(new MaybeFlippedPose2d(blueHub.getX() - 3, blueHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Blue"));
             tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
         }
+
     }
 
     public Command createFaceHub() {
@@ -606,6 +643,12 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createResetPose(Pose2d pose) {
         return runEnd(() -> resetPose(pose), this::stop).ignoringDisable(true).withName("Reset Robot Pose!!" + pose);
+    }
+
+    public Command createResetGyroCommand() {
+        return run(this::resetGyro)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 
     public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {

@@ -1,24 +1,40 @@
 [
   {
-    "name": "/Preferences/intakeSpeed",
+    "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
     "type": "double",
-    "value": 1.0,
+    "value": 84.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/shooterSpeed",
+    "name": "/Preferences/Tunable path constraints.Max Acceleration (inches)",
     "type": "double",
-    "value": 0.01,
+    "value": 120.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/ChassisTranslationDamper",
+    "name": "/Preferences/Tunable path constraints.Angular Velocity (degrees)",
     "type": "double",
-    "value": 0.67,
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Tunable path constraints.Angular Acceleration (degrees)",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/TEMP USE APRILTAGS",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -42,31 +58,7 @@
   {
     "name": "/Preferences/SdsModule.Steerkp",
     "type": "double",
-    "value": 32.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkD",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkS",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.SteerkV",
-    "type": "double",
-    "value": 0.0,
+    "value": 100.0,
     "properties": {
       "persistent": true
     }
@@ -88,7 +80,15 @@
     }
   },
   {
-    "name": "/Preferences/climbingSpeed",
+    "name": "/Preferences/intakeSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/shooterSpeed",
     "type": "double",
     "value": 1.0,
     "properties": {
@@ -98,15 +98,7 @@
   {
     "name": "/Preferences/tuneRPM",
     "type": "double",
-    "value": 1000.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/FeederSpeed",
-    "type": "double",
-    "value": 0.8,
+    "value": 500.0,
     "properties": {
       "persistent": true
     }
@@ -128,31 +120,47 @@
     }
   },
   {
-    "name": "/Preferences/Fire On The Run Throttling",
+    "name": "/Preferences/min_Spin",
     "type": "double",
-    "value": 0.5,
+    "value": 100.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Climber.mm.max_velocity",
+    "name": "/Preferences/base_Currents",
     "type": "double",
-    "value": 2.0,
+    "value": 100.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Climber.mm.max_acceleration",
+    "name": "/Preferences/pizzaSpeedForward",
     "type": "double",
-    "value": 2.25,
+    "value": 0.75,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Climber.eff.ks",
+    "name": "/Preferences/pizzaSpeedBack",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/PIZZAtuneRPM",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pizza.mm.kff",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -160,23 +168,7 @@
     }
   },
   {
-    "name": "/Preferences/Climber.eff.kff",
-    "type": "double",
-    "value": 5.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.eff.kg",
-    "type": "double",
-    "value": 0.45,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Climber.eff.ka",
+    "name": "/Preferences/Pizza.mm.kp",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -184,9 +176,9 @@
     }
   },
   {
-    "name": "/Preferences/Climber.mm.kp",
+    "name": "/Preferences/Pivot Speed",
     "type": "double",
-    "value": 4.0,
+    "value": -0.05,
     "properties": {
       "persistent": true
     }
@@ -240,105 +232,9 @@
     }
   },
   {
-    "name": "/Preferences/pizzaSpeedForward",
+    "name": "/Preferences/FeederSpeed",
     "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/pizzaSpeedBack",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/Right.x(in)",
-    "type": "double",
-    "value": 11.6875,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/Right.y(in)",
-    "type": "double",
-    "value": 11.625,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/Right.z(in)",
-    "type": "double",
-    "value": 12.125,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/Right.yaw(deg)",
-    "type": "double",
-    "value": 160.67,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/Right.pitch(deg)",
-    "type": "double",
-    "value": 58.050000000000004,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/Right.roll(deg)",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/min_Spin",
-    "type": "double",
-    "value": 100.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/base_Currents",
-    "type": "double",
-    "value": 100.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/PIZZAtuneRPM",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pizza.mm.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pizza.mm.kp",
-    "type": "double",
-    "value": 0.0,
+    "value": 0.8,
     "properties": {
       "persistent": true
     }
@@ -363,6 +259,30 @@
     "name": "/Preferences/Feeder.mm.kp",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ChassisTranslationDamper",
+    "type": "double",
+    "value": 0.9,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ChassisRotationDamper",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Fire On The Run Throttling",
+    "type": "double",
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
@@ -402,7 +322,7 @@
   {
     "name": "/Preferences/CameraExtrinsics/BackLeft.pitch(deg)",
     "type": "double",
-    "value": -30.0,
+    "value": -29.999999999999996,
     "properties": {
       "persistent": true
     }
@@ -411,6 +331,22 @@
     "name": "/Preferences/CameraExtrinsics/BackLeft.roll(deg)",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ChassisTranslationSlowDamper",
+    "type": "double",
+    "value": 0.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ChassisRotationSlowDamper",
+    "type": "double",
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
