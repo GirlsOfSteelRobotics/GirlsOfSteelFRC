@@ -123,8 +123,12 @@ public class RobotContainer {
         m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_combinedCommand.createCombinedCommand(AREWEATCOMPETITIONORNOTBOOLEANYAY);
 
-        m_debugPathsTab = new DebugPathsTab(m_chassis);
-        m_debugPathsTab.addDebugPathsToShuffleBoard();
+        if (!AREWEATCOMPETITIONORNOTBOOLEANYAY) {
+            m_debugPathsTab = new DebugPathsTab(m_chassis);
+            m_debugPathsTab.addDebugPathsToShuffleBoard();
+        } else {
+            m_debugPathsTab = null;
+        }
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties(true); //!Constants.CLEANUP_PROPERTIES);

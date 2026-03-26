@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class FireOnTheRunCommand extends Command {
-    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Fire On The Run Throttling", 0.5);
+    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Fire On The Run Throttling", 0.35);
 
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
