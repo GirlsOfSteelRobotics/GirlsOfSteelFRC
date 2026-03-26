@@ -1,6 +1,7 @@
 package com.gos.rebuilt.commands;
 
 import com.gos.lib.GetAllianceUtil;
+import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.FireOnTheRun;
@@ -24,6 +25,8 @@ public class FireOnTheRunCommand extends Command {
     private final PizzaSubsystem m_pizza;
     private final FeederSubsystem m_feeder;
     private final FireOnTheRun m_fotr;
+    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() - 2, 0);
+    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() + 2, 0);
 
     public FireOnTheRunCommand(CommandXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
         m_joystick = joystick;
@@ -42,27 +45,15 @@ public class FireOnTheRunCommand extends Command {
 
     @Override
     public void execute() {
-        Translation3d goal;
-        if(m_chassis.getRegion().equals(Regions.ALLIANCE)) {
-            goal = Hub.topCenterPoint;
+        MaybeFlippedTranslation3d goal;
+        if (m_chassis.getRegion().equals(Regions.ALLIANCE)) {
+            goal = new MaybeFlippedTranslation3d(Hub.topCenterPoint);
+        } else if (m_chassis.getRegion().equals(Regions.LEFT)) {
+            goal = LEFT_AIMING_TARGET;
+        } else {
+            goal = RIGHT_AIMING_TARGET;
         }
-        else if (m_chassis.getRegion().equals(Regions.LEFT)){
-            if(GetAllianceUtil.isBlueAlliance()) {
-                goal = new Translation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() - 2, 0);
-            }
-            else{
-                goal = new Translation3d(Hub.innerCenterPoint.getTranslation().getX() + 3, Hub.innerCenterPoint.getTranslation().getY() - 2, 0);
-            }
-        }
-        else{
-            if(GetAllianceUtil.isBlueAlliance()) {
-                goal = new Translation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() + 2, 0);
-            }
-            else{
-                goal = new Translation3d(Hub.innerCenterPoint.getTranslation().getX() + 3, Hub.innerCenterPoint.getTranslation().getY() + 2, 0);
-            }
-        }
-        Translation3d imaginaryPoint = m_fotr.findImaginary(goal);
+        Translation3d imaginaryPoint = m_fotr.findImaginary(goal.getTranslation());
         m_chassis.staringDrive(
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),

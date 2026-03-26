@@ -14,6 +14,11 @@ public class MaybeFlippedTranslation3d {
         m_redTranslation = ChoreoAllianceFlipUtil.flip(m_blueTranslation);
     }
 
+    public MaybeFlippedTranslation3d(Translation3d pose){
+        m_blueTranslation = pose;
+        m_redTranslation = ChoreoAllianceFlipUtil.flip(m_blueTranslation);
+    }
+
     public Translation3d getTranslation() {
         if (GetAllianceUtil.isBlueAlliance()) {
             return m_blueTranslation;

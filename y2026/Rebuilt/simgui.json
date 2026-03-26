@@ -83,6 +83,11 @@
       "Preferences": {
         "open": true
       }
+    },
+    "transitory": {
+      "Chassis Subsystem": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {

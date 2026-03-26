@@ -299,6 +299,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
+        m_networkTableEntries.addString("Region of field",() -> getRegion().toString());
 
 
     }
@@ -510,7 +511,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             if (robotPose.getX() < Hub.innerCenterPoint.getTranslation().getX()) {
                 return Regions.ALLIANCE;
             } else {
-                if (robotPose.getY()>Hub.innerCenterPoint.getTranslation().getY()){
+                if (robotPose.getY()<Hub.innerCenterPoint.getTranslation().getY()){
                     return Regions.RIGHT;
                 }
                 else{
