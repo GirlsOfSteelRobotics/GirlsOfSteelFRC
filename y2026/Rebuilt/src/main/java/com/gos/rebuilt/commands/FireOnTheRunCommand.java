@@ -1,6 +1,5 @@
 package com.gos.rebuilt.commands;
 
-import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
@@ -59,10 +58,10 @@ public class FireOnTheRunCommand extends Command {
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d())
         );
-        if(m_chassis.getRegion().equals(Regions.ALLIANCE)) {
+        if (m_chassis.getRegion().equals(Regions.ALLIANCE)) {
             m_shooter.shootFromDistance(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
         }
-        else{
+        else {
             m_shooter.shootFromDistanceBoosted(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
         }
         m_pizza.feed();

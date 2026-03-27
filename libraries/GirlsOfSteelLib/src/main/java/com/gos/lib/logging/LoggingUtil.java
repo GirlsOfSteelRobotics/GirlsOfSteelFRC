@@ -76,7 +76,7 @@ public class LoggingUtil {
         m_booleanLogs.add(new BooleanLogger(m_loggingTable.getEntry(logName), updateChecker));
     }
 
-    public void addString(String logName, Supplier<String> updateChecker){
+    public void addString(String logName, Supplier<String> updateChecker) {
         m_stringLogs.add(new StringLogger(m_loggingTable.getEntry(logName), updateChecker));
     }
 
@@ -87,7 +87,7 @@ public class LoggingUtil {
         for (DoubleLogger doubleLogger: m_doubleLogs) {
             doubleLogger.updateDoubleEntry();
         }
-        for(StringLogger stringLogger: m_stringLogs){
+        for (StringLogger stringLogger: m_stringLogs) {
             stringLogger.updateStringEntry();
         }
     }
