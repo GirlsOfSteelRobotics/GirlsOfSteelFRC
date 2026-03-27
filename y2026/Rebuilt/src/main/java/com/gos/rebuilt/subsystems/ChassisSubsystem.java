@@ -218,9 +218,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation; // NOPMD(ImmutableField)
 
 
-    private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
-        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.05)
-        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.05)
         .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
@@ -326,7 +323,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
     public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
         setControl(
-            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+            m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(new Rotation2d(angleJoystick)));
     }

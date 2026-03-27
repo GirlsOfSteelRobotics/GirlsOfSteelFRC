@@ -3,7 +3,6 @@ package com.gos.rebuilt.commands;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
-import com.gos.reefscape.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,11 +25,9 @@ public class DavidDriveCommand extends Command {
 
     @Override
     public void initialize() {
-        if (GetAllianceUtil.isBlueAlliance()) {
-            m_lastAngle = m_chassis.getState().Pose.getRotation().getRadians();
-        } else {
+
             m_lastAngle = -m_chassis.getState().Pose.getRotation().getRadians();
-        }
+
     }
 
     @Override
@@ -66,6 +63,6 @@ public class DavidDriveCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_chassis.driveWithJoystick(0, 0, 0);
+        m_chassis.driveFieldCentric(0, 0, 0);
     }
 }
