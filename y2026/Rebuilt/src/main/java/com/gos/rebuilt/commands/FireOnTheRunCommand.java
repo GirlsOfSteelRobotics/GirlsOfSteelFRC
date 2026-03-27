@@ -1,5 +1,6 @@
 package com.gos.rebuilt.commands;
 
+import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 public class FireOnTheRunCommand extends Command {
-    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Fire On The Run Throttling", 0.5);
+    private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Fire On The Run Throttling", 0.35);
 
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
@@ -25,8 +26,8 @@ public class FireOnTheRunCommand extends Command {
     private final PizzaSubsystem m_pizza;
     private final FeederSubsystem m_feeder;
     private final FireOnTheRun m_fotr;
-    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 5, Hub.innerCenterPoint.getTranslation().getY() + 2, 1);
-    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 5, Hub.innerCenterPoint.getTranslation().getY() - 2, 1);
+    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getBlue().getX() - 5, Hub.innerCenterPoint.getBlue().getY() + 2, 1);
+    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getBlue().getX() - 5, Hub.innerCenterPoint.getBlue().getY() - 2, 1);
 
     public FireOnTheRunCommand(CommandXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
         m_joystick = joystick;
@@ -59,10 +60,10 @@ public class FireOnTheRunCommand extends Command {
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d())
         );
-        if(m_chassis.getRegion().equals(Regions.ALLIANCE)) {
+        if (m_chassis.getRegion().equals(Regions.ALLIANCE)) {
             m_shooter.shootFromDistance(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
         }
-        else{
+        else {
             m_shooter.shootFromDistanceBoosted(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
         }
         m_pizza.feed();

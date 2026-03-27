@@ -147,8 +147,8 @@ public class FeederSubsystem extends SubsystemBase {
 
             tab.add(createFeederCommand());
             tab.add(createFeederReverseCommand());
+            tab.add(createTuneRPM());
         }
-        tab.add(createTuneRPM());
     }
 
     @Override

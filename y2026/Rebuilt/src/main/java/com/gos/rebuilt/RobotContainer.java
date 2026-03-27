@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -123,8 +124,12 @@ public class RobotContainer {
         m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
         m_combinedCommand.createCombinedCommand(AREWEATCOMPETITIONORNOTBOOLEANYAY);
 
-        m_debugPathsTab = new DebugPathsTab(m_chassis);
-        m_debugPathsTab.addDebugPathsToShuffleBoard();
+        if (!AREWEATCOMPETITIONORNOTBOOLEANYAY) {
+            m_debugPathsTab = new DebugPathsTab(m_chassis);
+            m_debugPathsTab.addDebugPathsToShuffleBoard();
+        } else {
+            m_debugPathsTab = null;
+        }
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties(true); //!Constants.CLEANUP_PROPERTIES);
@@ -136,8 +141,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("DRIVE to START! xD ", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
 
-        PathfindingCommand.warmupCommand().schedule();
-        FollowPathCommand.warmupCommand().schedule();
+        CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand().andThen(FollowPathCommand.warmupCommand()));
     }
 
 
