@@ -99,6 +99,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;  // NOPMD
     private final PidProperty m_pidControllerProperty;
+    private final PidProperty m_davidDrivePidControllerProperty;
     private double m_lastSimTime;
     private final LoggingUtil m_networkTableEntries;
 
@@ -230,6 +231,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withRotationalDeadband(MAX_ROTATION_SPEED * .05)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
+    private final SwerveRequest.FieldCentricFacingAngle m_davidDriveRequest = new SwerveRequest.FieldCentricFacingAngle()
+        .withRotationalDeadband(MAX_ROTATION_SPEED * 0.05)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
      * <p>
@@ -255,6 +260,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         SmartDashboard.putData("Field3d", m_field.getField3d());
 
         m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", Constants.DEFAULT_CONSTANT_PROPERTIES, m_angleFace.HeadingController)
+            .addP(10.0)
+            .addD(0.1)
+            .build();
+
+        m_davidDrivePidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", Constants.DEFAULT_CONSTANT_PROPERTIES, m_davidDriveRequest.HeadingController)
             .addP(10.0)
             .addD(0.1)
             .build();
@@ -324,9 +334,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
     }
+
     public void davidDrive(double xJoystick, double yJoystick, double angleJoystick) {
         setControl(
-            m_angleFace.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+            m_davidDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withTargetDirection(new Rotation2d(angleJoystick)));
     }
@@ -439,6 +450,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
 
         m_pidControllerProperty.updateIfChanged();
+        m_davidDrivePidControllerProperty.updateIfChanged();
         m_networkTableEntries.updateLogs();
     }
 

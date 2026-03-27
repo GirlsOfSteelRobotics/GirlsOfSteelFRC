@@ -1,8 +1,6 @@
 package com.gos.rebuilt.commands;
 
 import com.gos.lib.pathing.MaybeFlippedTranslation3d;
-import com.gos.lib.GetAllianceUtil;
-import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.FireOnTheRun;

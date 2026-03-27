@@ -25,9 +25,11 @@ public class DavidDriveCommand extends Command {
 
     @Override
     public void initialize() {
-
+        if (GetAllianceUtil.isBlueAlliance()) {
+            m_lastAngle = m_chassis.getState().Pose.getRotation().getRadians();
+        } else {
             m_lastAngle = -m_chassis.getState().Pose.getRotation().getRadians();
-
+        }
     }
 
     @Override
