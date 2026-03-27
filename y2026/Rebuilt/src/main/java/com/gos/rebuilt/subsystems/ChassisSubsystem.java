@@ -31,6 +31,7 @@ import com.gos.lib.pathing.MaybeFlippedTranslation3d;
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.phoenix6.alerts.BasePhoenix6Alerts;
 import com.gos.lib.phoenix6.alerts.CancoderAlerts;
+import com.gos.lib.phoenix6.alerts.PigeonAlerts;
 import com.gos.lib.phoenix6.alerts.TalonFxAlerts;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
 import com.gos.lib.phoenix6.properties.pid.PhoenixPidControllerPropertyBuilder;
@@ -143,7 +144,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
 
-    private static final boolean DEBUG_SWERVE_STATE = true;
+    private static final boolean DEBUG_SWERVE_STATE = false;
 
     private final SwerveDrivePublisher m_swerveDrivePublisher;
     private static final double DEADBAN = Math.toRadians(15);
@@ -273,6 +274,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             m_alerts.add(new TalonFxAlerts(module.getSteerMotor(), "Swerve Steer[" + i + "]"));
             m_alerts.add(new CancoderAlerts(module.getEncoder()));
         }
+        m_alerts.add(new PigeonAlerts(getPigeon2()));
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
         m_swerveDrivePublisher = new SwerveDrivePublisher();
@@ -619,7 +621,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public void addChassisDebugCommands(boolean inCompetition) {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
 
-        if (inCompetition) {
+        if (!inCompetition) {
             tab.add(createFaceHub());
             tab.add(createResetPose(new Pose2d()));
 
@@ -629,6 +631,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             tab.add(createResetPose(new MaybeFlippedPose2d(redHub.getX() - 3, redHub.getY(), Rotation2d.fromDegrees(180))).withName("3m From Red"));
         }
 
+        tab.add(createCheckChassisAlertsCommand());
+
+    }
+
+    public void checkChassisAlerts() {
+        for (BasePhoenix6Alerts alert : m_alerts) {
+            alert.checkAlerts();
+        }
     }
 
     public Command createFaceHub() {
@@ -667,5 +677,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     public Command createPathfindToMaybeFlippedPose(MaybeFlippedPose2d pose) {
         return defer(() -> AutoBuilder.pathfindToPose(pose.getPose(), TUNABLE_PATH_CONSTRAINTS.getConstraints(), 0.0));
+    }
+
+    public Command createCheckChassisAlertsCommand() {
+        return runOnce(this::checkChassisAlerts).withName("Check Chassis Alerts").ignoringDisable(true);
     }
 }
