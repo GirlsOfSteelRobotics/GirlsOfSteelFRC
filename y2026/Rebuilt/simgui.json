@@ -72,6 +72,11 @@
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/Combined Commands/Shooting Easier": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 1914,
         "height": 8.069275856018066,

@@ -42,6 +42,7 @@ import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.GosField;
 import com.gos.rebuilt.MatchTime;
 import com.gos.rebuilt.RobotExtrinsic;
+import com.gos.rebuilt.enums.Regions;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -318,6 +319,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
+        m_networkTableEntries.addString("Region of field",() -> getRegion().toString());
         m_networkTableEntries.addDouble("goalAngle", this::getGoalAngleDegrees);
 
 
@@ -539,6 +541,33 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             return true;
         }
         return Math.abs(m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians()) < DEADBAN;
+    }
+
+    public Regions getRegion(){
+        Translation2d robotPose = getState().Pose.getTranslation();
+        if(GetAllianceUtil.isBlueAlliance()) {
+            if (robotPose.getX() < Hub.innerCenterPoint.getTranslation().getX()) {
+                return Regions.ALLIANCE;
+            } else {
+                if (robotPose.getY()<Hub.innerCenterPoint.getTranslation().getY()){
+                    return Regions.RIGHT;
+                }
+                else{
+                    return Regions.LEFT;
+                }
+            }
+        }
+        else{
+            if (robotPose.getX() > Hub.innerCenterPoint.getTranslation().getX()) {
+                return Regions.ALLIANCE;
+            } else {
+                if (robotPose.getY() > Hub.innerCenterPoint.getTranslation().getY()) {
+                    return Regions.RIGHT;
+                } else {
+                    return Regions.LEFT;
+                }
+            }
+        }
     }
 
     public Rotation2d getGoalAngle() {
