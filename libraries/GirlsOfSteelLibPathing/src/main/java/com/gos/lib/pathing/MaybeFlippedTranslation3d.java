@@ -26,4 +26,8 @@ public class MaybeFlippedTranslation3d {
             return m_redTranslation;
         }
     }
+
+    public Translation3d getBlue() {
+        return m_blueTranslation;
+    }
 }

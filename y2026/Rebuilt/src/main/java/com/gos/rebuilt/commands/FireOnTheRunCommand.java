@@ -24,8 +24,8 @@ public class FireOnTheRunCommand extends Command {
     private final PizzaSubsystem m_pizza;
     private final FeederSubsystem m_feeder;
     private final FireOnTheRun m_fotr;
-    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 5, Hub.innerCenterPoint.getTranslation().getY() + 2, 1);
-    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 5, Hub.innerCenterPoint.getTranslation().getY() - 2, 1);
+    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getBlue().getX() - 5, Hub.innerCenterPoint.getBlue().getY() + 2, 1);
+    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getBlue().getX() - 5, Hub.innerCenterPoint.getBlue().getY() - 2, 1);
 
     public FireOnTheRunCommand(CommandXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
         m_joystick = joystick;
