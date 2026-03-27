@@ -73,8 +73,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_table.put(MIN_DISTANCE, 3200.0);
         m_table.put(2.89, 3200.0);
         m_table.put(2.88, 3400.0);
+        m_table.put(3.00, 3375.0);
+        m_table.put(3.14,3475.0);
         m_table.put(3.49, 3550.0);
+        m_table.put(3.73,3725.0);
         m_table.put(4.08, 3800.0);
+        m_table.put(4.3, 3850.0);
         m_table.put(4.73, 4150.0);
 
 
