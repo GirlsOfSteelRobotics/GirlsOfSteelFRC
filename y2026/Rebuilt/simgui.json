@@ -72,7 +72,7 @@
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
-      "/SmartDashboard/Autos": {
+      "/Shuffleboard/Combined Commands/Shooting Easier": {
         "window": {
           "visible": true
         }
