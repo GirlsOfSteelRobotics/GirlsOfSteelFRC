@@ -90,7 +90,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.0,
+    "value": 0.0008,
     "properties": {
       "persistent": true
     }
@@ -98,7 +98,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.0001,
     "properties": {
       "persistent": true
     }
@@ -467,14 +467,6 @@
     "name": "/Preferences/ChassisRotationDamper",
     "type": "double",
     "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/TEMP USE APRILTAGS",
-    "type": "boolean",
-    "value": true,
     "properties": {
       "persistent": true
     }
