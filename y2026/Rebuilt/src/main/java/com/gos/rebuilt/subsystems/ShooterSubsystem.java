@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -46,13 +47,15 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
-    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", .01);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 1000);
+    private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 500);
     private final SparkMaxAlerts m_shooterAlert;
+    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speed booster", 1.2);
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
+    private final Debouncer m_debouncer;
 
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
@@ -66,12 +69,17 @@ public class ShooterSubsystem extends SubsystemBase {
         m_motorEncoder = m_leader.getEncoder();
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
+        m_debouncer = new Debouncer(.1);
 
         m_table.put(MIN_DISTANCE, 3200.0);
-        m_table.put(2.81, 3200.0);
+        m_table.put(2.89, 3200.0);
         m_table.put(2.88, 3400.0);
+        m_table.put(3.00, 3375.0);
+        m_table.put(3.14, 3475.0);
         m_table.put(3.49, 3550.0);
+        m_table.put(3.73, 3725.0);
         m_table.put(4.08, 3800.0);
+        m_table.put(4.3, 3850.0);
         m_table.put(4.73, 4150.0);
 
 
@@ -81,14 +89,15 @@ public class ShooterSubsystem extends SubsystemBase {
         SparkMaxConfig leaderConfig = new SparkMaxConfig();
         leaderConfig.idleMode(IdleMode.kCoast);
         leaderConfig.smartCurrentLimit(60);
-        leaderConfig.inverted(true);
+        leaderConfig.inverted(false);
         leaderConfig.encoder.positionConversionFactor(1);
         leaderConfig.encoder.velocityConversionFactor(1);
 
         SparkMaxConfig followerConfig = new SparkMaxConfig();
         followerConfig.idleMode(IdleMode.kCoast);
         followerConfig.smartCurrentLimit(60);
-        followerConfig.follow(m_leader, true);
+        followerConfig.follow(m_leader, false
+        );
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
             .addFF(1.48e-4)
@@ -147,7 +156,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double rpmToVelocity(double rpm) {
-        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .75;
+        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .37;
     }
 
     public void setRPM(double goal) {
@@ -157,12 +166,17 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isAtGoalRPM() {
-        return Math.abs(m_goal - getRPM()) < DEADBAND;
+        return m_debouncer.calculate(Math.abs(m_goal - getRPM()) < DEADBAND);
     }
 
     public void shootFromDistance(double distance) {
         double rpm = m_table.get(distance);
         setRPM(rpm);
+    }
+
+    public void shootFromDistanceBoosted(double distance) {
+        double rpm = m_table.get(distance);
+        setRPM(m_speedBoost.getValue() * rpm);
     }
 
     public double rpmFromDistance(double distance) {
@@ -185,12 +199,14 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pidProperties.updateIfChanged();
     }
 
-    public void addShooterDebugCommands() {
+    public void addShooterDebugCommands(boolean atComp) {
         ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
-        tab.add(createShooterSpinMotorForwardCommand());
-        tab.add(createShooterSpinMotorBackwardCommand());
-        tab.add(createShooterSpin2000());
-        tab.add(createShooterSpin1500());
+        if (!atComp) {
+            tab.add(createShooterSpinMotorForwardCommand());
+            tab.add(createShooterSpinMotorBackwardCommand());
+            tab.add(createShooterSpin2000());
+            tab.add(createShooterSpin1500());
+        }
         tab.add(createTuneRPM());
 
     }

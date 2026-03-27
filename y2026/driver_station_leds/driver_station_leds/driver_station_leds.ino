@@ -4,7 +4,10 @@
 #define NUM_LEDS 50
 #define LED_PIN 6
 
-#define IS_CONNECTED_BITMASK   1 << 0
+#define IS_CONNECTED_BITMASK   1 << 0 // 0
+#define OUR_TURN_BITMASK 1<<1
+#define GOOD_SHOOTING_PLACE 1<<2
+
 
 CRGB leds[NUM_LEDS];
 
@@ -31,10 +34,30 @@ void loop() {
 
 void writeRobotPatterns(uint32_t data) {
   bool is_connected = checkBit(data, IS_CONNECTED_BITMASK);
+  bool is_our_turn = checkBit(data, OUR_TURN_BITMASK);
+  bool good_shoot = checkBit(data, GOOD_SHOOTING_PLACE);
+
 
   if (!is_connected) {
     rainbowWave(50, 10);
     return;
+  }
+
+  for (int i = 31; i < 49; ++i) {
+      if (good_shoot) {
+        leds[i] = CRGB::Gold;
+      }
+  }
+
+  int time = (data >> 10) & 0x1F;
+
+  for (int i = 0; i < time; ++i) {
+    if (is_our_turn) {
+      leds[i] = CRGB::Green;
+    }
+    else {
+      leds[i] = CRGB::Red;
+    }
   }
 }
 

@@ -2,9 +2,11 @@ package com.gos.rebuilt.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
 import com.gos.rebuilt.Constants;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
@@ -28,12 +30,18 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
-    private static final double GEAR_RATIO = 45.0;
-    private final RelativeEncoder m_encoder;
+    private static final double GEAR_RATIO = 3 * 3 * 3;
+    private final AbsoluteEncoder m_absoluteEncoder;
+    private final RelativeEncoder m_relativeEncoder;
     private final SparkMaxAlerts m_pivotMotorAlerts;
     private final LoggingUtil m_networkTableEntries;
+    public static final double DEFAULT_ANGLE = 0;
+
+
     private double m_armGoalAngle = 90;
     private final RevProfiledSingleJointedArmController m_armPidController;
+
+    private final GosDoubleProperty m_tuningPivotSpeed;
 
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
@@ -43,8 +51,10 @@ public class PivotSubsystem extends SubsystemBase {
 
 
         m_pivotMotor = new SparkFlex(Constants.PIVOT_MOTOR, MotorType.kBrushless);
-        m_encoder = m_pivotMotor.getEncoder();
+        m_relativeEncoder = m_pivotMotor.getEncoder();
+        m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", -0.05);
 
+        m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder();
 
         m_pivotMotorAlerts = new SparkMaxAlerts(m_pivotMotor, "pivotMotor");
 
@@ -52,7 +62,10 @@ public class PivotSubsystem extends SubsystemBase {
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
-        pivotConfig.inverted(false);
+        pivotConfig.inverted(true);
+        pivotConfig.encoder.positionConversionFactor(GEAR_RATIO);
+        pivotConfig.encoder.velocityConversionFactor(GEAR_RATIO / 60);
+        pivotConfig.absoluteEncoder.inverted(true);
         m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(360)
@@ -83,15 +96,28 @@ public class PivotSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Pivot goal", this::getGoalAngle);
         m_networkTableEntries.addDouble("Setpoint angle", m_armPidController::getPositionSetpoint);
         m_networkTableEntries.addDouble("Setpoint Velocity", m_armPidController::getVelocitySetpoint);
+        m_networkTableEntries.addDouble("Absolute Encoder Position", this::getAbsolutePosition);
+
+        syncEncoders();
     }
 
     public double getPosition() {
-        return m_encoder.getPosition();
+        return m_relativeEncoder.getPosition();
+    }
+
+    public final void syncEncoders() {
+        m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
+    }
+
+    public double getAbsolutePosition() {
+        return m_absoluteEncoder.getPosition();
     }
 
     public double getVelocity() {
-        return m_encoder.getVelocity();
+        return m_relativeEncoder.getVelocity();
     }
+
+
 
     @Override
     public void periodic() {
@@ -109,7 +135,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_encoder.getPosition();
+        return m_relativeEncoder.getPosition();
     }
 
 
@@ -118,7 +144,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public final double getAbsoluteAngle() {
-        double angle = -m_encoder.getPosition();
+        double angle = -m_relativeEncoder.getPosition();
         if (angle < -300) {
             angle += 360;
         }
@@ -127,6 +153,12 @@ public class PivotSubsystem extends SubsystemBase {
 
     public double getGoalAngle() {
         return m_armGoalAngle;
+    }
+
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     @SuppressWarnings("removal")
@@ -147,26 +179,43 @@ public class PivotSubsystem extends SubsystemBase {
         m_pivotSimulator.update();
     }
 
-    public void addPivotDebugCommands() {
+    public void addPivotDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {
         ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
+        if (!areWeAtACompetitionOrNotBoolean) {
+            debugTabPivot.add(createPivotMoveToSpeed());
 
-        debugTabPivot.add(createMovePivotToAngleCommand(0.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(15.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(30.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(45.0));
-        debugTabPivot.add(createMovePivotToAngleCommand(90.0));
+            debugTabPivot.add(createMovePivotUpCommand());
+            debugTabPivot.add(createMovePivotDownCommand());
 
-        debugTabPivot.add(createMovePivotUpCommand());
-        debugTabPivot.add(createMovePivotDownCommand());
+            debugTabPivot.add(createMovePivotToAngleCommand(0.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(15.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(30.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(45.0));
+            debugTabPivot.add(createMovePivotToAngleCommand(90.0));
+
+        }
+        debugTabPivot.add(createPivotToCoastModeCommand().withName("Move pivot with coasting"));
+        debugTabPivot.add(createResetEncoderUpCommand());
+        debugTabPivot.add(createResetEncoderDownCommand());
+        debugTabPivot.add(createSyncEncoderCommand());
+    }
+
+    public Command createSyncEncoderCommand() {
+        return run(this::syncEncoders).withName("Sync Encoders");
     }
 
     public Command createMovePivotDownCommand() {
-        return runEnd(() -> moveArmToAngle(0), this::stop)
+        return runEnd(() -> moveArmToAngle(180), this::stop)
             .withName("Go down");
     }
 
+    public Command createMovePivotDownCommandLowMotorPercentage() {
+        return runEnd(() -> setSpeed(.02), this::stop)
+            .withName("Go down with set speed 2%");
+    }
+
     public Command createMovePivotUpCommand() {
-        return runEnd(() -> moveArmToAngle(90), this::stop)
+        return runEnd(() -> moveArmToAngle(0), this::stop)
             .withName("Go up");
     }
 
@@ -175,6 +224,23 @@ public class PivotSubsystem extends SubsystemBase {
             .withName("Go to angle" + angle);
     }
 
+    public Command createPivotMoveToSpeed() {
+        return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this:: stop).withName("move pivot to speed");
+    }
 
+    public Command createResetEncoderUpCommand() {
+        return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).withName("Reset Encoder UP").ignoringDisable(true);
+    }
+
+    public Command createResetEncoderDownCommand() {
+        return run(() -> m_relativeEncoder.setPosition(170)).withName("Reset Encoder DOWN").ignoringDisable(true);
+    }
+
+    public Command createPivotToCoastModeCommand() {
+        return this.runEnd(
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Pivot to Coast");
+    }
 }
 

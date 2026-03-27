@@ -13,8 +13,8 @@ import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -30,8 +30,8 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class PizzaSubsystem extends SubsystemBase {
 
-    private final SparkMax m_pizzaMotor;
-    private final GosDoubleProperty m_pizzaSpeedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedForward", 1);
+    private final SparkFlex m_pizzaMotor;
+    private final GosDoubleProperty m_pizzaSpeedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedForward", 0.75);
     private final GosDoubleProperty m_pizzaSpeedReverse = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedBack", 1);
 
     private final RelativeEncoder m_pizzaEncoder;
@@ -64,7 +64,7 @@ public class PizzaSubsystem extends SubsystemBase {
 
 
 
-        m_pizzaMotor = new SparkMax(Constants.PIZZA_MOTOR, MotorType.kBrushless);
+        m_pizzaMotor = new SparkFlex(Constants.PIZZA_MOTOR, MotorType.kBrushless);
 
         m_pidController = m_pizzaMotor.getClosedLoopController();
 
@@ -136,14 +136,17 @@ public class PizzaSubsystem extends SubsystemBase {
 
 
 
-    public void addPizzaDebugCommands() {
+    public void addPizzaDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {
         ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
-        tab.add(createPizzaFeedCommand());
-        tab.add(createPizzaReverseCommand());
-        tab.add(createPIZZaSpin(60));
-        tab.add(createPIZZaSpin(180));
-        tab.add(createTuneRPM());
-        tab.add(createRunUntilStall());
+        if (!areWeAtACompetitionOrNotBoolean) {
+            tab.add(createPizzaFeedCommand());
+            tab.add(createPizzaReverseCommand());
+            tab.add(createPIZZaSpin(60));
+            tab.add(createPIZZaSpin(180));
+
+            tab.add(createRunUntilStall());
+            tab.add(createTuneRPM());
+        }
     }
 
     @Override

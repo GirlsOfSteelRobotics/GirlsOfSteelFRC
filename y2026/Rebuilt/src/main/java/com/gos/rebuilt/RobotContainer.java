@@ -6,15 +6,15 @@
 package com.gos.rebuilt;
 
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.rebuilt.commands.FireOnTheRunCommand;
-import com.gos.rebuilt.commands.StaringCommand;
-import com.gos.rebuilt.subsystems.ClimberSubsystem;
+import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
+import com.gos.rebuilt.commands.JoystickFieldRelativeDriveSlowerCommand;
 
 import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.choreo_gen.DebugPathsTab;
 import com.gos.rebuilt.commands.CombinedCommand;
-import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.PivotJoyCommand;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.FeederSubsystem;
@@ -23,15 +23,24 @@ import com.gos.rebuilt.subsystems.LEDSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.generated.FinalTunerConstants;
 import frc.robot.generated.TunerConstants;
+
+import java.util.Set;
 
 
 /**
@@ -44,7 +53,6 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final ClimberSubsystem m_climberSubsystem;
     private final CommandXboxController m_driverController; //NOPMD
     private final CommandXboxController m_operatorController;
 
@@ -54,6 +62,7 @@ public class RobotContainer {
     private final PizzaSubsystem m_pizzaSubsystem;
     private final PivotSubsystem m_pivotSubsystem;
     private final FeederSubsystem m_feederSubsystem;
+    // private final ClimberSubsystem m_climberSubsystem;
     private final LEDSubsystem m_ledSUbsystem; //NOPMD
     private final CombinedCommand m_combinedCommand;
 
@@ -64,6 +73,8 @@ public class RobotContainer {
 
     private final AutoFactory m_autoFactory;
 
+    private static final boolean AREWEATCOMPETITIONORNOTBOOLEANYAY = true;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -72,19 +83,24 @@ public class RobotContainer {
         PropertyManager.setPurgeConstantPreferenceKeys(Constants.CLEANUP_PROPERTIES);
 
         m_driverController = new CommandXboxController(0);
-        m_climberSubsystem = new ClimberSubsystem();
+        // m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
 
-        m_chassis = TunerConstants.createDrivetrain();
+        if (Constants.IS_COMPETITION_ROBOT) {
+            m_chassis = FinalTunerConstants.createDrivetrain();
+        } else {
+            m_chassis = TunerConstants.createDrivetrain();
+        }
         m_intakeSubsystem = new IntakeSubsystem();
         m_shooterSubsystem = new ShooterSubsystem();
         m_pizzaSubsystem = new PizzaSubsystem();
         m_pivotSubsystem = new PivotSubsystem();
         m_feederSubsystem = new FeederSubsystem();
-        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem);
         m_combinedCommand = new CombinedCommand(m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_intakeSubsystem, m_shooterSubsystem, m_pivotSubsystem);
-        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem, m_climberSubsystem);
+        m_superStructureViz = new SuperStructureViz(m_pivotSubsystem, m_pizzaSubsystem, m_chassis, m_shooterSubsystem);
         m_autoFactory = new AutoFactory(m_chassis, m_combinedCommand);
+
+        m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem, m_autoFactory);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
@@ -99,18 +115,21 @@ public class RobotContainer {
         configureBindings();
 
         // Add debug commands
-        boolean inCompetition = false;
         m_intakeSubsystem.addIntakeDebugCommands();
-        m_shooterSubsystem.addShooterDebugCommands();
-        m_pizzaSubsystem.addPizzaDebugCommands();
-        m_chassis.addChassisDebugCommands();
-        m_feederSubsystem.addFeederDebugCommands();
-        m_climberSubsystem.addClimberDebugCommands();
-        m_pivotSubsystem.addPivotDebugCommands();
-        m_combinedCommand.createCombinedCommand(inCompetition);
+        m_shooterSubsystem.addShooterDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        m_pizzaSubsystem.addPizzaDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        m_chassis.addChassisDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        m_feederSubsystem.addFeederDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        // m_climberSubsystem.addClimberDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        m_pivotSubsystem.addPivotDebugCommands(AREWEATCOMPETITIONORNOTBOOLEANYAY);
+        m_combinedCommand.createCombinedCommand(AREWEATCOMPETITIONORNOTBOOLEANYAY);
 
-        m_debugPathsTab = new DebugPathsTab(m_chassis);
-        m_debugPathsTab.addDebugPathsToShuffleBoard();
+        if (!AREWEATCOMPETITIONORNOTBOOLEANYAY) {
+            m_debugPathsTab = new DebugPathsTab(m_chassis);
+            m_debugPathsTab.addDebugPathsToShuffleBoard();
+        } else {
+            m_debugPathsTab = null;
+        }
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties(true); //!Constants.CLEANUP_PROPERTIES);
@@ -119,6 +138,10 @@ public class RobotContainer {
         if (Constants.CLEANUP_PROPERTIES) {
             PropertyManager.purgeExtraKeys();
         }
+
+        SmartDashboard.putData("DRIVE to START! xD ", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
+
+        CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand().andThen(FollowPathCommand.warmupCommand()));
     }
 
 
@@ -133,22 +156,41 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
+        // m_chassis.setDefaultCommand(new DavidDriveCommand(m_chassis, m_driverController));
+
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
         //m_driverController.a().whileTrue(m_combinedCommand.shootBall());
-        m_driverController.a().whileTrue(m_combinedCommand.shootBallNoAiming());
+        m_driverController.a().whileTrue(m_combinedCommand.shootBall());
         m_driverController.b().whileTrue(m_pizzaSubsystem.createPizzaReverseCommand());
-        m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
+
+        // m_driverController.rightBumper().whileTrue(new StaringCommand(m_chassis, m_driverController));
+        m_driverController.rightBumper().whileTrue(m_combinedCommand.emergencyTowerShot());
 
 
-        m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
-        m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
+        m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createResetGyroCommand());
+
+        // m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
+        // m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
+        m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
+        m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper
 
 
+
+    }
+
+    private Command createDriveChassisToStartingPoseCommand() {
+        return Commands.defer(() -> {
+            if (m_autoFactory.getSelectedAuto() == null) {
+                return new PrintCommand("no auto selected");
+            }
+            MaybeFlippedPose2d startingLocation = m_autoFactory.getSelectedAuto().getStartingLocation().m_pose;
+            return m_chassis.createPathfindToMaybeFlippedPose(startingLocation);
+        }, Set.of(m_chassis));
     }
 
 

@@ -15,9 +15,9 @@ package com.gos.rebuilt;
  */
 public final class Constants {
 
-
+    public static final boolean IS_COMPETITION_ROBOT = true;
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
-    public static final boolean CLEANUP_PROPERTIES = false;
+    public static final boolean CLEANUP_PROPERTIES = true;
 
     //motors
     public static final int INTAKE_MOTOR = 10;
@@ -30,7 +30,8 @@ public final class Constants {
     public static final int CLIMBER_RIGHT_MOTOR = 16;
     public static final int SHOOTER_FOLLOWER_MOTOR = 17;
 
-
+    //joystivks
+    public static final int LED_JOSTICK = 2;
     //PWM
     public static final int LED_PORT = 0;
 }

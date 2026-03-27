@@ -60,7 +60,7 @@ public class FeederSubsystem extends SubsystemBase {
         SparkMaxConfig feederConfig = new SparkMaxConfig();
         feederConfig.idleMode(IdleMode.kCoast);
         feederConfig.smartCurrentLimit(60);
-        feederConfig.inverted(true);
+        feederConfig.inverted(false);
 
         feederConfig.encoder.positionConversionFactor(12);
         feederConfig.encoder.velocityConversionFactor(12);
@@ -138,13 +138,17 @@ public class FeederSubsystem extends SubsystemBase {
         m_networkTableEntries.updateLogs();
     }
 
-    public void addFeederDebugCommands() {
+    public void addFeederDebugCommands(boolean areweatacompetitionyesornoboolean) {
+
         ShuffleboardTab tab = Shuffleboard.getTab("Feeder");
-        tab.add(createFeederCommand());
-        tab.add(createFeederReverseCommand());
-        tab.add(createFeederSpin(1000));
-        tab.add(createFeederSpin(500));
-        tab.add(createTuneRPM());
+        if (!areweatacompetitionyesornoboolean) {
+            tab.add(createFeederSpin(1000));
+            tab.add(createFeederSpin(500));
+
+            tab.add(createFeederCommand());
+            tab.add(createFeederReverseCommand());
+            tab.add(createTuneRPM());
+        }
     }
 
     @Override

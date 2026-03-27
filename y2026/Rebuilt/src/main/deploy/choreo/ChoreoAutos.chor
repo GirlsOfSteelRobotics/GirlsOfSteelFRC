@@ -7,20 +7,132 @@
    "DefaultMaxVel":{
     "dimension":"LinVel",
     "var":{
-     "exp":"5 ft / s",
-     "val":1.524
+     "exp":"8 ft / s",
+     "val":2.4384
+    }
+   },
+   "FieldLength":{
+    "dimension":"Length",
+    "var":{
+     "exp":"53 ft + 3 in",
+     "val":16.230600000000003
+    }
+   },
+   "FieldWidth":{
+    "dimension":"Length",
+    "var":{
+     "exp":"26 ft + 3 in",
+     "val":8.001
+    }
+   },
+   "HalfBumperSize":{
+    "dimension":"Length",
+    "var":{
+     "exp":"((26.5 + 3) / 2) in",
+     "val":0.37465
+    }
+   },
+   "StartWallOffset":{
+    "dimension":"Length",
+    "var":{
+     "exp":"65 in",
+     "val":1.651
+    }
+   },
+   "StartingLine":{
+    "dimension":"Length",
+    "var":{
+     "exp":"3.564448595046997 m",
+     "val":3.564448595046997
+    }
+   },
+   "TrenchMaxVelocity":{
+    "dimension":"LinVel",
+    "var":{
+     "exp":"7 ft / s",
+     "val":2.1336
     }
    }
   },
   "poses":{
-   "RightStartPoint":{
+   "LeftTrenchEnterance":{
     "x":{
-     "exp":"3.5836076736450195 m",
-     "val":3.5836076736450195
+     "exp":"3.4801511764526367 m",
+     "val":3.4801511764526367
     },
     "y":{
-     "exp":"0.3923019766807556 m",
-     "val":0.3923019766807556
+     "exp":"(26 ft + 3 in) - 0.644054114818573 m",
+     "val":7.356945885181427
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "LeftTrenchExit":{
+    "x":{
+     "exp":"5.815463066101074 m",
+     "val":5.815463066101074
+    },
+    "y":{
+     "exp":"(26 ft + 3 in) - 0.644054114818573 m",
+     "val":7.356945885181427
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "RightStartPoint":{
+    "x":{
+     "exp":"StartingLine",
+     "val":3.564448595046997
+    },
+    "y":{
+     "exp":"StartWallOffset",
+     "val":1.651
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "RightTrenchEnterance":{
+    "x":{
+     "exp":"3.4801511764526367 m",
+     "val":3.4801511764526367
+    },
+    "y":{
+     "exp":"0.644054114818573 m",
+     "val":0.644054114818573
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "RightTrenchExit":{
+    "x":{
+     "exp":"5.815463066101074 m",
+     "val":5.815463066101074
+    },
+    "y":{
+     "exp":"0.644054114818573 m",
+     "val":0.644054114818573
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "centerShoot":{
+    "x":{
+     "exp":"1.657145619392395 m",
+     "val":1.657145619392395
+    },
+    "y":{
+     "exp":"3.9891860485076904 m",
+     "val":3.9891860485076904
     },
     "heading":{
      "exp":"3.141592653589793 rad",
@@ -29,12 +141,26 @@
    },
    "centerStartPoint":{
     "x":{
-     "exp":"3.5836079120635986 m",
-     "val":3.583607912063598
+     "exp":"StartingLine",
+     "val":3.564448595046997
     },
     "y":{
-     "exp":"3.980612277984619 m",
-     "val":3.980612277984619
+     "exp":"FieldWidth / 2",
+     "val":4.0005
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "depot":{
+    "x":{
+     "exp":"0.8581051826477051 m",
+     "val":0.8581051826477051
+    },
+    "y":{
+     "exp":"5.945061206817627 m",
+     "val":5.945061206817627
     },
     "heading":{
      "exp":"3.141592653589793 rad",
@@ -55,18 +181,46 @@
      "val":2.334920878330869
     }
    },
-   "leftStartPoint":{
+   "leftStartFaceOppSide":{
     "x":{
-     "exp":"3.564448595046997 m",
+     "exp":"leftStartPoint.x",
      "val":3.564448595046997
     },
     "y":{
-     "exp":"7.664979934692383 m",
-     "val":7.664979934692383
+     "exp":"leftStartPoint.y",
+     "val":6.35
     },
     "heading":{
-     "exp":"3.138256905339462 rad",
-     "val":3.138256905339462
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "leftStartPoint":{
+    "x":{
+     "exp":"StartingLine",
+     "val":3.564448595046997
+    },
+    "y":{
+     "exp":"FieldWidth - StartWallOffset",
+     "val":6.35
+    },
+    "heading":{
+     "exp":"180 deg",
+     "val":3.141592653589793
+    }
+   },
+   "middleShootPoint":{
+    "x":{
+     "exp":"1.857145619392395 m",
+     "val":1.857145619392395
+    },
+    "y":{
+     "exp":"4.000089186048507 m",
+     "val":4.000089186048507
+    },
+    "heading":{
+     "exp":"3.141592653589793 rad",
+     "val":3.141592653589793
     }
    },
    "outpost":{
@@ -79,8 +233,8 @@
      "val":0.6745284199714661
     },
     "heading":{
-     "exp":"-3.1415922504008544 rad",
-     "val":-3.1415922504008544
+     "exp":"90 deg",
+     "val":1.5707963267948966
     }
    },
    "rightShootPoint":{
@@ -95,6 +249,20 @@
     "heading":{
      "exp":"-2.411692886266878 rad",
      "val":-2.411692886266878
+    }
+   },
+   "rightStartFaceOppSide":{
+    "x":{
+     "exp":"RightStartPoint.x",
+     "val":3.564448595046997
+    },
+    "y":{
+     "exp":"RightStartPoint.y",
+     "val":1.651
+    },
+    "heading":{
+     "exp":"0 deg",
+     "val":0.0
     }
    }
   }
