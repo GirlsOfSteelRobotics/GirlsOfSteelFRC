@@ -19,6 +19,7 @@ public class FireOnTheRun {
     private final ChassisSubsystem m_chassis;
     private final ShooterSubsystem m_shooter;
      private final StructPublisher<Pose2d> m_publisherPose;
+     private final StructPublisher<Translation3d> m_goalPosition;
      private final List<StructPublisher<Pose3d>> m_hubList;
      private final List<ShooterSimBalls> m_shooterSimBallsList;
     private static final double ITERATIONS = 10;
@@ -28,6 +29,7 @@ public class FireOnTheRun {
         m_chassis = chassis;
         m_shooter = shooter;
          m_publisherPose = NetworkTableInstance.getDefault().getStructTopic("FOTR/robot pose", Pose2d.struct).publish();
+         m_goalPosition = NetworkTableInstance.getDefault().getStructTopic("FOTR/goal", Translation3d.struct).publish();
          m_hubList = new ArrayList<>();
          for (int i = 0; i < ITERATIONS; i++) {
              m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("FOTR/hub pose " + i, Pose3d.struct).publish());
@@ -55,6 +57,7 @@ public class FireOnTheRun {
 
     public Translation3d findImaginary(Translation3d goal) {
         m_goal = goal;
+        m_goalPosition.accept(m_goal);
         ChassisSpeeds robotVel = ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
 
 
