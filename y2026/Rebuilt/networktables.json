@@ -472,14 +472,6 @@
     }
   },
   {
-    "name": "/Preferences/TEMP USE APRILTAGS",
-    "type": "boolean",
-    "value": true,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/ChassisTranslationSlowDamper",
     "type": "double",
     "value": 0.1,

@@ -25,8 +25,8 @@ public class FireOnTheRunCommand extends Command {
     private final PizzaSubsystem m_pizza;
     private final FeederSubsystem m_feeder;
     private final FireOnTheRun m_fotr;
-    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() - 2, 0);
-    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() + 2, 0);
+    public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() + 2, 0);
+    public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getTranslation().getX() - 3, Hub.innerCenterPoint.getTranslation().getY() - 2, 0);
 
     public FireOnTheRunCommand(CommandXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
         m_joystick = joystick;
@@ -59,7 +59,12 @@ public class FireOnTheRunCommand extends Command {
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d())
         );
-        m_shooter.shootFromDistance(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
+        if(m_chassis.getRegion().equals(Regions.ALLIANCE)) {
+            m_shooter.shootFromDistance(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
+        }
+        else{
+            m_shooter.shootFromDistanceBoosted(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
+        }
         m_pizza.feed();
         m_feeder.feed();
     }
