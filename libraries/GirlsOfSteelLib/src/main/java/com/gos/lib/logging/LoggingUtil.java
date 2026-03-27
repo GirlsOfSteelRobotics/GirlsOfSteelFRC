@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 public class LoggingUtil {
 
@@ -15,6 +16,7 @@ public class LoggingUtil {
 
     private final List<DoubleLogger> m_doubleLogs = new ArrayList<>();
     private final List<BooleanLogger> m_booleanLogs = new ArrayList<>();
+    private final List<StringLogger> m_stringLogs = new ArrayList<>();
 
     private static class DoubleLogger {
         private final NetworkTableEntry m_networkTableEntry;
@@ -44,6 +46,20 @@ public class LoggingUtil {
         }
     }
 
+    private static class StringLogger {
+        private final NetworkTableEntry m_networkTableEntry;
+        private final Supplier<String> m_stringSupplier;
+
+        public StringLogger(NetworkTableEntry networkTableEntry, Supplier<String> stringSupplier) {
+            m_networkTableEntry = networkTableEntry;
+            m_stringSupplier = stringSupplier;
+        }
+
+        public void updateStringEntry() {
+            m_networkTableEntry.setString(m_stringSupplier.get());
+        }
+    }
+
     public LoggingUtil(String loggingTableName) {
         this(NetworkTableInstance.getDefault().getTable(loggingTableName));
     }
@@ -60,12 +76,19 @@ public class LoggingUtil {
         m_booleanLogs.add(new BooleanLogger(m_loggingTable.getEntry(logName), updateChecker));
     }
 
+    public void addString(String logName, Supplier<String> updateChecker) {
+        m_stringLogs.add(new StringLogger(m_loggingTable.getEntry(logName), updateChecker));
+    }
+
     public void updateLogs() {
         for (BooleanLogger booleanLogger: m_booleanLogs) {
             booleanLogger.updateBooleanEntry();
         }
         for (DoubleLogger doubleLogger: m_doubleLogs) {
             doubleLogger.updateDoubleEntry();
+        }
+        for (StringLogger stringLogger: m_stringLogs) {
+            stringLogger.updateStringEntry();
         }
     }
 }

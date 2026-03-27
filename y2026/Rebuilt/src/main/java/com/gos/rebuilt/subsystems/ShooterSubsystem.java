@@ -50,6 +50,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 500);
     private final SparkMaxAlerts m_shooterAlert;
+    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speed booster", 1.2);
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
@@ -171,6 +172,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shootFromDistance(double distance) {
         double rpm = m_table.get(distance);
         setRPM(rpm);
+    }
+
+    public void shootFromDistanceBoosted(double distance) {
+        double rpm = m_table.get(distance);
+        setRPM(m_speedBoost.getValue() * rpm);
     }
 
     public double rpmFromDistance(double distance) {
