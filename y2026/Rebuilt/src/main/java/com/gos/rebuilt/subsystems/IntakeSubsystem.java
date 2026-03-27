@@ -24,26 +24,44 @@ public class IntakeSubsystem extends SubsystemBase {
     private final LoggingUtil m_loggingUtil;
     private final SparkMaxAlerts m_intakeMotorAlert;
 
+    private final SparkFlex m_followerMotor;
+    private final SparkMaxAlerts m_followerMotorAlert;
+
 
     public IntakeSubsystem() {
         m_intakeMotor = new SparkFlex(Constants.INTAKE_MOTOR, MotorType.kBrushless);
         m_intakeMotorAlert = new SparkMaxAlerts(m_intakeMotor, "Intake Motor");
+        m_followerMotor = new SparkFlex(Constants.INTAKE_FOLLOWER_MOTOR, MotorType.kBrushless);
+        m_followerMotorAlert = new SparkMaxAlerts(m_followerMotor, "Intake Follower Motor");
+
 
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.idleMode(IdleMode.kCoast);
         intakeConfig.smartCurrentLimit(60);
         intakeConfig.inverted(false);
 
+
+        SparkMaxConfig followMotorConfig = new SparkMaxConfig();
+        followMotorConfig.follow(m_intakeMotor, true);
+        followMotorConfig.idleMode(IdleMode.kBrake);
+
+
+
         m_intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
 
         m_loggingUtil = new LoggingUtil("Intake");
         m_loggingUtil.addDouble("Current", m_intakeMotor::getOutputCurrent);
+
+
     }
 
     @Override
     public void periodic() {
         m_loggingUtil.updateLogs();
         m_intakeMotorAlert.checkAlerts();
+        m_followerMotorAlert.checkAlerts();
     }
 
 
