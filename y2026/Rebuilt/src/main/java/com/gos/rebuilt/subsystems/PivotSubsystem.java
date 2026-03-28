@@ -30,7 +30,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class PivotSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pivotMotor;
-    private static final double GEAR_RATIO = 3 * 3 * 3;
+    private static final double GEAR_RATIO = 3 * 3 * 4;
     private final AbsoluteEncoder m_absoluteEncoder;
     private final RelativeEncoder m_relativeEncoder;
     private final SparkMaxAlerts m_pivotMotorAlerts;

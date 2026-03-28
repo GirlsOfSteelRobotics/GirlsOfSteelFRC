@@ -8,38 +8,6 @@
     }
   },
   {
-    "name": "/Preferences/shooterSpeed",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.Steerkp",
-    "type": "double",
-    "value": 67.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.Drivekp",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/SdsModule.DrivekV",
-    "type": "double",
-    "value": 0.124,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/ChassisTranslationDamper",
     "type": "double",
     "value": 1.0,
@@ -48,41 +16,9 @@
     }
   },
   {
-    "name": "/Preferences/chassis Pid.mm.kp",
-    "type": "double",
-    "value": 10.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/chassis Pid.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/tuneRPM",
     "type": "double",
     "value": 2190.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/FeederSpeed",
-    "type": "double",
-    "value": 0.5,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Fire On The Run Throttling",
-    "type": "double",
-    "value": 0.5,
     "properties": {
       "persistent": true
     }
@@ -99,54 +35,6 @@
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
     "value": 0.0001,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.max_velocity",
-    "type": "double",
-    "value": 45.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
-    "type": "double",
-    "value": 45.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.aff.ks",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.aff.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.aff.kg",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot.mm.kp",
-    "type": "double",
-    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -296,38 +184,6 @@
     }
   },
   {
-    "name": "/Preferences/pizzaSpeedForward",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/pizzaSpeedBack",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/min_Spin",
-    "type": "double",
-    "value": 100.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/base_Currents",
-    "type": "double",
-    "value": 100.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Pizza.mm.kff",
     "type": "double",
     "value": 0.00278,
@@ -408,22 +264,6 @@
     }
   },
   {
-    "name": "/Preferences/PIZZAtuneRPM",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/FEEDAtuneRPM",
-    "type": "double",
-    "value": 1.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
     "type": "double",
     "value": 84.0,
@@ -483,14 +323,6 @@
     "name": "/Preferences/ChassisRotationSlowDamper",
     "type": "double",
     "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/speed booster",
-    "type": "double",
-    "value": 1.2,
     "properties": {
       "persistent": true
     }

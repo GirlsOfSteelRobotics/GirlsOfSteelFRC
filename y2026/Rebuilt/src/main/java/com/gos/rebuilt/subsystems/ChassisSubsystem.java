@@ -127,7 +127,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final SlotConfigs DEFAULT_DRIVE_CONFIG;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
-        Constants.DEFAULT_CONSTANT_PROPERTIES,
+        false,
         "Tunable path constraints",
         84,
         120,
@@ -322,6 +322,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
         m_networkTableEntries.addDouble("Timer", MatchTime::timeLeft);
+        m_networkTableEntries.addBoolean("Endgame", MatchTime::endgame);
         m_networkTableEntries.addDouble("Chassis speed", this::getSpeed);
 
 
@@ -657,7 +658,49 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         tab.add(createCheckChassisAlertsCommand());
 
+        tab.add(createSweepRightCommand());
+        tab.add(createSweepLeftCommand());
+
     }
+
+    public Command createSweepLeftCommand() {
+
+        return defer(() -> {
+            Pose2d current = getState().Pose;
+
+            Rotation2d sweepAngle;
+            if (GetAllianceUtil.isBlueAlliance()) {
+                sweepAngle = new Rotation2d(Math.toRadians(120));
+            }
+            else {
+                sweepAngle = new Rotation2d(Math.toRadians(290));
+            }
+            MaybeFlippedPose2d leftSweep = new MaybeFlippedPose2d(5.8927202224731445, 3.040609836578369, sweepAngle);
+            MaybeFlippedPose2d rightSweep = new MaybeFlippedPose2d(5.8927202224731445, 4.970119953155518, sweepAngle);
+
+            return createDriveToPointNoFlipCommand(rightSweep.getPose(), sweepAngle, current, leftSweep.getPose());
+        }).withName("Sweep Left");
+    }
+
+    public Command createSweepRightCommand() {
+
+        return defer(() -> {
+            Rotation2d sweepAngle;
+            if (GetAllianceUtil.isBlueAlliance()) {
+                sweepAngle = new Rotation2d(-2.0899424410414196);
+            }
+            else { sweepAngle = new Rotation2d(Math.toRadians(70)); }
+
+            MaybeFlippedPose2d leftSweep = new MaybeFlippedPose2d(5.8927202224731445, 3.040609836578369, sweepAngle);
+            MaybeFlippedPose2d rightSweep = new MaybeFlippedPose2d(5.8927202224731445, 4.970119953155518, sweepAngle);
+
+            Pose2d current = getState().Pose;
+            return createDriveToPointNoFlipCommand(leftSweep.getPose(), sweepAngle, current, rightSweep.getPose());
+        }).withName("Sweep Right");
+    }
+
+
+
 
     public void checkChassisAlerts() {
         for (BasePhoenix6Alerts alert : m_alerts) {
@@ -687,8 +730,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withName("Reset Gyro");
     }
 
-    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
-        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
+    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start, Pose2d middle) {
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, middle, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             TUNABLE_PATH_CONSTRAINTS.getConstraints(),

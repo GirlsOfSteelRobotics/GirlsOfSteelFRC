@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
     private final SparkFlex m_intakeMotor;
-    private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "intakeSpeed", 1);
+    private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(false, "intakeSpeed", 0.6);
 
     private final LoggingUtil m_loggingUtil;
     private final SparkMaxAlerts m_intakeMotorAlert;
