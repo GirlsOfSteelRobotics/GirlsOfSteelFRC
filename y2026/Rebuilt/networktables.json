@@ -266,7 +266,7 @@
   {
     "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
     "type": "double",
-    "value": 84.0,
+    "value": 48.0,
     "properties": {
       "persistent": true
     }
