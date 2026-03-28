@@ -332,6 +332,27 @@ public record ChoreoTraj(
 	    new Pose2d(0, 0, Rotation2d.fromRadians(0)),
 	    new Pose2d(6.096, 0, Rotation2d.fromRadians(0))
 	);
+	public static final ChoreoTraj ShootLeftDepot = new ChoreoTraj(
+	    "ShootLeftDepot",
+	    OptionalInt.empty(),
+	    1.95323,
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335)),
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
+	);
+	public static final ChoreoTraj ShootLeftDepot$0 = new ChoreoTraj(
+	    "ShootLeftDepot",
+	    OptionalInt.of(0),
+	    0.97661,
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335)),
+	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142))
+	);
+	public static final ChoreoTraj ShootLeftDepot$1 = new ChoreoTraj(
+	    "ShootLeftDepot",
+	    OptionalInt.of(1),
+	    0.97662,
+	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
+	);
 
     /**
      * A map between trajectory names and their corresponding data.
@@ -381,7 +402,10 @@ public record ChoreoTraj(
 		Map.entry("TUNING_StraightPath_MaxAccel_01fps", TUNING_StraightPath_MaxAccel_01fps),
 		Map.entry("TUNING_StraightPath_MaxAccel_05fps", TUNING_StraightPath_MaxAccel_05fps),
 		Map.entry("TUNING_StraightPath_MaxAccel_10fps", TUNING_StraightPath_MaxAccel_10fps),
-		Map.entry("TUNING_StraightPath_MaxAccel_MaxSpeed", TUNING_StraightPath_MaxAccel_MaxSpeed)
+		Map.entry("TUNING_StraightPath_MaxAccel_MaxSpeed", TUNING_StraightPath_MaxAccel_MaxSpeed),
+		Map.entry("ShootLeftDepot", ShootLeftDepot),
+		Map.entry("ShootLeftDepot$0", ShootLeftDepot$0),
+		Map.entry("ShootLeftDepot$1", ShootLeftDepot$1)
     );
 
     /**
