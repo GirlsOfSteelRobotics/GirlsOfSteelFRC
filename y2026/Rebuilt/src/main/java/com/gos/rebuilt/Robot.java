@@ -5,12 +5,16 @@
 
 package com.gos.rebuilt;
 
+import com.gos.lib.alerts.PowerDistributionAlerts;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import java.util.List;
 
 import static com.gos.rebuilt.MatchTime.shouldIShoot;
 
@@ -25,6 +29,9 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
+    private final PowerDistribution m_pdh;
+    private final PowerDistributionAlerts m_pdhAlert;
+
 
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -34,6 +41,8 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        m_pdh = new PowerDistribution();
+        m_pdhAlert = new PowerDistributionAlerts(m_pdh, List.of(17, 18, 19));
     }
 
 
@@ -52,6 +61,7 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         SmartDashboard.putBoolean("should I shoot right now??", shouldIShoot());
+        m_pdhAlert.checkAlerts();
     }
 
 

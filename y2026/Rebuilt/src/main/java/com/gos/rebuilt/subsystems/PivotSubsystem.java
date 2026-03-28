@@ -195,7 +195,8 @@ public class PivotSubsystem extends SubsystemBase {
 
         }
         debugTabPivot.add(createPivotToCoastModeCommand().withName("Move pivot with coasting"));
-        debugTabPivot.add(createResetEncoderCommand().withName("Reset pivot encoder"));
+        debugTabPivot.add(createResetEncoderUpCommand());
+        debugTabPivot.add(createResetEncoderDownCommand());
         debugTabPivot.add(createSyncEncoderCommand());
     }
 
@@ -227,8 +228,12 @@ public class PivotSubsystem extends SubsystemBase {
         return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this:: stop).withName("move pivot to speed");
     }
 
-    public Command createResetEncoderCommand() {
-        return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).ignoringDisable(true);
+    public Command createResetEncoderUpCommand() {
+        return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).withName("Reset Encoder UP").ignoringDisable(true);
+    }
+
+    public Command createResetEncoderDownCommand() {
+        return run(() -> m_relativeEncoder.setPosition(170)).withName("Reset Encoder DOWN").ignoringDisable(true);
     }
 
     public Command createPivotToCoastModeCommand() {

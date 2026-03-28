@@ -31,11 +31,9 @@ public class FireOnTheRun {
         m_publisherPose = NetworkTableInstance.getDefault().getStructTopic("FOTR/robot pose", Pose2d.struct).publish();
         m_goalPosition = NetworkTableInstance.getDefault().getStructTopic("FOTR/goal", Translation3d.struct).publish();
         m_hubList = new ArrayList<>();
-        for (int i = 0; i < ITERATIONS; i++) {
-            m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("FOTR/hub pose " + i, Pose3d.struct).publish());
-        }
         m_shooterSimBallsList = new ArrayList<>();
         for (int i = 0; i < ITERATIONS; i++) {
+            m_hubList.add(NetworkTableInstance.getDefault().getStructTopic("FOTR/hub pose " + i, Pose3d.struct).publish());
             m_shooterSimBallsList.add(new ShooterSimBalls("FOTR/hypothetical Shoot On The Move " + i));
         }
     }
