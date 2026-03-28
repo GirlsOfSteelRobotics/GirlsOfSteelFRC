@@ -18,7 +18,7 @@ public class ShootLeftDepot extends GosAuto {
         super(StartingPositions.LEFT, List.of(AutoActions.DEPOT, AutoActions.SHOOOT));
         addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartLeftPreload").getPose())));
         addCommands(followChoreoPath("StartLeftPreload"));
-        addCommands(combinedCommand.shootBall());
+        addCommands(combinedCommand.shootBall().withTimeout(5));
         addCommands(followChoreoPath("ShootLeftDepot.0"));
         addCommands(chassisSubsystem.createStop());
         addCommands(combinedCommand.intake().withTimeout(5));

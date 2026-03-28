@@ -353,6 +353,41 @@ public record ChoreoTraj(
 	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142)),
 	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
 	);
+	public static final ChoreoTraj MiddleShootDepot = new ChoreoTraj(
+	    "MiddleShootDepot",
+	    OptionalInt.empty(),
+	    2.38165,
+	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
+	);
+	public static final ChoreoTraj MiddleShootDepot$0 = new ChoreoTraj(
+	    "MiddleShootDepot",
+	    OptionalInt.of(0),
+	    1.13937,
+	    new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142))
+	);
+	public static final ChoreoTraj MiddleShootDepot$1 = new ChoreoTraj(
+	    "MiddleShootDepot",
+	    OptionalInt.of(1),
+	    1.24228,
+	    new Pose2d(0.858, 5.945, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(1.857, 4, Rotation2d.fromRadians(3.142))
+	);
+	public static final ChoreoTraj LeftTrenchCenterBump = new ChoreoTraj(
+	    "LeftTrenchCenterBump",
+	    OptionalInt.empty(),
+	    10.50838,
+	    new Pose2d(3.564, 6.35, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(2.523, 6.373, Rotation2d.fromRadians(2.335))
+	);
+	public static final ChoreoTraj RightTrenchCenterBump = new ChoreoTraj(
+	    "RightTrenchCenterBump",
+	    OptionalInt.empty(),
+	    10.32711,
+	    new Pose2d(3.564, 1.651, Rotation2d.fromRadians(3.142)),
+	    new Pose2d(2.675, 1.551, Rotation2d.fromRadians(-2.412))
+	);
 
     /**
      * A map between trajectory names and their corresponding data.
@@ -405,7 +440,12 @@ public record ChoreoTraj(
 		Map.entry("TUNING_StraightPath_MaxAccel_MaxSpeed", TUNING_StraightPath_MaxAccel_MaxSpeed),
 		Map.entry("ShootLeftDepot", ShootLeftDepot),
 		Map.entry("ShootLeftDepot$0", ShootLeftDepot$0),
-		Map.entry("ShootLeftDepot$1", ShootLeftDepot$1)
+		Map.entry("ShootLeftDepot$1", ShootLeftDepot$1),
+		Map.entry("MiddleShootDepot", MiddleShootDepot),
+		Map.entry("MiddleShootDepot$0", MiddleShootDepot$0),
+		Map.entry("MiddleShootDepot$1", MiddleShootDepot$1),
+		Map.entry("LeftTrenchCenterBump", LeftTrenchCenterBump),
+		Map.entry("RightTrenchCenterBump", RightTrenchCenterBump)
     );
 
     /**

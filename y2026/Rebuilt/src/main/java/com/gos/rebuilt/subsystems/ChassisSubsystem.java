@@ -277,7 +277,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 
 
-
         Matrix<N3, N1> singleTagStddev = VecBuilder.fill(1.5, 1.5, Units.degreesToRadians(180));
         Matrix<N3, N1> multiTagStddev = VecBuilder.fill(.5, 0.5, Units.degreesToRadians(30));
 
@@ -294,8 +293,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
             .withSimEnableProcessedStream(enableFancyCameraSim)
-            .withSimEnableDrawWireframe(enableFancyCameraSim)
-            ;
+            .withSimEnableDrawWireframe(enableFancyCameraSim);
 
 
         m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
@@ -308,7 +306,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         ));
 
 
-
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
         m_networkTableEntries.addDouble("Timer", MatchTime::timeLeft);
@@ -316,7 +313,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
         m_networkTableEntries.addBoolean("ichassisgood", this::facingHub);
-        m_networkTableEntries.addString("Region of field",() -> getRegion().toString());
+        m_networkTableEntries.addString("Region of field", () -> getRegion().toString());
         m_networkTableEntries.addDouble("goalAngle", this::getGoalAngleDegrees);
 
 
@@ -434,8 +431,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     private double getSpeed() {
-        double xSpeed =  getState().Speeds.vxMetersPerSecond;
-        double ySpeed =  getState().Speeds.vyMetersPerSecond;
+        double xSpeed = getState().Speeds.vxMetersPerSecond;
+        double ySpeed = getState().Speeds.vyMetersPerSecond;
         double actualSpeed = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
 
         return Units.metersToFeet(actualSpeed);
@@ -534,21 +531,19 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return Math.abs(m_goalAngle.getRadians() - getState().Pose.getRotation().getRadians()) < DEADBAN;
     }
 
-    public Regions getRegion(){
+    public Regions getRegion() {
         Translation2d robotPose = getState().Pose.getTranslation();
-        if(GetAllianceUtil.isBlueAlliance()) {
+        if (GetAllianceUtil.isBlueAlliance()) {
             if (robotPose.getX() < Hub.innerCenterPoint.getTranslation().getX()) {
                 return Regions.ALLIANCE;
             } else {
-                if (robotPose.getY()<Hub.innerCenterPoint.getTranslation().getY()){
+                if (robotPose.getY() < Hub.innerCenterPoint.getTranslation().getY()) {
                     return Regions.RIGHT;
-                }
-                else{
+                } else {
                     return Regions.LEFT;
                 }
             }
-        }
-        else{
+        } else {
             if (robotPose.getX() > Hub.innerCenterPoint.getTranslation().getX()) {
                 return Regions.ALLIANCE;
             } else {

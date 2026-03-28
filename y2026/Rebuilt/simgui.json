@@ -65,6 +65,7 @@
       "/Shuffleboard/arm pivot/move pivot to speed": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/DRIVE to START! xD ": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts",
@@ -73,6 +74,11 @@
     },
     "windows": {
       "/Shuffleboard/Combined Commands/Shooting Easier": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Autos": {
         "window": {
           "visible": true
         }
@@ -91,6 +97,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true
