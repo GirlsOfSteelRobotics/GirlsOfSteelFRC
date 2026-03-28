@@ -1,7 +1,6 @@
 package com.gos.rebuilt.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;

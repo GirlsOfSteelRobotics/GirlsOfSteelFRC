@@ -96,6 +96,17 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(16);
     public static final double MAX_ROTATION_SPEED = Math.toRadians(540);
 
+    public static final Translation2d LEFT_SWEEP_TRANS = new Translation2d(5.89 + Units.inchesToMeters(15), 3.04);
+    public static final Translation2d RIGHT_SWEEP_TRANS = new Translation2d(5.89 + Units.inchesToMeters(15), 4.97);
+
+    public static final Rotation2d SWEEP_RIGHT_ANGLE  = Rotation2d.fromDegrees(-120);
+    public static final Pose2d SWEEP_RIGHT_START = new Pose2d(RIGHT_SWEEP_TRANS, SWEEP_RIGHT_ANGLE);
+    public static final Pose2d SWEEP_RIGHT_END = new Pose2d(LEFT_SWEEP_TRANS, SWEEP_RIGHT_ANGLE);
+
+    public static final Rotation2d SWEEP_LEFT_ANGLE  = Rotation2d.fromDegrees(120);
+    public static final Pose2d SWEEP_LEFT_START = new Pose2d(LEFT_SWEEP_TRANS, SWEEP_LEFT_ANGLE);
+    public static final Pose2d SWEEP_LEFT_END = new Pose2d(RIGHT_SWEEP_TRANS, SWEEP_LEFT_ANGLE);
+
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;  // NOPMD
     private final PidProperty m_pidControllerProperty;
@@ -663,17 +674,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     }
 
-    public static final Translation2d LEFT_SWEEP_TRANS = new Translation2d(5.89 + Units.inchesToMeters(15), 3.04);
-    public static final Translation2d RIGHT_SWEEP_TRANS = new Translation2d(5.89 + Units.inchesToMeters(15), 4.97);
-
-    public static final Rotation2d SWEEP_RIGHT_ANGLE  = Rotation2d.fromDegrees(-120);
-    public static final Pose2d SWEEP_RIGHT_START = new Pose2d(RIGHT_SWEEP_TRANS, SWEEP_RIGHT_ANGLE);
-    public static final Pose2d SWEEP_RIGHT_END = new Pose2d(LEFT_SWEEP_TRANS, SWEEP_RIGHT_ANGLE);
-
-    public static final Rotation2d SWEEP_LEFT_ANGLE  = Rotation2d.fromDegrees(120);
-    public static final Pose2d SWEEP_LEFT_START = new Pose2d(LEFT_SWEEP_TRANS, SWEEP_LEFT_ANGLE);
-    public static final Pose2d SWEEP_LEFT_END = new Pose2d(RIGHT_SWEEP_TRANS, SWEEP_LEFT_ANGLE);
-
     public Command createSweepLeftCommand() {
 
         return defer(() -> {
@@ -682,7 +682,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 current = ChoreoAllianceFlipUtil.flip(current);
             }
 
-            return createDriveToPointNoFlipCommand(current, SWEEP_LEFT_START, SWEEP_LEFT_END, SWEEP_LEFT_ANGLE);
+            return createDriveToPointCommand(current, SWEEP_LEFT_START, SWEEP_LEFT_END, SWEEP_LEFT_ANGLE);
         }).withName("Sweep Left");
     }
 
@@ -693,7 +693,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             if (GetAllianceUtil.isRedAlliance()) {
                 current = ChoreoAllianceFlipUtil.flip(current);
             }
-            return createDriveToPointNoFlipCommand(current, SWEEP_RIGHT_START, SWEEP_RIGHT_END, SWEEP_RIGHT_ANGLE);
+            return createDriveToPointCommand(current, SWEEP_RIGHT_START, SWEEP_RIGHT_END, SWEEP_RIGHT_ANGLE);
         }).withName("Sweep Right");
     }
 
@@ -728,7 +728,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withName("Reset Gyro");
     }
 
-    public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d middle, Pose2d end, Rotation2d endAngle) {
+    public Command createDriveToPointCommand(Pose2d start, Pose2d middle, Pose2d end, Rotation2d endAngle) {
         List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, middle, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
@@ -736,7 +736,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             null,
             new GoalEndState(0.0, endAngle)
         );
-//        path.preventFlipping = true;
         return (AutoBuilder.followPath(path));
     }
 
