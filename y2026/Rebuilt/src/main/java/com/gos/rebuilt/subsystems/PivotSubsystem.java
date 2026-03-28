@@ -118,7 +118,6 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
 
-
     @Override
     public void periodic() {
         m_networkTableEntries.updateLogs();
@@ -136,6 +135,10 @@ public class PivotSubsystem extends SubsystemBase {
 
     public double getAngle() {
         return m_relativeEncoder.getPosition();
+    }
+
+    public void clearStickyFaults() {
+        m_pivotMotor.clearFaults();
     }
 
 
@@ -225,7 +228,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createPivotMoveToSpeed() {
-        return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this:: stop).withName("move pivot to speed");
+        return runEnd(() -> setSpeed(m_tuningPivotSpeed.getValue()), this::stop).withName("move pivot to speed");
     }
 
     public Command createResetEncoderUpCommand() {

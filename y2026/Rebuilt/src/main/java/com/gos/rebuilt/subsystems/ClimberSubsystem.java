@@ -144,6 +144,11 @@ public class ClimberSubsystem extends SubsystemBase {
 
     }
 
+    public void clearStickyFaults() {
+        m_climberLeftMotor.clearFaults();
+        m_climberRightMotor.clearFaults();
+    }
+
     public double getGoalHeight() {
         return m_goalHeight;
     }

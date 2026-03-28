@@ -368,6 +368,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
     }
 
+    public void clearStickyFaults() {
+        getPigeon2().clearStickyFaults();
+        for (int i = 0; i < 4; i++) {
+            getModule(i).getSteerMotor().clearStickyFaults();
+            getModule(i).getDriveMotor().clearStickyFaults();
+            getModule(i).getEncoder().clearStickyFaults();
+        }
+    }
+
     /**
      * Returns a command that applies the specified control request to this swerve drivetrain.
      *

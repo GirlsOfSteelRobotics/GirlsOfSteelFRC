@@ -65,6 +65,10 @@ public class IntakeSubsystem extends SubsystemBase {
         tab.add(createIntakeOutCommand());
     }
 
+    public void clearStickyFaults() {
+        m_intakeMotor.clearFaults();
+    }
+
     public Command createIntakeInCommand() {
         return runEnd(this::intake, this::stop).withName("Intake In! :)");
     }

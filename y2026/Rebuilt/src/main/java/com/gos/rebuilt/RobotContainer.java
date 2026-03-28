@@ -42,6 +42,8 @@ import frc.robot.generated.TunerConstants;
 
 import java.util.Set;
 
+import static edu.wpi.first.wpilibj2.command.Commands.run;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -140,6 +142,7 @@ public class RobotContainer {
         }
 
         SmartDashboard.putData("DRIVE to START! xD ", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
+        SmartDashboard.putData("Clear Sticky Faults", createResetStickyFaults());
 
         CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand().andThen(FollowPathCommand.warmupCommand()));
     }
@@ -183,6 +186,7 @@ public class RobotContainer {
 
     }
 
+
     private Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
             if (m_autoFactory.getSelectedAuto() == null) {
@@ -193,6 +197,19 @@ public class RobotContainer {
         }, Set.of(m_chassis));
     }
 
+
+    private void resetStickyFaults() {
+        m_feederSubsystem.clearStickyFaults();
+        m_intakeSubsystem.clearStickyFaults();
+        m_pivotSubsystem.clearStickyFaults();
+        m_pizzaSubsystem.clearStickyFaults();
+        m_shooterSubsystem.clearStickyFaults();
+        m_chassis.clearStickyFaults();
+    }
+
+    private Command createResetStickyFaults() {
+        return run(this::resetStickyFaults).withName("Unstick Faults :)");
+    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

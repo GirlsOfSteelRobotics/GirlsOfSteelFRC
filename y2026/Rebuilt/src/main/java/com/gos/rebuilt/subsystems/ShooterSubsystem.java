@@ -129,6 +129,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
 
+    public void clearStickyFaults() {
+        m_leader.clearFaults();
+        m_follower.clearFaults();
+    }
+
     public void spinMotorForward() {
         m_leader.set(m_shooterSpeed.getValue());
     }
