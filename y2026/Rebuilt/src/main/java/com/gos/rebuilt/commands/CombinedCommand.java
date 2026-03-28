@@ -29,6 +29,16 @@ public class CombinedCommand {
         m_feederSubsystem = feeder;
     }
 
+    public Command sweepLeft() {
+        return m_chassisSubsystem.createSweepLeftCommand()
+            .alongWith(intake());
+    }
+
+    public Command sweepRight() {
+        return m_chassisSubsystem.createSweepRightCommand()
+            .alongWith(intake());
+    }
+
     public Command shootBall() {
         return m_chassisSubsystem.createFaceHub()
             .alongWith((m_shooterSubsystem.createShootFromDistanceCommand(m_chassisSubsystem::getDistanceFromHub)))

@@ -55,7 +55,35 @@
    }
   },
   "poses":{
-   "LeftTrenchEnterance":{
+   "LeftBumpEntrance":{
+    "x":{
+     "exp":"3.5162644386291504 m",
+     "val":3.5162644386291504
+    },
+    "y":{
+     "exp":"5.564469814300537 m",
+     "val":5.564469814300537
+    },
+    "heading":{
+     "exp":"LeftTrenchEntrance.heading",
+     "val":3.141592653589793
+    }
+   },
+   "LeftBumpExit":{
+    "x":{
+     "exp":"5.715985298156738 m",
+     "val":5.715985298156738
+    },
+    "y":{
+     "exp":"5.564469814300537 m",
+     "val":5.564469814300537
+    },
+    "heading":{
+     "exp":"LeftTrenchExit.heading",
+     "val":3.141592653589793
+    }
+   },
+   "LeftTrenchEntrance":{
     "x":{
      "exp":"3.4801511764526367 m",
      "val":3.4801511764526367
@@ -83,6 +111,34 @@
      "val":3.141592653589793
     }
    },
+   "RightBumpEntrance":{
+    "x":{
+     "exp":"3.516263723373413 m",
+     "val":3.516263723373413
+    },
+    "y":{
+     "exp":"2.499052047729492 m",
+     "val":2.499052047729492
+    },
+    "heading":{
+     "exp":"RightTrenchEntrance.heading",
+     "val":3.141592653589793
+    }
+   },
+   "RightBumpExit":{
+    "x":{
+     "exp":"5.6592183113098145 m",
+     "val":5.6592183113098145
+    },
+    "y":{
+     "exp":"2.4848601818084717 m",
+     "val":2.4848601818084717
+    },
+    "heading":{
+     "exp":"RightTrenchExit.heading",
+     "val":3.141592653589793
+    }
+   },
    "RightStartPoint":{
     "x":{
      "exp":"StartingLine",
@@ -97,7 +153,7 @@
      "val":3.141592653589793
     }
    },
-   "RightTrenchEnterance":{
+   "RightTrenchEntrance":{
     "x":{
      "exp":"3.4801511764526367 m",
      "val":3.4801511764526367

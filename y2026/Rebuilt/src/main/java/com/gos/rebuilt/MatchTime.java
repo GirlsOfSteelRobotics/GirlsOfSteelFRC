@@ -49,5 +49,10 @@ public class MatchTime {
         return -1;
     }
 
+    public static boolean endgame() {
+        double time = DriverStation.getMatchTime();
+        return time <= 30;
+    }
+
 
 }

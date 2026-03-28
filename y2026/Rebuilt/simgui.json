@@ -1,11 +1,4 @@
 {
-  "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    }
-  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -14,6 +7,8 @@
       "/Shuffleboard/Chassis/Check Chassis Alerts": "Command",
       "/Shuffleboard/Chassis/Face Hub": "Command",
       "/Shuffleboard/Chassis/Reset Robot Pose!!Pose2d(Translation2d(X: 0.00, Y: 0.00), Rotation2d(Rads: 0.00, Deg: 0.00))": "Command",
+      "/Shuffleboard/Chassis/Sweep Left": "Command",
+      "/Shuffleboard/Chassis/Sweep Right": "Command",
       "/Shuffleboard/Climber/Climb Down": "Command",
       "/Shuffleboard/Climber/Climb Up": "Command",
       "/Shuffleboard/Climber/Climber go to height 0.0": "Command",
@@ -75,6 +70,8 @@
       "/Shuffleboard/arm pivot/move pivot to speed": "Command",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Autos": "String Chooser",
+      "/SmartDashboard/Choreo Alerts": "Alerts",
+      "/SmartDashboard/Clear Sticky Faults": "Command",
       "/SmartDashboard/DRIVE to START! xD ": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts",
@@ -82,6 +79,16 @@
       "/SmartDashboard/VisionSystemSim-AprilTagSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/Chassis/Sweep Left": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Chassis/Sweep Right": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Combined Commands/Shooting Easier": {
         "window": {
           "visible": true
@@ -92,7 +99,19 @@
           "visible": true
         }
       },
+      "/SmartDashboard/Clear Sticky Faults": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+        },
+        "Trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
         "bottom": 1914,
         "height": 8.069275856018066,
         "left": 245,

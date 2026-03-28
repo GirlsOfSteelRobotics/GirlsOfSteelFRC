@@ -24,6 +24,10 @@ public class AutoFactory {
         m_chooser.addOption("Start Right Preload Center", new RightPreloadTrenchCenter(chassisSubsystem, combinedCommand));
         m_chooser.addOption("Start Left Preload Center", new LeftPreloadTrenchCenter(chassisSubsystem, combinedCommand));
 
+        m_chooser.addOption("Left -> Depot -> Shoot", new ShootLeftDepot(chassisSubsystem, combinedCommand));
+        m_chooser.addOption("Middle -> Shoot -> Depot -> Shoot", new MiddleShootDepot(chassisSubsystem, combinedCommand));
+        m_chooser.addOption("Left -> Trench -> Center -> Bump -> Shoot", new LeftTrenchCenterBump(chassisSubsystem, combinedCommand));
+        m_chooser.addOption("Right -> Trench -> Center -> Bump -> Shoot", new RightTrenchCenterBump(chassisSubsystem, combinedCommand));
         SmartDashboard.putData("Autos", m_chooser);
 
     }

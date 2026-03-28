@@ -63,7 +63,6 @@ public class PizzaSubsystem extends SubsystemBase {
         pizzaConfig.encoder.velocityConversionFactor(3 * 4 * 9);
 
 
-
         m_pizzaMotor = new SparkFlex(Constants.PIZZA_MOTOR, MotorType.kBrushless);
 
         m_pidController = m_pizzaMotor.getClosedLoopController();
@@ -116,6 +115,10 @@ public class PizzaSubsystem extends SubsystemBase {
         return (getRPM() < MIN_SPIN.getValue() && m_pizzaMotor.getOutputCurrent() > BASE_CURRENTS.getValue());
     }
 
+    public void clearStickyFaults() {
+        m_pizzaMotor.clearFaults();
+    }
+
     public void stop() {
         m_pizzaMotor.stopMotor();
     }
@@ -133,7 +136,6 @@ public class PizzaSubsystem extends SubsystemBase {
     public double getRPM() {
         return m_pizzaEncoder.getVelocity();
     }
-
 
 
     public void addPizzaDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {

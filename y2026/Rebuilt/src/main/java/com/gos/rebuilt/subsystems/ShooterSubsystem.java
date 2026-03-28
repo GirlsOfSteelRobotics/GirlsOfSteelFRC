@@ -48,9 +48,9 @@ public class ShooterSubsystem extends SubsystemBase {
     private final RelativeEncoder m_motorEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tuneRPM", 500);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 3725);
     private final SparkMaxAlerts m_shooterAlert;
-    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speed booster", 1.2);
+    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speed booster", 1.1);
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
@@ -127,6 +127,11 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_follower.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+    }
+
+    public void clearStickyFaults() {
+        m_leader.clearFaults();
+        m_follower.clearFaults();
     }
 
     public void spinMotorForward() {
