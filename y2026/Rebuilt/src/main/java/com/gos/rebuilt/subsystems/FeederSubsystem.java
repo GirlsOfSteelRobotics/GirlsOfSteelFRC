@@ -47,8 +47,6 @@ public class FeederSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FEEDAtuneRPM", 1);
 
 
-
-
     public FeederSubsystem() {
 
         m_networkTableEntries = new LoggingUtil("Feeder Subsystem");
@@ -97,6 +95,10 @@ public class FeederSubsystem extends SubsystemBase {
 
         m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
 
+    }
+
+    public void clearStickyFaults() {
+        m_feederMotor.clearFaults();
     }
 
     public double getGoal() {

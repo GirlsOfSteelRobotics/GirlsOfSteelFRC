@@ -96,6 +96,17 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(16);
     public static final double MAX_ROTATION_SPEED = Math.toRadians(540);
 
+    public static final Translation2d LEFT_SWEEP_TRANS = new Translation2d(5.89 + Units.inchesToMeters(15), 3.04);
+    public static final Translation2d RIGHT_SWEEP_TRANS = new Translation2d(5.89 + Units.inchesToMeters(15), 4.97);
+
+    public static final Rotation2d SWEEP_RIGHT_ANGLE  = Rotation2d.fromDegrees(-120);
+    public static final Pose2d SWEEP_RIGHT_START = new Pose2d(RIGHT_SWEEP_TRANS, SWEEP_RIGHT_ANGLE);
+    public static final Pose2d SWEEP_RIGHT_END = new Pose2d(LEFT_SWEEP_TRANS, SWEEP_RIGHT_ANGLE);
+
+    public static final Rotation2d SWEEP_LEFT_ANGLE  = Rotation2d.fromDegrees(120);
+    public static final Pose2d SWEEP_LEFT_START = new Pose2d(LEFT_SWEEP_TRANS, SWEEP_LEFT_ANGLE);
+    public static final Pose2d SWEEP_LEFT_END = new Pose2d(RIGHT_SWEEP_TRANS, SWEEP_LEFT_ANGLE);
+
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;  // NOPMD
     private final PidProperty m_pidControllerProperty;
@@ -127,7 +138,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private static final SlotConfigs DEFAULT_DRIVE_CONFIG;
 
     private static final TunablePathConstraints TUNABLE_PATH_CONSTRAINTS = new TunablePathConstraints(
-        Constants.DEFAULT_CONSTANT_PROPERTIES,
+        false,
         "Tunable path constraints",
         84,
         120,
@@ -290,7 +301,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_swerveDrivePublisher = new SwerveDrivePublisher();
 
 
-
         Matrix<N3, N1> singleTagStddev = VecBuilder.fill(1.5, 1.5, Units.degreesToRadians(180));
         Matrix<N3, N1> multiTagStddev = VecBuilder.fill(.5, 0.5, Units.degreesToRadians(30));
 
@@ -307,8 +317,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withSingleTagMaxAmbiguity(.5)
             .withSimEnableRawStream(enableFancyCameraSim)
             .withSimEnableProcessedStream(enableFancyCameraSim)
-            .withSimEnableDrawWireframe(enableFancyCameraSim)
-            ;
+            .withSimEnableDrawWireframe(enableFancyCameraSim);
 
 
         m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
@@ -321,10 +330,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         ));
 
 
-
         m_networkTableEntries = new LoggingUtil("Chassis Subsystem");
         m_networkTableEntries.addDouble("Distance", () -> getDistanceToObject(Hub.innerCenterPoint));
         m_networkTableEntries.addDouble("Timer", MatchTime::timeLeft);
+        m_networkTableEntries.addBoolean("Endgame", MatchTime::endgame);
         m_networkTableEntries.addDouble("Chassis speed", this::getSpeed);
 
 
@@ -368,6 +377,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             );
         } catch (Exception ex) {  // NOPMD(AvoidCatchingGenericException)
             DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
+        }
+    }
+
+    public void clearStickyFaults() {
+        getPigeon2().clearStickyFaults();
+        for (int i = 0; i < 4; i++) {
+            getModule(i).getSteerMotor().clearStickyFaults();
+            getModule(i).getDriveMotor().clearStickyFaults();
+            getModule(i).getEncoder().clearStickyFaults();
         }
     }
 
@@ -455,8 +473,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     private double getSpeed() {
-        double xSpeed =  getState().Speeds.vxMetersPerSecond;
-        double ySpeed =  getState().Speeds.vyMetersPerSecond;
+        double xSpeed = getState().Speeds.vxMetersPerSecond;
+        double ySpeed = getState().Speeds.vyMetersPerSecond;
         double actualSpeed = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
 
         return Units.metersToFeet(actualSpeed);
@@ -651,7 +669,36 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         tab.add(createCheckChassisAlertsCommand());
 
+        tab.add(createSweepRightCommand());
+        tab.add(createSweepLeftCommand());
+
     }
+
+    public Command createSweepLeftCommand() {
+
+        return defer(() -> {
+            Pose2d current = getState().Pose;
+            if (GetAllianceUtil.isRedAlliance()) {
+                current = ChoreoAllianceFlipUtil.flip(current);
+            }
+
+            return createDriveToPointCommand(current, SWEEP_LEFT_START, SWEEP_LEFT_END, SWEEP_LEFT_ANGLE);
+        }).withName("Sweep Left");
+    }
+
+    public Command createSweepRightCommand() {
+
+        return defer(() -> {
+            Pose2d current = getState().Pose;
+            if (GetAllianceUtil.isRedAlliance()) {
+                current = ChoreoAllianceFlipUtil.flip(current);
+            }
+            return createDriveToPointCommand(current, SWEEP_RIGHT_START, SWEEP_RIGHT_END, SWEEP_RIGHT_ANGLE);
+        }).withName("Sweep Right");
+    }
+
+
+
 
     public void checkChassisAlerts() {
         for (BasePhoenix6Alerts alert : m_alerts) {
@@ -681,15 +728,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withName("Reset Gyro");
     }
 
-    public Command createDriveToPointNoFlipCommand(Pose2d end, Rotation2d endAngle, Pose2d start) {
-        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
+    public Command createDriveToPointCommand(Pose2d start, Pose2d middle, Pose2d end, Rotation2d endAngle) {
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, middle, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             TUNABLE_PATH_CONSTRAINTS.getConstraints(),
             null,
             new GoalEndState(0.0, endAngle)
         );
-        path.preventFlipping = true;
         return (AutoBuilder.followPath(path));
     }
 

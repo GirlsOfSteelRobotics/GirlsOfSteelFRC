@@ -20,10 +20,14 @@ public final class ChoreoVars {
     public static final LinearVelocity TrenchMaxVelocity = Units.MetersPerSecond.of(2.134);
 
     public static final class Poses {
-        public static final Pose2d LeftTrenchEnterance = new Pose2d(3.48, 7.357, Rotation2d.fromRadians(3.142));
+        public static final Pose2d LeftBumpEntrance = new Pose2d(3.516, 5.564, Rotation2d.fromRadians(3.142));
+        public static final Pose2d LeftBumpExit = new Pose2d(5.716, 5.564, Rotation2d.fromRadians(3.142));
+        public static final Pose2d LeftTrenchEntrance = new Pose2d(3.48, 7.357, Rotation2d.fromRadians(3.142));
         public static final Pose2d LeftTrenchExit = new Pose2d(5.815, 7.357, Rotation2d.fromRadians(3.142));
+        public static final Pose2d RightBumpEntrance = new Pose2d(3.516, 2.499, Rotation2d.fromRadians(3.142));
+        public static final Pose2d RightBumpExit = new Pose2d(5.659, 2.485, Rotation2d.fromRadians(3.142));
         public static final Pose2d RightStartPoint = new Pose2d(3.564, 1.651, Rotation2d.fromRadians(3.142));
-        public static final Pose2d RightTrenchEnterance = new Pose2d(3.48, 0.644, Rotation2d.fromRadians(3.142));
+        public static final Pose2d RightTrenchEntrance = new Pose2d(3.48, 0.644, Rotation2d.fromRadians(3.142));
         public static final Pose2d RightTrenchExit = new Pose2d(5.815, 0.644, Rotation2d.fromRadians(3.142));
         public static final Pose2d centerShoot = new Pose2d(1.657, 3.989, Rotation2d.fromRadians(3.142));
         public static final Pose2d centerStartPoint = new Pose2d(3.564, 4, Rotation2d.fromRadians(3.142));

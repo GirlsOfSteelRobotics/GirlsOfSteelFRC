@@ -27,6 +27,7 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
@@ -41,6 +42,8 @@ import frc.robot.generated.FinalTunerConstants;
 import frc.robot.generated.TunerConstants;
 
 import java.util.Set;
+
+import static edu.wpi.first.wpilibj2.command.Commands.run;
 
 
 /**
@@ -65,6 +68,7 @@ public class RobotContainer {
     // private final ClimberSubsystem m_climberSubsystem;
     private final LEDSubsystem m_ledSUbsystem; //NOPMD
     private final CombinedCommand m_combinedCommand;
+    private final PowerDistribution m_pdh;
 
 
     private final DebugPathsTab m_debugPathsTab;
@@ -79,9 +83,9 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer() {
+    public RobotContainer(PowerDistribution pdh) {
         PropertyManager.setPurgeConstantPreferenceKeys(Constants.CLEANUP_PROPERTIES);
-
+        m_pdh = pdh;
         m_driverController = new CommandXboxController(0);
         // m_climberSubsystem = new ClimberSubsystem();
         m_operatorController = new CommandXboxController(1);
@@ -140,6 +144,7 @@ public class RobotContainer {
         }
 
         SmartDashboard.putData("DRIVE to START! xD ", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
+        SmartDashboard.putData("Clear Sticky Faults", createResetStickyFaults());
 
         CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand().andThen(FollowPathCommand.warmupCommand()));
     }
@@ -175,6 +180,8 @@ public class RobotContainer {
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
         m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
+        m_driverController.povLeft().whileTrue(m_combinedCommand.sweepLeft());
+        m_driverController.povRight().whileTrue(m_combinedCommand.sweepRight());
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper
@@ -182,6 +189,7 @@ public class RobotContainer {
 
 
     }
+
 
     private Command createDriveChassisToStartingPoseCommand() {
         return Commands.defer(() -> {
@@ -193,6 +201,20 @@ public class RobotContainer {
         }, Set.of(m_chassis));
     }
 
+
+    private void resetStickyFaults() {
+        m_feederSubsystem.clearStickyFaults();
+        m_intakeSubsystem.clearStickyFaults();
+        m_pivotSubsystem.clearStickyFaults();
+        m_pizzaSubsystem.clearStickyFaults();
+        m_shooterSubsystem.clearStickyFaults();
+        m_chassis.clearStickyFaults();
+        m_pdh.clearStickyFaults();
+    }
+
+    private Command createResetStickyFaults() {
+        return run(this::resetStickyFaults).ignoringDisable(true).withName("Unstick Faults :)");
+    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
