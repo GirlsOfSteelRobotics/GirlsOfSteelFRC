@@ -21,6 +21,7 @@ public final class Constants {
 
     //motors
     public static final int INTAKE_MOTOR = 10;
+    public static final int INTAKE_FOLLOWER_MOTOR = 18;
     public static final int SHOOTER_MOTOR = 11;
     public static final int PIZZA_MOTOR = 12;
     public static final int PIVOT_MOTOR = 13;
