@@ -53,6 +53,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_loggingUtil = new LoggingUtil("Intake");
         m_loggingUtil.addDouble("Current", m_intakeMotor::getOutputCurrent);
+        m_loggingUtil.addDouble ("follower current", m_followerMotor::getOutputCurrent);
 
 
     }
