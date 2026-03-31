@@ -94,6 +94,11 @@
           "visible": true
         }
       },
+      "/Shuffleboard/arm pivot/Reset Encoder UP": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Autos": {
         "window": {
           "visible": true
@@ -132,6 +137,12 @@
     },
     "transitory": {
       "Chassis Subsystem": {
+        "open": true
+      },
+      "Pivot Subsystem: Left": {
+        "open": true
+      },
+      "Pivot Subsystem: Right": {
         "open": true
       },
       "Shooter Subsystem": {
