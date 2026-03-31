@@ -4,7 +4,6 @@ import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
-import com.gos.rebuilt.Constants;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
@@ -26,7 +25,7 @@ public class PivotSide {
 
     private static final double GEAR_RATIO = 3 * 3 * 4;
     public static final double STARTING_ANGLE = 100;
-    public static final double DEPLOYED_ANGLE = 0;
+    public static final double DEPLOYED_ANGLE = -3;
 
     private final SparkFlex m_pivotMotor;
     private final AbsoluteEncoder m_absoluteEncoder;
@@ -43,7 +42,7 @@ public class PivotSide {
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
-    public PivotSide(int id, boolean inverted, String name) {
+    public PivotSide(int id, boolean inverted, double offset, String name) {
 
 
         m_pivotMotor = new SparkFlex(id, MotorType.kBrushless);
@@ -61,8 +60,12 @@ public class PivotSide {
         pivotConfig.inverted(inverted);
         pivotConfig.encoder.positionConversionFactor(360 / GEAR_RATIO);
         pivotConfig.encoder.velocityConversionFactor(360 / GEAR_RATIO / 60);
-        pivotConfig.absoluteEncoder.inverted(true);
-        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
+        pivotConfig.absoluteEncoder.inverted(inverted);
+        pivotConfig.absoluteEncoder.positionConversionFactor(360);
+        pivotConfig.absoluteEncoder.zeroCentered(true);
+        pivotConfig.absoluteEncoder.zeroOffset(offset);
+
+        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
             .addMaxVelocity(360)
             .addMaxAcceleration(540)
@@ -137,7 +140,7 @@ public class PivotSide {
     }
 
     public final double getAbsoluteAngle() {
-        double angle = -m_relativeEncoder.getPosition();
+        double angle = m_relativeEncoder.getPosition();
         if (angle < -300) {
             angle += 360;
         }

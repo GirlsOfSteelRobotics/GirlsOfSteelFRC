@@ -8,8 +8,8 @@ package com.gos.rebuilt;
 
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
+import com.gos.rebuilt.commands.DavidDriveCommand;
 import com.gos.rebuilt.commands.FireOnTheRunCommand;
-import com.gos.rebuilt.commands.JoystickFieldRelativeDriveCommand;
 import com.gos.rebuilt.commands.JoystickFieldRelativeDriveSlowerCommand;
 
 import com.gos.rebuilt.autos.AutoFactory;
@@ -160,8 +160,8 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
-        // m_chassis.setDefaultCommand(new DavidDriveCommand(m_chassis, m_driverController));
+        // m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
+        m_chassis.setDefaultCommand(new DavidDriveCommand(m_chassis, m_driverController));
 
         m_pivotSubsystem.setDefaultCommand(new PivotJoyCommand(m_pivotSubsystem, m_operatorController));
         //m_driverController.a().whileTrue(m_combinedCommand.shootBall());
@@ -182,6 +182,7 @@ public class RobotContainer {
         m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
         m_driverController.povLeft().whileTrue(m_combinedCommand.sweepLeft());
         m_driverController.povRight().whileTrue(m_combinedCommand.sweepRight());
+        m_driverController.y().whileTrue(m_pivotSubsystem.createMovePivotDownCommand());
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper
@@ -224,5 +225,9 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         return m_autoFactory.getSelectedAuto();
+    }
+
+    public void disabledPeriodic() {
+        m_pivotSubsystem.syncEncoders();
     }
 }

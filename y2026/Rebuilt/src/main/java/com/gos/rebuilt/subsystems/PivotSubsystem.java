@@ -16,8 +16,8 @@ public class PivotSubsystem extends SubsystemBase {
     private final PivotSide m_right;
 
     public PivotSubsystem() {
-        m_left = new PivotSide(Constants.PIVOT_MOTOR_LEFT, true, "Left");
-        m_right = new PivotSide(Constants.PIVOT_MOTOR_RIGHT, false, "Right");
+        m_left = new PivotSide(Constants.PIVOT_MOTOR_LEFT, false, 0.320, "Left");
+        m_right = new PivotSide(Constants.PIVOT_MOTOR_RIGHT, true, 0.472, "Right");
     }
 
 
@@ -42,20 +42,22 @@ public class PivotSubsystem extends SubsystemBase {
             debugTabPivot.add(createMovePivotUpCommand());
             debugTabPivot.add(createMovePivotDownCommand());
 
-            debugTabPivot.add(createMovePivotToAngleCommand(0.0));
-            debugTabPivot.add(createMovePivotToAngleCommand(15.0));
-            debugTabPivot.add(createMovePivotToAngleCommand(30.0));
-            debugTabPivot.add(createMovePivotToAngleCommand(45.0));
-            debugTabPivot.add(createMovePivotToAngleCommand(90.0));
 
         }
+
+        debugTabPivot.add(createMovePivotToAngleCommand(0.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(15.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(30.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(45.0));
+        debugTabPivot.add(createMovePivotToAngleCommand(90.0));
+
         debugTabPivot.add(createPivotToCoastModeCommand().withName("Move pivot with coasting"));
         debugTabPivot.add(createResetEncoderUpCommand());
         debugTabPivot.add(createResetEncoderDownCommand());
         debugTabPivot.add(createSyncEncoderCommand());
     }
 
-    private void syncEncoders() {
+    public void syncEncoders() {
         m_left.syncEncoders();
         m_right.syncEncoders();
     }

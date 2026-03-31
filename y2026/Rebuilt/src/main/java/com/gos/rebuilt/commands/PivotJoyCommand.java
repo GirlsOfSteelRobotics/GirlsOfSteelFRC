@@ -1,11 +1,13 @@
 package com.gos.rebuilt.commands;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class PivotJoyCommand extends Command {
+    private static final GosDoubleProperty DAMPER = new GosDoubleProperty(false, "PivotJoystickDamper", 0.2);
     private final PivotSubsystem m_pivotSubsystem;
     private final CommandXboxController m_joystick;
 
@@ -25,7 +27,7 @@ public class PivotJoyCommand extends Command {
     @Override
     public void execute() {
         if (Math.abs(m_joystick.getRightY()) > 0.1) {
-            m_pivotSubsystem.setSpeed(-m_joystick.getRightY());
+            m_pivotSubsystem.setSpeed(-m_joystick.getRightY() * DAMPER.getValue());
         }
         else {
             m_pivotSubsystem.setSpeed(0);
