@@ -26,7 +26,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.0008,
+    "value": 9e-05,
     "properties": {
       "persistent": true
     }
@@ -34,7 +34,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.0001,
+    "value": 0.001,
     "properties": {
       "persistent": true
     }
@@ -184,38 +184,6 @@
     }
   },
   {
-    "name": "/Preferences/Pizza.mm.kff",
-    "type": "double",
-    "value": 0.00278,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pizza.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Feeder.mm.kff",
-    "type": "double",
-    "value": 9e-05,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Feeder.mm.kp",
-    "type": "double",
-    "value": 0.01,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/CameraExtrinsics/BackLeft.x(in)",
     "type": "double",
     "value": -7.55,
@@ -320,9 +288,9 @@
     }
   },
   {
-    "name": "/Preferences/speed booster",
+    "name": "/Preferences/ChassisRotationDamper",
     "type": "double",
-    "value": 1.2,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }

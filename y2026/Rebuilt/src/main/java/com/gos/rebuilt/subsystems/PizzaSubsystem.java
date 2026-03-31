@@ -76,7 +76,7 @@ public class PizzaSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(this.m_pizzaMotor),
                 -360);
         }
-        m_pidProperties = new RevPidPropertyBuilder("Pizza", false, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
+        m_pidProperties = new RevPidPropertyBuilder("Pizza", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)
             .addP(0)
             .build();

@@ -28,14 +28,15 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class PivotSubsystem extends SubsystemBase {
+    private static final double GEAR_RATIO = 3 * 3 * 4;
+    public static final double STARTING_ANGLE = 100;
+    public static final double DEPLOYED_ANGLE = 0;
 
     private final SparkFlex m_pivotMotor;
-    private static final double GEAR_RATIO = 3 * 3 * 4;
     private final AbsoluteEncoder m_absoluteEncoder;
     private final RelativeEncoder m_relativeEncoder;
     private final SparkMaxAlerts m_pivotMotorAlerts;
     private final LoggingUtil m_networkTableEntries;
-    public static final double DEFAULT_ANGLE = 0;
 
 
     private double m_armGoalAngle = 90;
@@ -63,8 +64,8 @@ public class PivotSubsystem extends SubsystemBase {
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(true);
-        pivotConfig.encoder.positionConversionFactor(GEAR_RATIO);
-        pivotConfig.encoder.velocityConversionFactor(GEAR_RATIO / 60);
+        pivotConfig.encoder.positionConversionFactor(360 / GEAR_RATIO);
+        pivotConfig.encoder.velocityConversionFactor(360 / GEAR_RATIO / 60);
         pivotConfig.absoluteEncoder.inverted(true);
         m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
             // Speed Limits
@@ -208,7 +209,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createMovePivotDownCommand() {
-        return runEnd(() -> moveArmToAngle(180), this::stop)
+        return runEnd(() -> moveArmToAngle(DEPLOYED_ANGLE), this::stop)
             .withName("Go down");
     }
 
@@ -232,11 +233,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public Command createResetEncoderUpCommand() {
-        return run(() -> m_relativeEncoder.setPosition(DEFAULT_ANGLE)).withName("Reset Encoder UP").ignoringDisable(true);
+        return run(() -> m_relativeEncoder.setPosition(STARTING_ANGLE)).withName("Reset Encoder UP").ignoringDisable(true);
     }
 
     public Command createResetEncoderDownCommand() {
-        return run(() -> m_relativeEncoder.setPosition(170)).withName("Reset Encoder DOWN").ignoringDisable(true);
+        return run(() -> m_relativeEncoder.setPosition(DEPLOYED_ANGLE)).withName("Reset Encoder DOWN").ignoringDisable(true);
     }
 
     public Command createPivotToCoastModeCommand() {

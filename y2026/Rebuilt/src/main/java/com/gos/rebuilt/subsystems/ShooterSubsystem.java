@@ -41,7 +41,7 @@ import java.util.function.DoubleSupplier;
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
     private static final double DEADBAND = 50;
-    private static final double MIN_DISTANCE = 2.55;
+    private static final double MIN_DISTANCE = 2.53;
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
@@ -71,16 +71,16 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
         m_debouncer = new Debouncer(.1);
 
-        m_table.put(MIN_DISTANCE, 3200.0);
-        m_table.put(2.89, 3200.0);
-        m_table.put(2.88, 3400.0);
-        m_table.put(3.00, 3375.0);
-        m_table.put(3.14, 3475.0);
-        m_table.put(3.49, 3550.0);
-        m_table.put(3.73, 3725.0);
-        m_table.put(4.08, 3800.0);
-        m_table.put(4.3, 3850.0);
-        m_table.put(4.73, 4150.0);
+        m_table.put(4.66, 3700.0);
+        m_table.put(4.5, 3600.0);
+        m_table.put(4.2, 3350.0);
+        m_table.put(3.75, 3250.0);
+        m_table.put(3.28, 3050.0);
+        m_table.put(2.79, 2850.0);
+        m_table.put(MIN_DISTANCE, 2750.0);
+
+
+
 
 
         m_shooterAlert = new SparkMaxAlerts(m_leader, "shooterAlert");
@@ -161,7 +161,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double rpmToVelocity(double rpm) {
-        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .37;
+        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .425;
     }
 
     public void setRPM(double goal) {
