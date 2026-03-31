@@ -11,16 +11,16 @@ import java.util.List;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
-public class StartMiddleIntakeCenter extends GosAuto {
-    public StartMiddleIntakeCenter(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
+public class MiddleLeftBumpCenter extends GosAuto {
+    public MiddleLeftBumpCenter(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
         super(StartingPositions.CENTER, List.of(AutoActions.PRELOAD, AutoActions.SHOOOT));
-        addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("StartMiddleIntakeCenter").getPose())));
-        addCommands(followChoreoPath("StartMiddleIntakeCenter.0"));
+        addCommands(Commands.runOnce(() -> chassisSubsystem.resetPose(ChoreoUtils.getPathStartingPose("MiddleLeftBumpCenter").getPose())));
+        addCommands(followChoreoPath("MiddleLeftBumpCenter.0"));
         addCommands(combinedCommand.shootBall().withTimeout(5));
 
         addCommands(chassisSubsystem.createStop());
         addCommands(Commands.waitSeconds(2));
-        addCommands(followChoreoPath("StartMiddleIntakeCenter.1").alongWith(combinedCommand.intake()));
+        addCommands(followChoreoPath("MiddleLeftBumpCenter.1").alongWith(combinedCommand.intake()));
 
     }
 }

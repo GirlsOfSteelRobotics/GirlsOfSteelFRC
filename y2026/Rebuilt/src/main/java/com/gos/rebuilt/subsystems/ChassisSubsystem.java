@@ -43,6 +43,8 @@ import com.gos.rebuilt.Constants;
 import com.gos.rebuilt.GosField;
 import com.gos.rebuilt.MatchTime;
 import com.gos.rebuilt.RobotExtrinsic;
+import com.gos.rebuilt.choreo_gen.ChoreoVars;
+import com.gos.rebuilt.choreo_gen.ChoreoVars.Poses;
 import com.gos.rebuilt.enums.Regions;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -671,6 +673,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         tab.add(createSweepRightCommand());
         tab.add(createSweepLeftCommand());
+        tab.add(createUpTrenchCommand());
 
     }
 
@@ -695,6 +698,27 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             }
             return createDriveToPointCommand(current, SWEEP_RIGHT_START, SWEEP_RIGHT_END, SWEEP_RIGHT_ANGLE);
         }).withName("Sweep Right");
+    }
+
+    public Command createUpTrenchCommand() {
+
+        return defer(() -> {
+            Pose2d current = getState().Pose;
+            if (GetAllianceUtil.isRedAlliance()) {
+                current = ChoreoAllianceFlipUtil.flip(current);
+            }
+
+            Pose2d entrance = Poses.RightTrenchEntrance;
+            Pose2d exit = Poses.RightTrenchExit;
+
+            if (getDistanceToObject(Poses.LeftTrenchEntrance.getTranslation()) < getDistanceToObject(Poses.RightTrenchEntrance.getTranslation())) {
+                entrance = Poses.LeftTrenchEntrance;
+                exit = Poses.LeftTrenchExit;
+            }
+
+            return createDriveToPointCommand(current, entrance, exit, Rotation2d.fromDegrees(0));
+        }).withName("Up Trench");
+
     }
 
 
