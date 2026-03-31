@@ -39,6 +39,11 @@ public class CombinedCommand {
             .alongWith(intake());
     }
 
+    public Command UpTrench() {
+        return m_chassisSubsystem.createUpTrenchCommand()
+            .alongWith(intake());
+    }
+
     public Command shootBall() {
         return m_chassisSubsystem.createFaceHub()
             .alongWith((m_shooterSubsystem.createShootFromDistanceCommand(m_chassisSubsystem::getDistanceFromHub)))

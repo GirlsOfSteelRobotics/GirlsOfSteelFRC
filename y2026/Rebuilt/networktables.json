@@ -320,9 +320,9 @@
     }
   },
   {
-    "name": "/Preferences/speed booster",
+    "name": "/Preferences/ChassisRotationDamper",
     "type": "double",
-    "value": 1.2,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }

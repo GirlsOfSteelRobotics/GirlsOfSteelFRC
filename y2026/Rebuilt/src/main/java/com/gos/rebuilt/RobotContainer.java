@@ -182,6 +182,7 @@ public class RobotContainer {
         m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
         m_driverController.povLeft().whileTrue(m_combinedCommand.sweepLeft());
         m_driverController.povRight().whileTrue(m_combinedCommand.sweepRight());
+        m_driverController.povUp().whileTrue(m_combinedCommand.UpTrench());
         //pivot intake,= left trigger
         //shoot on the move = right trigger
         //feed/pass balls = b button\; retract = left bumper
