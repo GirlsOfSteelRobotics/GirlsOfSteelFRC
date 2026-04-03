@@ -25,7 +25,7 @@ public class PivotSide {
 
     private static final double GEAR_RATIO = 3 * 3 * 4;
     public static final double STARTING_ANGLE = 100;
-    public static final double DEPLOYED_ANGLE = -3;
+    public static final double DEPLOYED_ANGLE = -6;
 
     private final SparkFlex m_pivotMotor;
     private final AbsoluteEncoder m_absoluteEncoder;

@@ -1,6 +1,6 @@
 {
   "Version": "1.0.0.0",
-  "LastState": 11,
+  "LastState": 12,
   "Modules": [
     {
       "ModuleName": "Front Left",
@@ -42,7 +42,7 @@
       "IsEncoderInverted": false,
       "IsSteerInverted": false,
       "SelectedEncoderType": "CANcoder",
-      "EncoderOffset": 0.16552734375,
+      "EncoderOffset": 0.16455078125,
       "DriveMotorSelectionState": 1,
       "SteerMotorSelectionState": 1,
       "SteerEncoderSelectionState": 1,
@@ -91,7 +91,7 @@
       "IsEncoderInverted": false,
       "IsSteerInverted": false,
       "SelectedEncoderType": "CANcoder",
-      "EncoderOffset": -0.474853515625,
+      "EncoderOffset": -0.47509765625,
       "DriveMotorSelectionState": 1,
       "SteerMotorSelectionState": 1,
       "SteerEncoderSelectionState": 1,
@@ -113,7 +113,7 @@
       },
       "SteerMotor": {
         "Id": 6,
-        "Name": "BLA",
+        "Name": "BLS",
         "Model": "Talon FX vers. F",
         "CANbus": "C94FCCD050374E5320202047141510FF",
         "CANbusFriendly": "Default Name",
@@ -140,7 +140,7 @@
       "IsEncoderInverted": false,
       "IsSteerInverted": false,
       "SelectedEncoderType": "CANcoder",
-      "EncoderOffset": 0.39013671875,
+      "EncoderOffset": -0.447265625,
       "DriveMotorSelectionState": 1,
       "SteerMotorSelectionState": 1,
       "SteerEncoderSelectionState": 1,
@@ -162,7 +162,7 @@
       },
       "SteerMotor": {
         "Id": 7,
-        "Name": "BRA",
+        "Name": "BRS",
         "Model": "Talon FX vers. F",
         "CANbus": "C94FCCD050374E5320202047141510FF",
         "CANbusFriendly": "Default Name",
@@ -189,7 +189,7 @@
       "IsEncoderInverted": false,
       "IsSteerInverted": false,
       "SelectedEncoderType": "CANcoder",
-      "EncoderOffset": 0.431396484375,
+      "EncoderOffset": -0.00244140625,
       "DriveMotorSelectionState": 1,
       "SteerMotorSelectionState": 1,
       "SteerEncoderSelectionState": 1,

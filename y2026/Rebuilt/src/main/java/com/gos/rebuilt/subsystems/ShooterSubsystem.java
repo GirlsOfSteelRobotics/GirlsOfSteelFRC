@@ -40,12 +40,15 @@ import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
-    private static final double DEADBAND = 50;
+    private static final double DEADBAND = 100;
     private static final double MIN_DISTANCE = 2.53;
+
+    private static final GosDoubleProperty HACK_ADDITIONAL_RPM = new GosDoubleProperty(false, "ShooterHackAdditionalRPM", 0);
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
+    private final RelativeEncoder m_followerEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 3725);
@@ -67,6 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
         m_follower = new SparkFlex(Constants.SHOOTER_FOLLOWER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_leader.getEncoder();
+        m_followerEncoder = m_follower.getEncoder();
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
         m_debouncer = new Debouncer(.1);
@@ -109,6 +113,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
         m_networkTableEntries.addDouble("Applied Output", m_leader::getAppliedOutput);
+        m_networkTableEntries.addDouble("Applied Output Follower", m_follower::getAppliedOutput);
+        m_networkTableEntries.addDouble("Velocity Follower", m_followerEncoder::getVelocity);
 
         m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
 
@@ -176,6 +182,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void shootFromDistance(double distance) {
         double rpm = m_table.get(distance);
+        rpm += HACK_ADDITIONAL_RPM.getValue();
         setRPM(rpm);
     }
 
