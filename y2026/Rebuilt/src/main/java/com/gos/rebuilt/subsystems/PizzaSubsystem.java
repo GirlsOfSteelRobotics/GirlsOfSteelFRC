@@ -31,7 +31,7 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 public class PizzaSubsystem extends SubsystemBase {
 
     private final SparkFlex m_pizzaMotor;
-    private final GosDoubleProperty m_pizzaSpeedForward = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedForward", 0.75);
+    private final GosDoubleProperty m_pizzaSpeedForward = new GosDoubleProperty(false, "pizzaSpeedForward", 0.75);
     private final GosDoubleProperty m_pizzaSpeedReverse = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedBack", 1);
 
     private final RelativeEncoder m_pizzaEncoder;

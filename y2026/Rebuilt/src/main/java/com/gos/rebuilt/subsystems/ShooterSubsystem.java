@@ -53,7 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 3725);
     private final SparkMaxAlerts m_shooterAlert;
-    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speed booster", 1.1);
+    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(false, "speed booster", 1.1);
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
@@ -75,12 +75,19 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
         m_debouncer = new Debouncer(.1);
 
-        m_table.put(4.66, 3700.0);
-        m_table.put(4.5, 3600.0);
-        m_table.put(4.2, 3350.0);
-        m_table.put(3.75, 3250.0);
-        m_table.put(3.28, 3050.0);
-        m_table.put(2.79, 2850.0);
+
+
+
+
+        m_table.put(5.99,4150.0);
+        m_table.put(5.46,3900.0);
+        m_table.put(4.58,3700.0);
+        m_table.put(4.66, 3700.0 + 225);
+        m_table.put(4.5, 3600.0 + 225);
+        m_table.put(4.2, 3350.0 + 225);
+        m_table.put(3.75, 3250.0 + 225);
+        m_table.put(3.28, 3050.0 + 225);
+        m_table.put(2.79, 2850.0 + 225);
         m_table.put(MIN_DISTANCE, 2750.0);
 
 
