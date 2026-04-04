@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.gos.rebuilt.subsystems.PivotSide.DEPLOYED_ANGLE;
+import static com.gos.rebuilt.subsystems.PivotSide.STARTING_ANGLE;
 
 public class PivotSubsystem extends SubsystemBase {
 
@@ -39,8 +40,8 @@ public class PivotSubsystem extends SubsystemBase {
         if (!areWeAtACompetitionOrNotBoolean) {
             debugTabPivot.add(createPivotMoveToSpeed());
 
-            debugTabPivot.add(createMovePivotUpCommand());
-            debugTabPivot.add(createMovePivotDownCommand());
+            debugTabPivot.add(createMovePivotToIntakeAngleCommand());
+            debugTabPivot.add(createMovePivotToDeployedAngleCommand());
 
 
         }
@@ -114,9 +115,15 @@ public class PivotSubsystem extends SubsystemBase {
         return run(this::syncEncoders).withName("Sync Encoders");
     }
 
-    public Command createMovePivotDownCommand() {
+    public Command createMovePivotToDeployedAngleCommand() {
         return runEnd(() -> moveArmToAngle(DEPLOYED_ANGLE), this::stop)
-            .withName("Go down");
+            .withName("Go to deployed angle");
+    }
+
+
+    public Command createMovePivotUpCommand() {
+        return runEnd(() -> moveArmToAngle(STARTING_ANGLE), this::stop)
+            .withName("Go up, retract");
     }
 
     public Command createMovePivotDownCommandLowMotorPercentage() {
@@ -124,15 +131,17 @@ public class PivotSubsystem extends SubsystemBase {
             .withName("Go down with set speed 2%");
     }
 
-    public Command createMovePivotUpCommand() {
+    public Command createMovePivotToIntakeAngleCommand() {
         return runEnd(() -> moveArmToAngle(0), this::stop)
-            .withName("Go up");
+            .withName("Go to intake angle");
     }
 
     public Command createMovePivotToAngleCommand(double angle) {
         return runEnd(() -> moveArmToAngle(angle), this::stop)
             .withName("Go to angle" + angle);
     }
+
+
 
     public Command createPivotMoveToSpeed() {
         return runEnd(this::movePivotAtTuningSpeed, this::stop).withName("move pivot to speed");
