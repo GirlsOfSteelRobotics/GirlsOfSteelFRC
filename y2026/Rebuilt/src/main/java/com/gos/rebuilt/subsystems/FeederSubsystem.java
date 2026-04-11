@@ -69,7 +69,7 @@ public class FeederSubsystem extends SubsystemBase {
         m_pidController = m_feederMotor.getClosedLoopController();
         m_feederEncoder = m_feederMotor.getEncoder();
 
-        m_pidProperties = new RevPidPropertyBuilder("Feeder", false, m_feederMotor, feederConfig, ClosedLoopSlot.kSlot0)
+        m_pidProperties = new RevPidPropertyBuilder("Feeder", Constants.DEFAULT_CONSTANT_PROPERTIES, m_feederMotor, feederConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)
             .addP(0)
             .build();

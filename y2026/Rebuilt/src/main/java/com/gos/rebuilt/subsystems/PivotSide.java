@@ -1,0 +1,196 @@
+package com.gos.rebuilt.subsystems;
+
+import com.gos.lib.logging.LoggingUtil;
+import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.rev.alerts.SparkMaxAlerts;
+import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.PersistMode;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+
+public class PivotSide {
+
+    private static final double GEAR_RATIO = 3 * 3 * 4;
+    public static final double STARTING_ANGLE = 100;
+    public static final double DEPLOYED_ANGLE = -6;
+
+    private final SparkFlex m_pivotMotor;
+    private final AbsoluteEncoder m_absoluteEncoder;
+    private final RelativeEncoder m_relativeEncoder;
+    private final SparkMaxAlerts m_pivotMotorAlerts;
+    private final LoggingUtil m_networkTableEntries;
+
+
+    private double m_armGoalAngle = 90;
+    private final RevProfiledSingleJointedArmController m_armPidController;
+
+    private final GosDoubleProperty m_tuningPivotSpeed;
+
+
+    private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    public PivotSide(int id, boolean inverted, double offset, String name) {
+
+
+        m_pivotMotor = new SparkFlex(id, MotorType.kBrushless);
+        m_relativeEncoder = m_pivotMotor.getEncoder();
+        m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", -0.05);
+
+        m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder();
+
+        m_pivotMotorAlerts = new SparkMaxAlerts(m_pivotMotor, "pivotMotor");
+
+
+        SparkMaxConfig pivotConfig = new SparkMaxConfig();
+        pivotConfig.idleMode(IdleMode.kBrake);
+        pivotConfig.smartCurrentLimit(60);
+        pivotConfig.inverted(inverted);
+        pivotConfig.encoder.positionConversionFactor(360 / GEAR_RATIO);
+        pivotConfig.encoder.velocityConversionFactor(360 / GEAR_RATIO / 60);
+        pivotConfig.absoluteEncoder.inverted(inverted);
+        pivotConfig.absoluteEncoder.positionConversionFactor(360);
+        pivotConfig.absoluteEncoder.zeroCentered(true);
+        pivotConfig.absoluteEncoder.zeroOffset(offset);
+
+        m_armPidController = new RevProfiledSingleJointedArmController.Builder("Arm Pivot", false, m_pivotMotor, pivotConfig, ClosedLoopSlot.kSlot0)
+            // Speed Limits
+            .addMaxVelocity(360)
+            .addMaxAcceleration(540)
+            // Arm FF
+            .addKs(0)
+            .addKv(1.0)
+            .addKg(0.1)
+            // REV Position controller
+            .addKp(.05)
+            .build();
+
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeoVortex(1);
+            SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
+                0.381, Units.degreesToRadians(-5), Units.degreesToRadians(90), true, 0);
+            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
+                RevEncoderSimWrapper.create(m_pivotMotor), true);
+        }
+
+        m_pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        m_networkTableEntries = new LoggingUtil("Pivot Subsystem: " + name);
+
+        m_networkTableEntries.addDouble("Pivot Position", this::getPosition);
+        m_networkTableEntries.addDouble("Pivot Velocity", this::getVelocity);
+        m_networkTableEntries.addDouble("Applied Output", m_pivotMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Pivot goal", this::getGoalAngle);
+        m_networkTableEntries.addDouble("Setpoint angle", m_armPidController::getPositionSetpoint);
+        m_networkTableEntries.addDouble("Setpoint Velocity", m_armPidController::getVelocitySetpoint);
+        m_networkTableEntries.addDouble("Absolute Encoder Position", this::getAbsolutePosition);
+
+        syncEncoders();
+    }
+
+
+    public double getPosition() {
+        return m_relativeEncoder.getPosition();
+    }
+
+    public final void syncEncoders() {
+        m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
+    }
+
+    public double getAbsolutePosition() {
+        return m_absoluteEncoder.getPosition();
+    }
+
+    public double getVelocity() {
+        return m_relativeEncoder.getVelocity();
+    }
+
+
+    public void setSpeed(double pow) {
+        m_pivotMotor.set(pow);
+    }
+
+    public void stop() {
+        m_pivotMotor.stopMotor();
+    }
+
+    public double getAngle() {
+        return m_relativeEncoder.getPosition();
+    }
+
+    public void clearStickyFaults() {
+        m_pivotMotor.clearFaults();
+    }
+
+
+    private void resetPidController() {
+        m_armPidController.resetPidController(getPosition(), getVelocity());
+    }
+
+    public final double getAbsoluteAngle() {
+        double angle = m_relativeEncoder.getPosition();
+        if (angle < -300) {
+            angle += 360;
+        }
+        return angle;
+    }
+
+    public double getGoalAngle() {
+        return m_armGoalAngle;
+    }
+
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_pivotMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+    @SuppressWarnings("removal")
+    public void moveArmToAngle(double goal) {
+        if (Math.abs(m_armGoalAngle - goal) > 2) {
+            System.out.println("Resetting controller" + m_armGoalAngle + ", " + goal);
+            resetPidController();
+        }
+        m_armGoalAngle = goal;
+
+        m_armPidController.goToAngle(goal, getAbsoluteAngle());
+        // m_armPidController.goToAngleWithVelocities(goal, getAngle(), getVelocity());
+    }
+
+
+    public void resetEncoderUp() {
+        m_relativeEncoder.setPosition(STARTING_ANGLE);
+    }
+
+    public void resetEncoderDown() {
+        m_relativeEncoder.setPosition(DEPLOYED_ANGLE);
+    }
+
+    public void movePivotAtTuningSpeed() {
+        setSpeed(m_tuningPivotSpeed.getValue());
+    }
+
+    public void simulationPeriodic() {
+        m_pivotSimulator.update();
+    }
+
+    public void periodic() {
+        m_networkTableEntries.updateLogs();
+        m_pivotMotorAlerts.checkAlerts();
+        m_armPidController.updateIfChanged();
+    }
+
+
+}

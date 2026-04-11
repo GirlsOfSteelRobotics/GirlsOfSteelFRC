@@ -40,17 +40,20 @@ import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
     public static final Rotation2d SHOT_ANGLE = Rotation2d.fromDegrees(60);
-    private static final double DEADBAND = 50;
-    private static final double MIN_DISTANCE = 2.55;
+    private static final double DEADBAND = 100;
+    private static final double MIN_DISTANCE = 2.53;
+
+    private static final GosDoubleProperty HACK_ADDITIONAL_RPM = new GosDoubleProperty(false, "ShooterHackAdditionalRPM", -20);
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
     private final RelativeEncoder m_motorEncoder;
+    private final RelativeEncoder m_followerEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 3725);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 4200);
     private final SparkMaxAlerts m_shooterAlert;
-    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "speed booster", 1.1);
+    private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(false, "speed booster", 1.1);
 
     private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
@@ -67,20 +70,28 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader = new SparkFlex(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
         m_follower = new SparkFlex(Constants.SHOOTER_FOLLOWER_MOTOR, MotorType.kBrushless);
         m_motorEncoder = m_leader.getEncoder();
+        m_followerEncoder = m_follower.getEncoder();
         m_pidController = m_leader.getClosedLoopController();
         m_networkTableEntries = new LoggingUtil("Shooter Subsystem");
         m_debouncer = new Debouncer(.1);
 
-        m_table.put(MIN_DISTANCE, 3200.0);
-        m_table.put(2.89, 3200.0);
-        m_table.put(2.88, 3400.0);
-        m_table.put(3.00, 3375.0);
-        m_table.put(3.14, 3475.0);
-        m_table.put(3.49, 3550.0);
-        m_table.put(3.73, 3725.0);
-        m_table.put(4.08, 3800.0);
-        m_table.put(4.3, 3850.0);
-        m_table.put(4.73, 4150.0);
+
+
+
+
+        m_table.put(5.99, 4150.0);
+        m_table.put(5.46, 3900.0);
+        m_table.put(4.58, 3700.0);
+        m_table.put(4.66, 3700.0 + 225);
+        m_table.put(4.5, 3600.0 + 225);
+        m_table.put(4.2, 3350.0 + 225);
+        m_table.put(3.75, 3250.0 + 225);
+        m_table.put(3.28, 3050.0 + 225);
+        m_table.put(2.79, 2850.0 + 225);
+        m_table.put(MIN_DISTANCE, 2750.0);
+
+
+
 
 
         m_shooterAlert = new SparkMaxAlerts(m_leader, "shooterAlert");
@@ -100,7 +111,7 @@ public class ShooterSubsystem extends SubsystemBase {
         );
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
-            .addFF(1.48e-4)
+            .addFF(0.0018)
             .addP(1.2e-4)
             .build();
 
@@ -109,6 +120,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("at goal", this::isAtGoalRPM);
 
         m_networkTableEntries.addDouble("Applied Output", m_leader::getAppliedOutput);
+        m_networkTableEntries.addDouble("Applied Output Follower", m_follower::getAppliedOutput);
+        m_networkTableEntries.addDouble("Velocity Follower", m_followerEncoder::getVelocity);
 
         m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
 
@@ -161,7 +174,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double rpmToVelocity(double rpm) {
-        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .37;
+        return rpm * 2 * Math.PI * Units.inchesToMeters(2) / 60 * .425;
     }
 
     public void setRPM(double goal) {
@@ -176,6 +189,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void shootFromDistance(double distance) {
         double rpm = m_table.get(distance);
+        rpm += HACK_ADDITIONAL_RPM.getValue();
         setRPM(rpm);
     }
 

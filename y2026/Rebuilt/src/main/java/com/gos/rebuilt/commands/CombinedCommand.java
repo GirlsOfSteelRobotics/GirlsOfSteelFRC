@@ -46,15 +46,23 @@ public class CombinedCommand {
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
+
+
     public Command emergencyTowerShot() {
         return (m_shooterSubsystem.createShootFromDistanceCommand(() -> 3.01))
             .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM).withTimeout(2)
             .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
+    public Command emergencyFeed() {
+        return (m_shooterSubsystem.createShootFromDistanceCommand(() -> 7))
+            .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM).withTimeout(2)
+                .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
+    }
+
     public Command shootBallNoAiming() {
         return m_shooterSubsystem.createTuneRPM()
-            .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM)
+            .alongWith(new WaitUntilCommand(m_shooterSubsystem::isAtGoalRPM).withTimeout(2)
                 .andThen(m_pizzaSubsystem.createPizzaFeedCommand().alongWith(m_feederSubsystem.createFeederCommand())));
     }
 
@@ -64,7 +72,7 @@ public class CombinedCommand {
 
     public Command intake() {
         return m_intakeSubsystem.createIntakeInCommand()
-            .alongWith(m_pivotSubsystem.createMovePivotDownCommand());
+            .alongWith(m_pivotSubsystem.createMovePivotToIntakeAngleCommand());
     }
 
     public void createCombinedCommand(boolean inComp) {

@@ -21,14 +21,15 @@ public final class Constants {
 
     //motors
     public static final int INTAKE_MOTOR = 10;
-    public static final int INTAKE_FOLLOWER_MOTOR = 18;
     public static final int SHOOTER_MOTOR = 11;
     public static final int PIZZA_MOTOR = 12;
-    public static final int PIVOT_MOTOR = 13;
+    public static final int PIVOT_MOTOR_LEFT = 13;
     public static final int FEEDER_MOTOR = 14;
     public static final int CLIMBER_LEFT_MOTOR = 15;
     public static final int CLIMBER_RIGHT_MOTOR = 16;
     public static final int SHOOTER_FOLLOWER_MOTOR = 17;
+    public static final int INTAKE_FOLLOWER_MOTOR = 18;
+    public static final int PIVOT_MOTOR_RIGHT = 19;
 
     //joystivks
     public static final int LED_JOSTICK = 2;

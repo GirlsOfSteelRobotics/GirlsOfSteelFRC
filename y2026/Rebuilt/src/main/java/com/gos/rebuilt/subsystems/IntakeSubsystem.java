@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
     private final SparkFlex m_intakeMotor;
-    private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(false, "intakeSpeed", 0.6);
+    private final GosDoubleProperty m_intakeSpeed = new GosDoubleProperty(false, "intakeSpeed", 0.75);
 
     private final LoggingUtil m_loggingUtil;
     private final SparkMaxAlerts m_intakeMotorAlert;
@@ -37,11 +37,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.idleMode(IdleMode.kCoast);
-        intakeConfig.smartCurrentLimit(60);
+        intakeConfig.smartCurrentLimit(40);
         intakeConfig.inverted(false);
 
 
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
+        intakeConfig.smartCurrentLimit(40);
         followMotorConfig.follow(m_intakeMotor, true);
         followMotorConfig.idleMode(IdleMode.kBrake);
 

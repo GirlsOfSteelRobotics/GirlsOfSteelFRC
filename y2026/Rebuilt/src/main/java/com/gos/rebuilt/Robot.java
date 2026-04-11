@@ -78,6 +78,8 @@ public class Robot extends TimedRobot {
         if (DriverStation.isFMSAttached()) {
             DataLogManager.start();
         }
+
+        m_robotContainer.disabledPeriodic();
     }
 
 

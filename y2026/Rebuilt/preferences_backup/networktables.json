@@ -1,120 +1,8 @@
 [
   {
-    "name": "/Preferences/Shooter.mm.kff",
-    "type": "double",
-    "value": 0.000148,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kp",
-    "type": "double",
-    "value": 0.00012,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pizza.mm.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pizza.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pivot Speed",
-    "type": "double",
-    "value": -0.05,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Feeder.mm.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Feeder.mm.kp",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.x(in)",
-    "type": "double",
-    "value": -7.55,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.y(in)",
-    "type": "double",
-    "value": 10.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.z(in)",
-    "type": "double",
-    "value": 12.125,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.yaw(deg)",
-    "type": "double",
-    "value": 180.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.pitch(deg)",
-    "type": "double",
-    "value": -29.999999999999996,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/CameraExtrinsics/BackLeft.roll(deg)",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/intakeSpeed",
-    "type": "double",
-    "value": 0.8,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Tunable path constraints.Max Velocity (inches)",
     "type": "double",
-    "value": 48.0,
+    "value": 84.0,
     "properties": {
       "persistent": true
     }
@@ -144,9 +32,97 @@
     }
   },
   {
+    "name": "/Preferences/intakeSpeed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ShooterHackAdditionalRPM",
+    "type": "double",
+    "value": -20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/tuneRPM",
     "type": "double",
-    "value": 3725.0,
+    "value": 4200.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kff",
+    "type": "double",
+    "value": 0.0018,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kp",
+    "type": "double",
+    "value": 0.00012,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Speed",
+    "type": "double",
+    "value": -0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.max_velocity",
+    "type": "double",
+    "value": 360.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
+    "type": "double",
+    "value": 540.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.aff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.aff.kff",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.aff.kg",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.kp",
+    "type": "double",
+    "value": 0.05,
     "properties": {
       "persistent": true
     }
@@ -154,15 +130,15 @@
   {
     "name": "/Preferences/ChassisTranslationDamper",
     "type": "double",
-    "value": 0.9,
+    "value": 0.75,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/ChassisRotationDamper",
+    "name": "/Preferences/PivotJoystickDamper",
     "type": "double",
-    "value": 0.5,
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
@@ -179,6 +155,38 @@
     "name": "/Preferences/ChassisRotationSlowDamper",
     "type": "double",
     "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/pizzaSpeedForward",
+    "type": "double",
+    "value": 0.85,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/fotr: neutral far booster",
+    "type": "double",
+    "value": 1.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/fotr: neutral close booster",
+    "type": "double",
+    "value": 0.9,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/fotr: opposing booster",
+    "type": "double",
+    "value": 1.4,
     "properties": {
       "persistent": true
     }
