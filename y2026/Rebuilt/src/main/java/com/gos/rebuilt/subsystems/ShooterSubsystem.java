@@ -43,7 +43,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double DEADBAND = 100;
     private static final double MIN_DISTANCE = 2.53;
 
-    private static final GosDoubleProperty HACK_ADDITIONAL_RPM = new GosDoubleProperty(false, "ShooterHackAdditionalRPM", 0);
+    private static final GosDoubleProperty HACK_ADDITIONAL_RPM = new GosDoubleProperty(false, "ShooterHackAdditionalRPM", -20);
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
@@ -51,7 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final RelativeEncoder m_followerEncoder;
     private final LoggingUtil m_networkTableEntries;
     private final GosDoubleProperty m_shooterSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "shooterSpeed", 1);
-    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 3725);
+    private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(false, "tuneRPM", 4200);
     private final SparkMaxAlerts m_shooterAlert;
     private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(false, "speed booster", 1.1);
 
@@ -111,7 +111,7 @@ public class ShooterSubsystem extends SubsystemBase {
         );
 
         m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_leader, leaderConfig, ClosedLoopSlot.kSlot0)
-            .addFF(1.48e-4)
+            .addFF(0.0018)
             .addP(1.2e-4)
             .build();
 
