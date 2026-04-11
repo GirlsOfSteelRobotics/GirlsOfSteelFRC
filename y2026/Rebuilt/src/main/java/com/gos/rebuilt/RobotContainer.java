@@ -178,8 +178,8 @@ public class RobotContainer {
         // m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
-//        m_driverController.rightTrigger().whileTrue(m_combinedCommand.emergencyFeed());
-        //m_driverController.rightTrigger().whileTrue(m_combinedCommand.shootBallNoAiming());
+        // m_driverController.rightTrigger().whileTrue(m_combinedCommand.emergencyFeed());
+        // m_driverController.rightTrigger().whileTrue(m_combinedCommand.shootBallNoAiming());
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
         m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
         m_driverController.povLeft().whileTrue(m_combinedCommand.sweepLeft());

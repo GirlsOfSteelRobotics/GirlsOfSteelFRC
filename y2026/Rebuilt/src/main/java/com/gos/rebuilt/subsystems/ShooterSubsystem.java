@@ -79,9 +79,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
 
-        m_table.put(5.99,4150.0);
-        m_table.put(5.46,3900.0);
-        m_table.put(4.58,3700.0);
+        m_table.put(5.99, 4150.0);
+        m_table.put(5.46, 3900.0);
+        m_table.put(4.58, 3700.0);
         m_table.put(4.66, 3700.0 + 225);
         m_table.put(4.5, 3600.0 + 225);
         m_table.put(4.2, 3350.0 + 225);
