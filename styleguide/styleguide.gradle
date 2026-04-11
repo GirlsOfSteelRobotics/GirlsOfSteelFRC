@@ -4,7 +4,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 
 jacoco {
-    toolVersion = "0.8.14"
+    toolVersion = "0.8.8"
 }
 //jacocoTestReport {
 //    dependsOn test
@@ -32,8 +32,4 @@ pmd {
     ruleSets = []
 }
 
-tasks.withType(Pmd) {
-    excludes.add('**/choreo_gen/**.java')
-}
-
-// apply from: "${rootDir}/styleguide/spotless.gradle"
+apply from: "${rootDir}/styleguide/spotless.gradle"
