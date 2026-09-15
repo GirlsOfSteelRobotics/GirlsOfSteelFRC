@@ -1,0 +1,16 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "pathing",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//GosLib/GirlsOfSteelLib/src/main/java/com/gos/lib",
+        "//GosLib/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
+        "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-choreolib//libraries/java/choreolib-java",
+        "@bzlmodrio-pathplannerlib//libraries/java/pathplannerlib-java",
+    ],
+)

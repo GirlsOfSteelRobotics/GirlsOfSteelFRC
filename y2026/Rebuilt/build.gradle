@@ -75,11 +75,11 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 
-    implementation project(":libraries:GirlsOfSteelLib")
-    implementation project(":libraries:GirlsOfSteelLibRev")
-    implementation project(":libraries:GirlsOfSteelLibPhoenix6")
-    implementation project(":libraries:GirlsOfSteelLibPathing")
-    implementation project(":libraries:GirlsOfSteelLibPhotonVision")
+    implementation project(":GosLib:GirlsOfSteelLib")
+    implementation project(":GosLib:GirlsOfSteelLibRev")
+    implementation project(":GosLib:GirlsOfSteelLibPhoenix6")
+    implementation project(":GosLib:GirlsOfSteelLibPathing")
+    implementation project(":GosLib:GirlsOfSteelLibPhotonVision")
 }
 
 test {

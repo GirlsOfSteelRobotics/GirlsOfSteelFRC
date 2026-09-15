@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "pid",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//GosLib/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/feedforward",
+        "//GosLib/GirlsOfSteelLib/src/main/java/com/gos/lib/properties/pid",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
+        "@bzlmodrio-revlib//libraries/java/revlib-java",
+    ],
+)
