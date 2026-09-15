@@ -1,8 +1,0 @@
-            case {{entry.sim_keys[0]}}:
-                m_{{child.combined_variable_name(entry)}} = {{entry.sim_value}};
-                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.GREEN);
-                break;
-            case {{entry.sim_keys[1]}}:
-                m_{{child.combined_variable_name(entry)}} = -{{entry.sim_value}};
-                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.GREEN);
-                break;

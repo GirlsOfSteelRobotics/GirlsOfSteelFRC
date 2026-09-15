@@ -14,14 +14,5 @@ include 'libraries:GirlsOfSteelLibPhotonVision'
 include 'libraries:GirlsOfSteelLibPathing'
 //include 'libraries:SwerveShuffleboard'
 
-//include 'evergreen_robots:ChassisProject'
-//include 'evergreen_robots:SCRAWestCoastDrive'
-//include 'evergreen_robots:SwerveChassis'
-//include 'old_robots:y2022:MEPI'
-
-include 'y2024:Crescendo'
-include 'y2024:CrescendoDashboard'
-include 'y2025:Reefscape'
 include 'y2026:Rebuilt'
-include 'y2026:Kitbot'
 
