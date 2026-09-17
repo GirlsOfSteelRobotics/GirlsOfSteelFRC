@@ -32,11 +32,12 @@ import java.util.List;
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
- */
+
 @SuppressWarnings("PMD.UnusedPrivateField")
 public class RobotContainer {
     private static final String DRIVETRAIN_NAME = "m_drivetrain";
 
+    private RuoxiCodelab2026Part1Subsystem m_ruoxiCodeLab2026Part1;
     private PJCodelab2020Part1Subsystem m_pjCodelab2020Part1;
     private PJCodelab2020Part2Subsystem m_pjCodelab2020Part2;
     private JacksonCodelab2020Part1Part1 m_jacksonCodeLab2020Part1;
