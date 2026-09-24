@@ -5,10 +5,10 @@ gos_java_library(
     srcs = ["TrajectoryFactory.java"],
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
+        "//GosLib/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
-        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
