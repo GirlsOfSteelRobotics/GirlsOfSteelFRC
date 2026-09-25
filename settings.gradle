@@ -14,5 +14,6 @@ include 'GosLib:GirlsOfSteelLibPhotonVision'
 include 'GosLib:GirlsOfSteelLibPathing'
 //include 'libraries:SwerveShuffleboard'
 
+include 'y2026:BunnyBots'
 include 'y2026:Rebuilt'
 
