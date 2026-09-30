@@ -14,5 +14,7 @@ package frc.robot;
  */
 public final class Constants {
     // Joysticks
+    public static final int ELEVATOR_MOTOR_ID = 14;
+    public static final int ELEVATOR_FOLLOW_MOTOR_ID = 18;
     public static final int DRIVER_CONTROLLER_PORT = 0;
 }
