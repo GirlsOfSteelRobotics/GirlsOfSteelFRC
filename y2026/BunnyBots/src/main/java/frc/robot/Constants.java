@@ -15,4 +15,7 @@ package frc.robot;
 public final class Constants {
     // Joysticks
     public static final int DRIVER_CONTROLLER_PORT = 0;
+
+    // motors
+    public static final int INTAKE_MOTOR = 1;
 }
