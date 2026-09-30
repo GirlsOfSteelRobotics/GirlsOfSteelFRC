@@ -32,7 +32,7 @@ public class IntakeSubsystem {
         m_motor.stopMotor();
     }
 
-    public void addIntakeDebugCommands(){
+    public void addIntakeDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Intake");
         tab.add(createIntakeInCommand());
         tab.add(createIntakeOutCommand());
