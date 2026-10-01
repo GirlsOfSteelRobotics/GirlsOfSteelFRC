@@ -5,8 +5,8 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
+        "//GosLib/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
-        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
     ],
 )

@@ -1,8 +1,0 @@
-{
-  "teamNumber" : 3504,
-  "connectionType" : "STATIC",
-  "staticIp" : "10.35.4.102",
-  "hostname" : "photonvision",
-  "runNTServer" : false,
-  "shouldManage" : true
-}

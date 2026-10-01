@@ -1,5 +1,0 @@
-
-            case {{entry.sim_keys}}:
-                m_{{child.combined_variable_name(entry)}} = true;
-                m_{{child.combined_variable_name(entry)}}Label.setTextFill(Color.GREEN);
-                break;
