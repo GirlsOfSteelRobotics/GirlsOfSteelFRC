@@ -13,7 +13,7 @@ import static edu.wpi.first.wpilibj2.command.Commands.runEnd;
 
 public class IntakeSubsystem {
     private final SparkFlex m_motor;
-    private final GosDoubleProperty m_motorSpeed = new GosDoubleProperty(false, "motorSpeed", 0.75);
+    private final GosDoubleProperty m_motorSpeed = new GosDoubleProperty(false, "intake speed", 0.75);
 
     public IntakeSubsystem() {
         m_motor = new SparkFlex(Constants.INTAKE_MOTOR, MotorType.kBrushless);
@@ -39,10 +39,10 @@ public class IntakeSubsystem {
     }
 
     public Command createIntakeInCommand() {
-        return runEnd(this::intake, this::stop).withName("Intake in!! <3");
+        return runEnd(this::intake, this::stop).withName("Intake in");
     }
 
     public Command createIntakeOutCommand() {
-        return runEnd(this::outtake, this::stop).withName("Intake out!! <3");
+        return runEnd(this::outtake, this::stop).withName("Intake out (reverse)");
     }
 }
