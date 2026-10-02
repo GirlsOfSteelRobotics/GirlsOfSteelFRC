@@ -43,4 +43,9 @@ public class AutoDriveStraightTimedCommand extends Command {
         // TODO implement
         return false;
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        // TODO implement
+    }
 }

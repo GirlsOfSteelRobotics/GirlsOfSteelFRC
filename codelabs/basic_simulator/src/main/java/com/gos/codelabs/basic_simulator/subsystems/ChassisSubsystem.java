@@ -50,14 +50,14 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         public static final DCMotor DRIVE_GEARBOX = DCMotor.getCIM(2);
         public static final double K_DRIVE_GEARING = 8;
 
-        public static final double K_TRACK_WIDTH_METERS = 0.69;
-        public static final double K_WHEEL_DIAMETER_METERS = 0.15;
+        public static final double K_TRACK_WIDTH_METERS = 0.762;
+        public static final double K_WHEEL_DIAMETER_METERS = 0.1016;
 
         public static final double KS_VOLTS = 0.22;
         public static final double KV_VOLT_SECONDS_PER_METER = 1.98;
         public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.2;
-        public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
-        public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.8;
+        public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
 
         public static final LinearSystem<N2, N2, N2> K_DRIVETRAIN_PLANT =
                 LinearSystemId.identifyDrivetrainSystem(KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER,
@@ -123,7 +123,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_leftDriveA.configure(leftDriveAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_leftDriveB.configure(leftDriveBConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_rightDriveA.configure(rightDriveAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        m_rightDriveA.configure(rightDriveAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_rightDriveB.configure(rightDriveBConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     @Override
@@ -136,6 +136,12 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_gyro.close();
     }
 
+    /**
+     * Drives the robot.
+     *
+     * @param speed How fast to drive forwards [-1, 1]. Positive is forwards
+     * @param steer How fast to turn [-1, 1]. Positive is counter-clockwise (turning left), like the rest of WPILib
+     */
     public void arcadeDrive(double speed, double steer) {
         // TODO implement
     }
@@ -155,16 +161,27 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_simulator.update();
     }
 
+    /**
+     * Gets the direction the robot is facing.
+     *
+     * @return The heading, in degrees. Positive is counter-clockwise (turning left)
+     */
     public double getHeading() {
         // TODO implement
         return 0;
     }
 
+    /**
+     * @return How far the left side of the robot has driven, in meters
+     */
     public double getLeftDistance() {
         // TODO implement
         return 0;
     }
 
+    /**
+     * @return How far the right side of the robot has driven, in meters
+     */
     public double getRightDistance() {
         // TODO implement
         return 0;

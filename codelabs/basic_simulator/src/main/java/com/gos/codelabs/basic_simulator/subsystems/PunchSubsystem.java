@@ -1,8 +1,10 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
+import com.gos.codelabs.basic_simulator.SmartDashboardNames;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
@@ -21,6 +23,7 @@ public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean(SmartDashboardNames.PUNCH_TABLE_NAME + "/" + SmartDashboardNames.PUNCH_IS_EXTENDED, isExtended());
     }
 
     public boolean isExtended() {

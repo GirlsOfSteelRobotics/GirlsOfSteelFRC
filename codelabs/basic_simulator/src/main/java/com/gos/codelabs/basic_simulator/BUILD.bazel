@@ -31,5 +31,6 @@ gos_java_robot(
         "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
         "@bzlmodrio-allwpilib//libraries/java/wpilibNewCommands",
         "@bzlmodrio-allwpilib//libraries/java/wpilibj",
+        "@bzlmodrio-allwpilib//libraries/java/wpimath",
     ],
 )

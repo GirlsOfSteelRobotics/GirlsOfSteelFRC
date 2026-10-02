@@ -11,13 +11,26 @@ public class ElevatorToPositionCommand extends Command {
 
 
     public ElevatorToPositionCommand(ElevatorSubsystem elevator, ElevatorSubsystem.Positions position) {
-        this(elevator, position.m_heightMeters);
+        this(elevator, position, false);
+    }
+
+    public ElevatorToPositionCommand(ElevatorSubsystem elevator, ElevatorSubsystem.Positions position, boolean holdAtPosition) {
+        this(elevator, position.m_heightMeters, holdAtPosition);
     }
 
     public ElevatorToPositionCommand(ElevatorSubsystem lift, double position) {
-        this(lift, position, true);
+        this(lift, position, false);
     }
 
+    /**
+     * Moves the elevator to a height.
+     *
+     * @param lift The elevator subsystem
+     * @param position The goal height, in meters
+     * @param holdAtPosition If false, the command finishes once the elevator reaches the goal.
+     *                       If true, the command never finishes on its own, and keeps holding the elevator at
+     *                       the goal height until it is interrupted (for example, by letting go of a button)
+     */
     public ElevatorToPositionCommand(ElevatorSubsystem lift, double position, boolean holdAtPosition) {
         m_lift = lift;
         m_goal = position;

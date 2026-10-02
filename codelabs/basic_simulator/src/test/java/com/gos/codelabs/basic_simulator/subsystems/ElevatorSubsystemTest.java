@@ -25,11 +25,13 @@ public class ElevatorSubsystemTest extends BaseTestFixture {
     public void testManuallyMoveDown() {
 
         try (ElevatorSubsystem elevator = new ElevatorSubsystem()) {
+            // The elevator starts at the bottom, so raise it up first
+            runCycles(50, () -> elevator.setSpeed(1));
+            double startingHeight = elevator.getHeight();
 
-            elevator.setSpeed(-1);
-            runCycles(50); // Run for one second
+            runCycles(25, () -> elevator.setSpeed(-1));
 
-            assertTrue(elevator.getHeight() < 0);
+            assertTrue(elevator.getHeight() < startingHeight);
         }
     }
 
