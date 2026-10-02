@@ -73,7 +73,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
         m_loggingUtil = new LoggingUtil("Elevator");
         m_loggingUtil.addDouble("Height", this::getHeight);
-        m_loggingUtil.addDouble("Motor Speed", m_liftMotor::getAppliedOutput);
+        m_loggingUtil.addDouble("Throttle", m_liftMotor::getAppliedOutput);
         m_loggingUtil.addBoolean("Lower Limit Switch", this::isAtLowerLimit);
         m_loggingUtil.addBoolean("Upper Limit Switch", this::isAtUpperLimit);
 
@@ -143,7 +143,12 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
         // TODO implement
     }
 
-    public void setSpeed(double speed) {
+    /**
+     * Runs the elevator motor at a raw throttle.
+     *
+     * @param throttle The motor throttle [-1, 1]. Positive moves the elevator up
+     */
+    public void setThrottle(double throttle) {
         // TODO implement
     }
 

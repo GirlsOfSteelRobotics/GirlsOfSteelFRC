@@ -8,17 +8,17 @@ public class AutoDriveStraightTimedCommand extends Command {
 
     private final ChassisSubsystem m_chassis;
     private final Timer m_timer;
-    private final double m_speed;
+    private final double m_throttle;
     private final double m_time;
 
-    public AutoDriveStraightTimedCommand(ChassisSubsystem chassis, double speed, double time) {
+    public AutoDriveStraightTimedCommand(ChassisSubsystem chassis, double throttle, double time) {
         m_chassis = chassis;
-        m_speed = speed;
+        m_throttle = throttle;
         m_time = time;
         m_timer = new Timer();
 
-        if (m_speed > 1 || m_speed < -1) {
-            throw new IllegalArgumentException("Speed (" + m_speed + ") should be between [-1, 1]");
+        if (m_throttle > 1 || m_throttle < -1) {
+            throw new IllegalArgumentException("Throttle (" + m_throttle + ") should be between [-1, 1]");
         }
 
         if (m_time <= 0) {

@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
         m_loggingUtil = new LoggingUtil("Shooter");
         m_loggingUtil.addDouble("RPM", this::getRpm);
-        m_loggingUtil.addDouble("Motor Speed", m_wheelMotor::getAppliedOutput);
+        m_loggingUtil.addDouble("Throttle", m_wheelMotor::getAppliedOutput);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim sim = new FlywheelSim(
@@ -67,11 +67,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     /**
-     * Runs the wheel at a raw motor speed.
+     * Runs the wheel at a raw throttle.
      *
-     * @param speed The motor speed [-1, 1]
+     * @param throttle The motor throttle [-1, 1]
      */
-    public void setSpeed(double speed) {
+    public void setThrottle(double throttle) {
         // TODO implement
     }
 

@@ -154,10 +154,10 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     /**
      * Drives the robot.
      *
-     * @param speed How fast to drive forwards [-1, 1]. Positive is forwards
+     * @param throttle How fast to drive forwards [-1, 1]. Positive is forwards
      * @param steer How fast to turn [-1, 1]. Positive is counter-clockwise (turning left), like the rest of WPILib
      */
-    public void arcadeDrive(double speed, double steer) {
+    public void arcadeDrive(double throttle, double steer) {
         // TODO implement
     }
 

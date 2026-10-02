@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ShooterSubsystemTest extends BaseTestFixture {
 
     @Test
-    public void testSetSpeed() {
+    public void testSetThrottle() {
         try (ShooterSubsystem shooter = new ShooterSubsystem()) {
-            runCycles(25, () -> shooter.setSpeed(1));
+            runCycles(25, () -> shooter.setThrottle(1));
             assertTrue(shooter.getRpm() > 0);
 
             double fastestRpm = shooter.getRpm();
