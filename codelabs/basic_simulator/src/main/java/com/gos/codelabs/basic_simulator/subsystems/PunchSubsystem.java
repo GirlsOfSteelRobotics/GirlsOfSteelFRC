@@ -1,18 +1,24 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
-import com.gos.codelabs.basic_simulator.SmartDashboardNames;
+import com.gos.codelabs.basic_simulator.commands.MovePunchCommand;
+import com.gos.lib.logging.LoggingUtil;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     private final Solenoid m_punchSolenoid;
+    private final LoggingUtil m_loggingUtil;
 
     public PunchSubsystem() {
         m_punchSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_PUNCH);
+
+        m_loggingUtil = new LoggingUtil("Punch");
+        m_loggingUtil.addBoolean("Extended", this::isExtended);
     }
 
 
@@ -23,7 +29,7 @@ public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean(SmartDashboardNames.PUNCH_TABLE_NAME + "/" + SmartDashboardNames.PUNCH_IS_EXTENDED, isExtended());
+        m_loggingUtil.updateLogs();
     }
 
     public boolean isExtended() {
@@ -37,5 +43,11 @@ public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void retract() {
         // TODO implement
+    }
+
+    public void addPunchDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Punch");
+        tab.add(new MovePunchCommand(this, true).withName("Extend Punch"));
+        tab.add(new MovePunchCommand(this, false).withName("Retract Punch"));
     }
 }

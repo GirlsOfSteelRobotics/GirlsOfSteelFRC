@@ -1,7 +1,8 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
-import com.gos.codelabs.basic_simulator.SmartDashboardNames;
+import com.gos.codelabs.basic_simulator.commands.ElevatorToPositionCommand;
+import com.gos.lib.logging.LoggingUtil;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
@@ -9,6 +10,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
@@ -41,6 +44,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
+    private final LoggingUtil m_loggingUtil;
     private final Mechanism2d m_mechanism;
     private final MechanismLigament2d m_elevatorLigament;
 
@@ -66,6 +70,12 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
         m_mechanism = new Mechanism2d(1, ElevatorSimConstants.K_MAX_ELEVATOR_HEIGHT + .1);
         m_elevatorLigament = m_mechanism.getRoot("Elevator Root", .5, 0).append(new MechanismLigament2d("Elevator", 0, 90));
         SmartDashboard.putData("Elevator Mechanism", m_mechanism);
+
+        m_loggingUtil = new LoggingUtil("Elevator");
+        m_loggingUtil.addDouble("Height", this::getHeight);
+        m_loggingUtil.addDouble("Motor Speed", m_liftMotor::getAppliedOutput);
+        m_loggingUtil.addBoolean("Lower Limit Switch", this::isAtLowerLimit);
+        m_loggingUtil.addBoolean("Upper Limit Switch", this::isAtUpperLimit);
 
         if (RobotBase.isSimulation()) {
             ElevatorSim sim = new ElevatorSim(
@@ -94,10 +104,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     @Override
     public void periodic() {
         m_elevatorLigament.setLength(getHeight());
-
-        SmartDashboard.putNumber(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_HEIGHT, getHeight());
-        SmartDashboard.putBoolean(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_LOWER_LIMIT_SWITCH, isAtLowerLimit());
-        SmartDashboard.putBoolean(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_UPPER_LIMIT_SWITCH, isAtUpperLimit());
+        m_loggingUtil.updateLogs();
     }
 
     @Override
@@ -146,5 +153,12 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     public double getHeight() {
         // TODO implement
         return 0;
+    }
+
+    public void addElevatorDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Elevator");
+        tab.add(new ElevatorToPositionCommand(this, Positions.LOW).withName("To Position Low"));
+        tab.add(new ElevatorToPositionCommand(this, Positions.MID).withName("To Position Mid"));
+        tab.add(new ElevatorToPositionCommand(this, Positions.HIGH).withName("To Position High"));
     }
 }

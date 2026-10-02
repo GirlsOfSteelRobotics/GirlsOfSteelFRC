@@ -1,15 +1,17 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
-import com.gos.codelabs.basic_simulator.SmartDashboardNames;
+import com.gos.codelabs.basic_simulator.commands.ShooterRpmCommand;
+import com.gos.lib.logging.LoggingUtil;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -21,6 +23,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
     private final SparkMax m_wheelMotor;
     private final RelativeEncoder m_wheelEncoder;
+    private final LoggingUtil m_loggingUtil;
 
     private FlywheelSimWrapper m_simulator;
 
@@ -33,6 +36,10 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
     public ShooterSubsystem() {
         m_wheelMotor = new SparkMax(Constants.CAN_SHOOTER_MOTOR, MotorType.kBrushless);
         m_wheelEncoder = m_wheelMotor.getEncoder();
+
+        m_loggingUtil = new LoggingUtil("Shooter");
+        m_loggingUtil.addDouble("RPM", this::getRpm);
+        m_loggingUtil.addDouble("Motor Speed", m_wheelMotor::getAppliedOutput);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim sim = new FlywheelSim(
@@ -51,8 +58,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME + "/" + SmartDashboardNames.SPINNING_WHEEL_RPM, getRpm());
-        SmartDashboard.putNumber(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME + "/" + SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED, m_wheelMotor.getAppliedOutput());
+        m_loggingUtil.updateLogs();
     }
 
     @Override
@@ -97,5 +103,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void stop() {
         // TODO implement
+    }
+
+    public void addShooterDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+        tab.add(new ShooterRpmCommand(this, SHOOTING_RPM).withName("Spin At Shooting RPM"));
+        tab.add(new ShooterRpmCommand(this, 1000).withName("Spin At 1000 RPM"));
     }
 }

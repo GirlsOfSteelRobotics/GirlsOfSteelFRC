@@ -1,6 +1,10 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
+import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightDistanceCommand;
+import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightTimedCommand;
+import com.gos.codelabs.basic_simulator.commands.TurnToAngleCommand;
+import com.gos.lib.logging.LoggingUtil;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
@@ -15,9 +19,12 @@ import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +49,8 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     private final Field2d m_field;
 
     private final ADXRS450_Gyro m_gyro;
+
+    private final LoggingUtil m_loggingUtil;
 
     private DifferentialDrivetrainSimWrapper m_simulator;
 
@@ -107,6 +116,12 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
 
+        m_loggingUtil = new LoggingUtil("Chassis");
+        m_loggingUtil.addDouble("Left Distance", this::getLeftDistance);
+        m_loggingUtil.addDouble("Right Distance", this::getRightDistance);
+        m_loggingUtil.addDouble("Average Distance", this::getAverageDistance);
+        m_loggingUtil.addDouble("Heading", this::getHeading);
+
         if (RobotBase.isSimulation()) {
             m_simulator = new DifferentialDrivetrainSimWrapper(
                     DrivetrainConstants.createSim(),
@@ -154,6 +169,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     public void periodic() {
         m_odometry.update(m_gyro.getRotation2d(), getLeftDistance(), getRightDistance());
         m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_loggingUtil.updateLogs();
     }
 
     @Override
@@ -190,5 +206,16 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     public double getAverageDistance() {
         // TODO implement
         return 0;
+    }
+
+    public void addChassisDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        tab.add(new AutoDriveStraightTimedCommand(this, .5, 2).withName("Timed Drive Forwards"));
+        tab.add(new AutoDriveStraightTimedCommand(this, -.5, 2).withName("Timed Drive Backwards"));
+        tab.add(new AutoDriveStraightDistanceCommand(this, Units.feetToMeters(5)).withName("Drive Distance Forwards"));
+        tab.add(new AutoDriveStraightDistanceCommand(this, Units.feetToMeters(-5)).withName("Drive Distance Backwards"));
+        tab.add(new TurnToAngleCommand(this, 90).withName("Turn To 90"));
+        tab.add(new TurnToAngleCommand(this, -45).withName("Turn To -45"));
+        tab.add(new TurnToAngleCommand(this, 0).withName("Turn To 0"));
     }
 }
