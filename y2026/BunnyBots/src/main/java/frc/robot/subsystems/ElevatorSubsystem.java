@@ -3,9 +3,10 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ElevatorSubsystem {
+public class ElevatorSubsystem extends SubsystemBase {
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
     private final RelativeEncoder m_encoder;
@@ -20,8 +21,8 @@ public class ElevatorSubsystem {
         return m_encoder.getPosition();
     }
 
-    public void setPower(double power) {
-        m_leader.set(power);
+    public void setThrottle(double throttle) {
+        m_leader.set(throttle);
     }
 
     public void clearStickyFaults() {

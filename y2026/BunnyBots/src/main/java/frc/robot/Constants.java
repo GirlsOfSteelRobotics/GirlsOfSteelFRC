@@ -13,8 +13,12 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // Competition Settings
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = true;
+
     // Joysticks
     public static final int ELEVATOR_MOTOR_ID = 14;
     public static final int ELEVATOR_FOLLOW_MOTOR_ID = 18;
     public static final int DRIVER_CONTROLLER_PORT = 0;
+
 }
