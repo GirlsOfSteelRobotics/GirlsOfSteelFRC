@@ -109,10 +109,13 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void setSpeed(double speed) {
         // TODO implement
+        m_liftMotor.set(speed);
     }
 
     public double getHeight() {
         // TODO implement
-        return 0;
+        return m_liftEncoder.getPosition();
     }
+
+
 }
