@@ -13,7 +13,8 @@ public class ElevatorWithJoystickCommandTest extends BaseTestFixture {
 
     @Test
     public void testManualMoveUp() {
-        try (RobotContainer container = new RobotContainer(); ElevatorSubsystem elevator = container.getElevator()) {
+        try (RobotContainer container = new RobotContainer()) {
+            ElevatorSubsystem elevator = container.getElevator(); // NOPMD(CloseResource)
             runCycles(5, () -> {
                 DriverStationSim.setJoystickAxis(1, XboxController.Axis.kRightY.value, -.7);
                 DriverStationSim.notifyNewData();
@@ -26,14 +27,22 @@ public class ElevatorWithJoystickCommandTest extends BaseTestFixture {
 
     @Test
     public void testManualMoveDown() {
-        try (RobotContainer container = new RobotContainer(); ElevatorSubsystem elevator = container.getElevator()) {
-            runCycles(5, () -> {
+        try (RobotContainer container = new RobotContainer()) {
+            ElevatorSubsystem elevator = container.getElevator(); // NOPMD(CloseResource)
+
+            // The elevator starts at the bottom, so raise it up first
+            runCycles(50, () -> {
+                DriverStationSim.setJoystickAxis(1, XboxController.Axis.kRightY.value, -.7);
+                DriverStationSim.notifyNewData();
+            });
+            double startingHeight = elevator.getHeight();
+
+            runCycles(25, () -> {
                 DriverStationSim.setJoystickAxis(1, XboxController.Axis.kRightY.value, .7);
                 DriverStationSim.notifyNewData();
             });
 
-            assertTrue(elevator.getHeight() < 0);
-
+            assertTrue(elevator.getHeight() < startingHeight);
         }
     }
 }

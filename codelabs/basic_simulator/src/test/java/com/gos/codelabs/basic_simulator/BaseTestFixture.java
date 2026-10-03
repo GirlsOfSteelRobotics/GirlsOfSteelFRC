@@ -2,6 +2,7 @@ package com.gos.codelabs.basic_simulator;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.simulation.SimDeviceSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.junit.jupiter.api.AfterEach;
@@ -34,6 +35,9 @@ public class BaseTestFixture {
             DriverStationSim.setJoystickButtonCount(0, 10);
             DriverStationSim.setJoystickButtonCount(1, 10);
 
+            // Make sure the robot sees that it is enabled before the test starts, otherwise commands won't get scheduled
+            DriverStationSim.notifyNewData();
+
             SimHooks.pauseTiming();
 
         } catch (NoSuchFieldException | IllegalAccessException e) {
@@ -47,6 +51,9 @@ public class BaseTestFixture {
         CommandScheduler.getInstance().disable();
         DriverStationSim.setEnabled(false);
         DriverStationSim.resetData();
+        // Every test creates brand new motor controllers that re-use the same CAN IDs. Clear out the simulated devices
+        // from the last test, otherwise the simulator would keep updating the old (closed) devices instead of the new ones
+        SimDeviceSim.resetData();
     }
 
 
