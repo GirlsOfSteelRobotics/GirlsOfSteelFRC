@@ -22,4 +22,7 @@ public final class Constants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
     public static final int JOYSTICK_CONTROLLER_PORT = 1;
+
+    // motors
+    public static final int INTAKE_MOTOR = 1;
 }

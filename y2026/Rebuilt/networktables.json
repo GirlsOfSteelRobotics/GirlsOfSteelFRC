@@ -352,9 +352,17 @@
     }
   },
   {
-    "name": "/Preferences/ChassisRotationDamper",
+    "name": "/Preferences/speed booster",
     "type": "double",
-    "value": 0.5,
+    "value": 1.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/pizzaSpeedForward",
+    "type": "double",
+    "value": 0.85,
     "properties": {
       "persistent": true
     }
