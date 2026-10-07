@@ -1,8 +1,9 @@
 // spotless:off
 package frc.robot.choreo_gen;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.units.Units;
+import org.wpilib.units.measure.*;
 
 /**
  * Generated file containing variables defined in Choreo.
@@ -23,6 +24,9 @@ public final class ChoreoVars {
         public static final Pose2d pantry4 = new Pose2d(2.3325772, 7.6342421, Rotation2d.fromRadians(1.5707963));
         public static final Pose2d pantryBase = new Pose2d(0.5037772, 7.6342421, Rotation2d.fromRadians(1.5707963));
         public static final Pose2d ramp = new Pose2d(2.7587922, 2.3456151, Rotation2d.fromRadians(0));
+        public static final Pose2d startKitchenCenterLine = new Pose2d(0.3965401, 5.45961, Rotation2d.fromRadians(0));
+        public static final Pose2d startKitchenOven = new Pose2d(0.3965401, 5.45961, Rotation2d.fromRadians(-1.5707963));
+        public static final Pose2d startKitchenPantry = new Pose2d(0.3965401, 5.45961, Rotation2d.fromRadians(1.5707963));
     }
 }
 // spotless:on
