@@ -54,6 +54,8 @@ public class ChassisSubsystemTest extends BaseTestFixture {
             // Run for one second
             runCycles(LOOPS_TO_RUN);
 
+            System.out.println("Left" + chassis.getLeftDistance() + ", Right: " + chassis.getRightDistance() + ", heading " + chassis.getHeading());
+
             // Clockwise means the right side goes backwards, left goes forwards
             assertTrue(chassis.getLeftDistance() > 0);
             assertTrue(chassis.getRightDistance() < 0);
