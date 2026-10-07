@@ -14,11 +14,12 @@ package frc.robot;
  */
 public final class Constants {
     // Competition Settings
-    public static final boolean DEFAULT_CONSTANT_PROPERTIES = true;
+    public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
 
     // Joysticks
     public static final int ELEVATOR_MOTOR_ID = 14;
     public static final int ELEVATOR_FOLLOW_MOTOR_ID = 18;
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
+    public static final int JOYSTICK_CONTROLLER_PORT = 1;
 }
