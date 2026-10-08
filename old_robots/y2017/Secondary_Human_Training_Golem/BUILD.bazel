@@ -1,4 +1,0 @@
-alias(
-    name = "Secondary_Human_Training_Golem",
-    actual = "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works",
-)

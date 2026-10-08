@@ -17,5 +17,3 @@ subprojects {
 
     apply from: "${rootDir}/styleguide/styleguide.gradle"
 }
-
-apply from: "3rdParty_sb_widget_helper.gradle"
