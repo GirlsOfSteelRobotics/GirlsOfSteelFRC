@@ -127,20 +127,22 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      * @return True if the bottom limit switch is pressed
      */
     public boolean isAtLowerLimit() {
-        // TODO implement
-        return false;
+        m_lowerLimitSwitch.get();
+        return true;
     }
 
     /**
      * @return True if the top limit switch is pressed
      */
     public boolean isAtUpperLimit() {
-        // TODO implement
-        return false;
+        m_upperLimitSwitch.get();
+        return true;
     }
 
     public void stop() {
         // TODO implement
+        m_liftMotor.set(0);
+
     }
 
     /**
@@ -156,8 +158,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      * @return The height of the elevator, in meters
      */
     public double getHeight() {
-        // TODO implement
-        return 0;
+        return m_liftEncoder.getPosition();
     }
 
     public void addElevatorDebugCommands() {
