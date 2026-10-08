@@ -95,24 +95,26 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     public boolean isAtLowerLimit() {
         // TODO implement
-        return false;
+        return m_lowerLimitSwitch.get();
     }
 
     public boolean isAtUpperLimit() {
         // TODO implement
-        return false;
+       return m_upperLimitSwitch.get();
     }
 
     public void stop() {
         // TODO implement
+        m_liftMotor.set(0);
     }
 
     public void setSpeed(double speed) {
         // TODO implement
+        m_liftMotor.set(speed);
     }
 
     public double getHeight() {
         // TODO implement
-        return 0;
+        return m_liftEncoder.getPosition();
     }
 }
