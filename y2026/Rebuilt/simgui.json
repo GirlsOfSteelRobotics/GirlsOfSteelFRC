@@ -117,9 +117,6 @@
         }
       },
       "/SmartDashboard/Field": {
-        "AprilTags": {
-          "image": "C:\\Users\\girls\\IdeaProjects\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
-        },
         "Trajectory": {
           "arrows": false,
           "style": "Line"
@@ -170,7 +167,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 332,
+          "height": 0,
           "series": [
             {
               "color": [

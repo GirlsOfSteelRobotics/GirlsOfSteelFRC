@@ -8,8 +8,9 @@ import com.gos.codelabs.basic_simulator.auton_modes.AutonFactory;
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
+import com.gos.codelabs.basic_simulator.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,10 +24,11 @@ public class RobotContainer implements AutoCloseable {
     private final ChassisSubsystem m_chassisSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final PunchSubsystem m_punchSubsystem;
+    private final ShooterSubsystem m_shooterSubsystem;
 
     // Joysticks
-    private final XboxController m_driverJoystick;
-    private final XboxController m_operatorJoystick;
+    private final CommandXboxController m_driverJoystick;
+    private final CommandXboxController m_operatorJoystick;
 
     private final AutonFactory m_autonFactory;
 
@@ -37,11 +39,11 @@ public class RobotContainer implements AutoCloseable {
         m_chassisSubsystem = new ChassisSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
         m_punchSubsystem = new PunchSubsystem();
+        m_shooterSubsystem = new ShooterSubsystem();
 
-        m_driverJoystick = new XboxController(0);
-        m_operatorJoystick = new XboxController(1);
+        m_driverJoystick = new CommandXboxController(0);
+        m_operatorJoystick = new CommandXboxController(1);
 
-        new CommandTester(this);
         m_autonFactory = new AutonFactory(m_chassisSubsystem, m_elevatorSubsystem, m_punchSubsystem);
 
         // Configure the button bindings
@@ -53,6 +55,17 @@ public class RobotContainer implements AutoCloseable {
         m_chassisSubsystem.close();
         m_elevatorSubsystem.close();
         m_punchSubsystem.close();
+        m_shooterSubsystem.close();
+    }
+
+    /**
+     * Puts commands on the dashboard for each subsystem, so they can be tested individually.
+     */
+    public void addDebugCommands() {
+        m_chassisSubsystem.addChassisDebugCommands();
+        m_elevatorSubsystem.addElevatorDebugCommands();
+        m_punchSubsystem.addPunchDebugCommands();
+        m_shooterSubsystem.addShooterDebugCommands();
     }
 
     private void configureButtonBindings() {
@@ -78,5 +91,9 @@ public class RobotContainer implements AutoCloseable {
 
     public PunchSubsystem getPunch() {
         return m_punchSubsystem;
+    }
+
+    public ShooterSubsystem getShooter() {
+        return m_shooterSubsystem;
     }
 }
