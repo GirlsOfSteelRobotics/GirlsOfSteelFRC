@@ -183,29 +183,32 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
      * @return The heading, in degrees. Positive is counter-clockwise (turning left)
      */
     public double getHeading() {
-        // TODO implement
-        return 0;
+        //return m_gyro.getAngle();
+        return m_gyro.getRotation2d().getDegrees();
     }
 
     /**
      * @return How far the left side of the robot has driven, in meters
      */
     public double getLeftDistance() {
-        // TODO implement
-        return 0;
+        return m_leftEncoder.getPosition();
+
     }
 
     /**
      * @return How far the right side of the robot has driven, in meters
      */
     public double getRightDistance() {
-        // TODO implement
-        return 0;
+        return m_rightEncoder.getPosition();
+
     }
 
     public double getAverageDistance() {
-        // TODO implement
-        return 0;
+       double num1 = m_leftEncoder.getPosition();
+       double num2 = m_rightEncoder.getPosition();
+       return (num1 + num2)/2;
+
+
     }
 
     public void addChassisDebugCommands() {
