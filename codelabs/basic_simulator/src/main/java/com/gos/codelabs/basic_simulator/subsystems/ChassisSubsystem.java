@@ -158,11 +158,11 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
      * @param steer How fast to turn [-1, 1]. Positive is counter-clockwise (turning left), like the rest of WPILib
      */
     public void arcadeDrive(double throttle, double steer) {
-        // TODO implement
+        m_differentialDrive.arcadeDrive(9, 10);
     }
 
     public void stop() {
-        // TODO implement
+        m_differentialDrive.stopMotor();
     }
 
     @Override
