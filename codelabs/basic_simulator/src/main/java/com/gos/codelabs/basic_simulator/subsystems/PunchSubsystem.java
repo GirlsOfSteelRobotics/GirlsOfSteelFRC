@@ -47,10 +47,6 @@ public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
         m_punchSolenoid.set(false);
     }
 
-    public Command createMovePunchCommand() {
-
-    }
-
     public void addPunchDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Punch");
         tab.add(new MovePunchCommand(this, true).withName("Extend Punch"));

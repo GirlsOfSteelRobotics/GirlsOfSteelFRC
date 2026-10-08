@@ -19,7 +19,11 @@ public class MovePunchCommand extends Command {
     public void execute() {
         // TODO implement
         if (m_extendPunch) {
-            m_punch.
+            m_punch.extend();
+
+        }
+        else {
+            m_punch.retract();
         }
     }
 
