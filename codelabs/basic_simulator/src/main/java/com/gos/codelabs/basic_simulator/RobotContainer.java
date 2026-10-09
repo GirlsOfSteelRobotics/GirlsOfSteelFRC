@@ -5,6 +5,8 @@
 package com.gos.codelabs.basic_simulator;
 
 import com.gos.codelabs.basic_simulator.auton_modes.AutonFactory;
+import com.gos.codelabs.basic_simulator.commands.DriveChassisWithJoystickCommand;
+import com.gos.codelabs.basic_simulator.commands.ElevatorWithJoystickCommand;
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
@@ -69,7 +71,8 @@ public class RobotContainer implements AutoCloseable {
     }
 
     private void configureButtonBindings() {
-        // TODO implement
+        m_chassisSubsystem.setDefaultCommand(new DriveChassisWithJoystickCommand(m_chassisSubsystem, m_driverJoystick));
+        m_elevatorSubsystem.setDefaultCommand(new ElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorJoystick));
     }
 
     /**
