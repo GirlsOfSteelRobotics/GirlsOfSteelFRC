@@ -53,6 +53,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
+    public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
+        );
+    }
+
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
      * <p>
