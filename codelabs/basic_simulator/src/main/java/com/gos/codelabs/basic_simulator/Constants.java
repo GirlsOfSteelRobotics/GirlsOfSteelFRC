@@ -36,6 +36,7 @@ public final class Constants {
     public static final int CAN_CHASSIS_RIGHT_A = 3;
     public static final int CAN_CHASSIS_RIGHT_B = 4;
     public static final int CAN_LIFT_MOTOR = 5;
+    public static final int CAN_SHOOTER_MOTOR = 6;
 
     public static final boolean SIMULATE_SENSOR_NOISE = false;
 

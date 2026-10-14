@@ -4,6 +4,7 @@ import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutonFactory {
@@ -12,7 +13,8 @@ public class AutonFactory {
 
     public AutonFactory(ChassisSubsystem chassis, ElevatorSubsystem lift, PunchSubsystem punch) {
         m_sendableChooser = new SendableChooser<>();
-        m_sendableChooser.addOption("Default Mode", new DriveElevatePunchCommandGroup(chassis, lift, punch));
+        m_sendableChooser.setDefaultOption("Drive, Elevate, Punch", new DriveElevatePunchCommandGroup(chassis, lift, punch));
+        SmartDashboard.putData("Auto Chooser", m_sendableChooser);
     }
 
     public Command getAutonMode() {

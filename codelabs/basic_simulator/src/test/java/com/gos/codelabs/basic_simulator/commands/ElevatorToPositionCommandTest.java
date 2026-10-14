@@ -2,6 +2,7 @@ package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +15,7 @@ public class ElevatorToPositionCommandTest extends BaseTestFixture {
         ElevatorSubsystem.Positions goal = ElevatorSubsystem.Positions.MID;
         try (ElevatorSubsystem elevator = new ElevatorSubsystem()) {
             ElevatorToPositionCommand command = new ElevatorToPositionCommand(elevator, goal);
-            command.schedule();
+            CommandScheduler.getInstance().schedule(command);
 
             runCycles(100, null, () -> !command.isScheduled());
 
