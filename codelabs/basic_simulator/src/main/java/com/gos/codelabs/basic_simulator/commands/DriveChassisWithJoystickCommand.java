@@ -12,6 +12,7 @@ public class DriveChassisWithJoystickCommand extends Command {
         m_chassis = chassis;
         m_driverJoystick = driverJoystick;
 
+
         addRequirements(chassis);
     }
 
@@ -19,6 +20,9 @@ public class DriveChassisWithJoystickCommand extends Command {
     public void execute() {
         double leftY = m_driverJoystick.getLeftY();
         double rightX = m_driverJoystick.getRightX();
+        double rightY = m_driverJoystick.getRightY();
         m_chassis.arcadeDrive(-leftY, -rightX);
+
+
     }
 }
