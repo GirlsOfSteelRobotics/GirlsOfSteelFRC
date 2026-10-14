@@ -130,7 +130,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
                     RevEncoderSimWrapper.create(m_leftDriveA),
                     RevEncoderSimWrapper.create(m_rightDriveA),
                     new ADXRS450GyroWrapper(m_gyro));
-            m_simulator.setRightInverted(true);
+            m_simulator.setRightInverted(false);
 
             m_differentialDrive.setSafetyEnabled(false);
         }
@@ -159,13 +159,14 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
      */
     public void arcadeDrive(double throttle, double steer) {
         // TODO implement
-        m_differentialDrive.arcadeDrive(speed, steer);
+        m_differentialDrive.arcadeDrive(throttle, steer);
     }
 
     public void stop() {
         // TODO implement
-        m_leftEncoder.setPosition(0);
-        m_rightEncoder.setPosition(0);
+        //m_leftEncoder.setPosition(0);
+        //m_rightEncoder.setPosition(0);
+        m_differentialDrive.stopMotor();
     }
 
     @Override
@@ -187,7 +188,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
      */
     public double getHeading() {
         // TODO implement
-        return m_gyro.getAngle();
+        return -m_gyro.getAngle();
     }
 
     /**

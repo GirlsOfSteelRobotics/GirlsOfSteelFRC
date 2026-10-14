@@ -120,7 +120,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      */
     public boolean goToPosition(double position) {
         // TODO implement
-        return false;
+        return m;
     }
 
     /**
@@ -141,7 +141,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void stop() {
         // TODO implement
-        m_liftMotor.set(0);
+        m_liftMotor.stopMotor();
     }
 
     /**
@@ -151,7 +151,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      */
     public void setThrottle(double throttle) {
         // TODO implement
-        m_liftMotor.set(speed);
+        m_liftMotor.set(throttle);
 
     }
 

@@ -18,11 +18,12 @@ public class MovePunchCommand extends Command {
     @Override
     public void execute() {
         // TODO implement
+        m_punch.extend();
     }
 
     @Override
     public boolean isFinished() {
         // The solenoid stays where we put it, so this command only needs to run once
-        return true;
+        return m_punch.isExtended();
     }
 }
