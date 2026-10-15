@@ -127,20 +127,18 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      * @return True if the bottom limit switch is pressed
      */
     public boolean isAtLowerLimit() {
-        // TODO implement
-        return false;
+        return m_lowerLimitSwitch.get();
     }
 
     /**
      * @return True if the top limit switch is pressed
      */
     public boolean isAtUpperLimit() {
-        // TODO implement
-        return false;
+        return m_upperLimitSwitch.get();
     }
 
     public void stop() {
-        // TODO implement
+        m_liftMotor.set(0);
     }
 
     /**
@@ -149,15 +147,14 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      * @param throttle The motor throttle [-1, 1]. Positive moves the elevator up
      */
     public void setThrottle(double throttle) {
-        // TODO implement
+        m_liftMotor.set(throttle);
     }
 
     /**
      * @return The height of the elevator, in meters
      */
     public double getHeight() {
-        // TODO implement
-        return 0;
+        return m_liftEncoder.getPosition();
     }
 
     public void addElevatorDebugCommands() {
