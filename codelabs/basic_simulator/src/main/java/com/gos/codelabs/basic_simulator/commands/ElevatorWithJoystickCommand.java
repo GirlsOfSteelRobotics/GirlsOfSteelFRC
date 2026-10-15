@@ -17,6 +17,6 @@ public class ElevatorWithJoystickCommand extends Command {
 
     @Override
     public void execute() {
-        // TODO implement
+        m_lift.setThrottle(-m_operatorJoystick.getRightY());
     }
 }

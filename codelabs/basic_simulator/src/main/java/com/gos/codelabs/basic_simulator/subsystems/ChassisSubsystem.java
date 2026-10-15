@@ -158,11 +158,11 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
      * @param steer How fast to turn [-1, 1]. Positive is counter-clockwise (turning left), like the rest of WPILib
      */
     public void arcadeDrive(double throttle, double steer) {
-        // TODO implement
+        m_differentialDrive.arcadeDrive(throttle, steer);
     }
 
     public void stop() {
-        // TODO implement
+        m_differentialDrive.stopMotor();
     }
 
     @Override
@@ -183,29 +183,25 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
      * @return The heading, in degrees. Positive is counter-clockwise (turning left)
      */
     public double getHeading() {
-        // TODO implement
-        return 0;
+        return m_gyro.getRotation2d().getDegrees();
     }
 
     /**
      * @return How far the left side of the robot has driven, in meters
      */
     public double getLeftDistance() {
-        // TODO implement
-        return 0;
+        return m_leftEncoder.getPosition();
     }
 
     /**
      * @return How far the right side of the robot has driven, in meters
      */
     public double getRightDistance() {
-        // TODO implement
-        return 0;
+        return m_rightEncoder.getPosition();
     }
 
     public double getAverageDistance() {
-        // TODO implement
-        return 0;
+        return (double) (getLeftDistance() + getRightDistance()) /2;
     }
 
     public void addChassisDebugCommands() {
