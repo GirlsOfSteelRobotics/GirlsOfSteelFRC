@@ -28,16 +28,27 @@ public class TurnToAngleCommand extends Command {
     @Override
     public void execute() {
         // TODO implement
+        m_error = m_goalAngle - m_chassis.getHeading();
+        if (m_error > 0) {
+            m_chassis.arcadeDrive(0, 0.3);
+        } else if (m_error < 0) {
+            m_chassis.arcadeDrive(0, -0.3);
+        }
     }
 
     @Override
     public boolean isFinished() {
         // TODO implement
-        return false;
+        if (Math.abs(m_goalAngle - m_chassis.getAverageDistance()) <= ALLOWABLE_ERROR) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
         // TODO implement
+        m_chassis.stop();
     }
 }

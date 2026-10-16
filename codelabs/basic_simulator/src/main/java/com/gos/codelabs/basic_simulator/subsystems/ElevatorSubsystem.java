@@ -120,7 +120,15 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
      */
     public boolean goToPosition(double position) {
         // TODO implement
-        return m;
+        if (Math.abs(position - m_liftEncoder.getPosition()) <= ALLOWABLE_POSITION_ERROR) {
+            m_liftMotor.stopMotor();
+            return true;
+        } else if (position >= m_liftEncoder.getPosition()) {
+            m_liftMotor.set(0.5);
+        } else {
+            m_liftMotor.set(-0.5);
+        }
+            return false;
     }
 
     /**

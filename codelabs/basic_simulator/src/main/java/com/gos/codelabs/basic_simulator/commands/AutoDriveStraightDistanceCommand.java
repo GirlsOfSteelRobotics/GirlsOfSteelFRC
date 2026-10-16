@@ -29,16 +29,27 @@ public class AutoDriveStraightDistanceCommand extends Command {
     @Override
     public void execute() {
         // TODO implement
+        m_error = m_goalDistance - m_chassis.getAverageDistance();
+        if (m_error > 0) {
+            m_chassis.arcadeDrive(0.5, 0);
+        } else if (m_error < 0) {
+            m_chassis.arcadeDrive(-0.5, 0);
+        }
     }
 
     @Override
     public boolean isFinished() {
         // TODO implement
-        return false;
+        if (Math.abs(m_goalDistance - m_chassis.getAverageDistance()) <= ALLOWABLE_ERROR) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
         // TODO implement
+        m_chassis.stop();
     }
 }

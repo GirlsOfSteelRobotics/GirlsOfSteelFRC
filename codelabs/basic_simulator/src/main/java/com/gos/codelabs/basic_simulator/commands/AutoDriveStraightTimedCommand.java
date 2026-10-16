@@ -31,21 +31,24 @@ public class AutoDriveStraightTimedCommand extends Command {
     @Override
     public void initialize() {
         // TODO implement
+        m_timer.restart();
     }
 
     @Override
     public void execute() {
         // TODO implement
+        m_chassis.arcadeDrive(m_throttle, 0);
     }
 
     @Override
     public boolean isFinished() {
         // TODO implement
-        return false;
+        return m_timer.hasElapsed(m_time);
     }
 
     @Override
     public void end(boolean interrupted) {
         // TODO implement
+        m_chassis.stop();
     }
 }

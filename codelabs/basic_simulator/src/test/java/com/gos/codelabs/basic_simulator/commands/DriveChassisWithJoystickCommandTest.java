@@ -52,6 +52,9 @@ public class DriveChassisWithJoystickCommandTest extends BaseTestFixture {
                 DriverStationSim.notifyNewData();
             });
 
+            System.out.println(chassis.getLeftDistance());
+            System.out.println(chassis.getHeading());
+
             assertEquals(0, chassis.getAverageDistance(), DOUBLE_EPSILON);
             assertTrue(chassis.getHeading() < 0);
         }

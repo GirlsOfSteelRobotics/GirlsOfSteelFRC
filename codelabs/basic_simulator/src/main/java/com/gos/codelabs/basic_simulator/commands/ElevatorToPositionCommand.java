@@ -42,16 +42,18 @@ public class ElevatorToPositionCommand extends Command {
     @Override
     public void execute() {
         // TODO implement
+        m_finished = m_lift.goToPosition(m_goal);
     }
 
     @Override
     public boolean isFinished() {
         // TODO implement
-        return false;
+        return m_finished && !m_holdAtPosition;
     }
 
     @Override
     public void end(boolean interrupted) {
         // TODO implement
+        m_lift.stop();
     }
 }
