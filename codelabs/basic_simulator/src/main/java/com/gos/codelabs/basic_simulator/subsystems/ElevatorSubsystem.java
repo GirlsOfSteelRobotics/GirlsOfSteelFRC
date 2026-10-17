@@ -160,7 +160,6 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     public void setThrottle(double throttle) {
         // TODO implement
         m_liftMotor.set(throttle);
-
     }
 
     /**
