@@ -44,19 +44,19 @@ public class ChassisSubsystemTest extends BaseTestFixture {
         }
     }
 
-
     @Test
-    public void testTurnClockwise() {
+    public void testTurnCounterClockwise() {
 
         try (ChassisSubsystem chassis = new ChassisSubsystem()) {
+            // Positive steer turns counter-clockwise (to the left)
             chassis.arcadeDrive(0, 1);
 
             // Run for one second
             runCycles(LOOPS_TO_RUN);
 
-            // Clockwise means the right side goes backwards, left goes forwards
-            assertTrue(chassis.getLeftDistance() > 0);
-            assertTrue(chassis.getRightDistance() < 0);
+            // Counter-clockwise means the left side goes backwards, right goes forwards
+            assertTrue(chassis.getLeftDistance() < 0);
+            assertTrue(chassis.getRightDistance() > 0);
             assertEquals(0, chassis.getAverageDistance(), DOUBLE_EPSILON);
             assertEquals(-chassis.getLeftDistance(), chassis.getRightDistance(), DOUBLE_EPSILON);
             assertTrue(chassis.getHeading() > 0);
@@ -64,17 +64,18 @@ public class ChassisSubsystemTest extends BaseTestFixture {
     }
 
     @Test
-    public void testTurnCounterClockwise() {
+    public void testTurnClockwise() {
 
         try (ChassisSubsystem chassis = new ChassisSubsystem()) {
+            // Negative steer turns clockwise (to the right)
             chassis.arcadeDrive(0, -1);
 
             // Run for one second
             runCycles(LOOPS_TO_RUN);
 
-            // Clockwise means the left side goes backwards, right goes forwards
-            assertTrue(chassis.getLeftDistance() < 0);
-            assertTrue(chassis.getRightDistance() > 0);
+            // Clockwise means the left side goes forwards, right goes backwards
+            assertTrue(chassis.getLeftDistance() > 0);
+            assertTrue(chassis.getRightDistance() < 0);
             assertEquals(0, chassis.getAverageDistance(), DOUBLE_EPSILON);
             assertEquals(-chassis.getLeftDistance(), chassis.getRightDistance(), DOUBLE_EPSILON);
             assertTrue(chassis.getHeading() < 0);

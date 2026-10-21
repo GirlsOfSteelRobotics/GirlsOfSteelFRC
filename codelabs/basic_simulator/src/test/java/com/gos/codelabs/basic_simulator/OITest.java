@@ -2,6 +2,7 @@ package com.gos.codelabs.basic_simulator;
 
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
+import com.gos.codelabs.basic_simulator.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,8 @@ public class OITest extends BaseTestFixture {
 
         final int loopsToRun = 96; // Give more than enough time for it to get where it needs to go
 
-        try (RobotContainer container = new RobotContainer(); ElevatorSubsystem lift = container.getElevator()) {
+        try (RobotContainer container = new RobotContainer()) {
+            ElevatorSubsystem lift = container.getElevator(); // NOPMD(CloseResource)
             assertEquals(0, lift.getHeight(), DOUBLE_EPSILON);
 
             // Press the button, check that it goes to the mid height
@@ -55,7 +57,8 @@ public class OITest extends BaseTestFixture {
     public void testElevatorGoLow() {
         final int loopsToRun = 96; // Give more than enough time for it to get where it needs to go
 
-        try (RobotContainer container = new RobotContainer(); ElevatorSubsystem lift = container.getElevator()) {
+        try (RobotContainer container = new RobotContainer()) {
+            ElevatorSubsystem lift = container.getElevator(); // NOPMD(CloseResource)
             assertEquals(0, lift.getHeight(), DOUBLE_EPSILON);
 
             // Press the button, check that it goes to the low height
@@ -71,7 +74,8 @@ public class OITest extends BaseTestFixture {
     public void testElevatorGoHigh() {
         final int loopsToRun = 96;
 
-        try (RobotContainer container = new RobotContainer(); ElevatorSubsystem lift = container.getElevator()) {
+        try (RobotContainer container = new RobotContainer()) {
+            ElevatorSubsystem lift = container.getElevator(); // NOPMD(CloseResource)
             assertEquals(0, lift.getHeight(), DOUBLE_EPSILON);
 
             // Press the button, check that it goes to the high height
@@ -79,6 +83,25 @@ public class OITest extends BaseTestFixture {
                 DriverStationSim.setJoystickButton(1, XboxController.Button.kX.value, true);
             });
             assertEquals(ElevatorSubsystem.Positions.HIGH.m_heightMeters, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 3);
+        }
+    }
+
+    @Test
+    public void testShooterButton() {
+        try (RobotContainer container = new RobotContainer()) {
+            ShooterSubsystem shooter = container.getShooter(); // NOPMD(CloseResource)
+
+            // Hold the button, check that the wheel gets up to speed
+            runCycles(100, () -> {
+                DriverStationSim.setJoystickButton(1, XboxController.Button.kRightBumper.value, true);
+            });
+            assertEquals(ShooterSubsystem.SHOOTING_RPM, shooter.getRpm(), ShooterSubsystem.ALLOWABLE_RPM_ERROR);
+
+            // Release the button and make sure the wheel slows down
+            runCycles(50, () -> {
+                DriverStationSim.setJoystickButton(1, XboxController.Button.kRightBumper.value, false);
+            });
+            assertTrue(shooter.getRpm() < ShooterSubsystem.SHOOTING_RPM / 2);
         }
     }
 }
