@@ -4,16 +4,16 @@ import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ChassisSubsystem;
 
 public class JoystickFieldRelativeDriveCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(false, "ChassisTranslationDamper", 0.9);
     private static final GosDoubleProperty ROTATIONAL_DAMPER = new GosDoubleProperty(false, "ChassisRotationDamper", .5);
 
-    private final CommandSwerveDrivetrain m_chassis;
+    private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
 
-    public JoystickFieldRelativeDriveCommand(CommandSwerveDrivetrain chassis, CommandXboxController driverJoystick) {
+    public JoystickFieldRelativeDriveCommand(ChassisSubsystem chassis, CommandXboxController driverJoystick) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
 
@@ -42,4 +42,5 @@ public class JoystickFieldRelativeDriveCommand extends Command {
     public void end(boolean interrupted) {
         m_chassis.driveFieldCentric(0, 0, 0);
     }
+
 }

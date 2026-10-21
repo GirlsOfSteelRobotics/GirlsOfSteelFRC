@@ -26,7 +26,7 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.MomentOfInertia;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ChassisSubsystem;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Inches;
@@ -223,8 +223,8 @@ public class TunerConstants {
      * Creates a CommandSwerveDrivetrain instance.
      * This should only be called once in your robot program.
      */
-    public static CommandSwerveDrivetrain createDrivetrain() {
-        return new CommandSwerveDrivetrain(
+    public static ChassisSubsystem createDrivetrain() {
+        return new ChassisSubsystem(
             DrivetrainConstants, FrontLeft, FrontRight, BackLeft, BackRight
         );
     }
