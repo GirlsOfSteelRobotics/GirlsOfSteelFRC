@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
@@ -43,10 +44,10 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the trigger bindings
+        m_chassis = TunerConstants.createDrivetrain();
+        m_intakeSubsystem.addIntakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
         configureBindings();
-        m_intakeSubsystem.addIntakeDebugCommands();
-        m_chassis = TunerConstants.createDrivetrain();
 
     }
 
@@ -63,6 +64,7 @@ public class RobotContainer {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
         new Trigger(m_exampleSubsystem::exampleCondition)
             .onTrue(new ExampleCommand(m_exampleSubsystem));
+        m_chassis.setDefaultCommand((new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController)));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
 

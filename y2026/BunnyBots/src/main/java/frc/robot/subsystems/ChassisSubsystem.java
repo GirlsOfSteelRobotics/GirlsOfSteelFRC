@@ -17,8 +17,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.GosField;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
@@ -54,6 +56,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
+    private final GosField m_gosField = new GosField();
+
     public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
@@ -80,6 +84,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        SmartDashboard.putData(m_gosField.getField2d());
     }
 
     /**
@@ -157,6 +162,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 m_hasAppliedOperatorPerspective = true;
             });
         }
+        m_gosField.setPoseEstimate(getState().Pose);
     }
 
     private void startSimThread() {
@@ -224,4 +230,5 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .ignoringDisable(true)
             .withName("Reset Gyro");
     }
+
 }
