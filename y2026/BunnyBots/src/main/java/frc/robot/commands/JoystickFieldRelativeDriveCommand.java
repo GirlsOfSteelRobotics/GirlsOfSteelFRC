@@ -31,7 +31,6 @@ public class JoystickFieldRelativeDriveCommand extends Command {
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getRightX() * ROTATIONAL_DAMPER.getValue(), .05));
-        System.out.println(-m_joystick.getLeftY() + "," + -m_joystick.getLeftX() + "," + -m_joystick.getRightX());
     }
 
     @Override
