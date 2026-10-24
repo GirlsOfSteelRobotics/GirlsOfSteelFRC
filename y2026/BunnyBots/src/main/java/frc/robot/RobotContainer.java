@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DavidDriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
@@ -75,7 +76,7 @@ public class RobotContainer {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
         new Trigger(m_exampleSubsystem::exampleCondition)
             .onTrue(new ExampleCommand(m_exampleSubsystem));
-        m_chassis.setDefaultCommand((new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController)));
+        m_chassis.setDefaultCommand((new DavidDriveCommand(m_chassis, m_driverController)));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
 
