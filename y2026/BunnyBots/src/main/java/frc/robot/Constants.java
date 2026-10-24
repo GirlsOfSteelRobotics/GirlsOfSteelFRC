@@ -15,6 +15,7 @@ package frc.robot;
 public final class Constants {
     // Competition Settings
     public static final boolean DEFAULT_CONSTANT_PROPERTIES = false;
+    public static final boolean IS_COMPETITION_ROBOT = true;
 
     // Joysticks
     public static final int DRIVER_CONTROLLER_PORT = 0;
