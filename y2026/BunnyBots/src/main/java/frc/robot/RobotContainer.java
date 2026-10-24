@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.JoystickFieldRelativeDriveCommand;
@@ -48,6 +52,13 @@ public class RobotContainer {
         m_intakeSubsystem.addIntakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
         configureBindings();
+        if (RobotBase.isSimulation()) {
+            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
+            DriverStationSim.setDsAttached(true);
+            DriverStationSim.setEnabled(true);
+            DriverStation.silenceJoystickConnectionWarning(true);
+
+        }
 
     }
 
