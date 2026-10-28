@@ -52,7 +52,6 @@ public class RobotContainer {
         m_intakeSubsystem.addIntakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
         configureBindings();
-        m_intakeSubsystem.addIntakeDebugCommands();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
