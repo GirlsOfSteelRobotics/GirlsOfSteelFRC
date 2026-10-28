@@ -15,15 +15,15 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.Unit;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.DIOSim;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
@@ -44,22 +44,18 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
     private final RelativeEncoder m_encoder;
-    private final DigitalInput m_botLimitSwitch;
-    private final DigitalInput m_topLimitSwitch;
     private final SparkMaxAlerts m_checkAlerts;
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_elevatorFollowerErrorAlerts;
     private final RevProfiledElevatorController m_elevatorPidController;
-   private double m_goalHeight = NO_GOAL_HEIGHT;
-   private ElevatorSimWrapper m_simulator;
+    private double m_goalHeight = NO_GOAL_HEIGHT;
+    private ElevatorSimWrapper m_simulator;
 
 
     public ElevatorSubsystem() {
         m_leader = new SparkFlex(Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
         m_follower = new SparkFlex(Constants.ELEVATOR_FOLLOW_MOTOR_ID, MotorType.kBrushless);
         m_encoder = m_leader.getEncoder();
-        m_botLimitSwitch = new DigitalInput(Constants.BOTLIMITSWITCH_ID);
-        m_topLimitSwitch = new DigitalInput(Constants.TOPLIMITSWITCH_ID);
 
         SparkMaxConfig elevatorConfig = new SparkMaxConfig();
         elevatorConfig.idleMode(IdleMode.kBrake);
@@ -76,7 +72,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         followMotorConfig.smartCurrentLimit(60);
 
         elevatorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
-        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator",Constants.DEFAULT_CONSTANT_PROPERTIES,m_leader,elevatorConfig, ClosedLoopSlot.kSlot0)
+        m_elevatorPidController = new RevProfiledElevatorController.Builder("Elevator", Constants.DEFAULT_CONSTANT_PROPERTIES, m_leader, elevatorConfig, ClosedLoopSlot.kSlot0)
             //speed limits
             .addMaxVelocity(2)
             .addMaxAcceleration(2.25)
@@ -90,15 +86,15 @@ public class ElevatorSubsystem extends SubsystemBase {
             .build();
         m_leader.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_elevatorFollowerErrorAlerts = new SparkMaxAlerts(m_follower, "elevator follower");
-        m_follower.configure(followMotorConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+        m_follower.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        m_checkAlerts = new SparkMaxAlerts(m_elevatorMotor, "Elevator Alert");
+        m_checkAlerts = new SparkMaxAlerts(m_leader, "Elevator Alert");
 
 
         if (RobotBase.isSimulation()) {
             ElevatorSim sim = new ElevatorSim(
                 K_ELEVATOR_GEARBOX,
-                K_ELEVATOR_GEARING * 0.5
+                K_ELEVATOR_GEARING * 0.5,
                 K_CARRIAGE_MASS,
                 K_ELEVATOR_DRUM_RADIUS,
                 K_MIN_ELEVATOR_HEIGHT,
@@ -107,38 +103,30 @@ public class ElevatorSubsystem extends SubsystemBase {
             m_simulator = new ElevatorSimWrapper(sim,
                 new RevMotorControllerSimWrapper(m_leader, K_ELEVATOR_GEARBOX),
                 RevEncoderSimWrapper.create(m_leader));
-            m_simulator.setLowerLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_botLimitSwitch)::setValue));
-            m_simulator.setUpperLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_topLimitSwitch)::setValue));
         }
 
         m_networkTableEntries = new LoggingUtil("Elevator");
         m_networkTableEntries.addDouble("current height", this::getHeight);
         m_networkTableEntries.addDouble("current height (inches)", () -> Units.metersToInches(getHeight()));
-        m_networkTableEntries.addBoolean("Top Limit Switch", this::isAtTop);
-        m_networkTableEntries.addBoolean("Bottom Limit Switch", this::isAtBottom);
         m_networkTableEntries.addDouble("Velocity", this::getEncoderVel);
         m_networkTableEntries.addDouble("Setpoint Position", m_elevatorPidController::getPositionSetpoint);
         m_networkTableEntries.addDouble("Setpoint Velocity", m_elevatorPidController::getVelocitySetpoint);
         m_networkTableEntries.addDouble("Goal Height", () -> m_goalHeight);
         m_networkTableEntries.addBoolean("Is at good height", this::isAtGoalHeight);
-        m_networkTableEntries.addDouble("Percent Output", m_elevatorMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Percent Output", m_leader::getAppliedOutput);
 
     }
 
-        public double getHeight() {
+    public double getHeight() {
         return m_encoder.getPosition();
+    }
+
+    public void setSpeed(double speed) {
+        m_leader.set(speed);
     }
 
     public void setThrottle(double throttle) {
         m_leader.set(throttle);
-    }
-
-    public boolean isAtBottom() {
-        return m_botLimitSwitch.get();
-    }
-
-    public boolean isAtTop() {
-        return m_topLimitSwitch.get();
     }
 
     public void clearStickyFaults() {
@@ -155,9 +143,101 @@ public class ElevatorSubsystem extends SubsystemBase {
         return m_goalHeight;
     }
 
+    @Override
+    public void periodic() {
+        m_networkTableEntries.updateLogs();
+        m_checkAlerts.checkAlerts();
+        m_elevatorPidController.updateIfChanged();
+        m_elevatorFollowerErrorAlerts.checkAlerts();
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
+    }
+
     public double getEncoderVel() {
         return m_encoder.getVelocity();
     }
 
+    public void goToTunableHeight() {
+        goToHeight(ELEVATOR_TUNABLE_HEIGHT.getValue());
+    }
 
+    public void goToHeight(double goalHeight) {
+        if (Math.abs(m_goalHeight - goalHeight) > Units.inchesToMeters(5)) {
+            resetPidController();
+        }
+        m_goalHeight = goalHeight;
+        m_elevatorPidController.goToHeight(goalHeight, getHeight(), getEncoderVel());
+    }
+
+    public void resetPidController() {
+        m_elevatorPidController.resetPidController(getHeight(), getEncoderVel());
+    }
+
+    public boolean isAtGoalHeight() {
+        return isAtGoalHeight(m_goalHeight);
+    }
+
+    public boolean isAtGoalHeight(double goal) {
+        return Math.abs(getHeight() - goal) <= ELEVATOR_ERROR;
+    }
+
+    public void setVoltage(double outputVolts) {
+        m_leader.setVoltage(outputVolts);
+    }
+
+    public double getVoltage() {
+        if (RobotBase.isReal()) {
+            return m_leader.getBusVoltage();
+        }
+        return m_leader.getAppliedOutput() * RobotController.getBatteryVoltage();
+    }
+
+    public void setIdleMode(IdleMode idleMode) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(idleMode);
+        m_leader.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_follower.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+    public void addElevatorDebugCommands(boolean inComp) {
+        ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
+        if (!inComp) {
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(3)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(5)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
+            debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
+            debugTab.add(createElevatorToTunableHeightCommand().withName("elevator to tunable height"));
+            //l3 15.5
+        }
+
+        debugTab.add(createResetEncoderCommand().withName("reset encoder"));
+        debugTab.add(createElevatorToCoastModeCommand().withName("move elevator to coast"));
+    }
+
+    private Command createResetEncoderCommand() {
+        return run(() -> m_encoder.setPosition(0)).ignoringDisable(true);
+    }
+
+    //command factories//
+
+    public Command createMoveElevatorToHeightCommand(double height) {
+        return runEnd(() -> goToHeight(height), this::stop)
+            .withName("Elevator go to height" + height);
+    }
+
+    public Command createElevatorToTunableHeightCommand() {
+        return runEnd(this::goToTunableHeight, this::stop).withName("elevator to tunable height ");
+    }
+
+    public Command createElevatorToCoastModeCommand() {
+        return this.runEnd(
+            () -> setIdleMode(IdleMode.kCoast),
+            () -> setIdleMode(IdleMode.kBrake))
+            .ignoringDisable(true).withName("Elevator to Coast");
+    }
 }
