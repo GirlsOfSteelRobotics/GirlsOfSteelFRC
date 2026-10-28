@@ -121,10 +121,6 @@ public class ElevatorSubsystem extends SubsystemBase {
         return m_encoder.getPosition();
     }
 
-    public void setSpeed(double speed) {
-        m_leader.set(speed);
-    }
-
     public void setThrottle(double throttle) {
         m_leader.set(throttle);
     }
