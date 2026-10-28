@@ -78,7 +78,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             .addMaxAcceleration(2.25)
             //elevator ff
             .addKs(0)
-            .addKs(0)
+            .addKv(0)
             .addKg(.45)
             .addKa(0)
             //REV position controller

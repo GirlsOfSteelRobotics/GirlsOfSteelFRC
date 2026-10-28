@@ -41,6 +41,7 @@ public class RobotContainer {
         m_elevatorSubsystem = new ElevatorSubsystem();
         configureBindings();
         m_intakeSubsystem.addIntakeDebugCommands();
+        m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
     }
 
     /**
