@@ -1,0 +1,10 @@
+{
+  "name": "Blair 2026 Harvest Havoc",
+  "isFTC": false,
+  "coordinateSystem": "wall-blue",
+  "sourceUrl": "https://robot.mbhs.edu/bunnybots",
+  "topLeft": [46, 40],
+  "bottomRight": [716, 373],
+  "widthInches": 648,
+  "heightInches": 324
+}

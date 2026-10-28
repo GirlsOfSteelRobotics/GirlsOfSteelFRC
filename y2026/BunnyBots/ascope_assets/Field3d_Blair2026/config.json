@@ -1,0 +1,86 @@
+{
+  "name": "Blair 2026 Harvest Havoc",
+  "isFTC": false,
+  "coordinateSystem": "wall-blue",
+  "rotations": [
+    {
+      "axis": "x",
+      "degrees": 90
+    },
+	{
+	  "axis": "z",
+	  "degrees": 180
+	}
+  ],  
+  "widthInches": 651.303,
+  "heightInches": 321.625,
+  "defaultOrigin": "auto",
+  "driverStations": [
+    [
+      8.2775425,
+      -3.07975
+    ],
+    [
+      8.2775425,
+      -1.25095
+    ],
+    [
+      8.2775425,
+      1.8288
+    ],
+    [
+      -8.2775425,
+      3.07975
+    ],
+    [
+      -8.2775425,
+      1.25095
+    ],
+    [
+      -8.2775425,
+      -1.8288
+    ]
+  ],
+  "gamePieces": [
+    {
+      "name": "Carrot",
+      "rotations": [
+	    {
+		  "axis": "x",
+		  "degrees": 90
+		}
+	  ],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "stagedObjects": [
+        "Carrot_1",
+        "Carrot_2",
+        "Carrot_3",
+        "Carrot_4",
+        "Carrot_5",
+        "Carrot_6"
+      ]
+    },
+	{
+      "name": "CakedUpCarrot",
+      "rotations": [
+		{
+		  "axis": "x",
+		  "degrees": 90
+		}
+	  ],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "stagedObjects": [
+        "CarrotCake_1",
+        "CarrotCake_2"
+      ]
+    }
+  ]
+}
