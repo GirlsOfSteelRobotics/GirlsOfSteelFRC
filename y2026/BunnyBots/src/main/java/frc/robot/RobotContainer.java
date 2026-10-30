@@ -60,7 +60,6 @@ public class RobotContainer {
             DriverStation.silenceJoystickConnectionWarning(true);
 
         }
-
     }
 
     /**
