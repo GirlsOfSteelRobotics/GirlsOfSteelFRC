@@ -12,7 +12,6 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
-import frc.robot.enums.StartingPositions;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;

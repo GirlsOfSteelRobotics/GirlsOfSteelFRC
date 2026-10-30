@@ -14,18 +14,4 @@ public enum ElevatorHeights {
         m_height = height;
     }
 
-    public String variableName() {
-        switch (this) {
-        case OVENHEIGHT:
-            return "ovenheight";
-        case SHELF1:
-            return "shelf1";
-        case SHELF2:
-            return "shelf2";
-        case SHELF3:
-            return "shelf3";
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
 }

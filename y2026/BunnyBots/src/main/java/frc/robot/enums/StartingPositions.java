@@ -22,29 +22,4 @@ public enum StartingPositions {
 
 
     }
-
-    public String variableName() {
-        switch (this) {
-        case OVEN:
-            return "oven";
-        case PANTRY1:
-            return "pantry1";
-        case PANTRY2:
-            return "pantry2";
-        case PANTRY3:
-            return "pantry3";
-        case PANTRY4:
-            return "pantry4";
-        case PANTRYBASE:
-            return "pantryBase";
-        case STARTKITCHENCENTERLINE:
-            return "startKitchenCenterLine";
-        case STARTKITCHENOVEN:
-            return "startKitchenOven";
-        case STARTKITCHENPANTRY:
-            return "startKitchenPantry";
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
 }
