@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="2026 - Bunny Bots - Deploy (1)" type="GradleRunConfiguration" factoryName="Gradle" folderName="2026 Bunny Bots">
+  <configuration default="false" name="2026 - Bunny Bots - Deploy" type="GradleRunConfiguration" factoryName="Gradle" folderName="2026 Bunny Bots">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
