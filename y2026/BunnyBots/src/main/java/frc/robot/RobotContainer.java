@@ -19,7 +19,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.OuttakeSubsystem;
 
 
 
@@ -33,7 +33,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem;
-    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    private final OuttakeSubsystem m_intakeSubsystem = new OuttakeSubsystem();
     private final ChassisSubsystem m_chassis;
 
 
@@ -49,7 +49,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         m_chassis = TunerConstants.createDrivetrain();
-        m_intakeSubsystem.addIntakeDebugCommands();
+        m_intakeSubsystem.addOuttakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
         configureBindings();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);

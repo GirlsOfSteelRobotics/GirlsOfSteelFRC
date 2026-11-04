@@ -15,34 +15,43 @@ import frc.robot.Constants;
 import static edu.wpi.first.wpilibj2.command.Commands.runEnd;
 
 
-public class IntakeSubsystem {
+public class OuttakeSubsystem {
     private final SparkFlex m_motor;
-    private final GosDoubleProperty m_motorSpeed = new GosDoubleProperty(false, "intakeMotorSpeed", 0.75);
+    private final GosDoubleProperty m_scoreOvenSpeed = new GosDoubleProperty(false, "Outtake: Score Oven Speed", 0.75);
+    private final GosDoubleProperty m_scorePantrySpeed = new GosDoubleProperty(false, "Outtake: Score Pantry Speed", 0.75);
+    private final GosDoubleProperty m_reverseSpeed = new GosDoubleProperty(false, "Outtake: Reverse Speed", 0.75);
 
-    public IntakeSubsystem() {
-        m_motor = new SparkFlex(Constants.INTAKE_MOTOR, MotorType.kBrushless);
+    public OuttakeSubsystem() {
+        m_motor = new SparkFlex(Constants.OUTTAKE_MOTOR, MotorType.kBrushless);
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
         followMotorConfig.idleMode(IdleMode.kCoast);
         followMotorConfig.smartCurrentLimit(60);
         m_motor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
-    public void intake() {
-        m_motor.set(m_motorSpeed.getValue());
+    public void scoreOven() {
+        m_motor.set(m_scoreOvenSpeed.getValue());
     }
 
-    public void outtake() {
-        m_motor.set(-m_motorSpeed.getValue());
+    public void scorePantry() {
+        m_motor.set(m_scorePantrySpeed.getValue());
+    }
+
+    public void reverse() {
+        m_motor.set(m_reverseSpeed.getValue());
     }
 
     public void stop() {
         m_motor.stopMotor();
     }
 
-    public void addIntakeDebugCommands() {
+    public void addOuttakeDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Intake");
-        tab.add(createIntakeInCommand());
-        tab.add(createIntakeOutCommand());
+
+    }
+
+    public Command createOuttakeScoreOvenCommand() {
+
     }
 
     public Command createIntakeInCommand() {
