@@ -46,19 +46,21 @@ public class OuttakeSubsystem {
     }
 
     public void addOuttakeDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Intake");
-
+        ShuffleboardTab tab = Shuffleboard.getTab("Outtake");
+        tab.add(createOuttakeScoreOvenCommand());
+        tab.add(createOuttakeScorePantryCommand());
+        tab.add(createOuttakeReverseCommand());
     }
 
     public Command createOuttakeScoreOvenCommand() {
-
+        return runEnd(this::scoreOven, this::stop).withName("Score oven");
     }
 
-    public Command createIntakeInCommand() {
-        return runEnd(this::intake, this::stop).withName("Intake in!! <3");
+    public Command createOuttakeScorePantryCommand() {
+        return runEnd(this::scorePantry, this::stop).withName("Score pantry");
     }
 
-    public Command createIntakeOutCommand() {
-        return runEnd(this::outtake, this::stop).withName("Intake out!! <3");
+    public Command createOuttakeReverseCommand() {
+        return runEnd(this::reverse, this::stop).withName("Reverse");
     }
 }
