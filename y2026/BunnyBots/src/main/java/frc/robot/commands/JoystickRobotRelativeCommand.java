@@ -27,9 +27,9 @@ public class JoystickRobotRelativeCommand extends Command {
     @Override
     public void execute() {
         m_chassis.driveRobotCentric(
-            MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), 0.5),
-            MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), 0.5),
-            MathUtil.applyDeadband(-m_joystick.getLeftX() * ROTATIONAL_DAMPER.getValue(), 0.5)
+            MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
+            MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
+            MathUtil.applyDeadband(-m_joystick.getRightX() * ROTATIONAL_DAMPER.getValue(), .05)
         );
     }
 
