@@ -44,7 +44,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private Notifier m_simNotifier;
     private double m_lastSimTime;
 
-    private final CANrange m_canRange = new CANrange(2);
+    private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
     private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
