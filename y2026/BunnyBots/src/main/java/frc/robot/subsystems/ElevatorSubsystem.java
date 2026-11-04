@@ -209,8 +209,9 @@ public class ElevatorSubsystem extends SubsystemBase {
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
             debugTab.add(createElevatorToTunableHeightCommand().withName("elevator to tunable height"));
-            for (ElevatorHeights position : ElevatorHeights.values())
+            for (ElevatorHeights position : ElevatorHeights.values()) {
                 debugTab.add(createMoveElevatorToHeightCommand(position));
+            }
             //l3 15.5
         }
 
@@ -240,8 +241,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public Command createElevatorToCoastModeCommand() {
         return this.runEnd(
-            () -> setIdleMode(IdleMode.kCoast),
-            () -> setIdleMode(IdleMode.kBrake))
+                () -> setIdleMode(IdleMode.kCoast),
+                () -> setIdleMode(IdleMode.kBrake))
             .ignoringDisable(true).withName("Elevator to Coast");
     }
 }
