@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.enums.ElevatorHeights;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
@@ -208,6 +209,8 @@ public class ElevatorSubsystem extends SubsystemBase {
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
             debugTab.add(createElevatorToTunableHeightCommand().withName("elevator to tunable height"));
+            for (ElevatorHeights position : ElevatorHeights.values())
+                debugTab.add(createMoveElevatorToHeightCommand(position));
             //l3 15.5
         }
 
@@ -224,6 +227,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     public Command createMoveElevatorToHeightCommand(double height) {
         return runEnd(() -> goToHeight(height), this::stop)
             .withName("Elevator go to height" + height);
+    }
+
+    public Command createMoveElevatorToHeightCommand(ElevatorHeights heights) {
+        return runEnd(() -> goToHeight(heights.m_height), this::stop)
+            .withName("Elevator go to height" + heights);
     }
 
     public Command createElevatorToTunableHeightCommand() {
