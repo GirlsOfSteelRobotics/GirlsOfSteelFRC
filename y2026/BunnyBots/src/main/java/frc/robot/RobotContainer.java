@@ -33,7 +33,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem;
-    private final OuttakeSubsystem m_intakeSubsystem = new OuttakeSubsystem();
+    private final OuttakeSubsystem m_outtakeSubsystem = new OuttakeSubsystem();
     private final ChassisSubsystem m_chassis;
 
 
@@ -49,7 +49,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         m_chassis = TunerConstants.createDrivetrain();
-        m_intakeSubsystem.addOuttakeDebugCommands();
+        m_outtakeSubsystem.addOuttakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
         configureBindings();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
