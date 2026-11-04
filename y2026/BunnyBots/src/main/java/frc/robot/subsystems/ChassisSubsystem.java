@@ -45,7 +45,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private double m_lastSimTime;
 
     private final CANrange m_canRange = new CANrange(2);
-    //private final PWMSparkMax m_intakeMotor = new PWMSparkMax(0);
     private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
