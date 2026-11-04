@@ -3,11 +3,13 @@ package frc.robot.subsystems;
 import java.util.Optional;
 
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -20,6 +22,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.GosField;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
@@ -41,6 +44,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private Notifier m_simNotifier;
     private double m_lastSimTime;
 
+    private final CANrange m_canRange = new CANrange(2);
+    //private final PWMSparkMax m_intakeMotor = new PWMSparkMax(0);
+    private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
+
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
@@ -56,11 +63,23 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
+    private final SwerveRequest.RobotCentric m_robotCentricDriveRequest = new SwerveRequest.RobotCentric()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     private final GosField m_gosField = new GosField();
 
     public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
+        );
+    }
+
+    public void driveRobotCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_robotCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
         );
@@ -141,6 +160,14 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         if (Utils.isSimulation()) {
             startSimThread();
         }
+    }
+
+    public double getDistanceToWall() {
+        return m_canRange.getDistance().getValueAsDouble();
+    }
+
+    public boolean isWallThere() {
+        return getDistanceToWall() <= m_distanceToWall.getValue();
     }
 
     @Override
