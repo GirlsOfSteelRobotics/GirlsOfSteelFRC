@@ -17,9 +17,9 @@ import static edu.wpi.first.wpilibj2.command.Commands.runEnd;
 
 public class OuttakeSubsystem {
     private final SparkFlex m_motor;
-    private final GosDoubleProperty m_scoreOvenSpeed = new GosDoubleProperty(false, "Outtake: Score Oven Speed", 0.75);
-    private final GosDoubleProperty m_scorePantrySpeed = new GosDoubleProperty(false, "Outtake: Score Pantry Speed", 0.75);
-    private final GosDoubleProperty m_reverseSpeed = new GosDoubleProperty(false, "Outtake: Reverse Speed", 0.75);
+    private final GosDoubleProperty m_scoreOvenSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Score Oven Speed", 0.67);
+    private final GosDoubleProperty m_scorePantrySpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Score Pantry Speed", 0.45);
+    private final GosDoubleProperty m_reverseSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Reverse Speed", -1);
 
     public OuttakeSubsystem() {
         m_motor = new SparkFlex(Constants.OUTTAKE_MOTOR, MotorType.kBrushless);
