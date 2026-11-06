@@ -124,7 +124,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         super(drivetrainConstants, modules);
         if (Utils.isSimulation()) {
             startSimThread();
-        } configureAutoBuilder();
+        }
+        configureAutoBuilder();
         SmartDashboard.putData(m_gosField.getField2d());
     }
 
@@ -149,7 +150,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         super(drivetrainConstants, odometryUpdateFrequency, modules);
         if (Utils.isSimulation()) {
             startSimThread();
-        } configureAutoBuilder();
+        }
+        configureAutoBuilder();
     }
 
     @Override
@@ -239,20 +241,21 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .ignoringDisable(true)
             .withName("Reset Gyro");
     }
-public void addChassisDebugCommands(){
-    ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
-    try {
-        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("KitchenToCenterLine");
-        Command resetPose = runOnce(() -> resetPose(path.getStartingHolonomicPose().orElse(new Pose2d())));
-        tab.add(resetPose.andThen(AutoBuilder.followPath(path)));
 
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    } catch (Exception e) {
-        throw new RuntimeException(e);
+    public void addChassisDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        try {
+            PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("KitchenToCenterLine");
+            Command resetPose = runOnce(() -> resetPose(path.getStartingHolonomicPose().orElse(new Pose2d())));
+            tab.add(resetPose.andThen(AutoBuilder.followPath(path)));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        // Create a path following command using AutoBuilder. This will also trigger event markers.
+        tab.add(createSeedFieldCentricCommand());
+
     }
-    // Create a path following command using AutoBuilder. This will also trigger event markers.
-    tab.add(createSeedFieldCentricCommand());
-
-}
 }
