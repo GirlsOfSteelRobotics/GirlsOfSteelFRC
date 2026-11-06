@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.DavidDriveCommand;
+import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
@@ -72,7 +72,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand((new DavidDriveCommand(m_chassis, m_driverController)));
+        m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
     }
