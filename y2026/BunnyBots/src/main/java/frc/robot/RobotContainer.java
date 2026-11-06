@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.OuttakeSubsystem;
 
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -51,6 +50,7 @@ public class RobotContainer {
         m_chassis = TunerConstants.createDrivetrain();
         m_outtakeSubsystem.addOuttakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
+        m_chassis.addChassisDebugCommands();
         configureBindings();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
         if (RobotBase.isSimulation()) {
