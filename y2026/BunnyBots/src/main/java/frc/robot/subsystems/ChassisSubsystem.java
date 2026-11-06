@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+
+import java.io.IOException;
 import java.util.Optional;
 
 import com.ctre.phoenix6.Utils;
@@ -10,15 +12,23 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import com.gos.lib.properties.GosDoubleProperty;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -26,6 +36,8 @@ import frc.robot.Constants;
 import frc.robot.GosField;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import org.json.simple.parser.ParseException;
+
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
@@ -68,12 +80,44 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private final GosField m_gosField = new GosField();
 
+    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
+
     public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
         );
+    }
+
+    @SuppressWarnings("PMD")
+    private void configureAutoBuilder() {
+        try {
+            var config = RobotConfig.fromGUISettings();
+            AutoBuilder.configure(
+                () -> getState().Pose,   // Supplier of current robot pose
+                this::resetPose,         // Consumer for seeding pose against auto
+                () -> getState().Speeds, // Supplier of current robot speeds
+                // Consumer of ChassisSpeeds and feedforwards to drive the robot
+                (speeds, feedforwards) -> setControl(
+                    m_pathApplyRobotSpeeds.withSpeeds(ChassisSpeeds.discretize(speeds, 0.020))
+                        .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+                        .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())
+                ),
+                new PPHolonomicDriveController(
+                    // PID constants for translation
+                    new PIDConstants(10, 0, 0),
+                    // PID constants for rotation
+                    new PIDConstants(7, 0, 0)
+                ),
+                config,
+                // Assume the path needs to be flipped for Red vs Blue, this is normally the case
+                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                this // Subsystem for requirements
+            );
+        } catch (Exception ex) {
+            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
+        }
     }
 
     public void driveRobotCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
@@ -102,6 +146,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        configureAutoBuilder();
         SmartDashboard.putData(m_gosField.getField2d());
     }
 
@@ -127,38 +172,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         if (Utils.isSimulation()) {
             startSimThread();
         }
-    }
-
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants       Drivetrain-wide constants for the swerve drive
-     * @param odometryUpdateFrequency   The frequency to run the odometry loop. If
-     *                                  unspecified or set to 0 Hz, this is 250 Hz on
-     *                                  CAN FD, and 100 Hz on CAN 2.0.
-     * @param odometryStandardDeviation The standard deviation for odometry calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in meters
-     *                                  and radians
-     * @param visionStandardDeviation   The standard deviation for vision calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in meters
-     *                                  and radians
-     * @param modules                   Constants for each specific module
-     */
-    public ChassisSubsystem(
-        SwerveDrivetrainConstants drivetrainConstants,
-        double odometryUpdateFrequency,
-        Matrix<N3, N1> odometryStandardDeviation,
-        Matrix<N3, N1> visionStandardDeviation,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
+        configureAutoBuilder();
     }
 
     public double getDistanceToWall() {
@@ -257,4 +271,18 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withName("Reset Gyro");
     }
 
+    public void addChassisDebugCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        try {
+            PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("KitchenToCenterLine");
+            Command resetPose = runOnce(() -> resetPose(path.getStartingHolonomicPose().orElse(new Pose2d())));
+            tab.add(resetPose.andThen(AutoBuilder.followPath(path)));
+
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+        // Create a path following command using AutoBuilder. This will also trigger event markers.
+        tab.add(createSeedFieldCentricCommand());
+
+    }
 }

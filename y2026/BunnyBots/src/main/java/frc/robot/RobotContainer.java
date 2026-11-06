@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DavidDriveCommand;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.OuttakeSubsystem;
-
 
 
 /**
@@ -51,6 +50,7 @@ public class RobotContainer {
         m_chassis = TunerConstants.createDrivetrain();
         m_outtakeSubsystem.addOuttakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
+        m_chassis.addChassisDebugCommands();
         configureBindings();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
         if (RobotBase.isSimulation()) {
@@ -75,7 +75,7 @@ public class RobotContainer {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
         new Trigger(m_exampleSubsystem::exampleCondition)
             .onTrue(new ExampleCommand(m_exampleSubsystem));
-        m_chassis.setDefaultCommand((new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController)));
+        m_chassis.setDefaultCommand((new DavidDriveCommand(m_chassis, m_driverController)));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
 
