@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ import frc.robot.GosField;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.json.simple.parser.ParseException;
+
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
@@ -78,6 +80,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         );
     }
 
+    @SuppressWarnings("PMD")
     private void configureAutoBuilder() {
         try {
             var config = RobotConfig.fromGUISettings();
@@ -249,9 +252,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             Command resetPose = runOnce(() -> resetPose(path.getStartingHolonomicPose().orElse(new Pose2d())));
             tab.add(resetPose.andThen(AutoBuilder.followPath(path)));
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
         // Create a path following command using AutoBuilder. This will also trigger event markers.
