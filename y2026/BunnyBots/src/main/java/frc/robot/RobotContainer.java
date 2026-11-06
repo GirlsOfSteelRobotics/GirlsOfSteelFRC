@@ -8,14 +8,12 @@ import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
-import frc.robot.commands.Autos;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.DavidDriveCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -30,9 +28,8 @@ import frc.robot.subsystems.OuttakeSubsystem;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem;
-    private final OuttakeSubsystem m_outtakeSubsystem = new OuttakeSubsystem();
+    private final OuttakeSubsystem m_outtakeSubsystem;
     private final ChassisSubsystem m_chassis;
 
 
@@ -48,11 +45,14 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         m_chassis = TunerConstants.createDrivetrain();
-        m_outtakeSubsystem.addOuttakeDebugCommands();
+        m_outtakeSubsystem = new OuttakeSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
+
         m_chassis.addChassisDebugCommands();
-        configureBindings();
+        m_outtakeSubsystem.addOuttakeDebugCommands();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
+
+        configureBindings();
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
             DriverStationSim.setDsAttached(true);
@@ -72,16 +72,9 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-        new Trigger(m_exampleSubsystem::exampleCondition)
-            .onTrue(new ExampleCommand(m_exampleSubsystem));
         m_chassis.setDefaultCommand((new DavidDriveCommand(m_chassis, m_driverController)));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
-
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-        // cancelling on release.
-        m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     }
 
     /**
@@ -91,7 +84,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        return Commands.none();
     }
 
 }

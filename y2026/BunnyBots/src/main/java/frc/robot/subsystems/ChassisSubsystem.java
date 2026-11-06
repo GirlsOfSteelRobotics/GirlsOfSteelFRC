@@ -52,12 +52,12 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
  * https://v6.docs.ctr-electronics.com/en/stable/docs/tuner/tuner-swerve/index.html
  */
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
+    private static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private static final double MAX_ROTATION_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;
     private double m_lastSimTime;
-
-    private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
-    private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
@@ -66,9 +66,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective;
 
-
-    private static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private static final double MAX_ROTATION_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
 
     private final SwerveRequest.FieldCentric m_fieldCentricDriveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1) // Add a 10% deadband
@@ -78,16 +76,32 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
+    private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
+    private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
+
     private final GosField m_gosField = new GosField();
 
-    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
 
-    public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
-        setControl(
-            m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
-                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
-                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
-        );
+    /**
+     * Constructs a CTRE SwerveDrivetrain using the specified constants.
+     * <p>
+     * This constructs the underlying hardware devices, so users should not construct
+     * the devices themselves. If they need the devices, they can access them through
+     * getters in the classes.
+     *
+     * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
+     * @param modules             Constants for each specific module
+     */
+    public ChassisSubsystem(
+        SwerveDrivetrainConstants drivetrainConstants,
+        SwerveModuleConstants<?, ?, ?>... modules
+    ) {
+        super(drivetrainConstants, modules);
+        if (Utils.isSimulation()) {
+            startSimThread();
+        }
+        configureAutoBuilder();
+        SmartDashboard.putData(m_gosField.getField2d());
     }
 
     @SuppressWarnings("PMD")
@@ -120,59 +134,20 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
     }
 
+    public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
+        );
+    }
+
     public void driveRobotCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
         setControl(
             m_robotCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
         );
-    }
-
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
-     * @param modules             Constants for each specific module
-     */
-    public ChassisSubsystem(
-        SwerveDrivetrainConstants drivetrainConstants,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-        configureAutoBuilder();
-        SmartDashboard.putData(m_gosField.getField2d());
-    }
-
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants     Drivetrain-wide constants for the swerve drive
-     * @param odometryUpdateFrequency The frequency to run the odometry loop. If
-     *                                unspecified or set to 0 Hz, this is 250 Hz on
-     *                                CAN FD, and 100 Hz on CAN 2.0.
-     * @param modules                 Constants for each specific module
-     */
-    public ChassisSubsystem(
-        SwerveDrivetrainConstants drivetrainConstants,
-        double odometryUpdateFrequency,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, odometryUpdateFrequency, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-        configureAutoBuilder();
     }
 
     public double getDistanceToWall() {
@@ -265,12 +240,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
-    public Command createSeedFieldCentricCommand() {
-        return run(this::createSeedFieldCentricCommand)
-            .ignoringDisable(true)
-            .withName("Reset Gyro");
-    }
-
     public void addChassisDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         try {
@@ -284,5 +253,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         // Create a path following command using AutoBuilder. This will also trigger event markers.
         tab.add(createSeedFieldCentricCommand());
 
+    }
+
+    public Command createSeedFieldCentricCommand() {
+        return run(this::createSeedFieldCentricCommand)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 }
