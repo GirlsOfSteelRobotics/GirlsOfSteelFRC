@@ -9,7 +9,7 @@ import frc.robot.subsystems.ChassisSubsystem;
 public class DavidDriveCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(false, "ChassisTranslationDamper", 0.9);
     private double m_lastangle;
-    private static final GosDoubleProperty kp = new GosDoubleProperty(false, "DavidDrivekp", 0);
+    private static final GosDoubleProperty KP = new GosDoubleProperty(false, "DavidDrivekp", 0);
     private final ChassisSubsystem m_chassis;
     private final CommandXboxController m_joystick;
 
@@ -20,6 +20,7 @@ public class DavidDriveCommand extends Command {
         addRequirements(m_chassis);
     }
 
+    @Override
     public void execute() {
         double magnitude = Math.sqrt(-m_joystick.getRightX() * -m_joystick.getRightX() + -m_joystick.getRightY() * -m_joystick.getRightY());
         double angle = Math.atan2(-m_joystick.getRightX(), -m_joystick.getRightY());
@@ -28,11 +29,11 @@ public class DavidDriveCommand extends Command {
         }
         //P conorller formula -> out = error *kp
         double error = angle - m_chassis.getState().Pose.getRotation().getRadians();
-        double output_error = error * kp.getValue();
+        double outputError = error * KP.getValue();
         m_chassis.driveFieldCentric(
             MathUtil.applyDeadband(-m_joystick.getLeftY() * TRANSLATION_DAMPER.getValue(), .05),
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
-            output_error);
+            outputError);
 
         m_lastangle = angle;
     }
