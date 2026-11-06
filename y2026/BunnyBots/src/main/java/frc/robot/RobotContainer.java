@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.JoystickFieldRelativeDriveCommand;
+import frc.robot.commands.JoystickRobotRelativeCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
@@ -75,6 +76,7 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
+        m_driverController.rightBumper().whileTrue(new JoystickRobotRelativeCommand(m_chassis, m_driverController).until(m_chassis::isWallThere));
     }
 
     /**

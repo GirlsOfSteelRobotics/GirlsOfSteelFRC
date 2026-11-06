@@ -256,7 +256,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createSeedFieldCentricCommand() {
-        return run(this::createSeedFieldCentricCommand)
+        return run(this::seedFieldCentric)
             .ignoringDisable(true)
             .withName("Reset Gyro");
     }
