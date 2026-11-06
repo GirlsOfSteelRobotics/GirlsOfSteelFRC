@@ -51,6 +51,7 @@ public class RobotContainer {
         m_chassis = TunerConstants.createDrivetrain();
         m_intakeSubsystem.addIntakeDebugCommands();
         m_elevatorSubsystem = new ElevatorSubsystem();
+        m_chassis.addChassisDebugCommands();
         configureBindings();
         if (RobotBase.isSimulation()) {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
