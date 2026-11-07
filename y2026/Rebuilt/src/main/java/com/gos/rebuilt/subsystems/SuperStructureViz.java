@@ -6,14 +6,16 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SuperStructureViz extends SubsystemBase {
+    private static final Translation3d SPINDEXER_PIVOT = new Translation3d(0.0769, 0.039, 0.1667);
+    private static final Translation3d INTAKE_PIVOT = new Translation3d(0.046, 0.0, 0.3699);
 
     private final StructArrayPublisher<Pose3d> m_measuredPublisher;
     private final StructArrayPublisher<Pose3d> m_goalPublisher;
@@ -24,7 +26,6 @@ public class SuperStructureViz extends SubsystemBase {
     private final ShooterSimBalls m_shooterSimBalls;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
-    // private final ClimberSubsystem m_climberSubsystem;
 
 
     public SuperStructureViz(PivotSubsystem pivotSubsystem, PizzaSubsystem pizzaSubsystem, ChassisSubsystem chassisSubsystem, ShooterSubsystem shooterSubsystem) {
@@ -36,28 +37,14 @@ public class SuperStructureViz extends SubsystemBase {
         m_pizzaSubsystem = pizzaSubsystem;
         m_chassisSubsystem = chassisSubsystem;
         m_shooterSubsystem = shooterSubsystem;
-        // m_climberSubsystem = climberSubsystem;
 
         m_shooterSimBalls = new ShooterSimBalls("ShotPreview");
     }
 
     @Override
     public void periodic() {
-        m_measuredPublisher.set(getPoses(
-            ShooterSubsystem.SHOT_ANGLE.getRadians(),
-            m_pizzaSubsystem.getAngle(),
-            m_pivotSubsystem.getAngle()
-        // m_climberSubsystem.getLeftHeight(),
-        // m_climberSubsystem.getRightHeight()
-        ));
-
-        m_goalPublisher.set(getPoses(
-            ShooterSubsystem.SHOT_ANGLE.getRadians(),
-            0,
-            m_pivotSubsystem.getGoalAngle()
-        // m_climberSubsystem.getGoalHeight(),
-        // m_climberSubsystem.getGoalHeight()
-        ));
+        m_measuredPublisher.set(getPoses(m_pizzaSubsystem.getAngle(), m_pivotSubsystem.getAngle()));
+        m_goalPublisher.set(getPoses(0, m_pivotSubsystem.getGoalAngle()));
 
         SwerveDriveState state = m_chassisSubsystem.getState();
         Rotation2d chassisGoalAngle = m_chassisSubsystem.getGoalAngle();
@@ -69,38 +56,13 @@ public class SuperStructureViz extends SubsystemBase {
         m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), ChassisSpeeds.fromRobotRelativeSpeeds(m_chassisSubsystem.getState().Speeds, m_chassisSubsystem.getState().Pose.getRotation()), m_chassisSubsystem.getState().Pose);
     }
 
-    private Pose3d[] getPoses(double shooterPitchRad, double pizzaAngleDeg, double pivotAngleDeg) {
-        double turretYaw = 0;
-
-        Pose3d pizzaPose = new Pose3d(
-            Units.inchesToMeters(2), Units.inchesToMeters(2), Units.inchesToMeters(4.5),
-            new Rotation3d(Math.toRadians(0), Math.toRadians(0), Math.toRadians(pizzaAngleDeg)));
-
-        Pose3d turretPose = new Pose3d(
-            Units.inchesToMeters(-10), Units.inchesToMeters(-9), Units.inchesToMeters(17),
-            new Rotation3d(Math.toRadians(0), -shooterPitchRad, Math.toRadians(turretYaw)));
-
-        Pose3d intakePose = new Pose3d(
-            Units.inchesToMeters(10), Units.inchesToMeters(0), Units.inchesToMeters(12.5),
-            new Rotation3d(Math.toRadians(0), Math.toRadians(-pivotAngleDeg), Math.toRadians(0)));
-
-        // Pose3d leftClimberPose = new Pose3d(
-        //     Units.inchesToMeters(-3), Units.inchesToMeters(12), leftClimberHeight,
-        //     new Rotation3d(Math.toRadians(0), Math.toRadians(0), Math.toRadians(-90)));
-        //
-        // Pose3d rightClimberPose = new Pose3d(
-        //     Units.inchesToMeters(5), Units.inchesToMeters(12), rightClimberHeight,
-        //     new Rotation3d(Math.toRadians(0), Math.toRadians(0), Math.toRadians(-90)));
-
-        Pose3d leftClimberPose = new Pose3d();
-        Pose3d rightClimberPose = new Pose3d();
+    private Pose3d[] getPoses(double pizzaAngleDeg, double pivotAngleDeg) {
+        Pose3d pizzaPose = new Pose3d(SPINDEXER_PIVOT, new Rotation3d(0, 0, Math.toRadians(pizzaAngleDeg)));
+        Pose3d intakePose = new Pose3d(INTAKE_PIVOT, new Rotation3d(0, Math.toRadians(-pivotAngleDeg), 0));
 
         return new Pose3d[] {
             pizzaPose,
-            leftClimberPose,
-            rightClimberPose,
             intakePose,
-            turretPose,
         };
     }
 

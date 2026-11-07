@@ -1,0 +1,43 @@
+{
+  "name": "Gos26Cleo",
+  "rotations": [
+    {
+      "axis": "x",
+      "degrees": 90
+    }
+  ],
+  "position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "cameras": [],
+  "components": [
+    {
+      "zeroedRotations": [
+        {
+          "axis": "x",
+          "degrees": 90
+        }
+      ],
+      "zeroedPosition": [
+        -0.07686,
+        -0.039007,
+        -0.166687
+      ]
+    },
+    {
+      "zeroedRotations": [
+        {
+          "axis": "x",
+          "degrees": 90
+        }
+      ],
+      "zeroedPosition": [
+        -0.046025,
+        0.0,
+        -0.369887
+      ]
+    }
+  ]
+}
