@@ -30,14 +30,15 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase {
-    public static final double K_ELEVATOR_GEARING = 12.0;
+    public static final double K_ELEVATOR_GEARING = 27.0;
     public static final double K_CARRIAGE_MASS = Units.lbsToKilograms(9);
     public static final double K_MIN_ELEVATOR_HEIGHT = Units.inchesToMeters(-4);
     public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(120);
     public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getNeoVortex(2);
-    public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.0);
+    // 22 tooth #25 chain sprocket, 1.757" pitch diameter
+    public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(1.757 / 2);
     public static final double ELEVATOR_STAGES = 2;
-    public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * K_ELEVATOR_DRUM_RADIUS * Math.PI);
+    public static final double ELEVATOR_GEAR_CIRCUMFERENCE = 2 * Math.PI * K_ELEVATOR_DRUM_RADIUS;
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
     public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Elevator: tunable height", 0.25);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
@@ -64,7 +65,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.inverted(true);
 
 
-        double conversionFactor = Units.inchesToMeters(73 - 19.25) / 131.4;
+        double conversionFactor = ELEVATOR_GEAR_CIRCUMFERENCE * ELEVATOR_STAGES / K_ELEVATOR_GEARING;
         elevatorConfig.encoder.positionConversionFactor(conversionFactor);
         elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
 
@@ -97,7 +98,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             ElevatorSim sim = new ElevatorSim(
                 K_ELEVATOR_GEARBOX,
-                K_ELEVATOR_GEARING * 0.5,
+                K_ELEVATOR_GEARING / ELEVATOR_STAGES,
                 K_CARRIAGE_MASS,
                 K_ELEVATOR_DRUM_RADIUS,
                 K_MIN_ELEVATOR_HEIGHT,
