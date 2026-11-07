@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.OuttakeSubsystem;
+import frc.robot.subsystems.SuperStructureViz;
 
 
 /**
@@ -31,6 +32,7 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final OuttakeSubsystem m_outtakeSubsystem;
     private final ChassisSubsystem m_chassis;
+    private final SuperStructureViz m_superStructureViz; // NOPMD(UnusedPrivateField)
 
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -47,6 +49,7 @@ public class RobotContainer {
         m_chassis = TunerConstants.createDrivetrain();
         m_outtakeSubsystem = new OuttakeSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
+        m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_chassis);
 
         m_chassis.addChassisDebugCommands();
         m_outtakeSubsystem.addOuttakeDebugCommands();

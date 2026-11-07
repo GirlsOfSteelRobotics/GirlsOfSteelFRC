@@ -583,3 +583,4 @@ ctre_sim/
 imgui.ini
 
 networktables.json.bck
+.idea/pySourceRootDetection.xml
