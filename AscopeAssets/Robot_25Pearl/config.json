@@ -1,0 +1,111 @@
+{
+  "name": "Gos25Pearl",
+  "rotations": [
+    {
+      "axis": "x",
+      "degrees": 90
+    }
+  ],
+  "position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "cameras": [
+    {
+      "name": "Front Camera",
+      "rotations": [
+        {
+          "axis": "x",
+          "degrees": 0
+        },
+        {
+          "axis": "y",
+          "degrees": -19.0
+        },
+        {
+          "axis": "z",
+          "degrees": 11.0
+        }
+      ],
+      "position": [
+        0.3556,
+        0.0254,
+        0.235
+      ],
+      "resolution": [
+        1600,
+        1200
+      ],
+      "fov": 66.62
+    },
+    {
+      "name": "Back Camera",
+      "rotations": [
+        {
+          "axis": "x",
+          "degrees": 0
+        },
+        {
+          "axis": "y",
+          "degrees": 0
+        },
+        {
+          "axis": "z",
+          "degrees": 178.0
+        }
+      ],
+      "position": [
+        0.3556,
+        0.0254,
+        0.235
+      ],
+      "resolution": [
+        1600,
+        1200
+      ],
+      "fov": 66.62
+    }
+  ],
+  "components": [
+    {
+      "zeroedRotations": [
+        {
+          "axis": "x",
+          "degrees": 90
+        }
+      ],
+      "zeroedPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "zeroedRotations": [
+        {
+          "axis": "x",
+          "degrees": 90
+        }
+      ],
+      "zeroedPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "zeroedRotations": [
+        {
+          "axis": "x",
+          "degrees": 90
+        }
+      ],
+      "zeroedPosition": [
+        -0.253594,
+        0.0,
+        -0.525225
+      ]
+    }
+  ]
+}
