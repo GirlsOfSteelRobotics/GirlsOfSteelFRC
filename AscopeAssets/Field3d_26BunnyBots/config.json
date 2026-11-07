@@ -51,9 +51,9 @@
 		}
 	  ],
       "position": [
-        0,
-        0,
-        0
+        -5.3809,
+        -1.4707,
+        -0.2286
       ],
       "stagedObjects": [
         "Carrot_1",
@@ -73,9 +73,9 @@
 		}
 	  ],
       "position": [
+        0.6527,
         0,
-        0,
-        0
+        -0.5334
       ],
       "stagedObjects": [
         "CarrotCake_1",
