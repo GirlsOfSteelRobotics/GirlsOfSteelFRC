@@ -16,7 +16,6 @@ import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -24,6 +23,7 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -38,7 +38,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.GosField;
@@ -87,7 +86,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
     private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Distance to Wall", 2);
-    private TunablePathConstraints m_pathConstraints = new TunablePathConstraints(Constants.DEFAULT_CONSTANT_PROPERTIES, "Path Constraints", 60, 60, 180, 180);
+    private final TunablePathConstraints m_pathConstraints = new TunablePathConstraints(Constants.DEFAULT_CONSTANT_PROPERTIES, "Path Constraints", 60, 60, 180, 180);
 
     private final GosField m_gosField = new GosField();
 
@@ -111,6 +110,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             startSimThread();
         }
         configureAutoBuilder();
+        PathPlannerLogging.setLogActivePathCallback(m_gosField::setTrajectory);
+        PathPlannerLogging.setLogTargetPoseCallback(m_gosField::setTrajectorySetpoint);
+
         SmartDashboard.putData(m_gosField.getField2d());
     }
 
@@ -171,7 +173,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         // Prevent the path from being flipped if the coordinates are already correct
         path.preventFlipping = true;
 
-        return AutoBuilder.followPath(path).withName("Path on the fly/");
+        return AutoBuilder.followPath(path);
     }
 
     public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
@@ -294,7 +296,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         tab.add(createSeedFieldCentricCommand());
 
         for (StartingPositions position : StartingPositions.values()) {
-            tab.add(createPathOnTheFly(position.m_pose).withName(position.name()));
+            tab.add(createPathOnTheFly(position.m_pose).withName("Auto Drive To/" + position.name()));
         }
 
     }

@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -9,12 +8,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import java.util.function.IntSupplier;
-
 public class SuperStructureViz extends SubsystemBase {
-    // Lets the carrots be shown before the hopper sensors are hooked up
-    public static final GosDoubleProperty TEST_CARROT_COUNT = new GosDoubleProperty(false, "SuperStructureViz/Test Carrot Count", 0);
-
     // Where carrots sit in the hopper, in the robot frame with the elevator down. The hopper floor slopes
     // down towards the outtake wheels, so the first carrot sits under them and the rest line up behind it
     private static final Translation3d[] CARROT_SLOTS = {
