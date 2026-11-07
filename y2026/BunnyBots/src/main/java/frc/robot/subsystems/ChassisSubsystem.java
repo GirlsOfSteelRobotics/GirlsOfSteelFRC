@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import com.ctre.phoenix6.Utils;
@@ -11,12 +12,18 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.pathing.MaybeFlippedPose2d;
+import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,9 +38,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.GosField;
+import frc.robot.enums.StartingPositions;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.json.simple.parser.ParseException;
@@ -77,7 +86,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
-    private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
+    private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Distance to Wall", 2);
+    private TunablePathConstraints m_pathConstraints = new TunablePathConstraints(Constants.DEFAULT_CONSTANT_PROPERTIES, "Path Constraints", 60, 60, 180, 180);
 
     private final GosField m_gosField = new GosField();
 
@@ -132,6 +142,36 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         } catch (Exception ex) {
             DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
         }
+    }
+
+    public Command createPathOnTheFly(MaybeFlippedPose2d goal) {
+        return defer(() -> createPathOnTheFlyNotUpdated(goal));
+    }
+
+    public Command createPathOnTheFlyNotUpdated(MaybeFlippedPose2d goal) {
+        // Create a list of waypoints from poses. Each pose represents one waypoint.
+        // The rotation component of the pose should be the direction of travel. Do not use holonomic rotation.
+
+        List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+                getState().Pose, //current position
+                goal.getPose()
+        );
+
+
+        PathConstraints constraints = m_pathConstraints.getConstraints();
+
+        // Create the path using the waypoints created above
+        PathPlannerPath path = new PathPlannerPath(
+                waypoints,
+                constraints,
+                null, // The ideal starting state, this is only relevant for pre-planned paths, so can be null for on-the-fly paths.
+                new GoalEndState(0.0, goal.getPose().getRotation()) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
+        );
+
+        // Prevent the path from being flipped if the coordinates are already correct
+        path.preventFlipping = true;
+
+        return AutoBuilder.followPath(path).withName("Path on the fly/");
     }
 
     public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
@@ -253,11 +293,15 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         // Create a path following command using AutoBuilder. This will also trigger event markers.
         tab.add(createSeedFieldCentricCommand());
 
+        for (StartingPositions position : StartingPositions.values()) {
+            tab.add(createPathOnTheFly(position.m_pose).withName(position.name()));
+        }
+
     }
 
     public Command createSeedFieldCentricCommand() {
         return run(this::createSeedFieldCentricCommand)
             .ignoringDisable(true)
-            .withName("Reset Gyro");
+            .withName("Reset gyro");
     }
 }

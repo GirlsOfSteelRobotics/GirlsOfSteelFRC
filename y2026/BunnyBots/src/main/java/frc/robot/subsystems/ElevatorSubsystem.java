@@ -39,7 +39,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static final double ELEVATOR_STAGES = 2;
     public static final double ELEVATOR_GEAR_CIRCUMFERENCE = Units.inchesToMeters(2 * K_ELEVATOR_DRUM_RADIUS * Math.PI);
     public static final double ELEVATOR_ERROR = Units.inchesToMeters(1);
-    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "tunableElevator", 0.25);
+    public static final GosDoubleProperty ELEVATOR_TUNABLE_HEIGHT = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Elevator: tunable height", 0.25);
     public static final double NO_GOAL_HEIGHT = Units.inchesToMeters(-50); // The fake number to use to specify there is no goal height
 
     private final SparkFlex m_leader;
@@ -63,9 +63,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.smartCurrentLimit(60);
         elevatorConfig.inverted(true);
 
-        double conversionFactor = Units.inchesToMeters(44 - 16.5) / 30.45;
+
+        double conversionFactor = Units.inchesToMeters(73 - 19.25) / 131.4;
         elevatorConfig.encoder.positionConversionFactor(conversionFactor);
         elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
+
 
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
         followMotorConfig.follow(m_leader, true);
@@ -86,7 +88,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             .addKp(4)
             .build();
         m_leader.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        m_elevatorFollowerErrorAlerts = new SparkMaxAlerts(m_follower, "elevator follower");
+        m_elevatorFollowerErrorAlerts = new SparkMaxAlerts(m_follower, "Elevator Follower");
         m_follower.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_checkAlerts = new SparkMaxAlerts(m_leader, "Elevator Alert");
@@ -107,13 +109,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
 
         m_networkTableEntries = new LoggingUtil("Elevator");
-        m_networkTableEntries.addDouble("current height", this::getHeight);
-        m_networkTableEntries.addDouble("current height (inches)", () -> Units.metersToInches(getHeight()));
+        m_networkTableEntries.addDouble("Current Height (m)", this::getHeight);
+        m_networkTableEntries.addDouble("Current Height (in)", () -> Units.metersToInches(getHeight()));
         m_networkTableEntries.addDouble("Velocity", this::getEncoderVel);
         m_networkTableEntries.addDouble("Setpoint Position", m_elevatorPidController::getPositionSetpoint);
         m_networkTableEntries.addDouble("Setpoint Velocity", m_elevatorPidController::getVelocitySetpoint);
         m_networkTableEntries.addDouble("Goal Height", () -> m_goalHeight);
-        m_networkTableEntries.addBoolean("Is at good height", this::isAtGoalHeight);
+        m_networkTableEntries.addBoolean("At Goal Height", this::isAtGoalHeight);
         m_networkTableEntries.addDouble("Percent Output", m_leader::getAppliedOutput);
 
     }
@@ -208,41 +210,41 @@ public class ElevatorSubsystem extends SubsystemBase {
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(0)));
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2)));
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(2.5)));
-            debugTab.add(createElevatorToTunableHeightCommand().withName("elevator to tunable height"));
+            debugTab.add(createElevatorToTunableHeightCommand());
             for (ElevatorHeights position : ElevatorHeights.values()) {
                 debugTab.add(createMoveElevatorToHeightCommand(position));
             }
             //l3 15.5
         }
 
-        debugTab.add(createResetEncoderCommand().withName("reset encoder"));
-        debugTab.add(createElevatorToCoastModeCommand().withName("move elevator to coast"));
+        debugTab.add(createResetEncoderCommand());
+        debugTab.add(createElevatorToCoastModeCommand());
     }
 
     private Command createResetEncoderCommand() {
-        return run(() -> m_encoder.setPosition(0)).ignoringDisable(true);
+        return run(() -> m_encoder.setPosition(0)).ignoringDisable(true).withName("Reset encoder");
     }
 
     //command factories//
 
     public Command createMoveElevatorToHeightCommand(double height) {
         return runEnd(() -> goToHeight(height), this::stop)
-            .withName("Elevator go to height" + height);
+            .withName("Go to height (meters)/" + height);
     }
 
     public Command createMoveElevatorToHeightCommand(ElevatorHeights heights) {
         return runEnd(() -> goToHeight(heights.m_height), this::stop)
-            .withName("Elevator go to height" + heights);
+            .withName("Go to height (places)/" + heights);
     }
 
     public Command createElevatorToTunableHeightCommand() {
-        return runEnd(this::goToTunableHeight, this::stop).withName("elevator to tunable height ");
+        return runEnd(this::goToTunableHeight, this::stop).withName("Go to tunable height ");
     }
 
     public Command createElevatorToCoastModeCommand() {
         return this.runEnd(
                 () -> setIdleMode(IdleMode.kCoast),
                 () -> setIdleMode(IdleMode.kBrake))
-            .ignoringDisable(true).withName("Elevator to Coast");
+            .ignoringDisable(true).withName("Set to Coast");
     }
 }
