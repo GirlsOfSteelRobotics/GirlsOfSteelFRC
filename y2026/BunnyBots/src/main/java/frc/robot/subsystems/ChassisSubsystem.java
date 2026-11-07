@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.util.Optional;
 
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -30,6 +32,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.GosField;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
@@ -49,6 +52,9 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
  * https://v6.docs.ctr-electronics.com/en/stable/docs/tuner/tuner-swerve/index.html
  */
 public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem {
+    private static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private static final double MAX_ROTATION_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
     private static final double SIM_LOOP_PERIOD = 0.004; // 4 ms
     private Notifier m_simNotifier;
     private double m_lastSimTime;
@@ -60,24 +66,42 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective;
 
-
-    private static final double MAX_TRANSLATION_SPEED = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private static final double MAX_ROTATION_RATE = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
 
     private final SwerveRequest.FieldCentric m_fieldCentricDriveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
+    private final SwerveRequest.RobotCentric m_robotCentricDriveRequest = new SwerveRequest.RobotCentric()
+        .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1)
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+    private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
+    private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "distance to wall", 2);
+
     private final GosField m_gosField = new GosField();
 
-    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
 
-    public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
-        setControl(
-            m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
-                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
-                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
-        );
+    /**
+     * Constructs a CTRE SwerveDrivetrain using the specified constants.
+     * <p>
+     * This constructs the underlying hardware devices, so users should not construct
+     * the devices themselves. If they need the devices, they can access them through
+     * getters in the classes.
+     *
+     * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
+     * @param modules             Constants for each specific module
+     */
+    public ChassisSubsystem(
+        SwerveDrivetrainConstants drivetrainConstants,
+        SwerveModuleConstants<?, ?, ?>... modules
+    ) {
+        super(drivetrainConstants, modules);
+        if (Utils.isSimulation()) {
+            startSimThread();
+        }
+        configureAutoBuilder();
+        SmartDashboard.putData(m_gosField.getField2d());
     }
 
     @SuppressWarnings("PMD")
@@ -110,51 +134,28 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         }
     }
 
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants Drivetrain-wide constants for the swerve drive
-     * @param modules             Constants for each specific module
-     */
-    public ChassisSubsystem(
-        SwerveDrivetrainConstants drivetrainConstants,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-        configureAutoBuilder();
-        SmartDashboard.putData(m_gosField.getField2d());
+    public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_fieldCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
+        );
     }
 
-    /**
-     * Constructs a CTRE SwerveDrivetrain using the specified constants.
-     * <p>
-     * This constructs the underlying hardware devices, so users should not construct
-     * the devices themselves. If they need the devices, they can access them through
-     * getters in the classes.
-     *
-     * @param drivetrainConstants     Drivetrain-wide constants for the swerve drive
-     * @param odometryUpdateFrequency The frequency to run the odometry loop. If
-     *                                unspecified or set to 0 Hz, this is 250 Hz on
-     *                                CAN FD, and 100 Hz on CAN 2.0.
-     * @param modules                 Constants for each specific module
-     */
-    public ChassisSubsystem(
-        SwerveDrivetrainConstants drivetrainConstants,
-        double odometryUpdateFrequency,
-        SwerveModuleConstants<?, ?, ?>... modules
-    ) {
-        super(drivetrainConstants, odometryUpdateFrequency, modules);
-        if (Utils.isSimulation()) {
-            startSimThread();
-        }
-        configureAutoBuilder();
+    public void driveRobotCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
+        setControl(
+            m_robotCentricDriveRequest.withVelocityX(xJoystick * MAX_TRANSLATION_SPEED)
+                .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
+                .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
+        );
+    }
+
+    public double getDistanceToWall() {
+        return m_canRange.getDistance().getValueAsDouble();
+    }
+
+    public boolean isWallThere() {
+        return getDistanceToWall() <= m_distanceToWall.getValue();
     }
 
     @Override
@@ -239,12 +240,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
-    public Command createSeedFieldCentricCommand() {
-        return run(this::createSeedFieldCentricCommand)
-            .ignoringDisable(true)
-            .withName("Reset Gyro");
-    }
-
     public void addChassisDebugCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
         try {
@@ -258,5 +253,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         // Create a path following command using AutoBuilder. This will also trigger event markers.
         tab.add(createSeedFieldCentricCommand());
 
+    }
+
+    public Command createSeedFieldCentricCommand() {
+        return run(this::createSeedFieldCentricCommand)
+            .ignoringDisable(true)
+            .withName("Reset Gyro");
     }
 }

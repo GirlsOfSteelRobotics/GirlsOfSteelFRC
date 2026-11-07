@@ -27,7 +27,7 @@ public class DavidDriveCommand extends Command {
         if (magnitude < .75) {
             angle = m_lastangle;
         }
-        //P conorller formula -> out = error *kp
+        // P controller formula -> out = error *kp
         double error = angle - m_chassis.getState().Pose.getRotation().getRadians();
         double outputError = error * KP.getValue();
         m_chassis.driveFieldCentric(

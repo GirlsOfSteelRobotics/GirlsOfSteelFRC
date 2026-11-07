@@ -22,8 +22,9 @@ public final class Constants {
 
     public static final int JOYSTICK_CONTROLLER_PORT = 1;
 
-    // motors
+    // CAN
     public static final int OUTTAKE_MOTOR = 1;
     public static final int ELEVATOR_FOLLOW_MOTOR_ID = 18;
     public static final int ELEVATOR_MOTOR_ID = 14;
+    public static final int CAN_RANGE_ID = 2;
 }
