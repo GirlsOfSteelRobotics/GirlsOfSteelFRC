@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.autos.AutoFactory;
+import frc.robot.commands.CombinedCommand;
 import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
@@ -31,9 +33,10 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final OuttakeSubsystem m_outtakeSubsystem;
-    private final ChassisSubsystem m_chassis;
+    private final ChassisSubsystem m_chassisSubsystem;
     private final SuperStructureViz m_superStructureViz; // NOPMD(UnusedPrivateField)
-
+    private final AutoFactory m_autoFactory;
+    private final CombinedCommand m_combinedCommand;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -46,14 +49,17 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the trigger bindings
-        m_chassis = TunerConstants.createDrivetrain();
+        m_chassisSubsystem = TunerConstants.createDrivetrain();
         m_outtakeSubsystem = new OuttakeSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
-        m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_chassis);
+        m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_chassisSubsystem);
 
-        m_chassis.addChassisDebugCommands();
+        m_chassisSubsystem.addChassisDebugCommands();
         m_outtakeSubsystem.addOuttakeDebugCommands();
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
+
+        m_combinedCommand = new CombinedCommand(m_chassisSubsystem, m_outtakeSubsystem, m_elevatorSubsystem);
+        m_autoFactory = new AutoFactory(m_chassisSubsystem, m_combinedCommand);
 
         configureBindings();
         if (RobotBase.isSimulation()) {
@@ -75,9 +81,9 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassis.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassis, m_driverController));
+        m_chassisSubsystem.setDefaultCommand(new JoystickFieldRelativeDriveCommand(m_chassisSubsystem, m_driverController));
         m_elevatorSubsystem.setDefaultCommand(new MoveElevatorWithJoystickCommand(m_elevatorSubsystem, m_joystickController));
-        m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createSeedFieldCentricCommand());
+        m_driverController.start().and(m_driverController.back()).whileTrue(m_chassisSubsystem.createSeedFieldCentricCommand());
     }
 
     /**
