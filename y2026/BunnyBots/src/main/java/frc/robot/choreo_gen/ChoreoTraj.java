@@ -1,15 +1,15 @@
-// spotless:off
+
 package frc.robot.choreo_gen;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import java.util.Map;
 import java.util.OptionalInt;
 
+// If these imports cause errors because you're not using ChoreoLib,
+// turn off "Include ChoreoLib-specific Helpers" in Choreo's codegen settings.
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-// If the 2 imports above cause errors because you're not using ChoreoLib,
-// turn off "Include ChoreoLib-specific Helpers" in Choreo's codegen settings.
 
 /**
  * A class containing the name, start pose, end pose, and total time of every Choreo trajectory.
@@ -24,60 +24,14 @@ public record ChoreoTraj(
     Pose2d initialPoseBlue,
     Pose2d endPoseBlue
 ) {
-    public static final ChoreoTraj OvenToCenterLine = new ChoreoTraj(
-        "OvenToCenterLine",
-        OptionalInt.empty(),
-        2.09746,
-        new Pose2d(0.50854, 3.09811, Rotation2d.fromRadians(-1.5708)),
-        new Pose2d(7.82769, 1.94214, Rotation2d.fromRadians(0))
-    );
-    public static final ChoreoTraj KitchenToOven = new ChoreoTraj(
-        "KitchenToOven",
-        OptionalInt.empty(),
-        1.02549,
-        new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(-1.5708)),
-        new Pose2d(0.50854, 3.09811, Rotation2d.fromRadians(-1.5708))
-    );
-    public static final ChoreoTraj KitchenToPantry = new ChoreoTraj(
-        "KitchenToPantry",
-        OptionalInt.empty(),
-        0.99858,
-        new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(1.5708)),
-        new Pose2d(0.96098, 7.63424, Rotation2d.fromRadians(1.5708))
-    );
-    public static final ChoreoTraj KitchenToRamp = new ChoreoTraj(
-        "KitchenToRamp",
-        OptionalInt.empty(),
-        1.51134,
-        new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(-1.5708)),
-        new Pose2d(2.75879, 2.34562, Rotation2d.fromRadians(0))
-    );
-    public static final ChoreoTraj KitchenToCenterLine = new ChoreoTraj(
-        "KitchenToCenterLine",
-        OptionalInt.empty(),
-        2.22021,
-        new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(0)),
-        new Pose2d(7.82769, 1.94214, Rotation2d.fromRadians(0))
-    );
-    public static final ChoreoTraj PantryToCenterLine = new ChoreoTraj(
-        "PantryToCenterLine",
-        OptionalInt.empty(),
-        2.37808,
-        new Pose2d(0.96098, 7.63424, Rotation2d.fromRadians(1.5708)),
-        new Pose2d(7.82769, 1.94214, Rotation2d.fromRadians(0))
-    );
+    
 
     /**
      * A map between trajectory names and their corresponding data.
      * This allows for trajectory data to be looked up with strings during runtime.
      */
     public static final Map<String, ChoreoTraj> ALL_TRAJECTORIES = Map.ofEntries(
-        Map.entry("OvenToCenterLine", OvenToCenterLine),
-        Map.entry("KitchenToOven", KitchenToOven),
-        Map.entry("KitchenToPantry", KitchenToPantry),
-        Map.entry("KitchenToRamp", KitchenToRamp),
-        Map.entry("KitchenToCenterLine", KitchenToCenterLine),
-        Map.entry("PantryToCenterLine", PantryToCenterLine)
+    
     );
 
     /**
@@ -104,4 +58,3 @@ public record ChoreoTraj(
         return routine.trajectory(this.name);
     }
 }
-// spotless:on
