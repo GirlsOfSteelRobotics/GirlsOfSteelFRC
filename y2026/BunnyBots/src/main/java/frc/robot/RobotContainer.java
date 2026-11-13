@@ -59,7 +59,7 @@ public class RobotContainer {
         m_elevatorSubsystem.addElevatorDebugCommands(Constants.IS_COMPETITION_ROBOT);
 
         m_combinedCommand = new CombinedCommand(m_chassisSubsystem, m_outtakeSubsystem, m_elevatorSubsystem);
-        m_autoFactory = new AutoFactory(m_chassisSubsystem, m_combinedCommand);
+        m_autoFactory = new AutoFactory(m_chassisSubsystem);
 
         configureBindings();
         if (RobotBase.isSimulation()) {
