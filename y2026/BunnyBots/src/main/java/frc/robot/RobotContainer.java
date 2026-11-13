@@ -35,7 +35,7 @@ public class RobotContainer {
     private final OuttakeSubsystem m_outtakeSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final SuperStructureViz m_superStructureViz; // NOPMD(UnusedPrivateField)
-    private final AutoFactory m_autoFactory;
+    private final AutoFactory m_autoFactory; // NOPMD(UnusedPrivateField)
     private final CombinedCommand m_combinedCommand;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed

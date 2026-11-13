@@ -15,6 +15,7 @@ public enum StartingPositions {
     STARTKITCHENOVEN(ChoreoVars.Poses.startKitchenOven),
     STARTKITCHENPANTRY(ChoreoVars.Poses.startKitchenPantry);
 
+
     public MaybeFlippedPose2d m_pose;
 
     StartingPositions(Pose2d pose) {

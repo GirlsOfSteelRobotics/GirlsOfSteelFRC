@@ -307,7 +307,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withName("Reset gyro");
     }
 
-    public void stop()
+    public void stop() {
+        driveFieldCentric(0, 0, 0);
+    }
 
     public Command createStop() {
         return runOnce(this::stop);
