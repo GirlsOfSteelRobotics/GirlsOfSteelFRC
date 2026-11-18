@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.pathing.TunablePathConstraints;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -30,6 +31,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -90,6 +92,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private final GosField m_gosField = new GosField();
 
+    private final LoggingUtil m_loggingUtil;
+
+    private final GosDoubleProperty m_distanceGoalForWall = new GosDoubleProperty(false, "distanceGoalForWall", Units.inchesToMeters(6));
+
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
@@ -114,6 +120,9 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         PathPlannerLogging.setLogTargetPoseCallback(m_gosField::setTrajectorySetpoint);
 
         SmartDashboard.putData(m_gosField.getField2d());
+
+        m_loggingUtil = new LoggingUtil("ChassisLogs");
+        m_loggingUtil.addDouble("DistanceToWall", this::getDistanceToWall);
     }
 
     @SuppressWarnings("PMD")
@@ -155,8 +164,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         // The rotation component of the pose should be the direction of travel. Do not use holonomic rotation.
 
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-                getState().Pose, //current position
-                goal.getPose()
+            getState().Pose, //current position
+            goal.getPose()
         );
 
 
@@ -164,10 +173,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
         // Create the path using the waypoints created above
         PathPlannerPath path = new PathPlannerPath(
-                waypoints,
-                constraints,
-                null, // The ideal starting state, this is only relevant for pre-planned paths, so can be null for on-the-fly paths.
-                new GoalEndState(0.0, goal.getPose().getRotation()) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
+            waypoints,
+            constraints,
+            null, // The ideal starting state, this is only relevant for pre-planned paths, so can be null for on-the-fly paths.
+            new GoalEndState(0.0, goal.getPose().getRotation()) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
         );
 
         // Prevent the path from being flipped if the coordinates are already correct
@@ -190,6 +199,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 .withVelocityY(yJoystick * MAX_TRANSLATION_SPEED)
                 .withRotationalRate(rotationalJoystick * MAX_ROTATION_RATE)
         );
+    }
+
+    public void stop() {
+        driveRobotCentric(0, 0, 0);
     }
 
     public double getDistanceToWall() {
@@ -220,6 +233,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             });
         }
         m_gosField.setPoseEstimate(getState().Pose);
+
+        m_loggingUtil.updateLogs();
     }
 
     private void startSimThread() {
@@ -305,5 +320,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return run(this::createSeedFieldCentricCommand)
             .ignoringDisable(true)
             .withName("Reset gyro");
+    }
+
+    public Command createDriveToPose(Pose2d pose) {
+        return AutoBuilder.pathfindToPose(pose, m_pathConstraints.getConstraints(), 0.0);
+    }
+
+    public Command createLineUpToWall() {
+        return runEnd(() -> driveRobotCentric(-.1, 0, 0), this::stop).until(()-> getDistanceToWall()<m_distanceGoalForWall.getValue());
     }
 }
