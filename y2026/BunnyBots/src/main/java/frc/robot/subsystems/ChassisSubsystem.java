@@ -327,6 +327,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     public Command createLineUpToWall() {
-        return runEnd(() -> driveRobotCentric(-.1, 0, 0), this::stop).until(()-> getDistanceToWall()<m_distanceGoalForWall.getValue());
+        return runEnd(() -> driveRobotCentric(-.1, 0, 0), this::stop).until(() -> getDistanceToWall() < m_distanceGoalForWall.getValue());
     }
 }
