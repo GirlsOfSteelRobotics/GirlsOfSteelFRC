@@ -94,7 +94,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     private final LoggingUtil m_loggingUtil;
 
-    private final GosDoubleProperty m_distanceGoalForWall = new GosDoubleProperty(false, "distanceGoalForWall", Units.inchesToMeters(6));
+    private final GosDoubleProperty m_distanceGoalForWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Distance Goal for Wall", Units.inchesToMeters(6));
 
 
     /**
