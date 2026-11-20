@@ -1,0 +1,27 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Chassis/Drive Distance Backwards": "Command",
+      "/Shuffleboard/Chassis/Drive Distance Forwards": "Command",
+      "/Shuffleboard/Chassis/Timed Drive Backwards": "Command",
+      "/Shuffleboard/Chassis/Timed Drive Forwards": "Command",
+      "/Shuffleboard/Chassis/Turn To -45": "Command",
+      "/Shuffleboard/Chassis/Turn To 0": "Command",
+      "/Shuffleboard/Chassis/Turn To 90": "Command",
+      "/Shuffleboard/Elevator/To Position High": "Command",
+      "/Shuffleboard/Elevator/To Position Low": "Command",
+      "/Shuffleboard/Elevator/To Position Mid": "Command",
+      "/Shuffleboard/Punch/Extend Punch": "Command",
+      "/Shuffleboard/Punch/Retract Punch": "Command",
+      "/Shuffleboard/Shooter/Spin At 1000 RPM": "Command",
+      "/Shuffleboard/Shooter/Spin At Shooting RPM": "Command",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/Elevator Mechanism": "Mechanism2d",
+      "/SmartDashboard/Field": "Field2d"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}

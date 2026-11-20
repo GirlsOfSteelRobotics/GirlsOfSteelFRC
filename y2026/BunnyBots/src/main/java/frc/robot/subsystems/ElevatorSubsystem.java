@@ -51,7 +51,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_elevatorFollowerErrorAlerts;
     private final RevProfiledElevatorController m_elevatorPidController;
     private double m_goalHeight = NO_GOAL_HEIGHT;
-    private ElevatorHeights m_goalPosition;
+    private ElevatorHeights m_goalPosition = ElevatorHeights.NOGOALPOSITION;
     private ElevatorSimWrapper m_simulator;
 
 
@@ -137,6 +137,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void stop() {
         m_goalHeight = NO_GOAL_HEIGHT;
+        m_goalPosition = ElevatorHeights.NOGOALPOSITION;
         m_leader.set(0);
     }
 
@@ -180,7 +181,7 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return position;
             }
         }
-        return null;
+        return ElevatorHeights.NOGOALPOSITION;
     }
 
     public ElevatorHeights getGoalPosition() {
