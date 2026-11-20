@@ -1,28 +1,46 @@
 package frc.robot.led_patterns;
 
-import com.gos.lib.led.LEDBase;
 import com.gos.lib.led.LEDBoolean;
+import com.gos.lib.led.LEDPattern;
+import com.gos.lib.led.LEDPatternLookup;
+import com.gos.lib.led.LEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.enums.ElevatorHeights;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.OuttakeSubsystem;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnabledPatterns {
     private final OuttakeSubsystem m_outtake;
     private final ChassisSubsystem m_chassis;
     private final ElevatorSubsystem m_elevator;
     private final LEDBoolean m_canSeeWall;
+    private final Map<Double, LEDPattern> m_elevatorMap = new HashMap<>();
+    private final LEDPatternLookup<Double> m_elevatorGoal;
+
     //Section for if the can range sees the wall - LEDBoolean
     //Section for how many game pieces we have - Maybe 3 LEDBoolean?
 
-    public EnabledPatterns(AddressableLEDBuffer addressme, OuttakeSubsystem outtake, ChassisSubsystem chassis, ElevatorSubsystem elevator){
-        this.m_outtake = outtake;
-        this.m_chassis = chassis;
-        this.m_elevator = elevator;
-        this.m_canSeeWall = new LEDBoolean(addressme, 0, 10, Color.kAzure, Color.kDarkOrange);
-    }
-    public void writeLED(){
+    public EnabledPatterns(AddressableLEDBuffer addressme, OuttakeSubsystem outtake, ChassisSubsystem chassis, ElevatorSubsystem elevator) {
+        m_outtake = outtake;
+        m_chassis = chassis;
+        m_elevator = elevator;
+        m_canSeeWall = new LEDBoolean(addressme, 0, 10, Color.kAzure, Color.kDarkOrange);
+        m_elevatorMap.put(ElevatorHeights.OVENHEIGHT.m_height, new LEDSolidColor(addressme, 11, 20, Color.kLemonChiffon));
+        m_elevatorMap.put(ElevatorHeights.SHELF1.m_height, new LEDSolidColor(addressme, 11, 20, Color.kThistle));
+        m_elevatorMap.put(ElevatorHeights.SHELF2.m_height, new LEDSolidColor(addressme, 11, 20, Color.kMediumSlateBlue));
+        m_elevatorMap.put(ElevatorHeights.SHELF3.m_height, new LEDSolidColor(addressme, 11, 20, Color.kPlum));
+        m_elevatorGoal = new LEDPatternLookup<>(addressme, m_elevatorMap);
 
     }
+
+    public void writeLED() {
+        m_elevatorGoal.setKey(m_elevator.getGoalHeight());
+        m_elevatorGoal.writeLeds();
+    }
+
 }
