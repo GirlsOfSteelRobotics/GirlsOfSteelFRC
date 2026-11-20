@@ -196,7 +196,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         return m_canRange.getDistance().getValueAsDouble();
     }
 
-    public boolean isWallThere() {
+    public boolean canSeeWall() {
         return getDistanceToWall() <= m_distanceToWall.getValue();
     }
 
