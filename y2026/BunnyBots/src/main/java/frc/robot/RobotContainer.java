@@ -49,7 +49,7 @@ public class RobotContainer {
         m_chassis = TunerConstants.createDrivetrain();
         m_outtakeSubsystem = new OuttakeSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
-        m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_chassis);
+        m_superStructureViz = new SuperStructureViz(m_elevatorSubsystem, m_chassis, m_outtakeSubsystem);
 
         m_chassis.addChassisDebugCommands();
         m_outtakeSubsystem.addOuttakeDebugCommands();

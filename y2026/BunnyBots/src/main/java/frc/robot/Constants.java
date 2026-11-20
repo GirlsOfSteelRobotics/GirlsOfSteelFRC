@@ -27,4 +27,9 @@ public final class Constants {
     public static final int ELEVATOR_FOLLOW_MOTOR_ID = 18;
     public static final int ELEVATOR_MOTOR_ID = 14;
     public static final int CAN_RANGE_ID = 2;
+
+    //DigitalInput
+    public static final int BEAM_BREAK1 = 67;
+    public static final int BEAM_BREAK2 = 67;
+    public static final int BEAM_BREAK3 = 67;
 }
