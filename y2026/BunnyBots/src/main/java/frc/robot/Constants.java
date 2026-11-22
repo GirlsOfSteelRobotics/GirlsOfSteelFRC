@@ -19,7 +19,6 @@ public final class Constants {
 
     // Joysticks
     public static final int DRIVER_CONTROLLER_PORT = 0;
-
     public static final int JOYSTICK_CONTROLLER_PORT = 1;
 
     // CAN
@@ -27,4 +26,7 @@ public final class Constants {
     public static final int ELEVATOR_FOLLOW_MOTOR_ID = 18;
     public static final int ELEVATOR_MOTOR_ID = 14;
     public static final int CAN_RANGE_ID = 2;
+
+    // Other Stuff
+    public static final int LED_PORT = 0;
 }
