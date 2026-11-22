@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +21,9 @@ public class OuttakeSubsystem {
     private final GosDoubleProperty m_scoreOvenSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Score Oven Speed", 0.67);
     private final GosDoubleProperty m_scorePantrySpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Score Pantry Speed", 0.45);
     private final GosDoubleProperty m_reverseSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Reverse Speed", -1);
+    private final DigitalInput m_beamBreak1;
+    private final DigitalInput m_beamBreak2;
+    private final DigitalInput m_beamBreak3;
 
     public OuttakeSubsystem() {
         m_motor = new SparkFlex(Constants.OUTTAKE_MOTOR, MotorType.kBrushless);
@@ -27,6 +31,9 @@ public class OuttakeSubsystem {
         followMotorConfig.idleMode(IdleMode.kCoast);
         followMotorConfig.smartCurrentLimit(60);
         m_motor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_beamBreak1 = new DigitalInput(Constants.BEAM_BREAK1);
+        m_beamBreak2 = new DigitalInput(Constants.BEAM_BREAK2);
+        m_beamBreak3 = new DigitalInput(Constants.BEAM_BREAK3);
     }
 
     public void scoreOven() {
@@ -43,6 +50,20 @@ public class OuttakeSubsystem {
 
     public void stop() {
         m_motor.stopMotor();
+    }
+
+    public int getCarrotNumbers() {
+        int countCarrots = 0;
+        if (m_beamBreak1.get()) {
+            countCarrots++;
+        }
+        if (m_beamBreak2.get()) {
+            countCarrots++;
+        }
+        if (m_beamBreak3.get()) {
+            countCarrots++;
+        }
+        return countCarrots;
     }
 
     public void addOuttakeDebugCommands() {
