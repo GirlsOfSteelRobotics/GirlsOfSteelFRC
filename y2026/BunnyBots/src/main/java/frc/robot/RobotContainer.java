@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.gos.lib.pathing.ChoreoFileVersionPatch;
 import org.wpilib.hardware.hal.AllianceStationID;
 import org.wpilib.framework.RobotBase;
 import org.wpilib.simulation.DriverStationSim;
@@ -44,6 +45,9 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        // TODO(2027) Remove once PathPlannerLib can load Choreo 2026 trajectories
+        ChoreoFileVersionPatch.apply();
+
         // Configure the trigger bindings
         m_chassis = TunerConstants.createDrivetrain();
         m_outtakeSubsystem = new OuttakeSubsystem();

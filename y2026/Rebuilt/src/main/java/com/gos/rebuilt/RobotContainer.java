@@ -5,6 +5,7 @@
 
 package com.gos.rebuilt;
 
+import com.gos.lib.pathing.ChoreoFileVersionPatch;
 
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
@@ -83,6 +84,9 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer(PowerDistribution pdh) {
+        // TODO(2027) Remove once PathPlannerLib can load Choreo 2026 trajectories
+        ChoreoFileVersionPatch.apply();
+
         PropertyManager.setPurgeConstantPreferenceKeys(Constants.CLEANUP_PROPERTIES);
         m_pdh = pdh;
         m_driverController = new CommandNiDsXboxController(0);
