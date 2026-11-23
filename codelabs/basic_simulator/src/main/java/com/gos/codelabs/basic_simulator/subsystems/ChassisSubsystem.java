@@ -22,17 +22,17 @@ import org.wpilib.math.system.DCMotor;
 import org.wpilib.math.system.Models;
 import org.wpilib.math.util.Units;
 import org.wpilib.hardware.imu.OnboardIMU;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.framework.RobotBase;
 import org.wpilib.drive.DifferentialDrive;
 import com.gos.lib.tunables.CommandTab;
 import org.wpilib.simulation.DifferentialDrivetrainSim;
 import org.wpilib.smartdashboard.Field2d;
 import org.wpilib.telemetry.Telemetry;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.module_wrappers.wpi.ADXRS450GyroWrapper;
-// import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.module_wrappers.wpi.OnboardIMUWrapper;
+import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
@@ -52,8 +52,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     private final LoggingUtil m_loggingUtil;
 
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private DifferentialDrivetrainSimWrapper m_simulator;
+    private DifferentialDrivetrainSimWrapper m_simulator;
 
     public static final class DrivetrainConstants {
 
@@ -122,19 +121,18 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_loggingUtil.addDouble("Average Distance", this::getAverageDistance);
         m_loggingUtil.addDouble("Heading", this::getHeading);
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     m_simulator = new DifferentialDrivetrainSimWrapper(
-        //             DrivetrainConstants.createSim(),
-        //             new RevMotorControllerSimWrapper(m_leftDriveA, DrivetrainConstants.DRIVE_GEARBOX),
-        //             new RevMotorControllerSimWrapper(m_rightDriveA, DrivetrainConstants.DRIVE_GEARBOX),
-        //             RevEncoderSimWrapper.create(m_leftDriveA),
-        //             RevEncoderSimWrapper.create(m_rightDriveA),
-        //             new ADXRS450GyroWrapper(m_gyro));
-        //     m_simulator.setRightInverted(false);
+        if (RobotBase.isSimulation()) {
+            m_simulator = new DifferentialDrivetrainSimWrapper(
+                    DrivetrainConstants.createSim(),
+                    new RevMotorControllerSimWrapper(m_leftDriveA, DrivetrainConstants.DRIVE_GEARBOX),
+                    new RevMotorControllerSimWrapper(m_rightDriveA, DrivetrainConstants.DRIVE_GEARBOX),
+                    RevEncoderSimWrapper.create(m_leftDriveA),
+                    RevEncoderSimWrapper.create(m_rightDriveA),
+                    new OnboardIMUWrapper(m_gyro));
+            m_simulator.setRightInverted(false);
 
-        //     m_differentialDrive.setSafetyEnabled(false);
-        // }
+            m_differentialDrive.setSafetyEnabled(false);
+        }
 
         m_leftDriveA.configure(leftDriveAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_leftDriveB.configure(leftDriveBConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -175,8 +173,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_simulator.update();
+        m_simulator.update();
     }
 
     /**

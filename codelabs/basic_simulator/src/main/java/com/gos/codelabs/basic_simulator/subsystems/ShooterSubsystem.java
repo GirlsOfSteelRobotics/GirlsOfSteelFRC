@@ -8,14 +8,14 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import org.wpilib.math.system.DCMotor;
-// import org.wpilib.math.system.Models;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.math.system.Models;
+import org.wpilib.framework.RobotBase;
 import com.gos.lib.tunables.CommandTab;
-// import org.wpilib.simulation.FlywheelSim;
+import org.wpilib.simulation.FlywheelSim;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 
 public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
     public static final double SHOOTING_RPM = 3000;
@@ -25,8 +25,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
     private final RelativeEncoder m_wheelEncoder;
     private final LoggingUtil m_loggingUtil;
 
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private FlywheelSimWrapper m_simulator;
+    private FlywheelSimWrapper m_simulator;
 
     private static final class FlywheelSimConstants {
         public static final DCMotor K_GEARBOX = DCMotor.getNEO(1);
@@ -42,15 +41,14 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
         m_loggingUtil.addDouble("RPM", this::getRpm);
         m_loggingUtil.addDouble("Throttle", () -> m_wheelMotor.getAppliedOutput().get());
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     FlywheelSim sim = new FlywheelSim(
-        //             Models.flywheelFromPhysicalConstants(FlywheelSimConstants.K_GEARBOX, FlywheelSimConstants.K_MOMENT_OF_INERTIA, FlywheelSimConstants.K_GEARING),
-        //             FlywheelSimConstants.K_GEARBOX);
-        //     m_simulator = new FlywheelSimWrapper(sim,
-        //             new RevMotorControllerSimWrapper(m_wheelMotor, FlywheelSimConstants.K_GEARBOX),
-        //             RevEncoderSimWrapper.create(m_wheelMotor));
-        // }
+        if (RobotBase.isSimulation()) {
+            FlywheelSim sim = new FlywheelSim(
+                    Models.flywheelFromPhysicalConstants(FlywheelSimConstants.K_GEARBOX, FlywheelSimConstants.K_MOMENT_OF_INERTIA, FlywheelSimConstants.K_GEARING),
+                    FlywheelSimConstants.K_GEARBOX);
+            m_simulator = new FlywheelSimWrapper(sim,
+                    new RevMotorControllerSimWrapper(m_wheelMotor, FlywheelSimConstants.K_GEARBOX),
+                    RevEncoderSimWrapper.create(m_wheelMotor));
+        }
     }
 
     @Override
@@ -65,8 +63,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_simulator.update();
+        m_simulator.update();
     }
 
     /**

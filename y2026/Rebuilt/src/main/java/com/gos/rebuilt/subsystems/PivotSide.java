@@ -14,13 +14,13 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-// import org.wpilib.math.system.DCMotor;
-// import org.wpilib.math.util.Units;
-// import org.wpilib.framework.RobotBase;
-// import org.wpilib.simulation.SingleJointedArmSim;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.util.Units;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.simulation.SingleJointedArmSim;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class PivotSide {
 
@@ -47,8 +47,7 @@ public class PivotSide {
     private final GosDoubleProperty m_tuningPivotSpeed;
 
 
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private SingleJointedArmSimWrapper m_pivotSimulator;
+    private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public PivotSide(int id, boolean inverted, double offset, String name) {
 
@@ -83,14 +82,13 @@ public class PivotSide {
             .withPositionConversionFactor(RELATIVE_POSITION_CONVERSION_FACTOR)
             .build();
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     DCMotor gearbox = DCMotor.getNeoVortex(1);
-        //     SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
-        //         0.381, Units.degreesToRadians(-5), Units.degreesToRadians(90), true, 0);
-        //     m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
-        //         RevEncoderSimWrapper.create(m_pivotMotor), true);
-        // }
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeoVortex(1);
+            SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
+                0.381, Units.degreesToRadians(-5), Units.degreesToRadians(90), true, 0);
+            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
+                RevEncoderSimWrapper.create(m_pivotMotor, RELATIVE_POSITION_CONVERSION_FACTOR, RELATIVE_VELOCITY_CONVERSION_FACTOR), true);
+        }
 
         m_pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -190,8 +188,7 @@ public class PivotSide {
     }
 
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_pivotSimulator.update();
+        m_pivotSimulator.update();
     }
 
     public void periodic() {

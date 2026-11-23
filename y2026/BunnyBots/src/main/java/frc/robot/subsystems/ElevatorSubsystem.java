@@ -20,14 +20,14 @@ import org.wpilib.math.util.Units;
 import org.wpilib.framework.RobotBase;
 import org.wpilib.system.RobotController;
 import com.gos.lib.tunables.CommandTab;
-// import org.wpilib.simulation.ElevatorSim;
+import org.wpilib.simulation.ElevatorSim;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.enums.ElevatorHeights;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase {
     public static final double K_ELEVATOR_GEARING = 27.0;
@@ -56,8 +56,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_elevatorFollowerErrorAlerts;
     private final RevProfiledElevatorController m_elevatorPidController;
     private double m_goalHeight = NO_GOAL_HEIGHT;
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ElevatorSimWrapper m_simulator;
+    private ElevatorSimWrapper m_simulator;
 
 
     public ElevatorSubsystem() {
@@ -99,20 +98,19 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_checkAlerts = new SparkMaxAlerts(m_leader, "Elevator Alert");
 
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     ElevatorSim sim = new ElevatorSim(
-        //         K_ELEVATOR_GEARBOX,
-        //         K_ELEVATOR_GEARING / ELEVATOR_STAGES,
-        //         K_CARRIAGE_MASS,
-        //         K_ELEVATOR_DRUM_RADIUS,
-        //         K_MIN_ELEVATOR_HEIGHT,
-        //         K_MAX_ELEVATOR_HEIGHT, true, 0);
+        if (RobotBase.isSimulation()) {
+            ElevatorSim sim = new ElevatorSim(
+                K_ELEVATOR_GEARBOX,
+                K_ELEVATOR_GEARING / ELEVATOR_STAGES,
+                K_CARRIAGE_MASS,
+                K_ELEVATOR_DRUM_RADIUS,
+                K_MIN_ELEVATOR_HEIGHT,
+                K_MAX_ELEVATOR_HEIGHT, true, 0);
 
-        //     m_simulator = new ElevatorSimWrapper(sim,
-        //         new RevMotorControllerSimWrapper(m_leader, K_ELEVATOR_GEARBOX),
-        //         RevEncoderSimWrapper.create(m_leader));
-        // }
+            m_simulator = new ElevatorSimWrapper(sim,
+                new RevMotorControllerSimWrapper(m_leader, K_ELEVATOR_GEARBOX),
+                RevEncoderSimWrapper.create(m_leader, POSITION_CONVERSION_FACTOR, VELOCITY_CONVERSION_FACTOR));
+        }
 
         m_networkTableEntries = new LoggingUtil("Elevator");
         m_networkTableEntries.addDouble("Current Height (m)", this::getHeight);
@@ -158,8 +156,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_simulator.update();
+        m_simulator.update();
     }
 
     public double getEncoderVel() {

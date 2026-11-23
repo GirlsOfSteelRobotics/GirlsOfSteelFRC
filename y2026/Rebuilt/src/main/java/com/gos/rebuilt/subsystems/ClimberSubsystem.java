@@ -16,14 +16,14 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import org.wpilib.math.system.DCMotor;
 import org.wpilib.math.util.Units;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.framework.RobotBase;
 import com.gos.lib.tunables.CommandTab;
-// import org.wpilib.simulation.ElevatorSim;
+import org.wpilib.simulation.ElevatorSim;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 
 public class ClimberSubsystem extends SubsystemBase {
     public static final double K_ELEVATOR_GEARING = 12.0;
@@ -41,10 +41,8 @@ public class ClimberSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_climberRightMotorAlerts;
     private final RevProfiledElevatorController m_climberLeftPidController;
     private final RevProfiledElevatorController m_climberRightPidController;
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ElevatorSimWrapper m_leftSimulator;
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ElevatorSimWrapper m_rightSimulator;
+    private ElevatorSimWrapper m_leftSimulator;
+    private ElevatorSimWrapper m_rightSimulator;
 
 
     private double m_goalHeight;
@@ -100,39 +98,37 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberLeftMotor.configure(climberLeftMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_climberRightMotor.configure(climberRightMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     ElevatorSim sim = new ElevatorSim(
-        //         K_ELEVATOR_GEARBOX,
-        //         K_ELEVATOR_GEARING * 0.5, // Cut in half because of how a two stage elevator works (???)
-        //         K_CARRIAGE_MASS,
-        //         K_ELEVATOR_DRUM_RADIUS,
-        //         K_MIN_ELEVATOR_HEIGHT,
-        //         K_MAX_ELEVATOR_HEIGHT, true, 0);
+        if (RobotBase.isSimulation()) {
+            ElevatorSim sim = new ElevatorSim(
+                K_ELEVATOR_GEARBOX,
+                K_ELEVATOR_GEARING * 0.5, // Cut in half because of how a two stage elevator works (???)
+                K_CARRIAGE_MASS,
+                K_ELEVATOR_DRUM_RADIUS,
+                K_MIN_ELEVATOR_HEIGHT,
+                K_MAX_ELEVATOR_HEIGHT, true, 0);
 
-        //     m_leftSimulator = new ElevatorSimWrapper(sim,
-        //         new RevMotorControllerSimWrapper(m_climberLeftMotor, K_ELEVATOR_GEARBOX),
-        //         RevEncoderSimWrapper.create(m_climberLeftMotor));
-
-
-        // }
-
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     ElevatorSim sim = new ElevatorSim(
-        //         K_ELEVATOR_GEARBOX,
-        //         K_ELEVATOR_GEARING * 0.5, // Cut in half because of how a two stage elevator works (???)
-        //         K_CARRIAGE_MASS,
-        //         K_ELEVATOR_DRUM_RADIUS,
-        //         K_MIN_ELEVATOR_HEIGHT,
-        //         K_MAX_ELEVATOR_HEIGHT, true, 0);
-
-        //     m_rightSimulator = new ElevatorSimWrapper(sim,
-        //         new RevMotorControllerSimWrapper(m_climberRightMotor, K_ELEVATOR_GEARBOX),
-        //         RevEncoderSimWrapper.create(m_climberRightMotor));
+            m_leftSimulator = new ElevatorSimWrapper(sim,
+                new RevMotorControllerSimWrapper(m_climberLeftMotor, K_ELEVATOR_GEARBOX),
+                RevEncoderSimWrapper.create(m_climberLeftMotor));
 
 
-        // }
+        }
+
+        if (RobotBase.isSimulation()) {
+            ElevatorSim sim = new ElevatorSim(
+                K_ELEVATOR_GEARBOX,
+                K_ELEVATOR_GEARING * 0.5, // Cut in half because of how a two stage elevator works (???)
+                K_CARRIAGE_MASS,
+                K_ELEVATOR_DRUM_RADIUS,
+                K_MIN_ELEVATOR_HEIGHT,
+                K_MAX_ELEVATOR_HEIGHT, true, 0);
+
+            m_rightSimulator = new ElevatorSimWrapper(sim,
+                new RevMotorControllerSimWrapper(m_climberRightMotor, K_ELEVATOR_GEARBOX),
+                RevEncoderSimWrapper.create(m_climberRightMotor));
+
+
+        }
 
         m_networkTableEntries = new LoggingUtil("ClimberSubsystem");
         m_networkTableEntries.addDouble("Climber Left RPM", this::getLeftRPM);
@@ -238,10 +234,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_leftSimulator.update();
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_rightSimulator.update();
+        m_leftSimulator.update();
+        m_rightSimulator.update();
     }
 
     public void stop() {

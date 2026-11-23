@@ -21,20 +21,20 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.math.interpolation.InterpolatingDoubleTreeMap;
-// import org.wpilib.math.numbers.N1;
-// import org.wpilib.math.system.LinearSystem;
-// import org.wpilib.math.system.DCMotor;
-// import org.wpilib.math.system.Models;
+import org.wpilib.math.numbers.N1;
+import org.wpilib.math.system.LinearSystem;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.system.Models;
 import org.wpilib.math.util.Units;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.framework.RobotBase;
 import com.gos.lib.tunables.CommandTab;
-// import org.wpilib.simulation.FlywheelSim;
+import org.wpilib.simulation.FlywheelSim;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
-// import org.snobotv2.sim_wrappers.ISimWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
 
 import java.util.function.DoubleSupplier;
 
@@ -55,8 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_shooterAlert;
     private final GosDoubleProperty m_speedBoost = new GosDoubleProperty(false, "speed booster", 1.1);
 
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ISimWrapper m_shooterSimulator;
+    private ISimWrapper m_shooterSimulator;
     private final InterpolatingDoubleTreeMap m_table = new InterpolatingDoubleTreeMap();
     private double m_goal;
     private final Debouncer m_debouncer;
@@ -124,17 +123,16 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_networkTableEntries.addDouble("Goal velocity", this::getGoal);
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     DCMotor gearbox = DCMotor.getNeo550(2);
-        //     LinearSystem<N1, N1, N1> plant =
-        //         Models.flywheelFromPhysicalConstants(gearbox, 0.01, 1.0);
-        //     FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
-        //     this.m_shooterSimulator = new FlywheelSimWrapper(
-        //         shooterFlywheelSim,
-        //         new RevMotorControllerSimWrapper(this.m_leader, gearbox),
-        //         RevEncoderSimWrapper.create(this.m_leader));
-        // }
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            LinearSystem<N1, N1, N1> plant =
+                Models.flywheelFromPhysicalConstants(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
+            this.m_shooterSimulator = new FlywheelSimWrapper(
+                shooterFlywheelSim,
+                new RevMotorControllerSimWrapper(this.m_leader, gearbox),
+                RevEncoderSimWrapper.create(this.m_leader));
+        }
 
 
         m_leader.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -258,8 +256,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_shooterSimulator.update();
+        m_shooterSimulator.update();
     }
 
 

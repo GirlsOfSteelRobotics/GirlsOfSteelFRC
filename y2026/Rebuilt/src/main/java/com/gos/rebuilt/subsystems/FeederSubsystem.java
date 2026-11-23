@@ -18,25 +18,26 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-// import org.wpilib.math.numbers.N1;
-// import org.wpilib.math.system.LinearSystem;
-// import org.wpilib.math.system.DCMotor;
-// import org.wpilib.math.system.Models;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.math.numbers.N1;
+import org.wpilib.math.system.LinearSystem;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.system.Models;
+import org.wpilib.framework.RobotBase;
 import com.gos.lib.tunables.CommandTab;
-// import org.wpilib.simulation.FlywheelSim;
+import org.wpilib.simulation.FlywheelSim;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
-// import org.snobotv2.sim_wrappers.ISimWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class FeederSubsystem extends SubsystemBase {
 
     private final SparkFlex m_feederMotor;
     // TODO(2027) REVLib removed SPARK conversion factors, so they are applied in software.
     //  The SPARK closed loop gains now operate on native units (rotations / RPM) and need re-tuning.
+    private static final double POSITION_CONVERSION_FACTOR = 12;
     private static final double VELOCITY_CONVERSION_FACTOR = 12;
 
     private final RelativeEncoder m_feederEncoder;
@@ -47,8 +48,7 @@ public class FeederSubsystem extends SubsystemBase {
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ISimWrapper m_feederSimulator;
+    private ISimWrapper m_feederSimulator;
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FEEDAtuneRPM", 1);
 
 
@@ -78,17 +78,16 @@ public class FeederSubsystem extends SubsystemBase {
             .build();
 
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     DCMotor gearbox = DCMotor.getNeo550(2);
-        //     LinearSystem<N1, N1, N1> plant =
-        //         Models.flywheelFromPhysicalConstants(gearbox, 0.01, 1.0);
-        //     FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
-        //     this.m_feederSimulator = new FlywheelSimWrapper(
-        //         shooterFlywheelSim,
-        //         new RevMotorControllerSimWrapper(this.m_feederMotor, gearbox),
-        //         RevEncoderSimWrapper.create(this.m_feederMotor));
-        // }
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            LinearSystem<N1, N1, N1> plant =
+                Models.flywheelFromPhysicalConstants(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
+            this.m_feederSimulator = new FlywheelSimWrapper(
+                shooterFlywheelSim,
+                new RevMotorControllerSimWrapper(this.m_feederMotor, gearbox),
+                RevEncoderSimWrapper.create(this.m_feederMotor, POSITION_CONVERSION_FACTOR, VELOCITY_CONVERSION_FACTOR));
+        }
 
 
         m_networkTableEntries.addDouble("Current", () -> m_feederMotor.getOutputCurrent().get());
@@ -159,8 +158,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_feederSimulator.update();
+        m_feederSimulator.update();
     }
 
     public Command createFeederCommand() {

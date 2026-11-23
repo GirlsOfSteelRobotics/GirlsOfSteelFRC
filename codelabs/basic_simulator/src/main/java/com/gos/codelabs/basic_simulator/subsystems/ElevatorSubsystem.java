@@ -10,18 +10,18 @@ import com.revrobotics.spark.SparkMax;
 import org.wpilib.math.system.DCMotor;
 import org.wpilib.math.util.Units;
 import org.wpilib.hardware.discrete.DigitalInput;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.framework.RobotBase;
 import com.gos.lib.tunables.CommandTab;
-// import org.wpilib.simulation.DIOSim;
-// import org.wpilib.simulation.ElevatorSim;
+import org.wpilib.simulation.DIOSim;
+import org.wpilib.simulation.ElevatorSim;
 import org.wpilib.smartdashboard.Mechanism2d;
 import org.wpilib.smartdashboard.MechanismLigament2d;
 import org.wpilib.telemetry.Telemetry;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
+import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     public static final double ALLOWABLE_POSITION_ERROR = Units.inchesToMeters(1);
@@ -48,8 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     private final Mechanism2d m_mechanism;
     private final MechanismLigament2d m_elevatorLigament;
 
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ElevatorSimWrapper m_elevatorSim;
+    private ElevatorSimWrapper m_elevatorSim;
 
     private static final class ElevatorSimConstants {
         public static final double K_ELEVATOR_GEARING = 10.0;
@@ -77,22 +76,21 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
         m_loggingUtil.addBoolean("Lower Limit Switch", this::isAtLowerLimit);
         m_loggingUtil.addBoolean("Upper Limit Switch", this::isAtUpperLimit);
 
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     ElevatorSim sim = new ElevatorSim(
-        //             ElevatorSimConstants.K_ELEVATOR_GEARBOX,
-        //             ElevatorSimConstants.K_ELEVATOR_GEARING,
-        //             ElevatorSimConstants.K_CARRIAGE_MASS,
-        //             ElevatorSimConstants.K_ELEVATOR_DRUM_RADIUS,
-        //             ElevatorSimConstants.K_MIN_ELEVATOR_HEIGHT,
-        //             ElevatorSimConstants.K_MAX_ELEVATOR_HEIGHT, true, 0);
+        if (RobotBase.isSimulation()) {
+            ElevatorSim sim = new ElevatorSim(
+                    ElevatorSimConstants.K_ELEVATOR_GEARBOX,
+                    ElevatorSimConstants.K_ELEVATOR_GEARING,
+                    ElevatorSimConstants.K_CARRIAGE_MASS,
+                    ElevatorSimConstants.K_ELEVATOR_DRUM_RADIUS,
+                    ElevatorSimConstants.K_MIN_ELEVATOR_HEIGHT,
+                    ElevatorSimConstants.K_MAX_ELEVATOR_HEIGHT, true, 0);
 
-        //     m_elevatorSim = new ElevatorSimWrapper(sim,
-        //             new RevMotorControllerSimWrapper(m_liftMotor, ElevatorSimConstants.K_ELEVATOR_GEARBOX),
-        //             RevEncoderSimWrapper.create(m_liftMotor));
-        //     m_elevatorSim.setLowerLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_lowerLimitSwitch)::setValue));
-        //     m_elevatorSim.setUpperLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_upperLimitSwitch)::setValue));
-        // }
+            m_elevatorSim = new ElevatorSimWrapper(sim,
+                    new RevMotorControllerSimWrapper(m_liftMotor, ElevatorSimConstants.K_ELEVATOR_GEARBOX),
+                    RevEncoderSimWrapper.create(m_liftMotor));
+            m_elevatorSim.setLowerLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_lowerLimitSwitch)::setValue));
+            m_elevatorSim.setUpperLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_upperLimitSwitch)::setValue));
+        }
     }
 
     @Override
@@ -111,8 +109,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_elevatorSim.update();
+        m_elevatorSim.update();
     }
 
     /**

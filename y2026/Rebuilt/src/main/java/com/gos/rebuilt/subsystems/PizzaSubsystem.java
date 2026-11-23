@@ -18,15 +18,15 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-// import org.wpilib.math.system.DCMotor;
-// import org.wpilib.framework.RobotBase;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.framework.RobotBase;
 import com.gos.lib.tunables.CommandTab;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.SubsystemBase;
-// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-// import org.snobotv2.sim_wrappers.ISimWrapper;
-// import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
+import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class PizzaSubsystem extends SubsystemBase {
 
@@ -53,8 +53,7 @@ public class PizzaSubsystem extends SubsystemBase {
     private final PidProperty m_pidProperties;
 
 
-    // TODO(2027) restore simulation once SnobotSim supports 2027
-    // private ISimWrapper m_pizzaSimulator;
+    private ISimWrapper m_pizzaSimulator;
 
     public PizzaSubsystem() {
 
@@ -73,14 +72,13 @@ public class PizzaSubsystem extends SubsystemBase {
 
         m_pizzaAlert = new SparkMaxAlerts(m_pizzaMotor, "pizzaAlert");
         m_pizzaEncoder = m_pizzaMotor.getEncoder();
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // if (RobotBase.isSimulation()) {
-        //     DCMotor gearbox = DCMotor.getNeo550(2);
-        //     this.m_pizzaSimulator = new InstantaneousMotorSim(
-        //         new RevMotorControllerSimWrapper(this.m_pizzaMotor, gearbox),
-        //         RevEncoderSimWrapper.create(this.m_pizzaMotor),
-        //         -360);
-        // }
+        if (RobotBase.isSimulation()) {
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            this.m_pizzaSimulator = new InstantaneousMotorSim(
+                new RevMotorControllerSimWrapper(this.m_pizzaMotor, gearbox),
+                RevEncoderSimWrapper.create(this.m_pizzaMotor, POSITION_CONVERSION_FACTOR, VELOCITY_CONVERSION_FACTOR),
+                -360);
+        }
         m_pidProperties = new RevPidPropertyBuilder("Pizza", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
             .addFF(0)
             .addP(0)
@@ -187,8 +185,7 @@ public class PizzaSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // TODO(2027) restore simulation once SnobotSim supports 2027
-        // m_pizzaSimulator.update();
+        m_pizzaSimulator.update();
     }
 
 }
