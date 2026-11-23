@@ -3,7 +3,7 @@ package com.gos.lib;
 /**
  * This helper will do a latching counter to ensure that a value remains true for a certain number of loops.
  *
- * You should probably use {@link edu.wpi.first.math.filter.Debouncer} instead.
+ * You should probably use {@link org.wpilib.math.filter.Debouncer} instead.
  */
 public class DeadbandHelper {
     private int m_goodLoops;

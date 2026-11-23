@@ -1,7 +1,7 @@
 package frc.robot.enums;
 
 import com.gos.lib.pathing.MaybeFlippedPose2d;
-import edu.wpi.first.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Pose2d;
 import frc.robot.choreo_gen.ChoreoVars;
 
 public enum StartingPositions {

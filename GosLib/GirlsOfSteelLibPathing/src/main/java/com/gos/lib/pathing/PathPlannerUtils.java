@@ -2,10 +2,9 @@ package com.gos.lib.pathing;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.system.Filesystem;
+import org.wpilib.command2.Command;
+import org.wpilib.tunable.Tunables;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
@@ -25,12 +24,11 @@ public final class PathPlannerUtils {
     }
 
     /**
-     * Will create commands to follow trajectories for each one inside the paths folder.
+     * Will create commands to follow trajectories for each one inside the paths folder, and publishes them
+     * as tunables under "PP Paths/" so they can be run from the dashboard.
      * @param pathFactory The factory used to create paths
      */
     public static void createTrajectoriesShuffleboardTab(Function<PathPlannerPath, Command> pathFactory) {
-        ShuffleboardTab tab = Shuffleboard.getTab("PP Paths");
-
         File[] pathFiles = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
         Set<String> pathNames =
@@ -38,13 +36,13 @@ public final class PathPlannerUtils {
                 .filter(file -> !file.isDirectory())
                 .map(File::getName)
                 .filter(name -> name.endsWith(".path"))
-                .map(name -> name.substring(0, name.lastIndexOf(".")))
+                .map(name -> name.substring(0, name.lastIndexOf('.')))
                 .collect(Collectors.toSet());
         for (String pathName : pathNames) {
             try {
                 Command followPathCommand = pathFactory.apply(PathPlannerPath.fromPathFile(pathName))
                     .withName(pathName);
-                tab.add(followPathCommand);
+                Tunables.publish("PP Paths/" + pathName, followPathCommand);
             } catch (IOException | ParseException e) {
                 throw new RuntimeException(e);
             }

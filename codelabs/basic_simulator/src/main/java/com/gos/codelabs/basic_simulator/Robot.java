@@ -4,9 +4,9 @@
 
 package com.gos.codelabs.basic_simulator;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.wpilib.framework.TimedRobot;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.CommandScheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,14 +17,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
-    private RobotContainer m_robotContainer;
+    private final RobotContainer m_robotContainer;
 
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
      */
-    @Override
-    public void robotInit() {
+    public Robot() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
@@ -35,8 +34,8 @@ public class Robot extends TimedRobot {
      * This function is called every robot packet, no matter the mode. Use this for items like
      * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
      *
-     * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-     * SmartDashboard integrated updating.
+     * <p>This runs after the mode specific periodic functions, but before telemetry and tunables
+     * are updated.
      */
     @Override
     public void robotPeriodic() {
@@ -97,7 +96,7 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testInit() {
+    public void utilityInit() {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
     }
@@ -106,6 +105,6 @@ public class Robot extends TimedRobot {
      * This function is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {
+    public void utilityPeriodic() {
     }
 }

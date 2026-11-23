@@ -1,6 +1,6 @@
 package com.gos.lib.led;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
 
 public class LEDRainbow extends LEDBase {
     private final int m_indexLength;

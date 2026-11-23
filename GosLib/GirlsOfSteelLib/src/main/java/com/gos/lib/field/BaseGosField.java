@@ -1,13 +1,11 @@
 package com.gos.lib.field;
 
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.Field3d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject3d;
+import org.wpilib.fields.FieldTag;
+import org.wpilib.fields.Field;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.smartdashboard.Field2d;
+import org.wpilib.smartdashboard.FieldObject2d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class BaseGosField {
      * Constructor.
      * @param aprilTagLayout The april tag layout, used to draw where april tags are expected to be.
      */
-    public BaseGosField(AprilTagFieldLayout aprilTagLayout) {
+    public BaseGosField(Field aprilTagLayout) {
         m_field2d = new Field2d();
         m_currentTrajectoryObject = m_field2d.getObject("Trajectory");
         m_trajectorySetpoint = m_field2d.getObject("TrajectoryTargetPose");
@@ -43,10 +41,10 @@ public class BaseGosField {
      * Sets a new april tag layout.
      * @param aprilTagLayout The layout
      */
-    public final void setAprilTagLayout(AprilTagFieldLayout aprilTagLayout) {
+    public final void setAprilTagLayout(Field aprilTagLayout) {
         List<Pose3d> tagPoses = new ArrayList<>();
-        for (AprilTag tag : aprilTagLayout.getTags()) {
-            tagPoses.add(tag.pose);
+        for (FieldTag tag : aprilTagLayout.getTags()) {
+            tagPoses.add(tag.getPose());
         }
 
         FieldObject3d aprilTag3dObject = m_field3d.getObject("AprilTags"); // NOPMD(CloseResource)

@@ -1,7 +1,7 @@
 package com.gos.codelabs.gitflow.subsystems;
 
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.command2.SubsystemBase;
 
 public class PJCodelab2021Part1Subsystem extends SubsystemBase {
     public PJCodelab2021Part1Subsystem() {

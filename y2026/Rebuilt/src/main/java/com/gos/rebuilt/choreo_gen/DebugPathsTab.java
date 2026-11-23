@@ -3,10 +3,9 @@ package com.gos.rebuilt.choreo_gen;
 import com.gos.lib.pathing.ChoreoUtils;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.Commands;
 
 import static com.gos.lib.pathing.PathPlannerUtils.followChoreoPath;
 
@@ -18,7 +17,7 @@ public class DebugPathsTab {
     }
 
     public void addDebugPathsToShuffleBoard() {
-        ShuffleboardTab debugPathsTab = Shuffleboard.getTab("Debug Paths");
+        CommandTab debugPathsTab = new CommandTab("Debug Paths");
         debugPathsTab.add(createDebugPathCommand("TUNING_StraightPath_MaxAccel_MaxSpeed"));
         debugPathsTab.add(createDebugPathCommand("TUNING_StraightPath_MaxAccel_01fps"));
         debugPathsTab.add(createDebugPathCommand("TUNING_StraightPath_MaxAccel_05fps"));

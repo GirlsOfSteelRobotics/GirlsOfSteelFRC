@@ -1,5 +1,7 @@
 package com.gos.lib.phoenix6;
 
+import com.ctre.phoenix6.CANBus;
+import org.wpilib.hardware.bus.CANPort;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.Slot2Configs;
@@ -8,7 +10,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.gos.lib.phoenix6.properties.pid.Phoenix6TalonPidPropertyBuilder;
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.preferences.Preferences;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +21,7 @@ public class Phoenix6TalonPidPropertyBuilderTest extends BasePropertiesTest {
 
     @Test
     public void testTraditionalSetup() {
-        try (TalonFX talon = new TalonFX(6)) {
+        try (TalonFX talon = new TalonFX(6, new CANBus(CANPort.CAN_S0))) {
             talon.getConfigurator().apply(new TalonFXConfiguration());
 
             // Verify default settings
@@ -67,7 +69,7 @@ public class Phoenix6TalonPidPropertyBuilderTest extends BasePropertiesTest {
 
     @Test
     public void testSetupWithSlot() {
-        try (TalonFX talon = new TalonFX(6)) {
+        try (TalonFX talon = new TalonFX(6, new CANBus(CANPort.CAN_S0))) {
             talon.getConfigurator().apply(new TalonFXConfiguration());
 
             // Verify default settings
@@ -114,7 +116,7 @@ public class Phoenix6TalonPidPropertyBuilderTest extends BasePropertiesTest {
 
     @Test
     public void testEmptySlotConfig() {
-        try (TalonFX talon = new TalonFX(6)) {
+        try (TalonFX talon = new TalonFX(6, new CANBus(CANPort.CAN_S0))) {
             talon.getConfigurator().apply(new TalonFXConfiguration());
 
             Slot2Configs config = new Slot2Configs();

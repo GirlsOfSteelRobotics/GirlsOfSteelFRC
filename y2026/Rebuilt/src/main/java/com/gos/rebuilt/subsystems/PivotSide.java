@@ -1,6 +1,7 @@
 package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledSingleJointedArmController;
@@ -13,19 +14,25 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+// import org.wpilib.math.system.DCMotor;
+// import org.wpilib.math.util.Units;
+// import org.wpilib.framework.RobotBase;
+// import org.wpilib.simulation.SingleJointedArmSim;
+// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+// import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class PivotSide {
 
     private static final double GEAR_RATIO = 3 * 3 * 4;
     public static final double STARTING_ANGLE = 100;
     public static final double DEPLOYED_ANGLE = -6;
+
+    // TODO(2027) REVLib removed SPARK conversion factors, so they are applied in software.
+    //  The SPARK closed loop gains now operate on native units (rotations) and need re-tuning.
+    private static final double RELATIVE_POSITION_CONVERSION_FACTOR = 360 / GEAR_RATIO; // degrees per motor rotation
+    private static final double RELATIVE_VELOCITY_CONVERSION_FACTOR = 360 / GEAR_RATIO / 60; // degrees per second per RPM
+    private static final double ABSOLUTE_POSITION_CONVERSION_FACTOR = 360; // degrees per rotation
 
     private final SparkFlex m_pivotMotor;
     private final AbsoluteEncoder m_absoluteEncoder;
@@ -40,12 +47,13 @@ public class PivotSide {
     private final GosDoubleProperty m_tuningPivotSpeed;
 
 
-    private SingleJointedArmSimWrapper m_pivotSimulator;
+    // TODO(2027) restore simulation once SnobotSim supports 2027
+    // private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public PivotSide(int id, boolean inverted, double offset, String name) {
 
 
-        m_pivotMotor = new SparkFlex(id, MotorType.kBrushless);
+        m_pivotMotor = new SparkFlex(CANPort.CAN_S0, id, MotorType.kBrushless);
         m_relativeEncoder = m_pivotMotor.getEncoder();
         m_tuningPivotSpeed = new GosDoubleProperty(false, "Pivot Speed", -0.05);
 
@@ -58,10 +66,7 @@ public class PivotSide {
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.smartCurrentLimit(60);
         pivotConfig.inverted(inverted);
-        pivotConfig.encoder.positionConversionFactor(360 / GEAR_RATIO);
-        pivotConfig.encoder.velocityConversionFactor(360 / GEAR_RATIO / 60);
         pivotConfig.absoluteEncoder.inverted(inverted);
-        pivotConfig.absoluteEncoder.positionConversionFactor(360);
         pivotConfig.absoluteEncoder.zeroCentered(true);
         pivotConfig.absoluteEncoder.zeroOffset(offset);
 
@@ -75,15 +80,17 @@ public class PivotSide {
             .addKg(0.1)
             // REV Position controller
             .addKp(.05)
+            .withPositionConversionFactor(RELATIVE_POSITION_CONVERSION_FACTOR)
             .build();
 
-        if (RobotBase.isSimulation()) {
-            DCMotor gearbox = DCMotor.getNeoVortex(1);
-            SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
-                0.381, Units.degreesToRadians(-5), Units.degreesToRadians(90), true, 0);
-            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
-                RevEncoderSimWrapper.create(m_pivotMotor), true);
-        }
+        // TODO(2027) restore simulation once SnobotSim supports 2027
+        // if (RobotBase.isSimulation()) {
+        //     DCMotor gearbox = DCMotor.getNeoVortex(1);
+        //     SingleJointedArmSim armSim = new SingleJointedArmSim(gearbox, GEAR_RATIO, .01,
+        //         0.381, Units.degreesToRadians(-5), Units.degreesToRadians(90), true, 0);
+        //     m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor, gearbox),
+        //         RevEncoderSimWrapper.create(m_pivotMotor), true);
+        // }
 
         m_pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -91,7 +98,7 @@ public class PivotSide {
 
         m_networkTableEntries.addDouble("Pivot Position", this::getPosition);
         m_networkTableEntries.addDouble("Pivot Velocity", this::getVelocity);
-        m_networkTableEntries.addDouble("Applied Output", m_pivotMotor::getAppliedOutput);
+        m_networkTableEntries.addDouble("Applied Output", () -> m_pivotMotor.getAppliedOutput().get());
         m_networkTableEntries.addDouble("Pivot goal", this::getGoalAngle);
         m_networkTableEntries.addDouble("Setpoint angle", m_armPidController::getPositionSetpoint);
         m_networkTableEntries.addDouble("Setpoint Velocity", m_armPidController::getVelocitySetpoint);
@@ -102,24 +109,24 @@ public class PivotSide {
 
 
     public double getPosition() {
-        return m_relativeEncoder.getPosition();
+        return m_relativeEncoder.getPosition().get() * RELATIVE_POSITION_CONVERSION_FACTOR;
     }
 
     public final void syncEncoders() {
-        m_relativeEncoder.setPosition(m_absoluteEncoder.getPosition());
+        m_relativeEncoder.setPosition(getAbsolutePosition() / RELATIVE_POSITION_CONVERSION_FACTOR);
     }
 
-    public double getAbsolutePosition() {
-        return m_absoluteEncoder.getPosition();
+    public final double getAbsolutePosition() {
+        return m_absoluteEncoder.getPosition().get() * ABSOLUTE_POSITION_CONVERSION_FACTOR;
     }
 
     public double getVelocity() {
-        return m_relativeEncoder.getVelocity();
+        return m_relativeEncoder.getVelocity().get() * RELATIVE_VELOCITY_CONVERSION_FACTOR;
     }
 
 
     public void setSpeed(double pow) {
-        m_pivotMotor.set(pow);
+        m_pivotMotor.setThrottle(pow);
     }
 
     public void stop() {
@@ -127,7 +134,7 @@ public class PivotSide {
     }
 
     public double getAngle() {
-        return m_relativeEncoder.getPosition();
+        return getPosition();
     }
 
     public void clearStickyFaults() {
@@ -140,7 +147,7 @@ public class PivotSide {
     }
 
     public final double getAbsoluteAngle() {
-        double angle = m_relativeEncoder.getPosition();
+        double angle = getPosition();
         if (angle < -300) {
             angle += 360;
         }
@@ -171,11 +178,11 @@ public class PivotSide {
 
 
     public void resetEncoderUp() {
-        m_relativeEncoder.setPosition(STARTING_ANGLE);
+        m_relativeEncoder.setPosition(STARTING_ANGLE / RELATIVE_POSITION_CONVERSION_FACTOR);
     }
 
     public void resetEncoderDown() {
-        m_relativeEncoder.setPosition(DEPLOYED_ANGLE);
+        m_relativeEncoder.setPosition(DEPLOYED_ANGLE / RELATIVE_POSITION_CONVERSION_FACTOR);
     }
 
     public void movePivotAtTuningSpeed() {
@@ -183,7 +190,8 @@ public class PivotSide {
     }
 
     public void simulationPeriodic() {
-        m_pivotSimulator.update();
+        // TODO(2027) restore simulation once SnobotSim supports 2027
+        // m_pivotSimulator.update();
     }
 
     public void periodic() {

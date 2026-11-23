@@ -1,10 +1,9 @@
 package com.gos.lib.alerts;
 
-import edu.wpi.first.hal.REVPHFaults;
-import edu.wpi.first.hal.REVPHStickyFaults;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
-import edu.wpi.first.wpilibj.PneumaticHub;
+import org.wpilib.hardware.hal.REVPHFaults;
+import org.wpilib.hardware.hal.REVPHStickyFaults;
+import org.wpilib.util.Alert;
+import org.wpilib.hardware.pneumatic.PneumaticHub;
 
 public class PneumaticHubAlerts {
     private static final String ALERT_NAME = "pneumatic hub";
@@ -16,8 +15,8 @@ public class PneumaticHubAlerts {
 
     public PneumaticHubAlerts(PneumaticHub pneumaticHub) {
         m_pneumaticHub = pneumaticHub;
-        m_alert = new Alert("pneumatic hub", AlertType.kError);
-        m_alertSticky = new Alert("pneumatic hub (sticky) ", AlertType.kWarning);
+        m_alert = AlertFactory.create("pneumatic hub", Alert.Level.HIGH);
+        m_alertSticky = AlertFactory.create("pneumatic hub (sticky) ", Alert.Level.MEDIUM);
     }
 
     public void checkAlerts() {
@@ -32,73 +31,73 @@ public class PneumaticHubAlerts {
         alertMessageBuilder.append(ALERT_NAME);
 
         REVPHFaults faults = m_pneumaticHub.getFaults();
-        if (faults.Channel0Fault) {
+        if (faults.channel0Fault) {
             alertMessageBuilder.append("\nchannel 0 error");
         }
-        if (faults.Channel1Fault) {
+        if (faults.channel1Fault) {
             alertMessageBuilder.append("\nchannel 1 error");
         }
-        if (faults.Channel2Fault) {
+        if (faults.channel2Fault) {
             alertMessageBuilder.append("\nchannel 2 error");
         }
-        if (faults.Channel3Fault) {
+        if (faults.channel3Fault) {
             alertMessageBuilder.append("\nchannel 3 error");
         }
-        if (faults.Channel4Fault) {
+        if (faults.channel4Fault) {
             alertMessageBuilder.append("\nchannel 4 error");
         }
-        if (faults.Channel5Fault) {
+        if (faults.channel5Fault) {
             alertMessageBuilder.append("\nchannel 5 error");
         }
-        if (faults.Channel6Fault) {
+        if (faults.channel6Fault) {
             alertMessageBuilder.append("\nchannel 6 error");
         }
-        if (faults.Channel7Fault) {
+        if (faults.channel7Fault) {
             alertMessageBuilder.append("\nchannel 7 error");
         }
-        if (faults.Channel8Fault) {
+        if (faults.channel8Fault) {
             alertMessageBuilder.append("\nchannel 8 error");
         }
-        if (faults.Channel9Fault) {
+        if (faults.channel9Fault) {
             alertMessageBuilder.append("\nchannel 9 error");
         }
-        if (faults.Channel10Fault) {
+        if (faults.channel10Fault) {
             alertMessageBuilder.append("\nchannel 10 error");
         }
-        if (faults.Channel11Fault) {
+        if (faults.channel11Fault) {
             alertMessageBuilder.append("\nchannel 11 error");
         }
-        if (faults.Channel12Fault) {
+        if (faults.channel12Fault) {
             alertMessageBuilder.append("\nchannel 12 error");
         }
-        if (faults.Channel13Fault) {
+        if (faults.channel13Fault) {
             alertMessageBuilder.append("\nchannel 13 error");
         }
-        if (faults.Channel14Fault) {
+        if (faults.channel14Fault) {
             alertMessageBuilder.append("\nchannel 14 error");
         }
-        if (faults.Channel15Fault) {
+        if (faults.channel15Fault) {
             alertMessageBuilder.append("\nchannel 15 error");
         }
-        if (faults.Channel6Fault) {
+        if (faults.channel6Fault) {
             alertMessageBuilder.append("\nchannel 16 error");
         }
-        if (faults.Brownout) {
+        if (faults.brownout) {
             alertMessageBuilder.append("\nbrownout");
         }
-        if (faults.CompressorOverCurrent) {
+        if (faults.compressorOverCurrent) {
             alertMessageBuilder.append("\ncompressor over current");
         }
-        if (faults.CanWarning) {
+        if (faults.canWarning) {
             alertMessageBuilder.append("\ncan warning");
         }
-        if (faults.SolenoidOverCurrent) {
+        if (faults.solenoidOverCurrent) {
             alertMessageBuilder.append("\nsolenoid over current");
         }
-        if (faults.CompressorOpen) {
+        if (faults.compressorOpen) {
             alertMessageBuilder.append("\ncompressor open");
         }
-        if (faults.HardwareFault) {
+        if (faults.hardwareFault) {
             alertMessageBuilder.append("\nhardware fault");
         }
 
@@ -114,25 +113,25 @@ public class PneumaticHubAlerts {
 
         REVPHStickyFaults revphStickyFaults = m_pneumaticHub.getStickyFaults();
 
-        if (revphStickyFaults.CompressorOverCurrent) {
+        if (revphStickyFaults.compressorOverCurrent) {
             alertMessageBuilder.append("\nCompressor Over Current fault");
         }
-        if (revphStickyFaults.CompressorOpen) {
+        if (revphStickyFaults.compressorOpen) {
             alertMessageBuilder.append("\nCompressor open fault");
         }
-        if (revphStickyFaults.SolenoidOverCurrent) {
+        if (revphStickyFaults.solenoidOverCurrent) {
             alertMessageBuilder.append("\nSolenoid Over Current fault");
         }
-        if (revphStickyFaults.Brownout) {
+        if (revphStickyFaults.brownout) {
             alertMessageBuilder.append("\nBrownout fault");
         }
-        if (revphStickyFaults.CanWarning) {
+        if (revphStickyFaults.canWarning) {
             alertMessageBuilder.append("\nCan Warning fault");
         }
-        if (revphStickyFaults.CanBusOff) {
+        if (revphStickyFaults.canBusOff) {
             alertMessageBuilder.append("\nCan Bus Off fault");
         }
-        // if (revphStickyFaults.HasReset) {
+        // if (revphStickyFaults.hasReset) {
         //     alertMessageBuilder.append("\nHas reset fault");
         // }
 

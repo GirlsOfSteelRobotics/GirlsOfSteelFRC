@@ -1,8 +1,8 @@
 package com.gos.lib.phoenix6.alerts;
 
 import com.ctre.phoenix6.StatusSignal;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
+import com.gos.lib.alerts.AlertFactory;
+import org.wpilib.util.Alert;
 
 import java.util.List;
 
@@ -34,8 +34,8 @@ public class BasePhoenix6Alerts {
         m_faultAlertName = faultName;
         m_stickyFaultAlertName = stickyFaultName;
 
-        m_faultAlert = new Alert(faultName, AlertType.kError);
-        m_stickyFaultAlert = new Alert(stickyFaultName, AlertType.kWarning);
+        m_faultAlert = AlertFactory.create(faultName, Alert.Level.HIGH);
+        m_stickyFaultAlert = AlertFactory.create(stickyFaultName, Alert.Level.MEDIUM);
 
         m_faultSignals = faultSignals;
         m_stickyFaultSignals = stickyFaultSignals;

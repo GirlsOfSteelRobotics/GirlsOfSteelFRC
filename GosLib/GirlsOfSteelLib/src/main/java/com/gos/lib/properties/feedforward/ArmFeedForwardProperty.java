@@ -1,6 +1,6 @@
 package com.gos.lib.properties.feedforward;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
+import org.wpilib.math.controller.ArmFeedforward;
 
 public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
 
@@ -55,7 +55,10 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
     @SuppressWarnings("removal")
     @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double positionRadians, double velocityRadPerSec, double accelRadPerSecSquared) {
-        return m_feedForward.calculate(positionRadians, velocityRadPerSec, accelRadPerSecSquared);
+        // 2027: WPILib's two/three argument calculate() now takes (current, next) velocities, so the old
+        // continuous (velocity, acceleration) formula is computed directly from the gains.
+        return m_feedForward.getKs() * Math.signum(velocityRadPerSec) + m_feedForward.getKg() * Math.cos(positionRadians)
+            + m_feedForward.getKv() * velocityRadPerSec + m_feedForward.getKa() * accelRadPerSecSquared;
     }
 
     /**
@@ -63,7 +66,7 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
      */
     public double calculateWithVelocities(
         double currentAngle, double currentVelocity, double nextVelocity) {
-        return m_feedForward.calculateWithVelocities(currentAngle, currentVelocity, nextVelocity);
+        return m_feedForward.calculate(currentAngle, currentVelocity, nextVelocity);
     }
 
     /**

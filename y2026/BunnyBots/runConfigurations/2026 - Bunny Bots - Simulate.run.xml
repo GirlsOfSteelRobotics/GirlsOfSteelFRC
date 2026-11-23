@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="y2026:BunnyBots:simulateJava" />
+          <option value="y2026:BunnyBots:run" />
         </list>
       </option>
       <option name="vmOptions" />

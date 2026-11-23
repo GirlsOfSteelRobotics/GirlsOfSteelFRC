@@ -1,16 +1,22 @@
 package com.gos.lib.properties.pid;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import org.wpilib.math.controller.ProfiledPIDController;
+import org.wpilib.math.trajectory.TrapezoidProfile;
 
 public final class WpiProfiledPidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
+    /**
+     * WPILib 2027 requires trapezoid profile constraints to be strictly positive. This is used as the
+     * placeholder for an "unset" constraint, and as the lower bound for tuned values.
+     */
+    public static final double MIN_CONSTRAINT = Double.MIN_VALUE;
+
     private final ProfiledPIDController m_pidController;
     private TrapezoidProfile.Constraints m_constraints;
 
     public WpiProfiledPidPropertyBuilder(String baseName, boolean isConstant, ProfiledPIDController motor) {
         super(baseName, isConstant);
         m_pidController = motor;
-        m_constraints = new TrapezoidProfile.Constraints(0, 0);
+        m_constraints = new TrapezoidProfile.Constraints(MIN_CONSTRAINT, MIN_CONSTRAINT);
     }
 
     @Override
@@ -39,7 +45,7 @@ public final class WpiProfiledPidPropertyBuilder extends PidProperty.Builder imp
     @Override
     public IPidPropertyBuilder addMaxVelocity(double defaultValue) {
         addMaxVelocity(defaultValue, (double val) -> {
-            m_constraints = new TrapezoidProfile.Constraints(val, m_constraints.maxAcceleration);
+            m_constraints = new TrapezoidProfile.Constraints(Math.max(val, MIN_CONSTRAINT), m_constraints.maxAcceleration);
             m_pidController.setConstraints(m_constraints);
         });
         return this;
@@ -48,7 +54,7 @@ public final class WpiProfiledPidPropertyBuilder extends PidProperty.Builder imp
     @Override
     public IPidPropertyBuilder addMaxAcceleration(double defaultValue) {
         addMaxAcceleration(defaultValue, (double val) -> {
-            m_constraints = new TrapezoidProfile.Constraints(m_constraints.maxVelocity, val);
+            m_constraints = new TrapezoidProfile.Constraints(m_constraints.maxVelocity, Math.max(val, MIN_CONSTRAINT));
             m_pidController.setConstraints(m_constraints);
         });
         return this;

@@ -1,17 +1,17 @@
 package com.gos.rebuilt.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.command2.Command;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 
 
 public class PivotJoyCommand extends Command {
     private static final GosDoubleProperty DAMPER = new GosDoubleProperty(false, "PivotJoystickDamper", 0.2);
     private final PivotSubsystem m_pivotSubsystem;
-    private final CommandXboxController m_joystick;
+    private final CommandNiDsXboxController m_joystick;
 
-    public PivotJoyCommand(PivotSubsystem pivotSubsystem, CommandXboxController joystick) {
+    public PivotJoyCommand(PivotSubsystem pivotSubsystem, CommandNiDsXboxController joystick) {
         this.m_pivotSubsystem = pivotSubsystem;
         m_joystick = joystick;
         // each subsystem used by the command must be passed into the

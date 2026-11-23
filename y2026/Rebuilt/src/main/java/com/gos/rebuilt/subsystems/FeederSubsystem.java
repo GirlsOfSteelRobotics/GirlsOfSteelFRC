@@ -2,6 +2,7 @@ package com.gos.rebuilt.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
@@ -11,30 +12,33 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkLowLevel.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.system.LinearSystem;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
-import org.snobotv2.sim_wrappers.ISimWrapper;
+// import org.wpilib.math.numbers.N1;
+// import org.wpilib.math.system.LinearSystem;
+// import org.wpilib.math.system.DCMotor;
+// import org.wpilib.math.system.Models;
+// import org.wpilib.framework.RobotBase;
+import com.gos.lib.tunables.CommandTab;
+// import org.wpilib.simulation.FlywheelSim;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.SubsystemBase;
+// import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+// import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+// import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+// import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class FeederSubsystem extends SubsystemBase {
 
     private final SparkFlex m_feederMotor;
+    // TODO(2027) REVLib removed SPARK conversion factors, so they are applied in software.
+    //  The SPARK closed loop gains now operate on native units (rotations / RPM) and need re-tuning.
+    private static final double VELOCITY_CONVERSION_FACTOR = 12;
+
     private final RelativeEncoder m_feederEncoder;
     private final GosDoubleProperty m_feederSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FeederSpeed", 0.8);
     private final SparkMaxAlerts m_feederMotorAlerts;
@@ -43,7 +47,8 @@ public class FeederSubsystem extends SubsystemBase {
     private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperties;
     private final LoggingUtil m_networkTableEntries;
-    private ISimWrapper m_feederSimulator;
+    // TODO(2027) restore simulation once SnobotSim supports 2027
+    // private ISimWrapper m_feederSimulator;
     private final GosDoubleProperty m_tuneRpm = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "FEEDAtuneRPM", 1);
 
 
@@ -51,7 +56,7 @@ public class FeederSubsystem extends SubsystemBase {
 
         m_networkTableEntries = new LoggingUtil("Feeder Subsystem");
 
-        m_feederMotor = new SparkFlex(Constants.FEEDER_MOTOR, MotorType.kBrushless);
+        m_feederMotor = new SparkFlex(CANPort.CAN_S0, Constants.FEEDER_MOTOR, MotorType.kBrushless);
 
         m_feederMotorAlerts = new SparkMaxAlerts(m_feederMotor, "feedrMotor");
 
@@ -60,8 +65,6 @@ public class FeederSubsystem extends SubsystemBase {
         feederConfig.smartCurrentLimit(60);
         feederConfig.inverted(false);
 
-        feederConfig.encoder.positionConversionFactor(12);
-        feederConfig.encoder.velocityConversionFactor(12);
 
 
         m_feederMotor.configure(feederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -75,19 +78,20 @@ public class FeederSubsystem extends SubsystemBase {
             .build();
 
 
-        if (RobotBase.isSimulation()) {
-            DCMotor gearbox = DCMotor.getNeo550(2);
-            LinearSystem<N1, N1, N1> plant =
-                LinearSystemId.createFlywheelSystem(gearbox, 0.01, 1.0);
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
-            this.m_feederSimulator = new FlywheelSimWrapper(
-                shooterFlywheelSim,
-                new RevMotorControllerSimWrapper(this.m_feederMotor, gearbox),
-                RevEncoderSimWrapper.create(this.m_feederMotor));
-        }
+        // TODO(2027) restore simulation once SnobotSim supports 2027
+        // if (RobotBase.isSimulation()) {
+        //     DCMotor gearbox = DCMotor.getNeo550(2);
+        //     LinearSystem<N1, N1, N1> plant =
+        //         Models.flywheelFromPhysicalConstants(gearbox, 0.01, 1.0);
+        //     FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
+        //     this.m_feederSimulator = new FlywheelSimWrapper(
+        //         shooterFlywheelSim,
+        //         new RevMotorControllerSimWrapper(this.m_feederMotor, gearbox),
+        //         RevEncoderSimWrapper.create(this.m_feederMotor));
+        // }
 
 
-        m_networkTableEntries.addDouble("Current", m_feederMotor::getOutputCurrent);
+        m_networkTableEntries.addDouble("Current", () -> m_feederMotor.getOutputCurrent().get());
 
         m_networkTableEntries.addDouble("Feeder rpm", this::getRPM);
 
@@ -106,11 +110,11 @@ public class FeederSubsystem extends SubsystemBase {
     }
 
     public void feed() {
-        m_feederMotor.set(m_feederSpeed.getValue());
+        m_feederMotor.setThrottle(m_feederSpeed.getValue());
     }
 
     public void reverse() {
-        m_feederMotor.set(-m_feederSpeed.getValue());
+        m_feederMotor.setThrottle(-m_feederSpeed.getValue());
     }
 
     public void stop() {
@@ -125,12 +129,12 @@ public class FeederSubsystem extends SubsystemBase {
 
     public void setRPM(double goal) {
         m_goal = goal;
-        m_pidController.setSetpoint(goal, ControlType.kVelocity);
+        m_pidController.setSetpoint(goal / VELOCITY_CONVERSION_FACTOR, ControlType.kVelocity);
 
     }
 
     public double getRPM() {
-        return m_feederEncoder.getVelocity();
+        return m_feederEncoder.getVelocity().get() * VELOCITY_CONVERSION_FACTOR;
     }
 
     @Override
@@ -142,7 +146,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     public void addFeederDebugCommands(boolean areweatacompetitionyesornoboolean) {
 
-        ShuffleboardTab tab = Shuffleboard.getTab("Feeder");
+        CommandTab tab = new CommandTab("Feeder");
         if (!areweatacompetitionyesornoboolean) {
             tab.add(createFeederSpin(1000));
             tab.add(createFeederSpin(500));
@@ -155,7 +159,8 @@ public class FeederSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        m_feederSimulator.update();
+        // TODO(2027) restore simulation once SnobotSim supports 2027
+        // m_feederSimulator.update();
     }
 
     public Command createFeederCommand() {

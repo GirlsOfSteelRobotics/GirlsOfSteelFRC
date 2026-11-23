@@ -1,6 +1,7 @@
 package com.gos.lib;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import org.wpilib.driverstation.MatchState;
+import org.wpilib.driverstation.Alliance;
 
 import java.util.Optional;
 
@@ -14,8 +15,8 @@ public class GetAllianceUtil {
      * @return True if on blue
      */
     public static boolean isBlueAlliance() {
-        Optional<DriverStation.Alliance> maybeAlliance = DriverStation.getAlliance();
-        return maybeAlliance.isPresent() && maybeAlliance.get() == DriverStation.Alliance.Blue;
+        Optional<Alliance> maybeAlliance = MatchState.getAlliance();
+        return maybeAlliance.isPresent() && maybeAlliance.get() == Alliance.BLUE;
     }
 
     /**
@@ -23,7 +24,7 @@ public class GetAllianceUtil {
      * @return True if on red
      */
     public static boolean isRedAlliance() {
-        Optional<DriverStation.Alliance> maybeAlliance = DriverStation.getAlliance();
-        return maybeAlliance.isPresent() && maybeAlliance.get() == DriverStation.Alliance.Red;
+        Optional<Alliance> maybeAlliance = MatchState.getAlliance();
+        return maybeAlliance.isPresent() && maybeAlliance.get() == Alliance.RED;
     }
 }

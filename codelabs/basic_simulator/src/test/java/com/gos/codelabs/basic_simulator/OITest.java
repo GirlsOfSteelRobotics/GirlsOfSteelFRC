@@ -3,8 +3,8 @@ package com.gos.codelabs.basic_simulator;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import org.wpilib.driverstation.NiDsXboxController;
+import org.wpilib.simulation.DriverStationSim;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,13 +23,13 @@ public class OITest extends BaseTestFixture {
 
             // Press the button, check that it extends
             runCycles(2, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kA.value, true);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.A.value, true);
             });
             assertTrue(punch.isExtended());
 
             // Release the button and make sure it goes back
             runCycles(2, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kA.value, false);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.A.value, false);
             });
             assertFalse(punch.isExtended());
         }
@@ -46,7 +46,7 @@ public class OITest extends BaseTestFixture {
 
             // Press the button, check that it goes to the mid height
             runCycles(loopsToRun, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kY.value, true);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.Y.value, true);
             });
             assertEquals(ElevatorSubsystem.Positions.MID.m_heightMeters, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 3);
             resetJoysticks();
@@ -63,7 +63,7 @@ public class OITest extends BaseTestFixture {
 
             // Press the button, check that it goes to the low height
             runCycles(loopsToRun, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kB.value, true);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.B.value, true);
             });
             assertEquals(ElevatorSubsystem.Positions.LOW.m_heightMeters, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 2);
             resetJoysticks();
@@ -80,7 +80,7 @@ public class OITest extends BaseTestFixture {
 
             // Press the button, check that it goes to the high height
             runCycles(loopsToRun, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kX.value, true);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.X.value, true);
             });
             assertEquals(ElevatorSubsystem.Positions.HIGH.m_heightMeters, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 3);
         }
@@ -93,13 +93,13 @@ public class OITest extends BaseTestFixture {
 
             // Hold the button, check that the wheel gets up to speed
             runCycles(100, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kRightBumper.value, true);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.RIGHT_BUMPER.value, true);
             });
             assertEquals(ShooterSubsystem.SHOOTING_RPM, shooter.getRpm(), ShooterSubsystem.ALLOWABLE_RPM_ERROR);
 
             // Release the button and make sure the wheel slows down
             runCycles(50, () -> {
-                DriverStationSim.setJoystickButton(1, XboxController.Button.kRightBumper.value, false);
+                DriverStationSim.setJoystickButton(1, NiDsXboxController.Button.RIGHT_BUMPER.value, false);
             });
             assertTrue(shooter.getRpm() < ShooterSubsystem.SHOOTING_RPM / 2);
         }

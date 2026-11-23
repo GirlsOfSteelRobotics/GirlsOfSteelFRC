@@ -9,17 +9,17 @@ import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.FeederSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.math.util.MathUtil;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 public class FireOnTheRunCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Fire On The Run Throttling", 0.35);
 
     private final ChassisSubsystem m_chassis;
-    private final CommandXboxController m_joystick;
+    private final CommandNiDsXboxController m_joystick;
     private final ShooterSubsystem m_shooter;
     private final PizzaSubsystem m_pizza;
     private final FeederSubsystem m_feeder;
@@ -27,7 +27,7 @@ public class FireOnTheRunCommand extends Command {
     public static final MaybeFlippedTranslation3d LEFT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getBlue().getX() - 5, Hub.innerCenterPoint.getBlue().getY() + 2, 1);
     public static final MaybeFlippedTranslation3d RIGHT_AIMING_TARGET = new MaybeFlippedTranslation3d(Hub.innerCenterPoint.getBlue().getX() - 5, Hub.innerCenterPoint.getBlue().getY() - 2, 1);
 
-    public FireOnTheRunCommand(CommandXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
+    public FireOnTheRunCommand(CommandNiDsXboxController joystick, ChassisSubsystem chassis, FeederSubsystem feeder, PizzaSubsystem pizza, ShooterSubsystem shooter) {
         m_joystick = joystick;
         m_chassis = chassis;
         m_pizza = pizza;
@@ -45,9 +45,9 @@ public class FireOnTheRunCommand extends Command {
     @Override
     public void execute() {
         MaybeFlippedTranslation3d goal;
-        if (m_chassis.getRegion().equals(Regions.ALLIANCE)) {
+        if (m_chassis.getRegion() == Regions.ALLIANCE) {
             goal = new MaybeFlippedTranslation3d(Hub.topCenterPoint);
-        } else if (m_chassis.getRegion().equals(Regions.LEFT)) {
+        } else if (m_chassis.getRegion() == Regions.LEFT) {
             goal = LEFT_AIMING_TARGET;
         } else {
             goal = RIGHT_AIMING_TARGET;
@@ -58,7 +58,7 @@ public class FireOnTheRunCommand extends Command {
             MathUtil.applyDeadband(-m_joystick.getLeftX() * TRANSLATION_DAMPER.getValue(), .05),
             m_chassis.getShooterFaceAngle(imaginaryPoint.toTranslation2d())
         );
-        if (m_chassis.getRegion().equals(Regions.ALLIANCE)) {
+        if (m_chassis.getRegion() == Regions.ALLIANCE) {
             m_shooter.shootFromDistance(m_chassis.getDistanceToObject(imaginaryPoint.toTranslation2d()));
         }
         else {

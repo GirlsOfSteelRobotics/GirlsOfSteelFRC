@@ -4,18 +4,13 @@
   "name": "GirlsOfSteelLib",
   "version": "$VERSION",
   "uuid": "$GUID",
-  "frcYear": "2024",
+  "wpilibYear": "2027_alpha7",
   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/GirlsOfSteelLib.json",
   "javaDependencies": [
     {
       "groupId": "com.gos.lib",
       "artifactId": "GirlsOfSteelLib",
-      "version": "$VERSION"
-    },
-    {
-      "groupId": "com.gos.lib.ctre",
-      "artifactId": "GirlsOfSteelLibPhoenix5",
       "version": "$VERSION"
     },
     {

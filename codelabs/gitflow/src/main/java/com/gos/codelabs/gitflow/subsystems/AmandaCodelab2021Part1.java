@@ -1,7 +1,7 @@
 package com.gos.codelabs.gitflow.subsystems;
 
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.command2.SubsystemBase;
 
 public class AmandaCodelab2021Part1 extends SubsystemBase {
     public AmandaCodelab2021Part1() {

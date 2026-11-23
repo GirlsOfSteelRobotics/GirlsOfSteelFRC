@@ -4,19 +4,18 @@
 
 package frc.robot;
 
-import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
-import edu.wpi.first.wpilibj2.command.Commands;
+import org.wpilib.hardware.hal.AllianceStationID;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.simulation.DriverStationSim;
+import org.wpilib.command2.Commands;
 import frc.robot.commands.JoystickFieldRelativeDriveCommand;
 import frc.robot.commands.MoveElevatorWithJoystickCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
+import org.wpilib.command2.button.Trigger;
 import frc.robot.subsystems.OuttakeSubsystem;
 import frc.robot.subsystems.SuperStructureViz;
 
@@ -36,10 +35,10 @@ public class RobotContainer {
 
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController m_driverController =
-        new CommandXboxController(Constants.DRIVER_CONTROLLER_PORT);
-    private final CommandXboxController m_joystickController =
-        new CommandXboxController(Constants.JOYSTICK_CONTROLLER_PORT);
+    private final CommandNiDsXboxController m_driverController =
+        new CommandNiDsXboxController(Constants.DRIVER_CONTROLLER_PORT);
+    private final CommandNiDsXboxController m_joystickController =
+        new CommandNiDsXboxController(Constants.JOYSTICK_CONTROLLER_PORT);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -57,10 +56,9 @@ public class RobotContainer {
 
         configureBindings();
         if (RobotBase.isSimulation()) {
-            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
+            DriverStationSim.setAllianceStationId(AllianceStationID.BLUE_1);
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
-            DriverStation.silenceJoystickConnectionWarning(true);
 
         }
     }
@@ -69,9 +67,9 @@ public class RobotContainer {
      * Use this method to define your trigger->command mappings. Triggers can be created via the
      * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
      * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * org.wpilib.command2.button.CommandGenericHID}'s subclasses for {@link
+     * CommandNiDsXboxController Xbox}/{@link org.wpilib.command2.button.CommandNiDsPS4Controller
+     * PS4} controllers or {@link org.wpilib.command2.button.CommandJoystick Flight
      * joysticks}.
      */
     private void configureBindings() {

@@ -1,17 +1,17 @@
 package com.gos.lib.joysticks;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.driverstation.GenericHID;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 
 import java.util.function.BooleanSupplier;
 
 
 public class VibrateControllerWhileTrueCommand extends Command {
-    private final CommandXboxController m_driverController;
+    private final CommandNiDsXboxController m_driverController;
     private final BooleanSupplier m_isReady;
 
-    public VibrateControllerWhileTrueCommand(CommandXboxController controller, BooleanSupplier isReadySupplier) {
+    public VibrateControllerWhileTrueCommand(CommandNiDsXboxController controller, BooleanSupplier isReadySupplier) {
         m_driverController = controller;
         m_isReady = isReadySupplier;
     }
@@ -24,9 +24,11 @@ public class VibrateControllerWhileTrueCommand extends Command {
     @Override
     public void execute() {
         if (m_isReady.getAsBoolean()) {
-            m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+            m_driverController.getHID().setRumble(GenericHID.RumbleType.LEFT_RUMBLE, 1);
+            m_driverController.getHID().setRumble(GenericHID.RumbleType.RIGHT_RUMBLE, 1);
         } else {
-            m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+            m_driverController.getHID().setRumble(GenericHID.RumbleType.LEFT_RUMBLE, 0);
+            m_driverController.getHID().setRumble(GenericHID.RumbleType.RIGHT_RUMBLE, 0);
         }
     }
 
@@ -37,6 +39,7 @@ public class VibrateControllerWhileTrueCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+        m_driverController.getHID().setRumble(GenericHID.RumbleType.LEFT_RUMBLE, 0);
+        m_driverController.getHID().setRumble(GenericHID.RumbleType.RIGHT_RUMBLE, 0);
     }
 }

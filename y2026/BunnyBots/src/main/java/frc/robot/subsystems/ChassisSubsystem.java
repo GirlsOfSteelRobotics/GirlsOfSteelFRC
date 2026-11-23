@@ -3,9 +3,9 @@ package frc.robot.subsystems;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
@@ -24,21 +24,18 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import org.wpilib.driverstation.DriverStationErrors;
+import org.wpilib.driverstation.RobotState;
+import org.wpilib.driverstation.MatchState;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.driverstation.Alliance;
+import org.wpilib.system.Notifier;
+import org.wpilib.system.RobotController;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.Subsystem;
 import frc.robot.Constants;
 import frc.robot.GosField;
 import frc.robot.enums.StartingPositions;
@@ -47,9 +44,9 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import org.json.simple.parser.ParseException;
 
 
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.RadiansPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static org.wpilib.units.Units.MetersPerSecond;
+import static org.wpilib.units.Units.RadiansPerSecond;
+import static org.wpilib.units.Units.RotationsPerSecond;
 
 
 /**
@@ -68,13 +65,13 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private double m_lastSimTime;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
-    private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
+    private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.ZERO;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
-    private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
+    private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.PI;
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective;
 
-    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
+    private final SwerveRequest.ApplyRobotVelocity m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotVelocity();
 
     private final SwerveRequest.FieldCentric m_fieldCentricDriveRequest = new SwerveRequest.FieldCentric()
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1) // Add a 10% deadband
@@ -84,7 +81,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         .withDeadband(MAX_TRANSLATION_SPEED * 0.1).withRotationalDeadband(MAX_ROTATION_RATE * 0.1)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
-    private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID);
+    private final CANrange m_canRange = new CANrange(Constants.CAN_RANGE_ID, new CANBus());
     private final GosDoubleProperty m_distanceToWall = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Distance to Wall", 2);
     private final TunablePathConstraints m_pathConstraints = new TunablePathConstraints(Constants.DEFAULT_CONSTANT_PROPERTIES, "Path Constraints", 60, 60, 180, 180);
 
@@ -113,7 +110,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         PathPlannerLogging.setLogActivePathCallback(m_gosField::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_gosField::setTrajectorySetpoint);
 
-        SmartDashboard.putData(m_gosField.getField2d());
     }
 
     @SuppressWarnings("PMD")
@@ -123,10 +119,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             AutoBuilder.configure(
                 () -> getState().Pose,   // Supplier of current robot pose
                 this::resetPose,         // Consumer for seeding pose against auto
-                () -> getState().Speeds, // Supplier of current robot speeds
-                // Consumer of ChassisSpeeds and feedforwards to drive the robot
+                () -> getState().Velocity, // Supplier of current robot speeds
+                // Consumer of ChassisVelocities and feedforwards to drive the robot
                 (speeds, feedforwards) -> setControl(
-                    m_pathApplyRobotSpeeds.withSpeeds(ChassisSpeeds.discretize(speeds, 0.020))
+                    m_pathApplyRobotSpeeds.withVelocity(speeds.discretize(0.020))
                         .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
                         .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())
                 ),
@@ -138,11 +134,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 ),
                 config,
                 // Assume the path needs to be flipped for Red vs Blue, this is normally the case
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                () -> MatchState.getAlliance().orElse(Alliance.BLUE) == Alliance.RED,
                 this // Subsystem for requirements
             );
         } catch (Exception ex) {
-            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
+            DriverStationErrors.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
         }
     }
 
@@ -202,6 +198,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     @Override
     public void periodic() {
+        Telemetry.log("Field", m_gosField.getField2d());
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
@@ -209,10 +206,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-            DriverStation.getAlliance().ifPresent(allianceColor -> {
-                setOperatorPerspectiveForward(
-                    allianceColor == Alliance.Red
+        if (!m_hasAppliedOperatorPerspective || RobotState.isDisabled()) {
+            MatchState.getAlliance().ifPresent(allianceColor -> {
+                setOperatorForwardDirection(
+                    allianceColor == Alliance.RED
                         ? RED_ALLIANCE_PERSPECTIVE_ROTATION
                         : BLUE_ALLIANCE_PERSPECTIVE_ROTATION
                 );
@@ -237,53 +234,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
     }
 
-    /**
-     * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
-     * while still accounting for measurement noise.
-     *
-     * @param visionRobotPoseMeters The pose of the robot as measured by the vision camera.
-     * @param timestampSeconds      The timestamp of the vision measurement in seconds.
-     */
-    @Override
-    public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds) {
-        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds));
-    }
-
-    /**
-     * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
-     * while still accounting for measurement noise.
-     * <p>
-     * Note that the vision measurement standard deviations passed into this method
-     * will continue to apply to future measurements until a subsequent call to
-     * {@link #setVisionMeasurementStdDevs(Matrix)} or this method.
-     *
-     * @param visionRobotPoseMeters    The pose of the robot as measured by the vision camera.
-     * @param timestampSeconds         The timestamp of the vision measurement in seconds.
-     * @param visionMeasurementStdDevs Standard deviations of the vision pose measurement
-     *                                 in the form [x, y, theta]ᵀ, with units in meters and radians.
-     */
-    @Override
-    public void addVisionMeasurement(
-        Pose2d visionRobotPoseMeters,
-        double timestampSeconds,
-        Matrix<N3, N1> visionMeasurementStdDevs
-    ) {
-        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
-    }
-
-    /**
-     * Return the pose at a given timestamp, if the buffer is not empty.
-     *
-     * @param timestampSeconds The timestamp of the pose in seconds.
-     * @return The pose at the given timestamp (or Optional.empty() if the buffer is empty).
-     */
-    @Override
-    public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
-        return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
-    }
-
     public void addChassisDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        CommandTab tab = new CommandTab("Chassis");
         try {
             PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("KitchenToCenterLine");
             Command resetPose = runOnce(() -> resetPose(path.getStartingHolonomicPose().orElse(new Pose2d())));

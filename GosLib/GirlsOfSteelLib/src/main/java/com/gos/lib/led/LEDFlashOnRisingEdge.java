@@ -1,7 +1,7 @@
 package com.gos.lib.led;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.util.Color;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
+import org.wpilib.util.Color;
 
 public class LEDFlashOnRisingEdge {
     private final LEDFlash m_hasPiecePattern;
