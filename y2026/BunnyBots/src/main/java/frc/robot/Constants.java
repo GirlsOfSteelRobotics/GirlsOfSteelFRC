@@ -19,7 +19,6 @@ public final class Constants {
 
     // Joysticks
     public static final int DRIVER_CONTROLLER_PORT = 0;
-
     public static final int JOYSTICK_CONTROLLER_PORT = 1;
 
     // CAN
@@ -28,8 +27,8 @@ public final class Constants {
     public static final int ELEVATOR_MOTOR_ID = 14;
     public static final int CAN_RANGE_ID = 2;
 
-    //DigitalInput
-    public static final int BEAM_BREAK1 = 67;
-    public static final int BEAM_BREAK2 = 67;
-    public static final int BEAM_BREAK3 = 67;
+    // SmartIO
+    public static final int BEAM_BREAK1 = 0;
+    public static final int BEAM_BREAK2 = 1;
+    public static final int BEAM_BREAK3 = 2;
 }
