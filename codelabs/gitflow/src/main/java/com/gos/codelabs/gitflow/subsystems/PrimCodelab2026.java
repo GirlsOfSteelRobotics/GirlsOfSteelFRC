@@ -1,6 +1,6 @@
 package com.gos.codelabs.gitflow.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.command2.SubsystemBase;
 
 public class PrimCodelab2026 extends SubsystemBase {
 

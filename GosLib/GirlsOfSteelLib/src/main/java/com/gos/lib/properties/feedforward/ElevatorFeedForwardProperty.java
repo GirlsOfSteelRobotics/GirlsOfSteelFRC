@@ -1,6 +1,6 @@
 package com.gos.lib.properties.feedforward;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
+import org.wpilib.math.controller.ElevatorFeedforward;
 
 /**
  * Wrapper around {@link ElevatorFeedforward} to leverage tunable properties from the network tables
@@ -53,7 +53,9 @@ public class ElevatorFeedForwardProperty extends BaseFeedForwardProperty {
     @SuppressWarnings("removal")
     @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double velocity, double acceleration) {
-        return m_feedForward.calculate(velocity, acceleration);
+        // 2027: WPILib's two/three argument calculate() now takes (current, next) velocities, so the old
+        // continuous (velocity, acceleration) formula is computed directly from the gains.
+        return m_feedForward.getKg() + m_feedForward.getKs() * Math.signum(velocity) + m_feedForward.getKv() * velocity + m_feedForward.getKa() * acceleration;
     }
 
     /**
@@ -78,7 +80,7 @@ public class ElevatorFeedForwardProperty extends BaseFeedForwardProperty {
      * @return The computed feedforward in volts.
      */
     public double calculateWithVelocities(double currentVelocity, double nextVelocity) {
-        return m_feedForward.calculateWithVelocities(currentVelocity, nextVelocity);
+        return m_feedForward.calculate(currentVelocity, nextVelocity);
     }
 
     /**

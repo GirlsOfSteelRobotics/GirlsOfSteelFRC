@@ -3,8 +3,8 @@ package com.gos.codelabs.basic_simulator.commands;
 import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import com.gos.codelabs.basic_simulator.RobotContainer;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import org.wpilib.driverstation.NiDsXboxController;
+import org.wpilib.simulation.DriverStationSim;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +16,7 @@ public class ElevatorWithJoystickCommandTest extends BaseTestFixture {
         try (RobotContainer container = new RobotContainer()) {
             ElevatorSubsystem elevator = container.getElevator(); // NOPMD(CloseResource)
             runCycles(5, () -> {
-                DriverStationSim.setJoystickAxis(1, XboxController.Axis.kRightY.value, -.7);
+                DriverStationSim.setJoystickAxis(1, NiDsXboxController.Axis.RIGHT_Y.value, -.7);
                 DriverStationSim.notifyNewData();
             });
 
@@ -32,13 +32,13 @@ public class ElevatorWithJoystickCommandTest extends BaseTestFixture {
 
             // The elevator starts at the bottom, so raise it up first
             runCycles(50, () -> {
-                DriverStationSim.setJoystickAxis(1, XboxController.Axis.kRightY.value, -.7);
+                DriverStationSim.setJoystickAxis(1, NiDsXboxController.Axis.RIGHT_Y.value, -.7);
                 DriverStationSim.notifyNewData();
             });
             double startingHeight = elevator.getHeight();
 
             runCycles(25, () -> {
-                DriverStationSim.setJoystickAxis(1, XboxController.Axis.kRightY.value, .7);
+                DriverStationSim.setJoystickAxis(1, NiDsXboxController.Axis.RIGHT_Y.value, .7);
                 DriverStationSim.notifyNewData();
             });
 

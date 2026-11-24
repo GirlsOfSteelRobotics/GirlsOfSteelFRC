@@ -4,7 +4,7 @@
 
 package com.gos.codelabs.basic_simulator;
 
-import edu.wpi.first.wpilibj.RobotBase;
+import org.wpilib.framework.RobotBase;
 
 /**
  * Do NOT add any static variables to this class, or any initialization at all. Unless you know what

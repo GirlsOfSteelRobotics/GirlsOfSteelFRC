@@ -3,19 +3,19 @@ package com.gos.rebuilt.commands;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.math.util.MathUtil;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 
 
 public class DavidDriveCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(false, "ChassisTranslationDamper", 0.75);
 
     private final ChassisSubsystem m_chassis;
-    private final CommandXboxController m_joystick;
+    private final CommandNiDsXboxController m_joystick;
     private double m_lastAngle;
 
-    public DavidDriveCommand(ChassisSubsystem chassis, CommandXboxController joystick) {
+    public DavidDriveCommand(ChassisSubsystem chassis, CommandNiDsXboxController joystick) {
         m_chassis = chassis;
         m_joystick = joystick;
         // each subsystem used by the command must be passed into the

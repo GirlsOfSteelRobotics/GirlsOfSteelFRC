@@ -2,9 +2,9 @@ package com.gos.lib.pathing;
 
 import choreo.util.ChoreoAllianceFlipUtil;
 import com.gos.lib.GetAllianceUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
 
 public class MaybeFlippedPose2d {
 

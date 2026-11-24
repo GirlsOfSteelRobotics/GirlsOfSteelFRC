@@ -1,18 +1,18 @@
 package frc.robot.subsystems;
 
 import com.gos.lib.properties.GosDoubleProperty;
+import org.wpilib.hardware.bus.CANPort;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.command2.Command;
 import frc.robot.Constants;
 
-import static edu.wpi.first.wpilibj2.command.Commands.runEnd;
+import static org.wpilib.command2.Commands.runEnd;
 
 
 public class OuttakeSubsystem {
@@ -22,7 +22,7 @@ public class OuttakeSubsystem {
     private final GosDoubleProperty m_reverseSpeed = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Outtake: Reverse Speed", -1);
 
     public OuttakeSubsystem() {
-        m_motor = new SparkFlex(Constants.OUTTAKE_MOTOR, MotorType.kBrushless);
+        m_motor = new SparkFlex(CANPort.CAN_S0, Constants.OUTTAKE_MOTOR, MotorType.kBrushless);
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
         followMotorConfig.idleMode(IdleMode.kCoast);
         followMotorConfig.smartCurrentLimit(60);
@@ -30,15 +30,15 @@ public class OuttakeSubsystem {
     }
 
     public void scoreOven() {
-        m_motor.set(m_scoreOvenSpeed.getValue());
+        m_motor.setThrottle(m_scoreOvenSpeed.getValue());
     }
 
     public void scorePantry() {
-        m_motor.set(m_scorePantrySpeed.getValue());
+        m_motor.setThrottle(m_scorePantrySpeed.getValue());
     }
 
     public void reverse() {
-        m_motor.set(m_reverseSpeed.getValue());
+        m_motor.setThrottle(m_reverseSpeed.getValue());
     }
 
     public void stop() {
@@ -46,7 +46,7 @@ public class OuttakeSubsystem {
     }
 
     public void addOuttakeDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Outtake");
+        CommandTab tab = new CommandTab("Outtake");
         tab.add(createOuttakeScoreOvenCommand());
         tab.add(createOuttakeScorePantryCommand());
         tab.add(createOuttakeReverseCommand());

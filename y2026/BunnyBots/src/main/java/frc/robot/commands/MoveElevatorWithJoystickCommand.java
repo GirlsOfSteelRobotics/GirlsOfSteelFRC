@@ -1,18 +1,18 @@
 package frc.robot.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.command2.Command;
 
 public class MoveElevatorWithJoystickCommand extends Command {
     private final ElevatorSubsystem m_elevatorSubsystem;
-    private final CommandXboxController m_controller;
+    private final CommandNiDsXboxController m_controller;
 
     private static final GosDoubleProperty JOYSTICK_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Elevator Damper", 0.4);
 
-    public MoveElevatorWithJoystickCommand(ElevatorSubsystem elevatorSubsystem, CommandXboxController controller) {
+    public MoveElevatorWithJoystickCommand(ElevatorSubsystem elevatorSubsystem, CommandNiDsXboxController controller) {
         this.m_elevatorSubsystem = elevatorSubsystem;
 
         addRequirements(this.m_elevatorSubsystem);

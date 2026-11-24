@@ -6,8 +6,8 @@ import com.gos.lib.led.LEDFlash;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.util.Color;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
+import org.wpilib.util.Color;
 
 public class EnabledPatties {
     private final ShooterSubsystem m_shooter;
@@ -24,11 +24,11 @@ public class EnabledPatties {
         this.m_chassis = chassis;
         this.m_shooter = shooter;
         this.m_pizza = pizza;
-        this.m_shooterReady = new LEDBoolean(addressme, 0,  10, Color.kLawnGreen, Color.kIndianRed);
-        this.m_chassisFacing = new LEDBoolean(addressme, 11, 20, Color.kMediumSeaGreen, Color.kOrangeRed);
-        this.m_distanceGood = new LEDBoolean(addressme, 21, 30, Color.kDarkGoldenrod, Color.kGhostWhite);
-        this.m_everythingReady = new LEDBoolean(addressme, 31, 40, Color.kBrown, Color.kLimeGreen);
-        this.m_pizzaJammed = new LEDFlash(addressme, 41, 50, .5, Color.kRed);
+        this.m_shooterReady = new LEDBoolean(addressme, 0,  10, Color.LAWN_GREEN, Color.INDIAN_RED);
+        this.m_chassisFacing = new LEDBoolean(addressme, 11, 20, Color.MEDIUM_SEA_GREEN, Color.ORANGE_RED);
+        this.m_distanceGood = new LEDBoolean(addressme, 21, 30, Color.DARK_GOLDENROD, Color.GHOST_WHITE);
+        this.m_everythingReady = new LEDBoolean(addressme, 31, 40, Color.BROWN, Color.LIME_GREEN);
+        this.m_pizzaJammed = new LEDFlash(addressme, 41, 50, .5, Color.RED);
     }
 
     public void writeLED() {

@@ -1,23 +1,23 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.codelabs.basic_simulator.commands.ElevatorToPositionCommand;
 import com.gos.lib.logging.LoggingUtil;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.DIOSim;
-import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.util.Units;
+import org.wpilib.hardware.discrete.DigitalInput;
+import org.wpilib.framework.RobotBase;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.simulation.DIOSim;
+import org.wpilib.simulation.ElevatorSim;
+import org.wpilib.smartdashboard.Mechanism2d;
+import org.wpilib.smartdashboard.MechanismLigament2d;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.command2.SubsystemBase;
 import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -60,20 +60,19 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SparkMax(Constants.CAN_LIFT_MOTOR, MotorType.kBrushless);
+        m_liftMotor = new SparkMax(CANPort.CAN_S0, Constants.CAN_LIFT_MOTOR, MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
 
         m_lowerLimitSwitch = new DigitalInput(Constants.DIO_LIFT_LOWER_LIMIT);
         m_upperLimitSwitch = new DigitalInput(Constants.DIO_LIFT_UPPER_LIMIT);
 
-        // Draws the elevator in the simulator GUI, under SmartDashboard -> Elevator Mechanism
+        // Draws the elevator in the simulator GUI, under Telemetry -> Elevator Mechanism
         m_mechanism = new Mechanism2d(1, ElevatorSimConstants.K_MAX_ELEVATOR_HEIGHT + .1);
         m_elevatorLigament = m_mechanism.getRoot("Elevator Root", .5, 0).append(new MechanismLigament2d("Elevator", 0, 90));
-        SmartDashboard.putData("Elevator Mechanism", m_mechanism);
 
         m_loggingUtil = new LoggingUtil("Elevator");
         m_loggingUtil.addDouble("Height", this::getHeight);
-        m_loggingUtil.addDouble("Throttle", m_liftMotor::getAppliedOutput);
+        m_loggingUtil.addDouble("Throttle", () -> m_liftMotor.getAppliedOutput().get());
         m_loggingUtil.addBoolean("Lower Limit Switch", this::isAtLowerLimit);
         m_loggingUtil.addBoolean("Upper Limit Switch", this::isAtUpperLimit);
 
@@ -103,6 +102,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void periodic() {
+        Telemetry.log("Elevator Mechanism", m_mechanism);
         m_elevatorLigament.setLength(getHeight());
         m_loggingUtil.updateLogs();
     }
@@ -161,7 +161,7 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public void addElevatorDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Elevator");
+        CommandTab tab = new CommandTab("Elevator");
         tab.add(new ElevatorToPositionCommand(this, Positions.LOW).withName("To Position Low"));
         tab.add(new ElevatorToPositionCommand(this, Positions.MID).withName("To Position Mid"));
         tab.add(new ElevatorToPositionCommand(this, Positions.HIGH).withName("To Position High"));

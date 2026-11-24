@@ -2,16 +2,15 @@ package com.gos.rebuilt.subsystems;
 
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 import com.gos.rebuilt.ShooterSimBalls;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.networktables.StructPublisher;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Rotation3d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.networktables.NetworkTableInstance;
+import org.wpilib.networktables.StructArrayPublisher;
+import org.wpilib.networktables.StructPublisher;
+import org.wpilib.command2.SubsystemBase;
 
 public class SuperStructureViz extends SubsystemBase {
     private static final Translation3d SPINDEXER_PIVOT = new Translation3d(0.0769, 0.039, 0.1667);
@@ -53,7 +52,7 @@ public class SuperStructureViz extends SubsystemBase {
         }
         m_goalRobotPose.accept(new Pose2d(state.Pose.getX(), state.Pose.getY(), chassisGoalAngle));
 
-        m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), ChassisSpeeds.fromRobotRelativeSpeeds(m_chassisSubsystem.getState().Speeds, m_chassisSubsystem.getState().Pose.getRotation()), m_chassisSubsystem.getState().Pose);
+        m_shooterSimBalls.calculatePosition(m_shooterSubsystem.getLaunchSpeed(), m_chassisSubsystem.getState().Velocity.toFieldRelative(m_chassisSubsystem.getState().Pose.getRotation()), m_chassisSubsystem.getState().Pose);
     }
 
     private Pose3d[] getPoses(double pizzaAngleDeg, double pivotAngleDeg) {

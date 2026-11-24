@@ -2,7 +2,7 @@ package com.gos.lib.pathing;
 
 import com.gos.lib.properties.GosDoubleProperty;
 import com.pathplanner.lib.path.PathConstraints;
-import edu.wpi.first.math.util.Units;
+import org.wpilib.math.util.Units;
 
 /**
  * Property class that wraps up configuring Path Planners {@link PathConstraints} class

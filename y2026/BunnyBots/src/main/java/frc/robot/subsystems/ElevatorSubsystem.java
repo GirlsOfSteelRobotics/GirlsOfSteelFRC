@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledElevatorController;
@@ -13,16 +14,15 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.util.Units;
 
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.system.RobotController;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.simulation.ElevatorSim;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.enums.ElevatorHeights;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -45,6 +45,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private final SparkFlex m_leader;
     private final SparkFlex m_follower;
+    // TODO(2027) REVLib removed SPARK conversion factors, so they are applied in software.
+    //  The SPARK closed loop gains now operate on native units (rotations) and need re-tuning.
+    private static final double POSITION_CONVERSION_FACTOR = ELEVATOR_GEAR_CIRCUMFERENCE * ELEVATOR_STAGES / K_ELEVATOR_GEARING; // meters per motor rotation
+    private static final double VELOCITY_CONVERSION_FACTOR = POSITION_CONVERSION_FACTOR / 60; // meters per second per RPM
+
     private final RelativeEncoder m_encoder;
     private final SparkMaxAlerts m_checkAlerts;
     private final LoggingUtil m_networkTableEntries;
@@ -55,8 +60,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
     public ElevatorSubsystem() {
-        m_leader = new SparkFlex(Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
-        m_follower = new SparkFlex(Constants.ELEVATOR_FOLLOW_MOTOR_ID, MotorType.kBrushless);
+        m_leader = new SparkFlex(CANPort.CAN_S0, Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
+        m_follower = new SparkFlex(CANPort.CAN_S0, Constants.ELEVATOR_FOLLOW_MOTOR_ID, MotorType.kBrushless);
         m_encoder = m_leader.getEncoder();
 
         SparkMaxConfig elevatorConfig = new SparkMaxConfig();
@@ -65,9 +70,6 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorConfig.inverted(true);
 
 
-        double conversionFactor = ELEVATOR_GEAR_CIRCUMFERENCE * ELEVATOR_STAGES / K_ELEVATOR_GEARING;
-        elevatorConfig.encoder.positionConversionFactor(conversionFactor);
-        elevatorConfig.encoder.velocityConversionFactor(conversionFactor / 60);
 
 
         SparkMaxConfig followMotorConfig = new SparkMaxConfig();
@@ -87,6 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             .addKa(0)
             //REV position controller
             .addKp(4)
+            .withPositionConversionFactor(POSITION_CONVERSION_FACTOR)
             .build();
         m_leader.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_elevatorFollowerErrorAlerts = new SparkMaxAlerts(m_follower, "Elevator Follower");
@@ -106,7 +109,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
             m_simulator = new ElevatorSimWrapper(sim,
                 new RevMotorControllerSimWrapper(m_leader, K_ELEVATOR_GEARBOX),
-                RevEncoderSimWrapper.create(m_leader));
+                RevEncoderSimWrapper.create(m_leader, POSITION_CONVERSION_FACTOR, VELOCITY_CONVERSION_FACTOR));
         }
 
         m_networkTableEntries = new LoggingUtil("Elevator");
@@ -117,16 +120,16 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Setpoint Velocity", m_elevatorPidController::getVelocitySetpoint);
         m_networkTableEntries.addDouble("Goal Height", () -> m_goalHeight);
         m_networkTableEntries.addBoolean("At Goal Height", this::isAtGoalHeight);
-        m_networkTableEntries.addDouble("Percent Output", m_leader::getAppliedOutput);
+        m_networkTableEntries.addDouble("Percent Output", () -> m_leader.getAppliedOutput().get());
 
     }
 
     public double getHeight() {
-        return m_encoder.getPosition();
+        return m_encoder.getPosition().get() * POSITION_CONVERSION_FACTOR;
     }
 
     public void setThrottle(double throttle) {
-        m_leader.set(throttle);
+        m_leader.setThrottle(throttle);
     }
 
     public void clearStickyFaults() {
@@ -136,7 +139,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void stop() {
         m_goalHeight = NO_GOAL_HEIGHT;
-        m_leader.set(0);
+        m_leader.setThrottle(0);
     }
 
     public double getGoalHeight() {
@@ -157,7 +160,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public double getEncoderVel() {
-        return m_encoder.getVelocity();
+        return m_encoder.getVelocity().get() * VELOCITY_CONVERSION_FACTOR;
     }
 
     public void goToTunableHeight() {
@@ -190,9 +193,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public double getVoltage() {
         if (RobotBase.isReal()) {
-            return m_leader.getBusVoltage();
+            return m_leader.getBusVoltage().get();
         }
-        return m_leader.getAppliedOutput() * RobotController.getBatteryVoltage();
+        return m_leader.getAppliedOutput().get() * RobotController.getBatteryVoltage();
     }
 
     public void setIdleMode(IdleMode idleMode) {
@@ -203,7 +206,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void addElevatorDebugCommands(boolean inComp) {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Elevator");
+        CommandTab debugTab = new CommandTab("Elevator");
         if (!inComp) {
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(1)));
             debugTab.add(createMoveElevatorToHeightCommand(Units.feetToMeters(3)));

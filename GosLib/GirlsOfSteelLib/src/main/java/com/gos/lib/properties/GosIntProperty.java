@@ -1,6 +1,6 @@
 package com.gos.lib.properties;
 
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.preferences.Preferences;
 
 /**
  * Integer implementation of a GOS tunable property

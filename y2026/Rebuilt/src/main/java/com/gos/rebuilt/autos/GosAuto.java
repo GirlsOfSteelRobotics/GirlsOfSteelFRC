@@ -2,7 +2,7 @@ package com.gos.rebuilt.autos;
 
 import com.gos.rebuilt.enums.AutoActions;
 import com.gos.rebuilt.enums.StartingPositions;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import org.wpilib.command2.SequentialCommandGroup;
 
 import java.util.List;
 

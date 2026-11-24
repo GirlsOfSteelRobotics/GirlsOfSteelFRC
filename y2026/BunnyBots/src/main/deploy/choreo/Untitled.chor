@@ -259,7 +259,7 @@
  },
  "generationFeatures":[],
  "codegen":{
-  "root":"../java/frc/robot/choreo_gen",
+  "root":"../../java/frc/robot/choreo_gen",
   "genVars":true,
   "genTrajData":true,
   "useChoreoLib":true

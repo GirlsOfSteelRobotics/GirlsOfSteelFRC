@@ -5,14 +5,15 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
-import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkLowLevel.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.config.SparkBaseConfig;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import org.wpilib.math.controller.ProfiledPIDController;
+import org.wpilib.math.trajectory.TrapezoidProfile;
 
-public class RevProfiledElevatorController {
+public final class RevProfiledElevatorController {
     private final ClosedLoopSlot m_slot;
+    private final double m_positionConversionFactor;
     private final SparkClosedLoopController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
 
@@ -28,8 +29,10 @@ public class RevProfiledElevatorController {
         ElevatorFeedForwardProperty elevatorFf,
         ClosedLoopSlot slot,
         SparkBase motor,
-        PidProperty sparkPidProperties) {
+        PidProperty sparkPidProperties,
+        double positionConversionFactor) {
         m_slot = slot;
+        m_positionConversionFactor = positionConversionFactor;
         m_profilePid = profiledPidController;
         m_wpiFeedForward = elevatorFf;
         m_sparkPidController = motor.getClosedLoopController();
@@ -38,11 +41,11 @@ public class RevProfiledElevatorController {
         m_sparkPidProperties = sparkPidProperties;
     }
 
-    public final void updateIfChanged() {
+    public void updateIfChanged() {
         updateIfChanged(false);
     }
 
-    public final void updateIfChanged(boolean forceUpdate) {
+    public void updateIfChanged(boolean forceUpdate) {
         m_sparkPidProperties.updateIfChanged(forceUpdate);
         m_wpiFeedForward.updateIfChanged(forceUpdate);
         m_profilePidProperties.updateIfChanged(forceUpdate);
@@ -64,7 +67,7 @@ public class RevProfiledElevatorController {
             currentVelocityMps,
             setpoint.velocity);
 
-        m_sparkPidController.setSetpoint(setpoint.position, ControlType.kPosition, m_slot, feedForwardVolts);
+        m_sparkPidController.setSetpoint(setpoint.position / m_positionConversionFactor, ControlType.kPosition, m_slot, feedForwardVolts);
     }
 
     public void resetPidController(double currentHeightMeters, double currentVelocityMps) {
@@ -76,6 +79,7 @@ public class RevProfiledElevatorController {
         private final SparkBase m_motor;
         private final ClosedLoopSlot m_slot;
         private final RevPidPropertyBuilder m_revPidBuilder;
+        private double m_positionConversionFactor = 1;
 
         private final ProfiledPIDController m_profilePid;
         private final WpiProfiledPidPropertyBuilder m_wpiBuilder;
@@ -86,7 +90,7 @@ public class RevProfiledElevatorController {
             m_motor = motor;
             m_slot = slot;
 
-            m_profilePid = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+            m_profilePid = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(WpiProfiledPidPropertyBuilder.MIN_CONSTRAINT, WpiProfiledPidPropertyBuilder.MIN_CONSTRAINT));
             m_wpiBuilder = new WpiProfiledPidPropertyBuilder(mechanismName, isConstant, m_profilePid);
 
             m_mechanismFeedForward = new ElevatorFeedForwardProperty(mechanismName, isConstant);
@@ -139,6 +143,20 @@ public class RevProfiledElevatorController {
             return this;
         }
 
+        /**
+         * Sets the factor used to convert from SPARK native units (rotations) to mechanism units.
+         *
+         * <p>REVLib 2027 removed the SPARK side conversion factors, so the conversion is applied in software
+         * before setpoints are sent to the motor controller.
+         *
+         * @param positionConversionFactor mechanism units per motor rotation
+         * @return this
+         */
+        public Builder withPositionConversionFactor(double positionConversionFactor) {
+            m_positionConversionFactor = positionConversionFactor;
+            return this;
+        }
+
         public RevProfiledElevatorController build() {
             return new RevProfiledElevatorController(
                 m_profilePid,
@@ -146,7 +164,8 @@ public class RevProfiledElevatorController {
                 m_mechanismFeedForward,
                 m_slot,
                 m_motor,
-                m_revPidBuilder.build());
+                m_revPidBuilder.build(),
+                m_positionConversionFactor);
         }
     }
 }

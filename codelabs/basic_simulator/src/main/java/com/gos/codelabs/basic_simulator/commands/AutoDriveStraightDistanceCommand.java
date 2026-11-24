@@ -1,8 +1,8 @@
 package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.math.util.Units;
+import org.wpilib.command2.Command;
 
 public class AutoDriveStraightDistanceCommand extends Command {
 

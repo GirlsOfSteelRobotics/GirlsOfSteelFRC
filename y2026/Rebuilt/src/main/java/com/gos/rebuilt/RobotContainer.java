@@ -5,6 +5,7 @@
 
 package com.gos.rebuilt;
 
+import com.gos.lib.pathing.ChoreoFileVersionPatch;
 
 import com.gos.lib.pathing.MaybeFlippedPose2d;
 import com.gos.lib.properties.PropertyManager;
@@ -25,25 +26,24 @@ import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathfindingCommand;
-import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import org.wpilib.hardware.hal.AllianceStationID;
+import org.wpilib.hardware.power.PowerDistribution;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.simulation.DriverStationSim;
 import com.gos.rebuilt.subsystems.SuperStructureViz;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.wpilib.tunable.Tunables;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.CommandScheduler;
+import org.wpilib.command2.Commands;
+import org.wpilib.command2.PrintCommand;
+import org.wpilib.command2.button.CommandNiDsXboxController;
+import org.wpilib.command2.button.Trigger;
 import frc.robot.generated.FinalTunerConstants;
 import frc.robot.generated.TunerConstants;
 
 import java.util.Set;
 
-import static edu.wpi.first.wpilibj2.command.Commands.run;
+import static org.wpilib.command2.Commands.run;
 
 
 /**
@@ -56,8 +56,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController m_driverController; //NOPMD
-    private final CommandXboxController m_operatorController;
+    private final CommandNiDsXboxController m_driverController; //NOPMD
+    private final CommandNiDsXboxController m_operatorController;
 
     private final ChassisSubsystem m_chassis;
     private final IntakeSubsystem m_intakeSubsystem;
@@ -84,11 +84,14 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer(PowerDistribution pdh) {
+        // TODO(2027) Remove once PathPlannerLib can load Choreo 2026 trajectories
+        ChoreoFileVersionPatch.apply();
+
         PropertyManager.setPurgeConstantPreferenceKeys(Constants.CLEANUP_PROPERTIES);
         m_pdh = pdh;
-        m_driverController = new CommandXboxController(0);
+        m_driverController = new CommandNiDsXboxController(0);
         // m_climberSubsystem = new ClimberSubsystem();
-        m_operatorController = new CommandXboxController(1);
+        m_operatorController = new CommandNiDsXboxController(1);
 
         if (Constants.IS_COMPETITION_ROBOT) {
             m_chassis = FinalTunerConstants.createDrivetrain();
@@ -107,10 +110,9 @@ public class RobotContainer {
         m_ledSUbsystem = new LEDSubsystem(m_shooterSubsystem, m_chassis, m_pizzaSubsystem, m_autoFactory);
 
         if (RobotBase.isSimulation()) {
-            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
+            DriverStationSim.setAllianceStationId(AllianceStationID.BLUE_1);
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
-            DriverStation.silenceJoystickConnectionWarning(true);
 
         }
 
@@ -143,8 +145,8 @@ public class RobotContainer {
             PropertyManager.purgeExtraKeys();
         }
 
-        SmartDashboard.putData("DRIVE to START! xD ", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
-        SmartDashboard.putData("Clear Sticky Faults", createResetStickyFaults());
+        Tunables.publish("DRIVE to START! xD", createDriveChassisToStartingPoseCommand().withName("DRIVE to START! xD"));
+        Tunables.publish("Clear Sticky Faults", createResetStickyFaults());
 
         CommandScheduler.getInstance().schedule(PathfindingCommand.warmupCommand().andThen(FollowPathCommand.warmupCommand()));
     }
@@ -154,9 +156,9 @@ public class RobotContainer {
      * Use this method to define your trigger->command mappings. Triggers can be created via the
      * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
      * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * org.wpilib.command2.button.CommandGenericHID}'s subclasses for {@link
+     * CommandNiDsXboxController Xbox}/{@link org.wpilib.command2.button.CommandNiDsPS4Controller
+     * PS4} controllers or {@link org.wpilib.command2.button.CommandJoystick Flight
      * joysticks}.
      */
     private void configureBindings() {
@@ -174,16 +176,16 @@ public class RobotContainer {
 
         m_driverController.start().and(m_driverController.back()).whileTrue(m_chassis.createResetGyroCommand());
 
-        // m_driverController.povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
-        // m_driverController.povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
+        // m_driverController.getHID().povUp().whileTrue(m_climberSubsystem.createClimbingUpCommand());
+        // m_driverController.getHID().povDown().whileTrue(m_climberSubsystem.createClimbingDownCommand());
 
         m_driverController.rightTrigger().whileTrue(new FireOnTheRunCommand(m_driverController, m_chassis, m_feederSubsystem, m_pizzaSubsystem, m_shooterSubsystem));
         // m_driverController.rightTrigger().whileTrue(m_combinedCommand.emergencyFeed());
         // m_driverController.rightTrigger().whileTrue(m_combinedCommand.shootBallNoAiming());
         m_driverController.leftTrigger().whileTrue(m_combinedCommand.intake());
         m_driverController.leftBumper().whileTrue(new JoystickFieldRelativeDriveSlowerCommand(m_chassis, m_driverController));
-        m_driverController.povLeft().whileTrue(m_combinedCommand.sweepLeft());
-        m_driverController.povRight().whileTrue(m_combinedCommand.sweepRight());
+        m_driverController.getHID().povLeft().whileTrue(m_combinedCommand.sweepLeft());
+        m_driverController.getHID().povRight().whileTrue(m_combinedCommand.sweepRight());
         m_driverController.y().whileTrue(m_pivotSubsystem.createMovePivotUpCommand());
         //pivot intake,= left trigger
         //shoot on the move = right trigger

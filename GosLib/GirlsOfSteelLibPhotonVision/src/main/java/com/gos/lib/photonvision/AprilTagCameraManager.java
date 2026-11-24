@@ -1,13 +1,13 @@
 package com.gos.lib.photonvision;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.wpilibj.RobotBase;
+import org.wpilib.fields.Field;
+import org.wpilib.math.linalg.Matrix;
+import org.wpilib.util.Pair;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.numbers.N1;
+import org.wpilib.math.numbers.N3;
+import org.wpilib.framework.RobotBase;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -29,7 +29,7 @@ public class AprilTagCameraManager {
      * @param tagLayout The april tag layout
      * @param cameras A list of cameras to manage
      */
-    public AprilTagCameraManager(AprilTagFieldLayout tagLayout, List<AprilTagCamera> cameras) {
+    public AprilTagCameraManager(Field tagLayout, List<AprilTagCamera> cameras) {
         m_aprilTagCameras = cameras;
 
         if (RobotBase.isSimulation()) {

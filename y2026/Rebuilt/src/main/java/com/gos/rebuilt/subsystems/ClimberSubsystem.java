@@ -1,6 +1,7 @@
 package com.gos.rebuilt.subsystems;
 
 import com.gos.lib.logging.LoggingUtil;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevProfiledElevatorController;
@@ -13,14 +14,13 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.util.Units;
+import org.wpilib.framework.RobotBase;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.simulation.ElevatorSim;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
@@ -51,9 +51,9 @@ public class ClimberSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
     public ClimberSubsystem() {
-        m_climberLeftMotor = new SparkFlex(Constants.CLIMBER_LEFT_MOTOR, MotorType.kBrushless);
+        m_climberLeftMotor = new SparkFlex(CANPort.CAN_S0, Constants.CLIMBER_LEFT_MOTOR, MotorType.kBrushless);
         m_climberLeftEncoder = m_climberLeftMotor.getEncoder();
-        m_climberRightMotor = new SparkFlex(Constants.CLIMBER_RIGHT_MOTOR, MotorType.kBrushless);
+        m_climberRightMotor = new SparkFlex(CANPort.CAN_S0, Constants.CLIMBER_RIGHT_MOTOR, MotorType.kBrushless);
         m_climberRightEncoder = m_climberRightMotor.getEncoder();
         m_climberLeftMotorAlerts = new SparkMaxAlerts(m_climberLeftMotor, "Climber Left Motor");
         m_climberRightMotorAlerts = new SparkMaxAlerts(m_climberRightMotor, "Climber Right Motor");
@@ -154,54 +154,54 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public double getLeftHeight() {
-        return m_climberLeftEncoder.getPosition();
+        return m_climberLeftEncoder.getPosition().get();
     }
 
     public double getRightHeight() {
-        return m_climberRightEncoder.getPosition();
+        return m_climberRightEncoder.getPosition().get();
     }
 
     public double getLeftVelocity() {
-        return m_climberLeftEncoder.getVelocity();
+        return m_climberLeftEncoder.getVelocity().get();
     }
 
     public double getRightVelocity() {
-        return m_climberRightEncoder.getVelocity();
+        return m_climberRightEncoder.getVelocity().get();
     }
 
 
     public void climbUp() {
-        m_climberLeftMotor.set(m_climbingSpeed.getValue());
-        m_climberRightMotor.set(m_climbingSpeed.getValue());
+        m_climberLeftMotor.setThrottle(m_climbingSpeed.getValue());
+        m_climberRightMotor.setThrottle(m_climbingSpeed.getValue());
     }
 
     public void climbDown() {
-        m_climberLeftMotor.set(-m_climbingSpeed.getValue());
-        m_climberRightMotor.set(-m_climbingSpeed.getValue());
+        m_climberLeftMotor.setThrottle(-m_climbingSpeed.getValue());
+        m_climberRightMotor.setThrottle(-m_climbingSpeed.getValue());
     }
 
     public void leftClimbUp() {
-        m_climberLeftMotor.set(m_climbingSpeed.getValue());
+        m_climberLeftMotor.setThrottle(m_climbingSpeed.getValue());
     }
 
     public void leftClimbDown() {
-        m_climberLeftMotor.set(-m_climbingSpeed.getValue());
+        m_climberLeftMotor.setThrottle(-m_climbingSpeed.getValue());
     }
 
     public void rightClimbUp() {
-        m_climberRightMotor.set(m_climbingSpeed.getValue());
+        m_climberRightMotor.setThrottle(m_climbingSpeed.getValue());
     }
 
     public void rightClimbDown() {
-        m_climberRightMotor.set(-m_climbingSpeed.getValue());
+        m_climberRightMotor.setThrottle(-m_climbingSpeed.getValue());
     }
 
     public double getLeftRPM() {
-        return m_climberLeftEncoder.getVelocity();
+        return m_climberLeftEncoder.getVelocity().get();
     }
 
     public double getRightRPM() {
-        return m_climberRightEncoder.getVelocity();
+        return m_climberRightEncoder.getVelocity().get();
     }
 
     public void resetLeftPidController() {
@@ -282,7 +282,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void addClimberDebugCommands(boolean areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
-        ShuffleboardTab tab = Shuffleboard.getTab("Climber");
+        CommandTab tab = new CommandTab("Climber");
         if (!areweatacompeititionakashouldwehaveallthemethodsoronlysomeofthem) {
             tab.add(createClimbingUpCommand());
             tab.add(createClimbingDownCommand());

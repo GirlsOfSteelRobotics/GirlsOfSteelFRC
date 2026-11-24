@@ -1,7 +1,7 @@
 package com.gos.lib.led;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.util.Color;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
+import org.wpilib.util.Color;
 
 public class LEDAlertPatterns {
     private final LEDFlash m_alertErrorPattern;
@@ -9,9 +9,9 @@ public class LEDAlertPatterns {
     private final LEDFlash m_noAlertsPattern;
 
     public LEDAlertPatterns(AddressableLEDBuffer buffer, int startIndex, int numLEDs) {
-        m_alertErrorPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kRed);
-        m_alertWarningPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kYellow);
-        m_noAlertsPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.kGreen);
+        m_alertErrorPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.RED);
+        m_alertWarningPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.YELLOW);
+        m_noAlertsPattern = new LEDFlash(buffer, startIndex, startIndex + numLEDs, 2, Color.GREEN);
     }
 
     public void writeLEDs() {

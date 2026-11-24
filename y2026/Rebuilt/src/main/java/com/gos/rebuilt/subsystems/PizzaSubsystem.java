@@ -2,6 +2,7 @@ package com.gos.rebuilt.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
@@ -11,18 +12,17 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkLowLevel.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.framework.RobotBase;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
@@ -33,6 +33,11 @@ public class PizzaSubsystem extends SubsystemBase {
     private final SparkFlex m_pizzaMotor;
     private final GosDoubleProperty m_pizzaSpeedForward = new GosDoubleProperty(false, "pizzaSpeedForward", 0.85);
     private final GosDoubleProperty m_pizzaSpeedReverse = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "pizzaSpeedBack", 1);
+
+    // TODO(2027) REVLib removed SPARK conversion factors, so they are applied in software.
+    //  The SPARK closed loop gains now operate on native units (rotations / RPM) and need re-tuning.
+    private static final double POSITION_CONVERSION_FACTOR = 9 * 4 * 3;
+    private static final double VELOCITY_CONVERSION_FACTOR = 3 * 4 * 9;
 
     private final RelativeEncoder m_pizzaEncoder;
     private final SparkMaxAlerts m_pizzaAlert;
@@ -59,11 +64,9 @@ public class PizzaSubsystem extends SubsystemBase {
         pizzaConfig.smartCurrentLimit(60);
         pizzaConfig.inverted(true);
 
-        pizzaConfig.encoder.positionConversionFactor(9 * 4 * 3);
-        pizzaConfig.encoder.velocityConversionFactor(3 * 4 * 9);
 
 
-        m_pizzaMotor = new SparkFlex(Constants.PIZZA_MOTOR, MotorType.kBrushless);
+        m_pizzaMotor = new SparkFlex(CANPort.CAN_S0, Constants.PIZZA_MOTOR, MotorType.kBrushless);
 
         m_pidController = m_pizzaMotor.getClosedLoopController();
 
@@ -73,7 +76,7 @@ public class PizzaSubsystem extends SubsystemBase {
             DCMotor gearbox = DCMotor.getNeo550(2);
             this.m_pizzaSimulator = new InstantaneousMotorSim(
                 new RevMotorControllerSimWrapper(this.m_pizzaMotor, gearbox),
-                RevEncoderSimWrapper.create(this.m_pizzaMotor),
+                RevEncoderSimWrapper.create(this.m_pizzaMotor, POSITION_CONVERSION_FACTOR, VELOCITY_CONVERSION_FACTOR),
                 -360);
         }
         m_pidProperties = new RevPidPropertyBuilder("Pizza", Constants.DEFAULT_CONSTANT_PROPERTIES, m_pizzaMotor, pizzaConfig, ClosedLoopSlot.kSlot0)
@@ -83,8 +86,8 @@ public class PizzaSubsystem extends SubsystemBase {
         m_pizzaMotor.configure(pizzaConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         m_networkTableEntries.addDouble("Pizza Velocity", this::getRPM);
-        m_networkTableEntries.addDouble("Pizza Position", m_pizzaEncoder::getPosition);
-        m_networkTableEntries.addDouble("Current", m_pizzaMotor::getOutputCurrent);
+        m_networkTableEntries.addDouble("Pizza Position", () -> m_pizzaEncoder.getPosition().get() * POSITION_CONVERSION_FACTOR);
+        m_networkTableEntries.addDouble("Current", () -> m_pizzaMotor.getOutputCurrent().get());
 
         m_networkTableEntries.addDouble("Pizza rpm", this::getRPM);
 
@@ -100,19 +103,19 @@ public class PizzaSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_pizzaEncoder.getPosition();
+        return m_pizzaEncoder.getPosition().get() * POSITION_CONVERSION_FACTOR;
     }
 
     public void feed() {
-        m_pizzaMotor.set(m_pizzaSpeedForward.getValue());
+        m_pizzaMotor.setThrottle(m_pizzaSpeedForward.getValue());
     }
 
     public void reverse() {
-        m_pizzaMotor.set(-m_pizzaSpeedReverse.getValue());
+        m_pizzaMotor.setThrottle(-m_pizzaSpeedReverse.getValue());
     }
 
     public boolean checkJam() {
-        return (getRPM() < MIN_SPIN.getValue() && m_pizzaMotor.getOutputCurrent() > BASE_CURRENTS.getValue());
+        return (getRPM() < MIN_SPIN.getValue() && m_pizzaMotor.getOutputCurrent().get() > BASE_CURRENTS.getValue());
     }
 
     public void clearStickyFaults() {
@@ -125,7 +128,7 @@ public class PizzaSubsystem extends SubsystemBase {
 
     public void setRPM(double goal) {
         m_goal = goal;
-        m_pidController.setSetpoint(goal, ControlType.kVelocity);
+        m_pidController.setSetpoint(goal / VELOCITY_CONVERSION_FACTOR, ControlType.kVelocity);
 
     }
 
@@ -134,12 +137,12 @@ public class PizzaSubsystem extends SubsystemBase {
     }
 
     public double getRPM() {
-        return m_pizzaEncoder.getVelocity();
+        return m_pizzaEncoder.getVelocity().get() * VELOCITY_CONVERSION_FACTOR;
     }
 
 
     public void addPizzaDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {
-        ShuffleboardTab tab = Shuffleboard.getTab("Pizza");
+        CommandTab tab = new CommandTab("Pizza");
         if (!areWeAtACompetitionOrNotBoolean) {
             tab.add(createPizzaFeedCommand());
             tab.add(createPizzaReverseCommand());

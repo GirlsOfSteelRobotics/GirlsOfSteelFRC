@@ -4,13 +4,13 @@ package com.gos.rebuilt;
 //imports
 
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.math.kinematics.ChassisVelocities;
+import org.wpilib.math.util.Units;
+import org.wpilib.networktables.NetworkTableInstance;
+import org.wpilib.networktables.StructArrayPublisher;
 
 import java.util.ArrayList;
 
@@ -43,13 +43,13 @@ public class ShooterSimBalls {
         return m_fuelInitVY * time + m_shooterPosition.getY();
     }
 
-    public void calculatePosition(double launchSpeed, ChassisSpeeds fieldVelocity, Pose2d robotPosition) {
+    public void calculatePosition(double launchSpeed, ChassisVelocities fieldVelocity, Pose2d robotPosition) {
         m_robotPosition = robotPosition;
         m_shooterPosition = new Pose2d(m_robotPosition.getTranslation().minus(ShooterSubsystem.SHOOTER_OFFSET.rotateBy(m_robotPosition.getRotation())), m_robotPosition.getRotation());
         m_fuelInitVZ = launchSpeed * Math.sin(m_theta.getRadians());
         double horizComp = launchSpeed * Math.cos(m_theta.getRadians());
-        m_fuelInitVY = -Math.sin(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vyMetersPerSecond;
-        m_fuelInitVX = -Math.cos(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vxMetersPerSecond;
+        m_fuelInitVY = -Math.sin(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vy;
+        m_fuelInitVX = -Math.cos(m_shooterPosition.getRotation().getRadians()) * horizComp + fieldVelocity.vx;
 
 
         ArrayList<Translation3d> listOfTrans = new ArrayList<>(10);

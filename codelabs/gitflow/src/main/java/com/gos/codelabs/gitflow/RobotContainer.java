@@ -18,9 +18,9 @@ import com.gos.codelabs.gitflow.subsystems.PJCodelab2020Part2Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PJCodelab2021Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PrimCodelab2027;
 import com.gos.codelabs.gitflow.subsystems.PrimCodelab2026;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.driverstation.GenericHID;
+import org.wpilib.driverstation.NiDsXboxController;
+import org.wpilib.command2.Command;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -97,8 +97,8 @@ public class RobotContainer {
     /**
      * Use this method to define your button->command mappings.  Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick Joystick} or {@link XboxController}), and then passing it to a
-     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton JoystickButton}.
+     * org.wpilib.driverstation.Joystick Joystick} or {@link NiDsXboxController}), and then passing it to a
+     * {@link org.wpilib.command2.button.JoystickButton JoystickButton}.
      */
     private void configureButtonBindings() {
         m_drivetrain.setDefaultCommand(new TeleopDriveCommand(m_drivetrain));

@@ -1,11 +1,10 @@
 package com.gos.rebuilt.subsystems;
 
-import static edu.wpi.first.units.Units.Second;
-import static edu.wpi.first.units.Units.Volts;
+import static org.wpilib.units.Units.Second;
+import static org.wpilib.units.Units.Volts;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.gos.lib.GetAllianceUtil;
@@ -53,29 +52,29 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import org.wpilib.fields.Field;
+import org.wpilib.driverstation.DriverStationErrors;
+import org.wpilib.driverstation.RobotState;
+import org.wpilib.driverstation.MatchState;
+import org.wpilib.fields.Fields;
+import org.wpilib.math.linalg.Matrix;
+import org.wpilib.util.Pair;
+import org.wpilib.math.linalg.VecBuilder;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.math.numbers.N1;
+import org.wpilib.math.numbers.N3;
+import org.wpilib.math.util.Units;
+import org.wpilib.driverstation.Alliance;
+import org.wpilib.system.Notifier;
+import org.wpilib.system.RobotController;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.Subsystem;
+import org.wpilib.command2.sysid.SysIdRoutine;
 
 
 import frc.robot.generated.FinalTunerConstants;
@@ -115,16 +114,16 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     private final LoggingUtil m_networkTableEntries;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
-    private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.kZero;
+    private static final Rotation2d BLUE_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.ZERO;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
-    private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.k180deg;
+    private static final Rotation2d RED_ALLIANCE_PERSPECTIVE_ROTATION = Rotation2d.PI;
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective;
 
     /**
      * Swerve request to apply during robot-centric path following
      */
-    private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
+    private final SwerveRequest.ApplyRobotVelocity m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotVelocity();
 
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
@@ -267,8 +266,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         configureAutoBuilder();
 
         m_field = new GosField();
-        SmartDashboard.putData("Field", m_field.getField2d());
-        SmartDashboard.putData("Field3d", m_field.getField3d());
 
         m_pidControllerProperty = new PhoenixPidControllerPropertyBuilder("chassis Pid", Constants.DEFAULT_CONSTANT_PROPERTIES, m_angleFace.HeadingController)
             .addP(10.0)
@@ -308,7 +305,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         boolean enableFancyCameraSim = false;
 
         AprilTagCameraBuilder cameraBuilder = new AprilTagCameraBuilder()
-            .withLayout(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded))
+            .withLayout(Field.loadField(Fields.FRC_2026_REBUILT_WELDED))
             .withField(m_field)
             .withSingleTagStddev(singleTagStddev)
             .withMultiTagStddev(multiTagStddev)
@@ -320,7 +317,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             .withSimEnableDrawWireframe(enableFancyCameraSim);
 
 
-        m_aprilTagCameras = new AprilTagCameraManager(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded), List.of(
+        m_aprilTagCameras = new AprilTagCameraManager(Field.loadField(Fields.FRC_2026_REBUILT_WELDED), List.of(
             cameraBuilder
                 .withCamera("Shooter Camera")
                 .withTransform(RobotExtrinsic.SHOOTER_CAMERA).build(),
@@ -357,10 +354,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             AutoBuilder.configure(
                 () -> getState().Pose,   // Supplier of current robot pose
                 this::resetPose,         // Consumer for seeding pose against auto
-                () -> getState().Speeds, // Supplier of current robot speeds
-                // Consumer of ChassisSpeeds and feedforwards to drive the robot
+                () -> getState().Velocity, // Supplier of current robot speeds
+                // Consumer of ChassisVelocities and feedforwards to drive the robot
                 (speeds, feedforwards) -> setControl(
-                    m_pathApplyRobotSpeeds.withSpeeds(ChassisSpeeds.discretize(speeds, 0.020))
+                    m_pathApplyRobotSpeeds.withVelocity(speeds.discretize(0.020))
                         .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
                         .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())
                 ),
@@ -372,11 +369,11 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
                 ),
                 config,
                 // Assume the path needs to be flipped for Red vs Blue, this is normally the case
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                () -> MatchState.getAlliance().orElse(Alliance.BLUE) == Alliance.RED,
                 this // Subsystem for requirements
             );
         } catch (Exception ex) {  // NOPMD(AvoidCatchingGenericException)
-            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
+            DriverStationErrors.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
         }
     }
 
@@ -428,6 +425,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
     @Override
     public void periodic() {
+        Telemetry.log("Field", m_field.getField2d());
+        Telemetry.log("Field3d", m_field.getField3d());
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
@@ -435,10 +434,10 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-            DriverStation.getAlliance().ifPresent(allianceColor -> {
-                setOperatorPerspectiveForward(
-                    allianceColor == Alliance.Red
+        if (!m_hasAppliedOperatorPerspective || RobotState.isDisabled()) {
+            MatchState.getAlliance().ifPresent(allianceColor -> {
+                setOperatorForwardDirection(
+                    allianceColor == Alliance.RED
                         ? RED_ALLIANCE_PERSPECTIVE_ROTATION
                         : BLUE_ALLIANCE_PERSPECTIVE_ROTATION
                 );
@@ -454,7 +453,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
         SwerveDriveState state = getState();
 
         if (DEBUG_SWERVE_STATE) {
-            m_swerveDrivePublisher.setMeasuredStates(state.ModuleStates);
+            m_swerveDrivePublisher.setMeasuredStates(state.ModuleVelocities);
             m_swerveDrivePublisher.setRobotRotation(state.Pose.getRotation());
             m_swerveDrivePublisher.setDesiredStates(state.ModuleTargets);
         }
@@ -473,8 +472,8 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
     }
 
     private double getSpeed() {
-        double xSpeed = getState().Speeds.vxMetersPerSecond;
-        double ySpeed = getState().Speeds.vyMetersPerSecond;
+        double xSpeed = getState().Velocity.vx;
+        double ySpeed = getState().Velocity.vy;
         double actualSpeed = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
 
         return Units.metersToFeet(actualSpeed);
@@ -493,51 +492,6 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(SIM_LOOP_PERIOD);
-    }
-
-    /**
-     * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
-     * while still accounting for measurement noise.
-     *
-     * @param visionRobotPoseMeters The pose of the robot as measured by the vision camera.
-     * @param timestampSeconds      The timestamp of the vision measurement in seconds.
-     */
-    @Override
-    public void addVisionMeasurement(Pose2d visionRobotPoseMeters, double timestampSeconds) {
-        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds));
-    }
-
-    /**
-     * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
-     * while still accounting for measurement noise.
-     * <p>
-     * Note that the vision measurement standard deviations passed into this method
-     * will continue to apply to future measurements until a subsequent call to
-     * {@link #setVisionMeasurementStdDevs(Matrix)} or this method.
-     *
-     * @param visionRobotPoseMeters    The pose of the robot as measured by the vision camera.
-     * @param timestampSeconds         The timestamp of the vision measurement in seconds.
-     * @param visionMeasurementStdDevs Standard deviations of the vision pose measurement
-     *                                 in the form [x, y, theta]ᵀ, with units in meters and radians.
-     */
-    @Override
-    public void addVisionMeasurement(
-        Pose2d visionRobotPoseMeters,
-        double timestampSeconds,
-        Matrix<N3, N1> visionMeasurementStdDevs
-    ) {
-        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
-    }
-
-    /**
-     * Return the pose at a given timestamp, if the buffer is not empty.
-     *
-     * @param timestampSeconds The timestamp of the pose in seconds.
-     * @return The pose at the given timestamp (or Optional.empty() if the buffer is empty).
-     */
-    @Override
-    public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
-        return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
     public void driveFieldCentric(double xJoystick, double yJoystick, double rotationalJoystick) {
@@ -655,7 +609,7 @@ public class ChassisSubsystem extends TunerSwerveDrivetrain implements Subsystem
 
 
     public void addChassisDebugCommands(boolean inCompetition) {
-        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        CommandTab tab = new CommandTab("Chassis");
 
         if (!inCompetition) {
             tab.add(createFaceHub());

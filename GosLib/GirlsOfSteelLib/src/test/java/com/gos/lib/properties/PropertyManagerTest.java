@@ -1,6 +1,6 @@
 package com.gos.lib.properties;
 
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.preferences.Preferences;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

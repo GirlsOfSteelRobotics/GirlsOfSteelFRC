@@ -8,12 +8,12 @@
 package org.littletonrobotics.frc2026;
 
 import com.gos.lib.pathing.MaybeFlippedTranslation3d;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
+import org.wpilib.fields.Field;
+import org.wpilib.fields.Fields;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.math.util.Units;
 
 /**
  * Contains information for location of field element and other useful reference points.
@@ -320,15 +320,15 @@ public class FieldConstants {
     NONE("2026-none");
 
     private final String name;
-    private volatile AprilTagFieldLayout layout;
+    private volatile Field layout;
     private volatile String layoutString;
 
     AprilTagLayoutType(String name) {
       this.name = name;
     }
 
-    public AprilTagFieldLayout getLayout() {
-      layout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+    public Field getLayout() {
+      layout = Field.loadField(Fields.FRC_2026_REBUILT_WELDED);
       return layout;
     }
 
