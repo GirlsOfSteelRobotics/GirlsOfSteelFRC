@@ -17,6 +17,7 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants.DriveMotorArrangement;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.SteerMotorArrangement;
 import com.ctre.phoenix6.swerve.SwerveModuleConstantsFactory;
+import org.wpilib.hardware.bus.CANPort;
 import org.wpilib.math.linalg.Matrix;
 import org.wpilib.math.numbers.N1;
 import org.wpilib.math.numbers.N3;
@@ -50,7 +51,7 @@ public class TunerConstants {
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
     private static final Slot0Configs driveGains = new Slot0Configs()
-        .withKP(0.1).withKI(0).withKD(0)
+        .withKP(0.2).withKI(0).withKD(0)
         .withKS(0).withKV(0.124);
 
     // The closed-loop output type to use for the steer motors;
@@ -97,7 +98,7 @@ public class TunerConstants {
 
     // CAN bus that the devices are located on;
     // All swerve devices must share the same CAN bus
-    public static final CANBus kCANBus = new CANBus("");
+    public static final CANBus kCANBus = new CANBus(CANPort.CAN_S2);
 
     // Measured robot speed (m/s) at 12 V applied output;
     // This is NOT the desired max robot speed - see MaxSpeed in RobotContainer instead;
@@ -125,9 +126,9 @@ public class TunerConstants {
     private static final Voltage kDriveFrictionVoltage = Volts.of(0.2);
 
     public static final SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
-            .withNetwork(kCANBus)
-            .withPigeon2Id(kPigeonId)
-            .withPigeon2Configs(pigeonConfigs);
+        .withNetwork(kCANBus)
+        .withPigeon2Id(kPigeonId)
+        .withPigeon2Configs(pigeonConfigs);
 
     private static final SwerveModuleConstantsFactory<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> ConstantCreator =
         new SwerveModuleConstantsFactory<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>()
