@@ -46,18 +46,15 @@ def get_vendor_deps_versions(vendor_deps):
 
 
 def get_included_project_dirs(base_directory):
-    """
-    Returns the directories of the projects that are included in settings.gradle. Projects that are not
-    part of the build (i.e. old robots that have not been ported to the current WPILib version) are ignored.
-    """
+    # Returns the directories of the projects that are included in settings.gradle. Projects
+    # that are not part of the build (i.e. old robots that have not been ported to the current
+    # WPILib version) are ignored.
     project_dirs = []
     with open(os.path.join(base_directory, "settings.gradle"), "r") as f:
         for line in f.readlines():
             matches = re.match(r"^\s*include\s+['\"](.*)['\"]", line)
             if matches:
-                project_dirs.append(
-                    os.path.join(base_directory, *matches.group(1).split(":"))
-                )
+                project_dirs.append(os.path.join(base_directory, *matches.group(1).split(":")))
     return project_dirs
 
 
@@ -113,9 +110,7 @@ def fix_gradlerio_build_file(versions):
                     matches = re.search(GRADLERIO_REGEX, line)
                     if matches:
                         plugin = matches.group(1)
-                        new_content += (
-                            f'    id "{plugin}.GradleRIO" version "{newest_version}"\n'
-                        )
+                        new_content += f'    id "{plugin}.GradleRIO" version "{newest_version}"\n'
                     else:
                         new_content += line
 

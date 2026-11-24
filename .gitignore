@@ -584,3 +584,5 @@ imgui.ini
 
 networktables.json.bck
 .idea/pySourceRootDetection.xml
+# Temporary files from GosLib ChoreoFileVersionPatch (TODO(2027) remove with the patch)
+.gos_choreo_patch/

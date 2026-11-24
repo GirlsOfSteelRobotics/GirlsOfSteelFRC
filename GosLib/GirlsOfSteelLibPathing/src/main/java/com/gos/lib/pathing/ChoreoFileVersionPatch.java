@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * TODO(2027) Delete this once PathPlannerLib has a 2027 release that understands Choreo 2026 files.
@@ -60,20 +61,50 @@ public final class ChoreoFileVersionPatch {
             return;
         }
 
+        Path choreoPath = choreoDir.toPath().toAbsolutePath().normalize();
+        Path workDir;
         try {
-            Path tempDir = Files.createTempDirectory("gos_choreo_patch");
-            tempDir.toFile().deleteOnExit();
-
-            for (File trajFile : trajFiles) {
-                patchTrajectory(choreoDir, trajFile, tempDir);
-            }
-        } catch (IOException | ParseException | ReflectiveOperationException | IllegalArgumentException ex) {
-            // If anything goes wrong, PathPlannerLib will throw its normal error when the path is requested
+            workDir = createWorkDir(choreoPath);
+        } catch (IOException ex) {
             System.err.println("Could not apply the Choreo file version patch: " + ex); // NOPMD(SystemPrintln)
+            return;
+        }
+
+        try {
+            for (File trajFile : trajFiles) {
+                try {
+                    patchTrajectory(choreoPath, trajFile, workDir);
+                } catch (IOException | ParseException | ReflectiveOperationException | IllegalArgumentException ex) {
+                    // If anything goes wrong, PathPlannerLib will throw its normal error when the path is requested
+                    System.err.println("Could not apply the Choreo file version patch to " + trajFile.getName() + ": " + ex); // NOPMD(SystemPrintln)
+                }
+            }
+        } finally {
+            try {
+                Files.deleteIfExists(workDir);
+            } catch (IOException ex) {
+                workDir.toFile().deleteOnExit();
+            }
         }
     }
 
-    private static void patchTrajectory(File choreoDir, File trajFile, Path tempDir)
+    /**
+     * Creates the directory the patched copies are written to. PathPlannerLib is handed a path relative to the
+     * deploy directory, which is impossible if the system temp directory is on a different drive (i.e. GitHub's
+     * Windows runners check out to D: but use C: for temp). In that case a hidden directory inside the choreo
+     * directory is used instead.
+     */
+    private static Path createWorkDir(Path choreoPath) throws IOException {
+        Path tempDir = Files.createTempDirectory("gos_choreo_patch").toAbsolutePath().normalize();
+        if (Objects.equals(tempDir.getRoot(), choreoPath.getRoot())) {
+            return tempDir;
+        }
+
+        Files.deleteIfExists(tempDir);
+        return Files.createDirectories(choreoPath.resolve(".gos_choreo_patch"));
+    }
+
+    private static void patchTrajectory(Path choreoPath, File trajFile, Path workDir)
         throws IOException, ParseException, ReflectiveOperationException {
         String fileName = trajFile.getName();
         String trajectoryName = fileName.substring(0, fileName.length() - ".traj".length());
@@ -86,13 +117,11 @@ public final class ChoreoFileVersionPatch {
         }
 
         json.put("version", MAX_PATHPLANNER_SUPPORTED_VERSION);
-        Path patchedFile = tempDir.resolve(fileName);
+        Path patchedFile = workDir.resolve(fileName);
         Files.writeString(patchedFile, json.toJSONString(), StandardCharsets.UTF_8);
-        patchedFile.toFile().deleteOnExit();
 
         // PathPlannerLib looks up "<deploy>/choreo/<name>.traj", so point it at the temporary copy with a relative path
-        Path relative = choreoDir.toPath().toAbsolutePath().normalize()
-            .relativize(tempDir.resolve(trajectoryName).toAbsolutePath().normalize());
+        Path relative = choreoPath.relativize(workDir.resolve(trajectoryName));
         String loaderName = relative.toString().replace('\\', '/');
 
         Method loader = PathPlannerPath.class.getDeclaredMethod("loadChoreoTrajectoryIntoCache", String.class);
@@ -101,6 +130,8 @@ public final class ChoreoFileVersionPatch {
             loader.invoke(null, loaderName);
         } catch (InvocationTargetException ex) {
             throw new IOException("Failed to load patched trajectory " + trajectoryName, ex.getCause());
+        } finally {
+            Files.deleteIfExists(patchedFile);
         }
 
         rekeyCache(loaderName, trajectoryName);
