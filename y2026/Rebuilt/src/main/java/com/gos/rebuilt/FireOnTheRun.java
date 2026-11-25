@@ -2,13 +2,13 @@ package com.gos.rebuilt;
 
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructPublisher;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Rotation3d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.math.kinematics.ChassisVelocities;
+import org.wpilib.networktables.NetworkTableInstance;
+import org.wpilib.networktables.StructPublisher;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 import java.util.ArrayList;
@@ -46,9 +46,9 @@ public class FireOnTheRun {
         return m_chassis.getDistanceToObject(point.toTranslation2d()) / (getFuelVelocity(point) * Math.cos(ShooterSubsystem.SHOT_ANGLE.getRadians()));
     }
 
-    public Translation3d imaginaryHub(double time, ChassisSpeeds chassisSpeed) {
-        double deltaX = time * chassisSpeed.vxMetersPerSecond;
-        double deltaY = time * chassisSpeed.vyMetersPerSecond;
+    public Translation3d imaginaryHub(double time, ChassisVelocities chassisSpeed) {
+        double deltaX = time * chassisSpeed.vx;
+        double deltaY = time * chassisSpeed.vy;
 
         return new Translation3d(m_goal.getX() - deltaX, m_goal.getY() - deltaY, m_goal.getZ());
     }
@@ -56,7 +56,7 @@ public class FireOnTheRun {
     public Translation3d findImaginary(Translation3d goal) {
         m_goal = goal;
         m_goalPosition.accept(m_goal);
-        ChassisSpeeds robotVel = ChassisSpeeds.fromRobotRelativeSpeeds(m_chassis.getState().Speeds, m_chassis.getState().Pose.getRotation());
+        ChassisVelocities robotVel = m_chassis.getState().Velocity.toFieldRelative(m_chassis.getState().Pose.getRotation());
 
 
         Translation3d imaginaryPoint = Hub.innerCenterPoint.getTranslation();

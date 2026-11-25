@@ -1,6 +1,7 @@
 package com.gos.lib.rev;
 
 import com.revrobotics.spark.SparkBase;
+import org.wpilib.hardware.bus.CANPort;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -22,8 +23,8 @@ public enum RevMotorControllerModel {
 
     public SparkBase createMotor(int canId, MotorType motorTYpe) {
         return switch (this) {
-        case SPARK_MAX -> new SparkMax(canId, motorTYpe);
-        case SPARK_FLEX -> new SparkFlex(canId, motorTYpe);
+        case SPARK_MAX -> new SparkMax(CANPort.CAN_S0, canId, motorTYpe);
+        case SPARK_FLEX -> new SparkFlex(CANPort.CAN_S0, canId, motorTYpe);
         default -> throw new IllegalStateException("Unexpected value: " + this);
         };
     }

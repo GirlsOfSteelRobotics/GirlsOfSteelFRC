@@ -1,11 +1,11 @@
 package com.gos.codelabs.gitflow.subsystems;
 
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.PWMMotorController;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.drive.DifferentialDrive;
+import org.wpilib.hardware.motor.PWMMotorController;
+import org.wpilib.drivers.motor.PWMTalonSRX;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.command2.SubsystemBase;
 
 public class ChassisSubsystem extends SubsystemBase {
 
@@ -17,11 +17,11 @@ public class ChassisSubsystem extends SubsystemBase {
     @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
-        m_leftDriveA = new Talon(0);
-        m_rightDriveA = new Talon(2);
+        m_leftDriveA = new PWMTalonSRX(0);
+        m_rightDriveA = new PWMTalonSRX(2);
 
-        PWMMotorController leftDriveB = new Talon(1);
-        PWMMotorController rightDriveB = new Talon(3);
+        PWMMotorController leftDriveB = new PWMTalonSRX(1);
+        PWMMotorController rightDriveB = new PWMTalonSRX(3);
 
         m_leftDriveA.addFollower(leftDriveB);
         m_rightDriveA.addFollower(rightDriveB);
@@ -35,7 +35,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Left Drive", m_leftDriveA.get());
-        SmartDashboard.putNumber("Right Drive", m_rightDriveA.get());
+        Telemetry.log("Left Drive", m_leftDriveA.getThrottle());
+        Telemetry.log("Right Drive", m_rightDriveA.getThrottle());
     }
 }

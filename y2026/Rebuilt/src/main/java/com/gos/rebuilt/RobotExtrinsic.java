@@ -1,10 +1,10 @@
 package com.gos.rebuilt;
 
 import com.gos.lib.properties.TunableTransform3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
+import org.wpilib.math.geometry.Rotation3d;
+import org.wpilib.math.geometry.Transform3d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.math.util.Units;
 
 public class RobotExtrinsic {
 

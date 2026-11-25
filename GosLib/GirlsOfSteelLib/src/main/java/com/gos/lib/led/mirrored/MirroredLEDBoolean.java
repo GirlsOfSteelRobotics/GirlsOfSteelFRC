@@ -2,8 +2,8 @@ package com.gos.lib.led.mirrored;
 
 import com.gos.lib.led.LEDBoolean;
 import com.gos.lib.led.LEDPattern;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.util.Color;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
+import org.wpilib.util.Color;
 
 public class MirroredLEDBoolean implements LEDPattern {
 
@@ -12,7 +12,7 @@ public class MirroredLEDBoolean implements LEDPattern {
 
     public MirroredLEDBoolean(AddressableLEDBuffer buffer, int minIndex, int numLights,
                               Color trueColor) {
-        this(buffer, minIndex, numLights, trueColor, Color.kBlack);
+        this(buffer, minIndex, numLights, trueColor, Color.BLACK);
     }
 
     public MirroredLEDBoolean(AddressableLEDBuffer buffer, int minIndex, int numLights,

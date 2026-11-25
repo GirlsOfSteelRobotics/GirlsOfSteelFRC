@@ -1,8 +1,8 @@
 package com.gos.lib.led.driverstation;
 
-import edu.wpi.first.hal.DriverStationJNI;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.wpilib.hardware.hal.DriverStationJNI;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.telemetry.Telemetry;
 
 public class DriverStationLedDriver {
 
@@ -34,7 +34,7 @@ public class DriverStationLedDriver {
         }
     }
 
-    private byte m_port;
+    private final byte m_port;
 
     private int m_data;
 
@@ -84,19 +84,18 @@ public class DriverStationLedDriver {
     }
 
     public void write() {
-        short outputs = 0;
         short leftRumble = (short) (m_data & 0xFFFF);
         short rightRumble = (short) ((m_data >> 16) & 0xFFFF);
 
         if (RobotBase.isReal()) {
-            DriverStationJNI.setJoystickOutputs(m_port, outputs, leftRumble, rightRumble);
+            DriverStationJNI.setJoystickRumble(m_port, leftRumble, rightRumble, 0, 0);
         } else  {
-            DriverStationJNI.setJoystickOutputs(m_port, outputs, rightRumble, leftRumble);
+            DriverStationJNI.setJoystickRumble(m_port, rightRumble, leftRumble, 0, 0);
         }
 
 
-        SmartDashboard.putNumber("LED Data", m_data);
-        SmartDashboard.putNumber("LED Right", rightRumble);
-        SmartDashboard.putNumber("LED Left", leftRumble);
+        Telemetry.log("LED Data", m_data);
+        Telemetry.log("LED Right", rightRumble);
+        Telemetry.log("LED Left", leftRumble);
     }
 }

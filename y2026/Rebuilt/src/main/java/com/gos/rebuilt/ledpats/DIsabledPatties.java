@@ -1,7 +1,7 @@
 package com.gos.rebuilt.ledpats;
 
 import com.gos.rebuilt.autos.AutoFactory;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
 
 public class DIsabledPatties {
 

@@ -1,6 +1,6 @@
 package com.gos.lib.led;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
 
 import java.util.Map;
 

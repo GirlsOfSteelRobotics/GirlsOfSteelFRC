@@ -1,13 +1,13 @@
 // spotless:off
 package frc.robot.choreo_gen;
 
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
 import java.util.Map;
 import java.util.OptionalInt;
 
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 // If the 2 imports above cause errors because you're not using ChoreoLib,
 // turn off "Include ChoreoLib-specific Helpers" in Choreo's codegen settings.
 
@@ -24,11 +24,11 @@ public record ChoreoTraj(
     Pose2d initialPoseBlue,
     Pose2d endPoseBlue
 ) {
-    public static final ChoreoTraj OvenToCenterLine = new ChoreoTraj(
-        "OvenToCenterLine",
+    public static final ChoreoTraj KitchenToCenterLine = new ChoreoTraj(
+        "KitchenToCenterLine",
         OptionalInt.empty(),
-        2.09746,
-        new Pose2d(0.50854, 3.09811, Rotation2d.fromRadians(-1.5708)),
+        2.22021,
+        new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(0)),
         new Pose2d(7.82769, 1.94214, Rotation2d.fromRadians(0))
     );
     public static final ChoreoTraj KitchenToOven = new ChoreoTraj(
@@ -52,11 +52,11 @@ public record ChoreoTraj(
         new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(-1.5708)),
         new Pose2d(2.75879, 2.34562, Rotation2d.fromRadians(0))
     );
-    public static final ChoreoTraj KitchenToCenterLine = new ChoreoTraj(
-        "KitchenToCenterLine",
+    public static final ChoreoTraj OvenToCenterline = new ChoreoTraj(
+        "OvenToCenterline",
         OptionalInt.empty(),
-        2.22021,
-        new Pose2d(0.39654, 5.45961, Rotation2d.fromRadians(0)),
+        2.09746,
+        new Pose2d(0.50854, 3.09811, Rotation2d.fromRadians(-1.5708)),
         new Pose2d(7.82769, 1.94214, Rotation2d.fromRadians(0))
     );
     public static final ChoreoTraj PantryToCenterLine = new ChoreoTraj(
@@ -72,11 +72,11 @@ public record ChoreoTraj(
      * This allows for trajectory data to be looked up with strings during runtime.
      */
     public static final Map<String, ChoreoTraj> ALL_TRAJECTORIES = Map.ofEntries(
-        Map.entry("OvenToCenterLine", OvenToCenterLine),
+        Map.entry("KitchenToCenterLine", KitchenToCenterLine),
         Map.entry("KitchenToOven", KitchenToOven),
         Map.entry("KitchenToPantry", KitchenToPantry),
         Map.entry("KitchenToRamp", KitchenToRamp),
-        Map.entry("KitchenToCenterLine", KitchenToCenterLine),
+        Map.entry("OvenToCenterline", OvenToCenterline),
         Map.entry("PantryToCenterLine", PantryToCenterLine)
     );
 

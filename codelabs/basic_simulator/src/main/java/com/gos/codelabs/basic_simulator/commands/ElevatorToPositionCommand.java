@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.command2.Command;
 
 public class ElevatorToPositionCommand extends Command {
     private final ElevatorSubsystem m_lift;

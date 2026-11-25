@@ -1,17 +1,17 @@
 package com.gos.lib.joysticks;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.driverstation.GenericHID;
+import org.wpilib.system.Timer;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 
 
 public class VibrateControllerTimedCommand extends Command {
-    private final CommandXboxController m_driverController;
+    private final CommandNiDsXboxController m_driverController;
     private final Timer m_intakeTimer;
     private final double m_elapsedTime;
 
-    public VibrateControllerTimedCommand(CommandXboxController controller, double elapsedTime) {
+    public VibrateControllerTimedCommand(CommandNiDsXboxController controller, double elapsedTime) {
         m_driverController = controller;
         this.m_intakeTimer = new Timer();
         m_elapsedTime = elapsedTime;
@@ -24,7 +24,8 @@ public class VibrateControllerTimedCommand extends Command {
 
     @Override
     public void execute() {
-        m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+        m_driverController.getHID().setRumble(GenericHID.RumbleType.LEFT_RUMBLE, 1);
+        m_driverController.getHID().setRumble(GenericHID.RumbleType.RIGHT_RUMBLE, 1);
     }
 
     @Override
@@ -34,6 +35,7 @@ public class VibrateControllerTimedCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_driverController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+        m_driverController.getHID().setRumble(GenericHID.RumbleType.LEFT_RUMBLE, 0);
+        m_driverController.getHID().setRumble(GenericHID.RumbleType.RIGHT_RUMBLE, 0);
     }
 }

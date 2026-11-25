@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="codelabs:basic_simulator:simulateJava" />
+          <option value="codelabs:basic_simulator:run" />
         </list>
       </option>
       <option name="vmOptions" />

@@ -2,7 +2,7 @@ package com.gos.lib.led.mirrored;
 
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.LEDRainbow;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
 
 public class MirroredLEDRainbow implements LEDPattern {
 

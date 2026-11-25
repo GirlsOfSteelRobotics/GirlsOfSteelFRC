@@ -1,6 +1,7 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightDistanceCommand;
 import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightTimedCommand;
 import com.gos.codelabs.basic_simulator.commands.TurnToAngleCommand;
@@ -11,27 +12,26 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.numbers.N2;
-import edu.wpi.first.math.system.LinearSystem;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.linalg.VecBuilder;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.kinematics.DifferentialDriveKinematics;
+import org.wpilib.math.kinematics.DifferentialDriveOdometry;
+import org.wpilib.math.numbers.N2;
+import org.wpilib.math.system.LinearSystem;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.system.Models;
+import org.wpilib.math.util.Units;
+import org.wpilib.hardware.imu.OnboardIMU;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.drive.DifferentialDrive;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.simulation.DifferentialDrivetrainSim;
+import org.wpilib.smartdashboard.Field2d;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.command2.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-import org.snobotv2.module_wrappers.wpi.ADXRS450GyroWrapper;
+import org.snobotv2.module_wrappers.wpi.OnboardIMUWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
@@ -48,7 +48,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     private final DifferentialDriveOdometry m_odometry;
     private final Field2d m_field;
 
-    private final ADXRS450_Gyro m_gyro;
+    private final OnboardIMU m_gyro;
 
     private final LoggingUtil m_loggingUtil;
 
@@ -69,7 +69,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
 
         public static final LinearSystem<N2, N2, N2> K_DRIVETRAIN_PLANT =
-                LinearSystemId.identifyDrivetrainSystem(KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER,
+                Models.differentialDriveFromSysId(KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER,
                         KV_VOLT_SECONDS_PER_RADIAN, KA_VOLT_SECONDS_SQUARED_PER_RADIAN);
 
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS =
@@ -92,14 +92,14 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SparkMax(Constants.CAN_CHASSIS_LEFT_A, MotorType.kBrushless);
-        m_leftDriveB = new SparkMax(Constants.CAN_CHASSIS_LEFT_B, MotorType.kBrushless);
+        m_leftDriveA = new SparkMax(CANPort.CAN_S0, Constants.CAN_CHASSIS_LEFT_A, MotorType.kBrushless);
+        m_leftDriveB = new SparkMax(CANPort.CAN_S0, Constants.CAN_CHASSIS_LEFT_B, MotorType.kBrushless);
         SparkMaxConfig leftDriveAConfig = new SparkMaxConfig();
         SparkMaxConfig leftDriveBConfig = new SparkMaxConfig();
         leftDriveBConfig.follow(m_leftDriveA);
 
-        m_rightDriveA = new SparkMax(Constants.CAN_CHASSIS_RIGHT_A, MotorType.kBrushless);
-        m_rightDriveB = new SparkMax(Constants.CAN_CHASSIS_RIGHT_B, MotorType.kBrushless);
+        m_rightDriveA = new SparkMax(CANPort.CAN_S0, Constants.CAN_CHASSIS_RIGHT_A, MotorType.kBrushless);
+        m_rightDriveB = new SparkMax(CANPort.CAN_S0, Constants.CAN_CHASSIS_RIGHT_B, MotorType.kBrushless);
         SparkMaxConfig rightDriveAConfig = new SparkMaxConfig();
         SparkMaxConfig rightDriveBConfig = new SparkMaxConfig();
         rightDriveBConfig.follow(m_rightDriveA);
@@ -108,13 +108,12 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_leftEncoder = m_leftDriveA.getEncoder();
         m_rightEncoder = m_rightDriveA.getEncoder();
 
-        m_gyro = new ADXRS450_Gyro();
+        m_gyro = new OnboardIMU(OnboardIMU.MountOrientation.FLAT);
 
         m_differentialDrive = new DifferentialDrive(m_leftDriveA, m_rightDriveA);
 
         m_odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
         m_field = new Field2d();
-        SmartDashboard.putData(m_field);
 
         m_loggingUtil = new LoggingUtil("Chassis");
         m_loggingUtil.addDouble("Left Distance", this::getLeftDistance);
@@ -129,7 +128,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
                     new RevMotorControllerSimWrapper(m_rightDriveA, DrivetrainConstants.DRIVE_GEARBOX),
                     RevEncoderSimWrapper.create(m_leftDriveA),
                     RevEncoderSimWrapper.create(m_rightDriveA),
-                    new ADXRS450GyroWrapper(m_gyro));
+                    new OnboardIMUWrapper(m_gyro));
             m_simulator.setRightInverted(false);
 
             m_differentialDrive.setSafetyEnabled(false);
@@ -147,8 +146,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_leftDriveB.close();
         m_rightDriveA.close();
         m_rightDriveB.close();
-        m_differentialDrive.close();
-        m_gyro.close();
+        
     }
 
     /**
@@ -167,8 +165,9 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     @Override
     public void periodic() {
+        Telemetry.log("Field", m_field);
         m_odometry.update(m_gyro.getRotation2d(), getLeftDistance(), getRightDistance());
-        m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_field.setRobotPose(m_odometry.getPose());
         m_loggingUtil.updateLogs();
     }
 
@@ -209,7 +208,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public void addChassisDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Chassis");
+        CommandTab tab = new CommandTab("Chassis");
         tab.add(new AutoDriveStraightTimedCommand(this, .5, 2).withName("Timed Drive Forwards"));
         tab.add(new AutoDriveStraightTimedCommand(this, -.5, 2).withName("Timed Drive Backwards"));
         tab.add(new AutoDriveStraightDistanceCommand(this, Units.feetToMeters(5)).withName("Drive Distance Forwards"));

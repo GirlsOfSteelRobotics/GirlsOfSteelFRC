@@ -1,7 +1,7 @@
 package com.gos.lib.properties;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.networktables.NetworkTableInstance;
+import org.wpilib.preferences.Preferences;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 

@@ -5,8 +5,8 @@ import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightDistanceComman
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.wpilib.math.util.Units;
+import org.wpilib.command2.CommandScheduler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

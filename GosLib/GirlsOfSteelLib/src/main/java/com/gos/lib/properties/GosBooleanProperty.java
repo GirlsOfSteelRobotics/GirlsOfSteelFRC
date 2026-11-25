@@ -1,6 +1,6 @@
 package com.gos.lib.properties;
 
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.preferences.Preferences;
 
 /**
  * Boolean implementation of a GOS tunable property

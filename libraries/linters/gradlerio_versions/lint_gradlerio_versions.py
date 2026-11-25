@@ -6,15 +6,24 @@ import json
 import shutil
 
 
+GRADLERIO_REGEX = r'(edu\.wpi\.first|org\.wpilib)\.GradleRIO.* version "(.*)"'
+
+
+def _walk_projects(base_directory):
+    for project_dir in get_included_project_dirs(base_directory):
+        for entry in os.walk(project_dir):
+            yield entry
+
+
 def get_build_file_versions(build_files):
     versions = collections.defaultdict(list)
 
     for build_file in build_files:
         with open(build_file, "r") as f:
             for line in f.readlines():
-                matches = re.search(r'edu\.wpi\.first\.GradleRIO.* version "(.*)"', line)
+                matches = re.search(GRADLERIO_REGEX, line)
                 if matches:
-                    version = matches.group(1)
+                    version = matches.group(2)
                     versions[version].append(build_file)
 
     return versions
@@ -36,11 +45,24 @@ def get_vendor_deps_versions(vendor_deps):
     return vendor_versions
 
 
+def get_included_project_dirs(base_directory):
+    # Returns the directories of the projects that are included in settings.gradle. Projects
+    # that are not part of the build (i.e. old robots that have not been ported to the current
+    # WPILib version) are ignored.
+    project_dirs = []
+    with open(os.path.join(base_directory, "settings.gradle"), "r") as f:
+        for line in f.readlines():
+            matches = re.match(r"^\s*include\s+['\"](.*)['\"]", line)
+            if matches:
+                project_dirs.append(os.path.join(base_directory, *matches.group(1).split(":")))
+    return project_dirs
+
+
 def get_versions(base_directory):
     build_files = []
     vendor_deps = collections.defaultdict(list)
 
-    for root, _, files in os.walk(base_directory):
+    for root, _, files in _walk_projects(base_directory):
         for f in files:
             full_file = os.path.join(root, f)
             if f == "build.gradle":
@@ -85,11 +107,10 @@ def fix_gradlerio_build_file(versions):
             new_content = ""
             with open(bad_file, "r") as f:
                 for line in f.readlines():
-                    matches = re.search(r'edu\.wpi\.first\.GradleRIO.* version "(.*)"', line)
+                    matches = re.search(GRADLERIO_REGEX, line)
                     if matches:
-                        new_content += (
-                            f'    id "edu.wpi.first.GradleRIO" version "{newest_version}"\n'
-                        )
+                        plugin = matches.group(1)
+                        new_content += f'    id "{plugin}.GradleRIO" version "{newest_version}"\n'
                     else:
                         new_content += line
 

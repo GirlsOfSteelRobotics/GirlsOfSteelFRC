@@ -8,10 +8,20 @@
 
     <rule ref="category/java/bestpractices.xml">
         <exclude name="GuardLogStatement" />
-        <exclude name="JUnitTestsShouldIncludeAssert" />
-        <exclude name="JUnitAssertionsShouldIncludeMessage" />
-        <exclude name="JUnitTestContainsTooManyAsserts" />
-        <exclude name="JUnit5TestShouldBePackagePrivate" />
+        <exclude name="UnitTestShouldIncludeAssert" />
+        <exclude name="UnitTestAssertionsShouldIncludeMessage" />
+        <exclude name="UnitTestContainsTooManyAsserts" />
+        <exclude name="UnitTestShouldUseTestAnnotation" />
+        <exclude name="JUnitJupiterTestShouldBePackagePrivate" />
+        <exclude name="UnnecessaryWarningSuppression" />
+        <!-- Added in PMD 7 -->
+        <exclude name="ImplicitFunctionalInterface" />
+        <exclude name="EnumComparison" />
+        <exclude name="UseEnumCollections" />
+        <exclude name="LooseCoupling" />
+        <exclude name="UnusedAssignment" />
+        <exclude name="RelianceOnDefaultCharset" />
+        <exclude name="ExhaustiveSwitchHasDefault" />
         <exclude name="SystemPrintln" />
     </rule>
 
@@ -60,11 +70,23 @@
         <exclude name="ShortClassName" />
         <exclude name="ConfusingTernary" />
         <exclude name="BooleanGetMethodName" />
+        <!-- Added / changed in PMD 7 -->
+        <exclude name="LocalVariableDeclarationShouldBeAtStartOfBlock" />
+        <exclude name="UseExplicitTypes" />
+        <exclude name="TypeParameterNamingConventions" />
     </rule>
 
     <rule ref="category/java/design.xml">
         <exclude name="SingularField" />
-        <exclude name="UseUtilityClass" />
+        <exclude name="InstantiableUtilityClass" />
+        <!-- Added in PMD 7 -->
+        <exclude name="PublicMemberInNonPublicType" />
+        <!-- Newly reported by PMD 7 on existing code -->
+        <exclude name="DataClass" />
+        <exclude name="CouplingBetweenObjects" />
+        <exclude name="AvoidDeeplyNestedIfStmts" />
+        <exclude name="SimplifyBooleanReturns" />
+        <exclude name="FinalFieldCouldBeStatic" />
         <exclude name="AvoidThrowingRawExceptionTypes" />
         <!-- <exclude name="CyclomaticComplexity" /> -->
         <!-- <exclude name="DataClass" /> -->
@@ -98,7 +120,8 @@
         <!-- <exclude name="AvoidCatchingThrowable" /> -->
         <!-- <exclude name="AvoidDuplicateLiterals" /> -->
         <exclude name="AvoidLiteralsInIfCondition" />
-        <exclude name="BeanMembersShouldSerialize" />
+        <exclude name="NonSerializableClass" />
+        <exclude name="TestClassWithoutTestCases" />
         <!-- <exclude name="ConstructorCallsOverridableMethod" /> -->
         <!-- <exclude name="DataflowAnomalyAnalysis" /> -->
         <!-- <exclude name="DoNotCallSystemExit" /> -->
@@ -113,6 +136,8 @@
         <!-- <exclude name="AvoidUsingVolatile" /> -->
         <!-- <exclude name="DoNotUseThreads" /> -->
         <exclude name="UseConcurrentHashMap" />
+        <!-- Newly reported by PMD 7 on existing code -->
+        <exclude name="DoNotUseThreads" />
     </rule>
 
     <rule ref="category/java/performance.xml">

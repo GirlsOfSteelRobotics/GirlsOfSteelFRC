@@ -1,12 +1,12 @@
 package com.gos.lib.sensors;
 
 import com.gos.lib.GetAllianceUtil;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Rotation3d;
+import org.wpilib.math.util.Units;
+import org.wpilib.networktables.NetworkTable;
+import org.wpilib.networktables.NetworkTableEntry;
+import org.wpilib.networktables.NetworkTableInstance;
 
 public class LimelightSensor {
 
@@ -161,7 +161,7 @@ public class LimelightSensor {
      * for there to exist a height differential between goal and camera. The larger this differential,
      * the more accurate the distance estimate will be.
      *
-     * <p>Units can be converted using the {@link edu.wpi.first.math.util.Units} class.
+     * <p>Units can be converted using the {@link org.wpilib.math.util.Units} class.
      *
      * @param cameraHeightMeters The physical height of the camera off the floor in meters.
      * @param targetHeightMeters The physical height of the target off the floor in meters. This

@@ -1,8 +1,8 @@
 package com.gos.lib.properties;
 
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
-import edu.wpi.first.wpilibj.Preferences;
+import com.gos.lib.alerts.AlertFactory;
+import org.wpilib.util.Alert;
+import org.wpilib.preferences.Preferences;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,8 +21,8 @@ import java.util.function.BiFunction;
  */
 public final class PropertyManager {
 
-    private static final Alert PROPERTY_MISMATCH_ALERT = new Alert("Properties Mismatch", AlertType.kWarning);
-    private static final Alert HAS_DYNAMIC_PROPERTIES = new Alert("Using Dynamic GOS Properties", AlertType.kInfo);
+    private static final Alert PROPERTY_MISMATCH_ALERT = AlertFactory.create("Properties Mismatch", Alert.Level.MEDIUM);
+    private static final Alert HAS_DYNAMIC_PROPERTIES = AlertFactory.create("Using Dynamic GOS Properties", Alert.Level.LOW);
     private static boolean purgeConstantPreferenceKeys;
 
     private static final Set<String> REGISTERED_KEYS = new HashSet<>();

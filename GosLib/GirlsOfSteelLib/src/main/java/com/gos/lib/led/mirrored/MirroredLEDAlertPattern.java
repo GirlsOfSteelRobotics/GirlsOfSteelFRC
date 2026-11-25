@@ -1,7 +1,7 @@
 package com.gos.lib.led.mirrored;
 
 import com.gos.lib.led.LEDAlertPatterns;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
 
 public class MirroredLEDAlertPattern {
 

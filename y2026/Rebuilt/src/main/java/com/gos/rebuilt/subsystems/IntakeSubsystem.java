@@ -2,6 +2,7 @@ package com.gos.rebuilt.subsystems;
 
 
 import com.gos.lib.logging.LoggingUtil;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.rebuilt.Constants;
@@ -11,10 +12,9 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -29,9 +29,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public IntakeSubsystem() {
-        m_intakeMotor = new SparkFlex(Constants.INTAKE_MOTOR, MotorType.kBrushless);
+        m_intakeMotor = new SparkFlex(CANPort.CAN_S0, Constants.INTAKE_MOTOR, MotorType.kBrushless);
         m_intakeMotorAlert = new SparkMaxAlerts(m_intakeMotor, "Intake Motor");
-        m_followerMotor = new SparkFlex(Constants.INTAKE_FOLLOWER_MOTOR, MotorType.kBrushless);
+        m_followerMotor = new SparkFlex(CANPort.CAN_S0, Constants.INTAKE_FOLLOWER_MOTOR, MotorType.kBrushless);
         m_followerMotorAlert = new SparkMaxAlerts(m_followerMotor, "Intake Follower Motor");
 
 
@@ -53,8 +53,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
         m_loggingUtil = new LoggingUtil("Intake");
-        m_loggingUtil.addDouble("Current", m_intakeMotor::getOutputCurrent);
-        m_loggingUtil.addDouble("follower current", m_followerMotor::getOutputCurrent);
+        m_loggingUtil.addDouble("Current", () -> m_intakeMotor.getOutputCurrent().get());
+        m_loggingUtil.addDouble("follower current", () -> m_followerMotor.getOutputCurrent().get());
 
 
     }
@@ -68,11 +68,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public void intake() {
-        m_intakeMotor.set(m_intakeSpeed.getValue());
+        m_intakeMotor.setThrottle(m_intakeSpeed.getValue());
     }
 
     public void outtake() {
-        m_intakeMotor.set(-m_intakeSpeed.getValue());
+        m_intakeMotor.setThrottle(-m_intakeSpeed.getValue());
     }
 
     public void stop() {
@@ -80,7 +80,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void addIntakeDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Intake");
+        CommandTab tab = new CommandTab("Intake");
         tab.add(createIntakeInCommand());
         tab.add(createIntakeOutCommand());
     }

@@ -1,8 +1,8 @@
 package com.gos.lib.led;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
+import org.wpilib.util.Color;
+import org.wpilib.util.Color8Bit;
 
 public class LEDSolidColor extends LEDBase {
     private final int m_minIndex;

@@ -27,6 +27,11 @@ public final class Constants {
     public static final int ELEVATOR_MOTOR_ID = 14;
     public static final int CAN_RANGE_ID = 2;
 
+    // SmartIO
+    public static final int BEAM_BREAK1 = 0;
+    public static final int BEAM_BREAK2 = 1;
+    public static final int BEAM_BREAK3 = 2;
+
     // Other Stuff
     public static final int LED_PORT = 0;
 }

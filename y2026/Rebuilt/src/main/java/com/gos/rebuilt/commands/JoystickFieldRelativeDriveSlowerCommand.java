@@ -2,9 +2,9 @@ package com.gos.rebuilt.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.math.util.MathUtil;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 
 
 public class JoystickFieldRelativeDriveSlowerCommand extends Command {
@@ -12,9 +12,9 @@ public class JoystickFieldRelativeDriveSlowerCommand extends Command {
     private static final GosDoubleProperty ROTATIONAL_DAMPER = new GosDoubleProperty(false, "ChassisRotationSlowDamper", .5);
 
     private final ChassisSubsystem m_chassis;
-    private final CommandXboxController m_joystick;
+    private final CommandNiDsXboxController m_joystick;
 
-    public JoystickFieldRelativeDriveSlowerCommand(ChassisSubsystem chassis, CommandXboxController driverJoystick) {
+    public JoystickFieldRelativeDriveSlowerCommand(ChassisSubsystem chassis, CommandNiDsXboxController driverJoystick) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
 
