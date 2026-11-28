@@ -1,7 +1,7 @@
 package com.gos.lib.properties.feedforward;
 
 import com.gos.lib.properties.BasePropertiesTest;
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.preferences.Preferences;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

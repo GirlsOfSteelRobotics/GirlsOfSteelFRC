@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Rotation3d;
+import org.wpilib.math.geometry.Transform3d;
+import org.wpilib.math.geometry.Translation3d;
+import org.wpilib.networktables.NetworkTableInstance;
+import org.wpilib.networktables.StructArrayPublisher;
+import org.wpilib.command2.SubsystemBase;
 
 public class SuperStructureViz extends SubsystemBase {
     // Where carrots sit in the hopper, in the robot frame with the elevator down. The hopper floor slopes
@@ -21,13 +21,15 @@ public class SuperStructureViz extends SubsystemBase {
 
     private final ElevatorSubsystem m_elevator;
     private final ChassisSubsystem m_chassis;
+    private final OuttakeSubsystem m_outtake;
     private final StructArrayPublisher<Pose3d> m_measuredPublisher;
     private final StructArrayPublisher<Pose3d> m_goalPublisher;
     private final StructArrayPublisher<Pose3d> m_carrotPublisher;
 
-    public SuperStructureViz(ElevatorSubsystem elevator, ChassisSubsystem chassis) {
+    public SuperStructureViz(ElevatorSubsystem elevator, ChassisSubsystem chassis, OuttakeSubsystem outtake) {
         m_elevator = elevator;
         m_chassis = chassis;
+        m_outtake = outtake;
 
         m_measuredPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz/Measured", Pose3d.struct).publish();
         m_goalPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SuperStructureViz/Goal", Pose3d.struct).publish();
@@ -56,7 +58,7 @@ public class SuperStructureViz extends SubsystemBase {
     private Pose3d[] getCarrotPoses(double carriageHeightMeters) {
         // Game pieces are drawn relative to the field, so place them relative to the robot's pose
         Pose3d robotPose = new Pose3d(m_chassis.getState().Pose);
-        int numCarrots = 2; // TODO get from intake subsystem
+        int numCarrots = m_outtake.getCarrotNumbers();
         int count = Math.max(0, Math.min(numCarrots, CARROT_SLOTS.length));
 
         Pose3d[] carrots = new Pose3d[count];

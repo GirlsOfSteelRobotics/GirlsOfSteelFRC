@@ -1,9 +1,9 @@
 package frc.robot.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.math.util.MathUtil;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 import frc.robot.subsystems.ChassisSubsystem;
 
 public class DavidDriveCommand extends Command {
@@ -11,9 +11,9 @@ public class DavidDriveCommand extends Command {
     private double m_lastangle;
     private static final GosDoubleProperty KP = new GosDoubleProperty(false, "DavidDrivekp", 0);
     private final ChassisSubsystem m_chassis;
-    private final CommandXboxController m_joystick;
+    private final CommandNiDsXboxController m_joystick;
 
-    public DavidDriveCommand(ChassisSubsystem chassis, CommandXboxController driverJoystick) {
+    public DavidDriveCommand(ChassisSubsystem chassis, CommandNiDsXboxController driverJoystick) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
 

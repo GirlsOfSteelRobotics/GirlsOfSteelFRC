@@ -1,9 +1,9 @@
 package com.gos.lib.properties.pid;
 
 import com.gos.lib.properties.BasePropertiesTest;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Preferences;
+import org.wpilib.math.controller.ProfiledPIDController;
+import org.wpilib.math.trajectory.TrapezoidProfile;
+import org.wpilib.preferences.Preferences;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +14,7 @@ public class WpiProfiledPidPropertyBuilderTest extends BasePropertiesTest {
 
     @Test
     public void testParameterSetting() {
-        ProfiledPIDController controller = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        ProfiledPIDController controller = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(WpiProfiledPidPropertyBuilder.MIN_CONSTRAINT, WpiProfiledPidPropertyBuilder.MIN_CONSTRAINT));
         PidProperty property = new WpiProfiledPidPropertyBuilder(PROPERTY_NAME, false, controller)
             .addP(1)
             .addI(2)
@@ -34,7 +34,7 @@ public class WpiProfiledPidPropertyBuilderTest extends BasePropertiesTest {
 
     @Test
     public void testThrowOnKff() {
-        ProfiledPIDController controller = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
+        ProfiledPIDController controller = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(WpiProfiledPidPropertyBuilder.MIN_CONSTRAINT, WpiProfiledPidPropertyBuilder.MIN_CONSTRAINT));
         WpiProfiledPidPropertyBuilder builder = new WpiProfiledPidPropertyBuilder(PROPERTY_NAME, false, controller);
 
         assertThrows(UnsupportedOperationException.class, () -> builder.addFF(0));

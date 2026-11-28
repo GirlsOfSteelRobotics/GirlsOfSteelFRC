@@ -7,10 +7,10 @@ import com.gos.rebuilt.autos.AutoFactory;
 import com.gos.rebuilt.ledpats.DIsabledPatties;
 import com.gos.rebuilt.ledpats.DriverStationPatterns;
 import com.gos.rebuilt.ledpats.EnabledPatties;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.hardware.led.AddressableLED;
+import org.wpilib.driverstation.RobotState;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
+import org.wpilib.command2.SubsystemBase;
 
 
 public class LEDSubsystem extends SubsystemBase {
@@ -41,7 +41,6 @@ public class LEDSubsystem extends SubsystemBase {
         this.m_led = new AddressableLED(Constants.LED_PORT);
         m_led.setLength(m_addressMe.getLength());
         m_led.setData((m_addressMe));
-        m_led.start();
         this.m_enabledPatterns = new EnabledPatties(m_addressMe, m_shooter, m_chassis, m_pizza);
         this.m_disabledPatterns = new DIsabledPatties(m_addressMe, factory);
         this.m_driverStationPatterns = new DriverStationPatterns(new DriverStationLedDriver(Constants.LED_JOSTICK), m_chassis, m_shooter);
@@ -52,7 +51,7 @@ public class LEDSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         clearLEDs();
-        if (DriverStation.isEnabled()) {
+        if (RobotState.isEnabled()) {
             m_enabledPatterns.writeLED();
         } else {
             m_disabledPatterns.update();

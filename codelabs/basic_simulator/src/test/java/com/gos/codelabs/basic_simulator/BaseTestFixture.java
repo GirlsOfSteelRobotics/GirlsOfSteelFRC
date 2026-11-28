@@ -1,10 +1,10 @@
 package com.gos.codelabs.basic_simulator;
 
-import edu.wpi.first.hal.HAL;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
-import edu.wpi.first.wpilibj.simulation.SimDeviceSim;
-import edu.wpi.first.wpilibj.simulation.SimHooks;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.wpilib.hardware.hal.HAL;
+import org.wpilib.simulation.DriverStationSim;
+import org.wpilib.simulation.SimDeviceSim;
+import org.wpilib.simulation.SimHooks;
+import org.wpilib.command2.CommandScheduler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -21,7 +21,7 @@ public class BaseTestFixture {
     @BeforeEach
     public void setupSimulator() {
         try {
-            HAL.initialize(0, 0);
+            HAL.initialize();
 
             Field privateStringField = CommandScheduler.class.getDeclaredField("instance");
             privateStringField.setAccessible(true);
@@ -29,11 +29,11 @@ public class BaseTestFixture {
             CommandScheduler.getInstance().enable();
             DriverStationSim.setEnabled(true);
 
-            DriverStationSim.setJoystickAxisCount(0, 6);
-            DriverStationSim.setJoystickAxisCount(1, 6);
+            DriverStationSim.setJoystickAxesMaximumIndex(0, 6);
+            DriverStationSim.setJoystickAxesMaximumIndex(1, 6);
 
-            DriverStationSim.setJoystickButtonCount(0, 10);
-            DriverStationSim.setJoystickButtonCount(1, 10);
+            DriverStationSim.setJoystickButtonsMaximumIndex(0, 10);
+            DriverStationSim.setJoystickButtonsMaximumIndex(1, 10);
 
             // Make sure the robot sees that it is enabled before the test starts, otherwise commands won't get scheduled
             DriverStationSim.notifyNewData();

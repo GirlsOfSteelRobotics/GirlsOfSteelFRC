@@ -6,10 +6,9 @@ import com.gos.rebuilt.subsystems.IntakeSubsystem;
 import com.gos.rebuilt.subsystems.PivotSubsystem;
 import com.gos.rebuilt.subsystems.PizzaSubsystem;
 import com.gos.rebuilt.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.WaitUntilCommand;
 
 public class CombinedCommand {
 
@@ -76,7 +75,7 @@ public class CombinedCommand {
     }
 
     public void createCombinedCommand(boolean inComp) {
-        ShuffleboardTab debugTab = Shuffleboard.getTab("Combined Commands");
+        CommandTab debugTab = new CommandTab("Combined Commands");
         if (!inComp) {
             debugTab.add(shootBall().withName("Shoot"));
 

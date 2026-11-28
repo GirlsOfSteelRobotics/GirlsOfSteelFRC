@@ -1,18 +1,18 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
 import com.gos.codelabs.basic_simulator.Constants;
+import org.wpilib.hardware.bus.CANPort;
 import com.gos.codelabs.basic_simulator.commands.ShooterRpmCommand;
 import com.gos.lib.logging.LoggingUtil;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.math.system.DCMotor;
+import org.wpilib.math.system.Models;
+import org.wpilib.framework.RobotBase;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.simulation.FlywheelSim;
+import org.wpilib.command2.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
@@ -34,16 +34,16 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public ShooterSubsystem() {
-        m_wheelMotor = new SparkMax(Constants.CAN_SHOOTER_MOTOR, MotorType.kBrushless);
+        m_wheelMotor = new SparkMax(CANPort.CAN_S0, Constants.CAN_SHOOTER_MOTOR, MotorType.kBrushless);
         m_wheelEncoder = m_wheelMotor.getEncoder();
 
         m_loggingUtil = new LoggingUtil("Shooter");
         m_loggingUtil.addDouble("RPM", this::getRpm);
-        m_loggingUtil.addDouble("Throttle", m_wheelMotor::getAppliedOutput);
+        m_loggingUtil.addDouble("Throttle", () -> m_wheelMotor.getAppliedOutput().get());
 
         if (RobotBase.isSimulation()) {
             FlywheelSim sim = new FlywheelSim(
-                    LinearSystemId.createFlywheelSystem(FlywheelSimConstants.K_GEARBOX, FlywheelSimConstants.K_MOMENT_OF_INERTIA, FlywheelSimConstants.K_GEARING),
+                    Models.flywheelFromPhysicalConstants(FlywheelSimConstants.K_GEARBOX, FlywheelSimConstants.K_MOMENT_OF_INERTIA, FlywheelSimConstants.K_GEARING),
                     FlywheelSimConstants.K_GEARBOX);
             m_simulator = new FlywheelSimWrapper(sim,
                     new RevMotorControllerSimWrapper(m_wheelMotor, FlywheelSimConstants.K_GEARBOX),
@@ -106,7 +106,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public void addShooterDebugCommands() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+        CommandTab tab = new CommandTab("Shooter");
         tab.add(new ShooterRpmCommand(this, SHOOTING_RPM).withName("Spin At Shooting RPM"));
         tab.add(new ShooterRpmCommand(this, 1000).withName("Spin At 1000 RPM"));
     }

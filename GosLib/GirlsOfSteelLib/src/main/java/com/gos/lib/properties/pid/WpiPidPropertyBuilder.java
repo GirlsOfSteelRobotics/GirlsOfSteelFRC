@@ -1,6 +1,6 @@
 package com.gos.lib.properties.pid;
 
-import edu.wpi.first.math.controller.PIDController;
+import org.wpilib.math.controller.PIDController;
 
 public final class WpiPidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
     private final PIDController m_pidController;

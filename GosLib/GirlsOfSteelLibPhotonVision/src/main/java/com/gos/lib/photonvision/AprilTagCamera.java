@@ -5,16 +5,16 @@ import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
 import com.gos.lib.field.BaseGosField;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.TunableTransform3d;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
+import org.wpilib.fields.Field;
+import org.wpilib.math.linalg.Matrix;
+import org.wpilib.math.linalg.VecBuilder;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Transform3d;
+import org.wpilib.math.numbers.N1;
+import org.wpilib.math.numbers.N3;
+import org.wpilib.math.util.Units;
+import org.wpilib.framework.RobotBase;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -70,12 +70,12 @@ public class AprilTagCamera {
      * @param transform3d The transform used to set the extrinsic location of the camera on the robot
      */
     @Deprecated
-    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
+    public AprilTagCamera(Field aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d) {
         this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_STDDEV, DEFAULT_MULTI_TAG_STDDEV);
     }
 
     @Deprecated
-    public AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
+    public AprilTagCamera(Field aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev) {
         this(aprilTagLayout, field, name, transform3d, DEFAULT_SINGLE_TAG_MAX_DISTANCE, DEFAULT_SINGLE_TAG_MAX_AMBIGUITY, singleTagStddev, multiTagStddev, DEFAULT_DEBUG_CONFIG, true, true, true);
     }
 
@@ -90,8 +90,8 @@ public class AprilTagCamera {
      * @param singleTagStddev The base STDDEV to use if only a single april tag is seen
      * @param multiTagStddev The base STDDEV to use if multiple april tags are seen
      */
-    @SuppressWarnings("PMD.ExcessiveParameterList")
-    /* default */ AprilTagCamera(AprilTagFieldLayout aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, double singleTagMaxAmbiguity, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev, DebugConfig fieldDebugSettings, boolean simEnableRawStream, boolean simEnableProcessedStream, boolean simEnableDrawWireframe) {
+    @SuppressWarnings({"PMD.ExcessiveParameterList", "PMD.CommentDefaultAccessModifier"})
+    /* default */ AprilTagCamera(Field aprilTagLayout, BaseGosField field, String name, TunableTransform3d transform3d, double singleTagMaxDistance, double singleTagMaxAmbiguity, Matrix<N3, N1> singleTagStddev, Matrix<N3, N1> multiTagStddev, DebugConfig fieldDebugSettings, boolean simEnableRawStream, boolean simEnableProcessedStream, boolean simEnableDrawWireframe) {
         m_cameraName = name;
         m_robotToCamera = transform3d;
         m_photonCamera = new PhotonCamera(m_cameraName);
@@ -102,8 +102,7 @@ public class AprilTagCamera {
 
         m_field = new AprilTagCameraObject(field, m_cameraName, fieldDebugSettings);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_robotToCamera.getTransform());
-        m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
+        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, m_robotToCamera.getTransform());
 
         if (RobotBase.isSimulation()) {
             m_cameraSim = new PhotonCameraSim(m_photonCamera);
@@ -132,7 +131,6 @@ public class AprilTagCamera {
         Transform3d robotToCamera = m_robotToCamera.getTransform();
 
         m_photonPoseEstimator.setRobotToCameraTransform(robotToCamera);
-        m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
         m_maybeResult = Optional.empty();
         m_lastPipelineResult = Optional.empty();
 
@@ -142,7 +140,11 @@ public class AprilTagCamera {
     }
 
     private void update(Transform3d robotToCamera, PhotonPipelineResult result) {
-        m_maybeResult = m_photonPoseEstimator.update(result);
+        // Multi-tag on the coprocessor, falling back to the lowest ambiguity single tag
+        m_maybeResult = m_photonPoseEstimator.estimateCoprocMultiTagPose(result);
+        if (m_maybeResult.isEmpty()) {
+            m_maybeResult = m_photonPoseEstimator.estimateLowestAmbiguityPose(result);
+        }
 
         if (m_maybeResult.isEmpty()) {
             m_field.clearCameraResult();

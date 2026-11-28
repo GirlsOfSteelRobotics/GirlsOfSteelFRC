@@ -1,16 +1,16 @@
 package com.gos.lib.rev;
 
 import com.revrobotics.REVLibError;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
-import edu.wpi.first.wpilibj.DriverStation;
+import com.gos.lib.alerts.AlertFactory;
+import org.wpilib.util.Alert;
+import org.wpilib.driverstation.DriverStationErrors;
 
 import java.util.function.Supplier;
 
 public class SparkMaxUtil {
 
     private static final StringBuilder ALERT_BUILDER = new StringBuilder(100); // NOPMD(AvoidStringBufferField)
-    private static final Alert CONFIG_FAILED_ALERT = new Alert("Rev CAN config failure", AlertType.kError);
+    private static final Alert CONFIG_FAILED_ALERT = AlertFactory.create("Rev CAN config failure", Alert.Level.HIGH);
     private static boolean configFailed;
 
     public static void autoRetry(Supplier<REVLibError> command) {
@@ -31,7 +31,7 @@ public class SparkMaxUtil {
 
         if (ctr != 1) {
             ALERT_BUILDER.append("Took ").append(ctr).append(" times to retry command");
-            DriverStation.reportError("Took " + ctr + " times to retry command", false);
+            DriverStationErrors.reportError("Took " + ctr + " times to retry command", false);
         }
 
         CONFIG_FAILED_ALERT.set(configFailed);

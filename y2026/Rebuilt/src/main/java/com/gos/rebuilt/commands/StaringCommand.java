@@ -2,10 +2,10 @@ package com.gos.rebuilt.commands;
 
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rebuilt.Constants;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.math.util.MathUtil;
+import org.wpilib.command2.Command;
 import com.gos.rebuilt.subsystems.ChassisSubsystem;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 import org.littletonrobotics.frc2026.FieldConstants.Hub;
 
 
@@ -13,9 +13,9 @@ public class StaringCommand extends Command {
     private static final GosDoubleProperty TRANSLATION_DAMPER = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "ChassisTranslationDamper", 0.5);
 
     private final ChassisSubsystem m_chassis;
-    private final CommandXboxController m_joystick;
+    private final CommandNiDsXboxController m_joystick;
 
-    public StaringCommand(ChassisSubsystem chassis, CommandXboxController driverJoystick) {
+    public StaringCommand(ChassisSubsystem chassis, CommandNiDsXboxController driverJoystick) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
 

@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.command2.Command;
 
 public class MovePunchCommand extends Command {
 

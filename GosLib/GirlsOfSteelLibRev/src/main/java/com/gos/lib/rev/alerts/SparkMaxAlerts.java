@@ -3,8 +3,8 @@ package com.gos.lib.rev.alerts;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.Faults;
 import com.revrobotics.spark.SparkBase.Warnings;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
+import com.gos.lib.alerts.AlertFactory;
+import org.wpilib.util.Alert;
 
 @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class SparkMaxAlerts {
@@ -19,11 +19,11 @@ public class SparkMaxAlerts {
         m_sparkMax = sparkMax;
         m_motorString = motor;
 
-        m_faultAlert = new Alert(m_motorString, AlertType.kError);
-        m_stickyFaultAlert = new Alert(m_motorString, AlertType.kWarning);
+        m_faultAlert = AlertFactory.create(m_motorString, Alert.Level.HIGH);
+        m_stickyFaultAlert = AlertFactory.create(m_motorString, Alert.Level.MEDIUM);
 
-        m_warningsAlert = new Alert(m_motorString, AlertType.kWarning);
-        m_stickyWarningAlert = new Alert(m_motorString, AlertType.kInfo);
+        m_warningsAlert = AlertFactory.create(m_motorString, Alert.Level.MEDIUM);
+        m_stickyWarningAlert = AlertFactory.create(m_motorString, Alert.Level.LOW);
     }
 
     public void checkAlerts() {
@@ -34,25 +34,25 @@ public class SparkMaxAlerts {
     }
 
     private void checkFaults() {
-        String errorString = getFaultString(m_sparkMax.hasActiveFault(), m_sparkMax.getFaults());
+        String errorString = getFaultString(m_sparkMax.hasActiveFault().get(), m_sparkMax.getFaults().get());
         m_faultAlert.setText(errorString);
         m_faultAlert.set(!(errorString.equals(m_motorString)));
     }
 
     private void checkStickyFaults() {
-        String errorString = getFaultString(m_sparkMax.hasStickyFault(), m_sparkMax.getStickyFaults());
+        String errorString = getFaultString(m_sparkMax.hasStickyFault().get(), m_sparkMax.getStickyFaults().get());
         m_stickyFaultAlert.setText(errorString);
         m_stickyFaultAlert.set(!(errorString.equals(m_motorString)));
     }
 
     private void checkWarnings() {
-        String errorString = getWarningString(m_sparkMax.hasActiveWarning(), m_sparkMax.getWarnings());
+        String errorString = getWarningString(m_sparkMax.hasActiveWarning().get(), m_sparkMax.getWarnings().get());
         m_warningsAlert.setText(errorString);
         m_warningsAlert.set(!(errorString.equals(m_motorString)));
     }
 
     private void checkStickyWarnings() {
-        String errorString = getWarningString(m_sparkMax.hasStickyWarning(), m_sparkMax.getStickyWarnings());
+        String errorString = getWarningString(m_sparkMax.hasStickyWarning().get(), m_sparkMax.getStickyWarnings().get());
         m_stickyWarningAlert.setText(errorString);
         m_stickyWarningAlert.set(!(errorString.equals(m_motorString)));
     }

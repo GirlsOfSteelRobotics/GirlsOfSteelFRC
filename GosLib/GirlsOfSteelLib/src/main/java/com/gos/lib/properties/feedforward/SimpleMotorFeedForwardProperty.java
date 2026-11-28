@@ -1,6 +1,6 @@
 package com.gos.lib.properties.feedforward;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import org.wpilib.math.controller.SimpleMotorFeedforward;
 
 public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
     private SimpleMotorFeedforward m_feedForward;
@@ -44,7 +44,9 @@ public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
     @SuppressWarnings("removal")
     @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double velocity, double acceleration) {
-        return m_feedForward.calculate(velocity, acceleration);
+        // 2027: WPILib's two/three argument calculate() now takes (current, next) velocities, so the old
+        // continuous (velocity, acceleration) formula is computed directly from the gains.
+        return m_feedForward.getKs() * Math.signum(velocity) + m_feedForward.getKv() * velocity + m_feedForward.getKa() * acceleration;
     }
 
     /**
@@ -69,7 +71,7 @@ public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
      * @return The computed feedforward.
      */
     public double calculateWithVelocities(double currentVelocity, double nextVelocity) {
-        return m_feedForward.calculateWithVelocities(currentVelocity, nextVelocity);
+        return m_feedForward.calculate(currentVelocity, nextVelocity);
     }
 
     public double getKs() {

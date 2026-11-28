@@ -1,16 +1,16 @@
 package com.gos.rebuilt;
 
 import com.gos.lib.field.BaseGosField;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
+import org.wpilib.fields.Field;
+import org.wpilib.fields.Fields;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.smartdashboard.FieldObject2d;
 
 public class GosField extends BaseGosField {
     protected final FieldObject2d m_oldPoseEstimator;
 
     public GosField() {
-        super(AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded));
+        super(Field.loadField(Fields.FRC_2026_REBUILT_WELDED));
 
         m_oldPoseEstimator = m_field2d.getObject("OldPoseEstimator");
     }

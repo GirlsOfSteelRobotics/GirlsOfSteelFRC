@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.command2.Command;
 
 public class ShooterRpmCommand extends Command {
     private final ShooterSubsystem m_shooter;

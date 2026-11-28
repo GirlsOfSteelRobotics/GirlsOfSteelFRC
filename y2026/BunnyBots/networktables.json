@@ -1,0 +1,170 @@
+[
+  {
+    "name": "\/Preferences\/motorSpeed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/ChassisTranslationDamper",
+    "type": "double",
+    "value": 0.9,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/ChassisRotationDamper",
+    "type": "double",
+    "value": 0.5,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator Damper",
+    "type": "double",
+    "value": 0.4,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/SuperStructureViz\/Height (in)",
+    "type": "double",
+    "value": 40,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/intakeMotorSpeed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/tunableElevator",
+    "type": "double",
+    "value": 0.25,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.mm.max_velocity",
+    "type": "double",
+    "value": 0.5,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.mm.max_acceleration",
+    "type": "double",
+    "value": 1.1,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.eff.ks",
+    "type": "double",
+    "value": 0,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.eff.kff",
+    "type": "double",
+    "value": 11,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.eff.kg",
+    "type": "double",
+    "value": 0.2,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.eff.ka",
+    "type": "double",
+    "value": 0,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator.mm.kp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/distance to wall",
+    "type": "double",
+    "value": 3,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/ChassisTranslaatoinDamper",
+    "type": "double",
+    "value": 0.9,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/ChasisRotationDamper",
+    "type": "double",
+    "value": 0.5,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Outtake: Score Oven Speed",
+    "type": "double",
+    "value": 0.67,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Outtake: Score Pantry Speed",
+    "type": "double",
+    "value": 0.45,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Outtake: Reverse Speed",
+    "type": "double",
+    "value": -1,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/DavidDrivekp",
+    "type": "double",
+    "value": 0,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/SuperStructureViz\/Test Carrot Count",
+    "type": "double",
+    "value": 4,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Distance to Wall",
+    "type": "double",
+    "value": 2,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Path Constraints.Max Velocity (inches)",
+    "type": "double",
+    "value": 60,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Path Constraints.Max Acceleration (inches)",
+    "type": "double",
+    "value": 60,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Path Constraints.Angular Velocity (degrees)",
+    "type": "double",
+    "value": 180,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Path Constraints.Angular Acceleration (degrees)",
+    "type": "double",
+    "value": 180,
+    "properties": {"persistent": true}
+  },
+  {
+    "name": "\/Preferences\/Elevator: tunable height",
+    "type": "double",
+    "value": 0.25,
+    "properties": {"persistent": true}
+  }
+]

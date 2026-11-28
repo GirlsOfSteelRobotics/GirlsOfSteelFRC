@@ -3,16 +3,16 @@ package com.gos.lib.photonvision;
 import com.gos.lib.field.AprilTagCameraObject.DebugConfig;
 import com.gos.lib.field.BaseGosField;
 import com.gos.lib.properties.TunableTransform3d;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
+import org.wpilib.fields.Field;
+import org.wpilib.fields.Fields;
+import org.wpilib.math.linalg.Matrix;
+import org.wpilib.math.numbers.N1;
+import org.wpilib.math.numbers.N3;
 
 public class AprilTagCameraBuilder {
     private Matrix<N3, N1> m_singleTagStddev = AprilTagCamera.DEFAULT_SINGLE_TAG_STDDEV;
     private Matrix<N3, N1> m_multiTagStddev = AprilTagCamera.DEFAULT_MULTI_TAG_STDDEV;
-    private AprilTagFieldLayout m_tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+    private Field m_tagLayout = Field.loadField(Fields.DEFAULT_FIELD);
     private DebugConfig m_fieldDebugConfig = AprilTagCamera.DEFAULT_DEBUG_CONFIG;
     private double m_singleTagMaxDistanceMeters = AprilTagCamera.DEFAULT_SINGLE_TAG_MAX_DISTANCE;
     private double m_singleTagMaxAmbiguityMeters = AprilTagCamera.DEFAULT_SINGLE_TAG_MAX_AMBIGUITY;
@@ -48,7 +48,7 @@ public class AprilTagCameraBuilder {
         return this;
     }
 
-    public AprilTagCameraBuilder withLayout(AprilTagFieldLayout layout) {
+    public AprilTagCameraBuilder withLayout(Field layout) {
         m_tagLayout = layout;
         return this;
     }

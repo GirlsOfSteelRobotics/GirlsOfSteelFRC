@@ -1,19 +1,19 @@
 package com.gos.rebuilt;
 
 import com.gos.lib.GetAllianceUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.wpilib.driverstation.MatchState;
+import org.wpilib.telemetry.Telemetry;
 
 @SuppressWarnings("PMD")
 public class MatchTime {
 
     public static boolean shouldIShoot() {
 
-        double time = DriverStation.getMatchTime();
-        String whoStartedFirst = DriverStation.getGameSpecificMessage();
+        double time = MatchState.getMatchTime();
+        String whoStartedFirst = MatchState.getGameData().orElse("");
         boolean blue = GetAllianceUtil.isBlueAlliance();
         boolean winAuto = blue && "B".equals(whoStartedFirst) || !blue && "B".equals(whoStartedFirst);
-        SmartDashboard.putNumber("MatchTime", time);
+        Telemetry.log("MatchTime", time);
 
         if (time < 140 && time > 130) {  // auto and transition, everyone is active
             return true;
@@ -32,7 +32,7 @@ public class MatchTime {
     }
 
     public static double timeLeft() {
-        double time = DriverStation.getMatchTime();
+        double time = MatchState.getMatchTime();
         if (time < 140 && time > 130) {  // auto and transition, everyone is active
             return time - 130;
         } else if (time < 130 && time > 105) {  // shift 1
@@ -50,7 +50,7 @@ public class MatchTime {
     }
 
     public static boolean endgame() {
-        double time = DriverStation.getMatchTime();
+        double time = MatchState.getMatchTime();
         return time <= 30;
     }
 

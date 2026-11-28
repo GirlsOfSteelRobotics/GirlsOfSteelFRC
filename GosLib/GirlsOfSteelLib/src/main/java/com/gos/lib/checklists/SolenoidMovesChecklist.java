@@ -1,11 +1,11 @@
 package com.gos.lib.checklists;
 
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import com.gos.lib.alerts.AlertFactory;
+import org.wpilib.util.Alert;
+import org.wpilib.hardware.pneumatic.Solenoid;
+import org.wpilib.system.Timer;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.Subsystem;
 
 import java.util.function.DoubleSupplier;
 
@@ -27,7 +27,7 @@ public class SolenoidMovesChecklist extends Command {
         m_pressureSupplier = pressureSupplier;
         m_solenoid = solenoid;
         m_startPressure = 0;
-        m_alert = new Alert(label, AlertType.kError);
+        m_alert = AlertFactory.create(label, Alert.Level.HIGH);
         m_timer = new Timer();
     }
 

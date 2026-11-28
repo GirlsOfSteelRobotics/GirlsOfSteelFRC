@@ -3,10 +3,9 @@ package com.gos.rebuilt.subsystems;
 
 import com.gos.rebuilt.Constants;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.gos.lib.tunables.CommandTab;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.SubsystemBase;
 
 import static com.gos.rebuilt.subsystems.PivotSide.DEPLOYED_ANGLE;
 import static com.gos.rebuilt.subsystems.PivotSide.STARTING_ANGLE;
@@ -36,7 +35,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public void addPivotDebugCommands(boolean areWeAtACompetitionOrNotBoolean) {
-        ShuffleboardTab debugTabPivot = Shuffleboard.getTab("arm pivot");
+        CommandTab debugTabPivot = new CommandTab("arm pivot");
         if (!areWeAtACompetitionOrNotBoolean) {
             debugTabPivot.add(createPivotMoveToSpeed());
 

@@ -1,13 +1,12 @@
 package com.gos.lib.field;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject3d;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.smartdashboard.FieldObject2d;
 
 import java.util.List;
 
 /**
- * Helper object used to draw april tag information on a {@link edu.wpi.first.wpilibj.smartdashboard.Field2d}
+ * Helper object used to draw april tag information on a {@link org.wpilib.smartdashboard.Field2d}
  */
 public class AprilTagCameraObject {
     private final FieldObject2d m_estimatedPose2d;
