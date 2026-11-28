@@ -31,4 +31,7 @@ public final class Constants {
     public static final int BEAM_BREAK1 = 0;
     public static final int BEAM_BREAK2 = 1;
     public static final int BEAM_BREAK3 = 2;
+
+    // Other Stuff
+    public static final int LED_PORT = 0;
 }
