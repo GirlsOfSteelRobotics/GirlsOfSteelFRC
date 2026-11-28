@@ -1,17 +1,17 @@
 package frc.robot.autos;
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.CombinedCommand;
 import frc.robot.subsystems.ChassisSubsystem;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.tunable.Selectable;
 
 public class AutoFactory {
-    private final SendableChooser<GosAuto> m_chooser;
+    private final Selectable<GosAuto> m_chooser;
 
     public AutoFactory(ChassisSubsystem chassisSubsystem, CombinedCommand combinedCommand) {
-        m_chooser = new SendableChooser<>();
+        m_chooser = new Selectable<>();
 
-        SmartDashboard.putData("Autos", m_chooser);
+        Telemetry.log("Autos", m_chooser);
     }
 
     public GosAuto getSelectedAuto() {

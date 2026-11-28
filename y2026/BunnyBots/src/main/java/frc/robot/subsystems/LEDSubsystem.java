@@ -1,12 +1,13 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.autos.AutoFactory;
 import frc.robot.led_patterns.EnabledPatterns;
+import org.wpilib.command2.SubsystemBase;
+import org.wpilib.driverstation.DriverStation;
+import org.wpilib.driverstation.internal.DriverStationBackend;
+import org.wpilib.hardware.led.AddressableLED;
+import org.wpilib.hardware.led.AddressableLEDBuffer;
 
 public class LEDSubsystem extends SubsystemBase {
 
@@ -30,7 +31,6 @@ public class LEDSubsystem extends SubsystemBase {
 
         m_led.setLength(m_addressMe.getLength());
         m_led.setData((m_addressMe));
-        m_led.start();
 
         m_enabledPatterns = new EnabledPatterns(m_addressMe, m_chassis, m_elevator);
     }
@@ -38,7 +38,7 @@ public class LEDSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         clearLEDs();
-        if (DriverStation.isEnabled()) {
+        if (DriverStationBackend.isEnabled()) {
             m_enabledPatterns.writeLED();
         } /*else {
             m_disabledPatterns.update();

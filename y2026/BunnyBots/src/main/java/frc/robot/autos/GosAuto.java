@@ -1,7 +1,7 @@
 package frc.robot.autos;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.enums.StartingPositions;
+import org.wpilib.command2.SequentialCommandGroup;
 
 
 public class GosAuto extends SequentialCommandGroup {
